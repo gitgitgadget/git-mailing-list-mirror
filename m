@@ -1,118 +1,118 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.149
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794945982;
-	b=uKOJPftWGz9vbNQwoLLK5Wqp+gwd/8WjLeDSfuwqy0dLJFP/VtVsmzIjzZdVinI2l+bu
-	 4LdfnFx+2Mvh0WjiYZcFPekRt7wK1Ap2mELtC5YY7v1/+6LJdlgVM8YboS93CKdTmUIpz
-	 eCnBiz8KEmmLK04GGj2ZAudapQvsQzsxZlKi9ll/7lHZdNJJiBTWYKJ1r/BiohIFWqx/n
-	 J1i1hjRg6i27cFq4zLIfRuIdKwFSVF0AJIBLXTdkjRxBzXgLwEJJUw8dBAdjx5ziYlHso
-	 D7TzA8kwImTKbtkQ0Rlo2LL0QX1V4WsQEtMtEycujXo6nJNzuK04ss2rtpkG0Wk+joQ==
+	t=1794946064;
+	b=b3mTDAtt0Gw+HzGJgjNGnSzvU/Au8DZRWZSw3M5k7JAu7LeFds79uy53sH+Z7JfI2H/8
+	 mf7ojFBVv/JA3h6cKXgRygaoPc3zGInERYCOIRgZpwljQ/VO1+DPa60aLoBatkOXz4x6r
+	 iFr0oV8bw7v1ScE3/GBBdfeiDGBS8ZqWPQIjHRSXi4S/WOdu/iJSp1E2fVT3tFyv+xis1
+	 XEMu/JyjNdX9V7E2vEzOntrlIN8z3foUlPbQPeT7GDu2OAmEsqwyN6tGBkgjbCMQ9JrJL
+	 jK+QjVUrwkpnB00H7Hj1r2460JxDfme+Vm/EYElWGk9IaHHuiT028ii5XsNbsl5LuxQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794945982;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794946064;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=UPWSReX2Tt8Cdw2lEFlmDnm9milvPdWDCebkqbAi4Ls=;
-	b=onAadd2e4daV5QOg8hDuxH0C7LlucrzUEMWFo+/yq9rfoidOnCr1HGqt5jAQHgXyj6MX
-	 5KKs5+7mAkSDSVzc5QpFAUF9/XVvcGn9gtTOV5dRoGpcemHtahZ3aZVRzzAJlwz441p46
-	 Ddrc6C4oDHwb/zKHjpiO1fAD8u7vSDAfhtJWu7ZHDSUskjpiCSLdeLvj0gBN7UHF7cZMy
-	 3o1/Ys+OmkqB1sMMaIF+Vd7H61tjJhLTU2uh3boHNlUnrkc1TArb/I9Zev+9k9PLGzeIT
-	 3ecaRr0LFcwJMV5xfXzLgIsSNfE0+O9KhsndxzXmz4aaWAymFd6nP2erwcnxXbL6DKw==
+	bh=t0OhnQrd7Lefe5toIq8jThIdrvhpkGUkQButXqTdCnY=;
+	b=WIsujlN8QLsX37UtiT6SNC+7AYmfsJmgcx3Lu1sXs2YcB+aPVciltaD/5yJi5VnfNkDy
+	 ag0RQPLqnqxcXsidEZ4Pt86dkfGAkmCdCqacobf0aUnSuwVz0MTFAOqziUVXZ6GVg1nQi
+	 mWDJaMRP8LfXsAoEp9rDv3EWNRtzJwmT5kvhUn0trhXEKtX/7fUfQJ3Xag8OEXQUgAEkV
+	 cXEzrMsfILNfOdjjlTpITnsASQehK9IYBOR8My9YMQ/Spf6lbfc5dbTubI0lzDVywiW0s
+	 4ivzAg/uv0wODQA7rPv+cji8cNFlIs5Ym9tdPkqPr/r05CZqpD21SikOWaftGsnckgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=Tgj6FKrc;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=M4QhbW3X;
-	arc=none smtp.remote-ip=202.12.124.154
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b="EW/yV+LK";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=thdypOMV;
+	arc=none smtp.remote-ip=202.12.124.149
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFB3606A337
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 20:06:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3FFB3606A337
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB05D606A32A
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 20:07:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AB05D606A32A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=Tgj6FKrc;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=M4QhbW3X
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 924CD7A01D6
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 15:06:21 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=EW/yV+LK;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=thdypOMV
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0EFBE1D0025C
+	for <git@vger.kernel.org>; Tue, 17 Nov 2026 15:07:43 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Tue, 17 Nov 2026 15:06:21 -0500
+  by phl-compute-06.internal (MEProxy); Tue, 17 Nov 2026 15:07:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794945981; x=1795032381; bh=UPWSReX2Tt
-	8Cdw2lEFlmDnm9milvPdWDCebkqbAi4Ls=; b=Tgj6FKrcNH7WAVynJRDJ87NJG0
-	Fwh/frHkVu6d9bdgHErP+4AUkUiFrkvgDwBkLXc5thUpzMXoApaoG/7wpeuYQtnO
-	gPlFxFxCiUqf2AM/Qo/7UmbsjzNNdGGjtVXsH5oC4hA6whqriliuFOeMri5C+lV2
-	pZA7hb6Tu1Wp2ieihlzy8ifcHzRcDxY0WLZzI1XQ0HASVrbDmdHNSjdG+lZ/rKKH
-	iMvuxqqoJd1scpmd2mta5h8QPQqrjFImcBL+VwfYnRPf32wD4yhcnNs605iS7dy9
-	w575lfe6QKVIM2rYe32yowWQ9HfRpc+xywRFniPkB55NWVafyTgLRm0DEGNg==
+	:subject:to:to; s=fm2; t=1794946062; x=1795032462; bh=t0OhnQrd7L
+	efe5toIq8jThIdrvhpkGUkQButXqTdCnY=; b=EW/yV+LKq2u3xRoBTX2WHb9F0B
+	hV1/PXYMzV1BYW9AuebzxJh+UR+VEBS5cyvWA2zBonqWuVqqKMTFbgoxsz9cG3EW
+	35ENr18em8Qk1pATLBRFo93qcb7WNsbATwvFYblWQmIwy4utaMyHR4E2wJvRhDJY
+	nfv00XzD+CpvM6l8Dt4NWSftQfm6uW3zUblsqO1Z6e5bPYmwfr/WggWESthxnJ8E
+	TDy6zitlDsNsMieanKH/wB7nQETBclOiUw3MaEx1OWAAQr6BmhRMwehGH/I+ID0T
+	ntALTSLseUIZWJ7mdVLwDKu47cK7QfN8g10+HHt4CxnCGGaU6ORFHSDX5vWw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794945981; x=1795032381; bh=UPWSReX2Tt8Cdw2lEFlmDnm9milvPdWDCeb
-	kqbAi4Ls=; b=M4QhbW3XAGY3YRINfPeuSLetDiYqOqTl1IfsLsbfl+6pDTqG4WU
-	8GeaiB+5NWIAJvIPFRMGg0DL12v8OB+rbpbnWroDC1OfYXMcGXvRuqkYY93kqAqp
-	cjEWW+NAWxv3ajS0gSw9m8VokwyPlQJvzX8yPrSLuw7a0XWHgyE7t0zBr8841QlE
-	2vl821gpliKm4W8yqx2DIo+FHNZlQtg37Tm1qERNW94/OFQ8dM+iGKXvRRk65NPm
-	6CxQa53LWyqAxrsuuk9iTxnjIi4ZUM4G1cGIgXHW6kicRBJmQRvB3OOPvsnCPCji
-	6Ds7FGz9wNTa9pPAyJ1323sM84qUbbP9WGQ==
+	1794946062; x=1795032462; bh=t0OhnQrd7Lefe5toIq8jThIdrvhpkGUkQBu
+	tXqTdCnY=; b=thdypOMV7AmLvsZCTGEmbzw4e0ZnU9B/5CFnr6iduETqgI7qjO4
+	xwPB+PT+/+dk90ajastRsmBQucqB5n88qDHVvhzp1V1/qsvHSKUgaTEeiJrjOeNs
+	o73JAQIx0jX1ooNFMoI/vpcUmVw1fHfuY5ST7QmiX1CHn28cJG6hK2W2aVuhg6fj
+	cV/IDGy4O2NxtT22/xqX71ypOFgXzDruEtUZZ1lojKDpXTE0IUYpxuXJEbDpx/3F
+	pqx9oL/NLggVXSeEf4mg3SbSjVpitb9vZhPtEiBXTCfaOupUk2GxvyeXGr3rUj/2
+	YhGk3PSWyVVtVad0ug0IGoTTRxxI3UYr3oQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794945981; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1794946062; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:X01ZjvpdgDwTytVmUWH7+2/M4rJANLZwnknGco0JH4mHmzw
-	4Nb1qZdFEXHsXGVsSnhcMfYhC8fQR63KoVU9T/ojpkoFB6pk5ubg8o5OfdgRiIgS
-	3IOJ8t2eYehIeFxURGLRG3qDR4DTPiIbr4cb4Kl2IVIQTVzJ+EuCP2C6NyChUQhm
-	dUxXQXsj+ggd2xMD3sN0vimqu5hgOq8NNWM0W6hZqg5z7xxj0nNWOcXflUNY8YWt
-	jiZF0N61tsXgtRRnAbv/UDMLXpqmLpVmD2De9TeFD6SBK2uEcGcwZbu4QkEjBsDG
-	B8eP49mPqaB/U+KjXQ+pQTTHSZ9DSH5oKcmwS8A==;
+	s=fm2:rsa-sha256:bdW8duGCEH6u+6mxvDnLCAIxFw+LH7pJcG9fulvnDxcsTQg
+	gyvRFKJ2UZKg36cG0qe0KSILOVMV2v+WeiqVFvXp78Iw40LF2okZ4+8i/UMNGGHL
+	kWiND/uBLAHrkP5HleWdFeLpjGtcmPJmXsXo9NzV3ahnR0L9Na2cKPGnXemfgZG4
+	5/33zK4DV4YMacbEJEpUxn9AUT1p51GFgfWQybV6/kG80U/KrOzXmVwRxu2hbzIa
+	bit55EHAGEfYnaNMLtEbXZ4mIhGINzzCahVnBnwCO1cFTJP33XUHGHz/SnRWmqMU
+	EZ1xU9U6Wk1gohXvcBX/ptLi0nRAUG5vMIAnibw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:zncp7oT+C5yXIgLwfLjUe/627MQCLz5WXLvcjuh0Oow=:v67LEkEytsgKS0IqqASN3rDXbb8j/wDHdgXIcS/bfUs=;
-X-ME-Sender: <xms:vbP8ajpSAuCA3M7BlThE0YPJzbTxKA8F5-TED-QIBDxkdA6FIA2hOg>
-    <xme:vbP8alEWJ0K00-bSRPUYucKoyLCOb4k2PfzyNXRqgO72HRI2Flx2TWq3PqUvIPdMb
-    BR_vjUEOasElb5PCfJFoYarsFuob3pzO5SY1rByu1Zc5KgEJPT6eb8>
-X-ME-Received: <xmr:vbP8atlO201xWmMjJRM9xSfb0YmmInd9zqy_nJVQDjxolhf32gAdKb3PeUGy0jFpjwdIzD171EsMrUgWEf3ZVTmOylw3oyV3Q7LT>
-X-ME-Proxy-Cause: dmFkZTEpQEaTeZ+mpD+cqIv7npVuVm5BAL+S6a1AzkV2XVtNTmyODxOqhXGLsrBvgsxeT0
-    NEKyJseBrFH6PXfVhNoCricUKdrqJzcss8I78TPauqayPVpVYONXBZg7DvhePqh6tCV5jQ
-    XUJG+T40trkqk+fdz31wFTIxnsubXxT8vXnjH6ihqy+4Nw/cKH+V7gNMi+5N3zYXaXieoW
-    tho5iiOm+96HoneG/v52trrlDpbEpbX+taSvkKsdSW7Xy7OASKa5ATTfU++G3Yid/jPYLN
-    9wzNuyXZjnnW0D52YyJ4FefG09eVPRDUfyiG5gsKypdiBDvSioMFWPY/cpyKY9I/qanGmG
-    mKOjAnkP88ftpntfdj33cKAn6EX8MQvYGrLce5MBHj80mvzISiQYhXn5bsua3ZO65hfn+g
-    nR2FbGJnAGoDgWj5kkM/11uh1fcWVmk517eaGoNfui3sfWDhgz/2XQD5A+uCvCb8ooFl29
-    E6BImyX8l9bK7aB8dvOZSb9wSoNl0SR+sLsdmkPxm5t0MmhjqBj2TOFBYQv6uWYXIOxNc8
-    enKmh7siLOSO5oX2X3xSHfg7GzfVjiXG3W5uL7dkO9o8XGyMMJV+CSSxCdbTeGwhqzKXeY
-    DvR8CHD3Yx8LmjtvRsoSFdTHftS0XphtPffwTHmIebpeUxasr8Nm3c7RayQQ
-X-ME-Proxy: <xmx:vbP8agkMDvZrN0EdORMdEksLdOXQ8OpMkyR_I7Fpy3bHJQpHvJX1gQ>
-    <xmx:vbP8amuxeLOivlPFzViqQjWDQx61ZXAbWu0yezN53NwoOgP6rHoTiA>
-    <xmx:vbP8arkt_zzp18Ndb5atYCd01rjZyGh6C2KBJvzhKq9-zHhqG6X3SQ>
-    <xmx:vbP8apu3GT7rgvh3SgCJhLb-I9MpDMhR_2AcnLKeLYSnqedHLCSV1w>
-    <xmx:vbP8attPCOW_vtFbNTt89MwQ3XNVkd0VJvAle8SbeG3sITy9Izez-Igi>
+Message-Instance: m=1; h=sha256:Vtlss0eT9Wafk56Ae9Ql/ABBnb+RtyvB+El1CPsIdQI=:7IM8sKdiKMWO2hZVm71/mpfVo2jnKrVK0fS1X69+DgE=;
+X-ME-Sender: <xms:DrT8aiGIUtDPrQPtgsXZF8eOMH33Q8dLyzXLhlw6e0VUtq_Wpe2gDQ>
+    <xme:DrT8aqyTr6fcqP8XUrwHoYbCF1zGW1JuLLRbqWjWzPwZAYMktlfQb74HZnVvdJ5Y5
+    s2J_lwAHeWcHUqlWfX-lw9ptDAgYDdiW9NMnCF-2pyXdXAUY7g_3Dc>
+X-ME-Received: <xmr:DrT8aphwfKN85AQWHoe6kjRR4kSAOf3ka7oYMQGIdb4RrTHnMMvjmGqtxqCdwamKPAJGSsifEpk0QUCjyJyyz3kaPNs64lHY2UD3>
+X-ME-Proxy-Cause: dmFkZTFa9zdL3WfIUulGILKygTQaPdT3Z3HKIgaXnfqt9O+Y5aW/Zr+jOu3EzB/vc61+iJ
+    X/mGFGr8+51WCvqOlm1svuqHA7f2FoeWavQ7nXHRyHMd/qyVQcssjviABa6eS/9/owiJlC
+    IS0FHPnEUAep5cacBoDJJbZUQvYb8MfFbZQe3/g6L3H9oi0GubkNckoUMumx1c6ObHzdyx
+    DTZDSEfynGf3P/mYpn6Hi5+5JpyCBZAoOf2ZLReZI9Su8VpKjIklPhhEIk1N6m4bmZE9+0
+    q07fRS+QluDzL7WMdXVu3LjzVkf1V5RHlAeFoWfwegdamZZq5j0kVj0OianxKFvuCjdzKb
+    CwTf2M96RUAUPPm046FBjoSpLV4w3ETuDkeYJDmrDYZiZg1WwiD26uu2lO59r//WB/waJE
+    DVgJJiRw8BZT+greuFALCgl1y7cpMrboqIO2GghcvDSr2a6htg/rkOsjGZ9SSQL4IGQCEV
+    HLmp67dFkH7Lyr5Ej3jQlVW5H78AISc6d4RD2jaqkzVMP3Syn6CMmIn0qrxNEnHEeWfIxP
+    RzFpBGGS228AQ4sQP5vNRsnawyxXptM8JGXVQ3BSb6EFU4r/cncu95wd8JQNXOcMHLACk+
+    MBOkttureus6Uo0KSyp8y4AhHTcqU2jcjgkudrhqtrg9YWD1KAgMJg8bfYEw
+X-ME-Proxy: <xmx:DrT8alwED-4LDqej0_TaTN9aBgMs5i0NA_T1wSfiIJVWbUNnF-IC9g>
+    <xmx:DrT8asL-gBFttsnu4jGNL8xHUfy3tPjuSawU_CIsAmL5zOi5yQgzYQ>
+    <xmx:DrT8asRFOHo0Vw7AFY4D1jr18fTPoUNTTMi_CduZgPeYFzEO3EUFDw>
+    <xmx:DrT8akrWJk_UlD0x4k1sh2tRsLgVMfiwjy4CLC1WfT3kV6ZgETHCfg>
+    <xmx:DrT8akIBrPk-DGfQhs7kz9WcyDs9wAAs3JbuW1sMlwpWNbjpXsQY1uJ->
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Nov 2026 15:06:20 -0500 (EST)
+ 17 Nov 2026 15:07:42 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Dirk Gouders <dirk@gouders.net>
-Subject: [PATCH v2] utf8: add display_mode_esc_sequence_len_counted()
-In-Reply-To: <xmqqmrr7fllq.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	17 Nov 2026 08:50:41 -0800")
-References: <xmqqmrr7fllq.fsf@gitster.g>
-Date: Tue, 17 Nov 2026 12:06:19 -0800
-Message-ID: <xmqqqzgjcjes.fsf@gitster.g>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Nov 2026, #06)
+In-Reply-To: <87a4n7jti0.fsf@collabora.com> (Adrian Ratiu's message of "Tue,
+	17 Nov 2026 18:46:31 +0200")
+References: <xmqq5wxwolja.fsf@gitster.g> <87a4n7jti0.fsf@collabora.com>
+Date: Tue, 17 Nov 2026 12:07:41 -0800
+Message-ID: <xmqqmrr7cjci.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -125,127 +125,28 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-display_mode_esc_sequence_len() scans for an ANSI display mode
-escape sequence (e.g. "ESC [ 1 ; 31 m") at the start of a string,
-relying on NUL termination to stop.  Some callers, however, work on
-a counted buffer: utf8_strnwidth() takes <string, len> and must not
-scan past it, while strbuf_utf8_replace() and
-strbuf_add_wrapped_text() know (or can cheaply learn) the end.
+Adrian Ratiu <adrian.ratiu@collabora.com> writes:
 
-Add display_mode_esc_sequence_len_counted() taking <ptr, len>,
-which never reads at or beyond ptr[len], and make
-display_mode_esc_sequence_len() a thin wrapper for NUL-terminated
-strings.
+> Hi,
+>
+> On Mon, 16 Nov 2026, Junio C Hamano <gitster@pobox.com> wrote:
+> <snip>
+>> [New Topics]
+>>
+>> * ar/ls-remote-show-object-format (2026-11-12) 1 commit
+>>  - ls-remote: add --show-object-format
+>>
+>>  'git ls-remote' has been taught a new '--show-object-format' option
+>>  to output the hash algorithm learned from the remote during the
+>>  handshake, helping to identify the object format of empty
+>>  repositories.
+>>
+>>  Will merge to 'next'?
+>>  cf. <ava7178U9hXzPy1Y@pks.im>
+>>  cf. <xmqqfqx5kjoq.fsf@gitster.g>
+>>  source: <20261112085205.452463-1-adrian.ratiu@collabora.com>
+>
+> I think this is ready for next if nobody has objections.
 
-Use the counted variant in utf8_strnwidth() for correctness, and in
-strbuf_utf8_replace() and strbuf_add_wrapped_text() (computing the
-end once upfront in the latter) to avoid measuring the remaining
-text in each iteration.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- * As there are new patches that want to add new callers to this
-   function, let's keep the original with the same API while adding
-   a new helper function that allows us to limit the scan.
-
- utf8.c | 35 ++++++++++++++++++++++++++---------
- utf8.h |  1 +
- 2 files changed, 27 insertions(+), 9 deletions(-)
-
-diff --git a/utf8.c b/utf8.c
-index 96460cc414..d0546ab31f 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -16,20 +16,33 @@ struct interval {
- 	ucs_char_t last;
- };
- 
--size_t display_mode_esc_sequence_len(const char *s)
-+/*
-+ * Return the length of the ANSI display mode escape sequence (e.g.,
-+ * "\033[1;31m") that appears at the beginning of the "len" bytes
-+ * of string "s", or 0 if the bytes do not begin with a complete
-+ * such sequence.  Never looks at s[len] or beyond.
-+ */
-+size_t display_mode_esc_sequence_len_counted(const char *s, size_t len)
- {
--	const char *p = s;
--	if (*p++ != '\033')
-+	const char *p = s, *end = s + len;
-+
-+	if (end <= p || *p++ != '\033')
- 		return 0;
--	if (*p++ != '[')
-+	if (end <= p || *p++ != '[')
- 		return 0;
--	while (isdigit(*p) || *p == ';')
-+	while (p < end && (isdigit(*p) || *p == ';'))
- 		p++;
--	if (*p++ != 'm')
-+	if (end <= p || *p++ != 'm')
- 		return 0;
- 	return p - s;
- }
- 
-+/* Same as above, but for a NUL-terminated string "s". */
-+size_t display_mode_esc_sequence_len(const char *s)
-+{
-+	return display_mode_esc_sequence_len_counted(s, strlen(s));
-+}
-+
- /* auxiliary function for binary search in interval table */
- static int bisearch(ucs_char_t ucs, const struct interval *table, int max)
- {
-@@ -218,7 +231,8 @@ int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
- 		size_t skip;
- 
- 		while (skip_ansi &&
--		       (skip = display_mode_esc_sequence_len(string)) != 0)
-+		       (skip = display_mode_esc_sequence_len_counted(string,
-+							orig + len - string)) != 0)
- 			string += skip;
- 
- 		glyph_width = utf8_width(&string, NULL);
-@@ -279,6 +293,7 @@ void strbuf_add_wrapped_text(struct strbuf *buf,
- {
- 	int indent, w, assume_utf8 = 1;
- 	const char *bol, *space, *start = text;
-+	const char *end = text + strlen(text);
- 	size_t orig_len = buf->len;
- 
- 	if (width <= 0) {
-@@ -299,7 +314,8 @@ void strbuf_add_wrapped_text(struct strbuf *buf,
- 		char c;
- 		size_t skip;
- 
--		while ((skip = display_mode_esc_sequence_len(text)))
-+		while ((skip = display_mode_esc_sequence_len_counted(text,
-+								end - text)))
- 			text += skip;
- 
- 		c = *text;
-@@ -378,7 +394,8 @@ void strbuf_utf8_replace(struct strbuf *sb_src, int pos, int width,
- 		int glyph_width;
- 		size_t n;
- 
--		while ((n = display_mode_esc_sequence_len(src))) {
-+		while ((n = display_mode_esc_sequence_len_counted(src,
-+								  end - src))) {
- 			strbuf_add(&dst, src, n);
- 			src += n;
- 		}
-diff --git a/utf8.h b/utf8.h
-index cf8ecb0f21..57ca2ab270 100644
---- a/utf8.h
-+++ b/utf8.h
-@@ -6,6 +6,7 @@ struct strbuf;
- typedef unsigned int ucs_char_t;  /* assuming 32bit int */
- 
- size_t display_mode_esc_sequence_len(const char *s);
-+size_t display_mode_esc_sequence_len_counted(const char *s, size_t len);
- int utf8_width(const char **start, size_t *remainder_p);
- int utf8_strnwidth(const char *string, size_t len, int skip_ansi);
- int utf8_strwidth(const char *string);
--- 
-2.56.1-740-gf38658f3d0
-
+Thanks.  I have an automation set up to turn "Will merge to 'next'?"
+into "Will merge to 'next'." after some hours of inactivity ;-)
