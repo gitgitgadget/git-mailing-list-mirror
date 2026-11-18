@@ -1,121 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794973656;
-	b=vQd7WVWs2oV8c9DZ5tLL2/mnUVt3no7j8vwLK1pUxWh/ZTsVxWSiK5M1G70aS5ZuvRaN
-	 qUV6wmn6ZX2PAhjLrbP7H5fCXmv4xlFGF1+Z8inunt8b6viitQu2u0Dw7NVXxtA0sOiH2
-	 e/eNpepqG2Z1CE4U697Gpg4k3T/bkSlvzf5A1F6iGBt9DQ9lP7XBElUMlZ0CXaUCHj/6D
-	 npco+54Odnc7GzMOp9s3iQKZ8o2gUlu3rX6ra5d5k+HK+6zfDQ7nJnfq/MBuM+LncMGjP
-	 LZB71PsOlSUjYHGoR/IbqAKqUMxrs2NJkiOpXT8xe+dpCPZQbgOT+leKkC7RxUR32vw==
+	t=1794985007;
+	b=4cMaV2WQ8LWseQ72pOSUcY3otrOjGWEqnC+2Jfj36Yr8oofiZl5WS802tNscxjsdHVNK
+	 oe3rN5bTFjjNXgQfCT+4ndFNJbJcwX4PwU3Cx+C7gZKOihrwhr57Mo2TNIpPu5eI9f+fv
+	 /7/2VbtkWXUi9D71n8zDpwy00btjw9Z0VlGC3AnNyDb7sFEQ4QHs2Dy3m84ehE2h/vv0b
+	 z/rP3durxIi/UUgtcDoJsqz4g3dGFnTELGxpvb79xExPUd5incvD17FDeq4yL+q57HR+f
+	 gw3enjJzP7FfFYWPW4pjn4Z3g/vAvmpMIgdHu7pTcdn/96OQRuI0Ie02KPi/nY2QvdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794973656;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=Qu6NXeOv/LBTrfc42UQ3SI4OROb/6SolEjxAuZIfsK4=;
-	b=xVVqqU6YoijR1zU3W2jc1cvyTyvgcwfkL0UT8j4rG/L9bRQWWEaRpGW107b2Af4xtoRs
-	 i7gKP7LZpPTt6AkHEe0SbxiG28l/DVKjaG6B5KfF7okCi15OwSvP9VmbcYWdzncuPhFmp
-	 W25fJW8wOZHKWVd7A5ciVjaLYyFdzxrGNKa6ixPCRe6kxm5DQfFIWwjlOY6vmYgINvFe5
-	 b6OXmBlbHo3xcPFXzY31DuYrf5xf99OoUPnJ9WG5kA5qo5FgvdIHxS4NO78lX42xXTfI3
-	 HChumkBJb1/AAqnZl0e4zXV1d3Mot3w2iF8Y59QocOCDCfzvprhulnx/8mCiKPIgD2A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794985007;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=2F6fzWHzA+gPK95D94UOTohXtcF6WKgjQ50XkhPNm/I=;
+	b=w3BcpjnWFmG6kiKybzbpwrKM1tsHSK5fSzMmHWvlZZp1N2OQNtbmtlTS1FC/Bn8YLsue
+	 7/8c8UWQUflNaAWr0p7qcpGjYCVoi46IUzP0gqSUs662JKg43zCgDgUv2Tt9AcbWDOI+s
+	 WI7O5A9YRsHbo1/PBb/GrOUETDvMCEsW34rN+tIQ6BlOPg27Ad/Ipc8EiMjhNy3+p8Ey/
+	 TefZgWOm1NPX2yHrHv67uaSJRLWViXFPWW0VcF7VIRhNw6MSAjFFIUr82relIGPuE0lHJ
+	 AVtPpu8ze44nhU0uNC55aEeFGVPrtBIDFO/1hxBLaY5VZ6IQ7F/rqxw3da6CHP+4+jg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=M6lrkaa1;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=rM32xmg1;
-	arc=none smtp.remote-ip=202.12.124.155
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AFWgPU9p;
+	arc=none smtp.remote-ip=209.85.221.43
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7207A606A332
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 03:47:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7207A606A332
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D6D606A31C
+	for <git@vger.kernel.org>; Wed, 18 Nov 2026 06:56:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A0D6D606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=M6lrkaa1;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=rM32xmg1
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C49757A0281
-	for <git@vger.kernel.org>; Tue, 17 Nov 2026 22:47:34 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Tue, 17 Nov 2026 22:47:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1794973654; x=1795060054; bh=Qu6NXeOv/L
-	BTrfc42UQ3SI4OROb/6SolEjxAuZIfsK4=; b=M6lrkaa1GVf6Tz3jx/MQVyv2nk
-	VwJR79sZfx+ZqDOvXIf8SDuu5+ipZMiN9rq25mCDNExgBj+ILpy12x0paIk70Ed9
-	MMtmCtQ2Vu/D4eJ56XYdniG31ems4eKtBiIWv6J9vX+pZVotEBDM2AuLXuwBeA7q
-	UWs6R1aARHUEnOaxGBQM3mcbZXRRJolNkVp5eETCIh0ROj68Q+pXUHbB3E6nN9QB
-	tRztPD0SPtAMg9yBIDgSTIR8H2Te8udOWXXyHzrgX47AlsQ9KhOKjRqwHcNZAw/r
-	NS9dLOilsN/3QsRG1IwGPzzIJdOtyO5Pni7dE0NSoXyTNc6zsJASUlH0QcrQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794973654; x=1795060054; bh=Qu6NXeOv/LBTrfc42UQ3SI4OROb/6SolEjx
-	AuZIfsK4=; b=rM32xmg1FAZgEOkxRUgEUobuV9Lym2AzjixDonKSMhQ0xpp02L8
-	m3JCyPBlfZcjLnR/1abILnMkHg4+UwORvklhNxjX9fU7n6cMw9jU2bT7lFDuLXHv
-	kJYJr4QhQlJG2UIoaVOvpPH4keLqEN8WOo/6j4efxolkhHnbdvcky1SBnuNmMHQT
-	XeDQ4iisSndAQUO+0ztA6vjJBRkq0yRA/9XQH1S/8dRa46TsoqGd70Zw92q1ORh2
-	ZNUjQK/DFBIC7zZao+amj+YhiyTyiOqG5GlxVuKDyr6N7z7RV+lFbtG+KmE7PTyJ
-	5Lbrlbsggx6XMI/p9rKHdpMWYIa6RvRkn4g==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794973654; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:eIyZtdq+F4Lm/v4y6pWSyOEDBQ+fdzag8hP4ATSTDYlbsNk
-	3zGHquFnI/zfSpiGg6RNktZGmP42CW+NBfTFEZNuCc6bwaAkTpdKB8gAMq1sAYQT
-	guXn6UB/sPi0Lu8Crpqjj17uEkQviRVvxfsLD6Y0BFrjdvUuARpN8kpA4slm1SCz
-	U5bVrw7PxdM69ekcxAHzOKGAxu+5szGswBRvVSfcjt3/JrwWq6i38sHifulvDP7l
-	5nNfzC7IFxxQjSDcOXMz8c+jPx8U00Rxb3lLUmz5qTEAqBMYTuSaUkgjxZ4a0nzD
-	RR0TjEP0CbVBE2ByOhBlrZ2N/XnHoH80amhvcLQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:f+lVqDmf+/d9VwpUt7+RwxfNTKUhfMxyPzqNqMXUX5A=:prPld3ioO0flBAukxjIOjeuRbdAHPnnzWeXlWr9DY5A=;
-X-ME-Sender: <xms:1h_9asmFr7w5f46mkDN2Z5qSVnaTsAUmNblhHXH-K-PcbAp3mNtYvw>
-    <xme:1h_9aitzZ8cf86nrTBT6HqEwEMGG6vZsscYqrI6tWMIpXC4Qz6XdQXFWSpR3Qlz3d
-    v5m9RdEyObHvHIt9cBzr4zOT7_VlG4jFffgL1CCe9Ofa2d2Hy0IkMM>
-X-ME-Received: <xmr:1h_9ai8-O_FbSEhXpqUNWcnvoSQ3-hSDLOXqkZXgIQwRdK84C20uuuXaSkCo23zZ2Aog6oe3D3n6WjEyho-ZCHOXM2mWC7pcShm_>
-X-ME-Proxy-Cause: dmFkZTEgPNr65On+fiOda+NFq9mUIx7QaJSrQgYWabRxJqnzGbYqQA/pRGnhnaZ5ooEhER
-    dmZa8w3ASpo0AwujRqKAHepZK0JBgZjMje+FHCFfV7vNAkjuleke7US9zBFP+/dQQWyirF
-    2OOpS9Xcb/mSDY+1CmP2J/bdVEZHGxqpxPEYeMbHYuCVU78cKqYlzVjRnXDlJ/85rc0P3I
-    0M0tuPpK/iIYeUZMPVf1tp3/9ORXgAz1SUNOTTpqeSjV8U0KfFVvgw2Ml4R1LBdyP0zG76
-    ZNIdT6RQLHvqVDu/maT+/AUuzgVpoJrKFNQW8wRNt/sd07gmzn/ZWxDf2a5wJ8BIYWGAjC
-    Ym/2aXx5tKUiSAqKDtTN9hAaiFoxXyG7HZz58cPUzdFqhus+intF0wszrd3hxC4nRZaBN2
-    +xVhw7JeJ0WBTzJqEwCYgaATjFOflrhHyj7lFqg5rTsMyoRoICP4DhUUxgf7/vz2zpAjzz
-    fjTlyD5FhMeJ4yNaTU2vX+FuFK4bywU0wzVHNeDaYXdxJJ3CnILiGb8XZLhro07BdYhctH
-    qL4ISh6UWZbf3FNt3RFGZrQozqzRuNVhmj2BiIV1+lNx5JRTEQCboX/Bjw5FutQa+iKBvl
-    Z/IDe+og0dszIh5V5IzyzpVuyN6fgxUUrzShi+pqgbXWAItrNrSKXJmkVpYQ
-X-ME-Proxy: <xmx:1h_9akPeDIsmSM0KIdkeSVwsgj3YKyDq06RSmbr9mWG0FpSV4zkljg>
-    <xmx:1h_9aoGRBPnlbm3phm3j0GHZdJGMlVmVq2qdXbN8_JhfJTq8AO0NQQ>
-    <xmx:1h_9aqQzlCZ2668dMsaQ4Q3aOeWlRgToq6oZ9XsUiwGm16K3mqSkCw>
-    <xmx:1h_9atuc6LwrWJ7cCVdrGUnQHnpleOWvlN4VtbOpV0WZ1qTXjf4cjw>
-    <xmx:1h_9ap2C8B-AcNUbI31h4jRlUAQcmVNiZKrmE8_jyRo2NblvM-WjOL5k>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Nov 2026 22:47:33 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elia Pinto <gitter.spiros@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 2/2] tree: use size_t for the size of parsed trees
-In-Reply-To: <0b1d1c5668c89e3329e246d787ec80a161bd1dac.1793357680.git.gitter.spiros@gmail.com>
-	(Elia Pinto's message of "Fri, 30 Oct 2026 11:58:23 +0100")
-References: <cover.1793357680.git.gitter.spiros@gmail.com>
-	<0b1d1c5668c89e3329e246d787ec80a161bd1dac.1793357680.git.gitter.spiros@gmail.com>
-Date: Tue, 17 Nov 2026 19:47:32 -0800
-Message-ID: <xmqqh5he94x7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AFWgPU9p
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-49d64a88222so1045993f8f.1
+        for <git@vger.kernel.org>; Tue, 17 Nov 2026 22:56:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794985005; x=1795589805; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=2F6fzWHzA+gPK95D94UOTohXtcF6WKgjQ50XkhPNm/I=;
+        b=AFWgPU9pJ/XdBMftBRIaPUM4JRUhm0ofJdxlemD9OB2L6cHQLjp611q8S85TU4Dawr
+         +ErgrFO0rbZjR3xeHQPHQOPKi73GEJ5WnqEtW+5brkLHAH0Xnl0bhhqiIpcFObwZP4gz
+         dRkiKpySGnpwpGh5b8kaB8DXoSOBqitbznXEuCXGxmuqYsYKF8SIV93nu4LQNFbz1fqx
+         YddG13oiSVc6NcQ1nRQE4QLvLBIVoklQvBbrqK4khT6ZLZCdCfYQFdOvFbrxnvdn3Wxy
+         EV8p2kO0J2spxDKQZAsBmSsPeEyF0vBnrvbr10N5xf2Vz1h2SsnGcH47Wb2VmWjud1oW
+         Jigw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794985005; x=1795589805;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=2F6fzWHzA+gPK95D94UOTohXtcF6WKgjQ50XkhPNm/I=;
+        b=W9FokhFaJ9Y5onOMjr6AJOOBLAAQVLS4taItLKWv+gBHZGSpMoApHn91znHbCNmuU0
+         +6UCVjzFsbTqfy6RMEwN1NMSCGkTkMMBM5ph4ELvG/AH2QjfsPeQMe81Z3zlEPvgWHyF
+         Y5LLBoryQgb8JDDgrLRevdn0F7jpX41u6WBwpJF/ERTJODxM13vn15odHboaIlESihqD
+         tUmggZej3rbqLtPEiAJ8yU0NjvEGsRhdeOpITRlGranBlJHNuI1C2O47r3mRdS+2wPy2
+         B7UglFJH5yGQbdviGPr3Jfw4lYHpDKehqpro6jdkxammMryKAJdgDoLE9B8Ez/nJozQO
+         XXyQ==
+X-Gm-Message-State: APuU4Z9Y9IPlqj3/L6Y+l4piV8gayKlNDdj7NfyBWk97QRGWxkiTmume
+	mh9/8Fsfp2Y4WqsLuIBSMw7gwGiZZ17XPZWetZ1JIdTGm/zAhHqQYuYAIHDz0w==
+X-Gm-Gg: AYBFou38Lj9rKFRraO6dK7D1YNlm78rxRDaczE8wJrz1fhu+G/PTtnTlcvhkdcu3OSc
+	gjwQU6Vxh45anhoNWWze5pt7LXNd+D5BycSXbLUexKGTQF66MDlh08U3TG4V4yYz+KCdG8+iFEI
+	BN0OW0sX3DnhIXWNEwS3wDPx1h8Xui1FZwNGvXQLZLrxEp9PsTjZprILUN6Q7API7xKEfSKVU7m
+	R+u/UrjGorqoygDqwfoBcoIbUBRiCmdWWIe/2r6gHjEfgNNxEwb4jcJ4AvGbq0D9MyPkJ9iqD2P
+	7yuB5hs734vEOpkkf/6dNuhWp/AINFyyR3z34oPGiLcFFgByGvgeJ6QYNImMlHAc1g70frSpFih
+	XQs5nF6IbQdHSxg8htih+oEVNp0/ItIzr5sCdDlB87OfGU9ue9i2++Cw6LTkVMnA0lSN86+COX4
+	czSVQ/5p8DFCzlzoPMC9XxIRjfGStdcZdSHv7hN68GYIxTxDWYRmuo83M3u0KTY4EhaA1yn3c8I
+	YKXlt6Apf2ah8HzVw/P4FvEDWXDRX2UQcD1CjjSLx6edxUOfNa9Zd8RTYNbGGCQGP8xsTEPWnMs
+	tJRodC98edFDj0XYlbe+ETNk6VHQt7J0crFojHU60s7J7lufe4DNintlxRzL+pQ=
+X-Received: by 2002:a05:600c:6708:b0:4a1:88df:8a2a with SMTP id 5b1f17b1804b1-4bb7da267f5mr28680845e9.13.1794985004766;
+        Tue, 17 Nov 2026 22:56:44 -0800 (PST)
+Received: from ubuntu26lts1.example.com ([151.31.213.44])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb783f7eecsm222311235e9.3.2026.11.17.22.56.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Nov 2026 22:56:43 -0800 (PST)
+From: Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Elia Pinto <gitter.spiros@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>,
+	Han Xin <hanxin.hx@alibaba-inc.com>,
+	Han Xin <chiyutianyi@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Tan <jonathantanmy@fastmail.com>,
+	Kristofer Karlsson <krka@spotify.com>
+Subject: [PATCH v2 0/4] use size_t when receiving and verifying packs
+Date: Wed, 18 Nov 2026 07:56:34 +0100
+Message-ID: <cover.1794984184.git.gitter.spiros@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <cover.1793446357.git.gitter.spiros@gmail.com>
+References: <cover.1793446357.git.gitter.spiros@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -125,38 +104,277 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Elia Pinto <gitter.spiros@gmail.com> writes:
+This series fixes object sizes that are truncated when receiving and
+verifying packs. Most of them are kept in an "unsigned long", which is
+a problem where "long" is 32 bits while size_t is 64, such as on 64-bit
+Windows; 2/4 is about an "unsigned int", which is 32 bits everywhere.
 
-> struct tree stores the size of its buffer in an "unsigned long", which
-> is only 32 bits wide on Windows, and parse_tree_buffer() takes it as
-> such, although repo_parse_tree_gently() gets it from odb_read_object()
-> as a size_t. Callers then pass tree->size to init_tree_desc(), so with
-> the previous commit a tree of 4GiB or more is still truncated on
-> Windows before it gets there.
->
-> Use size_t for both. parse_object_buffer() still hands an "unsigned
-> long" size to parse_tree_buffer(); it is shared with the other object
-> types and is left for a later change.
+ 1/4 unpack-objects fails with "inflate returned -5" on an object of
+     4GiB or more that is not streamed, dies on a delta base that
+     large, and silently writes a truncated object for a delta result
+     that large. With 1/4, "unpack-objects -n" and large delta bases
+     work, and writing such an object, unless it is streamed, dies
+     with a clear error.
 
-Sounds good to me.
+ 2/4 "index-pack --fix-thin" with a local base of 4GiB or more
+     compresses only part of it and dies later with "serious inflate
+     inconsistency" (all platforms).
 
-> diff --git a/tree.c b/tree.c
-> index 53f7395e9f..d37b9bc7b1 100644
-> --- a/tree.c
-> +++ b/tree.c
-> @@ -172,7 +172,7 @@ struct tree *lookup_tree(struct repository *r, const struct object_id *oid)
->  	return object_as_type(obj, OBJ_TREE, 0);
->  }
->  
-> -int parse_tree_buffer(struct tree *item, void *buffer, unsigned long size)
-> +int parse_tree_buffer(struct tree *item, void *buffer, size_t size)
->  {
->  	if (item->object.parsed)
->  		return 0;
+ 3/4 index-pack reports a false "SHA1 COLLISION FOUND" for a large
+     object that already exists locally.
 
-The only caller of this function, object.c:parse_object_buffer(),
-has its size as ulong.  Even though this alone would not help
-end-to-end, as a "one thing at a time" step, this patch may be OK.
+ 4/4 "git fsck" checks only a prefix of large objects in packs.
+
+None of them comes with a test, as each needs an object of 4GiB or
+more; 1/4 and 2/4 describe how I checked them with the size truncated
+to 16 bits.
+
+Changes since v1:
+
+ - Rebased onto master at e1ec09b23c (The 22nd batch). v1's 1/4 no
+   longer applied: e07ac16d1c (unpack-objects: pass the size of a
+   streamed blob as size_t, 2026-11-06) by Kristofer Karlsson, now in
+   master, makes the same change to stream_blob(). 1/4 drops that hunk;
+   Kristofer is Cc'd.
+
+ - The message of 1/4 used stream_blob() as its only example, so it is
+   rewritten around the paths that are still affected: objects that
+   are not streamed, all blobs with "git unpack-objects -n", and
+   deltas.
+
+ - 1/4 no longer drops the cast_size_t_to_ulong() in
+   unpack_delta_entry(), but moves it to write_object(), where the size
+   is passed to odb_write_object() and parse_object_buffer(). v1 let
+   objects of 4GiB or more reach these functions and be written
+   truncated.
+
+ - 4/4 says that parse_object_buffer() and fsck_object() still see a
+   truncated size until they take a size_t.
+
+ - The messages of 1/4, 3/4 and 4/4 now say that the problem is "long"
+   being 32 bits while size_t is 64. The code of 2/4, 3/4 and 4/4 is
+   unchanged.
+
+There were no comments on v1.
+
+v1 left pack-objects for a later series. That fix has since been
+merged as ep/pack-objects-streamed-large-blobs-fix (ed0aed1e17); it
+covers the streamed path and explains why the other truncations in
+pack-objects cannot be reached.
+
+The callees odb_write_object(), parse_object_buffer() and
+fsck_object() still take an "unsigned long" on master. They are changed
+by two other series of mine, which are not queued yet:
+
+  https://lore.kernel.org/git/cover.1793444420.git.gitter.spiros@gmail.com/
+  https://lore.kernel.org/git/cover.1793439137.git.gitter.spiros@gmail.com/
+
+The series is based on master at e1ec09b23c.
+
+Elia Pinto (4):
+  unpack-objects: use size_t for object sizes
+  index-pack: use size_t in write_compressed()
+  index-pack: use size_t for object sizes
+  pack-check: use size_t for the size passed to verify callbacks
+
+ builtin/fsck.c           |  2 +-
+ builtin/index-pack.c     | 14 +++++++-------
+ builtin/unpack-objects.c | 42 ++++++++++++++++++++--------------------
+ odb.h                    |  2 +-
+ pack.h                   |  2 +-
+ 5 files changed, 31 insertions(+), 31 deletions(-)
+
+Range-diff against v1:
+1:  f259eeb6a6 ! 1:  b2c3d349a4 unpack-objects: use size_t for object sizes
+    @@ Metadata
+      ## Commit message ##
+         unpack-objects: use size_t for object sizes
+     
+    -    builtin/unpack-objects.c uses "unsigned long" to track object sizes
+    -    throughout the file, while sizes read from packs are handled as size_t.
+    -    On platforms where "long" is 32 bits, this truncates the size for
+    -    objects of 4GiB or more.
+    +    Since f2063855fb (index-pack, unpack-objects: use size_t for object
+    +    size, 2026-05-08), unpack_one() decodes the size of an object into a
+    +    size_t, and e07ac16d1c (unpack-objects: pass the size of a streamed
+    +    blob as size_t, 2026-11-06) passes it on as such to stream_blob(),
+    +    which handles blobs larger than core.bigFileThreshold. The rest of
+    +    builtin/unpack-objects.c still takes the size as an "unsigned long":
+     
+    -    When handling large objects on those platforms, unpack-objects fails
+    -    rather than corrupting data. For instance, streaming large blobs
+    -    (exceeding core.bigFileThreshold) passes a truncated size to
+    -    stream_blob(), causing the stream write to fail with an error.
+    +     - unpack_non_delta_entry() and get_data(), used for commits, trees,
+    +       tags and blobs below core.bigFileThreshold, and for all blobs with
+    +       "git unpack-objects -n", which never streams;
+     
+    -    Use size_t across the board in builtin/unpack-objects.c and remove the
+    -    now-unnecessary size cast in unpack_delta_entry(). Downstream consumers
+    -    like odb_write_object() and fsck_object() are updated separately.
+    +     - unpack_delta_entry() and the functions that keep and resolve
+    +       deltas;
+     
+    -    Triggering this requires processing 4GiB or more of input on a platform
+    -    where "long" is 32 bits, so no test is added.
+    +     - struct obj_buffer, which keeps objects around for --strict.
+    +
+    +    On platforms where "long" is 32 bits while size_t is 64, such as 64-bit
+    +    Windows, the size of an object of 4GiB or more is therefore truncated:
+    +
+    +     - For an object that is not streamed, get_data() allocates a buffer
+    +       of the truncated size, inflate runs out of room in it, and
+    +       unpack-objects fails with "inflate returned -5". Truncating the
+    +       size to 16 bits in get_data() and unpack_non_delta_entry()
+    +       reproduces this with a pack holding a 70000-byte blob, both with
+    +       and without -n.
+    +
+    +     - unpack_delta_entry() reads the base of a delta through
+    +       cast_size_t_to_ulong(), so a base of 4GiB or more makes it die even
+    +       when the result would be smaller.
+    +
+    +     - The result of a delta reaches write_object() as a size_t, but
+    +       write_object() takes it as an "unsigned long". A result of 4GiB or
+    +       more is silently truncated there, and an object with the wrong
+    +       contents, hence the wrong name, is written.
+    +
+    +    Use size_t across builtin/unpack-objects.c. The functions that
+    +    write_object() hands objects to, odb_write_object() and
+    +    parse_object_buffer(), still take an "unsigned long", as does
+    +    fsck_object(); they are updated separately. Until then, move the size
+    +    cast from unpack_delta_entry() to write_object(), where the size is
+    +    passed to them. fsck_object() only sees objects that went through
+    +    parse_object_buffer() first, and so does write_cached_object(), which
+    +    writes them out later; neither needs a cast of its own.
+    +
+    +    As a result, on those platforms:
+    +
+    +     - "git unpack-objects -n" handles objects of any size;
+    +
+    +     - a delta with a base of 4GiB or more and a smaller result is
+    +       resolved;
+    +
+    +     - an object of 4GiB or more that is not streamed and has to be
+    +       written, including the result of a delta, makes unpack-objects die
+    +       with "object too large to read on this platform" instead of failing
+    +       with "inflate returned -5" or being written truncated.
+    +
+    +    Truncating the size to 16 bits where write_object() passes it on
+    +    confirms the last point for a 70000-byte blob: with the cast,
+    +    unpack-objects dies with "object too large to read on this platform:
+    +    70000 is cut off to 4464"; without it, it exits with 0 and writes a
+    +    truncated blob under another name.
+    +
+    +    Triggering this requires processing an object of 4GiB or more on a
+    +    platform where "long" is 32 bits while size_t is 64, so no test is
+    +    added.
+     
+         Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+     
+    @@ builtin/unpack-objects.c: static void added_object(unsigned nr, enum object_type
+     +			 void *buf, size_t size)
+      {
+      	if (!strict) {
+    - 		if (odb_write_object(the_repository->objects, buf, size, type,
+    +-		if (odb_write_object(the_repository->objects, buf, size, type,
+    ++		if (odb_write_object(the_repository->objects, buf,
+    ++				     cast_size_t_to_ulong(size), type,
+    + 				     &obj_list[nr].oid) < 0)
+    + 			die("failed to write object");
+    + 		added_object(nr, type, buf, size);
+    +@@ builtin/unpack-objects.c: static void write_object(unsigned nr, enum object_type type,
+    + 		obj_list[nr].obj = NULL;
+    + 	} else if (type == OBJ_BLOB) {
+    + 		struct blob *blob;
+    +-		if (odb_write_object(the_repository->objects, buf, size, type,
+    ++		if (odb_write_object(the_repository->objects, buf,
+    ++				     cast_size_t_to_ulong(size), type,
+    + 				     &obj_list[nr].oid) < 0)
+    + 			die("failed to write object");
+    + 		added_object(nr, type, buf, size);
+    +@@ builtin/unpack-objects.c: static void write_object(unsigned nr, enum object_type type,
+    + 				 &obj_list[nr].oid);
+    + 		added_object(nr, type, buf, size);
+    + 		obj = parse_object_buffer(the_repository, &obj_list[nr].oid,
+    +-					  type, size, buf,
+    ++					  type, cast_size_t_to_ulong(size), buf,
+    + 					  &eaten);
+    + 		if (!obj)
+    + 			die("invalid %s", type_name(type));
+     @@ builtin/unpack-objects.c: static void write_object(unsigned nr, enum object_type type,
+      }
+      
+    @@ builtin/unpack-objects.c: static void added_object(unsigned nr, enum object_type
+      				   unsigned nr)
+      {
+      	void *buf = get_data(size);
+    -@@ builtin/unpack-objects.c: static ssize_t zlib_stream_read(struct odb_stream *in_stream,
+    - 	return buf_len - zstream->avail_out;
+    - }
+    - 
+    --static void stream_blob(unsigned long size, unsigned nr)
+    -+static void stream_blob(size_t size, unsigned nr)
+    - {
+    - 	git_zstream zstream = { 0 };
+    - 	struct zlib_stream in_stream = {
+    -@@ builtin/unpack-objects.c: static void stream_blob(unsigned long size, unsigned nr)
+    +@@ builtin/unpack-objects.c: static void stream_blob(size_t size, unsigned nr)
+      }
+      
+      static int resolve_against_held(unsigned nr, const struct object_id *base,
+2:  438f7c6ba2 = 2:  9952f0fb10 index-pack: use size_t in write_compressed()
+3:  0258282745 ! 3:  e66860d274 index-pack: use size_t for object sizes
+    @@ Commit message
+         Functions like sha1_object() and append_obj_to_pack() in
+         builtin/index-pack.c take object sizes as an "unsigned long", even
+         though struct object_entry already tracks them as size_t. On platforms
+    -    where "long" is 32 bits, this truncates the size for objects of 4GiB or
+    -    more.
+    +    where "long" is 32 bits while size_t is 64, such as 64-bit Windows,
+    +    this truncates the size of objects of 4GiB or more.
+     
+         When receiving, on those platforms, a large object that already exists
+         locally, sha1_object() compares the real size (size_t) against the
+    @@ Commit message
+         Use size_t for the size parameter across these functions.
+     
+         Triggering this requires processing 4GiB or more of input on a platform
+    -    where "long" is 32 bits, so no test is added.
+    +    where "long" is 32 bits while size_t is 64, so no test is added.
+     
+         Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+     
+4:  87b0d2bd96 ! 4:  00939c7f1b pack-check: use size_t for the size passed to verify callbacks
+    @@ Commit message
+         replicated in struct odb_fsck_options (odb.h) and implemented by
+         fsck_obj_buffer() in builtin/fsck.c.
+     
+    -    On platforms where "long" is 32 bits, running "git fsck" on packs with
+    -    objects of 4GiB or more passes a truncated size to fsck_obj_buffer(),
+    -    causing parse_object_buffer() and fsck_object() to inspect only a
+    -    prefix.
+    +    On platforms where "long" is 32 bits while size_t is 64, such as
+    +    64-bit Windows, running "git fsck" on packs with objects of 4GiB or
+    +    more passes a truncated size to fsck_obj_buffer(), causing
+    +    parse_object_buffer() and fsck_object() to inspect only a prefix.
+     
+         Use size_t for the size parameter in verify_fn,
+         struct odb_fsck_options.object_cb, and fsck_obj_buffer().
+    +    parse_object_buffer() and fsck_object() themselves still take an
+    +    "unsigned long"; until they are updated separately, they keep
+    +    inspecting only a prefix.
+     
+         Triggering this requires processing objects of 4GiB or more on a
+    -    platform where "long" is 32 bits, so no test is added.
+    +    platform where "long" is 32 bits while size_t is 64, so no test is
+    +    added.
+     
+         Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+     
+
+base-commit: e1ec09b23c8e0deb21a0b95ac5996422277395d4
+-- 
+2.53.0
 
