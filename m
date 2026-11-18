@@ -1,125 +1,53 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.61.206.94
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035080;
-	b=KSHz8KeLOgDLSOSm2/5k2/sN/m24Cn/3pbhg4CB0TbQ/lmqzcrkwFC1BQ/NAuM7p/RJR
-	 x7LJTT/2x2S/w4yRWf187B8kFm3QAGZ9Nb0avUlXpJl0onIxb7AQQYP2AZzM5fz0+Lbyx
-	 5LQG4ge0jpM59bigHzoAY52MV+W0ycFEfEiCYyawQPSzMbWqr32tgHIjFZRYIwOoYFIAE
-	 jzxxXVNtbAksLptRK7tlMpWFw8Z4j7ZuqSCM+htogKgjt/jAqb6zeiLqN2UZ/G3TUeZxC
-	 Q4yX8w/niFAaQziNtIqTWR86rOZmSe/VbeDHMIMDM9JxWUo0Cz51m16cVPOSTPDNNUg==
+	t=1795036146;
+	b=KmgKNLqavulaC/ajzwGrIOLtcCdljjVtLKWdaFuQy2OiUB9vN0AI9c1lPOWOnBLxNaW3
+	 comXgjNGZsyFE7EDmmHpJRJqpac1Lq7mTfuTppuaZy66KFlZDAWRY7qxuLoXlLbV1P9Ug
+	 QoVuZ7YGazK9l+ugLQFGoYYLuWm5xXfw3ULhR4Nz9EErmqUS4njPwXuAZsi3/ImH02NRu
+	 nAmpLalhCdZUG5EHudT+Oacj9cHrU0HO+A68I1smrBCqUm/tFHyu7FqVhefNDbjgZbiKq
+	 i5qh4cahMzcLsajbppJyxvAQE4Lq+CyQXhtcelvcrE13BLLKfqkGeEXja8iDKJvLXNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035080;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=am3R70Zi9Y8710M/3j6M9L7aG99Y8DI+IGpAxxRiwT0=;
-	b=I+vPf5K6OX879XBONPV+760kRvwRSkZ7UQ89x22vy8H/unxp6Vpu8UE4Lmt7/N/qwCn8
-	 aqZWK5uIJ9e2nxKK8bh0HjXwZfXV5wzZ1TiJ+ukVj30lUiC9H7q6j7oZQd4COYw55SA+x
-	 DSQtCTWxtAGq+q5FmREmZopIcjtKzeDd6Kz3rhXH0vOlQnFiyE3HCt4kD9Amza/bcnXDY
-	 hVh6sQ55qtgHz79hKx6P5ziABgcaPwtqKY5BZv6uaw6gTBUORP/HQj5Q/h3ozKDnKiS7T
-	 aX1kFoWsalrbi/Eds4uaA9cL1+OOfVsxI2qdPJiujdVvXWMjdk984Z7YyIejIQhU8BA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036146;
+	h=DMARC-Filter:Received:DKIM-Signature:From:Date:Subject:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:Message-Id:References:
+	 In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key;
+	bh=vN9+h0Mo9oeAFltixXBfWamedwRkBQ4Y16krlgV99Tk=;
+	b=b0xF2IpkQzJYt4EVI/HsbWwCZXoaYTNjxcPGgIkHv+8eLuMofDzRJxOdwHucaHVCeYMf
+	 pkOl5UMWQGLqEWQKl9dGnctIb8/A5vRA2Q6Uqlc3QLF8DgsYq7fwfcahPXQqWIZ+TNoCk
+	 2nJDj6P88hyDG+KLq6WkN3dl+x3qBvU2u25JvNlzFJ5w9/8dddSLQbhond0meNSyfmPKC
+	 bRb/J+SgRmLkVzf6DFYIIoMcKTGQLD8IlzTdTeMJxtxq5SA9OVcBxzIciiNRidzu7hNln
+	 /UBXIttZXgOnGvddtR3qSiB2VSsj1spY5yVKU7T5SJ0jWqukdCiMXqXyk3xD8mawz6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=H8xsd+yO;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=4R2A1OBA;
-	arc=none smtp.remote-ip=103.168.172.150
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	dmarc=pass header.from=gouders.net;
+	spf=pass smtp.mailfrom=gouders.net;
+	dkim=pass header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=NLyRrggP;
+	arc=none smtp.remote-ip=202.61.206.94
+Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD1C606A31C
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 20:51:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4AD1C606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72FF7606A325
+	for <git@vger.kernel.org>; Wed, 18 Nov 2026 21:09:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 72FF7606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gouders.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=H8xsd+yO;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=4R2A1OBA
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 81A6CEC060B
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 15:51:19 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 18 Nov 2026 15:51:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795035079; x=1795121479; bh=am3R70Zi9Y
-	8710M/3j6M9L7aG99Y8DI+IGpAxxRiwT0=; b=H8xsd+yO40908XWR2euGJAH+pj
-	MgigXT6xZK7dCcG2gCywliEMtnaZsovlijC7APo/FDxryBfqabjNQgD6GbLWkeP5
-	QHAbTDiHzNKWkm6vrrFbHNh7BotF4u/6GQxwceJVv7uNqvdD2Ryp75JPm2JgfF7D
-	+PEiM2cRmk0nYRu9yFtN91CLr550Lxp8xtB0eKD8J/BBnX/pDQ9WiFX8z9q4t5UY
-	fp2be41/3xRbpd2N8v37znToNrqPLTLKL7Fbv7S9W8RrudX3jRAY999CboR6viWw
-	rbyrFM2B3J2+awmXSdpZL2LkKo4v3gp4yzMU4rPfBJILvAph3ytnoHwQwHmw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795035079; x=1795121479; bh=am3R70Zi9Y8710M/3j6M9L7aG99Y8DI+IGp
-	AxxRiwT0=; b=4R2A1OBA88moLymsQYit7aKr23X6XGaHZP4Pc27gxJXOymo0yox
-	vwJly6g0dHym9eIvd77m4p1h1pDMWiq8ImMNQ8bwofXnVDhkVXLwvmubmYiSOPci
-	TmYe47ZZDbayU92Nn6LQNu2Sv7OuKNb8JG/t2gDM5R23gMN8T9Wws6eJIQI+C6kJ
-	0TBLmHuXnJhCBRD2N9LzLtxxz7W6hQtXDETSLcGpfB/mkYO1l54HLBrdvTRXkI1g
-	N+Dyuh135L0Du/o7hGfTFlDb7FLwxx04Kbu/s7H+/0w1Lf4+Acvg47ZB2TidGRA+
-	wigOWVP8Rz9pjwEmdzuOamA9lLSeffw+o3w==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795035079; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:M0jxDoGgF+oNcazpyzhITsf5Eg5QUt86hxGA1wshDjkwbun
-	f4f620s+R0r7zcXIRftPU+qKIQQGePrFQEQ/2A/6DGXixEHhmd5dEtbifqXwWZXd
-	xkhCRiii07oUdD7HIu6g96O4IA4rWe/95yxq3iyFwA3d+eoczJLNsQL38sNZ21Wx
-	7082u9Lla/v6S1S9bAntsbTvCf2CjxL+bYoWZBQ/YgE9TWuKd+DWyWy9m9AtH+mv
-	SpAXPKjwylPMkXX9b1xVDKbCMoOQur3ISaMc37ywkdjEdJM/618j/AsrAtM6d1lW
-	tpwFF8gpU8lYOP7olE9iQUqy+x18Jv6buUzgcCA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:0fVVpPj+x1Rtz4xHHFM1RJ2pwOVOvARaiF+jVem72Lg=:ScEcar2fbx3w9JLZcVgQa0xfHho2dnrxKaJ3HjX9QeI=;
-X-ME-Sender: <xms:xg_-am3GUFH20vZv18S-HjbMachc8lnyEj_UG6AE27yQMpaREB3K8Q>
-    <xme:xg_-auAfs7F32HXWneQBN3EkTXF9WQXXDB7bZltoPbBZ6fVCPw6jRUGtP1-1qKx6M
-    uo7B92DwWvzDnPGbxM-G2ii7vHKzM-4VBG0O2LYHAz74rJl0yi41o0>
-X-ME-Received: <xmr:xg_-ajIC6LtzEvb8ITweFgMIBjLinQnrQY8mKcXOG_2pL3e5q4eiqfGzO0njxrIReUoquOHrlgnvoTG9v0mV1mUBZBqnqByFrmSm>
-X-ME-Proxy-Cause: dmFkZTGreYgd3KhWOx+cPZsG+MOpkV874INpZ21PLfpulN2pnbRs+MSdr5Y4Xa8Whpa9w6
-    +XLDJfP8GLBvpBzSNMyoz1Fc974+vF3AnHqexKyifmhNR27kpxrkYR/mx6+qarjhZbYaQy
-    jDNKZDtL+3TBDRQ9BPKSb487M6q4e8jeb+/Uai06Bi8sEDknIxEVnDrN5B3pFkjec8ZNhQ
-    4uEQHDn1WX7gyYHoYi5qNELtnIVjPKl4uUQMGUtAlqbcru+cNLhWcWwLFmcJzVXBSwiAah
-    S9sJ9BgIM7PDhum/Ps1UY+NpZ942cuyKtZRhD9KKGicWRwRiEVAcvoKCGc/5MA8rbeLekG
-    tBkTV3YxyhJhgQdVg6+Vq/GXCzyyffK8lAlPTTgDG8Cx6YkYEOZzzIdmBK7fQLZklbBFtm
-    3LV58KTcrxsmwtAbN8mQv1vJsshyAF5ps/c5/VbJLpCl+V7jraeV4s8PsaA6GpaAN2hNqn
-    7LKwDPb2q0teDOvZPrm6N+9Xb2NfC/4o1mVKcq0pk9jIZaiUgcwHWrXRjAHUFfJ5/iJibd
-    C5jEvfqinsOkmNJfVmpcNg7WcTpnz8bpdb45F0BJPcbroEBsUv9nL+kSzItvD/8BvbUWFl
-    qHkRG2Pn3GcZ8+o/SGkPk9WvWzOJ49PK4p+braLYXMax8EUTowk5QdUZyQAw
-X-ME-Proxy: <xmx:xg_-anmRe-diEv4YHm-nIS9zhrBZxwq5AnCXsU1jIWll7RQQbaB2rA>
-    <xmx:xg_-asai4maVqwZe_M_8p-6J-t8v0wp2BIOI6peMGis3ahx36HL4eQ>
-    <xmx:xg_-aj8ZEaeWqyLGHJ_hbOcC4Ygi7vgPPvZk2ZbJcTV-MnD-tTM60g>
-    <xmx:xg_-araSsNr8uw1jvoqeiY2AekbV80rLkpEH5WyvHjRYN0OAQ7nYdA>
-    <xmx:xw_-aloStcgRlnDkdKDgY-U2nTFHAienLNRXMCpEZ8RBG0ZQyCuDt3LK>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Nov 2026 15:51:18 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tanga Joris <tangajoris@gmail.com>
-Cc: git@vger.kernel.org,  siddharthasthana31@gmail.com,
-  phillip.wood@dunelm.org.uk,  jackrawlings2011@gmail.com,
-  christian.couder@gmail.com,  kaartic.sivaraam@gmail.com,
-  usmanakinyemi202@gmail.com
-Subject: Re: [Outreachy PATCH v3 1/3] apply: free the old def_name in
- parse_git_diff_header()
-In-Reply-To: <20261117004348.806694-2-tangajoris@gmail.com> (Tanga Joris's
-	message of "Tue, 17 Nov 2026 03:43:46 +0300")
-References: <20261114012055.127905-1-tangajoris@gmail.com>
-	<20261117004348.806694-1-tangajoris@gmail.com>
-	<20261117004348.806694-2-tangajoris@gmail.com>
-Date: Wed, 18 Nov 2026 12:51:17 -0800
-Message-ID: <xmqqh5hd50e2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=NLyRrggP
+Received: from lena.gouders.net (ip-109-41-49-52.web.vodafone.de [109.41.49.52])
+	(authenticated bits=0)
+	by mx10.gouders.net (8.18.2/8.17.1.9) with ESMTPSA id 6AIL8tdP1931210
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Wed, 18 Nov 2026 22:09:03 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gouders.net; s=gnet;
+	t=1795036143; bh=vN9+h0Mo9oeAFltixXBfWamedwRkBQ4Y16krlgV99Tk=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc;
+	b=NLyRrggPMHVpYvgjkiReDeVZYk5nCXjZhwKzMtKH7V9BYEe/Z0pN4qkoHQmj08ge/
+	 tuD3BXXyuj1Cf+kcy6hQWfJfvVm9R3Ab1RPTh/IsMM9/refHhRy+dI9XtITdqWNYn6
+	 xMebxrzrHC0IM838Qyv8dGsudc5gMtb6tWR0Jp5w=
+From: Dirk Gouders <dirk@gouders.net>
+Date: Wed, 18 Nov 2026 22:08:52 +0100
+Subject: [PATCH v2 3/4] utf8: respect string boundaries after skipping ANSI
+ escape sequences
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -129,63 +57,87 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261118-master-v2-3-3f2aaec15d31@gouders.net>
+References: <20261118-master-v2-0-3f2aaec15d31@gouders.net>
+In-Reply-To: <20261118-master-v2-0-3f2aaec15d31@gouders.net>
+To: git@vger.kernel.org
+Cc: Dirk Gouders <dirk@gouders.net>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1847; i=dirk@gouders.net;
+ h=from:subject:message-id; bh=v/rNSLmpcQ/pdK88YKCsYdMymsO+3sV5BKbKFIyhSLU=;
+ b=owGbwMvMwMW4JPzVNXNTrzmMp9WSGLL+Cb8t2ZuT0nz2c3GD3OPp8k+8Nm3yM9Taf3u/AO8/p
+ ofebdzZnYwTWBgYuRiqxBRZlk4qsktTWfGi7JtqJswgViaQKdIiDQxAwMLAl5uYV2qkY6Rnqm2o
+ Zwhk6Bg5QOT4GTTSC9Id0vNLU1KLivXyUkscTS2NzI2MXc3MjEwcLVwtzM3czIxMzSwdTUzNXR1
+ dzIzNjU1NHC2dGbg4BWDW5Sxi/1/pfv7L+rhn8WKByRXrim5YqxkzHDll03bCvff6j7Yq75U13V
+ JnGTdfTK7a5Mg/M9ZA5/OLGWypqg3Fz46kNhc79q39wLmG4V/spIx9j+0WbYpneG7dGWal/EZh1
+ 4EHPO0+T1/y/rWNtyjflX/k7aKL9hdXPq789uVRUlPo2yn3rl70mHuw7iYX6x7fWdsfOxce7Z/g
+ le5yalP7lAs5Xz86u9w6JsIz6cj2HpWjZ1e+/M6js3vmQZEfdi8SY79t1bm0+0HlfMu7f1eoS2w
+ 1SKzjXP/VOoLlcev1s95f3l4MlxKcf+zc/Fe7o9v+xmzzmJHzcxqDSU2ldYrYdWXWb6dyv1xPz2
+ m5XLns7oUNy88ZAQA=
+X-Developer-Key: i=dirk@gouders.net; a=openpgp;
+ fpr=943B4FA3CAB8EBC55754E5EA0DA2395F431875F6
 
-Tanga Joris <tangajoris@gmail.com> writes:
+utf8_strnwidth() can skip ANSI escape sequences and it is possible
+that such sequences end the string within the given boundary.
 
-> diff --git a/apply.c b/apply.c
-> index f00b7ba4d3..0847835357 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -1373,6 +1373,7 @@ int parse_git_diff_header(struct strbuf *root,
->  	 * or removing or adding empty files), so we get
->  	 * the default name from the header.
->  	 */
-> +	free(patch->def_name);
->  	patch->def_name = git_header_name(p_value, line, len);
->  	if (patch->def_name && root->len) {
->  		char *s = xstrfmt("%s%s", root->buf, patch->def_name);
+Check for such situations before proceeding and calling utf8_width().
 
-This looks seriously inadequate, though.
+Add tests that test such corner cases.
 
-After seeing "diff --git" line and extracting patch->def_name by
-calling git_header_name(), suppose there is an unrecognised line
-(e.g., "diff --git a/f b/f" followed by "diff --git a/g b/g").  We
-set patch->old_name and patch->new_name both to copy of
-patch->def_name (e.g., "f" taken from "diff --git a/f b/f") and
-patch->is_toplevel_relative set to 1 before we return from
-parse_git_diff_header() to find_header().  Which causes
-find_header() to "continue" when git_hdr_len <= len, without
-clearing patch->old_name and patch->new_name and others.
+Signed-off-by: Dirk Gouders <dirk@gouders.net>
+---
+ t/unit-tests/u-utf8-width.c | 11 +++++++++++
+ utf8.c                      | 12 ++++++++----
+ 2 files changed, 19 insertions(+), 4 deletions(-)
 
-The test below only "passes" because the bogus "diff --git a/g b/g"
-line names the same file "g" used for the next one, I suspect.  If
-you replace 'g' with 'f' on the bogus "diff --git" line, you will
-see an "inconsistent old filename" error, so this change is not
-making us ignore the bogus "diff --git" line, either.  Not that I
-think it is a good idea to ignore such a corrupt patch input.
+diff --git a/t/unit-tests/u-utf8-width.c b/t/unit-tests/u-utf8-width.c
+index 86e09c3574..5e2b636db9 100644
+--- a/t/unit-tests/u-utf8-width.c
++++ b/t/unit-tests/u-utf8-width.c
+@@ -2,6 +2,17 @@
+ #include "utf8.h"
+ #include "strbuf.h"
+ 
++/*
++ * Test utf8_strnwidth for strings with SGR sequences and corner case length
++ * arguments.
++ */
++void test_utf8_width__strnwidth_ansi(void)
++{
++	cl_assert_equal_i(3, utf8_strnwidth("\033[31mhello", 4, 1));
++	cl_assert_equal_i(0, utf8_strnwidth("\033[31mhello", 5, 1));
++	cl_assert_equal_i(1, utf8_strnwidth("\033[31mhello", 6, 1));
++}
++
+ /*
+  * Test utf8_strnwidth with various Chinese strings
+  * Chinese characters typically have a width of 2 columns when displayed
+diff --git a/utf8.c b/utf8.c
+index b43f84a03d..1b88324ea3 100644
+--- a/utf8.c
++++ b/utf8.c
+@@ -230,10 +230,14 @@ int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
+ 		int glyph_width;
+ 		size_t skip;
+ 
+-		while (skip_ansi &&
+-		       (skip = display_mode_esc_sequence_len_counted(string,
+-							orig + len - string)) != 0)
+-			string += skip;
++		if (skip_ansi ) {
++			while ((skip = display_mode_esc_sequence_len_counted(string,
++									     orig + len - string)) != 0)
++				string += skip;
++
++			if (string >= orig + len)
++				break;
++		}
+ 
+ 		glyph_width = utf8_width(&string, NULL);
+ 		if (glyph_width > 0)
 
-> +test_expect_success 'ignore an empty "diff --git" line before a git patch' '
-> +	test_when_finished "rm -f g" &&
-> +	echo 1 >g &&
-> +	cat >empty_section.diff <<-\EOF &&
-> +	diff --git a/g b/g
-> +	diff --git a/g b/g
-> +	index d00491f..0cfbf08 100644
-> +	--- a/g
-> +	+++ b/g
-> +	@@ -1 +1 @@
-> +	-1
-> +	+2
-> +	EOF
-> +	git apply empty_section.diff &&
-> +	echo 2 >expect &&
-> +	test_cmp expect g
-> +'
+-- 
+2.55.0
 
-I do not think we should ignore such a bogus "diff --git" line;
-shouldn't we diagnose it as a corrupt patch input?  I do not think
-we are there yet without making find_header() do more work when
-punting, though.
-
-Thanks.
