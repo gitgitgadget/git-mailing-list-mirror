@@ -1,106 +1,106 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.45
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795038840;
-	b=t0HUkmZ6hyffWeSL76+hf1WqYs8cDpqb74+uE4bjkhrvQxv2rVB4ER36/oAL+5esvrhb
-	 Zp7LdGLnxSQJZrHB5KASDGt3NfOGccuOyW7b17cVqk7d2phdmY3ZObqOe7hO6XyjF7ugJ
-	 1HoLijXAq7LAKZq4qqUfbtrsSV2axbLfrticPsekT/IClEo113cnkPljQeOgww385ZQrn
-	 Rk5CeBfl5hDpd2jAelq3sV4WJ9/EEU/2qYP4ejjgDgdEyVVBE7ANYFcRqRlx1aQ11TLvz
-	 pQ+50948TPoPOmsHMykOR+uk6iz4DQEei/UKSzt7qwAAilzHx1FI9SGjkKZj9oo/7yw==
+	t=1795038842;
+	b=ffLvWpVg/wfT9rfFfdRyt5gMdhWGF6vJ1n+rCdwGh7RZ5aohSTbMFUO4Z98aFjZgTM3N
+	 iZWbk1R+ibM7IuM4JiS6VuEjtQtnTCarBJ+INzX9N4MilynTmGqcfj/TWNFO52w5ZUsUZ
+	 jnAxR/NoyHg2LhLKKAWRzpiWW/4jlYSajN1Hruelg8gCSzkp8vwiFvPUxZTPdrVhWJ5nL
+	 6V/PhELcAaWRfAccD5AiOzBxlffouS/vLK4BlpU6xX0FvT131qVFOb5L0/yr8wEUMBEpi
+	 5HKGoUDEV0/Xfle7ilbnXnkF0jU+Pit8XdrBNbZTaTWy2euas0ZiED44gGV8LskOtXg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038840;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038842;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 In-Reply-To:References:MIME-Version:From:Date:X-Gm-Features:
 	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=cgXgNCR/ae5DHfQ9LZYpT7KcfIMty9leYKtPt8ITmlo=;
-	b=ZKRbtTGqIoF4tfwLs8o71Yh9KP2PWVe2hdcHKvYhgOEebPf/bUojEQb3KUMlMxnnE7N/
-	 paMzMJVQ9zdyj8xVhD/CqJDquNnyTguAqfxoQ94QcljuBgQX7xdADf3WEKdsh1+gNZ5Zi
-	 k6VrYiCfrtW/+hJclPz3agI/K+7eFuEKvuXlZ/2tHSKd0S9XD3DnxOsXTHbJkFfvluEVm
-	 ThtCKN/bPs7sqDcI0vQlFAC1EdRtXy/ppPJ7194ZLtMYluTpYKW0VB7D+XIsE1i+9wofN
-	 xb4W5Y+0+Qw79c13lM50dErAhbBnbCc1HUctKr504ALG9AKMvfMjnSYUbENMYxBbAvQ==
+	bh=lJZJ8rr6FC/AV0K3bpEexvcKtfB5kRtQmOatowU8Qw0=;
+	b=0nGFAjiYkhWrPmn1NAIMarTNTH7KezhWEEE3tryhbijBqGZIMytCdJJkO6YiuFrVpAb3
+	 AwiXYm2DTb9O25sUSJiCg4vamkbi+QeY62h5VuwMWNngquSH05qK5nkKZQEaz7WnZXN0r
+	 i+HJHTLuQMUfPpmQnSYnuMDafkK7kVks3veji2WCn48c4dERlqHVVRr97/+XL6g5B/Bty
+	 UgTt3xMJNy8uVeMVtAPhDpXPLT9PwRqr2P2inWpyCyinJWeoDyDRn/x9oBxcgZpiNzehu
+	 xjkvedv6k7kc6Lcl5zJv2wcGV7YvvJxpis553n44EHNjzJuIE1rstSrix+t80TYTg7w==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=google.com;
 	spf=pass smtp.mailfrom=google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=nkXFNgQ3;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.43
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=OFcwJejc;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.45
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC74C606A338
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 21:53:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DC74C606A338
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA2D606A31C
+	for <git@vger.kernel.org>; Wed, 18 Nov 2026 21:54:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1EA2D606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=nkXFNgQ3
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-6b71ee00f0dso1101a12.1
-        for <git@vger.kernel.org>; Wed, 18 Nov 2026 13:53:59 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795038838; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=OFcwJejc
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-6b71ee00f0dso1104a12.1
+        for <git@vger.kernel.org>; Wed, 18 Nov 2026 13:54:01 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795038840; cv=none;
         d=google.com; s=arc-20260327;
-        b=ZmAK9IABBjUeNScdMLYu69avpC0assJx/iYjZD3HKyqEhstjhpyOcpWq2tKosaFU8x
-         D1gR6Amr5dPflqx7GE49Hy0hcJe3Z8r9IU0u4LCOR99POIfu9Sq2oIWzrt0yoSnDKOkQ
-         wMdn75BRLNjXjcPwIqmnM+VOBlA+LE55Pxmrb9Rh8Izc4KHCV7jVSa2SxEiY3qJRGqM4
-         lifVoGrLoN7BbemIM299NMf1CSKLji750thwegvHsN0h1eFiELcD77m4fQh6hOXeA7vH
-         rhiF+ghJl3yeuLOSCc9nKZC/L2yWEzehmKJO4IxcZuinmOeq3AZMkM8dzlnTWliVlNeh
-         JrIg==
+        b=lm6+To+x0gf/rNsOHeDygzgiO2CGFgJpqVIXneQL26xuZDBDxFJP2UAxSltTm343O1
+         jbhStPMOmLJJxI2tSejoM/hgyyBypzv/bYLdVgYlOoPtB+3Oarnu0nCHZJk+u7Obhv1I
+         zSw+rDeKokW0RdJPtdewOtVxYKB/Ixo7ilNO/GRQGHqUwzxBbEhcTaru4ZAahHlI6IFH
+         WWpbqfRR7jNJX4T46NxPnUnS5X3tvmFz49oRhFMsjS0Ski4FsgYE0LCNxHAQMAiIhiTd
+         b8AItfdTKdTieFl22lKWyF5vA8ooYOMdlQuBUlIE0SENWsVSJCQLzJSkNiQ/cA05mjNL
+         BMCg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:mime-version:references
          :in-reply-to:dkim-signature;
-        bh=cgXgNCR/ae5DHfQ9LZYpT7KcfIMty9leYKtPt8ITmlo=;
-        fh=wrTqu/8TFdAZQutBq3Y0u8nP8uKQe1VGHpKpmLz4rHo=;
-        b=oLo4EvWtgGQSKtZRT45JiQ5EgiT6syX3AIU9w2tok04VTOHhUs0UKHm8uCikdzWx11
-         eYy8+ZmQAG8l7cZXXp34gOnvqXEV1ekRam2FMmS/dBxlVKUS9aeSapz/gGdFKdox/oIB
-         s6ThafTY7v1FG/ERNOIqPbahI4HhOk09oT4cCJQ2AHPumIUNIsO+S2DaGHDyPHXjkdC0
-         Jn/0eAeBG8J4NtPJl10BSvAbNZmXwUo5AU/Ez5P7KCt/WrM5mnnr11TONiSQeWLAsHOp
-         x4kf95mOj9zwL7R0AxCfiDGjWK5jYVeUhzDMp3kIrJUE4nr+CjdX7ZjisLS4bK2ossbN
-         W9ZA==;
+        bh=lJZJ8rr6FC/AV0K3bpEexvcKtfB5kRtQmOatowU8Qw0=;
+        fh=B5F6YYfT659SMP+X3sKz7fgGyyB7ypOpMHWX1HohuZ8=;
+        b=kV1Igv7/gxRLNbHlXdMjOluJxrkuWfsX/ljgw4jBKWya4m7iO4VxNDoyYOvh7Z0OA/
+         0CVDXxLYKyu43Z0VLu1eIdV8OEWuw0f6Gh0FW4jOVvyGLT14dKtb3EqvYI8JuhQuR8Vi
+         qFvO0Bpb3Wg9wcgUC6iilW/BQjRf8c04L5wq6tIjCKcMj1avR+pyIPi9699twGIaLEHT
+         1566ZiPapyhTpew8yQ0GLJpMNcqhtleVQFfPwck1lHt9t9hObEBeby2e8HqHaJeHZeoX
+         vBPaaL1cKAxFf+r2efsRBWwGHtjj2QSALkD1GdELIfLezPvZjWwtrw2aTGXxcgEJppCT
+         uZ6w==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795038838; x=1795643638; darn=vger.kernel.org;
+        d=google.com; s=20260707; t=1795038840; x=1795643640; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:from:mime-version
          :references:in-reply-to:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=cgXgNCR/ae5DHfQ9LZYpT7KcfIMty9leYKtPt8ITmlo=;
-        b=nkXFNgQ3wRalfyEYlHliLHUzXcMv5WNQvcbi2INJ9vf+Zrzifr+2ieAuqE45OcwZbI
-         ssGDtRTFM/hseGzjtdXVfv+PISoOZ+e8F0cwh35mLTRVGe6f8dI5dcDPdGk9JmP4DK6F
-         LzdYCUCRWSH5H44BJhj475c1tTddIzU0gTUPmeEHGjIz7SAROrHyb7YY6MFCshWFgVIH
-         laqEO6KYi2c9q08pPkrAExznLPPbogQ+/wjLP+F0+rBoCUTtglXuSP0eNFz6D17w+tlO
-         pqJWMpJmXNSUV9NzGYa08K7VmNFJXtQz21Qxa+Bf9ZNIOAQxSNaccOh889atQqKJP/rU
-         VBXg==
+        bh=lJZJ8rr6FC/AV0K3bpEexvcKtfB5kRtQmOatowU8Qw0=;
+        b=OFcwJejcHros4S/R5heyCBTf9o8o1zC3JgnP7OmeZftv7SJAig0NPYB/VP2b77l+20
+         oeJV7zQB+9ZluaS8THQIHOIYvlzVQFs5ETGiUOshH+ZPtLPMIs2M0WuRLf/Y1apva2wb
+         EMjKZMFqm3Ax+vq/0M/YuloLOlBrGnsaiLtPBuAgldJ5tjWKEWpvR9dRIY1QKlsYFWpM
+         G2Q1Etu/I/0dyCxTRcvoBasTMBLKbgne7BXMjxu5sLNZ52b/aKLb2KlNaAdV4wtukhgg
+         coObaZV7MpJmgB9L83cQ3jKHyROD87qzEmWzvEMdr78ujj2Jx3KFupjvup0eeY0vt2mm
+         Zafg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795038838; x=1795643638;
+        d=1e100.net; s=20260707; t=1795038840; x=1795643640;
         h=content-type:cc:to:subject:message-id:date:from:mime-version
          :references:in-reply-to:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=cgXgNCR/ae5DHfQ9LZYpT7KcfIMty9leYKtPt8ITmlo=;
-        b=pW1aDW7vDgg1Y4jvpeAAYhZVV7fVmsIKU6uGNuOToj9hmxr3dIcL7mFCiXxjHHkSuJ
-         Td77TUAPyBBu5Xyx4G8h7m8oslkEOgqlEQOlfLOOOXgJJraXfjwZl2LC/fxbtLf6yzTq
-         nmwL09P09hJ+0Y7cniltueOvCdsZJDHs9wWJbWLEu4n1SISzJhRoQUsqAu8hZEKZxeig
-         QZl9YHiVaWfghS48kIv+G2HVO4HRxkwxNLXqiZ6l7452ADaeNS3adSsKyGbu6tciOPeu
-         3Zr+FaA8agdjaiQwdssbrXmXRHk9lesZqBsognR24IBqrz2yEivLdPICE36Nm7AVlP63
-         k+zg==
-X-Forwarded-Encrypted: i=1; AL+hErGloEJalD2ErlQZ44ds3OJhe7T1LwSX2XwUTfNOf2KKSONNvoNFg7a8aTIdS8rBL6RBGvo=@vger.kernel.org
-X-Gm-Message-State: APuU4Z88+K418Uzy4pNvr9kwk1K5xNediO3/1Nck3Oa2RzWjfudw6rX6
-	tMmW1Yz4GEh6FvvxmeSAgkZslCrRz3haT5mFQd8ri7telJ/IM1DJntCMOHR4jt9Fb06B16VyiZn
-	OGNVKpY/6WU4bvElo27JmCVcD9EhHwc9z0oKUv1C8
-X-Gm-Gg: AYBFou1YAdArlEMB9lckac0HVeG/xo4hdTPt7qe5mNr1vQKw0JZ1InLqLGAhlZUTcVF
-	TV36BM6DeP36TuiGl8i/4RgYn2QR+pDzESz8JMeyj4SWgPptlFAaqc6OCFZ+JJfm/Hm6Nlc+U7E
-	b3C3qHgfPOyYRrK7mr99Yi5onwklOFq7H894VGgcvB5pzgCThRM+m9mDSfcN1AwV6RVKUskUFG/
-	H0y8EgR1hsXbnn9L6bSWVOEsBliBOeOdX26MuGmTYzAYuRd4bou4U3AkHLMTaOSJb5BoFazG0TO
-	sT7axlTA69mEKVG3ccpJygP8RjpqBluhhhDU6zss0iPoFyA6J9D5FWcuyBdL9qwJSJXDG0Ayqek
-	h2ZkTAeeugkM5bihDHjesHqas5Nk7NcFOzUcpLOUAtNMa9g2K1xXFTjOUHBgEsQlYxkOv9mLTrw
-	7GLvhhlr5y+tY=
-X-Received: by 2002:aa7:c4ec:0:b0:6af:b196:68bf with SMTP id
- 4fb4d7f45d1cf-6ba100a9db7mr8273a12.7.1795038837696; Wed, 18 Nov 2026 13:53:57
- -0800 (PST)
+        bh=lJZJ8rr6FC/AV0K3bpEexvcKtfB5kRtQmOatowU8Qw0=;
+        b=u6IK4IMm8qqO4xgqles3rPyrJE6XVdnJklb1j87VC/OrRPs5+XhjkcSgDUPHeizoi9
+         B+tw5QuA+2ysEM9KII7Sd3XFHdU/d14mDUDZTZiYA6adZBOzt35rX8gVR6YtxmVi1CW+
+         yRgjFdKH2RjALYaC/XtLFGApPScGehj/l86jBza/QTboHAD7f5TCtlIftrw4NN01pfX0
+         /XiboqmUr8a2krPAWNG1ADM8IQ0lesWzloAq/O1Gocis6k9kL7CY9XbMZRLwp7+SuH1P
+         yRZs9aFC6lafsxc7RUU+OYTsTIQAWb5qGWvhTC8EZUecHXWESKmCjjxaX2zqF9x/PpjA
+         ofrw==
+X-Forwarded-Encrypted: i=1; AL+hErGKqnzkwIp69j3K8ge3wCznePVMtV/ndMYpYZKu8KCLRJlcTxVopXo/A/b+y3FpAOjDCjE=@vger.kernel.org
+X-Gm-Message-State: APuU4Z84b56pWSgGOAd0aylM5j5nY6Zd023Nk/y/Qv2qMfzeYUjQ7fmd
+	qcKWixkj257YZvoMwUcloLGamo8ezZP8Wu2k0153ftsTccSGKVOGpZMSPTvmGNHn1o1G5LGc133
+	/0h7fxoCNFzFj+OKZdeB2ZHmCtQXN/mk7fAZ1Ln9+
+X-Gm-Gg: AYBFou3GN/fU4Axv5kML15ipYijgz6HCjNJEgD48zKNeLW337gl73RapTEAk5XIEdRb
+	uvKzSiLF/l3wcLdO4ZX00F3AOfQXofD2HC6RonfdyUkr7WeqbWgGx0R0rFmTPRSThpmL/JBhVA4
+	ag0kvZ4pdbjTDUMBaAD8TbeH65zuqGi5XhI8CwsnihJqQbv4h3nM1X8RkcubOpA9w1a6iAFYAIq
+	f9L5Fj6sXC73qW2vQq6hQIOmg/Dg8i3hPIzYNt8YnigsMP+JobXKyRGyAQcpuVQ3jg92ERiOszV
+	BHkhv5Q9wQqEuXe+ECT+KeV2MymbUBZtckN91Djyi/rDTYdahLfWdi6aXIJU3/X82dfhkdmS7XH
+	Bb0ELf7pK7jZcDemHKDKW4noR761JMpBLiQR6ku6WU18Mmo99wcvHL5nTUxmHH4F071o2EBdZL2
+	spFqCbWVC4TA==
+X-Received: by 2002:aa7:d411:0:b0:6aa:128c:36ad with SMTP id
+ 4fb4d7f45d1cf-6ba10a57b5emr9811a12.10.1795038839923; Wed, 18 Nov 2026
+ 13:53:59 -0800 (PST)
 Received: from 913411032810 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 18 Nov 2026 13:53:57 -0800
-In-Reply-To: <av2TehodwlsK6BnO@pks.im>
+ HTTPREST; Wed, 18 Nov 2026 13:53:59 -0800
+In-Reply-To: <av2TgYegy1w-Wi8t@pks.im>
 References: <pull.2287.git.1793462224.gitgitgadget@gmail.com>
- <pull.2287.v3.git.1794022836.gitgitgadget@gmail.com> <6510dddc39ca61fe1ae2f81cb8e7febd5f82d5ca.1794022836.git.gitgitgadget@gmail.com>
- <av2TehodwlsK6BnO@pks.im>
+ <pull.2287.v3.git.1794022836.gitgitgadget@gmail.com> <786964ff00368648e5bd0fd4c5889f7c105d0a51.1794022836.git.gitgitgadget@gmail.com>
+ <av2TgYegy1w-Wi8t@pks.im>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -111,10 +111,10 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 From: Ravi Mistry <rmistry@google.com>
-Date: Wed, 18 Nov 2026 13:53:57 -0800
-X-Gm-Features: AclHuK8DiXALX-cbACeZRnuakN4fYqmtKvL4E_RYBl9DEXratKmnHdbCCyS5oj0
-Message-ID: <CAF+mdify3esjp-ghiFj6uQEEwqQvOzMd0+Q9Z36BoWQGADb8tg@mail.gmail.com>
-Subject: Re: [PATCH v3 3/5] http: add http.retryStatusCodes config option
+Date: Wed, 18 Nov 2026 13:53:59 -0800
+X-Gm-Features: AclHuK-jxeKyEFKWjMuOvBC7Cvg3VWwQ9gOWii0qj3-UHRQtimWATVPM56lsMmQ
+Message-ID: <CAF+mdieq6h0UX_xfgO1yxtd-gZE2AuJT-mpE+WCKtAFO4VJzig@mail.gmail.com>
+Subject: Re: [PATCH v3 4/5] remote-curl: retry transient HTTP errors in post_rpc()
 To: Patrick Steinhardt <ps@pks.im>
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
 	Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>, 
@@ -123,20 +123,19 @@ Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Maybe the fact that Git now handles retries is a motivation for
-> providers to fix their infrastructure and instead align on one specific
-> error code here. So instead of making this configurable, can we instead
-> nudge the ecosystem in the right direction and make providers fix their
-> infra, so that it just works and users don't have to configure anything?
+> But the POST requests aren't necessarily idempotent, are they? We for
+> example also use `post_rpc()` in `push_git()` to POST data when reaching
+> out to git-receive-pack(1). I don't think we can assume that it's safe
+> to retry requests there.
+>
+> So I think we'll have to adapt this so that we only do this for some
+> request types.
 
-For rate limiting, I agree that providers should align on 429.
-502/503/504 cover different failures: reverse proxies, CDNs, and
-client-side proxies return 502/504 when a connection drops or times
-out, and servers return 503 during temporary overload or maintenance.
+This is a very good point. Retrying a git-receive-pack POST after a
+502/504 is not safe if the remote already processed the push.
 
-We also should not retry them by default because in some setups they
-could point to a permanently broken proxy or server. Keeping 429 as the
-default lets CI systems and system administrators opt in centrally via
-http.retryStatusCodes where 5xx errors are transient.
+In v4 I will restrict retries in post_rpc() to read-only services
+("git-upload-pack" and "git-upload-archive") so git-receive-pack is not
+retried, and add a test covering push.
 
 Thanks!
