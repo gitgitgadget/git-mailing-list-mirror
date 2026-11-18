@@ -1,89 +1,115 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.169
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.153
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026170;
-	b=jSAP2LS7k5L/e6BlX5nRsEXX1xU/BR0gbVqb0N57mIkeASC3FtN9AS+zXGKvSunYfXC6
-	 k1guFHllPNYqjDgttDqOyJDja1zGVdIMFnryzz6JgFrqQtv1TpqQdVmdPhxzFpd0OqUDn
-	 bwl/0xWLpztDxseGrj2Y5Z/fu565JQVpfk85g5dRRnQFUXnu6wWFer5BN0k2ny+T6Szne
-	 ufhgH9rXLQtqbjEfmFQIjpB1U0CU82Usc4p7dQJNjXHJrLAhxYPVPwNVa2X0QdbRg2m6m
-	 Fd7YtOLNlwBmkVcurvaHek6G/X23ddq7upe/wxD9Nm6vtICs29QgV/Q/vMspLXu4O8w==
+	t=1795026663;
+	b=dElUy0fJ9DUAiV8g0HfjBiLRJzhDoGp/oztR3RVbmZhaNcPUI5JeqMue/pjjU+QaGSjV
+	 Worph4BJz6sPNwtMny16BOji6Yz2iqgPS75wqC7v1ry8qJ7bO2VBAXEo8QCSEIalu4cCI
+	 q4ugQZZZkADXnzwEzFF9SvUI7HPNEX4MstBVgV0ruVjD3olw1LKo/AM/Yp/2hl/e3yajQ
+	 fDmP9FZdVZhPVTV29G9OjMuNw8yeuQbxB7rjr6TlJ5Haxxi+2ZbwIb5LUYr7j1GIY035E
+	 NCSO92jDsuu+te5j0/j+ikX2IuowYbqkEdJPoic2wwIu0wnln/ibjtUE6sz/bkGm1Vw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026170;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
-	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
-	 Cc;
-	bh=8n7lN4m/oZUwSPzvS3T+6OgISH0is1mLXjRGrDp5210=;
-	b=NvZzSJ/OO2SGR/FPzGdeF1AV1896ecCZO6JvmKLtlGeg4t7Ok9euXjuleoFoO4Gz8t/M
-	 7GnW7ADgI5fcvoJnC8TLm+wmdkaOOr4qohDuIdoTC3n4YNX8uO9rPZhqh1CR89OTxDFzr
-	 N1eX+AJf5PG2Qsv5SxT6XIrBN1jpDTZDdlmEFSB4kEmE+J65iG33Qt5eKTJZ11dr+DjJ6
-	 9OeHT5KoqkXc3iLr7jC0lf4Of/65dyQsGhxrUcBXWs7fEp+Wb5Q38xrMIW2rggvn722B3
-	 SBiEnW9gP+8kQbepl8tI3Pe4sREXRdJbO8L+1oWC8ccfs8Ah3DsJDO095/jCmUhyJNA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026663;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Subject:Date:Message-ID:User-Agent:MIME-Version:
+	 Content-Type;
+	bh=znHIppFrkT0MSzyZbJi6Y93a0+i+XXeq0QYzL3W+JNM=;
+	b=rq1f4als18nWCEz4Bgg8G7wygqPQOsMQcf3n9QhskjGlgoQg+ydQ/FLH7tQWssujmWhQ
+	 viKyRqRsEs3ZRKfmjWxllLjFHntcJbIjcG0EfkYbWAEotitM7XoeMZ05J7jW2UtZsSZpe
+	 YRKCCOGptgmddDy+zRmIXm2hZGfIMNfbx3vVw6USZ/nYDLESIfeYscg9R0/rMUB2J2G1e
+	 othU1hmg5KyfqS8Csikh7ZhT5sNP3u97300hyVrcUIN/irWxYHvIxzX2lriG1Y+OJ31mr
+	 /EVC1mwEWkkm30qMRKTQSSMBxwXZFd3+WG2VSuN44ccGWt2nUBKAMOIL0qJRNsBhDfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0xofcpQo;
-	arc=none smtp.remote-ip=209.85.160.169
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b="dVTT/P9r";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=HrTP3dWD;
+	arc=none smtp.remote-ip=103.168.172.153
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ADC1606A325
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 18:22:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5ADC1606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A0F606A32F
+	for <git@vger.kernel.org>; Wed, 18 Nov 2026 18:31:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 27A0F606A32F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0xofcpQo
-Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-55c48582654so12836151cf.0
-        for <git@vger.kernel.org>; Wed, 18 Nov 2026 10:22:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795026169; x=1795630969; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=8n7lN4m/oZUwSPzvS3T+6OgISH0is1mLXjRGrDp5210=;
-        b=0xofcpQoVyJOxooSwI/nlhfMDgX8XdG0TnqmBlU8FT4kqIlaJFQdTPS47BxabuCwL1
-         u2lmR0FPfmWkPVzIPv7X9fsgnOwR9UhLbserB5t5B/WONRaUfejHxQD50oAaiaW3vd5b
-         iodxpvfV7IJRE4gFDJHIwBoZgEo85NYkP977FLt+54IUVQ/8xGuCI+h0kjC2GsvZUL7F
-         RuQpXf9NX88tQKdQt0Psyge6KcifWrjbiezIrzHWlUrmaQWaTqcjkJgs04kse1szCAQE
-         fZgVYhFqV164fIEtPDp38N5RmjaEepxWHYJ8LXFCUupIgyRERPa9HBRiPINKEwz8in7h
-         dV3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795026169; x=1795630969;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=8n7lN4m/oZUwSPzvS3T+6OgISH0is1mLXjRGrDp5210=;
-        b=0otG2CloZ646eL4Ia7Ju0JyOMOKVGhbep3q4o2P+P+9P8TLujLcCFhhNNSwbNPogux
-         QcaI/1VeRq3yRs59N+CFJQTv2iXYIAhTLKEaKGOB3d9l4WXu4VSmA8usffgVa040orC1
-         hJrTS4eUOoi0nMBmbZb+GA/b03pfvv6s+Nxodtya+zXUpnZDWb6703hT0gWf5xVVO3Wr
-         kfvcbO1KVOc08uEwKSJMypmohj5vHGTNQuOA3SqRLjBYOYpp/bxBc1WvA2N5p/SpikUe
-         IZFFa86MNr+Y1zO2H8sADCt8OCb+2pVYT98q5jM4MyVDap8tzAXySgnLgc08FkMPWHBp
-         DP7Q==
-X-Gm-Message-State: APuU4Z9+ZZcthb1PmKNwUC0RE+b8b1fy36nBgFsIZed5g8IVbeakLthB
-	FHHhTHiTCuAUWS6+COXga2gSuEGPPIlnTgzTGaqVKbW4uApuGSG/NCS0cCrAZg==
-X-Gm-Gg: AYBFou3GC89f103QZdr+jFHjwojn5regUXqg/iKN6A1hgZPIEcWFWZD3JbzOYYm50bq
-	WmwD1j+z490y9YxR4Mp/vdD/k/S8RFwcl4arWK0SZSdOXTay1oMJ8O1NjVuyp2FzWFqFKdM4NkN
-	KDJoXopYcEmnlsx7YK2fQKtbvJgHatNXWFr9g0lNXDil9pBANmhrro3dt7pehNuOTwYbccbbA2S
-	PgQgK//Mu3vEIGjTk6tUf1z57KBA7aNHauBE58c3DfqXRBRtJymbRXeuEfwh0ESvaqVK1pMAulA
-	FXVBgFc7QlAEk7wHRnAyybz8U+i8YWQWEZiNpTfd3XbuZZVXERtzX/1scgwZ3RPvWbqURKr+Fvt
-	m92m7UMdo581Ca6idvjwqsgrSQJGvasx8znlDkwtl7sCENHdTlZWlOgFBcNiB2dPDquqaroG7Px
-	rOENhglaM5l13P2om/RDdDU3hxiHXu8Q6fkPrtl5VPAFFpabNFeAxvZ/4YEkRsPrIAxeA0P+rq6
-	wJZYh64/CpLoAMH6AyqGIocWtPLlTKlzyNPIEzyHkRtRdZsoUid1Anty0tDVVxoAkWENmr50Ywi
-	maH0p9wkfKoNTIBJwS5Ay/uZlEsMiX4=
-X-Received: by 2002:ac8:5c92:0:b0:55c:fa5a:b233 with SMTP id d75a77b69052e-55d5a62d441mr59505091cf.43.1795026169099;
-        Wed, 18 Nov 2026 10:22:49 -0800 (PST)
-Received: from [127.0.0.1] ([20.49.15.113])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-55d66c4a4e9sm5305911cf.25.2026.11.18.10.22.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2026 10:22:48 -0800 (PST)
-Message-Id: <pull.2318.git.1795026168007.gitgitgadget@gmail.com>
-From: "Maik Riechert via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 18 Nov 2026 18:22:47 +0000
-Subject: [PATCH] diff-lib: skip leading path check for fsmonitor-valid entries
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=dVTT/P9r;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=HrTP3dWD
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2E648140013D
+	for <git@vger.kernel.org>; Wed, 18 Nov 2026 13:31:02 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-08.internal (MEProxy); Wed, 18 Nov 2026 13:31:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
+	 t=1795026662; x=1795113062; bh=znHIppFrkT0MSzyZbJi6Y93a0+i+XXeq
+	0QYzL3W+JNM=; b=dVTT/P9rlFvAT/ubNHLP7G9OPPVpZovRiNaOEkvB/ad0tv06
+	n0XMDBVgQM+PLly6nbSmCbo/aDQtlyoLEgWG3NXv1Aol2Y0YxEbpADL+mD9jZuM9
+	c8NbJiEFODgUzln5lYM6qLMw3RxhzfSoDVKBQrre0T8+h9F8ynOdUEw4bTTPV9xb
+	6mfeud1LriHLoDK4sBg1jJgc6LYXZWwpq6ZPq6aWaoZSy3yCsTE5fx2BpVVlaomj
+	9x6oeH3/ZNdcccIGLD9qkrzUhAq0fBxdArxJP6cVJYA/yth9Iy7gYDHf/ZlQROER
+	5gZqdKddDUbwEmVpuXNpQmuefMqxyq1O9MeLhA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795026662; x=
+	1795113062; bh=znHIppFrkT0MSzyZbJi6Y93a0+i+XXeq0QYzL3W+JNM=; b=H
+	rTP3dWDGW6Ub7t8hQwIal5380ALBlxWjdMmuD8EqbIVz2hKUNSzOPEuxgkQSR/bI
+	HICCjr5zdQsjKHLkZFpK5fkMx+zbJq/CVVN8Z5fenUvnNXMDz45p6OPX/HzFIZO7
+	xG3gKKPWCyezuxUaM2iT8d6oi/X62PjEq7p7WXQNVB9BilOt7wY0da+QJ8yiounf
+	4n/72395KYs0O/nXgwyJG2qPlcgOObigLWpKHEXPlhV0c9lNV8aAp4HV2Ie0g649
+	ADsNzKXxwxjGtO8QNrzVPuVeAe+JxSOSJCbqHBTEgUErKrtHMhgM40ZW9anMYWvZ
+	40wfGrpLBIwXXdl5XzORA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795026662; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:e9bCGI0A8csaq3RhxnhneBTrwOqOIcMEQF9USJIwv1mJr6e
+	1yFzzR4x9iWB+nVmlD0rpIlHbB/Hzybf15nR4wFlYo2BfSAcHvPoEO8oTHUO4udq
+	UJQQva3t47aHGN589WUx77eBs250IJsXeP18OafIK6JVQd+0rj9GqGWzJM+9Tsan
+	JaLzd5UyYcO5NTiL5zuzXqavCdLHpl8F27F9HY5a0H/oKNKfeRYQnTgxepLUZks6
+	kiF1AicpX6JSJI0EPzSbdQC9N+hTaNM7wK/PLK904ZSHwQgRWT0rOipYu7P08Skp
+	9yAJzvmJ7+fEer6GlgQjovl31AX1nnPbtI18Spg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=9;
+	hn=content-type,date,feedback-id,from,message-id,mime-version,
+	subject,to,user-agent;
+Message-Instance: m=1; h=sha256:DcPyl45bzIOmd8RPOTZyLha1GmkPBb1O5liPvHcD6TY=:WADrvZR0FtILeDkjilD80mH2Dt6xtVqOGC5JAnj03lw=;
+X-ME-Sender: <xms:5u79aq2ABLUiVIGPUV37D02ZlYip4S_U35zSHJ5rjS0m5ifvsgpJ7Q>
+    <xme:5u79ajHXlZxtS8ZbBYqkohPkUoxQLB7AgZ-xtaWzrkWqddwHt5an9qgT3-gpeHjnY
+    Y3jbJj80X6hCqxcj7X6aqm88VXOTpsW4hKQQmUx_uk_pule_LViyw>
+X-ME-Received: <xmr:5u79agicl16gMVAI0f6eFn1UPp_5PUwPszoWcL60spzZk1r1dTvQ62nrcjX3N9Vt86N8XvOTmMzHHnobgA_u3g_-OKf9LH6pS-uu>
+X-ME-Proxy-Cause: dmFkZTGVWhu7yTmz1cx9HxatjL1QPJ8Mi0ZYMqDd2H8ERTrrAviCr+YNvIR5np37khoAGc
+    KCuthN9N0lmgBelCWxxUBrOEGOt4sl+ttCJaN+TLswuegiP6HQdAbC/MeraY/m0d42LS87
+    e8kU6O0Xvta4SBWi+u5cFGWUO6i9B6WwA5l0FBhhZrgVYn2OKvYMVJTvq3RF2e6lQJgcCK
+    ZtAmMDz61H2Yzh7/ZqbBo1vgUbaTqGBu8le4F5j/SSrtCJ7JjfLGb5Ncvu8Two4BQZvNwx
+    +W2XGIblwr9q7qpLHpFTVnLZ+WhvgiyIv9QVLeJbm0wx1OaRgx5UDRKgZbVWVAyvJ+NFeD
+    XwwVwgmW6qzowNbwltW6c099msunUawxx7IaMEqTtQCdEHPTbEznFxjRDklXmnBIBSnzh8
+    BkPYb29Tok6odGSHWGD9ff3m4+ZbKyIs/FFQvsh8q3ywQw0qK4626IFfrnChpmsgbCpsNP
+    +jwvv1gPoH43tGxxtciDrz1X3aQrNkz4IW6B+A40oMyh3jjs0Ddi8tHwfiilF71bNBHscD
+    /KNEBKi8Ymz40XQle87cpdiqEKmfOuYqssEo4k1zsRHOVTf3NN4r2xAtUsIe8DTppUmzLc
+    i4GvcKmojwree3mcNvoaptX4RGpnoIXxnDUTbPutOy7VX4/7ylTMvyfGTM6g
+X-ME-Proxy: <xmx:5u79am_o9mvuDQSRJk00T3Vh42wS18ttkCw_jDMrkZx3LozK1Ze81A>
+    <xmx:5u79avouDz_PXgGyaKUVXcj-vcbza2Uj54EZsHDwrF6OmaLssneN-A>
+    <xmx:5u79at-HuzWutVs4jnrGUlymV8lne5rZ4Ienf2UAEhKuJigTqedCmA>
+    <xmx:5u79arXmE9wZY6PB9AnFA6PGtOCsIVUDlEhKwqU4cxu-saIxi57TYQ>
+    <xmx:5u79alo_X4xS2fPdCrfNkdQlOSRiCDaiXsLCZlnIZwkKgDHnEu3R8Lkk>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 18 Nov 2026 13:31:01 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH] CodingGuidelines: !! is not all that exotic
+Date: Wed, 18 Nov 2026 10:31:00 -0800
+Message-ID: <xmqq33sy6lgb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,126 +119,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Josip Sokcevic <sokcevic@google.com>,
-    Maik Riechert <letmaik@outlook.com>,
-    Maik Riechert <letmaik@outlook.com>
+Content-Type: text/plain
 
-From: Maik Riechert <letmaik@outlook.com>
+Remove the clause against "clever tricks" that cites !!value that is
+a standard technique to normalize a value to 0/1 boolean.  We could
+resurrect it if we can come up with a truly exotic example that we
+would want to avoid, but this is not a good enough justification for
+this rule.
 
-Since 4f3d6d0261 (fsmonitor: skip lstat deletion check during git
-diff-index, 2021-03-17), check_removed() does not lstat() entries
-that fsmonitor says are unchanged. But it still calls
-has_symlink_leading_path() for them, which lstat()s the directories
-leading up to each path.
-
-That check is there to notice a leading directory that was replaced
-by a symlink. fsmonitor would have reported such a change, and
-refresh_fsmonitor() would have cleared CE_FSMONITOR_VALID for every
-entry below it, so we would not get here. preload_index() already
-trusts the flag this way and skips these entries altogether.
-
-The S_ISDIR() check that follows cannot trigger either: the mode
-comes from the index, and gitlinks are never marked valid.
-
-So return as soon as fake_lstat() has filled in the stat data.
-
-The first new test checks the shortcut itself by replacing a parent
-directory with a symlink without telling fsmonitor. The other two make
-sure we still notice when fsmonitor does report that directory, with
-and without a trailing slash, since nothing else checks for it now.
-
-On Linux, with 100,000 files (ten per directory), a hook that
-reports nothing and a warm cache, "git diff HEAD" goes from 57ms to
-26ms.
-
-Signed-off-by: Maik Riechert <letmaik@outlook.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-    diff-lib: skip leading path check for fsmonitor-valid entries
+ * I think we saw a good example that !! was used in a recent review
+   thread, and the idea to remove this rule was floated back then,
+   but without following through.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2318%2Fletmaik%2Fdiff-lib-fsmonitor-leading-path-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2318/letmaik/diff-lib-fsmonitor-leading-path-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2318
+ Documentation/CodingGuidelines | 4 ----
+ 1 file changed, 4 deletions(-)
 
- diff-lib.c                  |  8 +++----
- t/t7519-status-fsmonitor.sh | 44 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 48 insertions(+), 4 deletions(-)
-
-diff --git a/diff-lib.c b/diff-lib.c
-index 086476bd77..3730e04149 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -43,10 +43,10 @@ static int check_removed(const struct cache_entry *ce, struct stat *st)
- {
- 	int stat_err;
+diff --git c/Documentation/CodingGuidelines w/Documentation/CodingGuidelines
+index 3c8d6c7dd3..4bfa615bac 100644
+--- c/Documentation/CodingGuidelines
++++ w/Documentation/CodingGuidelines
+@@ -522,10 +522,6 @@ For C programs:
+ 	    that_is_used_in + a_very_long_expression) {
+ 		...
  
--	if (!(ce->ce_flags & CE_FSMONITOR_VALID))
--		stat_err = lstat(ce->name, st);
--	else
--		stat_err = fake_lstat(ce, st);
-+	if (ce->ce_flags & CE_FSMONITOR_VALID)
-+		return fake_lstat(ce, st);
-+
-+	stat_err = lstat(ce->name, st);
- 	if (stat_err < 0) {
- 		if (!is_missing_file_error(errno))
- 			return -1;
-diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
-index 93973ed25a..6c9df9f333 100755
---- a/t/t7519-status-fsmonitor.sh
-+++ b/t/t7519-status-fsmonitor.sh
-@@ -336,6 +336,50 @@ do
- 	done
- done
- 
-+# Create a repository whose only entry, dir1/tracked, is marked valid
-+# by an fsmonitor hook that reports no changes, then replace dir1 with
-+# a symlink to a directory that has the same contents.
-+setup_symlinked_leading_dir () {
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	mkdir repo/dir1 &&
-+	: >repo/dir1/tracked &&
-+	git -C repo add dir1/tracked &&
-+	git -C repo commit -m initial &&
-+	test_hook -C repo --setup fsmonitor-test <<-\EOF &&
-+	printf "last_update_token\0"
-+	EOF
-+	git -C repo config core.fsmonitor .git/hooks/fsmonitor-test &&
-+	git -C repo update-index --refresh --force-write-index &&
-+	echo "h dir1/tracked" >expect &&
-+	git -C repo ls-files -f >actual &&
-+	test_cmp expect actual &&
-+	mv repo/dir1 repo/dir2 &&
-+	ln -s dir2 repo/dir1
-+}
-+
-+# Like "status" above, diff-index should trust fsmonitor and not look
-+# for symlinks in leading directories that it was not told about.
-+test_expect_success SYMLINKS "diff-index doesn't detect unreported symlinked directories" '
-+	setup_symlinked_leading_dir &&
-+	git -C repo diff-index --name-status HEAD >actual &&
-+	test_must_be_empty actual
-+'
-+
-+for report in dir1 dir1/
-+do
-+	test_expect_success SYMLINKS "diff-index detects symlinked directory reported as $report" '
-+		setup_symlinked_leading_dir &&
-+		test_hook -C repo --clobber fsmonitor-test <<-EOF &&
-+		printf "last_update_token\0"
-+		printf "$report\0"
-+		EOF
-+		printf "D\tdir1/tracked\n" >expect &&
-+		git -C repo diff-index --name-status HEAD >actual &&
-+		test_cmp expect actual
-+	'
-+done
-+
- # test that splitting the index doesn't interfere
- test_expect_success 'splitting the index results in the same state' '
- 	write_integration_script &&
-
-base-commit: e1ec09b23c8e0deb21a0b95ac5996422277395d4
--- 
-gitgitgadget
+- - Some clever tricks, like using the !! operator with arithmetic
+-   constructs, can be extremely confusing to others.  Avoid them,
+-   unless there is a compelling reason to use them.
+-
+  - Use the API.  No, really.  We have a strbuf (variable length
+    string), several arrays with the ALLOC_GROW() macro, a
+    string_list for sorted string lists, a hash map (mapping struct
