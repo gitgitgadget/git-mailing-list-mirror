@@ -1,96 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.178
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028897;
-	b=xh4xj6+lRNaXSn25W2s32ihTiAMbpdmsmFIKSyWoy9Q7DXdVeGLXH7sFZBdFo5qTnJcY
-	 ltEz+DZuzkdJr/a9jj39CDyVlkTL0ZTMrK0wEk9QuIHPcG6fHLYIpMTBSGnBq9SYasxxM
-	 xmU+epr7/DAgSEMHrwMZyphilcmypxLLpNbtfOTXATErQ2T4/2u76R7XYNDyWJRkQuipl
-	 egwamHKg90pMg0RwE6DayKhbhSlGunhS6GiGGGRXy5ry0PG8yBoddxkn0gjqKqqgGRiLg
-	 FN/76Dho4QPzEn2idXDrFtqF++V58osOmnhAIe6SJ1NUnyXU6N9hgbM45LbyIllKeIg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028897;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.48
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795029168;
+	b=HnZGBnLswVSwvuqSZr7IsCW4CadqJProyAHoVrexCqSQx+IDdq1lQHkDiON/jNLIOIDS
+	 jMhzB+QupLntskcIz0/yDtYfc6il95IvyPRHYRIrG/0lqcVjl9bvffqP7KdIpkreWyZqm
+	 LvPYCYUPtzJ1BIhkTyZXe34OMYs2f/08QFFDccSIIVwzagKvlPq0/l3Hv/oyODlK7v7Jc
+	 VN3nKpLJRGIV5qtXjJewslbTAZHIx6ajRMKIGqxC/ln1Nq/ZTk/wB3bdUTk+SORoCK9l2
+	 SIOuoV5DKvdVHVE3uIVq7REDHoDkB82c38Ln2dJtYwgApWaDPuaie/ZfRbibEHyuxsA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029168;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=qwp6PGSlhtBocTScbIJcs+9ZhJjGrMenbMoU4Cq/cK4=;
-	b=5ENnVkA4aFuVZ8SBGBHiSmX/JrzTb56CrxEVtmJ+yZcndhuLFLUY25lzKfH3vXU0+kyG
-	 15P7JaoxUlxX5y+tVP1OQJGY1H3sru5ZmkD/iVp4pa/ill5+X6cq55haS+45U41Nvb/vX
-	 Gn77Gjh22aFaL0RMJm9kGVaiFEeu3bRYUubB+Gf3OZfEWOqG7NrPYosfAd9fV1AgbU7zB
-	 Y+73tu5o4o+JEi5ztbJ2sRYnQsSXZok3T3CGquQFykvTVkHJvpuzhclRzGNPQafJVlucO
-	 fzk5eApxeQ4Smthjj0rhri8Cnur2OEclh/KFavFlrHTvyBgbIB1eqZb6G0d6JHKdSCA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=nIs7+J8M3MhXC7R2humMBIyX+dtONEuMEcs0XKCh4wo=;
+	b=J5vXhETzOAY8oEH8rLXDyG91Ghh/5+51xOo/BxhzLZhS41YB7DBp110FSR8yVW/PEUpC
+	 u1q/cqb1WcuJjs0KNskBwJ1uRh/eKJn945wbEW/GmJlXXboGW8YMbCJap1FFgBf4BEIZ5
+	 ogdJeaAEAuEBOhFPhbTRihnqWiop7qh8IyZzl9/JLep+9lWpVQUOF2S+ntCCnQiwCZCEf
+	 hncAoc7QPnOSBP8R/cn7mMg5ugqlMPWeAAIFR0RwaqGogUUdzNGva77qRdEfKoGIHDS/Q
+	 wqXbntg47/ZPm4A8VgOJsjRvJ7CyP1uadjAOpL0+5WYbcIMz3eqci/SCzeN7MwYTT2w==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="W/x+jrL+";
-	arc=none smtp.remote-ip=74.125.82.178
-Received: from mail-dy1-f178.google.com (mail-dy1-f178.google.com [74.125.82.178])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Q8D+KP1U;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.48
+Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469E060A2600
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 19:08:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 469E060A2600
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A5B606A338
+	for <git@vger.kernel.org>; Wed, 18 Nov 2026 19:12:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D2A5B606A338
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=W/x+jrL+
-Received: by mail-dy1-f178.google.com with SMTP id 5a478bee46e88-382ecd5cf2cso155108eec.1
-        for <git@vger.kernel.org>; Wed, 18 Nov 2026 11:08:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Q8D+KP1U
+Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-702fd86d674so959088eaf.2
+        for <git@vger.kernel.org>; Wed, 18 Nov 2026 11:12:47 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795029167; cv=none;
+        d=google.com; s=arc-20260327;
+        b=rEOvGwJ5HhmRRiREr+oScrZKZAVxv8e2F7m0o6cpUK5cBBw8DTX6FBRyl3Se5ccdSF
+         RSfsGKyLnit8Ofx6b76XzkPoIEh1TAzM3JuY7MkfakA+v+5CwGXGxYydbbobgvin1kik
+         iDTRmXQgtN+dFLjq2aJaslf39mVyyCAbvivkGMAS19Q9mAfatstt1wgnXtxD6fqv8ZHc
+         6lN0hgQZ60Uo6SUuMYYJQhbzIvX1irc9qtfcUXSPuCdaVAXg2oMhoocWukGZNjzRE4pr
+         KcjmWU5918sMGaieJtenG46+1cVrr5d7+JDAzUqd6koOn6i4UeAHgklva0b6Q+xJ7Vkk
+         FP+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=nIs7+J8M3MhXC7R2humMBIyX+dtONEuMEcs0XKCh4wo=;
+        fh=XktqL/MyGiXPdCiIKDDtLLe8CLkSeKXGqq03+MB/JO8=;
+        b=NBjrnosU+TgXgRcttCGSMOsbs+oKMcsA2KIey/0x7Xt8jBd6WN7FdpJyBdiUhWuTv7
+         WuLRStpLbKf/5HXkcdsR4dCSVxu4Wi3NgQSCPtJgVaVFDsAr80kotfqfXpN/8ePpwM1x
+         Qe3b7pzlflCQhIwJFJFXIAKaNAAqqFCyiNa/WYGO01vd7yDAf+0oRj+UpN4eXfWAoATS
+         26G+MUw6qJSN7ZXyQPKKQHhlg+hdFsmuj3DSh3d/VkfroM6P99mKndt8C1Br9V/nnj37
+         JF0XlfjBAqqyuK+s1JLbOUn0kjQOuahm4pU6he9i5CE5Jrn98eu+NPDzWOinmj8UVkkT
+         2G2g==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795028894; x=1795633694; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=qwp6PGSlhtBocTScbIJcs+9ZhJjGrMenbMoU4Cq/cK4=;
-        b=W/x+jrL+kdOt9bSHYPhIyL68Nm12Hexg3ZvnApCwR6LyV1zO7izEv7sasLvNI1SOa8
-         7rVTfpb7Pl5KV3aWFB9pA+OltEeQbXEYmKaEzvnD+cAPZ8RczJQO3PguZbPgvPK/z2iY
-         T3XgUJWLlTwTgg2jAj0ss4CA1Zf/6mkBCdeJE2rTo07HGsfFN2rB0C69MgWNv+zFs3ag
-         Loo+lUKD/8+EAiCIupCvHipY6gDapzsy1MSdXcSVKam5vI/lO1Uga7oWSt8PcCYrpYNa
-         l5DafQTvqS4f/PZutwcqjT10QF5gMq1ZzPjBogw0ivPBfzJujyKhtMDSGjnqXkZmHTuJ
-         6U5g==
+        d=gmail.com; s=20260707; t=1795029167; x=1795633967; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=nIs7+J8M3MhXC7R2humMBIyX+dtONEuMEcs0XKCh4wo=;
+        b=Q8D+KP1U2bB7xL57IJ6WQKUDl9z6UAeIWrzGoYdrhNXV6sS94sBFp76GZ3h23mb/J5
+         rBI79Dikk+hg60brLmTJSJXMGP+Ul7Ak0hNKNTCDHo0iSOiuOs+kMezgMRWQdNRlufVP
+         Rl7EbF8Ml3ceIEK/WHc6W+WYBVZSREq6hCv1P+uWPF8Z8Drc0dWKML2DdbtkEvtJiGUi
+         /gHwDQ0aVvpVGvzlsGlhfSBVQP64dvp9K+KTKVRNlAZIQoL6aXojLqGHFVAU2Pe+W+x0
+         R/bOFpeO4sq9MIA8qtVLs9UcuqN4SbgbO/Dhvu6s+mnXzG7jm6l1///LCF/dmLVxI3pO
+         XnPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795028894; x=1795633694;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=qwp6PGSlhtBocTScbIJcs+9ZhJjGrMenbMoU4Cq/cK4=;
-        b=yMTDWEHQxhSdgdmlYomJ1fCiUNNALrGG7d9TM0ExfpMnw9IPSMiDIt2r+T5fsDZ/0f
-         rBq//KVpbXsOnIVeAcvVnvZZPoAuykcWW8uhwNUYGcGjaYs2ahgtpvgPxdilxn86jHm1
-         XA04tO3MfMtprS/WFJbHb6M4NDs+wagP7nF03HVPIdMitQ0T/0S5RKyLE8gDr6c19JDM
-         QRDLo9cXiVvcVL7FqlvJQoi8myf99pGRz4+MMTHbFnnVhXAC+c9rJw+H8R09oJH6r8ES
-         CpjGrJ9byRcua9eYa++Xu0fFPdtaY78mRzhte8eXyAySe6gyBzcRCwz9Y6wyPVYOSj7I
-         +reg==
-X-Gm-Message-State: APuU4Z80YId4v39H82HxffEWdPLnO/gZ3xE+mw4wNVYtxrkReMhTWvMB
-	BqPK3L7bFB5uzcJvtJrPjAVFON4s+3wcshgBwzF8/q1We5nFimf91m/Aa74QTA==
-X-Gm-Gg: AZFdTZcx5zNPaDwxIYI6AAVHoGRui/zrZOrzXBxj7ZYyjTNIFA7M7MoQdvJ3GVAf6MB
-	VTvrS1rtfwlkXcdn5vUDNFCgRFFIr/NIM4RoZrn/bU/He04zk+gvP1B/eYrDFfeCofUiF+c/Rq+
-	Ty+JeKeIPaGUWOIdaIZ7Hixw3KkVwdwvc1JKdz/gzLpjxCQ4XhGHMkNv3gG3L0CI9qVdWvpXyx7
-	Cy/grNWRHs6VWj4bj1YsH7jAwaHQGiiIYO2suCPmS7w+j2MEojg5EWxTc/x1mS2+akbah6gkhUd
-	lD+cM3Uy6kDeuobXlFdbRyjARaA/XYph7N2vKw4TK80lo8zLfd02zKPSbRQ2Z7v/Tc2k4DyK0EO
-	MekzdW4LYaICHuOhoJcWYeBbH8o+uIMa/jq08jY+j+n1UGjIKesjIjIQWHSdE3115LB17kDapXB
-	hVc++ArQJpkkcLVeagAQnG2BT4Ff6WJ0benCVlE02nSGBFVbl2A/IzVsc5Niraif7f8v6J+uJF+
-	X1myJIUbGCeI26R459MrQ0zRqokynmyRBrTS9rD10UTz4VjRfadFRKNrgR6v7chv2XqxmH7rE8A
-	Ju5twY4tK2yZ7uWXGuF721V/iMa48XZgwUmkUwpQyroHvXMYGw==
-X-Received: by 2002:a05:7300:b28:b0:369:f17d:efb with SMTP id 5a478bee46e88-383ee12cebdmr296626eec.10.1795028894160;
-        Wed, 18 Nov 2026 11:08:14 -0800 (PST)
-Received: from HP-V15.xu.edu.in ([125.22.10.135])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-382a680032dsm9065155eec.10.2026.11.18.11.08.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2026 11:08:13 -0800 (PST)
-From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	mail@thomasbachem.com,
-	ps@pks.im,
-	ttaylorr@openai.com,
-	Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Subject: [PATCH v4 2/2] maintenance: trace lock acquisition failures
-Date: Wed, 18 Nov 2026 19:07:35 +0000
-Message-ID: <20261118190735.3928-3-pushkarkumarsingh1970@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261118190735.3928-1-pushkarkumarsingh1970@gmail.com>
-References: <20261104173422.20725-1-pushkarkumarsingh1970@gmail.com>
- <20261118190735.3928-1-pushkarkumarsingh1970@gmail.com>
+        d=1e100.net; s=20260707; t=1795029167; x=1795633967;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=nIs7+J8M3MhXC7R2humMBIyX+dtONEuMEcs0XKCh4wo=;
+        b=jJUxo6N/uL/mDGfGrqSu1ID8lm/zGVWg+hsyp4MJWnBmQQQP783MT1681+GQVSdBj9
+         ekgui8sd6t/4exseAJLo+/fcuLiOkPcqLG+2/jISnOXAzqG2dyaFt5FEUs7NpQoShAAe
+         aQKYTsYvt553XEXbUnWQxucqjdpToUm2L8h0o2nF4OTX4GTVyJf1rIkaZC06wQAdma75
+         izWkmh/SA53Hh8veoLxBk+7YoXsuQy/68DAPvUdCXQO4acQxDtUnm3u7wbNGYHbI9UVN
+         maiZbJRx7H4Cuu0rEOLGBGY9gv3/oziXJkXQ1EjaVP6h/jvjHeI2fil+2k+AWjtp3lEr
+         gOFg==
+X-Forwarded-Encrypted: i=1; AL+hErFerfa/7zJ3DdlEeNWIO/ImUQVplNUDQ7D8FO1S64GRBlOIfWJdXvtumsgBiC7n3vD/lfk=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/YTzTB0sDkwbw8gkrYpKGE7z4q45olzezanHtysBakBK2/lGct
+	6Mxoc84Xqt/gMVhNFC6bU+7GEl3HLPxiwkCLepavw9TkwACloMUkBB6Bo0TVopqmloH2bECYh5H
+	OUyvA52CA1fKE15RuYZZ3Mwb+A6oJDaC0y0us
+X-Gm-Gg: AYBFou2wUO5oB75qnpZTKXGGGTlNNOlnLIysTNQi0RzBejh+Ze9cLm1VAOYVOo/u+5b
+	uY/u/V6sTKvZtdLDMRfNABqfapu2DawHTyjFSpJz0vowXgk1tGGC+jkOauHZAZ3HICPj8zNZrwo
+	alNQ3305D1hjp+GsN2aUmWwX5etFStDL+uUcznqwehkPebLwxxhcvkfThFGlrKVIucy6IbWhWkL
+	5bm94nfYQmH1yCo6TOZIV5X8vUfm6ZtS1WtNQSfjcf35nh8/G30UUZLUoNF2ui5h1z9MIdDj5V9
+	FoP89av/6Vv9Qo9Rx+dunLKYjKSEg75N4aOkB4+rqZuNcTnJF+KjEJeINBl8c4/B16bgrXPGqSn
+	J4R3IEehiAQT+Mkd+GLi6AOwv50I7ScVvglQ=
+X-Received: by 2002:a05:6820:16a4:b0:71a:d76b:fb33 with SMTP id
+ 006d021491bc7-71b1826ce1emr2427460eaf.8.1795029166612; Wed, 18 Nov 2026
+ 11:12:46 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -100,80 +103,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <xmqqmrr7fllq.fsf@gitster.g> <xmqqqzgjcjes.fsf@gitster.g>
+ <CAHWeT-Zt=1MjD=fbOiAiQtb28Q4DAR_wF12iymXmeXzGyyLgbQ@mail.gmail.com>
+ <xmqq33szavmy.fsf@gitster.g> <CAHWeT-ZcOqm9PXzM5W18+ktJ4gBdPNyx+g_2ZCaW25ufKH4g5A@mail.gmail.com>
+ <ghwlqak2j9.fsf@gouders.net> <CAHWeT-Yh8yTnG7rLjvO+XBtU=bZHJ3WWoQQsPfvJO013P2GSPA@mail.gmail.com>
+ <ghik1uassi.fsf@gouders.net>
+In-Reply-To: <ghik1uassi.fsf@gouders.net>
+From: Andy Koppe <andy.koppe@gmail.com>
+Date: Wed, 18 Nov 2026 19:12:34 +0000
+X-Gm-Features: AclHuK8y3FFGl9wM8RErK1obSJ7hbinM9335_LyNldSVTDS7sNLyMADIyiJdSOc
+Message-ID: <CAHWeT-ZjZHFE1BhRSwv6cvK4=rk0ZXNak8uG1y75Pgy+vNVQdQ@mail.gmail.com>
+Subject: Re: [PATCH v2] utf8: add display_mode_esc_sequence_len_counted()
+To: Dirk Gouders <dirk@gouders.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-When automatic or scheduled maintenance fails to acquire the
-maintenance lock, emit a Trace2 data event describing the reason
-for the failure.
+Dirk Gouders wrote:
+>
+> On Wed, Nov 18 2026, Andy Koppe wrote:
 
-The event uses the "maintenance" category and "lock/skip" key,
-with the OS error reported via strerror(err).
+> >> And as far as I know, we would need an FSM to identify valid sequences
+> >> if we are going to allow colons.
+>
+> > No. The parameter field can be any mix of digits, colons and
+> > semicolons.  Semicolons separate parameters, colons separate
+> > subparameters, and individual (sub)parameters can be empty, which is
+> > equivalent to zero. If the field consists of nothing but colons,
+> > that's one parameter with multiple empty subparameters.
+>
+> My statement was a bit misleading, because
+> display_mode_esc_sequence_len() already is an FSM
+> accepting the language "\033\[[0-9;]+m".  My concern was that I doubt
+> that simply adding ":" to the alphabet and as valid input to the state
+> "parameter"  (without introducing one or more new states) would still
+> let it accept only valid SGR sequences.
 
-This makes it easier to identify cases where automatic or
-scheduled maintenance is repeatedly skipped due to lock
-acquisition failures.
+"\033\[[0-9:;]*m" is the complete regex for SGRs. (Of course, it's not
+that simple if you wanted to actually collect the (sub)parameter
+values, but git doesn't need to.)
 
-Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
----
- builtin/gc.c           |  4 ++++
- t/t7900-maintenance.sh | 29 +++++++++++++++++++++++++++++
- 2 files changed, 33 insertions(+)
+> It seems I can learn something: is "\033[:;m" a valid SGR sequence?
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index d423b68cce..32d6f9c473 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1413,6 +1413,10 @@ static int maintenance_run_tasks(struct maintenance_run_opts *opts,
- 		 * another scheduled run is already running. Do not
- 		 * report an error in either case.
- 		 */
-+		if (opts->auto_flag || opts->schedule)
-+			trace2_data_string("maintenance", r, "lock/skip",
-+					   strerror(err));
-+
- 		if (!opts->quiet) {
- 			struct strbuf buf = STRBUF_INIT;
- 
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 4e519e4a5d..959c99a51f 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -423,6 +423,35 @@ test_expect_success 'scheduled maintenance skips with existing lock' '
- 	test_path_is_file .git/objects/maintenance.lock
- '
- 
-+test_expect_success 'auto maintenance traces existing lock' '
-+	test_when_finished "rm -f trace.txt .git/objects/maintenance.lock" &&
-+	: >.git/objects/maintenance.lock &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
-+		git maintenance run --auto --quiet &&
-+	test_trace2_data maintenance lock/skip "File exists" <trace.txt &&
-+	test_path_is_file .git/objects/maintenance.lock
-+'
-+
-+test_expect_success 'scheduled maintenance traces existing lock' '
-+	test_when_finished "rm -f trace.txt err .git/objects/maintenance.lock" &&
-+	: >.git/objects/maintenance.lock &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
-+		git maintenance run --schedule=hourly 2>err &&
-+	test_must_be_empty err &&
-+	test_trace2_data maintenance lock/skip "File exists" <trace.txt &&
-+	test_path_is_file .git/objects/maintenance.lock
-+'
-+
-+test_expect_success 'manual maintenance does not trace lock/skip' '
-+	test_when_finished "rm -f trace.txt err .git/objects/maintenance.lock" &&
-+	: >.git/objects/maintenance.lock &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
-+		test_must_fail git maintenance run --quiet 2>err &&
-+	test_must_be_empty err &&
-+	! grep -e "\"category\":\"maintenance\",\"key\":\"lock/skip\"" trace.txt &&
-+	test_path_is_file .git/objects/maintenance.lock
-+'
-+
- test_expect_success 'maintenance.loose-objects.auto' '
- 	git repack -adk &&
- 	GIT_TRACE2_EVENT="$(pwd)/trace-lo1.txt" \
--- 
-2.53.0
+Yep. That's two parameters, with the first one consisting of two empty
+subparameters, and the second one an empty parameter.
 
+> But, such a discussion is difficult without defining what language you
+> want to accept.  I guess the two links were meant as a definition and I
+> have to confess I didn't yet read them.
+
+To be fair, ECMA-48 isn't the most readable, but once you realise that
+3/0 stands for 0x30 (aka '0') and 3/11 for 0x3B (aka ';'), it's not
+too bad.
+
+Andy
