@@ -1,125 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.138
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795010997;
-	b=glEaAjeNZYHYOlPoJRg6kE2e9nrfcMk4OQ/90iG5iAT10c9T1uP0vKhEdAJo7k6LoNy0
-	 qT5TsStQpP75NMyGlSgSN0ZOuqhxFwxAFqKMgc4/iJQRJaKwFEpnAtfndrjl8RP3JAV63
-	 xb1sCPt9T5Ol5eQ6tnziXX2Ruh/SH0D5cvdcVPIs9ZE9QLkkM32P85Aku2dIOvmbTbpCV
-	 MIyewiAGSv1QjpEPdaCN2aW1iow7znPF5DNIz91kRFX5/rZb1vibB/nN4Z0cYr/Wn+3Ai
-	 VZBVeo3erv+CD/Ffs61AEH2tvV6fyfCDytQcY10LZKUZeEDFGEmKckobT3Dh65Ky87Q==
+	t=1795016071;
+	b=sIbrwDyDtjn3puRG/DAUriEEo+mThh6bzpPhts7wxuji3C8+cf6ru6kvjPD8yrzFyIhy
+	 uHpszQomEUkxTZeXC5bMOOIGxhtIKOlqxNxnY5xBZ30KTYr93Uf35GX8vJK0YSMKkwGTQ
+	 sj+M32F3iLMoRZrScYsPOzR2ni5/LxgXjB3qJP/hCcWUhi/WzlDCXhOjGAPP+6WYj79oH
+	 Xyv3rw0WJH6Cdx2tWPgNTC7wyfXh/THWSSydpE9NwqsebESiVWE2+jIl9AsUSCxIS9HJ/
+	 RYR1tlbfoVqbbOgNkCSyi7TOYGmnnXIXmRpESPV5n0nIs9B/U5owamRREaTnQNH3TEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795010997;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=Sfs5xZ4tNr4lf1oD4rfiMznEWR5lVaXlc1PXmJgDCSw=;
-	b=c3l89YglB/DD5ZIrSqt28oiztQqivbDJuIEAmCl5WcasQC9ugutFA7bWNSvoOlPXoc/G
-	 nQxVq3Ly9C6u08YuGu42i7XwrudBb0rdBHZvE+a2i19oJK7Cb4NhNr4dNlISFArE/q0n0
-	 KLWWSC5PYg3B3ydIfEyWTlFg9dPSziRFjEs75QAQiVEPyXkbtPWvyvKSdVMM7LirBpzaX
-	 R+6H9sdiYDVkTMtCtfE0BL7WqYH2fF0+F/XI2C6JFx88KVOebn6GOcjC3w/bch+LWLaia
-	 By9sMmtH1E4A8n/a6IWsZ7BgmPxTI9IZSyYNrLvAgRLIUeqdm3LWpJIete2V0TqWDEA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016071;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:From:To:Subject:In-Reply-To:References:
+	 Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=wKrzVBdXSaduxd0+Iz9y/xvZswMIITp1y5iK0rMAe1Y=;
+	b=tSdVmVGmJa6jUJwjD5LVcpID6QUCTU7+uhhvLJ5Icc3UTv5nylY4M+dNEIq188/HGP5B
+	 uE8esDdclVwfobaqvzXPScXeGMeWUQzpvgrOfKWiY9YGutXlgRBaM1umzUPRzTh6sLUJD
+	 UAh77HIngJkaOBiAJ6SUNBo6jSi/1IJZplHeHvWrDhzU/RgjlXhfj+DzM/pVkW75sQzbN
+	 buClE+WOWAPcDMSqUy2yGPXBVIzC8JcmBxoll8y8W5cAMfDNFVUR11Daf+uiCp8BQl1fI
+	 fvOo/uCVIuIIf8S3MHkPAJD+PovQIPwTYKXYcMX5EY4u2Xa8L2oaEpknfO641iHvqWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=e5h8pOYK;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=geqP5DAO;
-	arc=none smtp.remote-ip=103.168.172.151
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=iotcl.com;
+	spf=fail smtp.mailfrom=iotcl.com;
+	dkim=pass header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=KKPihBjy;
+	arc=none smtp.remote-ip=95.215.58.138
+Received: from mta1.migadu.com (out-138.mta1.migadu.com [95.215.58.138])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E8260A2621
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 14:09:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 25E8260A2621
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E85606A330
+	for <git@vger.kernel.org>; Wed, 18 Nov 2026 15:34:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C6E85606A330
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=e5h8pOYK;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=geqP5DAO
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5164AEC0B00
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 09:09:56 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Wed, 18 Nov 2026 09:09:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1795010996; x=1795097396; bh=Sfs5xZ4tNr
-	4lf1oD4rfiMznEWR5lVaXlc1PXmJgDCSw=; b=e5h8pOYKerSNoYSp81/JpjK+T+
-	+zAZczmZUyFsg6K7pdAcCZX/5vWUkLFSWwxsaPSkTX6IIHHb5osK9vpdW9QdrYtN
-	slU53tA9LR2+SC/pN9OcgGX+YeJcJKjyQWwjtRwJMtfui7+t1tsyePOzB+iHRhcI
-	7p2BKadWVmraMjdFvbrJBMNzSGsBfwWuKUvi6NX0LsvkPa5FG2aqS19D1/JMJGKC
-	zdS7emjhqr3YD4SdT7K/BJlvPEyQHqcQjpUa8eHVKCC0XJzwpUnO1Y4BdpgNxvA7
-	pwHoq9zRLCjroP5IIiC14KYvSpp6W1LAMYnsXRGaPdZuxHc5GUDkkfcNRMPQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795010996; x=1795097396; bh=Sfs5xZ4tNr4lf1oD4rfiMznEWR5lVaXlc1P
-	XmJgDCSw=; b=geqP5DAOaBEHh2dJ24AccJcnqSbyzxFQrJj4kilBF4ZhBL/MvgK
-	gLtVxeHWewDn0O8IqVKRpfZDhvXnlmGlUA8K+sJxTThH6yMWVg+a63/1gn4+0q38
-	AUXamQ1pRge4X0KAvGFSBVd9x/PovVJ/kgyGR69Xex3trXFrCFTfn51qyn2vqKhK
-	2YzmtR9d+oAA5ZOhhtaaQsI3j5Xym04+pHwxB5r/2W7nNNreA8WgJXqhQLta6KXL
-	lny6ejSQWke7zNsXj9/ik/OmKc18x48duTojyKb9Zj86ortG69Tf0waDU3CR4bjK
-	kI4fSMcVC5YPqreaCm3udNYk/GS9SqFRMcw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795010996; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:CsWTqh9vFaa8z5Og4xXddFA/68pYDoZH3tCMToy49mTH65L
-	KDTZn31yaqZIw7Df1ibv/oMbOMPe0jzchV6V2Z2D8HrBpV2FvR+NzUgn5FkZ9QBe
-	nskt53RXWvi0oAYwCCWmiYIOx4hx50hTPFHIfQJZaviRSz+Zpk/JJIcL/l1crIVd
-	4F7EMzZsG1dCMXuXYu0VSb6yzL9epKVVkYrsdGkQAJpjONfM5RjOff4vnyVKJ26a
-	IiscCNVoLYZ+DvC6FSzDdE/YpNOZf2uur7cEh8PK4ucjrFINhMUqSr96cKvGBXNo
-	ZH45O1BZN34PBLyWatynANAxkXOn/g9FpB/q5tw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:sPDesCO5tCpjuC+nwOBL2AKe/thaFxwhYDHYTuAYDc0=:+w+GeipWP5+/EZItDTh9v2ImprwuF6NaKr+5WrMAK1I=;
-X-ME-Sender: <xms:tLH9amD4O_Dd52vxeBZnSiZkmmfSlpyAjhGEfg6hdC2yeL0KfKo__Q>
-    <xme:tLH9anjBXcYSBpLvX3sVqRe7ne7m0sVix8qmt5R9JQ0mysWmwnCi-bSutsLVYH6G7
-    x1OFvyDE3sM0Fv8JEiFgzoePh2ZvXFGYrgwVLtTbO684zqqqDFuW5n4>
-X-ME-Received: <xmr:tLH9auk9R4q8jYvYpK6YQftIZo6cvG0urG2VWXNAUkr_XCxyON83jA>
-X-ME-Proxy-Cause: dmFkZTEqfIEQ/9Eq6adTzWUpBsRIjiEQmgF0LXw0ElBUKrPLueKPwYFPp923R+EAITdCxM
-    S0C8gPoBurgCineGoIffVvDxK6Ndcw46nV07m4y8YSbVRO28oyxqyRsTlDJliml0XyWyD7
-    T3N/V8isoP1AMd8aGOBr8QZghtFBLsJ8mgqDdU+Guy50rGQ/GpBCOkxDM5Pb7N3GDc/Odt
-    Oicfb5/Q3h3c429j8tyPhwmEwYZlq2Urn04afl7WbGhYC+qWHFPmduzKUGNXMpybygrQ/F
-    WedrOJ/ugSdR4GZI/XmQ0J2blrW95YcuhkcgUw1j8LBkRs7xU0sRI0f75y0B781GLC1hpW
-    +VfGKUmrXC7nKt63ybpyxCLgaAplSxUwr8GysWkjQEIegTfdmVH8muRom7hIX6ctaFfANA
-    /mU7qt9AmG34/0lxSFQH7d4GZ3o3B9XPzemhXBD77M8GbrePRbXFBb0ALpj9EzrgVhX+UF
-    7nfZhTyJVkQIC/WeDg9zDYd/vctaaVDlJjWyFvkkdLYRBq1SPS2cx+RMfyYJIzy4HodEWW
-    yoevpS4wI37qu7Lynf5cA/S/+pK/wTOQ3RklynJEjsPHC7RRdoIpg5T7IiB6BAmJHRwisW
-    Ryq4EGruk8SusDC+OmHtfeydZuGrXc+do+I2PHpSos9L9EsKTtoKv5CTjfGA
-X-ME-Proxy: <xmx:tLH9ajrA4NsCzxAkg55ey1tf2S6PDTfFHR5yOJolxK3W4ogqJPEI_A>
-    <xmx:tLH9anEqH7r84NJ-B-AMiT1z8Y-X3IU-cd0YdZ97_OEkMqB-78vAvg>
-    <xmx:tLH9avzlKKxLAhGGTds1S_VRr7YLudNFtamZnuMgZTqdxppg8Hbmuw>
-    <xmx:tLH9aspnRSC34D-xQU2V2KcZkOWuIV2P71NtXzJXKY6rM-47U9Y0mg>
-    <xmx:tLH9amGBoq1GCHvq9rjVBPBDVE7yOSlRY00Ooc6JhevNtDBihSNsa7OO>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Nov 2026 09:09:55 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d49baabd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 18 Nov 2026 14:09:54 +0000 (UTC)
-Date: Wed, 18 Nov 2026 15:09:49 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org,
-	"Mark C. Chu-Carroll" <markchucarroll@fastmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v4 00/12] builtin/rerere: convert to use subcommands
-Message-ID: <av2xrR48fdyIRwTL@pks.im>
-References: <20261027-pks-rerere-subcommands-v1-0-d836c36ce0c5@pks.im>
- <20261111-pks-rerere-subcommands-v4-0-df0c8bf79e16@pks.im>
- <xmqq7bifponx.fsf@gitster.g>
- <avq3YHb_J8Ww6Kq7@pks.im>
- <xmqqik1wn5mu.fsf@gitster.g>
- <xmqqbj7oi7fn.fsf@gitster.g>
+	dkim=pass (1024-bit key, unprotected) header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=KKPihBjy
+X-Envelope-To: git@vger.kernel.org
+DKIM-Signature: a=rsa-sha256; bh=Tgt1KQzmQxA3ABTZbiOUPwf0yfijUWtWsNJdi3OaX4Q=;
+ c=simple/simple; d=iotcl.com;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1795016067; v=1; x=1795620867;
+ b=KKPihBjycTjVkE3cZTzEwpOwsZk0cJo1kYdgshlVqVnYwDrTxiyj5Zte4XjNHf6i/xhJgFQn
+ yW1yVid/rLyUl8HG5rUzfrg8cgZ4ydKpaCD445PmLXjzGIHzmFtPUVByudsSiKw/Dqrom4Czf7v
+ /we4euH9q2sRetdaNL8u10cA=
+X-Envelope-To: git@vger.kernel.org
+Received: by mta12.migadu.com with ESMTPS id 744bf09dca42ae82;
+	Wed, 18 Nov 2026 15:34:27 +0000
+X-Mizu-Trace-ID: 744bf09dca42ae82
+X-Migadu-Flow: FLOW_OUT
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: [PATCH 2/4] refs/reftable: don't write new table when expire is
+ a no-op
+In-Reply-To: <20261118-pks-reflog-expire-performance-v1-2-10b9263566a8@pks.im>
+References: <20261118-pks-reflog-expire-performance-v1-0-10b9263566a8@pks.im>
+ <20261118-pks-reflog-expire-performance-v1-2-10b9263566a8@pks.im>
+Date: Wed, 18 Nov 2026 16:34:15 +0100
+Message-ID: <87jymajgqw.fsf@dev.null.iotcl.com.invalid>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -129,49 +64,74 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqbj7oi7fn.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 16, 2026 at 05:16:12PM -0800, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Patrick Steinhardt <ps@pks.im> writes:
-> >
-> >>> $ rungit seen rerere --skip-locked gc
-> >>> error: unknown option `skip-locked'
-> >>> usage: git rerere [--[no-]rerere-autoupdate]
-> >>> 
-> >>>     --[no-]rerere-autoupdate
-> >>>                           register clean resolutions in index
-> >>> $ rungit seen rerere gc --skip-locked
-> >>
-> >> Yes, as documented in "builtin/rerere: use `OPT_SUBCOMMAND()`.
-> >>
-> >>   Unfortunately this means that we have a backwards-incompatible change
-> >>   because we no longer accept the "--[no-]rerere-autoupdate" flag for all
-> >>   subcommands. But this was arguably broken and misleading as we ignore
-> >>   this flag for any other subcommand aynway. So we cheat a bit and simply
-> >>   call it a bug that those flags were accepted in the first place.
-> >
-> > Ah, I missed that part.
-> >
-> >> But yes, the same is true for "--skip-locked". I was expecting more
-> >> review feedback on that specific part, and was a bit surprised to get
-> >> none.
-> >
-> > OK.  Let's break it and have the users fix their scripts.
-> 
-> Having said that
-> 
->     $ rungit seen rerere unknown
->     usage: too many arguments
->     $ rungit master rerere unknown
->     usage: git rerere [clear | forget <pathspec>... | diff | status | remaining | gc]
-> 
-> the above might be a regression that is more easily spotted by
-> folks.
+Patrick Steinhardt <ps@pks.im> writes:
 
-True, will fix.
+> When executing `git reflog expire` we may of course end up not expiring
+> any reflog entries because none of them are older than "gc.reflogExpire"
+> or "gc.reflogExpireUnreachable". But even so, the reftable backend would
+> end up writing a new table to disk anyway that contains basically an
+> exact copy of the current reflog. And with the "--all" flag, that would
+> happen once per existing reflog. This doesn't result in any correctness
+> issues, but it is of course a lot of pointless busywork.
+>
+> Skip writing and committing the new reftable in the case where there
+> aren't any changes, which results in a nice speedup:
+>
+>   Benchmark 1: git reflog expire --all (commit =3D HEAD~) (10 runs)
+>                   mean     =C2=B1       =CF=83          min     =E2=80=A6=
+     max
+>     Wall Time    736.0 ms  =C2=B1    11.7 ms     720.0 ms  =E2=80=A6   75=
+2.3 ms
+>     Memory       117.2 MiB =C2=B1     0.1 MiB    117.1 MiB =E2=80=A6   11=
+7.3 MiB
+>
+>   Benchmark 2: git reflog expire --all (commit =3D HEAD) (10 runs)
+>                   mean     =C2=B1       =CF=83          min     =E2=80=A6=
+     max
+>     Wall Time    370.3 ms  =C2=B1     3.7 ms     363.4 ms  =E2=80=A6   37=
+5.6 ms           -49.7%  (2.0x faster)
+>     Memory       116.8 MiB =C2=B1     0.2 MiB    116.5 MiB =E2=80=A6   11=
+7.1 MiB           -0.3%
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  refs/reftable-backend.c    | 15 ++++++++++++---
+>  t/t0610-reftable-basics.sh | 30 ++++++++++++++++++++++++++++++
+>  2 files changed, 42 insertions(+), 3 deletions(-)
+>
+> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+> index 4216a18684d..e2027bb9c02 100644
+> --- a/refs/reftable-backend.c
+> +++ b/refs/reftable-backend.c
+> @@ -2607,6 +2607,7 @@ static int reftable_be_reflog_expire(struct ref_sto=
+re *ref_store,
+>  	struct strbuf referent =3D STRBUF_INIT;
+>  	uint8_t *last_hash =3D NULL;
+>  	size_t logs_nr =3D 0, logs_alloc =3D 0, i;
+> +	bool has_changes =3D false;
+>  	unsigned int type =3D 0;
+>  	int ret;
+>=20=20
+> @@ -2696,17 +2697,25 @@ static int reftable_be_reflog_expire(struct ref_s=
+tore *ref_store,
+>  				    logs[i].value.update.message,
+>  				    policy_cb_data)) {
+>  			dest->value_type =3D REFTABLE_LOG_DELETION;
+> +			has_changes =3D true;
+>  		} else {
+> -			if ((flags & EXPIRE_REFLOGS_REWRITE) && last_hash)
+> +			if ((flags & EXPIRE_REFLOGS_REWRITE) && last_hash &&
+> +			    memcmp(dest->value.update.old_hash, last_hash,
+> +				   ref_store->repo->hash_algo->rawsz)) {
+>  				memcpy(dest->value.update.old_hash, last_hash, GIT_MAX_RAWSZ);
 
-Patrick
+I cannot help being bothered by using GIT_MAX_RAWSZ here, and
+ref_store->repo->hash_algo->rawsz the line above. Would it make sense to
+be consistent?
+
+--=20
+Laters,
+Toon
