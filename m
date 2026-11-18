@@ -1,122 +1,122 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.155
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794990318;
-	b=2cFLfSmiK8cHxsAh8GKGe67MnYd0ox5pbPvxHgE2pm7fMSbWLAiw8G/SIo18DPX/r3YU
-	 5tC//FPUtD0RW3mRFzqmdlB0kFguI+P9Y8Fu/AEEAVH9wm58w4gUKfleA7bpfjVGkq7GT
-	 KJmxMJaufF2GUa5uKoB/EPqRXTMAvaZnBxl7EFC0gqeH5nKGMb8Zuwc7Oe4nUyfE26gNz
-	 p+q5Ow/eASSmI5PiqWlj+rDKzu+t15ee8ACj7IDZQmgC6j19KlrvECjnpp0QRpo0nMFUj
-	 HrbRbNmaLWIi2bNdaMKY8vBnzMmmvmVZa+3W6VTl9CxwT/vFJBUukmTsixdaxk8b1cQ==
+	t=1794990323;
+	b=WIOfUHqZYjCBhpeplib8dIvwShNZZ1UIj+PlwSsk+mkDxV4CQwlTFENLrnn8FWkxZa35
+	 sHC8mHgAWlQG8CDkP9Z+WPfhfvUMB/kUqghGThm3PA0YglfambMh7HTVWqOQqEmbk+LgJ
+	 lZzA3IMrrz5PFg+l6/qBQ6zt+Bc3WeXsuMDXB9nAE9PMKVcnbdwsfzVwhMXS0ayWPO0xE
+	 4pf4tpnAHoCYr/1TuhMoiEvquPy+QzMRLNUehxn+l+10V1w9ZpXQSLNloobizxhIfGNLM
+	 BBhX8eTWY4L5PLRW7xFlLIEe1liacfXM/EefAWOQ7SwPO66nyPS2kaaYGV+mc2C5sAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794990318;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794990323;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
 	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=SN4AnSQa9xHJVIvxuaZJyS3NIZub3Ft8N5tGpDPdQPs=;
-	b=RYfQmmDX4sQWmavVpP+QIfWSNe3b08O8R41v/K+31wQj4oVYhiedS1aNQw3dmmHg2+2x
-	 XfavCSTz4MDM0hw9VnfNxdkIa6tvBZQGn2rdrhJLgs8Gm44WCqRz4OZUF9dTvuReg3aiB
-	 hXXRU1SBjL+bhHuvyp8SO7hPhmzmCXfldug0u8F3HEScI0UUw/AuyB9vp5WQuRtCU57ly
-	 AqmhiUqpA+Zj1JFfwKmROSkiGAuHTjcZwa3a2Ni/Mvhsv7e0sK7Cm/TGRRWascW8XQ1xK
-	 bK5Cnp8zSfldVOwZPdTtAfiR14QxUUWmbROFKcdfIRyXfB1Woht7kmClNwLo1iFCkTw==
+	bh=Ge5ob3DZd5sR05ZfUvhZnkGn9tOAzQWn6WTisPI5H9k=;
+	b=VUo54C/1cgtn043JJQVUvRSyVUviCFtfWPoqzKPuPQDOPs7dnPxJmm7cBVpOyM6KWDJk
+	 v/MmNBEJW2U7Dp6jaRG8ANrvlMwMfi7UQe/hQ3TM6rlp/9Fx3g1tbe72RldECW54/MY9n
+	 0YUqHEEvlml1PBrOTIGwl3SfejU96PkrJvvobzmT+qxf4Us7J7dvNzRK3IJGI2Qd3yndJ
+	 v8WHgP3yksZMXuphdWo5r9rOihe2F6a9/55zAzUDlVYS8ilXn48LPIspL3xyHh2Zc//AO
+	 4pyhs8ewWp33wnTnrFeZ+TdtzZp7clgtnniMvZxfz5cJKyayE2LhXw9xBlu1mSUf/Ig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=SkAqgegh;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=M4Hwkpr0;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=axQc1IVS;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=xweS0KSv;
 	arc=none smtp.remote-ip=103.168.172.155
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DF8606A31C
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 08:25:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C2DF8606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8F6606A335
+	for <git@vger.kernel.org>; Wed, 18 Nov 2026 08:25:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1F8F6606A335
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=SkAqgegh;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=M4Hwkpr0
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id ABC62140016D
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 03:25:16 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=axQc1IVS;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=xweS0KSv
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 45F071400165
+	for <git@vger.kernel.org>; Wed, 18 Nov 2026 03:25:22 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Wed, 18 Nov 2026 03:25:16 -0500
+  by phl-compute-03.internal (MEProxy); Wed, 18 Nov 2026 03:25:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1794990316; x=1795076716; bh=SN4AnSQa9x
-	HJVIvxuaZJyS3NIZub3Ft8N5tGpDPdQPs=; b=SkAqgeghaTB18JJu4weyeNp3Zu
-	kKHaJ8NkfutKjQnqE1xyAgzK7iyXzlNaZWbcoCkNXu098zIDXTOdxzLAovvHZ36E
-	p6MfZCekJaCnJcMHPRGxymhLUObrPBh5J9X+THsAVcu9hRXN7uRzCYP9ynt7zTKy
-	l/UKTtAit96zdljGlcy3GMDgHcFKekcObUZXNwUadlcGANgugU+0NDTjGhJBpuA3
-	qaFTGREVNwS4VTmID7Hg+6EYrTb+A28ThJpozcSVbgqo5p215dOU1FJeW67f2ji7
-	+pExFUTjfAYV6i+wvMfM4336B0lpVC+qyNxwulX/8TJ5gtuuseQpSXmlniTg==
+	:subject:to:to; s=fm3; t=1794990322; x=1795076722; bh=Ge5ob3DZd5
+	sR05ZfUvhZnkGn9tOAzQWn6WTisPI5H9k=; b=axQc1IVSbke46oQgYCf7+1YeAo
+	WFLl7bJZTELqc9LW0gwa0TtbgW9/aHig1ZCaPccl/LtUcm2MwSp8YKqqu9KUthrN
+	ItBSMD+U0CLUHMrzE/r00GHXGipHWuboPlA+3hzWrUG7XDXnAEgtRbU0zf5qx1eF
+	n+ZhyauaVQj7fGtCURHbmqoBhiIPBERwMLeHWDEP7tS294A7Rc0Ix9KhDMcXDAfU
+	ynvlHuwbt2nUqw9EloYkfdZ17q2smfyoXoXyhbyTeSdflAkufQzwyvckRZoj+mMS
+	b5kmJL73xm+4H3diMJHMMy0KKjR+Ih9G0AMsgvsnne4JuSSsTQEEM91Z5P2A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794990316; x=1795076716; bh=SN4AnSQa9xHJVIvxuaZJyS3NIZub3Ft8N5t
-	GpDPdQPs=; b=M4Hwkpr0Ph1MlGzjEkgp4wPvIgVvilE0CekY8NKZ9Ci5g9oqvPh
-	yOubmaWNd71pyto/39J3T9atRM0ias7tSeOxgUscQcrFLDWeyrBfxeLt+Q5docaR
-	x98KNzcN7w29mNrELr7G+uCs/dRjhZ5ghF5q06tmj6/1hnV9Fk4uA6hjmURLvjb9
-	VOIv0ohECiBMQUR+61Ryd2DiIYbJ3f1jFD8dDnAKuizrEqJkxl1QFPV7F9iPAC7v
-	tRmZ6OldmLU1cawlyiEXvvNPF7IeGbJ1uybxqPz3sD8T52oyvG83zLq0xzjhr+ZT
-	WBlY/r9f8Xb0FbNVTKrH1TGomYxbBoozlDw==
+	1794990322; x=1795076722; bh=Ge5ob3DZd5sR05ZfUvhZnkGn9tOAzQWn6WT
+	isPI5H9k=; b=xweS0KSvekFYMxSjVOrD/Gb3xgwEkQzqPn0dQWfwZwWqOB4dUcp
+	tvLrv9pxv7qeubRJmdzr19F3aIpBlEFH1LxSMFG3Yf29E2gHa+YgBf3Kl+RJ9uD5
+	jXVkB+Z83+YkB2qE4wZFsq0df9rDD4zcMOMo/BU++h2C0jPk/NhEbvYn24D1uZli
+	w5ZceS6HfRPb2pJ/YT4c610ZvVwUyQ/ulpX5KYWePIw5/iWfDUayxdEEjQsO6r9D
+	Z7aIZQWYrmkQ44HVEbkak5+MyYdf3l7Z6hnppHS6rQzTd6lwvabaXdUC1dQ7+KvR
+	ezgHmpzJur8Y1bptgGCS56xQhufbWnZ0b8Q==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794990316; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1794990322; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:tZ3rAlw5Ekv+9VPPFzr4LPHG8xo9+p3qjrp9E3iPVfFT+kS
-	NJX9d7vxffpAWDrtkm+IIq35HCAQ4KqzTocq27kJOO2HE3wExsHX1u/EcGXMdR/u
-	FdfQpwWJqgYqYydxlt8Nc90novQeaRvKszVmngGET1B0wqZ/hzX2SuvjuV2kVCZA
-	dW3sf6quRbfAUsvRJecCwgEyTnopCh4ljR9le0xT3Md4aRyPw+VkvEfriRTwiW0b
-	291uTnQIXtulZ+oMzwI90jG9CA8ZDV8QffegiWx+6REmgYUr4T01NbFC15XO8yAP
-	E7V+ZJOzyVbOogD09J8qecJR0yLkhPYRWF2O8pw==;
+	s=fm3:rsa-sha256:AxzqOMH7N/RhJYf7dC8JDh6jBhpUyS/jkqHem1EdEuKllcp
+	LDmaU18cksOHo/gkOBRDT2Bv5FnXtLETJkod7huNK7y4HXPnrVifJvLpy8npx/O2
+	aAYBBCx+l5jGU/KsY2WldL9hO3RawJickf6luoe9RKg3a3PTV8Wd7WXEghTu/gEt
+	2oz+0KWAKQF9mFnMdLBY2jKfM8jtyICStoOa1OOGxqz1CBmnN4Uiq4QH0Yxw8vu6
+	hvN4CFb9eoInvdXF8zPG3KJu1l6lVl3YXdyu5oGpbunPlF+S1XlVGdrTrschEnj1
+	E+PCcZuogKPRRyezftWvNYiyJRAo7gbsgiZUd7g==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:FnNvgErvG8iDuj5TwWS0hC4k3yHUuiA4vbeOfFOAYXg=:+TWMPZ5nscHWOaUUA0X/gWdzHbyPWcO4Z0pr3HxSMwQ=;
-X-ME-Sender: <xms:7GD9aj7i6V63SddkvzEd0aVAnz5IGmKBtjTn0ypUo0dwTalB0yZPNA>
-    <xme:7GD9aslJctf0u21ZA6fgDYogHynp20jxfvPxCtE5oJYwtKnEr_WObEFrITerrDn9w
-    Tr7sdv3l5CeMfISh1-c8_pwVw0m1yBsuM_-SWbbcADUIQNCsAJbS28>
-X-ME-Received: <xmr:7GD9akRbAwb34t-f9ey0j-VpXdNcKnrjRlIAYwO_f8J2gOdXaMw5MA>
+Message-Instance: m=1; h=sha256:J5Ny/sTWSm+tBkT1onAi1mavn0iuWmzg6+3BHd9PXlE=:cGgH3GhC2ms0VKV9vT7yc7FHA+F+qwKz6VqKJujdf24=;
+X-ME-Sender: <xms:8mD9ai7ZDIu0zavZfrYP3BrNWGcVfiUklSGwMz70mhUj3Viy90CyXw>
+    <xme:8mD9avkNcdGA50K0nN5fk0swPYrs9uigt5R_gN5aiEIKyDY9z4Qan0TZ1XUqp1DW5
+    PzS1s4ZAHpz-UJb4a9apGDd5K3nTIHBLGhy04hfgOl2SjDBeOmha0M>
+X-ME-Received: <xmr:8mD9arQDANiAuCqVFLHJlJpkx_N6CsvK4E-8Q7rrqDqcNbeybjaZlw>
 X-ME-Proxy-Cause: dmFkZTE55K3u9ahwWSLJ9WX6+RIaO3TJDWTAKz393EzLQGQUCE2cE3ExOSEvw8R66I/TPg
     Y0WFBr2+rfZjBIjuonTRK//T3nsmWFKqP9rPQoHKEw5JpJaqvJODCzmaBzJI0qblLf3R4a
     u4VkOztGnxYtv//+i4+fsj9XT58VL39W30wPSO1UA70iIvrzyI9e80evUq1fSf1Yf8tpGi
     YOl4JxDbnI+7FgVIV2LXC+3MDRpum6Vg4t20JGzE+IwSnOvMWrVV4cZrdrivyHdKlAuYlw
-    qVYN1jxZvA43zFmhRQjMImiT6xxXSjwOZaM0k+j45qlYwFMlm9rk6LVbzJGyDvTgp9pldx
-    ENZbgyeIjTQTDOnl3ey6iJZZSPCdWw+cpcjXNns5vArerwyxWFuJ1DELIXEqYC9P2ROeuk
-    gKfc73XTy0p3pYhTiGxWwLTAnLLGcZ8zpzP0/THai2STgjz2cfGGG9ouJenJ1yroJwFQgz
-    TRuSp+3LhIWWSMuoBVADnVyTxU5by+xlX6E49u+uwPOP2p3xEudB13v1M69NBtoilJPL9C
-    XJveHdOF2cKjdx6/NkcjJh5H+jv7rXKuYJ1tpZt+G3mR/ecgs4gfn0VMj4hrIf5RbUiMkH
-    h/6v52hShdIJJtwm5LzOELiH4YgsNDpLun+5XXlr0P3kAzJ2U+hOl6Jo91BA
-X-ME-Proxy: <xmx:7GD9arFjCpIe79ppnW_1kN1ib2LMCOLJcewb9w9912-RljQ_R0jo3Q>
-    <xmx:7GD9apFHn09xN0-FR86pnEQ9o80i00VUK-E63etUsTVhMiyXR1Czvw>
-    <xmx:7GD9apTd-UfyFK7QKHmOyTXUInXQgKkDVx531CdxP56pPoEpOwplnw>
-    <xmx:7GD9aqLG7szWRSXOrvef5DWsqUimhmNK_tWLTMSkuj6j_I4HxQIkaw>
-    <xmx:7GD9amB8U7KP5-KDQ-puTudH62NzPHlx0h8ywo6m5DVneZf-aDC69g3x>
+    qVYN1jxZvA43zFmhRQjMImiT6xxXSjwOZaM0k+j45qlYwFMlm9rk6LVbzJGyDvTgp9plbN
+    9xTxjaXrHFHp1vevdVDpjef5DfA0+g1zc/9+Pk512v+/zQshjDgG6UyzbSjbutZLsJw30I
+    iwDoo9Gh0hUuxyw3Njghlq7rPjk2Y7r+YKvZo2MDO8YA0AF7OaYCYABVlETdJCQ9qE+ExX
+    XoI23KSqTudBNogr4sxO/3nsGKpuTBmO8xPEJ2YfoqIZ7zVrxpaGQKa0DydGmVHnNSiZdp
+    D27KTzb1Im1imLbCwUFzwQ621h421VQ6hPVDHdhNvjAiLqn0dqZXxbBqI56CM8d7TNu8Tg
+    vqNDTTsiVesvohGRD0yy1xO79+Dmest2sWL6i914247PADOWON3ExP4lnu6w
+X-ME-Proxy: <xmx:8mD9amG7MmFtSv9YLrfuwmxNUJV-jSDBt5-z7JT70hQxnk1FPyG29w>
+    <xmx:8mD9aoG91Dil306-h1g_dJX5vXjGbQSDlCFFeHQ3xYgot8qm8CHr-A>
+    <xmx:8mD9asS08nQFsZPrY6NqEUhugXn1d4Yf4xCWdGJXkbAxdh-s01K2gw>
+    <xmx:8mD9ahKGd4Sh9ZulZzBrcyWf_qMKpcop67sFbMyd0HrFhvhqpxVTFQ>
+    <xmx:8mD9alDoPRIXoJA-sj2mDLZu2Teiul3FHJLL4_jgmHCS535PLuxKvNss>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Nov 2026 03:25:15 -0500 (EST)
+ 18 Nov 2026 03:25:20 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 347c1b6c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 18 Nov 2026 08:25:12 +0000 (UTC)
-Date: Wed, 18 Nov 2026 09:25:09 +0100
+	by mail (OpenSMTPD) with ESMTPSA id de30ac21 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 18 Nov 2026 08:25:20 +0000 (UTC)
+Date: Wed, 18 Nov 2026 09:25:17 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Christian Couder <christian.couder@gmail.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
 	Jeff King <peff@peff.net>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/3] notes-merge: use size_t in write_buf_to_worktree()
-Message-ID: <av1g1O5AG7wR7tjb@pks.im>
+Subject: Re: [PATCH 2/3] odb: widen odb_write_object() length to size_t
+Message-ID: <av1g7VQnCAcs5J1W@pks.im>
 References: <20261117174353.1158905-5-christian.couder@gmail.com>
- <20261117174353.1158905-6-christian.couder@gmail.com>
+ <20261117174353.1158905-7-christian.couder@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -128,52 +128,68 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261117174353.1158905-6-christian.couder@gmail.com>
+In-Reply-To: <20261117174353.1158905-7-christian.couder@gmail.com>
 
-On Tue, Nov 17, 2026 at 06:43:55PM +0100, Christian Couder wrote:
-> The write_buf_to_worktree() function in "notes-merge.c" has an
-> `unsigned long` size argument, while its two callers from that same
-> file:
-> 
-> 1. write_note_to_worktree(), and
-> 2. ll_merge_in_worktree(),
-> 
-> both pass a `size_t` to that size argument.
-> 
-> Since c6a4629e32 (odb: use size_t for object_info.sizep and the size
-> APIs, 2026-06-15), the first caller reads the note into a `size_t` size
-> before passing it on to write_buf_to_worktree(). On LLP64 platforms
-> like 64-bit Windows, where `unsigned long` is 32 bits, a delete/modify
-> conflict on a note of 4 GiB or more therefore silently writes a
-> truncated note into NOTES_MERGE_WORKTREE.
+On Tue, Nov 17, 2026 at 06:43:56PM +0100, Christian Couder wrote:
+> odb_write_object() and odb_write_object_ext() use an `unsigned long`
+> for their object length argument, while almost everything they pass it
+> to already uses `size_t`: hash_object_file(), format_object_header(),
+> convert_object_file(), the `write_object` callback of `struct
+> odb_source`, and `git_zstream`.
 
-Heh, this feels like nobody would ever hit such an issue. But fixing it
-is the right thing regardless of that, of course.
+Huh, I thought that we already had patches recently that converted this
+function to use `size_t`... oh, yes, this is overlapping with Elia's
+patch series [1]. I think it would make sense to rebase your patch
+series on top of his patches.
+
+[1]: <20261021101640.329990-1-gitter.spiros@gmail.com>
 
 [snip]
-> To fix the truncation issue with the first caller and to prepare for
-> getting rid of the check, let's convert the size argument in
-> write_buf_to_worktree() to a `size_t`.
+> To fix the possible truncation issues with many callers and to prepare
+> for getting rid of the check, let's use `size_t` for:
+> 
+> - the length argument of odb_write_object(), odb_write_object_ext(),
+>   the odb_source_write_object() wrapper, and write_loose_object(),
+> 
+> - the size stored in `struct inmemory_object`, which is later
+>   copied back into `size_t` fields (`object_info.sizep` and
+>   `odb_stream.size`).
 
-Makes sense. I've been lamenting about that before, but I really wish
-that C wasn't so painful to work with in this area. All these implicit
-casts are just so error-prone.
+Yeah, makes sense.
 
-> diff --git a/notes-merge.c b/notes-merge.c
-> index d361e70a48..4b010bcfc0 100644
-> --- a/notes-merge.c
-> +++ b/notes-merge.c
-> @@ -310,7 +310,7 @@ static void check_notes_merge_worktree(struct notes_merge_options *o)
+> diff --git a/odb.c b/odb.c
+> index de5be285d3..56a7910b03 100644
+> --- a/odb.c
+> +++ b/odb.c
+> @@ -702,7 +702,7 @@ void odb_assert_oid_type(struct object_database *odb,
 >  }
 >  
->  static void write_buf_to_worktree(const struct object_id *obj,
-> -				  const char *buf, unsigned long size)
-> +				  const char *buf, size_t size)
->  {
->  	int fd;
->  	char *path = repo_git_path(the_repository, NOTES_MERGE_WORKTREE "/%s", oid_to_hex(obj));
+>  int odb_write_object_ext(struct object_database *odb,
+> -			 const void *buf, unsigned long len,
+> +			 const void *buf, size_t len,
+>  			 enum object_type type,
+>  			 struct object_id *oid,
+>  			 const struct object_id *compat_oid_in,
 
-Looks obviously correct to me. We pass the value to `write_in_full()`,
-which already accepts a `size_t` as input parameter.
+Right. All functions that we pass `len` to already accept a `size_t`,
+except for `odb_source_write_object()`. But you also adapt that function
+at the same time, so we're good.
+
+> diff --git a/odb/source.h b/odb/source.h
+> index 7b56f51b82..8daf5df31c 100644
+> --- a/odb/source.h
+> +++ b/odb/source.h
+> @@ -454,7 +454,7 @@ static inline int odb_source_freshen_object(struct odb_source *source,
+>   * object ID and the compatibility object ID, if non-NULL.
+>   */
+>  static inline int odb_source_write_object(struct odb_source *source,
+> -					  const void *buf, unsigned long len,
+> +					  const void *buf, size_t len,
+>  					  enum object_type type,
+>  					  const struct object_id *oid,
+>  					  const struct object_id *compat_oid,
+
+And the callback functions fo the backend already use a `size_t`, so
+those don't need to be changed.
 
 Patrick
