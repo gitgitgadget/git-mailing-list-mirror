@@ -1,93 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.148
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027531;
-	b=rwyNyjorGRAxbk20l4aSrbzQUcsyd1p2F7OnGQkKlyqjr15KIxu8U6709J//U2QYaywq
-	 +ZOHI5JI8zGwh6ApDGXLA5G89DBe1ruz5MmTQRkMkL6es1VFWzbRPlliJ8SfosVvhGLg+
-	 wE62R0QNjhAhRMCS6Q06kBZVQEM1miuASxHwVEr38WUkOJF4+ULkFh0jsaJUpeogO56bU
-	 oa0s6jtR4dOI0FEHyARvds/g7FAPv2I5sTcBarWSFY9FfjrLJ/YYR7QFpAM4E3Fejdv9F
-	 H5N3YvyooatPFA/h+UMx1hmj9pXfr3MZnK7Ipeg90TsHinbT6vwueq9tmnrJ0Oz04QA==
+	t=1795028514;
+	b=TxNBQyUeU67vsHKnj+wSdVs27aqYQzQ9n4hD6uanTTIV2VzxTwVDUu4jPD8mane5TD/I
+	 3Hwhi2eG3FXVA0eiWzeQLDxjs64hHoNmMotTDXAIK9xA1yv+IdSKEzWlLnuyEb6zX76qI
+	 app//nOtS2D4/yoVH2aFJZ2uxr9H/sYhoXKaAPYPvsNA8EwmLZCyoU6iPFmPQahhpqEDL
+	 5FhcmpUxr2vpof89YDrt0abSvElyDzRgv05F7n6ot9kVhRmL+G65E/v9IbXDdutr8rqc9
+	 dGf4o3M8DQcRF0pHgqteO7wNo2EJGzeIUwFAVjcd2mDQ7kJckpDeEwEk2dGTf9bskew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027531;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
-	 References:From:Date:Subject:Fcc:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=Dr2J55vxIx7W5WDdLya7+BPT+6w4aDEt1J4CRsPCFtU=;
-	b=4WsTPj4Gpj3jJjj4LjPThi+B8dNbR4sD1tf4x4ni06pAUSP4eKmsgAunhmYHHA4bUMm9
-	 ihuGVjMZS/QnPPykJb1ePC+8VIVTTBvETlB5ouz2VBz+5bBatiITZLrGjcTjhOy2liSbG
-	 azBv91T1VYaUxudBmKw/gWd7mBJtrQu351f+RZNUvAbFWFHCfctz9OY55MRDOHs5/dJxQ
-	 W99q+8pfNK3m2Emafsfif6ZOcJ6sf1MRHZnoEUf5g+AdYGNSWedG+JIe2hg0Sy42ThplD
-	 U1C478MUzpWO2lWMFgkXyeO7W59Y4/r4E/B4aJDwSxbQ2scwZalgjuINfsojmBCPF1Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028514;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=MlUU/Y7krlE8R9OZo3fTEl2ari7VAOgrp4qKEYaelOw=;
+	b=l9vMq6wbHrhyJ7D+oj5jKkizxl9DAcllLuSpDehVeZt8WXRnHszeJ4meaX8c1EgoQoPU
+	 +tocgveGWsgi5WxoCsltSIHh8AucWCYK+MWCMHZo1QZe8Scj8Iw+5zD13zJoRTPnEb031
+	 x62y0y/JFO2b/xS9bQN9hGcTouvx4qhKpEE3nz7WG2VbGP231lOthRzjLzMaMmozq2pLt
+	 mV7Qn96mjIDinfWoOcDz+KBQ6WdUUjVeouXvfbWxTp+1Y7//xrRl+eiAaOAehLXCZ8vSv
+	 liByMW1YMR2c+2Rgo/68QQrPuwNEH7Vn4Arco0Dlltu3AqRDKQZyK6T50WTvjF0SDxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=k25D6CCy;
-	arc=none smtp.remote-ip=209.85.216.44
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ZKTwsHf1;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=XF9GYGoE;
+	arc=none smtp.remote-ip=103.168.172.148
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2854860A2624
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 18:45:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2854860A2624
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F237606A337
+	for <git@vger.kernel.org>; Wed, 18 Nov 2026 19:01:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6F237606A337
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=k25D6CCy
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-3b12cb3c37bso749088a91.2
-        for <git@vger.kernel.org>; Wed, 18 Nov 2026 10:45:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795027524; x=1795632324; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=Dr2J55vxIx7W5WDdLya7+BPT+6w4aDEt1J4CRsPCFtU=;
-        b=k25D6CCylKJZ6c/dk3TsEnxXo0blBjAAhreA/9pPWgVHXWgHqvCy9w+bMhIKS1k+g3
-         +eux4pkWK0RNvxG6vDL2VXqZpFzlb2lHva7zgIsYLSUjhuYihPab77FPpk9Mjrx0pPnE
-         tfukntzFTPSxvP3VnhfZVpFMU+6KLC0TvUTEchlJBa9mjQJU0Zz2xqih8PeTMlsLyY5u
-         lQLA367ClezkRy5ETLMsA4c6DLtspUcxxDM9zU9tFLCklnauRGrqTc5PD4LZVk18eymW
-         yvYspexWgHdae4vGdhhaEq6P45T3nG8WvkYcCvWyTAit5hVfQqS0YwdQY0xpFnub8jO6
-         YTfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795027524; x=1795632324;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Dr2J55vxIx7W5WDdLya7+BPT+6w4aDEt1J4CRsPCFtU=;
-        b=UjJunPEiiIFfQt5iRevvM9AhuYf92EY1KyufABKZkP1OetM2pTRBfqBB5UjzpLHLMj
-         TB9X+ocITb6ax+fR7qYd4w43cWdDJhUhnIiHLxomkBcbV3s03yTsIzRvvVjhLjEr6ccl
-         C04vzUQsIHg3XageqkJTogURvzesQhaxrQ6vxZFcuifOpm/nYHwIfpqkPBLjntKBLypB
-         yxFAHjsVFqipSvVXzDvqSI6+3nq79cRMvv58mZGjr5cELwUbshCNPECmgDSD//jfLwXV
-         w931yrjRc0lzEGrzrOrpQL8ED7RSBDcudumtRXNOUYd6pu7HA5jU1fJw2Q0gm12dgosN
-         AcbQ==
-X-Gm-Message-State: APuU4Z8JZby5b/qZ3Ws1hfyODt7f6irLYuZtO1Ja2hm0ixrHG2V8A1Z+
-	rqbuC7tD/Gyjw26WTjvYij/TiQNlVlV1tdES28Ft3FIO0JhWigCSmIvArKLP0A==
-X-Gm-Gg: AZFdTZdpGRBpE9dJlQy8ftLsyskM+1By33xAH960kX4NskuxIkqGMlov3/Wd83Max/c
-	tM4RcZxwn1yctGNL6EE+BDJ+h+67KgEbiP7KNS707rY+aebRr2fnTrlYOKxOAEurHCQ5xyRWfMI
-	j08pmGBqKvSWSMf5njSPhJFOaNr1fkyuwxSx89+S9FHqliw5Ic4E73Eb6RKGfb5MD343j8mnmGA
-	8g0zOjmVXRbaOPRTKXW3hGW0Eq/wGDPDZqTbXGk1NoDQunQwl2X4cMYjkhYA6q5agWoDh6yh9HM
-	VCwCPm2gZvY+Sjxj4Y7dStTkpqqJ36H4qL19L3GFtTMNohjcdzBtZZOsIKgxf1cI7gRnifeyW6t
-	L2nGjVADvZdoy/fhQ9rUeaqepoJWmPeaze+BJMRClxbadaqasUAvqJYft6cGSN9wVo3rhNjU1ne
-	hB7L3FcrD+gt3WzDQSWkkCtQVao9K08pI/wEEyH6zaX5ezcnD0jG8xm5ZJ5nxigGFX3NlVCfiN5
-	dLaIRkGYrUF5PRoRNXv9UbOJZip/qPeLH1rN86GngdyHf1gDGTIV7MuhVM7A8ZB5MTmqPXb+tQg
-	uqF5U3SSXKEMtT83Hufj0ioJn4Z0lue/wZ3n0DpLsCxMrxZK2KEqRsmVAuZih1AqOVNC4PjNcAP
-	BjoTDF+al
-X-Received: by 2002:a17:90b:58ef:b0:3ac:d39d:ee4f with SMTP id 98e67ed59e1d1-3b3d07d4632mr3359814a91.44.1795027524339;
-        Wed, 18 Nov 2026 10:45:24 -0800 (PST)
-Received: from [127.0.0.1] (ec2-3-42-157-126.us-west-2.compute.amazonaws.com. [3.42.157.126])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b3f7067012sm434035a91.12.2026.11.18.10.45.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2026 10:45:23 -0800 (PST)
-Message-Id: <pull.2315.v2.git.1795027523258.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2315.git.1794825269464.gitgitgadget@gmail.com>
-References: <pull.2315.git.1794825269464.gitgitgadget@gmail.com>
-From: "Srujith A Poojary via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 18 Nov 2026 18:45:23 +0000
-Subject: [PATCH v2] read-cache: use istate->repo in index operations
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ZKTwsHf1;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=XF9GYGoE
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 83CABEC009E
+	for <git@vger.kernel.org>; Wed, 18 Nov 2026 14:01:44 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Wed, 18 Nov 2026 14:01:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1795028504; x=1795114904; bh=MlUU/Y7krl
+	E8R9OZo3fTEl2ari7VAOgrp4qKEYaelOw=; b=ZKTwsHf1POqMG/uco4/a+nzdDW
+	s9J/yZLcXptlBYNQCmESINqVaKx0xzKNAbyWLi2BTZcOr25f18/qLFNBQJLj4pWU
+	mXIuPlh+RbB9BfFebgSBRaoMbBfy5S3329M6sr/kvzkVicT8oFL5RAjgWTzr4h6n
+	mBc37K09FbX99XoGmqw/bhUxtLW1zvkVp/kp5qiwbGmt2TMY9nJ5xbQP9Uz5hsXc
+	uKEL7P+0+cNEmHqzH7AFRbqhXd2eGsJANXDunHMs91eeEAY58sIDE/dijQhGD0Nd
+	BAppzoHVsB9qjihXpAUywcFl5J2qSJ9QQTge24a78Q/4YMlbZeIBCwD2WetA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795028504; x=1795114904; bh=MlUU/Y7krlE8R9OZo3fTEl2ari7VAOgrp4q
+	KEYaelOw=; b=XF9GYGoEfJAm7TOps0TGC13CMv3dsVXRQqKxvD1GOCoBvVaJaB2
+	OfDQQAerOASPdjmOchJaGTxsUoL9Gm2cNQLzZZYxSKTZt8jFiY1rt4s63KSmai0t
+	wjI/jvkYX3SyI6Wn0kqIpUgRU6hl+es+gAcXCdsysu6M3rQtsGew3GlzE1TIYVX0
+	fBB9gbDdjw5uRGJUbRdu/1L8vrN2g7vLeO7Atyuz6arsacm4rGkG836nrTmDRhsO
+	rAfAR0WSMGTi2sZ3pn7maiO2RY97Jr/IoN++XciHYdgUWQ2tCDRwBzbzmpijjARB
+	kWOKih1Z3kTww6tYsX+xvAt33nFab5OGpLA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795028504; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:NRsNuLTr61bSdxhYdjJ6tKArhWElSboa2p/xKjs3CBrETUR
+	ZUiCe8iddzv7YHX7O1dKsS76Trnmj9ajlAXYsOwgLnwaRRst50bqtPYnWtgODL95
+	1bYpPNRIzSRvoM5qceS07gdpU39qx6LoT6S5qD7yj41Sk0rN5g3BQF8w+6TFprCy
+	ft0ZS4eYxw+4mT+6R5+1Pvnxn8gI8eWB9WVJk7FXMvoKU88aNs5uQJ5nSWoRMfq7
+	0KCAyhC092LB01jY3aFj0BlYBIYCwUsoWq7ccdhsrINNjQ8ArIcd83SYF71h5SvQ
+	mFI1cOQz3z+bKEI5wuWwFXNiIf4hBEOejt5tSBw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:HpP7Y3hDFHITUAYzQrOE7OYgwFfuLRbM6sMdIWpzB0o=:V/f7e8iylVHU7AQ5rImr5ZOCqPjxqX/E9xqgpxpqHIY=;
+X-ME-Sender: <xms:GPb9anN2S-j-kbaBVrLRDXkXLNak5FsBrGdbYkd-3YrsADVUfNYmSw>
+    <xme:GPb9ao2nvbtC-7mvGjGHCG9n0z3xVGq5QJ8zisxg9is9RRm2lYMP4sOwcSmKaZlQr
+    yvHNCTXwXnm8vrx03dk65sC6A59nQuP4oGfTi5JOADNO90EZ45l8w>
+X-ME-Received: <xmr:GPb9aumXV7PxTouEcDkRBLs4bLIUpwFh_HCxt8-7fbAqpVnA5uCF-JMAWYktdaE4UBhzvdB1clfTdpt8P4axeXLwK8YyqUXtZpht>
+X-ME-Proxy-Cause: dmFkZTERDxOdOEWiz8t+ZsMaPf4eWPt6i3DktU9icg3DCHtn9LUtukbrB/IxZLKO2hiadM
+    yPbGzukt1IP/+Ch7q5JL6XkXwOz27FMZRow2rkTCvsDcHeD//nBkWBli4j6Pv01pGKLp4R
+    vLZpPIa+arWBlTO2N02zx8DnmYxYTIu1bplERGjl723hlJxVqvOtMZ+hPryKxGoKNKankC
+    lFs9J0EzKJ3i9APc+egQB1wcKq8S0oRi4N2YLaG1Z6BazwHEPW6ylawgLiBVaH7j47DnOD
+    S++eKgQ9jHKeGItqz+lLsBdYTcWv+KWrjloITKpxKcpVi35fmvWUpgxlsy6rAf4HHTz7s8
+    LLBZ7yE3QUff1ADIu5c55VsIa6Nu5N9EJz0P8QE/J0tT6t2ELsLu6rkPvODoZWkh8fREDG
+    asG5sX5jq13zSMtL0MItoaT2MUOObVcXoqVEU2BImZJwf9JMeFnP+NxtrAEtuVXPU4UzB/
+    qn8pSQ667/VDv1aXWXmb136F0OOTiQMqyuVhoFLwOMpV7AgrRVRCPHC2+rE5mB0IBSZcz7
+    2NkWQDjvqhHXleGfO4/G7AgrYFv0zIxTPXMQr73+gA2PaE9APPj361YraqTNcXSgeLnsa0
+    yb4HMbpN4fMCJVudeE2nM9tjZoqBdChdWh0+p6dFzImHhMDC0BsaApMe9tBQ
+X-ME-Proxy: <xmx:GPb9anUuNK31bhRQnSVeJ3fV0Q033_HSy1pK361PKS-_jwKTRHm9uQ>
+    <xmx:GPb9asui5h-T1swNTmwxxOvOUslmNwDm8JLGUy4ktAIf_lbu0FfJhg>
+    <xmx:GPb9aiYMluz7IjZdXFOekz2LK7fY2ynshIdhhlfYfESoWenCBbujLQ>
+    <xmx:GPb9ajWYDgiHH63U3JC9vUKVgoBwCT-QaivmZp45Y3EDWG3ZHWdkgg>
+    <xmx:GPb9alv0o66EzwstQRQG_ebn6Eu69UAfyUQZcDTxFeoEtOoqbb-uQCo4>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 18 Nov 2026 14:01:43 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Maik Riechert via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Josip Sokcevic <sokcevic@google.com>,  Maik
+ Riechert <letmaik@outlook.com>
+Subject: Re: [PATCH] diff-lib: skip leading path check for fsmonitor-valid
+ entries
+In-Reply-To: <pull.2318.git.1795026168007.gitgitgadget@gmail.com> (Maik
+	Riechert via GitGitGadget's message of "Wed, 18 Nov 2026 18:22:47
+	+0000")
+References: <pull.2318.git.1795026168007.gitgitgadget@gmail.com>
+Date: Wed, 18 Nov 2026 11:01:42 -0800
+Message-ID: <xmqqse0y55gp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -97,169 +126,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>,
-    Srujith A Poojary <poojarysrujith@gmail.com>,
-    Srujith A Poojary <poojarysrujith@gmail.com>
+Content-Type: text/plain
 
-From: Srujith A Poojary <poojarysrujith@gmail.com>
+"Maik Riechert via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Use the repository associated with the index state in
-add_to_index(), refresh_index(), and overlay_tree_on_index.
+> diff --git a/diff-lib.c b/diff-lib.c
+> index 086476bd77..3730e04149 100644
+> --- a/diff-lib.c
+> +++ b/diff-lib.c
+> @@ -43,10 +43,10 @@ static int check_removed(const struct cache_entry *ce, struct stat *st)
+>  {
+>  	int stat_err;
+>  
+> -	if (!(ce->ce_flags & CE_FSMONITOR_VALID))
+> -		stat_err = lstat(ce->name, st);
+> -	else
+> -		stat_err = fake_lstat(ce, st);
+> +	if (ce->ce_flags & CE_FSMONITOR_VALID)
+> +		return fake_lstat(ce, st);
+> +
+> +	stat_err = lstat(ce->name, st);
+>  	if (stat_err < 0) {
+>  		if (!is_missing_file_error(errno))
+>  			return -1;
 
-These functions already receive an index state, so use its
-repository instead of relying on the global repository for
-repository-specific configuration, progress reporting, and
-tree operations.
+Now that stat_err is used only once, we can retire the variable and
+inline the lstat() call inside the if() condition.
 
-This removes unnecessary dependencies on the global repository
-from these code paths.
+Other than that, assuming that the CE_FSMONITOR_VALID bit is
+trustworthy, the change looks OK.  has_symlink_leading_path() would
+be fairly expensive and being able to avoid it is a big plus, which
+is done in other code paths like read-cache.c:refresh_cache_ent()
+and preload-index.c:preload_thread() already.
 
-Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
----
-    read-cache: use istate->repo in index operations
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2315%2Fpoojarysrujith%2Flibification-overlay-tree-repo-clean-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2315/poojarysrujith/libification-overlay-tree-repo-clean-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/2315
-
-Range-diff vs v1:
-
- 1:  6eabf019e9 ! 1:  19ab253b22 read-cache: use istate->repo in overlay_tree_on_index()
-     @@ Metadata
-      Author: Srujith A Poojary <poojarysrujith@gmail.com>
-      
-       ## Commit message ##
-     -    read-cache: use istate->repo in overlay_tree_on_index()
-     +    read-cache: use istate->repo in index operations
-      
-     -    Use the repository associated with the index state when
-     -    resolving the tree name, parsing the tree, and reading
-     -    its entries.
-     +    Use the repository associated with the index state in
-     +    add_to_index(), refresh_index(), and overlay_tree_on_index.
-      
-     -    This avoids relying on the global repository when the
-     -    function already has access to its associated repository.
-     +    These functions already receive an index state, so use its
-     +    repository instead of relying on the global repository for
-     +    repository-specific configuration, progress reporting, and
-     +    tree operations.
-     +
-     +    This removes unnecessary dependencies on the global repository
-     +    from these code paths.
-      
-          Signed-off-by: Srujith A Poojary <poojarysrujith@gmail.com>
-      
-       ## read-cache.c ##
-     +@@ read-cache.c: int add_to_index(struct index_state *istate, const char *path, struct stat *st,
-     + 	 * case of the file being added to the repository matches (is folded into) the existing
-     + 	 * entry's directory case.
-     + 	 */
-     +-	if (repo_ignore_case(the_repository)) {
-     ++	if (repo_ignore_case(istate->repo)) {
-     + 		adjust_dirname_case(istate, ce->name);
-     + 	}
-     + 	if (!(flags & ADD_CACHE_RENORMALIZE)) {
-     + 		alias = index_file_exists(istate, ce->name,
-     +-					  ce_namelen(ce), repo_ignore_case(the_repository));
-     ++					  ce_namelen(ce), repo_ignore_case(istate->repo));
-     + 		if (alias &&
-     + 		    !ce_stage(alias) &&
-     + 		    !ie_match_stat(istate, alias, st, ce_option)) {
-     +@@ read-cache.c: int add_to_index(struct index_state *istate, const char *path, struct stat *st,
-     + 	} else
-     + 		set_object_name_for_intent_to_add_entry(ce);
-     + 
-     +-	if (repo_ignore_case(the_repository) && alias && different_name(ce, alias))
-     ++	if (repo_ignore_case(istate->repo) && alias && different_name(ce, alias))
-     + 		ce = create_alias_ce(istate, ce, alias);
-     + 	ce->ce_flags |= CE_ADDED;
-     + 
-     +@@ read-cache.c: int refresh_index(struct index_state *istate, unsigned int flags,
-     + 	int t2_sum_scan = 0;
-     + 
-     + 	if (flags & REFRESH_PROGRESS && isatty(2))
-     +-		progress = start_delayed_progress(the_repository,
-     ++		progress = start_delayed_progress(istate->repo,
-     + 						  _("Refresh index"),
-     + 						  istate->cache_nr);
-     + 
-      @@ read-cache.c: static int read_one_entry_quick(const struct object_id *oid, struct strbuf *base
-       void overlay_tree_on_index(struct index_state *istate,
-       			   const char *tree_name, const char *prefix)
-
-
- read-cache.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
-
-diff --git a/read-cache.c b/read-cache.c
-index 5bbfbfeceb..5ca2561e7a 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -908,12 +908,12 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
- 	 * case of the file being added to the repository matches (is folded into) the existing
- 	 * entry's directory case.
- 	 */
--	if (repo_ignore_case(the_repository)) {
-+	if (repo_ignore_case(istate->repo)) {
- 		adjust_dirname_case(istate, ce->name);
- 	}
- 	if (!(flags & ADD_CACHE_RENORMALIZE)) {
- 		alias = index_file_exists(istate, ce->name,
--					  ce_namelen(ce), repo_ignore_case(the_repository));
-+					  ce_namelen(ce), repo_ignore_case(istate->repo));
- 		if (alias &&
- 		    !ce_stage(alias) &&
- 		    !ie_match_stat(istate, alias, st, ce_option)) {
-@@ -934,7 +934,7 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
- 	} else
- 		set_object_name_for_intent_to_add_entry(ce);
- 
--	if (repo_ignore_case(the_repository) && alias && different_name(ce, alias))
-+	if (repo_ignore_case(istate->repo) && alias && different_name(ce, alias))
- 		ce = create_alias_ce(istate, ce, alias);
- 	ce->ce_flags |= CE_ADDED;
- 
-@@ -1537,7 +1537,7 @@ int refresh_index(struct index_state *istate, unsigned int flags,
- 	int t2_sum_scan = 0;
- 
- 	if (flags & REFRESH_PROGRESS && isatty(2))
--		progress = start_delayed_progress(the_repository,
-+		progress = start_delayed_progress(istate->repo,
- 						  _("Refresh index"),
- 						  istate->cache_nr);
- 
-@@ -3874,6 +3874,7 @@ static int read_one_entry_quick(const struct object_id *oid, struct strbuf *base
- void overlay_tree_on_index(struct index_state *istate,
- 			   const char *tree_name, const char *prefix)
- {
-+	struct repository *repo = istate->repo;
- 	struct tree *tree;
- 	struct object_id oid;
- 	struct pathspec pathspec;
-@@ -3882,9 +3883,9 @@ void overlay_tree_on_index(struct index_state *istate,
- 	read_tree_fn_t fn = NULL;
- 	int err;
- 
--	if (repo_get_oid(the_repository, tree_name, &oid))
-+	if (repo_get_oid(repo, tree_name, &oid))
- 		die("tree-ish %s not found.", tree_name);
--	tree = repo_parse_tree_indirect(the_repository, &oid);
-+	tree = repo_parse_tree_indirect(repo, &oid);
- 	if (!tree)
- 		die("bad tree-ish %s", tree_name);
- 
-@@ -3919,7 +3920,7 @@ void overlay_tree_on_index(struct index_state *istate,
- 
- 	if (!fn)
- 		fn = read_one_entry_quick;
--	err = read_tree(the_repository, tree, &pathspec, fn, istate);
-+	err = read_tree(repo, tree, &pathspec, fn, istate);
- 	clear_pathspec(&pathspec);
- 	if (err)
- 		die("unable to read tree entries %s", tree_name);
-
-base-commit: 1891de46f79dc444a47db1c87bd0c8c76b5463f2
--- 
-gitgitgadget
