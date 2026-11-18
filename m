@@ -1,111 +1,64 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.156
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030218;
-	b=Qesgpwx4w6tC/OBU7FOWwFjU2qkhxevG7ubsCGM3qbScXoFb5WsrtYPBMIHVRH1kVPnP
-	 UOZizXO1qdj1tv0uVV+LUcZROlCyjJe7fMWo/748IzSMju7Xj77aw9xeOgySRBuzoByBD
-	 1+DUdG2UWGJr3Pg2AkHiFrTt7mCsyPQVLqqKjmMPH8ygkeUB3DMa7h/LYJFm/SYPO0B2H
-	 qaCGlkZJsnSaU6nxoQLnymQ0Zd14Wk1kAJp4todyb+v4gll1IzZtwLjrnEPUGRBVsYOON
-	 M5jNTeTR3tYV7AeqHmNgHQo/rPpj91tQBOtOLcwZGcRaaE4bhj3vDk81q+LVnq6iEWA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030218;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Mime-Version:Content-Transfer-Encoding:Content-Type:Date:
-	 Message-Id:Cc:Subject:From:To:X-Mailer:References:In-Reply-To;
-	bh=ARz0ZCZgJH/OtGctZQ0ZouLU+xhCS4xli8bXNhXOgNo=;
-	b=GxwaJysvBWqDPt7i8+MhcPRY8mbG1N46TXogAjWs99TccRdqOzP+ggTDTJOLWhvZ7vBR
-	 a1erIA3PA1p0Bf/fF2CgMGaySB4hfm+S7AQvVEM1DsN+z4TovJ6YGrdkOrSIodKlCHDFb
-	 2UNyTZbVTVfNuwTSkxi0j/FNLPGdrSKH56x83YcvTG0AzvcWYaZf8C24XSNilszIxbVU8
-	 h6wogYQWPnoR02ekEpCyEflR/C/V2+HggwpaOksV/sqTtNattBQAS922L5PQjE3pxEa2d
-	 r22gOJFcZRwiuLgKqPiP/fSbpWOBAmwM1P7yN174ioplG0yIfW2JyCzbrLQDDLLpKxQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=fastmail.com;
-	spf=pass smtp.mailfrom=fastmail.com;
-	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm3 header.b=VCbW5RmP;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="udN/zx0y";
-	arc=none smtp.remote-ip=202.12.124.156
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.12
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795030429;
+	b=HvGylcxMQudx+RVQWYVx/XVqp6sO95QY6j6M4lIqzQZy54By64bKWHLOLmSkocz5bxn9
+	 l97NXxAIEaBMpg03IDu5o1XAk49t2Huyu85Gcjqv3nzHFfMTu7N2TuRiO5VMAVePCytqr
+	 s3e6qFgatped3cu8F59a0pTu014LQekrTeztCVI0BeFqkr6Gn5UfG2SCH7sYFX+nVi9bf
+	 CFrKCO0ln/ugzvVpZhhWkAnD/Z5c3UrOnjQPMiB1tdsJnvVzxGi+PTgNPUZdCwojN78bj
+	 VmtuSMOoOc2KYU28WAJct/kidkLRVJrEaD6p8xz5GpsJ+7ofRxtACsQjOaR9rRRDx5g==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030429;
+	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:MIME-Version:Content-Type;
+	bh=bobzesAlZx+G2IcjZ+oR/JrlT/FIVHHDu2foaEk3mDQ=;
+	b=ipfQOEc91fqjPccNIgwPlgrmXM8XNW/ZqvRvcNgPhCwT3Zt53q0M//nHXICVV+aLQNzS
+	 oyVfmWw7gxkqrt6Rn5w6sT2RsYXzZmj+o1rXM10xh5GKt0gYZ7Sco52wliOZbCDFJC5yT
+	 GoFBgn3Xivuk91ugqoIbbASuBpQww+hSTgWyQBS1yfSCDMZFWgZBBUR0z7jkFOPotLllD
+	 f03IHzTvgLrURNKYMl4lQK0S5IEO5znsOImgn2kYOZ8+xYtjo13xgsEUKlls8mLvu1x81
+	 9EXIM7rYN1EAdAdY0eS/a7Cu0P7hPnfj8ut2fHxufftLJUu6qHEwQPAXYzWwzFA6ggg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=collabora.com;
+	spf=pass smtp.mailfrom=collabora.com;
+	dkim=pass header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=Vl5u79G6;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.12
+Received: from sender5-op-o12.zoho.com (sender5-op-o12.zoho.com [165.173.182.12])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D87606D377
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 19:30:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 47D87606D377
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D6C606B411
+	for <git@vger.kernel.org>; Wed, 18 Nov 2026 19:33:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 60D6C606B411
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm3 header.b=VCbW5RmP;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=udN/zx0y
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8D5327A01D4
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 14:30:17 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Wed, 18 Nov 2026 14:30:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1795030217;
-	 x=1795116617; bh=ARz0ZCZgJH/OtGctZQ0ZouLU+xhCS4xli8bXNhXOgNo=; b=
-	VCbW5RmPy4FVnAQNfXeqEY2YAZUQ2WjFAiLSr29I3ALLKue1UxiFtv7473mUJTTL
-	HU/io2OpMqQW6qpyhdcJTUboaB5ObyHh4mXNjVwS7cOATw/HOM/9gcHvEbTHbl/m
-	gejZA3JAgpMt+n63RImqv3m48pWptq1mLQOGQ3Xk2MdTv7FXxCoPAqKRoh/y8pwT
-	cfl9f+TeGcMkC1VxI2OnixAnje/+4sgQtWlgV3sAvnfuFthrsH8Ksa5iuJxL7Et4
-	3Zp9mNdnThE3+Tdq+bQX4IScjlbBhxXrTcE6/5E5Y5dTmfOOpdlLenqNBk/fKT8X
-	qm9a/2uUwFDkbSMuBNJtgg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795030217; x=
-	1795116617; bh=ARz0ZCZgJH/OtGctZQ0ZouLU+xhCS4xli8bXNhXOgNo=; b=u
-	dN/zx0ydxqLdCfEndsuYyKaADwW8gUUOU85LumEgH6+5q9QCe0k7mvtrF+Z1APXi
-	KNTSslTXPXh/p/4psw00qFJm/R0W55UGT09aCsJ1Jrzd/S/0G2kIkuUxVMRRlBHg
-	RYdxo+npMaEu0jxmxei1Z9cWMQHRxizB7/2YTUzuCQXcOJrDltgWcSdytv6frnyq
-	g6cq9fDNuROC+K0RN3OuJSiBPm4NZBv8BxjFztOFLax6njAT2qrmigWeCgn5qWgy
-	w7AM1TxngfWTn+nBW6JIXuL7m+TRYLUGG/Gi5Nf85Fo4ECDOKVAk3V4IQ1gpLsQW
-	WWUgUuS4eT+tjO7FQ8v+w==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=fastmail.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795030217; d=fastmail.com;
-	mf=PG1hcmtjaHVjYXJyb2xsQGZhc3RtYWlsLmNvbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:VyDQOigvAifwhaVxG8LnO+aDosXGc0ePQYhzTzTZWMC59Qd
-	MEvdpv0i/pqvOUYFdbphaRmlXzkGlHOB5No5j8DNsErGC8UpJgqC4EjubVZkAUi6
-	rv0E/0RGHedeFSQbB22Ea2Tz6kAQ9anWrk149sVil9jxmyL9+whyAVHwvAqvtJCR
-	r+jBF2kaqi+O8Tu8vWVZaOAhc9tyCTL3vQMVwsr3nT+8VJApOo7P/0nSwwcfYBUg
-	sCsW8CvIi/Zipy4+1fzKqLsTCkEK1dX6uEbTTjRkqkc2anEEGFwAAjb2vBt5inxI
-	Kb5B931x80jLjRW+yOMB3ll/jYtmmROaEP0znFw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:4tpVm2Ts4YzTDSQBdtE/P/nXxl5v4nE9OZTEnOImdWY=:DtQWpTyO1sjNdCp8vFOuKqvYQ6c60cErhz0RZh8+5JI=;
-X-ME-Sender: <xms:yfz9ajuPlSpQcf8cco5ZdJ2BQZiXQbylmRpiuXSoWJrTd23AW8rCCg>
-    <xme:yfz9arXk7c_UNsmW-JVbUC8FyeRyH9rRiYab8bPKJXW3lAXlX1NzHYiLHeOe4iMlv
-    SzHt23ZW9snrHj3Z34ajFIy9YyX2AWdNK5KGDDmJPMfQAYbh4MW55DKOw>
-X-ME-Received: <xmr:yfz9avGRs7N8HLVJxypLGzzFGlD20zrdx4-SGQEHV_2MLiktnj70O9m1gUOl517QAJnhyAquO663taSIPuBFugx8>
-X-ME-Proxy-Cause: dmFkZTGL7A7nLvMHiCUyTPt7beThl+AjZ6wFidXldNLrI91JAiUacmbv0XsqkYppmeqvjO
-    fwqYj/KXiOmL6hYtNAuAPLMaJj77Sh40KUOxIn4+aMOErdyoNjv7b+o7W87tOgYnu0wkrA
-    Xw/aFJt90jSG72jYqus+ZePD2F1hyvDVAmjsTnDG458w+svHB4W8kmUIwnCvlR2Fw/GHa5
-    oqEUMjypS4L0MQlAflSRZ15aCud6yjtc5bd66g8VMet0A42SUF2/kRb0hLnJ6yh33CQkVg
-    qZpWN+hcCrxNT48aoBMp5ecK5+F7nD68q2IzbE3gFBYuuAcA1tbHNBu2siu04KHsjm2ln8
-    pPPIQ6Mw8Gx70zgQU4dcb18IwRi8Dm4sj4Hb9Xo+R9JkG8B09Z0gtfW4TuWtFU8bK19KeL
-    5FZ8M1FYbhT6DIsNxW+6qtl/qsAp9pQ75fwYmw+4uIdwfVoXDKuzzxO/DkxHHjSvo9o8dc
-    1nfUiLUmIMzvUzBxydcGNbOgpMAPx1TsAvz5ElEBKQHNRcXKrtlm8Jt+P3yZ2H38o8QGu2
-    3AXZV2S4Et+DqMW5tuoUR4zFvKDz+QpEZMqCwkBZEjDoBdgnv6+yJvGho+5z4r8LrvGLbq
-    c/5j1KkQ94O5D+gFcJM48zaQ6zCyjhtP/fr3yFbA8VwJ7HoDGBF8Mplc00Hg
-X-ME-Proxy: <xmx:yfz9at3TYObTwcYsOstkXxM1QTa_Z5j-sAeu8ZapffX_MsRUERR4kg>
-    <xmx:yfz9ahOAZEAdpZ3YOSuuXdp_fgNy-uC3hbydwq8jS5TZ6jIE_p6DnA>
-    <xmx:yfz9as7zW0Xoas-4rmr8PtVUts088qh8hcgE6gJ8FD3zIEVsr_OibQ>
-    <xmx:yfz9ar0qU-GH3-O543rpKatusBCygy6RPvUhORAfvhZpa2-Mo0peeg>
-    <xmx:yfz9alHMXjs_7aRn6m9oPdFfNDX41RFgHn8u6fbJ9VFzi5AwOzQy_05C>
-Feedback-ID: id2564aa6:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Nov 2026 14:30:16 -0500 (EST)
+	dkim=pass (1024-bit key, unprotected) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=Vl5u79G6
+ARC-Seal: i=1; a=rsa-sha256; t=1795030415; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=ROLt7USlZnP9AH+0EiRhLDOUG7wKg0Q3+ms8deQtFUCLwnwHfqrqVqtWqYuQL5vI8FB8x6WuIfZt3EUXItgeaOWMJVDEIvZnm0azNS4j9RB0jXpC7jszIs+RLQfiYbPyw+M+W0k22HHbIq9BuUM2VSul7VQJxwAkOkN7istMt5w=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1795030415; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=bobzesAlZx+G2IcjZ+oR/JrlT/FIVHHDu2foaEk3mDQ=; 
+	b=oH2D9WsbM6UyGsT4pUEi0fWAj4NRDMEZiWSkeWeyUnl/a/gACdgOANKeykVV7xJC+LDK5+yQ+2D9cvFhaynxWPdeRxE68HE2HDIwPTWqr+Yw2Pewp3TRzrPQ66J8guOhuyszcyKb6mjL73V0njV4eX9XsIOGLYmzT96QtAOQ3xQ=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: a=rsa-sha256; b=Vl5u79G6yfofM5iKqn2MtkMMrpigMgJjWkpoCgQTyRaGyf/G0MW1PwJBaqfQjeI/k7hIwAobFt43OSK4kzA2vCPWVY04y9ip5EnVtVDygr1RXGDG0kD/bA3BbXZxIyCltLOWDILq6eNgAap4p+3+aUXC/V5+mHGtfOLpkG3TM9I=; c=relaxed/relaxed; s=zohomail; d=collabora.com; v=1; bh=bobzesAlZx+G2IcjZ+oR/JrlT/FIVHHDu2foaEk3mDQ=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
+Received: by smtp.zohomail.com with SMTPS id 1795030413964194.5349348168229;
+	Wed, 18 Nov 2026 11:33:33 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Andreas Wendleder <gonsolo@gmail.com>, Phillip
+ Wood <phillip.wood@dunelm.org.uk>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 1/3] submodule: return an error instead of BUG() for an
+ unexpected git dir
+In-Reply-To: <xmqqecci54tw.fsf@gitster.g>
+References: <avuJBGlB3pRU3JU0@pampelmuse>
+ <20261118163249.1693361-1-adrian.ratiu@collabora.com>
+ <20261118163249.1693361-2-adrian.ratiu@collabora.com>
+ <xmqqecci54tw.fsf@gitster.g>
+Date: Wed, 18 Nov 2026 21:33:27 +0200
+Message-ID: <874idej5o8.fsf@collabora.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -114,77 +67,60 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 18 Nov 2026 14:30:16 -0500
-Message-Id: <DMYL3TCBEMAJ.2MW8J9PLG9ZD@fastmail.com>
-Cc: <git@vger.kernel.org>, <jltobler@gmail.com>, <ps@pks.im>
-Subject: Re: [PATCH v7 1/1] repo: add filtering options to "repo structure"
-From: "Mark C. Chu-Carroll" <markchucarroll@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, "Mark C. Chu-Carroll"
- <markchucarroll@fastmail.com>
-X-Mailer: aerc 0.21.0
-References: <20261015144559.3652143-3-markchucarroll@fastmail.com>
- <20261015170342.39967-1-markchucarroll@fastmail.com>
- <20261015170342.39967-2-markchucarroll@fastmail.com>
- <xmqq33u5c6z6.fsf@gitster.g>
-In-Reply-To: <xmqq33u5c6z6.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain
 
-On Fri Oct 16, 2026 at 11:59 PM EDT, Junio C Hamano wrote:
-> "Mark C. Chu-Carroll" <markchucarroll@fastmail.com> writes:
+On Wed, 18 Nov 2026, Junio C Hamano <gitster@pobox.com> wrote:
+> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
 >
->>  t/t1901-repo-structure.sh   | 197 ++++++++++++++++++++++++++++++++++++
+>> 9cf8547320 (clone: prevent clashing git dirs when cloning submodule in
+>> parallel, 2024-01-28) added a caller that passes a path read from the
+>> gitfile, which made the BUG() reachable.
+>>
+>> Return an error instead of BUG(), so the command dies with the same
+>> "refusing to create/use ..." message as when the submodulePathConfig
+>> extension is enabled.
 >
-> This test is broken with SHA-256 and in Git 3.0.
+> Makes sense.
 >
->> +test_expect_success 'filter by object type' '
->
-> This hardcodes many 40 hexdigits constants, like ...
->
->> +	test_when_finished "rm -rf repo" &&
->> +	git init repo &&
->> +	(
->> ...
->> +		objects.blobs.max_size=3D13
->> +		objects.blobs.max_size_oid=3D97d808e45116bf02103490294d3d46dad7a2ac62
->
-> ... this one, which is very specific to SHA-1.  Existing tests in
-> this file (like the one immediately after this one) protects such a
-> test with SHA1 prerequisite to avoid breaking in SHA-256
-> environment, which is far from ideal but better than leaving it
-> broken.  In the longer term, we should strive to get rid of use of
-> SHA1 prerequisites, as SHA-256 will be becoming the default in not
-> so distant future versions of Git.
->
->>  test_expect_success SHA1 'lines and nul format' '
->>  	test_when_finished "rm -rf repo" &&
->>  	git init repo &&
->
-> If you choose to fix them, see recent effort by others for
-> inspiration to make sure you can share and reuse most of this test
-> between two supported hash functions, e.g. the discussion that lead
-> to
->
->   https://lore.kernel.org/git/pull.2252.v4.git.1792012956734.gitgitgadget=
-@gmail.com/
->
-> but you may choose to punt and just put your broken test under SHA1
-> prerequisite to sweep the breakage under the rug just like other
-> existing tests in this file.
+> The above archaeology was quite illuminating.  It seems that the
+> offending commit came without the usual on-list reviews as part of
+> the Git 2.39.4/2.45.1 updates.
 
-Sorry for the delay in responding to this; I missed this message.
+Yeah, I wasn't part of discussions on this, so I don't have the full
+context either, but I do think switching BUG() -> error() makes sense.
 
-I think that the best approach for now is to put this under SHA1,
-then I'll take on updating all of the tests in this file to get rid=20
-ofthe SHA1 prerequisite.
+>> Reported-by: Andreas Wendleder <gonsolo@gmail.com>
+>> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+>> ---
+>>  submodule.c                 |  8 ++++++--
+>>  t/t7450-bad-git-dotfiles.sh | 14 ++++++++++++++
+>>  2 files changed, 20 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/submodule.c b/submodule.c
+>> index 1302c11ddf..d00d820d42 100644
+>> --- a/submodule.c
+>> +++ b/submodule.c
+>> @@ -2410,10 +2410,14 @@ static int validate_submodule_legacy_git_dir(char *git_dir, const char *submodul
+>>  		BUG("validate_submodule_git_dir() must be called with "
+>>  		    "extensions.submodulePathConfig disabled.");
+>>  
+>> +	/*
+>> +	 * The git dir may come from a gitfile on disk, so a mismatch is
+>> +	 * not necessarily a bug in the caller.
+>> +	 */
+>
+> "is not necessarily a bug" is not incorrect per se, but it is only
+> relevant in the context of turning what was originally a BUG() into
+> a "return error()".  If this had been written to return an error
+> instead of calling BUG() from the beginning, you would not have
+> phrased the comment that way.
+>
+> If this if() statement needs a comment, we should state why these
+> two are expected to match, or why it is an error if they do not
+> match.
 
-      -Mark
+Good point.
 
---=20
-Mark Craig Chu-Carroll (@MarkChuCarroll at gitlab)
-*** Software Tools/Math Geek - Software Engineer at Gitlab
-*** Work Email: mcarroll@gitlab.com / markchucarroll@fastmail.com
-*** Personal Blog: http://goodmath.org/blog / Personal email: markcc@gmail.=
-com
-
+I'll drop the comment addition in v2 since we don't need to over-explain
+the BUG() -> error() transition.
