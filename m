@@ -1,95 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.42
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794985008;
-	b=js+6+KkI3M7SHV7BjWuNPMC8hCVz05Nf6BsD1pXYeaqnS6CZ3Tery6RiKDxmb38G1kTZ
-	 B79ZJYYAe4mtAJK9KSUpGX7KYcyXJFJrgO2qQiTY834AhvO5LiVj1P++ZaJwL7eSj2TpW
-	 PoWhwsw2fwX00NkRtWI3TVhn3Bm5+qRgiHhUnSkfgy4fSuDqnm/BM+wwvItTESa7pyuhP
-	 reFn6X51h//kH4xNUQ5m9wEXlSEN4TdWDYiVqoJ4vQYRGWnJ1TNpPNQZIQX+mp+JkNOU2
-	 oQE+ifwYFVl1PPfjqqOaI9MCXrYnUDLEVL4MEPxy2iVRfphNbubIzOrb8kK9lXBtZbg==
+	t=1794985009;
+	b=q+fDBynyrtBBUnQQ5QsDoVcDF3j3vGRhjhrCaqRxk0WaJdfhCS76QINCCZHOc+5i6Rik
+	 1dl24NROGE2IVR/OItP/7Y01LGuMb7sQ87LVbnDvOkz3xxkPy+YEgN1OyYFCVbFftHOgZ
+	 KlxDwNJe+cCmAu5x/5r1GGwEM7YrA6gS+teeNbhaAGr+3uWHN6KK2nt6+MzZ6h44XGCFp
+	 Wp6c92WiW0FFYlCoqCVmaMB7jsJ51wqolYfQ4NfKo8stpUfp/7nWern9wsQ4Jp7QjHhrH
+	 uMJYcSw6DL9eTTAkhrCAfIjJ4jqRklnQ9LCWHeL8AlsO6cI2he9zMyb8+zjd9Vu9uNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794985008;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794985009;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=EG/FjE0NIvYUh8L+hen96J0lBc/GuACk/O8oj+cJeBI=;
-	b=EZMfls26qvy8ZlaRoBjy+eGeHN6R1ZGT6E/ckuD3ARxw5vd2yzxLAdIoBMpHKAMLWdXg
-	 HjGA372iEKxItnIYTN/TL4HgUHAXHihlXnoQBAqBI9MIm0XcKWJsSCRcfH9syOaqu8mrW
-	 hdUbcAL3Ta08pTsn4OaD3Rz6VpgBt+weiKkX7xIexnOD5bERyZ5xxhqPhhmzL3m9FxTD6
-	 rAupqIThZ+omAKV9hPUsZqJvcZXlkuFcVb2Wma1qYPNvg7POLk8qW1sl3bOgpq1Uw812j
-	 LADSsvcgjVzvrDLznVsfWqqDjTlsS03iLS/XZm2Ze+euuCjue2pBhhbPrJkx8x/t/tA==
+	bh=0E3fCx9XCR8vCrn+9DeLShjIsItyc0sFuK5XQADgWpE=;
+	b=XZrrnAHYaXlWPBQJtkKTJlPlKU5aPPJbWbQLA4rIy7RaLZomO5p3IYTDA+0ifFJT+Lee
+	 f0quzx5C8StbMUnISYTeJ60h9QrQ92aPVH/qnMy17zkFYEJ/g/uGuPq09mIj4fhTVzG5T
+	 nhfLZBtdkDRQ/4+Q4XTFnBlYzo/jpleVUwNLbNWig5Mjz3CEWBE84lkVTUkfnt+FGarm1
+	 kBZfz3DU12xzu9HxsEX38lGtvrMYhN0GHU2z8TtOh9I9aN0gS5LSMdYDiDjV2yR9NbRGp
+	 7gc3RbjXC24ryrbNQXJiQO0lFlsaCpSKhfnsBPzUOQMw8W8dnSVUfmyDnTAcZFaCgtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="bk0/Chtv";
-	arc=none smtp.remote-ip=209.85.128.44
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QCwXdz8x;
+	arc=none smtp.remote-ip=209.85.128.42
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B48606A331
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 06:56:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D9B48606A331
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30061606A330
+	for <git@vger.kernel.org>; Wed, 18 Nov 2026 06:56:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 30061606A330
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=bk0/Chtv
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4a3517554f7so6867455e9.2
-        for <git@vger.kernel.org>; Tue, 17 Nov 2026 22:56:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QCwXdz8x
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4ac95761c85so4363565e9.2
+        for <git@vger.kernel.org>; Tue, 17 Nov 2026 22:56:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794985006; x=1795589806; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794985008; x=1795589808; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=EG/FjE0NIvYUh8L+hen96J0lBc/GuACk/O8oj+cJeBI=;
-        b=bk0/Chtvyu/CRCQM42yfSJg1zir6JX9BNR8TGgrmbHLW/cx5pG6FNQpq3rIDxQFFAJ
-         NK3SnbNB70PnwmjIIAW6mgKUZPuvuecpWqurdNMCycLthUgC6Ocqx8YcmTdwpfYhQ7Xn
-         9PHBoTI2Je6X/nu//Q8Ka2x4NpUzVq8eonjbFB8auzLb4zIX5PfuYQ2IpDDaUH6CRxjl
-         /VLflJ4XhkamDQh4JdVLJhzRwCAJw0hmdwTyi7b1REySyTv6IeTluv2XqoO/FOXYoEu3
-         2LY4zxj2he1vLKkQPjBzYuPTJaVknI+HawnTujmdWLICVVkqvU+82U4m6zfYZKkbivUZ
-         ZBOA==
+        bh=0E3fCx9XCR8vCrn+9DeLShjIsItyc0sFuK5XQADgWpE=;
+        b=QCwXdz8xIjO8JBuiZZXg5yXptmyYSMgA8L1V77kCnlwciFEKLZRwnTvX0/DhcXXPFB
+         wKR2sPJ2wDL0CRlwOUCgU1R8tAJ7DRPkKtPLfhd0wpqIsYPdfT9rLnQUXGO1gM9BVWpu
+         Vxmwm0X5wAnaM0HNRQyegwVQrKwF/glQUeY9ZBN6PrJHaZI0grEC+/2csTmNnWAN1ClH
+         +P1LI0d748jA4NOGJNfzstrik6yLWkW8QRk5gxu8hL4oMCWrCCwylAwJ45fp8k1E6Y4A
+         m6/3IK3eg0VknFDXxnGNTFG/Qw3rPFqpdauvEZYn/6yIzZs20IiEDIBPMTULHRQXMFu5
+         Nn2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794985006; x=1795589806;
+        d=1e100.net; s=20260707; t=1794985008; x=1795589808;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=EG/FjE0NIvYUh8L+hen96J0lBc/GuACk/O8oj+cJeBI=;
-        b=UrDthLDsxTCAcbiMK8JimzaUKrdPE2BwddsnJyUr//m6WbFq7iAdU5oi5vXkIMiheN
-         m8KOcKxzRy1AZA3NFOph698Bo3KeiGbkoDgWQG4bX5X5Vkhg0lm2gcShUXEW/Jg2EAME
-         QpEXzyRYjVGAsV1gozJqdy315m5pLc5ggjeiQ8gS/v0WBpgoKqd1MmGoA+EJwh2OfIGR
-         /EF8YiWqi+lmd5Lz2w+oPKlEsNNYV9hxN7oZe2apjDZb0Fiy4MhjBOfaFtlUZ6CGrUoT
-         jabcpxbzpaXr2be05lt8tl/kfFhpPWh8X+8Kh9oFbzocJ9JUow2jDcquVrSt13y9zVd8
-         iwiQ==
-X-Gm-Message-State: APuU4Z8Wd94TRrMwrVVjmJflXZpkGK0kF53+Htew9ERiavbVbJ2ig1AA
-	WJe5I11l12e2nIZkP6O8EeDhrzJjKi2IyHQrhE3IKrjP4RJxd5s5vrkmK/3Ttw==
-X-Gm-Gg: AYBFou0gMa9c9HjuHrEsJNL/+1vkPHXldlh46mAWdXvG6FZa9Fx6f0TILLgJHkF89Mh
-	fX0GWf83Ls9/78vHNQv9xUOQraYYfLmMsxwJI5ZzrIxKLnv2o9ejDvM47AemXTk7peY36GB/QtJ
-	RCFWJTABdJ0cCQSf3XsTtaf0xonnfDokqCsUneYoGlZ+7eYnfujh4FJalAXIQVjakY6ey/6K3or
-	4niBhPeSFL6iTmwNmBfbsBD0OP27APZN0EFSgJf4cWMI2PVUtUNckMBaX+ffyouoIhSSUIQUxOx
-	DNQ9XuuVD+hEfwyvfoiZsr7ez8Gp0T58AvCr2MaLXyXU5nT5sSRfUFJ7bMZIHb9XSQ7+U9aDn79
-	EFx51gJfoCzLAO/lnXo1UqCguCrRNkUa86aCt9rTU39eorkfPk+3kHVZpHHfQp/5pgR+4TM/Szj
-	bV0tN1T+SI3InEasK7RG+07pbr6Kro2c4MyDvpx9KlBDas20588SD6US9O4/AaPsy/tJL/scFXV
-	Bbvdgfjts6hjk2mpE+IiQ6tlBMWwgfmQ1a9DN92wARr1G4I7iG/onmRqCsmCZ+7DN23ENpnIbm3
-	ZANJK8/Pfgk0KXoApse9XYTX1NseuOVzOEZ7fHEgu138o5gCpvssTWAwUqf8hqk=
-X-Received: by 2002:a05:600c:3b84:b0:4bb:5dbf:af06 with SMTP id 5b1f17b1804b1-4bb7da2243fmr31689945e9.9.1794985006256;
-        Tue, 17 Nov 2026 22:56:46 -0800 (PST)
+        bh=0E3fCx9XCR8vCrn+9DeLShjIsItyc0sFuK5XQADgWpE=;
+        b=m8nUJxNeVTWCwiz0sQQjnoE83Y9Avbtq5taryGQ6zYjretHQcK1gahMe8G+aAP3wVv
+         af9agApq+4+wk1OtqY5L9koU5FZLmyqW+hSv12un2EQNNUKNFsZ7hwIMVOXG+HhBdEL8
+         HJP8rAHeE6oKPOIh3PUst0XAR70arp5Jy+Ox+JAKrh8ZbP5wE46lMB5hyZvLG6/46qJE
+         ckFZ2IrVoGWMPiMbgyy6+6j62EEk9/eoG5IOWWiA9IFvDqkhdWr1Y+cfwx+Lcd/Z7PGl
+         lmDStYtdtebQmwRAOjGTgo5GQDOQ+/XN/FQS/XzjzWUoVU4IakhY7u49ZBwqA0JTRMRc
+         30Rg==
+X-Gm-Message-State: APuU4Z/ck653jQR2KbtxYP/n/FMvl9D3tPyktdEWaSLreHcj9E2PxpH0
+	Rg5kErFQK9Xdnn7HDyzCnSC6XC8BTa+gl0gITbx3zu4wfIDTEZKec853PfYLVg==
+X-Gm-Gg: AYBFou3qzAt732pE0fe0ynbi9rWHHDKnDZrp3NimcGzpjTcUt9qCszwJz3YhfwTM4kK
+	aY51bBU8JmQknQuBv6999IsuSpL3F2Ka3va3xe/mpzE6cQv69+P1AxoB1vQsQf7ZnsYdIjE9X7H
+	ckXIrQb+ZIyE+cvY3h4y6undcdzt0TCzBdy2Wzg7dBbMCL2KjS9ckb9x5xMD3oU94oDUFuFGCJQ
+	DTjt3OMLNvPjf7Uhtv3KBRpKw3U+fvxmjaKMvgQz1HxdOxn3xD3fjxxZWAiUNcT16BB5wo4vmxr
+	2d6WRRBfV/xJDYS+X9rNn4iRrZ+n9+qOHzmT9tCHcuFype93uAqEOVILngSOSKL/IizUOWuJ0WZ
+	W8jgBfxs1ueQpqS51SM+lQXkld+zNaTB5gEWJfe383mX7Sog9873U4TnDImaOu3oGCTqzWvTMbU
+	3sX2QZd2/epYXMwrBU0mNVzY7B5vys66fpylEv0J9xdpLfc4CwNfw9wMj6f0pxay35rFBQHXeOY
+	Cirbh6o0htJL1EgTSUcGFNTCXMCOpsRVS+Fr/7yc9Wb18UGC3I12g7QFmeLZ07j2FQQ44Julxrc
+	KPwcbXTHguCQSeYt2p7WDjjgTSWUB9Ebal56dHv2heGsAEg+y7qVb5bHW2AzxX0=
+X-Received: by 2002:a05:600c:8b63:b0:4bb:69f2:87f7 with SMTP id 5b1f17b1804b1-4bb7da1b372mr28424985e9.18.1794985007576;
+        Tue, 17 Nov 2026 22:56:47 -0800 (PST)
 Received: from ubuntu26lts1.example.com ([151.31.213.44])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb783f7eecsm222311235e9.3.2026.11.17.22.56.45
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb783f7eecsm222311235e9.3.2026.11.17.22.56.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2026 22:56:45 -0800 (PST)
+        Tue, 17 Nov 2026 22:56:46 -0800 (PST)
 From: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Elia Pinto <gitter.spiros@gmail.com>,
-	Kristofer Karlsson <krka@spotify.com>,
-	Han Xin <hanxin.hx@alibaba-inc.com>,
-	Han Xin <chiyutianyi@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 1/4] unpack-objects: use size_t for object sizes
-Date: Wed, 18 Nov 2026 07:56:35 +0100
-Message-ID: <b2c3d349a4ac73da7e1d066ac43754d3e6939b9f.1794984184.git.gitter.spiros@gmail.com>
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 2/4] index-pack: use size_t in write_compressed()
+Date: Wed, 18 Nov 2026 07:56:36 +0100
+Message-ID: <9952f0fb104450461661b3f8b5f646760198744c.1794984184.git.gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1794984184.git.gitter.spiros@gmail.com>
 References: <cover.1793446357.git.gitter.spiros@gmail.com> <cover.1794984184.git.gitter.spiros@gmail.com>
@@ -104,235 +99,42 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Since f2063855fb (index-pack, unpack-objects: use size_t for object
-size, 2026-05-08), unpack_one() decodes the size of an object into a
-size_t, and e07ac16d1c (unpack-objects: pass the size of a streamed
-blob as size_t, 2026-11-06) passes it on as such to stream_blob(),
-which handles blobs larger than core.bigFileThreshold. The rest of
-builtin/unpack-objects.c still takes the size as an "unsigned long":
+write_compressed() in builtin/index-pack.c takes the object size as an
+"unsigned int" and returns an "int", which are 32 bits wide on all
+platforms. It is used by append_obj_to_pack() when resolving thin packs
+with --fix-thin.
 
- - unpack_non_delta_entry() and get_data(), used for commits, trees,
-   tags and blobs below core.bigFileThreshold, and for all blobs with
-   "git unpack-objects -n", which never streams;
+With a local base of 4GiB or more, write_compressed() compresses only
+the first "size mod 2^32" bytes, while the pack header written by
+append_obj_to_pack() records the full size. Later, when resolving deltas
+against that base, unpack_data() encounters an early end of stream and
+dies with "serious inflate inconsistency". Shrinking the parameter to 16
+bits and using a 100KiB base makes "git index-pack --fix-thin" die the
+same way.
 
- - unpack_delta_entry() and the functions that keep and resolve
-   deltas;
+Use size_t for both the size parameter and the return value.
 
- - struct obj_buffer, which keeps objects around for --strict.
-
-On platforms where "long" is 32 bits while size_t is 64, such as 64-bit
-Windows, the size of an object of 4GiB or more is therefore truncated:
-
- - For an object that is not streamed, get_data() allocates a buffer
-   of the truncated size, inflate runs out of room in it, and
-   unpack-objects fails with "inflate returned -5". Truncating the
-   size to 16 bits in get_data() and unpack_non_delta_entry()
-   reproduces this with a pack holding a 70000-byte blob, both with
-   and without -n.
-
- - unpack_delta_entry() reads the base of a delta through
-   cast_size_t_to_ulong(), so a base of 4GiB or more makes it die even
-   when the result would be smaller.
-
- - The result of a delta reaches write_object() as a size_t, but
-   write_object() takes it as an "unsigned long". A result of 4GiB or
-   more is silently truncated there, and an object with the wrong
-   contents, hence the wrong name, is written.
-
-Use size_t across builtin/unpack-objects.c. The functions that
-write_object() hands objects to, odb_write_object() and
-parse_object_buffer(), still take an "unsigned long", as does
-fsck_object(); they are updated separately. Until then, move the size
-cast from unpack_delta_entry() to write_object(), where the size is
-passed to them. fsck_object() only sees objects that went through
-parse_object_buffer() first, and so does write_cached_object(), which
-writes them out later; neither needs a cast of its own.
-
-As a result, on those platforms:
-
- - "git unpack-objects -n" handles objects of any size;
-
- - a delta with a base of 4GiB or more and a smaller result is
-   resolved;
-
- - an object of 4GiB or more that is not streamed and has to be
-   written, including the result of a delta, makes unpack-objects die
-   with "object too large to read on this platform" instead of failing
-   with "inflate returned -5" or being written truncated.
-
-Truncating the size to 16 bits where write_object() passes it on
-confirms the last point for a 70000-byte blob: with the cast,
-unpack-objects dies with "object too large to read on this platform:
-70000 is cut off to 4464"; without it, it exits with 0 and writes a
-truncated blob under another name.
-
-Triggering this requires processing an object of 4GiB or more on a
-platform where "long" is 32 bits while size_t is 64, so no test is
-added.
+Triggering this requires processing a local base of 4GiB or more, so
+no test is added.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- builtin/unpack-objects.c | 42 ++++++++++++++++++++--------------------
- 1 file changed, 21 insertions(+), 21 deletions(-)
+ builtin/index-pack.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index d2f25bed49..9bd355b2c4 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -40,7 +40,7 @@ static struct progress *progress;
-  */
- struct obj_buffer {
- 	char *buffer;
--	unsigned long size;
-+	size_t size;
- };
- 
- static struct decoration obj_decorate;
-@@ -50,7 +50,7 @@ static struct obj_buffer *lookup_object_buffer(struct object *base)
- 	return lookup_decoration(&obj_decorate, base);
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 0264c18c5f..f65228468b 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1411,7 +1411,7 @@ static void conclude_pack(int fix_thin_pack, const char *curr_pack, unsigned cha
+ 		    nr_ofs_deltas + nr_ref_deltas - nr_resolved_deltas);
  }
  
--static void add_object_buffer(struct object *object, char *buffer, unsigned long size)
-+static void add_object_buffer(struct object *object, char *buffer, size_t size)
- {
- 	struct obj_buffer *obj;
- 	CALLOC_ARRAY(obj, 1);
-@@ -114,10 +114,10 @@ static void use(int bytes)
-  * allocated buffer which is reused to hold temporary zstream output
-  * and return NULL instead of returning garbage data.
-  */
--static void *get_data(unsigned long size)
-+static void *get_data(size_t size)
+-static int write_compressed(struct hashfile *f, void *in, unsigned int size)
++static size_t write_compressed(struct hashfile *f, void *in, size_t size)
  {
  	git_zstream stream;
--	unsigned long bufsize = dry_run && size > 8192 ? 8192 : size;
-+	size_t bufsize = dry_run && size > 8192 ? 8192 : size;
- 	void *buf = xmallocz(bufsize);
- 
- 	memset(&stream, 0, sizeof(stream));
-@@ -161,7 +161,7 @@ struct delta_info {
- 	struct object_id base_oid;
- 	unsigned nr;
- 	off_t base_offset;
--	unsigned long size;
-+	size_t size;
- 	void *delta;
- 	struct delta_info *next;
- };
-@@ -170,7 +170,7 @@ static struct delta_info *delta_list;
- 
- static void add_delta_to_list(unsigned nr, const struct object_id *base_oid,
- 			      off_t base_offset,
--			      void *delta, unsigned long size)
-+			      void *delta, size_t size)
- {
- 	struct delta_info *info = xmalloc(sizeof(*info));
- 
-@@ -261,7 +261,7 @@ static void write_rest(void)
- }
- 
- static void added_object(unsigned nr, enum object_type type,
--			 void *data, unsigned long size);
-+			 void *data, size_t size);
- 
- /*
-  * Write out nr-th object from the list, now we know the contents
-@@ -269,10 +269,11 @@ static void added_object(unsigned nr, enum object_type type,
-  * to be checked at the end.
-  */
- static void write_object(unsigned nr, enum object_type type,
--			 void *buf, unsigned long size)
-+			 void *buf, size_t size)
- {
- 	if (!strict) {
--		if (odb_write_object(the_repository->objects, buf, size, type,
-+		if (odb_write_object(the_repository->objects, buf,
-+				     cast_size_t_to_ulong(size), type,
- 				     &obj_list[nr].oid) < 0)
- 			die("failed to write object");
- 		added_object(nr, type, buf, size);
-@@ -280,7 +281,8 @@ static void write_object(unsigned nr, enum object_type type,
- 		obj_list[nr].obj = NULL;
- 	} else if (type == OBJ_BLOB) {
- 		struct blob *blob;
--		if (odb_write_object(the_repository->objects, buf, size, type,
-+		if (odb_write_object(the_repository->objects, buf,
-+				     cast_size_t_to_ulong(size), type,
- 				     &obj_list[nr].oid) < 0)
- 			die("failed to write object");
- 		added_object(nr, type, buf, size);
-@@ -299,7 +301,7 @@ static void write_object(unsigned nr, enum object_type type,
- 				 &obj_list[nr].oid);
- 		added_object(nr, type, buf, size);
- 		obj = parse_object_buffer(the_repository, &obj_list[nr].oid,
--					  type, size, buf,
-+					  type, cast_size_t_to_ulong(size), buf,
- 					  &eaten);
- 		if (!obj)
- 			die("invalid %s", type_name(type));
-@@ -310,8 +312,8 @@ static void write_object(unsigned nr, enum object_type type,
- }
- 
- static void resolve_delta(unsigned nr, enum object_type type,
--			  void *base, unsigned long base_size,
--			  void *delta, unsigned long delta_size)
-+			  void *base, size_t base_size,
-+			  void *delta, size_t delta_size)
- {
- 	void *result;
- 	size_t result_size;
-@@ -330,7 +332,7 @@ static void resolve_delta(unsigned nr, enum object_type type,
-  * resolve all the deltified objects that are based on it.
-  */
- static void added_object(unsigned nr, enum object_type type,
--			 void *data, unsigned long size)
-+			 void *data, size_t size)
- {
- 	struct delta_info **p = &delta_list;
- 	struct delta_info *info;
-@@ -349,7 +351,7 @@ static void added_object(unsigned nr, enum object_type type,
- 	}
- }
- 
--static void unpack_non_delta_entry(enum object_type type, unsigned long size,
-+static void unpack_non_delta_entry(enum object_type type, size_t size,
- 				   unsigned nr)
- {
- 	void *buf = get_data(size);
-@@ -420,7 +422,7 @@ static void stream_blob(size_t size, unsigned nr)
- }
- 
- static int resolve_against_held(unsigned nr, const struct object_id *base,
--				void *delta_data, unsigned long delta_size)
-+				void *delta_data, size_t delta_size)
- {
- 	struct object *obj;
- 	struct obj_buffer *obj_buffer;
-@@ -435,12 +437,11 @@ static int resolve_against_held(unsigned nr, const struct object_id *base,
- 	return 1;
- }
- 
--static void unpack_delta_entry(enum object_type type, unsigned long delta_size,
-+static void unpack_delta_entry(enum object_type type, size_t delta_size,
- 			       unsigned nr)
- {
- 	void *delta_data, *base;
--	unsigned long base_size;
--	size_t base_size_st = 0;
-+	size_t base_size = 0;
- 	struct object_id base_oid;
- 
- 	if (type == OBJ_REF_DELTA) {
-@@ -517,8 +518,7 @@ static void unpack_delta_entry(enum object_type type, unsigned long delta_size,
- 		return;
- 
- 	base = odb_read_object(the_repository->objects, &base_oid,
--			       &type, &base_size_st);
--	base_size = cast_size_t_to_ulong(base_size_st);
-+			       &type, &base_size);
- 	if (!base) {
- 		error("failed to read delta-pack base object %s",
- 		      oid_to_hex(&base_oid));
+ 	int status;
 -- 
 2.53.0
 
