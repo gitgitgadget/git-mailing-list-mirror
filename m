@@ -1,123 +1,123 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.155
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029327;
-	b=mEB0iH8TQ/1paRYOk0NBHkQkLK5/FnC1aP0Qfwmr3FHKcNBLLaBc79g0OTFNgAKuUc4g
-	 G79dl62Bfrb/ly6FgD77GdnWJ4kt579o2/Gsvj/IwTElWoum9mG3jtZT7mFAdEc0SgNXT
-	 vTBeRK9vIINbsXk7Y8mGndLJjmWoBVExU931JOsMFkUMLKr1QIIc0kpKbW8bucNTztDQR
-	 fqhqG8lY4m8KU5aB1+uCnEDJTCVmtrLYVtstRbZZTMbXXxnck/aKNa67kyqINRTUbxSut
-	 BkVZMKMO5QRwQAe0X3lui6XS1in6/8PciiDh4GEJk0j9oIqRceM4UpSWOM3iwMgwtJQ==
+	t=1795030118;
+	b=BNbW0n1zF3veNVJLULjM6rNc204DC7OrzYINT13q0JUyTHefZ42IN92XD2BY3FQErJ8M
+	 tr5PbhamU7t8wiXhOF8xIv0dThjPZYiTYqpSosqQMPw6X1cgQD+DgTHUKt6RQKFKwBvJl
+	 BhVcP48YNf5gmxbeipDOqJ2gWmzuDeQKwZKqeX9VrvgCPQyfxyihtqwXRD3kuDP6RTLIb
+	 Tmiz9li5/ewA2IbWEglPxAs6KguEu5TW36jNBwdsw7yfA5rONhJR+sF5GOfXJZOqpBIyF
+	 1OhD437Dj6QGQPS2IzLhmW6uPMruc+qRQHQk6tyLEuJvpKfnDbRi7jabrc04g3dgLQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029327;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030118;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:User-Agent:Date:
-	 Message-ID:MIME-Version:Content-Type;
-	bh=Ret1uc3R+rNg0vRXPcWBXWe/8MorHP7vVnomslBpU40=;
-	b=WOxsFFM/0wvOLHdqhHZI6SGLE3CiWmmSqXa07Osw/6FaYV8NX4ysj/K4TS/1N05tUzuM
-	 hv0cfMQujMlmfWkAfu8x6IzgVPUvpSZ5C/ck6QeCVgVpiFTYgf1CeqaxL+GhRzLulBC6T
-	 VpRbh2hIJBzLKt7eQ/RkiLaqhlTHFrRaTen5/8HIZ4OFiIP1T0FRlWwI5yDWMKiKWmpTL
-	 bLIb+IRV7SyvV6dO4Bask//EK7OsTyMMEQ86nRzCtlRvWgYm9qDOdi1PCiNW7NUg7k+zI
-	 lSoXFgeBN6eJ0ZHiHMlTafZD+uIPhdeD1ccX2JWtbNBPsCnkeMJfvvzmeKWVbuT7HkQ==
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=OTbN7j13usX5JbG/Y+ycniioOjT7W0q2mHam58n6g3Y=;
+	b=khNFylRdnZTPqWGgX/G6f/Y6QeJ50omR2wPZzXivvlHg91GCz/EmM6Y4BQDDjPVe3NA/
+	 nDud//ETwk5ASO+U5JGsYe/iatzLtq6LxUil38kcstKLSIyOSnnatQblrr5r9uauRjDx6
+	 dB750lZsadqcViv9PqkuZAj3thIQDZf/eSS1UXMVDKaMBIrGbD7WrslePNgPj8XuZFqiB
+	 Ex8UgpIxLx3DyYfOIWhWTv3rGN51Jdd41sNdR/zNPR8ZgR1Cg9aU0goskuxMAIf9E1QtC
+	 Ld6cGLCmg7EFu6ENQa/I9hlezvei8Xtqx4vun5S/2aolDgMZdp6/DBciSikOds9DifQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=OFReAgrU;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=eRsuodnx;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=Tj5I9Xu8;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Z1GsSikM;
 	arc=none smtp.remote-ip=103.168.172.155
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2CC606A330
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 19:15:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8B2CC606A330
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E91960712AA
+	for <git@vger.kernel.org>; Wed, 18 Nov 2026 19:28:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1E91960712AA
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=OFReAgrU;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=eRsuodnx
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 72FE41400135
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 14:15:25 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 18 Nov 2026 14:15:25 -0500
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=Tj5I9Xu8;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Z1GsSikM
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id F08E8140012C
+	for <git@vger.kernel.org>; Wed, 18 Nov 2026 14:28:36 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Wed, 18 Nov 2026 14:28:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795029325; x=1795115725; bh=Ret1uc3R+r
-	Ng0vRXPcWBXWe/8MorHP7vVnomslBpU40=; b=OFReAgrUNIDrJ/Fs0Mwx912b/v
-	MqiAY87INz1G2Mp+RmoIylg/elw0SKgJFP0BQtaBTG9Rupk02chmMAfRk/U9THBQ
-	svp4sNYoLbK6WO1yipW7/quYk0YVilpkyrUoOX+/57HdX5kxh43y/sVsi9Mbij8+
-	/T/pWv36yJjy3KQmCMnCUloXxqA0wWpPW2LIDJ0MFapdjof1IxQSZPmFltrz6rIb
-	qiah+gGvN3+jQRTOQ1jXP0KePoTS5oyygkZmU+qqkP9QxhtjFLP+H2e3T8poYgSj
-	SljruU0D3FalHPjb+X0BpCwRsARfgugtm3NFtHWzPAaG835sZ7geUvcBjjhg==
+	:subject:to:to; s=fm2; t=1795030116; x=1795116516; bh=OTbN7j13us
+	X5JbG/Y+ycniioOjT7W0q2mHam58n6g3Y=; b=Tj5I9Xu82KOyjWDVIrTma3y9au
+	0sHjEgFZtq30pg3bGdxl12uV6URoQoPXdBYKVXxSCU4yo7hrJnUYbgsF+aznfVaT
+	aiqUwLpZYkmgbm/mwDcXJrrbYgeiFnIXIPwtppaB4FUjIFj8pi8Wfr2jJnVNkoK3
+	2dC1aJenVstuDDjWOEf5umNN+4L22F3UObUKS/6SvCBg7MZoemwM3MS2XzoDN4KE
+	3pM3FRxpOhzRdwhEF+06SrGAxsU6z5mjA9r4w0Ebk53YxqG+4jt/ACpkZIdJEYbE
+	efqMwaG3ZEinhV9tX2daLj278eZ4podGAckY09Tn9Yeskf/bahfDZYWUhAcA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795029325; x=1795115725; bh=Ret1uc3R+rNg0vRXPcWBXWe/8MorHP7vVno
-	mslBpU40=; b=eRsuodnx3mwN154YpiUyOr1zBy+aW1lGfl41gAJXecEoXxqaByg
-	hkmaXJYwSH4FLmC7NRdvvejteNaI3hjddXVHH4KkcuzVmuEo3X3TazHhc04uUPm+
-	Uouj9kb/fnReAF1/7TFHSQBpJTI34C52302FhBhvwDCFAHyxJkgMu64L+Yw1U6j/
-	Avg+yJjX1yR0z1zZfvBMz5LaHEtpn1PxvAkv6n5lG5QtuFJG+ydSn/ehPFtmcAGT
-	r4oqHLHl1wwRIJ8aG2N9/5fNHgu/dZKxUjlLa/MatLnYKbGn1Bpa8zMf7+LsToLv
-	GaiQyhEk9GMtnrWaGCsvfq9AmgNHvfWT6QQ==
+	1795030116; x=1795116516; bh=OTbN7j13usX5JbG/Y+ycniioOjT7W0q2mHa
+	m58n6g3Y=; b=Z1GsSikMBkTAG84n4MJ5S21ETmhgBJeeB0e95pzbt4iLphgZwrp
+	6BM3wuyp2jrPk5Bj/NLPw9WFSD7Lh/paYTJ5QTReN0pmwITvV/RK8quYnkZiU/U7
+	bC1NsX7K/aLgU0F9DBw1ha/YZEmzZVH9Xybf9nIN4NwSRMO7+0+Abnf9gUIgPGLK
+	yA7059aHhluDgfakGJx+lZd8YpjC0PsPl3JNjpJE2AzsZDFFCmMzITmHLyXuujID
+	lNcDFeCzCy1FjLZHZGvFoeE6Uz3wRqeKF+1Z6LqdqUnI4KaMWq36QHT5/ziy2VWT
+	4oPVM4zySqVYe305jqhMFXlfaW4ORcsUObw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795029325; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1795030116; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:MIgAq9n085VfrYCXUWSp0gdMS1NF3eEtuWNNVjcJovic9Cc
-	AYpH/q5jAhITHukXc+1+lGnUn7I9GZdhuCwOiNpFpM16ab6uJcZZoYxy+lHNC7uG
-	tuSZa6dKKfiKGssb6gXdGrO0BQaAFXg5rvpq63qgkNFR3PknRwgpSgIk2TNx4Tzf
-	mRh44iPe1A7UXGSNqyoUXZu0A6UaK4LN1XM007+E1nq1PUE3Zc2HVsWd3h5k5i9i
-	G+yNTx3oPZJ84lUUqlBOo4Mtlqxb00j/fW2tY2vp70zyc3zVi35QHO0HLzN2ELHS
-	l4chczQfgvQ1VeDkICcOT6C8kyY1YKIRJPO2yIw==;
+	s=fm2:rsa-sha256:EvWDgr/4jpwqGoCR8suP+aOe0Z9I7AuTY226bvA2lcqSsGT
+	qbug3A4huvakteQPKv6jFkpwl5kwJIFZs88Gfhh8wA9wPy577UC/o9DiTrW9bwBM
+	B0SdU4PGqpWIuYpXldolWehDa2WVSDGj/RAoPQfjT57TaD70VrDlYKu/F0ipzzuA
+	U39zBSQqCB9hZOK2zI15wzbDya5Ul6O84lQUboOxW2MpLy53NppuM+2KSiCBJkOe
+	/gRLE1Md1A9cbYM1vcMiX0aUICYsCMSNjYFtFMHjt5g43PtLG3Yc2ExvlyUrYO3T
+	v94lUuKDtiycKuD/Rt9CtsSbnhreMrn3MUESyBQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:cpFl37P2KjiorydqTT+04yzQKSE2yfFMKhoauJHjZcs=:wdjEypsfZkrmQvypxpQpLHEuCvA20zRevF0+dKIs0LQ=;
-X-ME-Sender: <xms:TPn9aick6DxjaEdgH7pOoPWZ2SjBi5BO6xDzozKOd8d9s3WrolRVTQ>
-    <xme:TPn9aljeM4kOzZFhhhDXwac3TO1Rf7ifJ0CtlbIlwTM-8rT-NbKk_mFxIImCYO6VG
-    IZ0XaxfAfljbqkoOEgVGAtx-c0ny91t3U2WRhsxqfFTwity3IXfSlE>
-X-ME-Received: <xmr:TPn9aqyKbrSshR7H5ghPN1uedJOmy9SP0wefxLlNpNuB90jY6ySxFATI9mevc7Roj6-tcVNkZSk3Vbmr4y9oc4hrLhorjTYXC7NK>
-X-ME-Proxy-Cause: dmFkZTGQQZbGf6akFg9y6SyrdYYYj0/emgXn4hONBAKItW2/cghALPSeMrR5PcYmxIeJdN
-    YfA1k/yIsZrH1alxsK37ks1X38wOBR5zWjb6vDoRzxkmXoZEEdFZdofdbcbQ5Ittij+kpn
-    K1nrWMXE0Iarb6tlRxzns2jzltWImX8ZnxbpQgH5tEqeJQJ7igClx2hZf3JH9Cx6G6pm1+
-    +YZrBVMfkgVI/QCoA9/GhCedr/mQRtAy1zyKNVHs4jdd4nkcLd8LBTb//Ata+gFnz/2UKZ
-    rJAXJvgWszIn0C9fflIDFRlrf6tSc4OMsqyu/suIoE3ep4OUWdal/E2WFm/YZ+zwPiSVng
-    hGR2Xcg3XOvyXjk9D1/5XAGVoj9EV6ynFsTmm0EKdYH5IA97//UGpttaiPq9S2N5H15do4
-    RbBRAm5uoiRTBioyXJygpsS3y8/zkHV0a46Cn/vNQQz7cvW7yZZPlBC4jDRMQCDnSnzAuG
-    bd90jYb2XPN8eRwoG9qFnXGvqSUgmr3jw+JwYs/dlbM/vCvkvdyvmX0PyKbMSWjcYBwQqO
-    CHUBBRN7LNvH3RBh67WqNrRDpm/GrZkyURBVQGQOMhUUk5gccNGWzPLtS6guSkimyGFGZX
-    xm0MZVvLMH5wak29vyegFL7EMe7S2R35hH69AE0piZrFj7jpQQCxc8qx6L7g
-X-ME-Proxy: <xmx:TPn9ahOyZ7Fsy60BFziRf9UwJvSXOB1FraQscuMp_VAgY6liHf9M4A>
-    <xmx:TPn9arVasGQ0GmHG0rPeUOI8sM8xenWIGuWigaoMunkSkgSbrpl__g>
-    <xmx:TPn9al1BP-Qmh9LL0U9ZUsRlJA_TY3dvj1U643v8BI0lTZE4wCY0bA>
-    <xmx:TPn9apo-qNZ4Aj4gBphNNocKAdhxQaKaDwoZllHsRkngk-eYLV2sEg>
-    <xmx:Tfn9alIyqa942rbM73d9IKT1pjJsfUSUxHlMxva3jximY3FuEN_szQME>
+Message-Instance: m=1; h=sha256:WK1RNCHiZVLhhV2zAMZL2LPXp37lgPdykcYXEez8cl4=:LhIMWAWjckZcvu+um2ywAcXyYldreyXvBQQOT/EdijY=;
+X-ME-Sender: <xms:ZPz9atcI0uj3PXlfGQRDm0bnjOXch7x4NpsPkvQJ2A54WgTm0CDOTw>
+    <xme:ZPz9akhdgFF_tQpvHKYY_iwdAvP5mXqWgpFHywgZCcWH95HfXvhUIk-oFxTkRVCwH
+    GcwfmzDrTD6Xm5jiGitHtW2Q7FKHcSKjoZfQhmVe0X5L8HdBbpJ8fg>
+X-ME-Received: <xmr:ZPz9atw2TNynzl8nG47Id6dYHiNMQcDC0RutWZt3vfQ9l9l59S5TMIthO5GCWzix8cDnqXeJ_FMAkSvXlEkcX1doUVTFHevshpr3>
+X-ME-Proxy-Cause: dmFkZTF67lkw4Elvbw9muKIZH6RcZ0P88QeFTS8dpExqptWwdWOPw1RYeqgzHqoPjacvrp
+    88EzjOWA6Gw/hQpRhDZ+JQo447nvCeow4B9BQwj0c11L8/17cpqUpdUFOJSX+xYGaFIDnD
+    2/l2o/MiL2qbrTpCiYIBFy0ABJwZcfKpO/jECO+c73T0FZpJFCbshIjQOzg4LclWi3gZtM
+    S3PL4zWeDqCb7Q3WBnpRciQ2QqOb2Qo56yTDQF7eYYN/yBE58A+5bVIak8RQ2ouhUBE3xA
+    2Tr2CPAcwpQESCgsnvBymf6fz+7QJlSQqDKO+DyTFbFt1t/aNbacBnEjOR2OsUKLRX9KBK
+    y1ZpSeJx/y/LyD7UJJQd3Hc9Ml8D7j/yZQMfc4JgtblVjOj9DhqqCCzCRdPXEWPKzfpTUz
+    6JQi1h+MzPGvEnJ6/jQDKQv/Lmp779cAaFNyGg8Q8/aovpuEfqzZkfxVvInKHZCBnINnAG
+    vav5GEo/2mLSXoi5f/QncgdJZD0OrnlXlh/iwtlfCEvnWQya4BUn1mwfNabwfaHUDHRJ3E
+    WfjVduHTRczH/eLSJND6D1UEZ9B+o9OOFAaHaWJHNjrEoWWPFe/13asrxkQ3OdNZfVLqk4
+    y3jzBaMjUwYv1dYWiyqRe8U1cTc0LwmrSFozIeAXdv0culAcNHq+U5o2IFVw
+X-ME-Proxy: <xmx:ZPz9aoMivS8MHu5CUKVjokskxnQ50b-p7Unzgy09bKiXK_Xgw-JcYg>
+    <xmx:ZPz9amXaVbkFmV9Q22W1CO3rws4tjiXF04_1ST5FHJVFZs2O398kXQ>
+    <xmx:ZPz9ak2_rvUvym5tZRHOXoB-g7RqNPKi5qYAai0NqIM8JDEKBRdzSA>
+    <xmx:ZPz9asp9hqeJS1CxwTOedKAfimkSeCoOyWuezjEkSBI6-rmYUIHJiQ>
+    <xmx:ZPz9ani4AuVEmBZz9OuF8d5m1Zq8ZD3EIIxl9sP4IFywEnLNhiYcc_4_>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Nov 2026 14:15:24 -0500 (EST)
+ 18 Nov 2026 14:28:35 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Adrian Ratiu <adrian.ratiu@collabora.com>
 Cc: git@vger.kernel.org,  Andreas Wendleder <gonsolo@gmail.com>,  Phillip
  Wood <phillip.wood@dunelm.org.uk>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 1/3] submodule: return an error instead of BUG() for an
- unexpected git dir
-In-Reply-To: <20261118163249.1693361-2-adrian.ratiu@collabora.com> (Adrian
-	Ratiu's message of "Wed, 18 Nov 2026 18:32:47 +0200")
+Subject: Re: [PATCH 2/3] submodule: only suggest submodulePathConfig when it
+ is disabled
+In-Reply-To: <20261118163249.1693361-3-adrian.ratiu@collabora.com> (Adrian
+	Ratiu's message of "Wed, 18 Nov 2026 18:32:48 +0200")
 References: <avuJBGlB3pRU3JU0@pampelmuse>
 	<20261118163249.1693361-1-adrian.ratiu@collabora.com>
-	<20261118163249.1693361-2-adrian.ratiu@collabora.com>
+	<20261118163249.1693361-3-adrian.ratiu@collabora.com>
+Date: Wed, 18 Nov 2026 11:28:34 -0800
+Message-ID: <xmqqzev63pnh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Wed, 18 Nov 2026 11:15:23 -0800
-Message-ID: <xmqqecci54tw.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -131,53 +131,69 @@ Content-Type: text/plain
 
 Adrian Ratiu <adrian.ratiu@collabora.com> writes:
 
-> 9cf8547320 (clone: prevent clashing git dirs when cloning submodule in
-> parallel, 2024-01-28) added a caller that passes a path read from the
-> gitfile, which made the BUG() reachable.
+> When a recursive checkout refuses to use a submodule's git dir, the
+> error message ends with:
 >
-> Return an error instead of BUG(), so the command dies with the same
-> "refusing to create/use ..." message as when the submodulePathConfig
-> extension is enabled.
+>   Enabling extensions.submodulePathConfig should fix this.
+>
+> This is printed even when the extension is already enabled, which is
+> confusing: the user is told to turn on something that is already on.
 
-Makes sense.
+The motivation sounds sensible.
 
-The above archaeology was quite illuminating.  It seems that the
-offending commit came without the usual on-list reviews as part of
-the Git 2.39.4/2.45.1 updates.
+> Move the suggestion into a separate hint, as submodule_name_to_gitdir()
+> already does, and only show it when the extension is disabled.
+
+Hmph, but submodule_name_to_gitdir() does
+
+	/* validate because users might have modified the config */
+	if (validate_submodule_git_dir(buf->buf, submodule_name)) {
+		advise(_("enabling extensions.submodulePathConfig might fix the "
+			 "following error, if it's not already enabled."));
+		die(_("refusing to create/use '%s' in another submodule's "
+		      " git dir."), buf->buf);
+	}
+
+which does not really check if it is enabled; it just hedges the
+message by using "might fix ... if it's not" and lets the users do
+the work themselves, which is not necessarily a bad approach to take
+to simplify our job.
+
+Similarly, builtin/submodule--helper.c:clone_submodule(), which is
+another caller of validate_submodule_git_dir(), has an unconditional
+"Enabling ... should fix this" message, which we may want to give a
+similar treatment.
 
 > Reported-by: Andreas Wendleder <gonsolo@gmail.com>
 > Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 > ---
->  submodule.c                 |  8 ++++++--
->  t/t7450-bad-git-dotfiles.sh | 14 ++++++++++++++
->  2 files changed, 20 insertions(+), 2 deletions(-)
+>  submodule.c                                | 10 ++++++----
+>  t/t7425-submodule-gitdir-path-extension.sh | 14 ++++++++++++++
+>  t/t7450-bad-git-dotfiles.sh                |  1 +
+>  3 files changed, 21 insertions(+), 4 deletions(-)
 >
 > diff --git a/submodule.c b/submodule.c
-> index 1302c11ddf..d00d820d42 100644
+> index d00d820d42..64cd8005f7 100644
 > --- a/submodule.c
 > +++ b/submodule.c
-> @@ -2410,10 +2410,14 @@ static int validate_submodule_legacy_git_dir(char *git_dir, const char *submodul
->  		BUG("validate_submodule_git_dir() must be called with "
->  		    "extensions.submodulePathConfig disabled.");
+> @@ -2171,11 +2171,13 @@ int submodule_move_head(const char *path, const char *super_prefix,
 >  
-> +	/*
-> +	 * The git dir may come from a gitfile on disk, so a mismatch is
-> +	 * not necessarily a bug in the caller.
-> +	 */
+>  				free(dotgit);
+>  				if (validate_submodule_git_dir(git_dir,
+> -							       sub->name) < 0)
+> +							       sub->name) < 0) {
+> +					if (!the_repository->repository_format_submodule_path_cfg)
+> +						advise(_("enabling extensions.submodulePathConfig "
+> +							 "might fix the following error."));
+>  					die(_("refusing to create/use '%s' in "
+> -					      "another submodule's git dir. "
+> -					      "Enabling extensions.submodulePathConfig "
+> -					      "should fix this."), git_dir);
+> +					      "another submodule's git dir."), git_dir);
+> +				}
 
-"is not necessarily a bug" is not incorrect per se, but it is only
-relevant in the context of turning what was originally a BUG() into
-a "return error()".  If this had been written to return an error
-instead of calling BUG() from the beginning, you would not have
-phrased the comment that way.
+It is not exactly a new issue, but this makes an already too deeply
+nested block even worse.  I wonder if the entire "if not dry-run, do
+these" block should be moved to a private helper function to make it
+a bit easier to read.
 
-If this if() statement needs a comment, we should state why these
-two are expected to match, or why it is an error if they do not
-match.
-
->  	if (len <= suffix_len || (p = git_dir + len - suffix_len)[-1] != '/' ||
->  	    strcmp(p, submodule_name))
-> -		BUG("submodule name '%s' not a suffix of git dir '%s'",
-> -		    submodule_name, git_dir);
-> +		return error(_("submodule name '%s' not a suffix of git dir '%s'"),
-> +			     submodule_name, git_dir);
