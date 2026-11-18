@@ -1,101 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.52
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.181
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794993439;
-	b=OJTxUQ9XIRIGy18lHqnpNTolW0n9m3N9gq5wbUo5ruXbbpiCfPkhcDvCbaaqE2yPQ9cL
-	 yULCQkTPBScYG6VNR5HKwlMhDbvfOk2Rsg7W8s6iwword1zlvaLoHtCCeYZmO+eW3Gw/g
-	 Ahs0vcoYZZQJ8ISx0D2ephzjesZioccQ2v9iYrZi2OpI0EWAxRJLHrnyIqQZREX7gLXye
-	 4B2U3nwXlzKTvar9OXfz4EvRCt9OY98RswLlr/1awGwcveLl7G003X5ZGaTLFTnfYqUOk
-	 pt+rMr2D+tVRYWJWZM4f3TBitvdPXXfmEZ/FcYNpBrDBScn9rZg4YJu1fsDc4jg7V3Q==
+	t=1794993786;
+	b=Dm7LuCUQxl+llFwv0k2u+yCuAaPkM67+TuMatm9uBk6CoE4AGqi6apX6dkjS/0fDgHRS
+	 1dLyWAdLGAPWCCi2YURa/u9V7geADWogFuTJ7YogeLZf6sG4SsAMzMWhfvHqLRyB+V9xS
+	 vxsvP5heiKAmDr3ayROh++Rs8Gzmm8ZwteIfYWwRAbag9b9ATH5Esjo1wFI9/p8PQ0w0k
+	 Mm+El3b/BCMq54Arn1nIk2ppbc+HrPCwnPJKY0XO2tawpIH1cs5rzSZ0clJOzeHodCKF1
+	 OOXLSXpf10aF9PoBiULJIduN5ENXxfqJUabaSFp7jB/lSk6FYyIGbSHbgkKMNQazFsw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794993439;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794993786;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=vlkKVINx1OLdyl+QZkpbYAZ5q+c9q1fwIfzKGF9493o=;
-	b=GTGL2vLQhs7CyBSqD4ckhJ54iTX4rnVyIVKVsqs5kFh+Xii6+tkzPnmEMQvDxmAj5gFD
-	 GJd+1I13pLSUPcYepVfhnTmj69ksm5nky8zCa5Lk1kSoSXgAb8ci6RNydEZ1NtfESy+Ns
-	 rqPUuFu6K/WIKMc29shwXzvKEdUCdxdzbR6XOwaAMvs835dUXF3GM2mbjnHPWbn6/e1IJ
-	 7lVyyIzXcp7OfB/NxMHBHicAAal6qCcWO3purF6BncSYhI/ucM8FkPvUJ3XExXKDgph6A
-	 PCFrIU1AtLDQpyNV9w/baXvYTGR0LuQ9VqlCTOKtkAUwXXgEPRXF3ci3oa47P9kbnDQ==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:From:Date:
+	 X-Gm-Features:Message-ID:Subject:To:Content-Type;
+	bh=W0pdwS74aEgHZDULOwjrGpk9Jqf6DS88SonlXeirVLA=;
+	b=1cJUz/g0LsW7sLNIUIx1R3jZHO7f5ieyFGVW2k4YcxqMqS7pQwlEWHgqxBOaxj0t5kSq
+	 ArdBsGZ1Js0XQZSarFYxtIxW+Fpb2MVq1tL4N4i5Z4iL43dR9yT+sCsJ0aQOZ0gbJ7Dur
+	 imHUkkfScwrbX6ag/ExX2ax5VS6VATXnJ4V86XO7MsSlp8xE1FCQGiqMbafxIonImRAFl
+	 fNvrxOnER3XdP1oH0nOyVeLtFFhP3GVDsfMJfZiuKPdFvxTWwudU1Ku3/seLInl5HFcLW
+	 0ZhBSIBdQD5tK7jPcZjW++NFxHlX2yxiDCLVlbysBDlo3TT7wNjuGabxyz37ZEwRtNw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vsx8eDWE;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.52
-Received: from mail-dl1-f52.google.com (mail-dl1-f52.google.com [74.125.82.52])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AFtjKZPC;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.181
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0591606A331
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 09:17:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D0591606A331
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19D4606A31C
+	for <git@vger.kernel.org>; Wed, 18 Nov 2026 09:23:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D19D4606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vsx8eDWE
-Received: by mail-dl1-f52.google.com with SMTP id a92af1059eb24-1b3b4944abeso645129c88.1
-        for <git@vger.kernel.org>; Wed, 18 Nov 2026 01:17:18 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794993438; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AFtjKZPC
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-5365f9a04c5so10186351cf.1
+        for <git@vger.kernel.org>; Wed, 18 Nov 2026 01:23:05 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794993785; cv=none;
         d=google.com; s=arc-20260327;
-        b=TGNAGjdcydU5rgH2D/DESGZykdwqi52oaawSWB0zwSctyXGx7mCMoV6sp+pLEgkfXc
-         cw7oI5pUouojXL/TmfSxIZHTAbEP3WOEZ8MyT6SEz9QZUTbnypHdjLakxxwdbAXoKG/5
-         ya7JdpIqppgaof0QkZ41fa0rNzCpGroOmQYuCJwoizBS66U9i+pfOKWbro7UTnMq+aru
-         7bql0h1PCeDNHfnTXLvIsfjfKw4/lWzc0r3ZiBWF8MPVDk7fedkkhy8q4akyg85EbjhU
-         v3rDn6bbYumA9TvjdA/Yt7pLBbZc5KHi7HjK3Ml5hKz7XZKXrQ6U+Tc7Hohq1X57KetW
-         IElw==
+        b=mvdTGPAUAPW4zWf36QQM1uBeB5RQ2otejbZcl+bvMtovDIAILtPMLqRAUJQzT2d2ud
+         o3LmF8dXTU9RRIxrkGaUxTMJrW1iqgQNFzcRCko01KhwxvyV6ztle0CDuf7Mioe7nKgl
+         FFPCx3EuqsuUyyP+oZQXzY+w1Hkb6wvtsYHigekQJXkZjJWK0V3d65TWZHbrdC+8RuEp
+         4A/+zO4YH+3uSh+1X0tPW4FZBrhRtoXxlSCF2/EBuTZSz8qQ3QYWXiejxoB3mX3Hm2iu
+         x0Bg9FLGPqC9tC/0Pg79Z4Bv8xt2jJZuijeCg6oPTTHNObfcB2GyCUHujLLvYeNvpXWy
+         FX5w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=vlkKVINx1OLdyl+QZkpbYAZ5q+c9q1fwIfzKGF9493o=;
-        fh=SIOQ8kTsF5hsnUPUu7cz/6Hml5sUs4WJ7Z7wWwJK8EU=;
-        b=WUOGBhFsLKzNLu1qnz2tUp5s4Qjhxk4CmkzMeygjWZIZjvn9XakFXiE10h0j5Mf+CX
-         Xn0E03YebvHqO6uMuy8ZUrBGsaS+ri7k2sMzzgr7Sj3+EnFhJWllC3k2fg3uZbE3dQqN
-         +P7HUhjYFd7c3VA/Rj3yXZSrQjwNH6MEb09zN2LZwaWQn2NR7PsDu4hBWHlRPValVAyR
-         INQsf3uhbaFXM/Z9rW4LgNf0jFyB3v2HFIcSdkp5JJmmxJA5S+E8bO7IuPLQP8tXbuXe
-         C0TK2td/XBcR+CCjZCBFOpgljh5pHteTsS2zg9gh6YpbzexiADFWMSvGziCRAth2Q/qa
-         Ue8A==;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=W0pdwS74aEgHZDULOwjrGpk9Jqf6DS88SonlXeirVLA=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=mcrFLfJSp4kRJgYlMHyHqGCY+AlaI8BEuzKZJLPCIAy02ATiBC6e3aNv7N1lMP/9iB
+         X0iUMXIX54d+ZsHZXymM+Oqz4XHF1gLgS642gvTixzsV89AzVpkAz8ywgHPdVA0EgKIR
+         edGLlIhEG8djeac6Mj9ASTfgAzPCGCPR3qafQuOPGhFmHSAmDNmhEYxKIwnR76bi1lSA
+         TF1lJRd/trr+R4H8DybdisGGwnopPkLYLw1wao74I0DWHHNW80TkesR1Cr0vgaygAtGC
+         iNSZ+At6mavzzU2Twy9+QFQc4PnRYJ0EQRlSTHjkssIbCvu6jqqclNXqnMhe2M76C7vG
+         TMgQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794993438; x=1795598238; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=vlkKVINx1OLdyl+QZkpbYAZ5q+c9q1fwIfzKGF9493o=;
-        b=vsx8eDWEJunupW/bBu14naihUAwpDKWVp2EOagWweBdvEE0tW7OlOV/irZf+qeMEbd
-         wSaugCb+YNz0nbJyA6cIjTcnFxxcz3o97CKI1ISFZyQ7vqSxit91X0yxE0ZFUJT0juBD
-         ZuzwoBR0HUHncbPZxEfCc9nIeAgV621VsQcyJNe976mV8CiGvqVPKu8JVrKkbSHebaDQ
-         KFwF5EliJBEPiVdM8p5/eK5KN4+uSDSweAyHE7N3lvVXbaDSJ6OPO/lVLJCgi0gOKN5+
-         /A6t0cfQztqT/yzX0izLZ/d7Nt3mkMrPFNeyGBqD5ScVWriPBffy82qhrBbgoiynz6SZ
-         ooqg==
+        d=gmail.com; s=20260707; t=1794993785; x=1795598585; darn=vger.kernel.org;
+        h=content-type:to:subject:message-id:date:from:mime-version:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=W0pdwS74aEgHZDULOwjrGpk9Jqf6DS88SonlXeirVLA=;
+        b=AFtjKZPCvuGmyDs2yooWAu/fD+rxzOJAkzWG1YdZQKcmyh+NDyodNtmaDQemOBlLlr
+         h25DRGQ8EfIkmCLXDo9uMT1bYpoV2IghNP/IiOFW8tZeh43dW9LeCmKqdJetgVFP5n/M
+         8jueBHECuMX0cavnNskTCZ9XjGoE0FFQQfc8iql6KgmdRZLqt9XI/Sr4ch8tRC/yq9Ez
+         KjIvPnZ0+sMJoiaBMpkCysxvEEIeeIL79O6mnU4GBtdaeh1lWINDudEhsrmKrHSoEbLG
+         dDqHZsWCz85o9Z3lfOA10+EWpBtLeJEBfV7IgTWvuZ5aLK9OmNPyQ43Era6pJxM0ROKY
+         92lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794993438; x=1795598238;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1794993785; x=1795598585;
+        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=vlkKVINx1OLdyl+QZkpbYAZ5q+c9q1fwIfzKGF9493o=;
-        b=TFkddfC/WbXsAMbAx8/UpxKsTtvXQGvn/OG+erF0Xfc4W0nh7m2dQAge8cEW+KKe/r
-         5DIcpHhhZEduDbWEdvoLAyXGirp3/Ij1rYYbJbWd+Nj3bNoQ5FyQK4V4MFxh4Z9TGkra
-         AJEdBrcn7EVG/8YB7JYiz5aCsNCAuIRSHZd1kS/ww6CISFPB5ch/xvNvT0w6xgIrHwyg
-         4iYKVMyLpINJUPPf0qVnSqZPHjk6VHYQhtFtxhwr+Nr+uQca53c93AuG1rsnDp4YM74J
-         5yN1251X3ZvbtRuCcWOUHRlakXFus1cfrR/nqpQivLgfbLc0fIidD/pae7XyP3lkq+bU
-         JIvg==
-X-Gm-Message-State: APuU4Z+MOJBFtq8WQODS+K2OVq8WTdEGNGjZEKO4h6RZAkjUDqQwav47
-	Lx9nQvZ7CMpV6oGAlihMTDiinTe15Enff2oYNBsK3I+4Sp4SZJUKSpiksBlM0Qcny7aWn8WwRX8
-	2vNcrAkxjSCMuifFWqfV/TIaKz9jbLok=
-X-Gm-Gg: AYBFou21AX0r4hEW746nPNEBM9lirIamlEoVngZLCtgJbSmlHZFcrbwF39RmZCUUmqc
-	O9ixggwTdQZnuP6UAU93Z4TVjSSefy+kvRKk/VgWObhhEIlaRKfsX2ovHecAmka8BfeYGwnS//v
-	HT982LDa7ltU26tw+v/VG7f7Kmu/KE3jSSqI+mVfFpHaGDnxFq7sTRxguvS1G6peJDhvbD7GvaE
-	PFxJ+WIZLu19woyKxyFc0HhvQfXMZopaRrhOKYm0+EYXlLDdcl1D6HrLHMuepbYHNmzlItIfxOx
-	2/8WoLG9j+uwpc0ISxZq5jGsAHqJR0Zuw/8klAzpFIgYyiBG/arjwCn8CdziL9bOSazNQEUBOtZ
-	OE1CcHVLBWtUVQg4lUlyGwQETcGnyuYm94M9S/dxov1qvkjLLSy47rNFdC/GjuOvD9xlmx655kV
-	mSEcxtsi6kVFu/Jb6JjeJvrujI1CFa7QwebCyqR/qPMILvkusihCIe0nrWTMzDmoP2v1fuBpn8L
-	lS2KN2pQV2liaMfQEDSi/gm
-X-Received: by 2002:a05:7022:370b:b0:1a3:dfb6:e593 with SMTP id
- a92af1059eb24-1b543d001a2mr1814060c88.27.1794993437741; Wed, 18 Nov 2026
- 01:17:17 -0800 (PST)
+        bh=W0pdwS74aEgHZDULOwjrGpk9Jqf6DS88SonlXeirVLA=;
+        b=JirEmoU//QQLBi8XhQZBFOOb7bHIqHNPnqUq2ZSZZMdEJC9aOX+V+v0sCjGxNSKg0X
+         ucD3pqH7PTm532ztySuHreSK2Ibu4p0X2YnX6fmLVbqkgGHS7iQ0+BPttfKHg03fGZN5
+         SV0OdipLH09CftuuBlyTkW3riZu5d9/UdtlkJz6IKIFPSiMgBlfwnm7ZHs7yx/QlCAKT
+         qglMnMtPUgjxhQomfqwr0Ou3khHz+VSg/Qj4OyXhyIXzEW0kuR34nopcVeo1hvoeRZos
+         AybR9aKwOnMm6tadPzyharork3w8sG3oS6+6Q5S3y4lmVYHuDLTDDq3KFfLae4K4d31d
+         PXKg==
+X-Gm-Message-State: APuU4Z8si5GklL1lBcJZUGI9M2jL0Dkq74HKu3gLVxsD7sFbeCjhj2p8
+	E26zU/b/oksLnHO9YtfaoPtSvMeZ931xq/xrr7dQyXvpsUEd6gz8f8TJ59ml3MmBdiWtaSSRK9O
+	QwFzvrd+rj4ljFLeVRpseSg64Ui+WlwBcbwv0wGQ=
+X-Gm-Gg: AZFdTZeBS3y08MEAP7f1LBdXL2MmbY8wuklM4+PL6WOWbJpnHGKskFkw6g29gn0lf9h
+	YQBLKa53f8e9DoYVza5xLnO3G3OeX06XFR5tF6ZwRKKa6jUcRrvErYx5c/H3sSexntmEQvl5yF8
+	r8BVOdv0IyGQJa1GOJJlehSrq5Of5sSn1QpBWV2G6fs8KCNRZqsBDm149fSEnBrA2GpGdBOfptC
+	DFghin+fWaB4LZ64Go6rQGN02ijakMSg7OAFvT8n9TRmkDpKUYh8d5RhaU9jjV0l0ZEw/3vZmBO
+	xlUtro1AqWZ4OO5+qe5GFdqtgjC0W/BJEX7A7cU+n8qZNDewis5xuAOPmMx7FxHZTTP1xwyBeQn
+	QbbVGtRohBkTKxHJEkLpnuOuVmmY9t4Ta9pu+l3diwktXW0l0yrd4SFwIimMXYUOW8M6KlJD4yI
+	gmclQwXiapUuXOSEgBuXEXPfW+o8AOH6KSXo9G80RsKg==
+X-Received: by 2002:a05:6214:27e6:b0:921:4b6:78b6 with SMTP id
+ 6a1803df08f44-92114e3b70emr29373706d6.29.1794993784495; Wed, 18 Nov 2026
+ 01:23:04 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,31 +100,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261117174353.1158905-5-christian.couder@gmail.com>
- <20261117174353.1158905-7-christian.couder@gmail.com> <av1g7VQnCAcs5J1W@pks.im>
-In-Reply-To: <av1g7VQnCAcs5J1W@pks.im>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 18 Nov 2026 10:17:04 +0100
-X-Gm-Features: AclHuK_koCYO1n8wi_HAY9icDs-9G1Nzi3TuYKYRDIHTw-tjTHlgd5-A2-wWVOk
-Message-ID: <CAP8UFD2CLGe_ip1EPWvq+Es51ROzupiFZgJFuNVpLHrFQSUK+g@mail.gmail.com>
-Subject: Re: [PATCH 2/3] odb: widen odb_write_object() length to size_t
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, Jeff King <peff@peff.net>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Elia Pinto <gitter.spiros@gmail.com>
+From: Obayagbona Uwagbae Alexander <uwaobayagbona@gmail.com>
+Date: Wed, 18 Nov 2026 10:22:28 +0100
+X-Gm-Features: Aa3M54o7VxUEludUvXuWHN5Bi5lf-lTTUA-R9BofsCwmHuqJszyY-8joetuu46s
+Message-ID: <CAEocypwuxFTM98WA_puQT64cOGbAzWC7B9+=wuTZAM+7ZNu6ew@mail.gmail.com>
+Subject: [Newcomer] Hello from a December 2026 Outreachy applicant
+To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 18, 2026 at 9:25=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
+Good day everyone,
 
-> Huh, I thought that we already had patches recently that converted this
-> function to use `size_t`... oh, yes, this is overlapping with Elia's
-> patch series [1]. I think it would make sense to rebase your patch
-> series on top of his patches.
->
-> [1]: <20261021101640.329990-1-gitter.spiros@gmail.com>
+My name is Uwagbae Alexander Obayagbona, and I'm a software developer
+based in Lagos, Nigeria.
+I applied to Outreachy for the December 2026 cohort and chose Git for
+the contribution phase.
+Unfortunately, I didn't have enough time to get a contribution in
+before the deadline.
 
-Yeah, I overlooked that series. I will rebase on top of it.
+Even so, I'd really like to stick around.
+In the interest of becoming a long-term contributor, I've decided to
+keep contributing outside the Outreachy period, not just around a
+program deadline.
+I'll start small with something from #leftoverbits or the good first
+issue list, and I'll check here first before picking anything up.
 
-Thanks.
+If there's an area where a newcomer would be useful, or anything you'd
+recommend I read before sending a first patch, I'd be glad to hear it.
+
+Thanks for having me. I look forward to learning from you all.
+
+Warm regards,
+Uwagbae Alexander Obayagbona
