@@ -1,95 +1,123 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.180
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795010638;
-	b=TSdvMHnTueripKZqftMIeUUjOXgudBiVNMjneHkyHCdsdRlYRTjcGlMBNIDwU2101WKy
-	 N/cktahnq+pJXy0P1cAGWh0oussdHCAvLHlYzc08b6D675pJUqGimla+ArbLoQb5TK2/x
-	 fePnjBYkRrcxFfYNQ6cTMKP/uEouGR8SZ+BqTU1zpH1DJjQXCYAAQqsBEe2yaaKb3KK9q
-	 rhsSzZWDEITujenSid+eLJr3LCFkhv7jVXXAUitA+SCLfKUIq8VY7FFEXPBTGtkT5Va/B
-	 5J7A0C8hp4Lyo+fVC5ecqnrgayEfSBePkBTmEBuf3td9RxQE3r9lIjRMhyZnrGQ6j5g==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795010638;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:From:Date:
-	 X-Gm-Features:Message-ID:Subject:To:Cc:Content-Type;
-	bh=OAq9UxRO90lckz5M/0L7hFkhTBed6NxVplIgHkjqP5Y=;
-	b=YVc20WoxXByd/9JPPIi3UMBHmeobIYriezyOkk74yt5i71DTRp65jqM/pmQoKg8RxP8V
-	 C4yipw0wzkcrmPmyGPtkoV4+rKTkZSk0F35tzHcAmgSya6R4l4dy5Fogg2LA2dbrmXyDL
-	 Pyu8qJeE8cPwkL/0wkNqBTeDhaF8kFPsdbJ/09pT/kMQ9XvK5yS3o3drzJpUgu+iOkVet
-	 0bnBGimFStmE50NpbxFaYLINnzoCjCMvn+cGEkmUFE3wptG+qE1g1xSgo0Ls9MLkA05Wd
-	 qowLaKRWrsMrbvs8eVrJI+jbBGNszRdvw+1+b/rXF5w+00IWC4t5LhX0aWpU196uRWw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=CbGWiIh4;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.180
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.154
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795010982;
+	b=owsaF2XuoK6VNxnVbNK07oscallNEjSydsJtUXqelpZfxDeOFzmKw21Ox9uLGeGVD047
+	 UQAlqICNHUC1lY8YgMGX2MqJjk0GET7W6dkm95AdMLu5bNtbwQi698kpNInmoVuxAcp1o
+	 1HGeXhyWLeXjAVdHbY5ryzz4y0M9kWA9Dbgm0GC7/VCZNx8QBYwVfi3IkY5NZJaWMMTmV
+	 o+B1rNSs4PQZaYIwBMgFzL+/51D9NcU5cTSLq1wi9wAstghsDtOfkDUBOL/NEpLVyDJ7E
+	 ccXHfv8r2moHjQ4JOCSdBCSwExdwI1bOPBYMgekHooa1PGDWVxBuFxyXU9x7K1nEtTg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795010982;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=i+wU9jPpper78ZAYf5SuweI8T0/wlXSsbmYVlSAY6K0=;
+	b=f8L/txBbYP5MY3lbr7kUiJP3+UZEHmrEkzOIWrHWM0s6T/LfRzgrwNeJch6erCPIlP4q
+	 jxGsjJ7xNMg29bpgJ5HtaeIUtpAzprw0d9rsu7jxRadG/QDTDeuTpGGnkmJStLIBW+60f
+	 Le7iIzuZM3gGyD9kPfa3htfmO0BVmRnvddQ96nFEO8txIxb5vjNu0MFNjNXZT1sswQFYN
+	 BP6bz/tHRU8eLw9E2xY46IJ9D1/PpngyWy4SnG6oto96GKf3emFtVloY/eC1rknQ7mFHy
+	 2YQE7Nt2LlILCoHtAjRWZrvZIKANgA8A4izQJHrmYVLpwdeYRgteuzQjESp8pBgkEgA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b="Gk2/HMM3";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=2vuJ3ARJ;
+	arc=none smtp.remote-ip=103.168.172.154
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2837606A31C
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 14:03:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C2837606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9130D606A32C
+	for <git@vger.kernel.org>; Wed, 18 Nov 2026 14:09:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9130D606A32C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=CbGWiIh4
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-3ae22dcfdc3so8862341fa.1
-        for <git@vger.kernel.org>; Wed, 18 Nov 2026 06:03:57 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795010636; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Iq593/gvD0jqN0fcNEmAHl4yYrFB6L0iNO4AmAvsP8qNOTY3MXSIthNnZ7MegWTWfX
-         oPC/xRY8wD13yl+x++Y/T/yeset4eB4VF4phTlOrjN4dDKXp4laAQyb/DwV2uE8aku86
-         ekrEn2RNdmMeGDcnFbL15WRsYu+WYO6miJzi/vOTSWkm+KPFvUStLrp5+IkbOQGLRcI+
-         xVCk5DIPtdCtHjlC42gjgcX1wqMgRTref8QGfIsFzdxMXRbFMsH3DkP730SQvYXOblFx
-         GQJ2mt0klkkzNRlnY9vpOdYYMkn7S6xFc7UQh3oWwmM3Kw0izfq/Xim8jwcaBQHKrWKH
-         hC8A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=OAq9UxRO90lckz5M/0L7hFkhTBed6NxVplIgHkjqP5Y=;
-        fh=vihsUN31oCSdlAH+A9PWNcftk/V3pNwNrt/NXi4KMqs=;
-        b=eCmEBfirHmiMxRtHT3BPIaumTr5GTRVdai5zmqK87Y/NEsp8Ov18ck/XDu48i9k4up
-         XjTeThzoVdWZpKLYkC31jassDrUTljhW+GqASUxhAa+fRbNXuvJ0ea5JMWQzDQWPi3Ps
-         JIkXaWlnQGqS5l54DbDuDcaJaXNMdVarOXl6hyAxRhylFQxhq1pGNUlOoQPMt86/hZDG
-         KoZDlTFM2VZ4msk5xsl5eFb2bvN1OHRjy8ikH32zn9eYYJD1mMTNenR15VAmL9ztmhYu
-         A1Yj5QmBPgrS2qEK41CcDDPzXBXcuL6SBCY/VJHTQTA+XEfeRVVJAXIxJIPbufAGquRI
-         yUsg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795010636; x=1795615436; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:mime-version:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=OAq9UxRO90lckz5M/0L7hFkhTBed6NxVplIgHkjqP5Y=;
-        b=CbGWiIh4l0C1k5SVag9cO9YBQlkT2Wfm4faFdyMAReE+lzLAdYRbxcF35mkeUnGkry
-         kDLdx/Sh+HEKc95j9/N0eTMEKI4lc1NGZhkftg1NCsuMVqu54z/gZvNHU4jxQnQvTaqg
-         7O18P1HfOfUvm0qeEmDI0CH59KEvsoO72lTMe2QwhfRn997RG7urmyfmHOnPNs1uGMM4
-         mENMlo/Pby4MlScdTDoDmwDRjtcK00kuX/uGhFNPv9LhDlXrkfTdjt3E6QCEWS63XgIL
-         KtUVceEnHdAOaUKZxdsXPENzQ71EIeXLqlo0oormLnyFzUvgVT+KpRfhtYLavUrBtBju
-         UPXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795010636; x=1795615436;
-        h=content-type:cc:to:subject:message-id:date:from:mime-version
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=OAq9UxRO90lckz5M/0L7hFkhTBed6NxVplIgHkjqP5Y=;
-        b=pYOyAYjeWvi0cfR6626eatABbBaAGSRUnCw8SrZwLUjpmr13PpSrJyXYvwKz5adP3u
-         YYdQgDWOa2du+dd10OhWf7lMJPMr0CKBjKI2C10VKYr6BHM9jSj6pC1CeNSrbtxpkYoG
-         gO95IMD0iob7+yV1sEerFvQYyu7K7ICJvzv03ofhcz1JKP7Rk5s0jf1EvwkKAVj4dIcJ
-         QC+Nt2xpgG3ux4xnD+dqdKijjhW1eVWG2jrDE/qQ1qN8yHeEfaLfqfUsawys6jjn/qpV
-         yZJ5Re4ylVjJcMjMvhhr7jKNdPxo3Muajsrvtv3iKbrysn3qNpglaYq9x1xc9ApmNtmU
-         Le0g==
-X-Gm-Message-State: APuU4Z+IYrmgVR6HKby9W8NeewxyXf7oYASGltYhNSBMw7+c5Ok1sQrn
-	phvZhehzNHcYhIP7makH17ciCxLsxF+l4bz0MYBOBjC++pNxrQ5cxMBOwerYBXdKcoPjgBteb9p
-	Kr8mtUl1WNiAaAgOD7irAAf6dMg+0OgQqsYP7WfRt1VlJ41jJxzKDbQlAlko=
-X-Gm-Gg: AYBFou1eAuNN7lTH/ai8/Jt+4cO9T02MVwgLV512D43a0iTDaMiKo54oXqYl5S4zAU4
-	xEzZtYTXKjrEKeWnWM3dEcZywtokSpCCehV/6yeVIFA7StRJOTHHv2HGuFaNby2ZCvSMO8qSxhr
-	dEs3GO11g/99dHsa0YZOPKjM8DqDR4i7WjZlM3vl7vL+AWVzUA9uHiQ+qgRfJL4WX2P3sPlnizC
-	TJbu5SQ/wFS/JXfv4Ki76GJPQNmgV9qKIoIilIQpv4daKoEVoL8+ssBKezA9PPojiKbAWS+AHHS
-	QuVztE2whQscFcIT9aWtGeUd3nxtr9oOn0zKR3otxzKiq9mMGAxiwHWC+3ygZ9zO7qa5U5IwBaj
-	aR1nioGM6IlBCZ3QfI4R7plRM2qjL6QFrUCjBLw656LfzkmoWPPmrzks9XjUx6N0BuaQ=
-X-Received: by 2002:a2e:bea0:0:b0:3ad:f19b:f8e5 with SMTP id
- 38308e7fff4ca-3ae670cf703mr9115151fa.17.1795010635201; Wed, 18 Nov 2026
- 06:03:55 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=Gk2/HMM3;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=2vuJ3ARJ
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BF38A14001BC
+	for <git@vger.kernel.org>; Wed, 18 Nov 2026 09:09:36 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Wed, 18 Nov 2026 09:09:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1795010976; x=1795097376; bh=i+wU9jPppe
+	r78ZAYf5SuweI8T0/wlXSsbmYVlSAY6K0=; b=Gk2/HMM3QENXbpywJ7Z7K8oO5W
+	LFzuUyV8BQghZYDm3GgrbL+ZsgY2py7H59b8BFVaUTKz8Lh18Vlnl9Pgla/D/Dzm
+	poI+UN2SyRCWrionA6M5ydDZP2slGp1W4EfHs4K6kLDisoTBD3Fz6K+fqW3CVz/5
+	+F461eWPGEvm1gV3sNuWOGXIVN3x1JTFqC3WWOVRLscQSSV7RkCRGWqsuXKg5p4r
+	dUtDmx/lBDIl8g0TjNr/k8x8zfZeSxkWbk10VX9N8K6C5VmHsBUEHqAQAGnOCFQ3
+	epyIOvXooYOK5SQzWQ6r8PonQfpMC/SjAtM0RfMYdUDb0ED+GNqE2EZ2vYdg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795010976; x=1795097376; bh=i+wU9jPpper78ZAYf5SuweI8T0/wlXSsbmY
+	VlSAY6K0=; b=2vuJ3ARJ4BeC9LUI+woZUmB0NUKNHHGVExmRCHbPTGKkliQoauS
+	gObZ/vznKw8AhR498kkHpHM40jMJ/YB2fAJlw1JMSjXuVLbwos91/rbOgEFT35+a
+	i2u/iq86EfgpzuGx0Dw9OjR357uuzfdZWfTP0vBUc+CGJZI8o+Fig4nGptUahA7J
+	Mjw8rRWEuFC1NU+Z6iCm4G9AUcOxDdkfNzN4bXM++zIoxVnu6WJ5buG2xAXUPIqB
+	qNmfiO4hvQWDOY/b8jEOQIAckknp7pw9V9G3x2P81YwhEQiZVzH4I7kQ6EPkB1B2
+	YGvyEbP+wordY8b3TeQj0FyXQZ1mDiwKQDQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795010976; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:oZsinKXtJxPPKlCa+t5r6bH2l7k21uKaU/g6x16mc7e0eWs
+	c6i5fW97mw/p9vPCTOAv7Z9SrYL3zMYMdeJ8lxVVEiEJ2BvuLLUlqH+qKHrUGDVX
+	u8dvwpeZBdjgMdQoqxsyWAfkcWovYzz/wcXn+MEhYtmBDx07d01JaB5d+FYhaQwD
+	UZ9THC3ax9Xf2uirIDYqkK5m+mPuDgGVTAlp7pJnAFUtI9d6zZcBpoCJHFtHnilw
+	18d88dtJBOZ27HsEFmww8tBBv5SXHqSh7U06jBG4Mv+FQZyacxFHWnjY849Vi7bt
+	nfJknBO5kf3936nnsNYxnrv2x7N6bOBTzRRLoMw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:IXNW0Hlx6gH6vlfBU1hVbdgaqqig0oW4fnVtX25r8Bo=:ws5QMXmiPtidb3ynIn4ltxvk35FjECvC4Rg2n290WAQ=;
+X-ME-Sender: <xms:oLH9ahYpkFDGy2QijXyUbQ7gM8ds3elltm-F-QskazFX-DK6PBD-JQ>
+    <xme:oLH9avYCwine3lvXDhi-4GgjG8ie3lq7zApt3RLWgaPE-74VcoXBgBO-oLMyMSOua
+    T3ICO5Bar4Fe_fh88KLWYWsDOWb_P9KhUk7hVFXNagF8tO-FgbGp6gy>
+X-ME-Received: <xmr:oLH9ao9U9pK3J192OWAKo0dyOyFAFtivujC6tg0kAUtV2WTj42IvIw>
+X-ME-Proxy-Cause: dmFkZTFsrC4MSWBx2mcWpJjRJPLVF1LbLQZCExV445qIVEvfKJdoe+2xVDv3P6exT1yK6w
+    7Rz/fUovii6KMluWnVWPBlB2epOZI6VG6Ctjea6mFWZowW4QGsULOmEA0Q7GaSsqGpT1UL
+    2V3fUuASn689fLnegZBkqa1CZeJ7gj9NRDgJ9I2/icDlQGbADcAFM4CWy9ckHR6zoAwxjL
+    WoK11eljKgpywoaBBKb2kD0hD23umZBjHAeLdu7PxPypXyx3atJ9dpTdmEgxL2CUcnntyQ
+    LaIqvxeKO+dauUSFJgyO7Ww8M/pXe1RaARMN/4wPlCGWAV6iCoMtahAwEpXMNPx5KJx/No
+    UPhP1m6gRbD6CDT/H20kMo3Pd4gc0PzwJkoRporDIGrDEKU+SaPA75IJeKcx43733OGxNi
+    N2Hxbt6n5Ztj9q4TOnSkm6FucwNw0u6D8DyHbwiKurcZ8Yg1bW8ZAR5gnkq4lymDGSznOW
+    e0LQ5eWp2DpdFKfyecZvVsCSbol6vO0MrtdMZd2yX5SKK43hMWNtjKT/EZ0lZBIfCyjveI
+    8fbM5XrQyVppeqgXT/awpfSjdT0vZzwsOY75dYuU+sdf8dfhzdEy/pOybN2Ovu6ZZWhKut
+    +iZfiUQJ6Q7cjTEtvwOWr+Pdtt3WCHlvKEDcZ8s/PjO+zfZTncEuhkdYe+sw
+X-ME-Proxy: <xmx:oLH9auiIzrGJmLmg8EnOr0Fe0xmX134TACy-yRCtVB_B17jqi_LTcw>
+    <xmx:oLH9aofwEVcjTUgbVZsG4MAjfoZRfhitNcXVjQHbLcHtgUdB0M4Mjg>
+    <xmx:oLH9aloBx030IBXaJGkXOaxWiTUD7fjnqGCogeBtXJ2aHirJAaWQNw>
+    <xmx:oLH9atCC1btpaHjY7uat4IJGTV-o6bllEeA_gXbJCvEjM2Lde6FM0Q>
+    <xmx:oLH9arLoYhr8Yz07xjlugEVFfXSwBvK_-VuQdywtcRICIzb39ZUjys6C>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 18 Nov 2026 09:09:35 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id d7aff497 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 18 Nov 2026 14:09:33 +0000 (UTC)
+Date: Wed, 18 Nov 2026 15:09:26 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org,
+	"Mark C. Chu-Carroll" <markchucarroll@fastmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v4 12/12] builtin/rerere: introduce proper usage strings
+ for subcommands
+Message-ID: <av2xijhHfFBANEHO@pks.im>
+References: <20261111-pks-rerere-subcommands-v4-0-df0c8bf79e16@pks.im>
+ <20261111-pks-rerere-subcommands-v4-12-df0c8bf79e16@pks.im>
+ <xmqqo6bogrvc.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -99,116 +127,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-From: John Mellor <johnme@google.com>
-Date: Wed, 18 Nov 2026 14:03:43 +0000
-X-Gm-Features: AclHuK9b8TGe3NYeybD_ijurbnHUOcYGIPQcpTkijLXKYldQYIA-oHOkFrvAZAs
-Message-ID: <CAG_kaUYEjQhiPMatcPXr00q3oO77BM2Mu7KUZyP0aSGGwKTsJA@mail.gmail.com>
-Subject: [BUG] fsmonitor (Linux): directory moved into working tree is not watched
-To: git@vger.kernel.org
-Cc: Paul Tarjan <github@paulisageek.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo6bogrvc.fsf@gitster.g>
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+On Mon, Nov 16, 2026 at 05:37:43PM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > diff --git a/Documentation/git-rerere.adoc b/Documentation/git-rerere.adoc
+> > index 4e6ab9a27c9..e04e9ef3ef8 100644
+> > --- a/Documentation/git-rerere.adoc
+> > +++ b/Documentation/git-rerere.adoc
+> > @@ -8,7 +8,13 @@ git-rerere - Reuse recorded resolution of conflicted merges
+> >  SYNOPSIS
+> >  --------
+> >  [verse]
+> > -'git rerere' [clear | forget <pathspec>... | diff | status | remaining | gc]
+> > +'git rerere' [--[no-]rerere-autoupdate]
+> > +'git rerere' clear
+> > +'git rerere' diff
+> > +'git rerere' forget <pathspec>...
+> > +'git rerere' gc
+> > +'git rerere' remaining
+> > +'git rerere' status
+> >  
+> >  DESCRIPTION
+> >  -----------
+> 
+> The above is consistent with [9/12] where we saw that the command
+> barfs if you say 'git rerere diff blurb'.
+> 
+> Yet, the documentation contradicts with the behaviour.
+> 
+>     'diff'::
+> 
+>     Display diffs for the current state of the resolution.  It is
+>     useful for tracking what has changed while the user is resolving
+>     conflicts.  Additional arguments are passed directly to the system
+>     'diff' command installed in PATH.
+> 
+> We do not take additional arguments.  We do not pass anything to the
+> system `diff` command installed in PATH.  It was a behaviour change
+> left undocumented ever since 658f365027 (Make git-rerere a builtin,
+> 2006-12-20) was done.
 
-Whilst I had the built-in fsmonitor daemon enabled on Linux, I moved
-a directory into the working tree from outside it (a plain rename on
-the same filesystem), committed it, then edited one file directly
-inside it and one in a subdirectory of the moved directory.
+Huh, interesting indeed. I'll include another patch to fix that while
+we're here already.
 
-Steps to reproduce:
-
-    git init fsm-repro && cd fsm-repro
-    git config core.fsmonitor true
-    git commit -q --allow-empty -m init
-    git status --short          # starts the daemon
-    mkdir -p ../fsm-outside/pkg/sub
-    echo a >../fsm-outside/pkg/top.txt
-    echo a >../fsm-outside/pkg/sub/f.txt
-    mv ../fsm-outside/pkg pkg
-    git add pkg && git commit -qm add
-    echo b >>pkg/top.txt
-    echo b >>pkg/sub/f.txt
-    git status --short
-
-What did you expect to happen? (Expected behavior)
-
-I expected both edited files to be listed as modified:
-
-     M pkg/sub/f.txt
-     M pkg/top.txt
-
-What happened instead? (Actual behavior)
-
-Only the file in the subdirectory is listed:
-
-     M pkg/sub/f.txt
-
-`git -c core.fsmonitor=false status --short` lists both files.
-
-What's different between what you expected and what actually happened?
-
-Edits to files directly inside the moved directory are invisible to
-status, diff, add -u, commit -a and stash, with no warning. It's not
-a race: it happens every time, and later edits in that directory are
-missed too, until the daemon is restarted.
-
-checkout and rm don't see the edit either, so they can accidentally
-discard it. Continuing from the steps above:
-
-    git restore pkg/sub/f.txt   # discard the edit that git can see
-    git checkout HEAD~          # should refuse: local modifications
-
-This incorrectly succeeds, silently deleting pkg/top.txt along with
-its uncommitted edit. Similarly, running `git rm pkg/top.txt` instead
-of the checkout deletes it rather than refusing due to local
-modifications.
-
-Anything else you want to add:
-
-Running the steps above in /tmp, GIT_TRACE_FSMONITOR shows the move
-and the edit in pkg/sub/, but nothing for pkg/top.txt:
-
-    inotify_event: '/tmp/fsm-repro/pkg', mask=0x40000080 IN_MOVED_TO|IN_ISDIR
-    no matching cookie for rename to '/tmp/fsm-repro/pkg'
-    inotify_event: '/tmp/fsm-repro/pkg/sub/f.txt', mask=0x00000002 IN_MODIFY
-
-I think the cause is in compat/fsmonitor/fsm-listen-linux.c. On
-IN_MOVED_TO|IN_ISDIR, process_event() calls rename_dir() and then
-register_inotify(path). As the directory came from outside the working
-tree, there is no matching IN_MOVED_FROM cookie, so rename_dir() takes
-its "Directory was moved from outside the watch tree" branch, which
-only logs "no matching cookie" and returns. register_inotify() then
-adds watches for the subdirectories of path, but not for path itself
-(whereas the IN_CREATE branch calls add_watch(path) first). So pkg/
-is never watched while pkg/sub/ is. A possible fix might be to call
-add_watch(path, data) in that branch of rename_dir()?
-
-This looks related to, but separate from, Erik Cervin-Edin's report
-about subdirectories of a directory renamed within the working tree:
-https://lore.kernel.org/git/as4z1SskiPyrSKIa@vader/
-
-I reproduced it on 2.56.1 and on next (720f3f593):
-
-[System Info]
-git version:
-git version 2.56.1.831.g720f3f593
-cpu: x86_64
-built from commit: 720f3f59372f7249d3b84f824ca9f570b40301ab
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-rust: disabled
-feature: fsmonitor--daemon
-OpenSSL: OpenSSL 3.6.5 29 Sep 2026
-zlib: 1.3.2
-SHA-1: SHA1_DC
-SHA-256: SHA256_BLK
-default-ref-storage-format: files
-default-hash: sha1
-uname: Linux 7.1.6 x86_64 (Debian-based)
-compiler info: gnuc: 15.2
-libc info: glibc: 2.43
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
+Patrick
