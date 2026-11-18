@@ -1,99 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.43
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795045580;
-	b=DNZ1vXyCCBsD5xsI8X3hFFQPTSo6POo30AIL+qVM0zyRKUGbEUJpJ1thNSiTlJUhAKQd
-	 NVV9zcVYcIwnSEJH6TJO9Mn5rtBhO7vpyTj0+JflSgh3h1E6fqNfzkFvGuvBzpgETAoHe
-	 hwCEnn01l8+UqWnjB38RRXktn5sWXUiz2Nqm8l1i9Eex2RoL1533iMCngsX9RX5FCjvjI
-	 F//B2wRSYO0mwrXs5icMtSfIMFzEfT1MQyU8nvRdVsazvVe2gwEVhsO6yBJSm65Qe/NJN
-	 aJPgoJV9cq1VAnw6fgPrk14rk8h/8n7dnz7qTnnkeEwX4Jx7AvF8wS+MLK7+a1bh8Nw==
+	t=1795046059;
+	b=prMSbr45lhj643ePPOL4Msd03U/zByBy1fb6NGlNjf0Ba7iVUAZzWXXvm145CzJKTP2D
+	 jgZzG1UeqZOhRfLBKqBYntKRapDkWi7XXx0dic5ZMkDDVaEiObBPmksxR3XL0obMNUr7d
+	 /cFXN+J7qG+foaFrNBw0fEODBMiSDmO9TwxOpN5Hdi1OoOU/UdaQfu54XMQSdI8gT2yMp
+	 pz1BCXhzkV3f9WKsUd9XOjylhHAFtQZMmMFgx7/mdoytZ4gJQqLdIRsIGAbBCy/wxSUGG
+	 +i8ETMcTjDIqD4d3lHmvDo9hMWT3qcfmrasGgOW+3jcU0Lj78wGSDM5GG7EKE8mDrEg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045580;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046059;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
 	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=sq+XIHGzCgkgAROLp2cEe5shflRlo0lNphrsiUztsAo=;
-	b=tcQTwc3jmBSci26cRi4y7mG4PYAne4BPxMT0yZAtdZ+6DFAajH8QoXQgn++3DSstIdTa
-	 TMpuLtbKRtbB3BgwyWJnjXA2xs74twftCTURVfJoW6QBDAGUBD+0kIINJXfFiE7/FS0cl
-	 fUukE1o77oZwRSJ1/jF8mErY4bgUpNGaV5q6cc/90+Y0o/BcsLJoaApCuBOjaOGnhMSSN
-	 BiTuxT1xrD4gmUZct+iDUTGrCVLXyindlOQDTISOzf71D/DbXPnn31021g9vIL8/YzmhB
-	 6O9+iJNKD2So5IL4V3rgStUQVQdmDd8qEKzo+fJarfeYYNB+AzROFzjVnDtwdipff/Q==
+	bh=8hiqtWx7LclBvhlgmIac8c9KwMyqPRLtXmLZo1jzcYQ=;
+	b=5qla1iVNhNOGANxHJ6eU/MVHpjBCPAZLb5F7ro7edi5zytyELWNSlMM9vYa1NK8E1+Xm
+	 KFsynbtdqUgXZTMqfiBbOIMbqibkcyKJ9qPb4NO2PCb/eDqGkHxhbMppvmdjYd1QUjgYz
+	 I8CvGpqeULpY1lzEm6CmiUVdAVNNMJqN4i32ra0GKbo5LRGKEYqVdGnl42cfy0qlw6rPx
+	 2lNnibGwSFvvpoPdoPBrQSP4SKC/QOO9dFAZKu4M5XQS/fTohTHkUIw2jMFJoivjZH6gc
+	 uPl2CL1/Z7MGlgXNIM72dhjssFnx9PHpaH1UdY9z6k8viD5+y1hv02NhSwpEl6htfsA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=noam.me;
-	spf=pass smtp.mailfrom=noam.me;
-	dkim=pass header.d=noam.me header.i=@noam.me header.a=rsa-sha256 header.s=google header.b=XAH40qR1;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.52
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=jF6P5So5;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.43
+Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3322B606A325
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 23:46:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3322B606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=noam.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=noam.me
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D0F606A332
+	for <git@vger.kernel.org>; Wed, 18 Nov 2026 23:54:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F0D0F606A332
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=noam.me header.i=@noam.me header.a=rsa-sha256 header.s=google header.b=XAH40qR1
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-c50a2efbe1dso280896366b.3
-        for <git@vger.kernel.org>; Wed, 18 Nov 2026 15:46:19 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795045578; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=jF6P5So5
+Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-67db89857abso2012243d50.0
+        for <git@vger.kernel.org>; Wed, 18 Nov 2026 15:54:18 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795046058; cv=none;
         d=google.com; s=arc-20260327;
-        b=f1wlSrD6O1RA92OiE1HN+4qYiOFBTl7jwVsQmlKzUeegu9rzwSNWRErQO9CjXKluLN
-         y+iWIMFFbuCNkWUrG/XSuVTIKHZ5MgXR+fl9PiYAGv/OKjxLOPc2LhQtLjsl5r185UML
-         eL+NN6jnyJXclZamQgdKcHTO6lI4HUoTDu47w95iw53BHJAnMnLDknqIoL6V6QBW4549
-         jM+owgHh+M8duL6HEv/4iNgnynryv7qrN0RkzDYc3lqy67U9nkXqkxNhYxP7bazmY/Wv
-         U5swZsSiRpENyOvDXnqMkei/FUKWl3fOCZp4At/cmfughunMbTld0OA5DdGCyj5n7kiE
-         bzVw==
+        b=K2T4YJTar8G/Vp7e1m1X8sZ1lhuRQuIsvB6xazx/vDhodtZjvXpt4pv5eOc6+pOtEw
+         tnXXMhj/TLfnCbFmlcIMoiPgEmF5yoQc4akQY390KrYu/l3glVBunzbZSEYn0f+/t0v/
+         8HsIBN9geKOsPG3l7PzqArcvNs47kPqVkqA69zxrZoQTEOeSnOAP8eMw1LuUgawEN1p3
+         LztgU5iYB9AQqYkNDW3wSWjTjoNhO8j9IOw6LmemLAuAYY1klaHMwR8Kc4bXMXycgvv6
+         A2qKWNSxKTpe8hwK8sgJz1U7AOkyMT4uTZ2hvfLd867zJzymjD5D8ED6+nvZ0pJhzjHG
+         Nj9Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=sq+XIHGzCgkgAROLp2cEe5shflRlo0lNphrsiUztsAo=;
-        fh=EWEqutMSy2TipolHUCSaYlfyeOq9uDJOmSABdyCDgYI=;
-        b=M/RYbs545h/sUJv4wyNsdNDvqzaaL2yf5n30GVmY11KsjxUUnHuJ05/MpvKdATnHBK
-         IPxybIxl0ozqNhS5/kgDDBlf1nAX7QRLnShOAJTWj+ZrrAZ1Jl1Rrbc3sLkGUH+RnfHu
-         7Yr30sZHnDd+HNwCrmDdBnDRE2ljnt1nqERwe/TUqBMGokorIIJOFFC/3MBd6HsAfqUA
-         VFtK4fVc1T+stn4VWTuxGy8tAUdG9sTinANljnp6GuVFCgL1dj/lwjcbHU094ROaLs43
-         78nG9My4E3QC1l570ShlrdYZbbrf1Af+OniSm2JAxEdK10I11AGhlMm62j3LmJkpMwCC
-         kovQ==;
+        bh=8hiqtWx7LclBvhlgmIac8c9KwMyqPRLtXmLZo1jzcYQ=;
+        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
+        b=L3GJVkmtb+WBKZOhnP00ydmnmOMutIOrMKi0SSNJ+hM0RRo0rYrBRhgoAFF9BTLDNF
+         CcOOvRM0HTITc5+Mom3tM1663xQnxe9VjIBDpJENhT0Aun/ofYp72GPDV9btTH0zFJEa
+         pUvt/VWi0EckWafTug5bPkbslLIj/gBr+yui0l0Ry/YSXbe9hI+2VDPwseO4I8Mmnn5s
+         MVp/LyB5JIUTzLJyaq8FFEexMpvFJ8CP5or4qSHU1S/SWbxWqvlYASovJ226ckJi+r84
+         SBIq4oX/2gcy6hDXIcM8/aQvuuRVaDoxoWSoqmxhYBrdCnAhUgoRfxeu5/CRCyUhbKaY
+         5Xbw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=noam.me; s=google; t=1795045578; x=1795650378; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795046058; x=1795650858; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=sq+XIHGzCgkgAROLp2cEe5shflRlo0lNphrsiUztsAo=;
-        b=XAH40qR1kfM61dJeY4jbEoHmxNDqpuXM8Cyo6x4g2Dkx1JN/+sNxHUmizf1rd12D0H
-         /CNqBLyCRbiQQYu+DyO0cefZyGJWUuVHrQMt6Cm4r1oXnDUvzAvF7DkTiEP0o/WMGbU0
-         JWEc3v4eSyYeneQpngjXB7SDyWh7CfiDtL/tziOKnAFYxwAJuS0Esfiepnwtq+9uLIqR
-         2GXEcAKhUrkWHOqLurjG0CPsf9rIAl7pXjxeGS3LXKlPBhsOGDyxaHmRTORILg5udC2l
-         XT5owDCcmwba9XnPT/vTk0ZxWDekMsD3yGaCEzzKu0ukARestUpSUeqKkgSwzGQVWnzc
-         fzpg==
+        bh=8hiqtWx7LclBvhlgmIac8c9KwMyqPRLtXmLZo1jzcYQ=;
+        b=jF6P5So5RhOlAtEUE0oybF7+byWPuH0L4no0+ppAPG6XPtFPCtC0uCLyaThO/XTAh5
+         rX/+ibFXJ2ihgjBRjEr+mFksIYSnq7yJSvWZBrReqJauQuQMCIMLToGsKGKA+7uBTsYE
+         h2IRmvld8jjLvM4lUpc57lIMLNVY3L7ATx4CNMbbnEwuQlxJ1zCXqeeXok59T9pdaDRE
+         7wwN64exPJqxPZOUEeaNmg0ccnCtC8SGF0BDYgaG9TYItYQ6yGZ7mfoH+6bOl7Q9wmh7
+         bdksKt6BKSBqS8YNWrpWSOSyzr4QxhjcFmr/kHk8WXUB8t92By6Y9BIHW125jclGZD1R
+         12oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795045578; x=1795650378;
+        d=1e100.net; s=20260707; t=1795046058; x=1795650858;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=sq+XIHGzCgkgAROLp2cEe5shflRlo0lNphrsiUztsAo=;
-        b=2w+YbURy/lhGOwa2vhigOrqIHb688dXP7n7MNIWtJ9mszJjGR3m8sYxkA789ybRCXU
-         nMyHZhu8m+RUN4VTNNh5l0uU4q/x1YYEbBJCSzb6ZJ0VcqtSsBskt33BO5qUAwZB/982
-         JUQgfvIlqsZtQHC1/8/8sfi/qyFzxlq7R2hw/hRCPt701jPgsVxSaKu4oEnpxwShbce7
-         aDm7d8mRjggBfsZhc0aepqodGWHnuhmJ612/Echi9MzkiPRzRmRidYsLvA1vM81FSftX
-         /u7z7KD1k9MfEyC2BELFEPJuZw/lFYoB+X4N845e0Fx/K72vMavTc5YleAoTdTEXpX9j
-         YH0g==
-X-Gm-Message-State: APuU4Z9B0sMZC2lxRPf/92yFGlfsUQ49Fhyfqja3A1f31Qibs+NiLpWK
-	iEgIGdFcWInEnOwnhUkUnKhA1hcMW22Q91uRw2pPereyQP2SgUKGVFnbqRFPwEeaxnTpPBAYREY
-	8efX5gR8PABy2MN8AmIb13nQVpDtpXu5HQUUCnceVPA==
-X-Gm-Gg: AYBFou39ayUza2XejhluP5kGMIZ/t0GnfuhKuEPUXI3OmFlfUCOInLqghIk2wx1f+oJ
-	Cx+dnoLIpJUlYiD2N23hxV2fHiE2Ya5GNCziPIgaaS9jSfkoGPAFzMGals5mE4t+uWSQvN/foeh
-	mGnNRkW9ABXuHFWrefthk18qenV6cZuddIXVBTlth2tXG3lO6P5hi9UEM0Za0IobiCN2jddR+g5
-	SpNo/npoUUeh1eW4fMK+/cyri7jwoL4QdjI2uwTrEn2Pnms44+GDGH7vHSxYacoXo8idbA9YMmU
-	A5WV+0NjLy5fd45iunxlmEGUI7O1liPrvAWIUGuEPAXEOAJuFOVoGf524feinNlhO9UEE5g7w1s
-	87SfcnrxQFTnYwI/Gs3OUKGJbuHroaY8T2QBCHP1zcGoVh5Mlgi+hqEfU2pFchAKWp0Aq
-X-Received: by 2002:a17:907:8693:b0:c3f:e414:d35a with SMTP id
- a640c23a62f3a-c510e358f3emr354033066b.26.1795045578439; Wed, 18 Nov 2026
- 15:46:18 -0800 (PST)
+        bh=8hiqtWx7LclBvhlgmIac8c9KwMyqPRLtXmLZo1jzcYQ=;
+        b=ltkGx439beLmgWQJiZ5Lqwqu3VEsiJQr+u350yBpqXt2S5bCE+IrrkrQRoV5mjuFql
+         o4NMZg7uS6RdUH0/LoDnil0kjgq4EXyr1EpiGAFekKYacWKiRJliB8KABVsIv1cfABHQ
+         JZg4fmFPGYdhv9BH4IJS2ih0i2e/7X6YyfyYwVqzqakNgi/iprYMaH3bsw9C78wASBjP
+         mfWWhLWhHPCRhNFVyhtLpZHlOsJb5R5pIxUr+6C86grDBIPm8hZyGkBjJ0b47Sq/Lip4
+         3sPoOuq2oM8xlR6tWDndHO3UxPD+NSnvpdR8pFjRAOljFzKvy2SO6+ftc7e/QIaQf3WX
+         htnQ==
+X-Gm-Message-State: APuU4Z90gqAMqw4acyh2ansMRRHBgLXUxqIrTL3kr+Ab1hSu+4F1y0tZ
+	Ekp9OXCtYuUQslQQ81qjHZN0OfVukZNOJ1ByQRllU1a9bngOKK27CiVM3n8YkHtlfrxrx8vAoLO
+	NvaXb0PkYO4cd6EPStMVduwfnyC7dvEsxEAgUZWkNRA==
+X-Gm-Gg: AZFdTZfyuEUlpGhWTyVDKeLWX5vqcEypvwlTWiAzyvmhTHPZWH87VOz1Ud5wOAZWhaz
+	ve05Ckkcl3te89VIJRjxJg/xvsU5xVkactWyiIxX+3I2MlgsRYelW9G6iu+vHr8K8fvDtPz4YCZ
+	QuK0jlGKSKcGMfjCo0bC6NSwxq8zJpeOQrS/JWd6o0RJfx7kAH9HswRs4qFFN1Ub+0nr3F3hhFm
+	xZO7dtD7pCndHW0XVQBdey3MXR0WFU5wfq9HcA6UqfJ7Lxpe1dHMGNcVm292HLq2si4Q8D4HcmX
+	mrbjdLE+/XGDvbHJ0lTH8b8xVuulXyvAvUSMkpLfuHYXvg3CPd8aU2wirauhTaz6ayCir2RgOJF
+	usGinp1hCTOyoJeyJIjPkCPjYxRKZvo5UNQmmJdnAC03y98aUZZDN7WoW4X4LTYcfMetS11WfSm
+	y2/Ibie1cDxPwUIPCWx554T4GHZjVC5/+Sj3UPVy25RD/9HLSUf261vLXbZQI1oMxmOpk2NRYvn
+	9+4qDYTZb5lcEoL2XXKIF3RqJQg44q82aeGqg==
+X-Received: by 2002:a05:690e:440e:b0:67c:332f:3fdc with SMTP id
+ 956f58d0204a3-67dd3fb245bmr1129534d50.82.1795046057839; Wed, 18 Nov 2026
+ 15:54:17 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,44 +105,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261118-ls-tree-format-z-verbatim-path-v1-1-718987241861@noam.me>
- <xmqqcxs120c8.fsf@gitster.g>
-In-Reply-To: <xmqqcxs120c8.fsf@gitster.g>
-From: Noam Cohen <noam@noam.me>
-Date: Wed, 18 Nov 2026 18:45:42 -0500
-X-Gm-Features: AclHuK8Bo0mZTQVIDezCzJQfrxJuMiTdM1kTr_TT5hsJ-wU7wteczXl8k4dlyRQ
-Message-ID: <CAJeEYUaJt49oz+Fq7qwWGyB9p=Hibdzd3113FBhbK1RDn3oHug@mail.gmail.com>
-Subject: Re: [PATCH] ls-tree: do not quote %(path) with -z
+References: <20261118105227.50447-1-okhuomonajayi54@gmail.com> <xmqqy0aq56oj.fsf@gitster.g>
+In-Reply-To: <xmqqy0aq56oj.fsf@gitster.g>
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Date: Thu, 19 Nov 2026 00:54:06 +0100
+X-Gm-Features: AclHuK8TJujNmKOvpXF0zMay4O_E_vbHtVoPlwUArw0ZVqf4ms4bpZV6UxaCULo
+Message-ID: <CAFpMFfDOGZUFPRfPkCXZyO5hJ1O7gfjzTnv6Djs=EMPd0VmfuQ@mail.gmail.com>
+Subject: Re: [PATCH] MyFirstContribution: leave a blank line between
+ mailing-list paragraphs
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Teng Long <dyroneteng@gmail.com>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Nov 18, 2026 at 7:35=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 
->>  test_expect_success 'setup' '
->> -    setup_basic_ls_tree_data
->> +    setup_basic_ls_tree_data &&
->> +    test_commit =D7=A0=D7=A2=D7=9D
->>  '
+> Sounds like a good way to help readability.  I didn't expect this
+> patch to extend MyFirstContribution, as the first chance for anybody
+> has to deal with "quoted text" is when writing a response to other's
+> patch during a review, not when responding to a review, but it seems
+> that CodingGuidelines, Submittingpatches, and ReviewingGuidelines do
+> not even talk about line length limit for e-mailed communications
+> (which is a bit surprising).
 >
-> Do we have to really use characters outside US-ASCII?
+> Will queue.  Thanks.
 
-The only US-ASCII bytes that quote_c_style() quotes are control
-characters, DEL, '"' and '\', and Windows does not allow them in
-filenames, except for DEL, which felt too obscure to rely on.
+Thanks Junio.
 
-We could avoid the filesystem and synthesize the tree with "git
-mktree" instead, which is what I had at first, but that made the
-test noticeably more complicated than a test_commit in the setup.
+I am working on a separate patch for the line-length limit. It
+states the limit in CodingGuidelines, SubmittingPatches, and
+ReviewingGuidelines.
 
-We already have tests that use non-ASCII paths, like t3902,
-t4012, and others.
-
-Do you think the test should set core.quotePath explicitly, rather
-than relying on its default?
-
-Also, should I just drop the test, or add a similar one for ls-files
---format?
+Okhuomon
