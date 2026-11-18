@@ -1,99 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.45
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.52
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795044785;
-	b=UAEBBiV24OiuhinV8oIH1yRfIDNXocXFzpbu6Me0WUi6k4NJoaXwUxa1FRBlaOumEuVc
-	 OR06vsd3yvR8EOW+vuEV/n+oO34ksxa3XK6D6VkKDLADnrlhSYzJs6la21uM7lRREImCA
-	 jrvfOrv/bvYygoLSwmj3/53hrS4iyukIxOstrjXe5ZIrlALJ26S0HV5DWNtuKU9S8ZiY4
-	 7W7QLaQ8hEmEGxhmGCHlEhEn25zI5YsQbWtLlwE99bZwO+iV/yC4LfC6jPwO50xpG0PSF
-	 Wv3xQhgWFKq7KDR/M4vOhmoCUdBcWMpj2YJqt6Bi1Xlm76QvYIIbLt/Od1lg+F118fQ==
+	t=1795045580;
+	b=DNZ1vXyCCBsD5xsI8X3hFFQPTSo6POo30AIL+qVM0zyRKUGbEUJpJ1thNSiTlJUhAKQd
+	 NVV9zcVYcIwnSEJH6TJO9Mn5rtBhO7vpyTj0+JflSgh3h1E6fqNfzkFvGuvBzpgETAoHe
+	 hwCEnn01l8+UqWnjB38RRXktn5sWXUiz2Nqm8l1i9Eex2RoL1533iMCngsX9RX5FCjvjI
+	 F//B2wRSYO0mwrXs5icMtSfIMFzEfT1MQyU8nvRdVsazvVe2gwEVhsO6yBJSm65Qe/NJN
+	 aJPgoJV9cq1VAnw6fgPrk14rk8h/8n7dnz7qTnnkeEwX4Jx7AvF8wS+MLK7+a1bh8Nw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044785;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045580;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
 	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=I/BqA7DA3KBgxwSbn72+kbqnq8uTfWIvT8RcsoD+YGc=;
-	b=QVd0kRK7KNUXEz3r8Eoiex446y9+JlX58h8o/U/oI6ubgq7yBU0BZC1i7UJbsLy5kV/Z
-	 2O3wqh/pYkRErWS5FLSaIjTFecaYQ/ofS2GEBrjQ7lu5smGgWgT8t862ZUAA5Z06psD7G
-	 53dC+uQiYGxzHjzZk1bZKc/5MhzNbKTOxnfW2TPHX6R0kZ54YNELuKiGbrdPvwXB/fm6+
-	 Wm9wVF5oL9uZURcUQwSOU4ZLfhL8got2W6ipLh9RuT62E5lTiH/OgHdWATnAxHWvmPTSf
-	 g7C7WdyQMSzxaB2jYqTNyi9r5N/7jeiclCq9zwdSJLUQuIYGYrx0EkHgLWjQBYoZLHg==
+	 Content-Type:Content-Transfer-Encoding;
+	bh=sq+XIHGzCgkgAROLp2cEe5shflRlo0lNphrsiUztsAo=;
+	b=tcQTwc3jmBSci26cRi4y7mG4PYAne4BPxMT0yZAtdZ+6DFAajH8QoXQgn++3DSstIdTa
+	 TMpuLtbKRtbB3BgwyWJnjXA2xs74twftCTURVfJoW6QBDAGUBD+0kIINJXfFiE7/FS0cl
+	 fUukE1o77oZwRSJ1/jF8mErY4bgUpNGaV5q6cc/90+Y0o/BcsLJoaApCuBOjaOGnhMSSN
+	 BiTuxT1xrD4gmUZct+iDUTGrCVLXyindlOQDTISOzf71D/DbXPnn31021g9vIL8/YzmhB
+	 6O9+iJNKD2So5IL4V3rgStUQVQdmDd8qEKzo+fJarfeYYNB+AzROFzjVnDtwdipff/Q==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AmcSbxgg;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.45
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+	dmarc=pass header.from=noam.me;
+	spf=pass smtp.mailfrom=noam.me;
+	dkim=pass header.d=noam.me header.i=@noam.me header.a=rsa-sha256 header.s=google header.b=XAH40qR1;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.52
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB96C606A330
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 23:33:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CB96C606A330
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3322B606A325
+	for <git@vger.kernel.org>; Wed, 18 Nov 2026 23:46:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3322B606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=noam.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=noam.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AmcSbxgg
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-843b6f8e2c7so1685273a34.1
-        for <git@vger.kernel.org>; Wed, 18 Nov 2026 15:33:04 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795044784; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=noam.me header.i=@noam.me header.a=rsa-sha256 header.s=google header.b=XAH40qR1
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-c50a2efbe1dso280896366b.3
+        for <git@vger.kernel.org>; Wed, 18 Nov 2026 15:46:19 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795045578; cv=none;
         d=google.com; s=arc-20260327;
-        b=lZnlKwri/h/czHcrujCHPBIFAlAXXGX1CthMfNcQBJTOHwCCQoVTnYphIB/NioCAko
-         k/kQnywtA21ZkRCXolpx1lFqs2vYQ4xdnU92POMWPlCWJPlJhkMMpPJKuQZqqX8NJyiM
-         N2pIrSToXd3oBrVFOlHKpjBWqO8tNN+LmN8aYmQcPdXBU1lSSBW/xdrYfXQrnZWsiH2r
-         fEh/+f9HliDNQaMc1x7YbTo6/Lf66N0OTePvTMisK3zt5ZxRQq151E065zmEhfHN+3lt
-         clJTBDI5XgLwQP3D53Cs/F2sOUuAlD3y54269dyJqeqtlr2AGw5eMTIlyJozIM7FTuUV
-         l5aA==
+        b=f1wlSrD6O1RA92OiE1HN+4qYiOFBTl7jwVsQmlKzUeegu9rzwSNWRErQO9CjXKluLN
+         y+iWIMFFbuCNkWUrG/XSuVTIKHZ5MgXR+fl9PiYAGv/OKjxLOPc2LhQtLjsl5r185UML
+         eL+NN6jnyJXclZamQgdKcHTO6lI4HUoTDu47w95iw53BHJAnMnLDknqIoL6V6QBW4549
+         jM+owgHh+M8duL6HEv/4iNgnynryv7qrN0RkzDYc3lqy67U9nkXqkxNhYxP7bazmY/Wv
+         U5swZsSiRpENyOvDXnqMkei/FUKWl3fOCZp4At/cmfughunMbTld0OA5DdGCyj5n7kiE
+         bzVw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=I/BqA7DA3KBgxwSbn72+kbqnq8uTfWIvT8RcsoD+YGc=;
-        fh=DDRQTb+wnbVU9XewO3U5V3gIkTzYR5f2/P6jJ9Y5lRc=;
-        b=I+c/AeP10wo8B9wLicGO0WAe7Fphhu6ScH5ThdfwUYwzzrzNedVknv+6EnDlZsu3SU
-         /cSTKKt2PNbXCZhv6SkgHgsbrWmM+oN66EnMOOYT2+4H87Z1+KZ+kT5EuxSVG+E4FbtV
-         tbd9bBwdwVYoaHf5/dvJLlXhK+8xRKO7BL4kSPwW7fPI743wBkkFXHOs150YV789TIrp
-         gyPeEBkpXN7fcF9ivk2PqQfK2p3pgWw0xiO121WrvLPQ+pbyAEztig19vQeZo1YRsJU2
-         uzB1BWTPBcqxk8iom9WJXyIZjR4OKXSGBYudNuciufH269ZfOIm9oxDFiZIQlkw4ygan
-         Vqhg==;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=sq+XIHGzCgkgAROLp2cEe5shflRlo0lNphrsiUztsAo=;
+        fh=EWEqutMSy2TipolHUCSaYlfyeOq9uDJOmSABdyCDgYI=;
+        b=M/RYbs545h/sUJv4wyNsdNDvqzaaL2yf5n30GVmY11KsjxUUnHuJ05/MpvKdATnHBK
+         IPxybIxl0ozqNhS5/kgDDBlf1nAX7QRLnShOAJTWj+ZrrAZ1Jl1Rrbc3sLkGUH+RnfHu
+         7Yr30sZHnDd+HNwCrmDdBnDRE2ljnt1nqERwe/TUqBMGokorIIJOFFC/3MBd6HsAfqUA
+         VFtK4fVc1T+stn4VWTuxGy8tAUdG9sTinANljnp6GuVFCgL1dj/lwjcbHU094ROaLs43
+         78nG9My4E3QC1l570ShlrdYZbbrf1Af+OniSm2JAxEdK10I11AGhlMm62j3LmJkpMwCC
+         kovQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795044784; x=1795649584; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=I/BqA7DA3KBgxwSbn72+kbqnq8uTfWIvT8RcsoD+YGc=;
-        b=AmcSbxggLwpQpRamYinXtAMDCuvlwOWWpFQNq0y2DzdJUsGXU6h1sZfTZgdj6vV8PZ
-         qLE26dI6BqUfrlaXqf0dbHF4SuZR5NMQ2gsnPD0CwlEDC4oOEug8JnKLUW7oSRyK4b9q
-         aj+LHU5B6xF5jsmgx1DRwp1/QX7dNxXp7OI+bZ9c+y9HpW5FTRZK9SXdBs7uNah+yRAY
-         v02OJqmIA+nYaFNDbZOQeZWDt4P3WwUFSjfruJ7CI631aPDYBvrCc590a8zZrnOyNfQV
-         FrgtGekvmnxqk0SgFxWA/KiaupRo0qN0vKocHgvoohGqm2GIcrmGYvkhiVDFJIVLpm4O
-         5oNA==
+        d=noam.me; s=google; t=1795045578; x=1795650378; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=sq+XIHGzCgkgAROLp2cEe5shflRlo0lNphrsiUztsAo=;
+        b=XAH40qR1kfM61dJeY4jbEoHmxNDqpuXM8Cyo6x4g2Dkx1JN/+sNxHUmizf1rd12D0H
+         /CNqBLyCRbiQQYu+DyO0cefZyGJWUuVHrQMt6Cm4r1oXnDUvzAvF7DkTiEP0o/WMGbU0
+         JWEc3v4eSyYeneQpngjXB7SDyWh7CfiDtL/tziOKnAFYxwAJuS0Esfiepnwtq+9uLIqR
+         2GXEcAKhUrkWHOqLurjG0CPsf9rIAl7pXjxeGS3LXKlPBhsOGDyxaHmRTORILg5udC2l
+         XT5owDCcmwba9XnPT/vTk0ZxWDekMsD3yGaCEzzKu0ukARestUpSUeqKkgSwzGQVWnzc
+         fzpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795044784; x=1795649584;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=I/BqA7DA3KBgxwSbn72+kbqnq8uTfWIvT8RcsoD+YGc=;
-        b=iZUh3OCkAc6r8aizhXo5W3E7YUeHIeUWByPDIb40bi1GdBdWRN/Tk4ffu45b5EerHQ
-         67T/flK6PmQfJ8aQMFJU+nwREik18kc9ETIcXizRhqZm3uQozbxWGxdeCPA+4dd6xjT3
-         9aGY2xkKcUFxOZ+bIvPzNlEe4A8uEPJa9aY1xumIpQsUBrEtPtpBeIUT2Ubk8fVq/72J
-         IqxCPW7pDRKNMw25fU512DvuvxoL0X5uRIOu/1y/Jb7KiUJ4POZp4NYzFw1G6dFriAXv
-         HqcICqnlPWQg5LhOrwt3e6XdsFQhzyY429/oQvmc8+SuPxvgUWJxITCTjJKpnP8d7zPi
-         +fkA==
-X-Gm-Message-State: APuU4Z+BEZ0tCnVb0TVeooTXORLe0HyWa+mXvT/2V775gM+Zy17N39pk
-	JetTMyIIZOdEArqXb+ojkSox0UpdmGLzfNXIAL8dZp+Iad/qQyfwtz5JHnOE9u34nv/qqgXPqfk
-	9GEWOwHUiaqh/Jc8NEUQT8i1YiqeikWHJzIaZy6k=
-X-Gm-Gg: AYBFou0JIbv+uSQpQiX05bWTKc15wkGEGasVO+Vk4zMq5904eXDDfPntXnWiMTh3rMA
-	6lbdsYwB4J03rxshw5ZiSLXgMC1nU71ExX6dXFI7w/6E3tzf7FIdsHwJPNfn30GwZ3vXPAxAB1h
-	1kGcG0LvfwuL1tond5H8UaX2+l79wMlhDa8d+FPBcWpr1sajgLZiRMpYfgavmt0tiJ3IIfALTis
-	5iunQXX+Yo4jqwv7M/lR6LrTE2B92gczeoHrhVQw5MRmpYg74rBwceqt/qqg/61H6t7yUTny77d
-	9dvUP7P1JpbF3HkpnqT5Anwtzdz5VvKOvDbyWFhOfFKQkeDi7umlVc525ZHNW081tNV0OSuwZS2
-	kWUk1SEvsWcjjHnjsOOBk0NKWMFD+anKWyfpAzmNS452TOVx6rJM0nhihGXaUBigUOlwWMZWo7o
-	uBQIzELKxSpHBTeA+p8Fl7hBmsp7sVsSAOfdYYItM7PYAZ0tq9XCGfsA==
-X-Received: by 2002:a05:6808:13c7:b0:4c4:d8a0:2773 with SMTP id
- 5614622812f47-5773d92c722mr4857724b6e.32.1795044783710; Wed, 18 Nov 2026
- 15:33:03 -0800 (PST)
+        d=1e100.net; s=20260707; t=1795045578; x=1795650378;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=sq+XIHGzCgkgAROLp2cEe5shflRlo0lNphrsiUztsAo=;
+        b=2w+YbURy/lhGOwa2vhigOrqIHb688dXP7n7MNIWtJ9mszJjGR3m8sYxkA789ybRCXU
+         nMyHZhu8m+RUN4VTNNh5l0uU4q/x1YYEbBJCSzb6ZJ0VcqtSsBskt33BO5qUAwZB/982
+         JUQgfvIlqsZtQHC1/8/8sfi/qyFzxlq7R2hw/hRCPt701jPgsVxSaKu4oEnpxwShbce7
+         aDm7d8mRjggBfsZhc0aepqodGWHnuhmJ612/Echi9MzkiPRzRmRidYsLvA1vM81FSftX
+         /u7z7KD1k9MfEyC2BELFEPJuZw/lFYoB+X4N845e0Fx/K72vMavTc5YleAoTdTEXpX9j
+         YH0g==
+X-Gm-Message-State: APuU4Z9B0sMZC2lxRPf/92yFGlfsUQ49Fhyfqja3A1f31Qibs+NiLpWK
+	iEgIGdFcWInEnOwnhUkUnKhA1hcMW22Q91uRw2pPereyQP2SgUKGVFnbqRFPwEeaxnTpPBAYREY
+	8efX5gR8PABy2MN8AmIb13nQVpDtpXu5HQUUCnceVPA==
+X-Gm-Gg: AYBFou39ayUza2XejhluP5kGMIZ/t0GnfuhKuEPUXI3OmFlfUCOInLqghIk2wx1f+oJ
+	Cx+dnoLIpJUlYiD2N23hxV2fHiE2Ya5GNCziPIgaaS9jSfkoGPAFzMGals5mE4t+uWSQvN/foeh
+	mGnNRkW9ABXuHFWrefthk18qenV6cZuddIXVBTlth2tXG3lO6P5hi9UEM0Za0IobiCN2jddR+g5
+	SpNo/npoUUeh1eW4fMK+/cyri7jwoL4QdjI2uwTrEn2Pnms44+GDGH7vHSxYacoXo8idbA9YMmU
+	A5WV+0NjLy5fd45iunxlmEGUI7O1liPrvAWIUGuEPAXEOAJuFOVoGf524feinNlhO9UEE5g7w1s
+	87SfcnrxQFTnYwI/Gs3OUKGJbuHroaY8T2QBCHP1zcGoVh5Mlgi+hqEfU2pFchAKWp0Aq
+X-Received: by 2002:a17:907:8693:b0:c3f:e414:d35a with SMTP id
+ a640c23a62f3a-c510e358f3emr354033066b.26.1795045578439; Wed, 18 Nov 2026
+ 15:46:18 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,53 +103,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261114012055.127905-1-tangajoris@gmail.com> <20261117004348.806694-1-tangajoris@gmail.com>
- <20261117004348.806694-2-tangajoris@gmail.com> <xmqqh5hd50e2.fsf@gitster.g>
-In-Reply-To: <xmqqh5hd50e2.fsf@gitster.g>
-From: Tanga Joris <tangajoris@gmail.com>
-Date: Thu, 19 Nov 2026 02:32:26 +0300
-X-Gm-Features: AclHuK9VFPhEji_IS5nyAcRe6Bj22n_zSZdgdLx1_hJTVBG5Qi4rb354sWKS3fI
-Message-ID: <CAKrRMNoB-4==1EPLAAXE4M1J6bUwuWj=p32CedDvOTi3tzO7=A@mail.gmail.com>
-Subject: Re: [Outreachy PATCH v3 1/3] apply: free the old def_name in parse_git_diff_header()
+References: <20261118-ls-tree-format-z-verbatim-path-v1-1-718987241861@noam.me>
+ <xmqqcxs120c8.fsf@gitster.g>
+In-Reply-To: <xmqqcxs120c8.fsf@gitster.g>
+From: Noam Cohen <noam@noam.me>
+Date: Wed, 18 Nov 2026 18:45:42 -0500
+X-Gm-Features: AclHuK8Bo0mZTQVIDezCzJQfrxJuMiTdM1kTr_TT5hsJ-wU7wteczXl8k4dlyRQ
+Message-ID: <CAJeEYUaJt49oz+Fq7qwWGyB9p=Hibdzd3113FBhbK1RDn3oHug@mail.gmail.com>
+Subject: Re: [PATCH] ls-tree: do not quote %(path) with -z
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, siddharthasthana31@gmail.com, 
-	phillip.wood@dunelm.org.uk, jackrawlings2011@gmail.com, 
-	christian.couder@gmail.com, kaartic.sivaraam@gmail.com, 
-	usmanakinyemi202@gmail.com
+Cc: git@vger.kernel.org, Teng Long <dyroneteng@gmail.com>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello Junio,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks for catching this.
+>>  test_expect_success 'setup' '
+>> -    setup_basic_ls_tree_data
+>> +    setup_basic_ls_tree_data &&
+>> +    test_commit =D7=A0=D7=A2=D7=9D
+>>  '
+>
+> Do we have to really use characters outside US-ASCII?
 
-On Wed, 18 Nov 2026 at 23:51, Junio C Hamano <gitster@pobox.com> wrote:
-> The test below only "passes" because the bogus "diff --git a/g b/g"
-> line names the same file "g" used for the next one, I suspect.  If
-> you replace 'g' with 'f' on the bogus "diff --git" line, you will
-> see an "inconsistent old filename" error, so this change is not
-> making us ignore the bogus "diff --git" line, either.  Not that I
-> think it is a good idea to ignore such a corrupt patch input.
+The only US-ASCII bytes that quote_c_style() quotes are control
+characters, DEL, '"' and '\', and Windows does not allow them in
+filenames, except for DEL, which felt too obscure to rely on.
 
-You're right, with 'f' I get the "inconsistent old filename" error
-too.
+We could avoid the filesystem and synthesize the tree with "git
+mktree" instead, which is what I had at first, but that made the
+test noticeably more complicated than a test_commit in the setup.
 
-> I do not think we should ignore such a bogus "diff --git" line;
-> shouldn't we diagnose it as a corrupt patch input?  I do not think
-> we are there yet without making find_header() do more work when
-> punting, though.
+We already have tests that use non-ASCII paths, like t3902,
+t4012, and others.
 
-I agree. I think find_header() should just stop and report it as a
-corrupt patch when a "diff --git" line has nothing after it, instead
-of going on to the next line. That would make 1/3 unnecessary, and
-2/3 a lot simpler.
+Do you think the test should set core.quotePath explicitly, rather
+than relying on its default?
 
-As far as I can tell, Git doesn't write such a line anymore. I tried
-a few things like "git diff -w" on a whitespace-only change, renames
-and merges, and every "diff --git" line had header lines after it.
-The apply and am tests also still pass with the change, apart from
-my own test in 1/3.
-
-Is that what you had in mind? If so, I'll send v4 with it.
-
-Thanks,
-Tanga
+Also, should I just drop the test, or add a similar one for ls-files
+--format?
