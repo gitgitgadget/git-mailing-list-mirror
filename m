@@ -1,117 +1,118 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.156
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794994330;
-	b=TV9rshbrL0HgsK3/tkIaLUah1/dvvJewB32mjXegkQgSogvxo/AeabjFpHQvIH776DJQ
-	 r83KTJi0Yp+3eeVA+KMGLhEd6oJ8idtWBP0CF+F8vIwAxp8su0Gt9Obt/YEqKfaTzoy+W
-	 Zh6TSWR708Nch48AX0GCnNFldXPTq3qCnF10VFElu6+1AyJuOZVEYyJyoRH408WooiK1U
-	 0CEzwyWopB/l0OOsd9bhdZ6ANr6iFPqJ56gPFcvp4GcoahqOfpY6Mrg5WmK24zN8Ki20D
-	 1UwsKQfTGyp4eGHafWkmgtvRIzeuFEkO/7M0lFqhrJmvXBE+uuEKA2mQcTKLH88RuFg==
+	t=1794994331;
+	b=mHWKG5D2gm3bLQlYqwS9/H9IxTciBzfFliNJHDaxeu1lWyz/O26kuiYhrmLTQM1yutkO
+	 VjIHlVz7MTTq5Gk4rNYOAWac7bB5Z0EjquHqwU5rQqX6SuXtxa3XJ1k99DZTRuN6ju57X
+	 gcKCDdMizd61olKxLTsklswsPNfZ0wua1ief6eRINVYnvS38zICdSVNO3U1DzCcy7vkFX
+	 Q8bmtAa79HPByA6DR+pbkviPhHMhrMDbM6uW6jSxhyVb79DOM9s1pJ1cr5cWAN2Oh/Y06
+	 r9NZwL+XJsoUHQazIbfyGwe6MWP4IA4O0FjtvDLxgIjNqgjuRlZCx4TlTbP1SXOC1fg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794994330;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794994331;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:From:Subject:Date:Message-Id:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:
-	 Cc:X-Mailer;
-	bh=DVcSKpGZSHUgAbq8rzehaHy5B7vJjSTT2mp3iqj+Gig=;
-	b=h/zL4Py+MsiV9Gay9ZAX6RIUPwuqxK5lZvseyoS7f/eMlXFy3fb0h5+98JoeNZAa2Nfk
-	 Z0t7b8CZCddYuqJ4HQWNbc0L8i/0WKBThVvB0dkPL6L8/yEgm7WMThW5JmSsK7mUrQMdx
-	 83Sj1LgLUUyUtB+Y6NALhMFreAILBVGeFo8uZiNh88YlhjoDsmrL+SbOZdaloL8CuXlsh
-	 wOqUZk9dDde53Mapfpg3t9PNWJsOXuOro0UMj9BYIzq3WhMzKI3eyJ/PtnMSV3mikXugP
-	 38xMZ2jTcuYsqd9mNGAQLUBnk+fLiKRnRfBrBJiSwW7slI4IceEdFFJTcZWPVE8+inw==
+	 Received:Received:From:Date:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
+	 X-Mailer;
+	bh=yA+tlTxid/EpbCGQie5PzT2WvHL49C30NpnN1LJOoS4=;
+	b=LbloHQ4fcKOzuHrudLUI/XhQsi71Kx7gpSWZx4ISa/xp+ZAMXXXR1LzL2QGHlo560dNV
+	 vCeu1/1cRhZBYEZgnhoLpEFixyscSfDCkRxWOk5nXcdhiFQTlcHZUQvW+7Y7xNAtKQQzT
+	 FcaLBt5hLhAN4S0RPrlGGkWC6lmvBl5YY3vR/Vr6ZKpyawX/7TWsGBs4P/UmTTefHnRdG
+	 OnN8uWnp9JlJ0hXOE9/39139Rd9Kw2qeW8HRBZPUEhRvL0mUhgcbJhkV4Ulf7xu15VOir
+	 jhfItMljhvE1DCQjNBgVaEixRZEIrcrK9DIzNzm1PMThJTewDenmV98zcgCMi3ob88Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=HBoR+c35;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=5F69KIDA;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=XPPT5JDC;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=z9Gqo44o;
 	arc=none smtp.remote-ip=103.168.172.156
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4924606A31C
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 09:32:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D4924606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87261606A320
+	for <git@vger.kernel.org>; Wed, 18 Nov 2026 09:32:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 87261606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=HBoR+c35;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=5F69KIDA
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0DC1E14000F1
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=XPPT5JDC;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=z9Gqo44o
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id DB8741400103
 	for <git@vger.kernel.org>; Wed, 18 Nov 2026 04:32:09 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Wed, 18 Nov 2026 04:32:09 -0500
+  by phl-compute-04.internal (MEProxy); Wed, 18 Nov 2026 04:32:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm3; t=1794994329; x=1795080729; bh=DVcSKpGZSH
-	UgAbq8rzehaHy5B7vJjSTT2mp3iqj+Gig=; b=HBoR+c35B7Lje3aMyXa7UBSddT
-	l5KUtRm/QV9v/7/omJQhQenr4w0YivQCrWmHdWvs7tXdHoh/IvmWozRhMRAVN3qs
-	exMP7lQr+aQcCP3lEY2K8QHXEo4xGgUR825aW5wPKhhmCFZ4/D2OgM/bvbsIzp9p
-	P7sYp97jd3fwdZxv4ZgTvdFD6w3N4u+nUEMN7Jr9jkW5kc9WbithWUgD6AQNuWd8
-	sGX2k3Y5qg54B0hMCsQ8lABvR5wp8anQb4ThKX5ZJaOSNq6nUsI65w63lk7QyeAJ
-	yFCWO/QxG/j6GjCxqlxOBwrmcp5AK9mFcsOXMlo8y8jrtw68LmtlP5ry9XYg==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1794994329;
+	 x=1795080729; bh=yA+tlTxid/EpbCGQie5PzT2WvHL49C30NpnN1LJOoS4=; b=
+	XPPT5JDCn/hkOjrwL3P2bYH6i2okmvTwhOhAnR+SYeVP2GRKgmSdClxvJ+V9BG33
+	nMQb0N5jCZ3EPTVLi9jRBmCnKBDt3jV4MqIgZDNVHSBD2BFX5mW/+VaKm+ADTqVa
+	bvz/wg3RWsBUK+VRVu5ZarHYhKmnLU8Qj3TKgfgk6uJAB5PEea/42TaFgqC6RA3M
+	gNE0odDDW0uRIty7dMufH3RvCP5GVmZ6RKVp5d1gI5MJJ0tiKAxSrK0PdsqJZat7
+	cpYHpr6jB8jnrcmz/Jpn1JBK6CUki+wCXZotupqwy34VxM2OvbWiqq0m1j9WiWp4
+	3W7H2ZndhK8bMYf+vkkrig==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1794994329; x=1795080729; bh=DVcSKpGZSHUgAbq8rzehaHy5B7vJ
-	jSTT2mp3iqj+Gig=; b=5F69KIDA1MKgnrt7Q45HIYvONW8nwxWg823+k4DeGQ8t
-	BklnU5JrZt91kKYtWEvj4DeOrOMgxSbbcwE0Sh8UGssLCgG9CVHa2uaCeB/TLsNO
-	h6JuxxZfKs0ryGmFt9bY+A4K5RWuj7TYgtehCmpaxOCc1XZNmcFTlAcwiIyt8Wca
-	fuDUKPHjyMY4qMPVOH6qtYHbM/f9BjoVVxJ3+kIIQldnxI/dYqKtv8XxulwKjbEE
-	WxokJJ87TBw8BzYm0kqsrJIXQnXDECJ5T/b02JrPgLEX7rbHui602Ge+R+HzEqXB
-	vCLO/Klig7UTqRdm7JQGbw3MgGXJukoy1fO5AG13bA==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794994329; x=
+	1795080729; bh=yA+tlTxid/EpbCGQie5PzT2WvHL49C30NpnN1LJOoS4=; b=z
+	9Gqo44okzCyB6NWeQ7li6QQu9LmmSMWl0kHdp82o1bkbWmKDDtIlcx6YmuFUOtlq
+	hqhdkeFc8QEhRZLyWGKZwdM8BurhyZHai6LOumY20KRT+Ua8xbLvIvc4wLokgXq6
+	7GQePRpCUelw1mwsidxV2Q84UQN/EKnZDUeIPqPOdxUWiKszgW7bqrYluYvfV9ib
+	Cef2ahUeDsPRk09KpOTo5RRrp8+D0u3bpHHCsB9ImmWDmebbtg6BzQC4+S2pGTUO
+	k24gSE/S1anLjVU2m0QCAvebR+DTwyckVuZa+4kknXd26wJekWMLF+0RpTHMsz3u
+	MxcA8x1qZFMbHkKqAIcSg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
 DKIM2-Signature: i=1; m=1; t=1794994329; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:Wu1TULavId8URlOoJPLXVMcuJB8uzw2lPdjIso/huY+4IW5
-	2oOZL2BnvxJ35ZCweEEmiWfvfvxHBpMnTM4lHRvvR9aubEN/Ep3Othw5jKYzvIfG
-	udLPsmgG1Rr3DWlFb5QXLJ/SKG5PilQ7qBvS8gA56AjlB/l7ghHt9yg0yylZW6eL
-	Az2RRRjbPOPSzcb+cIE39wvoHw9VGfcfDTGCnxTJYCDah069RrxPhV6lOm+1kXaK
-	VOLVQvVek0kkHtTUklOg9nJteQg1hlhJkj2oo1TPqgEp9gbAj0GieAcLE3tATrGS
-	apML6UAqafDWzpNofDoVSyuXfJkGuSHq9pzUzzg==;
+	s=fm3:rsa-sha256:FLhrWoEnFq9R48ailiaTKJfBRU5WnwvEBCacXQp2x+gfkvz
+	iQF8PeJAoI85OVe21SB6mtYgy20YobbizvlHIbNPxzyWvALCfjBSkMHNJvHXL5UB
+	VIydVhxHxX4H/J9Q6PD0eaLnlE/hlDnL1HbNBCdVXswRjw32V6oBPd0nDnGvMBaG
+	CsqnoRnDT9wIqItN91DGcjMN5cVLqLRaOLHAD/uVjwAIljCPPDrNRo48+v061KfQ
+	GtAYLOfpOWCx1IN3EtxF0aPHQmUD3I8pQyRhNttoC0eLaxeeyWeh5Qi+HEXdxCBy
+	FLnyefAvfSVAtJsS3al19I4dNNFaeTM9pUWdWfQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=10;
+	action=mi-m=1; hc=12;
 	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,message-id,mime-version,subject,to;
-Message-Instance: m=1; h=sha256:hYj+m1gOtEfgiWJ4LAN9b1SsA6sTlhYQCYiafGBMb88=:hVjE36u1ofFg/vclNpLSdxLJcoET0bOgrZg3JyBCnbc=;
-X-ME-Sender: <xms:mHD9agNEWyaSSg8E1-nixU-qClWUvkurD5cHA3uFUQkhvGR1q6qpPQ>
-    <xme:mHD9at67WkelgIyZPSkMUrAqqQeKzd3FyTLXS9AP6ZbQxcjZinpUrgAT3Bz45DtUP
-    f1GaotVYjI7TM4fjpZowEQ17C6rXqzxmA9tGGQUpK3_FiJp6RCpjxw>
-X-ME-Received: <xmr:mHD9as7cNRf4aZYN0qjun8G0UeX1uIolLeazkH8EsccCBVEH4bf-ww>
-X-ME-Proxy-Cause: dmFkZTEAnuYqV8ad1ew3aktJZ+h3IcqhzXPxTuAEt+cG/jpG8JqNgwAZ4tvBYdSTiL3Ka/
-    1dtkEpuZNZnsVZnhGX1l32iFUQLsRuJ/CRkQpJbFNMRVDtlJHG1VvT2+KzAFHQUyRqb226
-    F7efvCGXCaJbqdZell3HuSW5ilVj1/TNIPHI66UgGy2Vfs73NQs2HbP/KrLO9ORVA3cBQ4
-    N0Y4K2doaAhrVyYFOqW21+uV9XwEQUN4pkOxZpjNpykcfMRJlD/53rVy8sFrEnLxBYCz5r
-    JV99YTt7vBJlT3dn2742BZ9FjV+YAT2mXXt0GMYliHU+bkVgxq5H50/nc4bkkX6qxEJHZV
-    aGSZIa14MD1KtK94YrtK0pjtgnPtGpqFgArwqBVAgD/tsPN3p3H39lZfQ2+ZvV9P1XuweO
-    /Dc0LotGSXojG1c10XJAo96Xeg3pRfm8hxWC4/LxWLwcjjjRFidcZCL3mFMdRpy8x9UGFc
-    UHRJ/b8PufkmNpS8SptT4CtEHDdK3cXnAbqDans214ifUonGy8g4XNaqcLAxE0a9BpF2Fn
-    2NT1OHNuwXrfC6iwEMKaLQWKG3Ph8t1X7+E/yuD8BUpX41wS3wiVKW0o66w8Sg5Ps1H5bV
-    TbZdQRtwx5M29okd2C2c1QQ5zTBMWmpbK+rgd6AjQ3CErt/RgpCGz0DYYBjw
-X-ME-Proxy: <xmx:mHD9at2YreCjKAtJdr_BoInqESPJfVTAwJFwt6FdQ51Ba3wwVpMtDg>
-    <xmx:mXD9aoWZIdRRtV9fiQNPTZLCD8ip5NmWJIjrFoLRmn50p3Kpg7ZXIA>
-    <xmx:mXD9ao7IgiA_4LjxA6Eo0PClzAVbuG_QZAMUG1KCxzgzSENMlGBUdg>
-    <xmx:mXD9avIBxm11T_Wm8zvZXqxydn5DR0z4Z8RMddDc5P2T9NI4hBjSdw>
-    <xmx:mXD9ao_ZXe0NgjNXxNkDSjm6y6cpk9F3oin0heJokYE8dlW7S_UKjcaw>
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:wpAMuo9lJrH1Q4q8KZmk5kIPhVlGjM/OCKf+H9xrr4A=:XRqiaLUiAv/74Mur/702XFnGZdeUYTXotwSyvk+gUok=;
+X-ME-Sender: <xms:mXD9aqgazeVn3Wx5VZ0HQx1oHYqedOGOHfRj-SzjhLdGi0iytTiVtg>
+    <xme:mXD9ah9exwexlmD5d1gaxB1e2_FUAUNTP0beiJU9kOrR4Z-i9_YbcnKFaKnRq6ehM
+    YFTQIlWKE9W5MBAlKPxzFPhh1c4GiZZ4yd8SCsJVg6lrMwz_UM1nEA>
+X-ME-Received: <xmr:mXD9antYKZHGSFD8kq4lhzvz2rmYA2Frz76fXdxrW1oBzrsoD4lTMA>
+X-ME-Proxy-Cause: dmFkZTGcvMX63WB6NAv+rCi+Ol/GpWxetEFZUqV9F9xGRCcR2NpUu0iVtA1iDuilpY3giW
+    buYwGET8/1jUU29psDH7CeS/Sc3dVZfwdZLfkRySvrtiVTVy7NIu+fqfIjZao2MRAenSmb
+    U0C0u/7ccu2lx8p/gWL1JIPNoF9dlwqrV2KQyl/gj9g8ZlQ7LndAdOqTz1obrPGQwZqwvz
+    jOu2dYq6L8NHsQUL5XSXswY9xn+flIZmh6n0UzTRk44yj3ZhU+Wj5/jCaKCkbksya6ZBBe
+    A6ozBxKLeWVeduiprO521zrst5UQ8wRp1703l325ayhl/iHY/XDvOtw7EOmJcWeByy6TIx
+    D11T0ceCw7sMYgdsIMt2OcXW7tKPzjXAKl+ETieiPb5nk2fs4Ph82XUcQT1mcjQeHCk88f
+    5+LyGix3VVBY1DTS/HLKdEse7WGAWN8WPoYh42xUnfk+yAjlVAgahkBBmJwQV0pKgBdxjp
+    iEYlvVxAYPR1uDeBeJwhobXNHSLQ5mQYDkb8ob2qQksusilTe+C823w/pTQbM4klALHXJS
+    f9jouqSmxXUTi/m+GmXxtXZTzebTBXnbkyQsefekyKEx/jUh0e/gzlLM8WprtHi75ksLee
+    Oh3U/uMWMbkTVcRzk5VWqHjIMG+d65YijZCQ4DiI2H2vdTm3L03Dy3cIoOCg
+X-ME-Proxy: <xmx:mXD9aoav8pePI07r3LLTV0q_kh4C2rheCeAlJggd8YiUXb2TuTq3mA>
+    <xmx:mXD9anoVtGDai2od1bOBGOiAgTBsWBd4z-r1XZOoDuVP8m1pqRRs3w>
+    <xmx:mXD9at-tG1KV3ZlZ2h1CTlB6qgdrScrG8xkCUkjgKVVmZp6dR3pQjg>
+    <xmx:mXD9am9rko4O_XT-30lGbt_1YAxiiD71bfiHSg51MkI02HDu1MKEBA>
+    <xmx:mXD9anjsqaSCsVz_xSN7Kja_l5eSvB0KQ-_NEPuE1cI4L6NdqZw6B3lf>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 18 Nov 2026 04:32:08 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 18 Nov 2026 04:32:09 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 652c1abd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id e393c474 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 18 Nov 2026 09:32:06 +0000 (UTC)
+	Wed, 18 Nov 2026 09:32:09 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/4] Improve performance of reflog expiration
-Date: Wed, 18 Nov 2026 10:30:59 +0100
-Message-Id: <20261118-pks-reflog-expire-performance-v1-0-10b9263566a8@pks.im>
+Date: Wed, 18 Nov 2026 10:31:00 +0100
+Subject: [PATCH 1/4] refs/reftable: don't write new table on dry-run expire
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -123,70 +124,66 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMWwrCMBBG4a2UeXYgU1GsWxEf0vinjpc0TKoUS
- vdu1McPDmehAlMUOjYLGd5adEwVsmkoXH0awHqppta1exE5cL4XNsTHODDmrAbOsDja06cAhtt
- J321j58RTfeSa6vz7n85/l1d/Q5i+U1rXD0QoZoCBAAAA
-X-Change-ID: 20261118-pks-reflog-expire-performance-e051b93f901a
+Message-Id: <20261118-pks-reflog-expire-performance-v1-1-10b9263566a8@pks.im>
+References: <20261118-pks-reflog-expire-performance-v1-0-10b9263566a8@pks.im>
+In-Reply-To: <20261118-pks-reflog-expire-performance-v1-0-10b9263566a8@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-Hi,
+The `git reflog expire` subcommand supports a dry-run flag. When set, we
+print what would be pruned without actually pruning anything on disk.
 
-I recently noticed that a bunch of commands started hanging for almost a
-second after they're essentially done already. As it turns out, this was
-caused by auto-maintenance, which was blocking in the foreground for
-~800ms.
+But even though the expectation is that the on-disk state won't change,
+the reftable backend still ends up writing a new reftable to disk that
+contains the changes. This is of course rather pointless, as we would
+have already printed the entries that we're about to prune at that point
+in time.
 
-The root cause of this is that the auto-condition of "reflog-expire"
-doesn't properly evaluate reachability of reflog entries, so it instead
-considered every single reflog entry to point to an unreachable commit.
-Hence, all entries were evaluated against "gc.reflogExpireUnreachable"
-instead of "gc.reflogExpire", and thus the auto-condition significantly
-overcounts the number of entries that we'd prune. So every single run of
-git-maintenance(1) ultimately ended up spawning `git reflog expire`.
+Skip writing the data, which provides a small speedup:
 
-This is fixed by the last patch in this series. But I was a bit
-surprised that a no-op `git reflog expire` took this long, so the first
-two patches optimize the reftable backend to be more efficient, too.
-In my copy of "git.git":
-
-  Benchmark 1: git maintenance run --auto (commit = master) (10 runs)
+  Benchmark 1: git reflog expire --all --dry-run (commit = HEAD~) (10 runs)
                   mean     ±       σ          min     …     max
-    Wall Time    853.2 ms  ±    99.9 ms     570.9 ms  …   901.9 ms
-    Memory       117.5 MiB ±     0.3 MiB    117.2 MiB …   118.2 MiB
+    Wall Time    414.2 ms  ±     2.2 ms     411.8 ms  …   418.0 ms
+    Memory       116.9 MiB ±     0.1 MiB    116.6 MiB …   117.0 MiB
 
-  Benchmark 2: git maintenance run --auto (commit = reftable-optimizations) (10 runs)
+  Benchmark 2: git reflog expire --all --dry-run (commit = HEAD) (10 runs)
                   mean     ±       σ          min     …     max
-    Wall Time    392.3 ms  ±     2.3 ms     388.0 ms  …   396.6 ms           -54.0%  (2.2x faster)
-    Memory       117.2 MiB ±     0.2 MiB    116.8 MiB …   117.4 MiB           -0.2%
+    Wall Time    369.1 ms  ±     3.2 ms     361.9 ms  …   371.9 ms           -10.9%
+    Memory       116.8 MiB ±     0.1 MiB    116.7 MiB …   117.0 MiB           -0.1%
 
-  Benchmark 3: git maintenance run --auto (commit = auto-condition-optimizations) (10 runs)
-                  mean     ±       σ          min     …     max
-    Wall Time     18.6 ms  ±     1.1 ms      17.4 ms  …    20.9 ms           -97.8%  (45.8x faster)
-    Memory        81.2 MiB ±     0.1 MiB     80.9 MiB …    81.4 MiB          -30.9%  (1.4x less)
-
-So yeah, it's a bit more efficient now. :)
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (4):
-      refs/reftable: don't write new table on dry-run expire
-      refs/reftable: don't write new table when expire is a no-op
-      builtin/maintenance: only consider `gc.reflogExpire` for "--auto"
-      Documentation/config: fix typo in "maintenance.reflog-expire.auto"
+ refs/reftable-backend.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
- Documentation/config/maintenance.adoc |  2 +-
- builtin/gc.c                          | 33 +++++++++++++++++++++------------
- refs/reftable-backend.c               | 21 +++++++++++++++++----
- t/t0610-reftable-basics.sh            | 30 ++++++++++++++++++++++++++++++
- 4 files changed, 69 insertions(+), 17 deletions(-)
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 3ba6a9ac0db..4216a18684d 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -2706,6 +2706,11 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
+ 	if (flags & EXPIRE_REFLOGS_UPDATE_REF && last_hash && !is_null_oid(&oid))
+ 		oidread(&arg.update_oid, last_hash, ref_store->repo->hash_algo);
+ 
++	if ((flags & EXPIRE_REFLOGS_DRY_RUN)) {
++		ret = 0;
++		goto done;
++	}
++
+ 	arg.refs = refs;
+ 	arg.records = rewritten;
+ 	arg.len = logs_nr;
+@@ -2720,8 +2725,7 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
+ 	 * Future improvement: we could skip writing records that were
+ 	 * not changed.
+ 	 */
+-	if (!(flags & EXPIRE_REFLOGS_DRY_RUN))
+-		ret = reftable_addition_commit(add);
++	ret = reftable_addition_commit(add);
+ 
+ done:
+ 	if (add)
 
-
----
-base-commit: e1ec09b23c8e0deb21a0b95ac5996422277395d4
-change-id: 20261118-pks-reflog-expire-performance-e051b93f901a
+-- 
+2.56.1.831.g720f3f5937.dirty
 
