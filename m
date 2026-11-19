@@ -1,123 +1,79 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.145
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051486;
-	b=D1ob+lqcem/RDf81wOY4fXXMqOcbS7NedkT0+qrOADYrHTRps9mW5gGShTpsMI6B3nHt
-	 lf4cWHziU3s4tqc8td/enTwK1ogzm6XHBiUH0CXCdLtrEn54QmGLaT6bsIvjG31jgm1HF
-	 VuMweV2kmh2+JrSmm+vb911D3rdSmIfEAqDykF7lIJBs80/YZuIIv+ObjpiKYF+4ZJ3Tc
-	 QIlF9JaTrLQZzU0StgRv7fi4h1QE/m/48BoxOhP9vF3JLDKwL/JRGFhJ9f5FjKE1C5KM5
-	 LMbPbSj2iHgVPtebvJi6dHffTPcRxnG8TEt6D9YEOaNkB1ogx4a1/Tvjm0q0NKofmXg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051486;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=OKkLI74TSBt2g2MydQhBSdea1rgJxeAmoZ5jHQU5zJY=;
-	b=wfEP2+GG8Kl5EqBovtqpG90//IFNcM10V1W7MxG/9SLBopjmBZIqAs1TW6NYnEGg1cwh
-	 UFKe/v31fWatLA1XvTWzfkRIM6hM65Wzx8bKIjCdvR1c9KpQl4XXuaduDT9BLmhGxqcZf
-	 aeAUXB1d4eM8o3g/OFbv34TYf0bG9aC8xYyU0uOha0+8MsWp851UUHObdhgFqoJXDsn5X
-	 yoAUQ5b5mONi89XEogTfYEggAe5oNW5lMiCTU9pCecHnl6nIhaKA3wTMnkzWrOM6z9SxI
-	 iDmZX82iXuIZ786Bf8E9sJUQmQ4LJ6GoDO8X08xC8vseiL4CoS5iMzoieT1YzPvQ5eA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ihiBh54X;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=1WTojt8Y;
-	arc=none smtp.remote-ip=103.168.172.145
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795059793;
+	b=hlLRlVUVUqg+1RAx78XPZeRuyxPNIcG/ra/Uv36sz7ZAmT1Y0fjrHiHG5ujJ+2VfKSzX
+	 4Pjopny157L1YFrhsgompsD4Hk8PWj50NZq9OWTOCsVGBtbQydcBSAiLU5Xvu6ysCRCtA
+	 +1GEudT9Q1yiVbSxj5DHXjKwwECI7YMKAR9sBD9nQ8swzvf5wr2yT2IyctDjq4HsxXIvN
+	 bL06xd0mwFBi97oJuJUaC/ug86QRiHuPyN4nYjD55d9gTxLzKi5PhRY2nHkj5HKLQhjpC
+	 gHQ4vzYUV6aaCp7/YiOMf6BQeJ/N7PKdRq0lpVBFmT/LRzENVFON527UUaycYgCnqOA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059793;
+	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
+	 Content-Type:Message-Id:X-B4-Tracking:X-Change-ID:In-Reply-To:
+	 References:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key:
+	 X-Endpoint-Received:X-Original-From:Reply-To:
+	 Content-Transfer-Encoding;
+	bh=x2UbesA3pNoU2k8kREXP8A9hhrEal2TgtnATlGa/hZY=;
+	b=O1l766baz8qr2UVindiI9Gg1w0VK86/roFrrbyKIoWMLD3rftkTazE6CrGL9r+noqt8K
+	 FDxi8kyrOZub/NKWzJaIXel331hzBYBrpswEJB+O6tzhpMGWmEod7PN9Uk0/YXYqmESd5
+	 d3Ht0u7bULgvQtfF/FeiAsOmD1itEwN7VPrsFm6AQJzQa0QLdZMRNI4eYIznRBucQ4Ivz
+	 OMxWLBcjGWpvjC3IWkuUWQMBjD/2LoJZ+UMVjaOYwjjnWTT2zOQ36Gy8+uKutssDIQuWS
+	 wmKfKSXu1/XRY10uT36WreqMqYH86LUBS2lEm9dHnuaSdqgp5F9d889iDgDzYY4yiDg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=W9MOPOmE;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE96606A32A
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 01:24:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6BE96606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC15606A325
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 03:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ihiBh54X;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=1WTojt8Y
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 759B1EC0184
-	for <git@vger.kernel.org>; Wed, 18 Nov 2026 20:24:44 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 18 Nov 2026 20:24:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795051484; x=1795137884; bh=OKkLI74TSB
-	t2g2MydQhBSdea1rgJxeAmoZ5jHQU5zJY=; b=ihiBh54XPG+yqKzg2/CnODVTPW
-	i2/PXbVwj+GZT7x568ZbTwhHDKzSM8pK1WK4O9J49yAZLKH5PzzQF4ZfHlzCGC8T
-	cpTshfscTfpPPte/2sLCDEC/x4SMk9ZfQ3Fm+stx+c27dvth4aS2IuB/x5WwzqxX
-	q23jQxKjvJZKrjxkkRNc83GxF2TQLjQI99Fot81kO40/TL6D6pDtuvYSOclcIvla
-	aCZCLuskb2MRO+GemU7OnPxWKjySIBQnYCcxerce1pwYDLi9F9Nd9g7PHieqDLBh
-	Q72OckXlfMZoCcojSdOz0mnjeu2aamueEisnKJvJ1BPazd4cnjn/amC93kbw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795051484; x=1795137884; bh=OKkLI74TSBt2g2MydQhBSdea1rgJxeAmoZ5
-	jHQU5zJY=; b=1WTojt8YYmlohSrIYwgiMlzSa5iOSXiqcDwO2zP3dFzrYBpyugB
-	FhAhwzLWnY8jysmiDgGuIWHREmHDkPEomgx8Qcq7xE4x8+LHCjNvlWxHDoWx+/o2
-	TGtYUJb+MscmMv5Ogipu+RNeXQcyecAiqdap1ZuWPhk6dYwpYDH2gjF2U0B4QEft
-	RcswUwz2LrAYGoHx7uFt/CH5x+qrmVtidaX5NPqMfHz0cudII/TmfTjyc0SNm+ej
-	iIjiaznhOCT5JL2ZNa+qCMJTBf9VhJ07y9FTVsXxzxtCHZOQ9fLyOQ+pxdEa9ieV
-	fgU8SwrvbXjAMP12TO0RY9YM5OcsA67q+zw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795051484; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:dl7DxvM9oRmPytiMYfgwNwAK0Xy4zTrGwbsoPMtB3AUiyVR
-	xYgh+tQZPKKvmoHo/Dq2Uec4eGFhpUF/GzFW69+7jcyF757PKhouCosD4V6zVFju
-	b951LWWQ9OfaE7MgpDSgzKlgNsHQbJpcWB6TEA3wJhGjra8POWgVajLteTR83rfl
-	jKghPCbN7OHhCt2rUS5VO6EsmeQ2ZhmjY9UMRMMc28iq3GiZSkHUrh5MS6SKadzL
-	WbXxFdQdVS8PnK4+1g2ExBgmgIK2UdtKshQZvKJaTTpTeDSAZ3b12BR5DCgrDWmd
-	wHBF+za76Yi+AmCfjLUuS8ihJPsiDDFFhmWjpfA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:IGuH9tunrp5S+9X55Z2MenFZYOafJFlex0OAqEfCscE=:Zs7s8nWi4J+aLVbGtT+QX6IeNIkEqrvSymvupUEX+Kk=;
-X-ME-Sender: <xms:3E_-asWiG8ESCsLUM8xUrNRDjSahqdAwX2Bx1ja8qlsAZunUb9_6dg>
-    <xme:3E_-akSNDug4n_Ill5KLDEaYZ8Odmf0bP9v2JHGP4ochGcXdBzm9B_RKLsQQ3jGSl
-    DCZRh11IWPjrm6qYkvDZumYO0ALNoF009k4kXpeOC075JRPRdXHYDw>
-X-ME-Received: <xmr:3E_-aqOYkFz1s7GcTOHTR2mtwxrV54RitF08wh2TC4cQVHkgwbd8PMRrbQqH8v1wAj3ScYYBfL751jpB8Pz_6xDmDHFwZKDeRnfY>
-X-ME-Proxy-Cause: dmFkZTGyjLbTJIlYmW3/3JCdivbU0bcnMDvyMsy0b5I68EjsWYAHKeMA5oq43ntWL3SRE/
-    uQiKTnwhR0s2xJnHz0iqMmF5eNZoVoyxyweMe+ZEe4qaEYOJWCouEiBrc7CInGP5jfw0lQ
-    rEDCufhFvyWEGF/ZPXWZl5VMVs/I9YbQL1TVjggjfJPDQfI3IUbIzCGA+OXAp7mYCB+s1V
-    cLfjEM/F71Yxwt/qrb9QbiKcNalXdj+P2Tg2ICtyEe1lGveOHVt2s4BmZjbu7GljkG3Jle
-    /iJol8LiZpWHeQgrFc7hlnGA2jr69vNrKE2J01l466N5lQB4SWtuuhuCLbD8HUnSUk22mW
-    U+IBVIluYKDryNRWnhuWv2EDx4y7umaR7c9lbwNft6TbrzhW31j4aYEaBEaMukbo/j4DmZ
-    gcPBTY5uwBLNMW3ZNZgwQDwnjoO3+3pBXTeVHFY4ph0teicE2lK75rOmybBf/FpcrTYAZA
-    eQiUOlKBP0nddsbXh/XUUz9OiEZinBs/WeUJCyfn536Qo52L6zo7ptT9B0nBoYaNrW9Ryp
-    bcZk8mN1VLGcT9ZC02fOsXsl8s89to6ewWIpgfqSayIDSpOykoCsCxPrE1VSuxu4PBklx8
-    NTs5UDuZBtfUp6VMlvH9/FIW5wk9OvyLZhcFU9A9wKdRGdXBxdwCgCU0H9iA
-X-ME-Proxy: <xmx:3E_-aiTf5EYC5gPPEx_g5h-iMKPdx8pUxNvk8dEhAa6MQfWb182QxQ>
-    <xmx:3E_-aogpkyPaJjEMq2ZUAhunmdjpAAQCAbadQazQ3EKIYLtw6gFAXw>
-    <xmx:3E_-ar_9iCXKCcsExFauF3ko6IhJ3G59RRn07KnMaR07t1gofC5aDQ>
-    <xmx:3E_-avEaaqv0844-IbcODUIaTjsTo4BMhZ1Nf7WoZakQwpq_POmiIg>
-    <xmx:3E_-ahLmlTqU0Qg7qwEohmdkt6_QPWMkvzl-psMZsoF8PmHalQm0VQlf>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Nov 2026 20:24:43 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Noam Cohen <noam@noam.me>
-Cc: git@vger.kernel.org,  Teng Long <dyroneteng@gmail.com>,
-  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?=
- Bjarmason <avarab@gmail.com>,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH] ls-tree: do not quote %(path) with -z
-In-Reply-To: <CAJeEYUaJt49oz+Fq7qwWGyB9p=Hibdzd3113FBhbK1RDn3oHug@mail.gmail.com>
-	(Noam Cohen's message of "Wed, 18 Nov 2026 18:45:42 -0500")
-References: <20261118-ls-tree-format-z-verbatim-path-v1-1-718987241861@noam.me>
-	<xmqqcxs120c8.fsf@gitster.g>
-	<CAJeEYUaJt49oz+Fq7qwWGyB9p=Hibdzd3113FBhbK1RDn3oHug@mail.gmail.com>
-Date: Wed, 18 Nov 2026 17:24:42 -0800
-Message-ID: <xmqq8q2p1ulh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=W9MOPOmE
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
+ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
+	t=1795059793;
+	b=QOXRBV4UGhrfgGUk4ODowFdz1DOqsuaSOdyYs+cnXxOleNsWy7GMX5kTacnqWyfTyusH
+	 OzQixqgY2r6U1bQbZ5bajYO1vOKDUcAXpX5q25fJG4jFNnLP7anWugAR+hf6i4DxGXMHi
+	 EzjpTrEdu6llxHuZgtFhvooVptx8w1TG0iQMsLxQB8EJ+abT2dWeZw+HIOGr70KuErc37
+	 ZW7HmUmQUvHctSZjfcra7LZNde2Thlgp8vAMFq08PltmvnuwCpVu40nhO2J2fpetKNofP
+	 8JQOxyaDXKuxORCHIk9TEmQdqUdsFLba8gTO/s5HRkhyI3tnuzPWxa35b7AwE3FzwaA==
+ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1795059793;
+	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
+	 Message-Id:X-B4-Tracking:X-Change-ID:In-Reply-To:References:To:Cc:
+	 X-Mailer:X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
+	 X-Original-From:Reply-To:Content-Transfer-Encoding;
+	bh=x2UbesA3pNoU2k8kREXP8A9hhrEal2TgtnATlGa/hZY=;
+	b=Rq/v+aJI8ZOY/xex2bfw2oCdux6PAOPazUpMHHgrrwyLJ6Rna/k6e0DTwo4Qnnm6n8gk
+	 fN1KFtKNSTS4zHTMrxs9Nt/a4ts7ZGdrNUA3buIu3/aengvROqUvO9XPKxGsndZsLHR53
+	 W9HRwhQCZL6Y2EwGd9RDUE079KiGNwQuuPmP+bT100DoW6CGYh6h68ziyLj7u97g/jAH2
+	 ISpEFANHALbeu/HPq1ousX4bxFD4r1TGAl4AZK62h2lKqkQ86ZEJozYju80sdQkofGTTR
+	 kMMq1M4zaia0jk6nFcciaG+B4UVI5jVcjrXGXFplffWG4zxIcAqtvIVzpDyhFSeLh+w==
+ARC-Authentication-Results: i=1; smtp.kernel.org; 
+	arc=none smtp.remote-ip=100.80.115.77
+Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 8B6D81F000C4;
+	Thu, 19 Nov 2026 03:43:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795059793;
+	bh=x2UbesA3pNoU2k8kREXP8A9hhrEal2TgtnATlGa/hZY=;
+	h=From:Date:Subject:In-Reply-To:References:To:Cc:Reply-To;
+	b=W9MOPOmEPe8M5BhCIW3f9YBHuTs2OZOQkbBbRXK5SaDAM6gSRTOlm0vwKncFQP5p8
+	 XQhs5OEfvbE4WdBgtgJH1d4l9O8bsnnaVCIA6DAXpAr99MU6WdbXvmnqQxj2Sr1aEe
+	 RCsTCprMoT3JjmUqekA1CkbC3kIi8wolIlsP1c+xoLCEeLKeKquQXwfs5HoBCbVAbP
+	 s1OphQVWdRK6v+tBHKAngUDF1awmT8/hjpNYqzp48o6lyPpgvNIl/7/2jgHqFe7/8+
+	 NLVKcHGJUZJXjzwJsBBqyaZJJ77wNXUtTzFju3BWkufwiY+8KXq7AqgHMXVM2fbOCO
+	 96EafOTJonHLA==
+Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
+	by lkml.kernel.org (Postfix) with ESMTP id DCE9D4B0A7;
+	Thu, 19 Nov 2026 03:43:11 +0000 (UTC)
+From: Noam Cohen via B4 Relay <devnull+noam.noam.me@kernel.org>
+Date: Thu, 19 Nov 2026 03:43:01 +0000
+Subject: [PATCH v2] ls-tree: do not quote %(path) with -z
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -127,21 +83,95 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Message-Id: <20261119-ls-tree-format-z-verbatim-path-v2-1-c014e4e4c96f@noam.me>
+X-B4-Tracking: v=1; b=H4sIAERw/moC/42OQQ6CMBBFr2Jm7RinKlRX3sOwKDiVGkvJtDYq4
+ e4CXsDlS17++wNEFscRTqsBhLOLLnQTqPUKmtZ0N0Z3nRjUVhVEpPERMQkz2iDeJPxgZqlNch5
+ 7k1q0h1Lv6oKs1RamkV7YutcSuFQ/js/6zk2aV2ejdTEFeS8PMs3e37FMSFiSPupS7UkXdO6C8
+ RvPUI3j+AXhR0br3AAAAA==
+X-Change-ID: 20261118-ls-tree-format-z-verbatim-path-f5783b61ff8f
+In-Reply-To: <20261118-ls-tree-format-z-verbatim-path-v1-1-718987241861@noam.me>
+References: <20261118-ls-tree-format-z-verbatim-path-v1-1-718987241861@noam.me>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Teng Long <dyroneteng@gmail.com>, 
+ =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>, 
+ =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, Noam Cohen <noam@noam.me>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1795059791; l=2205;
+ i=noam@noam.me; s=20261118; h=from:subject:message-id;
+ bh=vgoVj7DmaNqL+zpYiTvi4MOrtN+qceluz1+GNCR8MPM=;
+ b=LEI5IdnifZQZ2djQax4CVk2oD9+Hn/nrk5SKW2mpYdaH9Sk/r8l409Z919/CxEaPB+3J8WJj1
+ PWktBhqQ0HHCHrlZdd1H966agWs6wOb6X8yxy3BuekPJQWHxMMC6RwN
+X-Developer-Key: i=noam@noam.me; a=ed25519;
+ pk=qyNqXh2nrM20rNZXIQMjH3jLUPgL/RaLrmNnO0YOpp4=
+X-Endpoint-Received: by B4 Relay for noam@noam.me/20261118 with
+ auth_id=1563
+X-Original-From: Noam Cohen <noam@noam.me>
+Reply-To: noam@noam.me
+Content-Transfer-Encoding: 7bit
 
-Noam Cohen <noam@noam.me> writes:
+From: Noam Cohen <noam@noam.me>
 
-> We could avoid the filesystem and synthesize the tree with "git
-> mktree" instead, which is what I had at first, but that made the
-> test noticeably more complicated than a test_commit in the setup.
+With -z, "git ls-tree" is documented to output the filename verbatim,
+but since 455923e0a1 (ls-tree: introduce "--format" option,
+2022-03-23) the %(path) placeholder of a custom --format is always
+C-quoted.
 
-Yeah, that, with forced core.quotePath setting, was what I had in
-mind.
+Output it verbatim when -z is given, like "git ls-files --format"
+already does.
 
-But it is not a requirement to avoid stepping outside US-ASCII while
-writing tests.  It is much better to have tests that use bytes from
-outside US-ASCII than not having at all.  It is just that it would
-be nicer if we do not have to worry about platform anomalies that
-cannot store characters outside US-ASCII range.
+Signed-off-by: Noam Cohen <noam@noam.me>
+---
+This makes "ls-tree -z --format" match "ls-files -z --format", which
+already outputs %(path) verbatim.
+---
+Changes in v2:
+- Use a path with a double quote, built with "git mktree", so the test
+  stays within US-ASCII and does not depend on the filesystem.
+- Force core.quotePath=true in the test.
+- Link to v1: https://patch.msgid.link/20261118-ls-tree-format-z-verbatim-path-v1-1-718987241861@noam.me
+---
+ builtin/ls-tree.c         | 5 ++++-
+ t/t3104-ls-tree-format.sh | 9 +++++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+index 46edaffc2e..d25bbffcdd 100644
+--- a/builtin/ls-tree.c
++++ b/builtin/ls-tree.c
+@@ -130,7 +130,10 @@ static int show_tree_fmt(const struct object_id *oid, struct strbuf *base,
+ 
+ 			strbuf_addstr(base, pathname);
+ 			name = relative_path(base->buf, prefix, &sbuf);
+-			quote_c_style(name, &sb, NULL, 0);
++			if (options->null_termination)
++				strbuf_addstr(&sb, name);
++			else
++				quote_c_style(name, &sb, NULL, 0);
+ 			strbuf_setlen(base, baselen);
+ 			strbuf_release(&sbuf);
+ 		} else
+diff --git a/t/t3104-ls-tree-format.sh b/t/t3104-ls-tree-format.sh
+index a1b2069a25..0df216909b 100755
+--- a/t/t3104-ls-tree-format.sh
++++ b/t/t3104-ls-tree-format.sh
+@@ -76,4 +76,13 @@ test_ls_tree_format \
+ 	"--full-tree" \
+ 	"--full-tree"
+ 
++test_expect_success 'ls-tree --format with -z does not quote paths' '
++	blob=$(git rev-parse HEAD:top-file.t) &&
++	tree=$(printf "100644 blob $blob\tdouble\"quote\n" | git mktree) &&
++	printf "blob double\"quote\0" >expect &&
++	git -c core.quotePath=true ls-tree -z \
++		--format="%(objecttype) %(path)" $tree >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+
+---
+base-commit: 03b41523c576f26ad34085378717a0c1b287470f
+change-id: 20261118-ls-tree-format-z-verbatim-path-f5783b61ff8f
 
 
