@@ -1,93 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.175
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.42
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795067039;
-	b=QqWQCNhF0qkPCVpODdhBrXP6l9ReQtkULVoKZmRcRmPS85IwbsVfekeQWVlmFS1CawV3
-	 WoJTIT/eO34B7SQj2+pvun7XUtvT4BWOa4DbTaVWv40RUNQly/mxjGXRna5oSgtIxBlmF
-	 7xdZ+74tz3rP7mZFLo4kQXW8q7rVNrbwXa+OQImL5Ixu0FmEVXHEz6tiDRLPKhDlZnR0s
-	 9QV4LhoO4SO73k78+bPATqeAekqCOrStakANfj70iB56el2wSwDkSEbsaU9XImiJCimkf
-	 U1whtd5C7dKYhczpcd2hT+yArXMdXX6tkNmpNQR14TJ0osO+6780jy/V6JBU7r3Uorw==
+	t=1795067432;
+	b=t//TmXbyVkC+m4Xiibb0BFR9GJ0h1U0BqVGzhuMXpBZLYrvnsTYQfpESnVsf8MZ/psK1
+	 Cc9KWzH39bfq9I9DyY3rQrRysQDQ8KZuX8qP4fM1VxQSWtWvNJj4/Pjbxs6YAN2odiedU
+	 4s/HFYczrRMYPwna16pVjGP8RgAfX0hSFZ2WDvBDUKd7pTO54kRA+6Npig30vv+pvVBAE
+	 7TwrnQcSu12NyCzUebrRqh/e5I394dYGnUwFnycYskDEnbGcfwbGD6Qak+Z2Lhg166vyN
+	 C3Ifdsj05Puz4KshxWCpz+nVbJ9wBKSHYa1jThpvRlaD3RcOfC1vkoOPUYPhNXBqJog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795067039;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795067432;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
-	 References:From:Date:Subject:Fcc:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=WXWBh2yCYzxwcsaq38V0SgxjAEG7903dPnuFBpVvc7g=;
-	b=pl1/G/Cm2j87eg23iylJ5Kd+Jo0BHc8NfG/naglpi9tkSNFSVGvMy+NelWuegcZqmOAS
-	 qjfULshKKrXyZdQO4hK/vs/JTsj/fBVhVrEX4At6KUN6bWb0NZtXLp9w8rRZaK6UKU/tf
-	 Z8wQVaoPB6SF7g6jazLCvWfkUhrqgKIyXNO5qRjprRL0bYqAtsjsqcy8yvmLBs7wMrCzG
-	 H6X1XDzce+Aq+gy2jSgmJmUO2tMriRg16jAHpr3LKAXPJ89pxVt8VkpxK6KvqIasyRqGC
-	 WA0YT6Biah2MFXlTUzZAbY/j1zNomCr4ApkmR6ew/aH03pFuWeYS2Q2IgKghL81BJvA==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=rhQWeIEP+TC2rsoFHjG6i/NESEouLzUOjr/Qp1CIBwA=;
+	b=UwX99RY2wYiMbpKQR6yXRiGI0GRQlv+Bk6I7Tlesbsv+rPGsa8VHZ8kRNbGIKR8usfWK
+	 FXZy/W1kZ1D6osQSrjOWzn9IUW8cG+skSzbUqrX2HghKsH1AqNPq+9K80qpfDsiJS7+iJ
+	 FyhiKzbuz/YcigmnhkcikOOrMzeFeyxzV9/0gJCOgWRtqC+LGmWxfy9iduxJktzKUi6Wy
+	 EW20+7L2RZ/F2xEzq9EUegVrnRwG6hzIjrB5FRhHf/gIpwJ98GuThV6Zl48YRXYbL1c2j
+	 iUiMJxAniQ/Gq6zpoW/++3q9DrKtow5sLTpTRimOVoqU6qgICbmFpOnxQGf8xEO3AbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=yWOrEebe;
-	arc=none smtp.remote-ip=209.85.160.175
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fCnYlXsW;
+	arc=none smtp.remote-ip=209.85.221.42
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B57606A320
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 05:43:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 78B57606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF01606A320
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 05:50:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DFF01606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=yWOrEebe
-Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-53644b28706so26085601cf.3
-        for <git@vger.kernel.org>; Wed, 18 Nov 2026 21:43:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fCnYlXsW
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-490d59c3edaso368816f8f.1
+        for <git@vger.kernel.org>; Wed, 18 Nov 2026 21:50:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795067038; x=1795671838; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=WXWBh2yCYzxwcsaq38V0SgxjAEG7903dPnuFBpVvc7g=;
-        b=yWOrEebeSrjQ52/ewmLVC0c3sPfToRmB+KWO3sW3iDHzp1lcb0mxtJYLO34azISIGO
-         AmNoP2y+1jvGmET2KeG/zsqQFCVdk2GquDBhUWSc6TflnFTDEJbDjcfW81Z0dsuHG1rW
-         a/xd4mpMQ/YrG26D1RVFZPOETCcWKceuC03VXMwtVhCY3SzhTxMUxCG6MUWeOVcSYGt8
-         QUklLZDHT0aqTk95HaXZ04e2tbd2FbAnq5TMGsF4ajT2BWmGsKPx8f3isln32AIenzY9
-         tbQyhmK55kBJd8zSv8O8ybm/XUL+N/i0z6vHT0IdqIe6jBqNZkax+Z+dUjYAF9OOSkuk
-         IU6g==
+        d=gmail.com; s=20260707; t=1795067430; x=1795672230; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=rhQWeIEP+TC2rsoFHjG6i/NESEouLzUOjr/Qp1CIBwA=;
+        b=fCnYlXsWbdm82qRiVqQbwL+8+HFBi0at2U+UMxHHlFU9PlaFbOnFha+y7RGswjZUrO
+         gMjHKrfS8g1SEb5Pg2kZa7oF0rYeMWEHTTpJ2CvoMOxJ+6822cRwrT6BRT2rtc1dRGEB
+         si8i9atxHEu1sr0mlbJWH23mPFusDNb4F6ZAEi3+MQtRQYmEtIGXL5DgJdeRhDkMmrB1
+         R53XhSMgJM850TkwZaot2Co1OKyJ3ehNkDUUVTvd7u0MoF+qEY+l2VIWX8NEWgBJJebi
+         LV0ofCMKID8c4eG58PuIpBb3UDcMRV7uKjDWRGbtpL/Ab0AHeOPgnv2i1SIV1iQoEnMQ
+         yi0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795067038; x=1795671838;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=WXWBh2yCYzxwcsaq38V0SgxjAEG7903dPnuFBpVvc7g=;
-        b=aaeCrfMtt4G+drzfCQNCk9FcqpSnuRzw4RSnPRIE8dZ32+85CB305n0q7yu13q38C1
-         QiZhavqCfvBLS2VCtoalc3gMRmGYlY+2NCzzXT1rEPEIvl+7Hz9Ea/OL+9heCh/2n1ZM
-         PWByaEGcDr9WucKQ3g5z3yjoWXzFKO1OI5ehnFGrQXJCM7Kh5IGs8oXOmMPnBEFFN4uT
-         mtBfdzJesp08yaB8+FFWz587La5dF/iZZjOY7o/dReoGJH1aIPr13TrgLuVBBQ+1WXKO
-         rmsYYgPltvyrIp6CmOXPQqATlfBDw9jQFcL1lDyGvJr+iogdlaZVj0I95K3NTuof6Giu
-         IW4w==
-X-Gm-Message-State: APuU4Z9oA8tSmp8mTdYU1vhbTV1RtSoMojYteIe3jGa8wWbX7fjNmVXP
-	WyUS0uniYXpUE6RULpPFhVgbgjMuUEn+J9v2hiwsoKsDjrQ92GNciDKoPLvTHexN
-X-Gm-Gg: AYBFou3SWyawhUL86P9RMilDzASuGZj86ZaoQKw5jAWYtmY7G6ue/31+aHzBnv6lCfH
-	2pE4xAM+k7vScuw4jwUz37MLpW7YpnzEkwwqvR+8H+V3h/g30XTHZfoYLFpWnK4GM+0ZtctQNdE
-	cySy0wKQjPwsnQeBd3uPUJBlDhdhmHbc2hHSwPtUQbeUMs8Ey1xbYxM0MtDzkCPYdBfjOcGpeEj
-	cE8YGfv/b31NDfAB8j+TyIo8W3pR1tc2sbVsm1hpZHqUmpjFGCv8Hf/q133fOhCBBFpYWG/SqBI
-	fYy0LWcZJgyTNvx0dH47aRYRbdI6IY4ndJWFaZ4tG2q53V9x8Hpe8aAcTQEv/pbwCMKuJFV2pDV
-	XdWbls/ez3bL7IqNHIZW8+5q3XC6MAKXYlJHmovfEciU6IbVlEYqEgonTZc4j+sVkjaE/g2L/b6
-	6gruViViK9B3ikLBqa9KWd5KX1PWLp6JqJOmqDPS9acfoXpwiH8KOh20fCD+Xapb1lwwXur+R01
-	i3TcWvQq6fYhUgXcc3FGXkVxtSns5VryeJtx7RYiW7f/LsW6EaYhqW9LKyyY784oS5mxvWp6Qpt
-	tSWNNSCi+BHdjfFLctq8T2sDwPPQep/6zg==
-X-Received: by 2002:a05:622a:9d0:20b0:535:a5f7:d588 with SMTP id d75a77b69052e-55d5a694445mr62079851cf.66.1795067038454;
-        Wed, 18 Nov 2026 21:43:58 -0800 (PST)
-Received: from [127.0.0.1] ([52.240.174.161])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-55d66bb7125sm16603731cf.16.2026.11.18.21.43.57
+        d=1e100.net; s=20260707; t=1795067430; x=1795672230;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=rhQWeIEP+TC2rsoFHjG6i/NESEouLzUOjr/Qp1CIBwA=;
+        b=JqZOxknJV1NUOadiV23HU6JS+8ulcnZwWo6NQBT1LXUYpo4U+9P8H98WFVKrgadnU7
+         EPtdsbqYRcPD/pbI6aHZ4wfjoGGJeYG4Bl4Ioy/OVr5ooyJHmsdYhY3SSrSdovk9WZRx
+         xO2XhvVkIQcuZRz/MMHx+GdKnKtLfJvsChjRZugHLZ0zFWZ/2bByP83MT8nQrMd/ref6
+         B/ve561kTvxrcP2L1zJtdsjNE9J0VjAOGknzU/qdbnMZEGtfHW5CMhCAXv6UJBRodVu+
+         TInexvtjIJBbK/N/8Sx43FVC/dC4H49PyBfr9bdF9K5VNLHkwyrB1CSq2CTZKLQ9CIYl
+         Ba+g==
+X-Gm-Message-State: APuU4Z96iFO6PQsECO1kOWpK3+VfLEcbPtAGoURI+opw7fAILKvi80LU
+	B5WoN3xRz0tLnBT8t5Hb/meu9K1MYX/MVQ8jmnj5pGhBS5h2l5FQ5H4vBPlmEw==
+X-Gm-Gg: AZFdTZeYhOZdk542z/NsemflhZ/PftLW85YVMkOJEyjof3j6+A6SJcqYY+iZHgwp5Ka
+	8cU/6z7v2zlR+Rty+gTFUM18Bt5YbBrpYbPydvA0lnGIr7lI0Z/yroQwfwlCxuSvmYNncogWubB
+	MMht0X+qTrOHqGXOsLRoXs/TGO66Pgymg+8MzCnzffg9CNcBa0Gf76xfEZ5uDo+Il0aWSik5aU4
+	hK03q6tr5AH/hWkbGsjJcAoTrw6xy+FPv5a4fmXkIa1q5j9E/qRWhvHIiXrby8hu2+scuIqusQG
+	Y2d1+bhrcZtgZnl5uoomjXZMi5MKFrHZMWDLrC/kz2p0uVdB/5FSo2qyW2YJ4qM/2sloJacX6bS
+	fOfyXJk4uJblTk3HCO2zVGE3KpdH4Pob4sEfCH7ZDnOBG8+GYx5f+C5XD5D1hMf18B99nwX97tu
+	GssDAY6AT1zfhUQYyyN802rM5BhGe/7p59TpZcBSsecX3KFczadpcNUSwLDiFiMNaHxUZQ2oFpN
+	jxV3PEMU46YHVq0YkIkP+V+/aOPZwKo+EZeAMQjKh1yyehzskeUCsJ2BR4EdxLoQKqhC1R2X21a
+	eYRZDaToDzGVju6uqMi1BGTq7xF8Mh15iosUka3D52aBV7pYL+jW68NvMPFhdcQ=
+X-Received: by 2002:a05:6000:250e:b0:48e:d7c:4bc3 with SMTP id ffacd0b85a97d-4aa5805e1e3mr135563f8f.21.1795067430071;
+        Wed, 18 Nov 2026 21:50:30 -0800 (PST)
+Received: from ubuntu26lts1.example.com ([151.31.213.44])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4a65100c6bfsm8242025f8f.2.2026.11.18.21.50.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2026 21:43:57 -0800 (PST)
-Message-Id: <pull.2318.v2.git.1795067037014.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2318.git.1795026168007.gitgitgadget@gmail.com>
-References: <pull.2318.git.1795026168007.gitgitgadget@gmail.com>
-From: "Maik Riechert via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 19 Nov 2026 05:43:56 +0000
-Subject: [PATCH v2] diff-lib: skip leading path check for fsmonitor-valid
- entries
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 18 Nov 2026 21:50:28 -0800 (PST)
+From: Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Harald Nordgren <haraldnordgren@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
+Subject: Re: [PATCH v2] status: reword message for a missing upstream branch
+Date: Thu, 19 Nov 2026 06:50:26 +0100
+Message-ID: <20261119055026.759205-1-gitter.spiros@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <xmqq5wxu87es.fsf@gitster.g>
+References: <20261019175722.5223-1-gitter.spiros@gmail.com> <20261021072137.258934-1-gitter.spiros@gmail.com> <xmqq5wxu87es.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -97,169 +97,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Josip Sokcevic <sokcevic@google.com>,
-    Maik Riechert <letmaik@outlook.com>,
-    Maik Riechert <letmaik@outlook.com>
+Content-Transfer-Encoding: 8bit
 
-From: Maik Riechert <letmaik@outlook.com>
+Junio C Hamano <gitster@pobox.com> writes:
 
-Since 4f3d6d0261 (fsmonitor: skip lstat deletion check during git
-diff-index, 2021-03-17), check_removed() does not lstat() entries
-that fsmonitor says are unchanged. But it still calls
-has_symlink_leading_path() for them, which lstat()s the directories
-leading up to each path.
+> Using --mirror means the local branch we are interested in (e.g.,
+> 'master' in your example) would be sent to their 'master'.  Do we
+> need to check if their 'master' is what our 'master' is based on,
+> though?  Can our 'master' be tracking their 'main', for example?
 
-That check is there to notice a leading directory that was replaced
-by a symlink. fsmonitor would have reported such a change, and
-refresh_fsmonitor() would have cleared CE_FSMONITOR_VALID for every
-entry below it, so we would not get here. preload_index() already
-trusts the flag this way and skips these entries altogether.
+The first check in push_creates() catches that. push_ref is what
+"@{push}" resolves to, and for a mirror remote branch_get_push_1() maps
+refs/heads/master to origin/master. That differs from the upstream
+origin/main, so we return false before looking at the mirror setting.
+With remote.origin.mirror=true and branch.master.merge=refs/heads/main,
+"git status" gives only the "--unset-upstream" hint.
 
-The S_ISDIR() check that follows cannot trigger either: the mode
-comes from the index, and gitlinks are never marked valid.
+> We are content if there exists one or more "push" refspecs for the
+> remote, regardless of what the value is, but is that really
+> sufficient?  What if our push refspec is deliberately narrow to
+> publish only selected branches, such as:
+>
+>            [remote "origin"]
+> 		push = next
+> 		push = seen
+>
+> and the current branch in question is not among them?
 
-So return as soon as fake_lstat() has filled in the stat data.
+The same check again: no push refspec matches 'master', so
+branch_get_push_1() fails with "push refspecs for 'origin' do not
+include 'master'", push_ref is NULL and we return false. The refspec
+and mirror tests only come into play once we know that @{push} is the
+upstream; they are there because push.default is not consulted at all
+when either is set.
 
-The first new test checks the shortcut itself by replacing a parent
-directory with a symlink without telling fsmonitor. The other two make
-sure we still notice when fsmonitor does report that directory, with
-and without a trailing slash, since nothing else checks for it now.
+> You mentioned "nothing" in the log message; shouldn't that also be
+> special cased?
 
-On Linux, with 100,000 files (ten per directory), a hook that
-reports nothing and a warm cache, "git diff HEAD" goes from 57ms to
-26ms.
+With push.default=nothing @{push} does not resolve either, so it ends
+up in the same place; 'status (missing upstream, push.default=nothing)'
+in t6040 covers it. "matching" is the only mode in which @{push}
+resolves to the upstream although "git push" would not create it, hence
+the special case.
 
-Signed-off-by: Maik Riechert <letmaik@outlook.com>
----
-    diff-lib: skip leading path check for fsmonitor-valid entries
-    
-    Changes since v1:
-    
-     * Dropped the stat_err variable and called lstat() directly in the if()
-       condition (suggested by Junio).
+None of this is said in the comment above push_creates(), which is why
+it raises these questions. In v3 I will spell it out there and add
+tests for the mirror and the narrow refspec cases.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2318%2Fletmaik%2Fdiff-lib-fsmonitor-leading-path-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2318/letmaik/diff-lib-fsmonitor-leading-path-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/2318
+> But we call push_creates() to compute suggest_push whether we have
+> advice enabled or declined.  I wonder if it makes the logic flow
+> cleaner to give a few more arguments to format_missing_upstream()
+> and move push_creates() call there, not here?
 
-Range-diff vs v1:
+Yes, that reads better. I will do it in v3.
 
- 1:  22f99f7189 ! 1:  4f8cbd869d diff-lib: skip leading path check for fsmonitor-valid entries
-     @@ Commit message
-          Signed-off-by: Maik Riechert <letmaik@outlook.com>
-      
-       ## diff-lib.c ##
-     -@@ diff-lib.c: static int check_removed(const struct cache_entry *ce, struct stat *st)
-     +@@
-     +  */
-     + static int check_removed(const struct cache_entry *ce, struct stat *st)
-       {
-     - 	int stat_err;
-     +-	int stat_err;
-     ++	if (ce->ce_flags & CE_FSMONITOR_VALID)
-     ++		return fake_lstat(ce, st);
-       
-      -	if (!(ce->ce_flags & CE_FSMONITOR_VALID))
-      -		stat_err = lstat(ce->name, st);
-      -	else
-      -		stat_err = fake_lstat(ce, st);
-     -+	if (ce->ce_flags & CE_FSMONITOR_VALID)
-     -+		return fake_lstat(ce, st);
-     -+
-     -+	stat_err = lstat(ce->name, st);
-     - 	if (stat_err < 0) {
-     +-	if (stat_err < 0) {
-     ++	if (lstat(ce->name, st) < 0) {
-       		if (!is_missing_file_error(errno))
-       			return -1;
-     + 		return 1;
-      
-       ## t/t7519-status-fsmonitor.sh ##
-      @@ t/t7519-status-fsmonitor.sh: do
-
-
- diff-lib.c                  |  9 +++-----
- t/t7519-status-fsmonitor.sh | 44 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 47 insertions(+), 6 deletions(-)
-
-diff --git a/diff-lib.c b/diff-lib.c
-index 086476bd77..b644154397 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -41,13 +41,10 @@
-  */
- static int check_removed(const struct cache_entry *ce, struct stat *st)
- {
--	int stat_err;
-+	if (ce->ce_flags & CE_FSMONITOR_VALID)
-+		return fake_lstat(ce, st);
- 
--	if (!(ce->ce_flags & CE_FSMONITOR_VALID))
--		stat_err = lstat(ce->name, st);
--	else
--		stat_err = fake_lstat(ce, st);
--	if (stat_err < 0) {
-+	if (lstat(ce->name, st) < 0) {
- 		if (!is_missing_file_error(errno))
- 			return -1;
- 		return 1;
-diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
-index 93973ed25a..6c9df9f333 100755
---- a/t/t7519-status-fsmonitor.sh
-+++ b/t/t7519-status-fsmonitor.sh
-@@ -336,6 +336,50 @@ do
- 	done
- done
- 
-+# Create a repository whose only entry, dir1/tracked, is marked valid
-+# by an fsmonitor hook that reports no changes, then replace dir1 with
-+# a symlink to a directory that has the same contents.
-+setup_symlinked_leading_dir () {
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	mkdir repo/dir1 &&
-+	: >repo/dir1/tracked &&
-+	git -C repo add dir1/tracked &&
-+	git -C repo commit -m initial &&
-+	test_hook -C repo --setup fsmonitor-test <<-\EOF &&
-+	printf "last_update_token\0"
-+	EOF
-+	git -C repo config core.fsmonitor .git/hooks/fsmonitor-test &&
-+	git -C repo update-index --refresh --force-write-index &&
-+	echo "h dir1/tracked" >expect &&
-+	git -C repo ls-files -f >actual &&
-+	test_cmp expect actual &&
-+	mv repo/dir1 repo/dir2 &&
-+	ln -s dir2 repo/dir1
-+}
-+
-+# Like "status" above, diff-index should trust fsmonitor and not look
-+# for symlinks in leading directories that it was not told about.
-+test_expect_success SYMLINKS "diff-index doesn't detect unreported symlinked directories" '
-+	setup_symlinked_leading_dir &&
-+	git -C repo diff-index --name-status HEAD >actual &&
-+	test_must_be_empty actual
-+'
-+
-+for report in dir1 dir1/
-+do
-+	test_expect_success SYMLINKS "diff-index detects symlinked directory reported as $report" '
-+		setup_symlinked_leading_dir &&
-+		test_hook -C repo --clobber fsmonitor-test <<-EOF &&
-+		printf "last_update_token\0"
-+		printf "$report\0"
-+		EOF
-+		printf "D\tdir1/tracked\n" >expect &&
-+		git -C repo diff-index --name-status HEAD >actual &&
-+		test_cmp expect actual
-+	'
-+done
-+
- # test that splitting the index doesn't interfere
- test_expect_success 'splitting the index results in the same state' '
- 	write_integration_script &&
-
-base-commit: e1ec09b23c8e0deb21a0b95ac5996422277395d4
--- 
-gitgitgadget
+Thanks for the review.
