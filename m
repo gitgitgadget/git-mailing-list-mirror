@@ -1,66 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.198
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.41
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795082203;
-	b=wT7CNMW9fP4clmY9LO8h07l2xDsEsS8XRVdBsmoy4bIA3NltS1JHBQful2gp2V4m1cDK
-	 JzZaoGz7Gv/xFAzSA7H+Xvwu+4jhDQsMq/FTuUB48DOM8KrINZhHaVyi7GAqKCFeiSHVZ
-	 qeuNW8FFYnuOCRA+4A//vT0U1CBhkr1UeVGUPuQ8r+r5lXOhLRW8RGdin7wjNRNjyZ5DZ
-	 x0V7yUQ2JTIN0OtpAgK67vEnQq1exFu9p9hic8FdOyp53RyWcUY4qUrGf1EeGjME1c3IO
-	 1OKf+jlwvi//cjYF6NOF5XMFpe83SNFS0D9pSfNGDc2ZSSI5r4YNNAa3l7ryDevt+YA==
+	t=1795082780;
+	b=FybNbwBi5xfwKzOVE7BXoADJTC3pxIyTNC6dWL6reTAFpyN2B+EdfzDRT9yTIYIJXGs+
+	 50Q1bWQoxiKpKUk4R9dSUDM9fVCDFQfb71o9cLLzGBkW8kC7h72qYBpWqpYKcplctuiy3
+	 hiAgfqFOguCwKGkVe25kNbTv2vlpUZJKWGm3Y9qDyEscRqScuZ3RTUo0Pxe8iZAaSf1o0
+	 6Q69x6QD372qmYv1Tpn2WBOeI8Hs9Msp1lap7Vvm8Subsb5iOci/cxycsHx/pYMfD26b2
+	 ZAluh+QP6cqzdWRSlB6flUc/IJpine4ZKnlbP30f4krNrnj98TBdf2CV7ShA8WGqFvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795082203;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795082780;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:MIME-Version:X-Received:Reply-To:Message-ID:Date:
-	 Subject:From:To:Content-Type;
-	bh=hVtulVhNk5gIUzI8TXzSBi+sSPKvGVh4aBdwto1IB2w=;
-	b=jpo129S4WBIBSyeXfGOi+MacQct36odcJJQRpy4vRAxpGM0zRk1sCrdnVBk0+9yiktpI
-	 e+FiEfkT1vx39qT/03fIOv2yxPkyCTRHnU6b9Hu7SXXO2cKdtNfNSohSrtUJQv3o/NKVc
-	 TLnN7jstxdLog8tAzdinU2frlThNFlhGcbxXU1mcYzYz0XLmn7FUH1CeA/Lz5mknw1nK9
-	 cfKoLU+fC50B/vqxdLLj4I5EbUK2YcvnmrXnE8eXRjS/gM9aUrFB5ux+a2uzTKiM9k6Ok
-	 ZTwg44Wb8LcorXxxtfGMltaEW5+BNCjz8WpGm+2yHRbm6l75oGoTuAKGLB3XhnLX2kg==
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=/b3zE6cwrZVIfg3dwieXXdtOE4QFmc7f6DT15g+lROk=;
+	b=H5NTytNxK5XK5hvK9UU6XTRD3EedBOkQ4oIxrv85o4dytjjUkNuWhrUpH/QVKRRZOZoa
+	 TIYbuLsAvPv0Lzrst/M68jnWhDdvLAWgaF1+V0dXMqXPpurDAKkJW58F1qvzD/YJni2M7
+	 lJt9Nlzuwwrn3NwDy6osagQaXtAKAJr7tIy7veOUPjk+URYtNr5KDL2ea2T+5hbGa58/S
+	 47iFRJOZEXBDCvVjKnmI1kpFz4d4f3K8baQRmS8wjDX7kMdW/H81vqSjnVEkUJNnOVxDS
+	 XJP88LU7zuRblLoXVubfWmv7uzmxh2P5x7i4yGznswh4Qw7+/W9qOh6ZmpcfosuaUQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XxtYVRHC;
-	arc=none smtp.remote-ip=209.85.214.198
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gOD081tn;
+	arc=none smtp.remote-ip=209.85.216.41
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD81606A33E
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 09:56:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6BD81606A33E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B48606A320
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 10:06:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 73B48606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XxtYVRHC
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2f033dc37cfso2403895ad.0
-        for <git@vger.kernel.org>; Thu, 19 Nov 2026 01:56:43 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gOD081tn
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-3b197cd42b0so1467568a91.2
+        for <git@vger.kernel.org>; Thu, 19 Nov 2026 02:06:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795082203; x=1795687003; darn=vger.kernel.org;
-        h=content-type:to:from:subject:date:message-id:reply-to:mime-version
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=hVtulVhNk5gIUzI8TXzSBi+sSPKvGVh4aBdwto1IB2w=;
-        b=XxtYVRHC0jjHWyScCZ7jggRW2HHrrXgvGdfHSRW6XnDrvVJup/opHJSb95yTEg5ZMS
-         GNXV3tmn/Wt7HFvH/taxTSeKGxxtNL/ZYaCB0hjiIeRrlUw+b6YqsMuW1702rfppX+kR
-         qGjYNF9cLjN+tfGki96ZIYsWscBex36zZvWGYohjEPQ0eYnbbxtLbFCPzOqQ5WVdLpu8
-         x09xVoKWrOCCceTxPrSJxGMGuyCANvE5mjs1ZHsAYWaVvxvlwe7RWt1iPt3k3Slsanww
-         KvKEnJMGlaKgQ8w7V7DLci0Mua3+kVnGWkt9s/vJ9k5HTLFxMZGZbYgTX452UwQE5bK8
-         KxZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795082203; x=1795687003;
-        h=content-type:to:from:subject:date:message-id:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20260707; t=1795082780; x=1795687580; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=hVtulVhNk5gIUzI8TXzSBi+sSPKvGVh4aBdwto1IB2w=;
-        b=NSDAq1uF9KSMvFgFAgdbSD7VCUUI2mJRscEstLEVLyl0NPgYqGUMIj0HaB+wC3ZeIZ
-         drhNOALUI0Cr6XHYPlY/1mO7+JorLgq9qFygpIqpH3JheZijSd4pjtYqwh1N/7dcK2Up
-         uMyM60HrUW833T3cCrym0hnjovb1f0Rc7jWT3z9jHajODf0tgsXmmKP7SoDMphCDkcV0
-         h6y0aqzsde6pgOt+LrN0sIkyGQVcT2HVAAdwv81tZLACJjtv7rRlSa1pj39hscn9yY5y
-         8ZSRuQny+8ja9aLqv3GLXDJQA2kSvsVACAxWyYdxSESIdMmidHnkcD/2egbzTGhhgRql
-         4gxw==
-X-Gm-Message-State: APuU4Z8hcE9foIQnzAy7Z51Ud636Bzig20gaRyPveMhaGhQg0eM8BZsz
-	rVv9sPOW47INfke1ueS/bQ8E6K8QdLB1PU18LA9LAH+ks62iRH4t4XTUGM0DJ28mGwPzKhscF56
-	rJnA=
+        bh=/b3zE6cwrZVIfg3dwieXXdtOE4QFmc7f6DT15g+lROk=;
+        b=gOD081tn0CcXEwRDKmApCJqRq48EYbHABftq5NJ6aWSTwhqRK4kTlMxAaRrrrKCP0s
+         X0Jzv47jENfoiZOCjoKwGEJt9Xo1Q3KXnIKLPb0Yco1gAiK2sTLoahFNDzTMRF3W8+65
+         sJZfnggFmmgSeIFAUlCOs/+8D/Syk/HZWNw4WfaN/vn/EV29ot87/tHsEkV69oxOEx3L
+         5YrhruQF/qbUKy7ugqpwT6+wqhMQ7pu+/gOggY/ShNywDWeXzs3r8KdVakSqZHPCdU0C
+         X5bGHKwXbhQ4gRcFXfSWKric2zmjk73Oqe4DmQBG3UgLui03YhLghlguFkACB5pkXimt
+         QsfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795082780; x=1795687580;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=/b3zE6cwrZVIfg3dwieXXdtOE4QFmc7f6DT15g+lROk=;
+        b=ndHSRJ92syTgZPwDv/xqeKaExf0NBfjDmk0hw2jcvPP/XF+okPBpEtBK/uAYpVIHB6
+         TBYQU37ZyKgo7Nf3wMlZJ8WgJ9wF9SXrYaDXhK8nvJUG0KIevNd7bGxiUugCsvHdBT9s
+         RtoSHmmW6lTeENepC5lPyqyjeTuocb1Y05meOSGl9jS4Z2S2hlXyAAzMu57pw7RcfeUy
+         QTT77I9IKCXWqQEj2WTfq4xKZMJojm89eAEu2/m0DYTg7GvAuHEYOryFSs1jc+rZzP64
+         D/Evk4MtI+YrlihPNGvshduQwhewobzx6wyOvwfRHjOwdxQDyUjeqeLZ35T1sc8mAADG
+         OzGg==
+X-Forwarded-Encrypted: i=1; AL+hErHgHwdduAoKi4QcRPhUCpvV/EMB7v2fPY1k+fV7+bxsUBGFdNL+lT4GuptTsRih2NV2mBE=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+MeFLpJUrpimjmWzh0Ym7ziAmrnq8wKQDgl3csd+cFD42CgZWY
+	fpKWNkeo3RLSDuSF+1/b53fy0ITSadTdpzAWLgdENtLFEOZ6yQ75PN2f
+X-Gm-Gg: AZFdTZdeeAqFtQYcs+TEOqnjn2hLm964Cb1alHdbV3AvrZiSDmnv3rJGFxioDcDKSpZ
+	6oMm3wGJ4NasM+tzyWjrECmokGXf1ShHqBXKRsx2nN1lfj32fdb33POs/XxCXMDGmQD0TBfhdOy
+	OmFbaOrZHhi0Wf5ZgHyju1MbqZPibZRVRTfSbJZQ3wodN0ELqTyz0cYytoihookhVTI7mAYH6iA
+	z2fcTzmoZ1zZq/h3F5W4PBllfNHO5FHIik/P+IT1HLXjlEmaEOJzc0AgjlUby6E6PA2nF6QRSsc
+	xQ/fHJ+GDGvCJZcgJwtYmXMHZmmrOQYiFZ7U52ekfUqSL9mWHFjgXAAj5wfW1LJJ5bYO5bj10i/
+	lVMBSV/gza8dMxN1bgzWJRgUS2BDLLgJa8h5QhG6DrVYbnuwqTNdZKi1NeLyIP7rG+1X61AZ3CW
+	aTj5yjPZ59rY+EWNRp2RG29dDl9xlN7mZu4wt9LXDKG/sI+8sZ8z43nRSBQ05qR96pVZ8uATnx+
+	kEJwIiSSCFNIN+gYSKnCJqWVyBAoM2PCWZZAmX4ssc0v6b12vN1GluwV0hZHUEEvZKgoBLG3lQ0
+	YavBd+fOzQU5a8ZW5QuAWbXGx2Otsn3rZcpxPopb
+X-Received: by 2002:a17:90b:52:b0:3b3:ba43:54c3 with SMTP id 98e67ed59e1d1-3b3d07c61d4mr4820380a91.33.1795082779738;
+        Thu, 19 Nov 2026 02:06:19 -0800 (PST)
+Received: from [192.168.0.11] ([106.51.27.147])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b401f4d058sm1225190a91.0.2026.11.19.02.06.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Nov 2026 02:06:19 -0800 (PST)
+Message-ID: <953176e8-e475-4a99-b2d3-725fd346c19e@gmail.com>
+Date: Thu, 19 Nov 2026 15:36:16 +0530
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -70,29 +92,70 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-Received: by 2002:a17:902:e550:b0:2ef:ddd6:7176 with SMTP id
- d9443c01a7336-2eff7574d13mr48552185ad.70.1795082202857; Thu, 19 Nov 2026
- 01:56:42 -0800 (PST)
-Reply-To: editorsisos@gmail.com
-Message-ID: <autogen-java-802e5e3b-dd4b-481b-94d7-f9d607b5254f@google.com>
-Date: Thu, 19 Nov 2026 09:56:42 +0000
-Subject: Regarding your research manuscript
-From: kaverip620@gmail.com
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/20] t9300: move 'fastimport.unpackLimit' to the
+ required test
+To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Cc: gitster@pobox.com
+References: <20261112-kn-fast-import-tests-1-v2-0-b8c3a0ab27e8@gmail.com>
+ <20261112-kn-fast-import-tests-1-v2-1-b8c3a0ab27e8@gmail.com>
+Content-Language: en-US
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <20261112-kn-fast-import-tests-1-v2-1-b8c3a0ab27e8@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Dear Author,
+On 11/12/26 23:04, Karthik Nayak wrote:
+> The 'empty stream succeeds' test sets 'fastimport.unpackLimit' to '0',
+> so that the following imports write packs for the 'verify pack' tests
+> to check. The test itself doesn't need it. A following commit makes it
+> run in its own repository, where the setting would no longer reach the
+> tests after it.
+> 
+> Move the configuration to 'A: create pack from stdin', the first test
+> which needs it. The configuration must persist for the 'verify pack'
+> tests of the following series, so set it with 'git config' and not with
+> 'test_config'.
+>
 
-Are you currently preparing a manuscript for academic publication?
+This makes me wonder if there is another patch later in this series to 
+turn the 'git config fastimport.unpackLimit' into one that uses 
+test_config instead to make the tests more self contained. Or may be it 
+is planned in the follow-up the cover letter mentions.
 
-Studies in Science of Science welcomes submissions from researchers across  
-a broad range of academic subjects. It is a Scopus and UGC approved  
-multidisciplinary journal, currently active in Scopus 2026.
+I'll see about it. In any case, I think it may be worth a noting in the 
+commit message your thoughts about a change that turns the 'git config' 
+into a test_config one.
 
-You can review its journal information and submission details here:
-https://sciencejournal.eu/
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>   t/t9300-fast-import.sh | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+> index 15f511fb6b..4cffe43a71 100755
+> --- a/t/t9300-fast-import.sh
+> +++ b/t/t9300-fast-import.sh
+> @@ -38,7 +38,6 @@ echo "$@"'
+>   ###
+>   
+>   test_expect_success 'empty stream succeeds' '
+> -	git config fastimport.unpackLimit 0 &&
+>   	git fast-import </dev/null
+>   '
+>   
+> @@ -47,6 +46,7 @@ test_expect_success 'truncated stream complains' '
+>   '
+>   
+>   test_expect_success 'A: create pack from stdin' '
+> +	git config fastimport.unpackLimit 0 &&
+>   	test_tick &&
+>   	cat >input <<-INPUT_END &&
+>   	blob
+> 
 
-Would you be interested in taking a look at the journal?
+Change itself looks good to me.
 
-Kind regards,
-Editorial Office
+-- 
+Sivaraam
+
