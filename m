@@ -1,86 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.178
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.47
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795109616;
-	b=ILj4aij8ncWTfH4fnu/xWVBNxtGoVX8VtYBE61ruRtVQrRbrhF66UtponFRenKhHjeJl
-	 KvGxp/B2WOks26j3+BJYYe4hHaUwm1sIWstKkTK/0bWOpbo1awSDl0KFjfGMuvZXK9BAg
-	 irRceKu4O4nyvBmu2YF7F+Dt+IUJ4thcbJNEM6HYuD+EPPVCFNTcI5bqHZ4bdJvVCV/X1
-	 /0gvPcyVSowPUzpQY7D2WhgaYJiz2bqG108wMKr5o6OIgvcFaNTIr/GKwpYVdT8P/LTeh
-	 Zm6+zk6roer/i9f9yKWrokaq2Z3JROZPsXfmAVciUAAcArG8m0JX53phuox/RlEQ4Ag==
+	t=1795110523;
+	b=qydGtZxgvFz0giW8L6BQbONmMeSfdCStHe1m0emrRUwvDXVBNXMR01i6VZEQif/NYF+T
+	 +Zit8xxCoirSo1dGF/iLnnzmDPG2B6NqDY3Z2NkZxJSmG8Xr+jwCvarLpa/FdJyvHfD1y
+	 OqBtz6VWFuynS2VXHG4DJuosu4ShxOeUq6iqGvpt15zLRCXhg2lf9H52tmXk/cP+7zgnx
+	 /Il8vIcatyC5iKXwlHhtb5USdf01gQhUYIoKTLKd3G0SmCwkL2Vy6WKhZvmdDI5qb2x8c
+	 /u6eV9rdZA3QnZRIF0US7i7WzySqrPAiuz7FgOzznleZFZuI4tsAw4OJC79oIz9HrHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795109616;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795110523;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=FQEYvXYCrnNqpXxxeEv8N7s0AfvFkJKd0UqdTB4BpoM=;
-	b=aWuJW7IT4Cz61uskfMCKYxbzKvhlMVq+CVZrcIqzsSFgb25VrmMpACJQJr8nSLBLLJEc
-	 kmU6T6l7kuIi1o+o3SPf3qs/V/a3GrlTziuyDah3S3KPlSwuxWpIypWSi07UuSmRJH9w3
-	 bXFZLgSGK7t/LRHCp+fB2EqQRfOHY0GOsgmCgR1dh5L5lVVH/odlNIebbyMg/nCGuzwIf
-	 O2skP5s9XTO7/6i+ospkBA2M2z1Pa13A8JEGB2A2lBj9b3CZ1/IevtMWVwe17gCVjvzDa
-	 iENfhrshYE9oypwzxi7M1pOpt4PS580LJw1X3fTfQIIa7wXkD8gT6YKZ4FHWk7M6pdA==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=mTxbOHr7AuVU7MS57iaWFEGoE2fOJkqRnUbiP/k9wz4=;
+	b=QyNgJoa8MSOyhXN0P3KU9boX1KKV0AKNtGumr4o4PwvgQ3WDAoYn0egGvOH6fMolg/pt
+	 howNh5ckojQoAHnjisssJ6mRSGfMomutt+FwDpkdVdP/zHW3FwfEFc/99sLdHGmAkWXyQ
+	 GLDixeNRbALd1U+x+1Xx0zxkVEbHzz8HpiBdjJf2JD29g70PtTPGq6avwMA3DP76dz6Ma
+	 Gi5w2JeqcQ0DQzQqi20xb0WKIo1cruqRCbKkUW8lNAFSa4mMKcRXgb8svz9LElAt9fUQa
+	 8+vXsYyvg0zaiEIB0yMX4lH9ivTTF0JqpEBJXQNNF/YiG8pqzMJ4EZjiynz9FOMLJuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=T0mBzL22;
-	arc=none smtp.remote-ip=209.85.215.178
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=az1TFB1o;
+	arc=none smtp.remote-ip=209.85.221.47
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29CC1606A320
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 17:33:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 29CC1606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68340606A324
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 17:48:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 68340606A324
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=T0mBzL22
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-cdb628232d2so19450a12.0
-        for <git@vger.kernel.org>; Thu, 19 Nov 2026 09:33:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=az1TFB1o
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-491846221ffso2097606f8f.3
+        for <git@vger.kernel.org>; Thu, 19 Nov 2026 09:48:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795109615; x=1795714415; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=FQEYvXYCrnNqpXxxeEv8N7s0AfvFkJKd0UqdTB4BpoM=;
-        b=T0mBzL22hiZrpm4h0//FoElmM3C6pVCxTIwmPSIWgetD9KQkf7pNdLebs5NW1O4FnD
-         P+iMSyviOpk8i6qRoFpejdfLyhK5Wt5V6QTYwbMAAEi/nd/7uz1feMjKF+ohO33N8TLt
-         hunSGV2J0LT09KWR0hblAH41RtTFqmykLUzGEFL6MKvvH/56BnfE5MlvJmqNNxeyzydD
-         6cQAq1hUiP1TGawGZZEXx68886SsXzr36QEQJWvHAF6sPdR2suPej8OZJh/lehBtu5yU
-         A9JUek20O/4yAzk1eXPTh2gFb4UwexTDeaPK8qPM9BezmO2xyMbK4yVLRqYvP5NT01j0
-         Qxeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795109615; x=1795714415;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20260707; t=1795110522; x=1795715322; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=FQEYvXYCrnNqpXxxeEv8N7s0AfvFkJKd0UqdTB4BpoM=;
-        b=P4j/IWnx8EduSVjvUFmGEwPpSD/wOoMpB7JIZNIcMcXJfuzV7rqIKuL3VAjq7YZ7X8
-         TkOHoxCychwoYyY/P5Dfc3mtiXQ5CrWss0/nwQEWUvsKQiqkAgv0ktaVoKyw66z0Vywm
-         Z9OMula1iOTHQTJXfRWpZGE0Vb2lD7UW5R5wG8JGwSo6yFR0RcGN0+Rhgg8ZQAjRlY6t
-         ifT3Gf5ujlLPqKCjRQKvbVDuofZLsa8xfq68gMNyIvaBXqKALInJBJ0mhXJZTaPMkbUE
-         v3NlGTYnu8U8oR00v8vajF1b7XkM6zpLVostHQ9iQcI9lDqFWMyLuGhtntzD2M/TddFh
-         lBRQ==
-X-Gm-Message-State: APuU4Z86Se/GEV2jMY7PDjM4g1ec+xO9NeTBCwFhh+B+sjKapOhTLXUW
-	K/PbICUbmMjn9jis364DVR3XsyflcSMrOrqos2RtHDa+rlwmfItAOaWnI7MVsg==
-X-Gm-Gg: AZFdTZeTbv82D6x8t//iY+T+10+yfVukiiD49BRze21y3v3YiXypfdEOOULkcKUrNR9
-	B8KtR0gU29X85Mvcwmla+U9mLvGzJvAxGh9u/pqqpse5o+ukkvHcDW43kfMtjPIzw/Gw0bd2FjK
-	jxuM2BWQRYKvjir6xgAQpLRsZd9rbptTPuD+M/9qD2XnOPQKcyQz52QqzqiMIpFws0qTG+y340Q
-	Xg65e/1cTmHnVbQcGLc8C6cc64HXfTZA7nwwaf2rxCRZek27D3pGOjJe/Qc/Mj6Xr0ROszEUT3n
-	Q+OrXVlDjU9L28cstkOqnSoJUDboaIC8yOAjtB0tIeSiw/68kxHCezezMBMZltHkYRgxXRQWde6
-	Ka91JwmUzRhTF0hZItI951j3bKoLTmf+z87Hznmw2tRPa52gYg07GpnPisHIPCps5V8Q87M+swt
-	haC+8idwJS543LtjAwcmXtqoH7fORwwCniHL+Wt9bB7E0BVPlu0KcFOtw/aeqVxhzKntlJBMk/Z
-	gCUMPTd6KD9zktcSOk6Uq25kE4ZYL5WPtiGUabOtB2EwPAyeMzHlbWM1OyDKDuT4UepDDuh2tyM
-	H9ILcgt+P1Ft5uxugZ+01Cf9WarVyzMfJtaVpJ5K7K5idGOsOeVng0hmjswW1A==
-X-Received: by 2002:a17:90b:3e81:b0:3ad:6090:a190 with SMTP id 98e67ed59e1d1-3b41c9559f5mr56549a91.41.1795109615338;
-        Thu, 19 Nov 2026 09:33:35 -0800 (PST)
-Received: from [192.168.0.11] ([106.51.27.147])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b40a878d50sm2716658a91.11.2026.11.19.09.33.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Nov 2026 09:33:35 -0800 (PST)
-Message-ID: <2bcce580-f5ed-47e9-bd3e-1e238eb90d5c@gmail.com>
-Date: Thu, 19 Nov 2026 23:03:32 +0530
+        bh=mTxbOHr7AuVU7MS57iaWFEGoE2fOJkqRnUbiP/k9wz4=;
+        b=az1TFB1ogD3vG0wIJTDLZI2qvunAE7Tsiu78++nGTj93BTietqEIh7X2eMfSCo5hlj
+         aH3fVCLZp5Z4BHl5HxSgIQaAFTgJC6WbBvp5aIE+l2mxP3s/LQagMZm/MB6YzHiZ3kl6
+         CbL25Bd1RXnGclwtyw3q+8AeITd6c41aVF6LEpD9gr1X6I3wun+ZwrwIlmNOTgmh2mBq
+         7tNByxR3G3fQuD9Q9bDxCHFuEfI/7Ip+/eqcndgTIzq0KukQo/Y6pp6SXrAHQu/MKe3A
+         VIlLDShxfLIYREKOMHM03t2NWOR/TuX2TUSzrv2HKkByEDNULyLwHHTeR/3PfnnLvc+q
+         14UA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795110522; x=1795715322;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=mTxbOHr7AuVU7MS57iaWFEGoE2fOJkqRnUbiP/k9wz4=;
+        b=osPQ7Zt8WvNwSEvakYVwErthc+g6aGF5fOwOtb60aqOQAqCuP0L+oVs03CwEiib5Y6
+         97FPSx4g2s5s+i6WgZzF96AeMdZFFqmDWeAWTmgbYnLcb2hitRqsieOYwONfzbiqYbnM
+         JX4lekTwwCER5Kw39wMbEd8GpCIvxM8+jtpjgl+WjdrGvqqkV7a6v7nD3m8U05UGMAoh
+         LPhJfTydIpWSkWO1pe4vpo1eDWMeicUixbHsdQeuwdJR3O0ujCLMWvIe7kdK2K4RYBXo
+         Vhaxzyuw02EQN/tXZjrOvarPYjpDZXbe4wTioC1cWiJyZL10RGFeQbJUKFv2OuuwZ1ke
+         sDEw==
+X-Gm-Message-State: APuU4Z9+8JASXBEFINuXeU9je5PqdrtJi8GYNBtNMaePrj0pjjctxdAl
+	ZMn5A5nLKxT/13gAiJ6e1nceTGzcpv3+/FAUTTqSoMnB9u5XU4t/1I9JpX/fGg==
+X-Gm-Gg: AZFdTZfP2Abp5QFUr87K8C7LJvDvQJXqDXgVcDp9q1JvuoTUwK8xFvDtvFdDaaJj8RG
+	HM9kQEGA7SpMxHHEHsuW30MuQzTkERczmzwqlMNh11AyK5cBoVQwvqcap7aJPSudAeH9OpeOxAk
+	8vrJbthjFaC8e+RYo9SyQIDZ1oQAGMewXXTmh9H+glKAFv85mv8xshJEpp+14c9dXOADn8Our8N
+	tmfjT8N3Nbcgyc8VsoY+KGlk6lJ0HIYpEUWKzgPB2PsCfUAlFzx9tAuyuIJoXpT/9+tjWdxE62d
+	K7Z2Rz68BK9zb4RBAgvRCf6abI987n8VBk5O5OuPQtWgkmkcVS+tO4cHMJBQDLck6J+us0hBvAx
+	oTSFfenO+tSIea/C7lejQK5aB6rJhBIotLw4nS8hezoe/WXXNUlCBeJIFwbJchAsMeYtjLVoUrb
+	+gh6zCAIVJFVaXSr8EIS6Be37emTqeuGK+Iata5tV1XMc3cjzo/AeSRrQ18sFar+GYLd8h3bwj+
+	KdEIzPik1GsvKIJ26/6BesW+jkb4A8waXya1U2/X2Y12HpLlpwJPHaiUN0WGycDXmen5vsDLQ0X
+	BwR2C2Vt6gtgNFq7IQll0LX5tATwdLNSKGntMcKAe96UJf4Kgty1ZYsri/xMm8A=
+X-Received: by 2002:a05:6000:46cf:b0:4a8:98fe:5f9a with SMTP id ffacd0b85a97d-4abb1d93a03mr135761f8f.18.1795110521598;
+        Thu, 19 Nov 2026 09:48:41 -0800 (PST)
+Received: from ubuntu26lts1.example.com ([151.31.213.44])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab6b8b7888sm849109f8f.42.2026.11.19.09.48.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Nov 2026 09:48:40 -0800 (PST)
+From: Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+Cc: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Matthew E. Luallen" <m@sph3r3.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] archive, apply: do not truncate files of 4GiB or more
+Date: Thu, 19 Nov 2026 18:48:38 +0100
+Message-ID: <20261119174838.829420-1-gitter.spiros@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <av7HMbnylHiz_MVz@pks.im>
+References: <cover.1793524457.git.gitter.spiros@gmail.com> <20261119065711.827536-1-gitter.spiros@gmail.com> <av7HMbnylHiz_MVz@pks.im>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -90,84 +99,11 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] test-lib: run EXPENSIVE tests one at a time
-To: Git mailing list <git@vger.kernel.org>
-Cc: Patrick Steinhardt <ps@pks.im>
-References: <20261119-ks-ci-long-test-hang-fix-v1-1-45c2fff6d9f0@gmail.com>
- <20261119-ks-ci-long-test-hang-fix-v2-1-37011c08380d@gmail.com>
-Content-Language: en-US
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <20261119-ks-ci-long-test-hang-fix-v2-1-37011c08380d@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 11/19/26 22:59, Kaartic Sivaraam wrote:
-> Changes in v2:
-> - Corrected commit messages as per Patrick's suggestions
-> - Tweaked the shell function comment to avoid mentioning 'prove --jobs'
-> - Made the owner and waiting variables local within acquire_expensive_lock_
-> 
-> Link to v1: https://patch.msgid.link/20261119-ks-ci-long-test-hang-fix-v1-1-45c2fff6d9f0@gmail.com
+On Thu, Nov 19, 2026 at 10:53:53AM +0100, Patrick Steinhardt wrote:
+> I'd prefer the latter. So how about you send a new, rebased version of
+> this series once it has landed?
 
-I thought b4 would've included it by itself. Anyways, here's the range-diff:
-
-1:  f0664ff4ee ! 1:  fbf773f39a test-lib: run EXPENSIVE tests one at a time
-     @@ Metadata
-       ## Commit message ##
-          test-lib: run EXPENSIVE tests one at a time
-
-     -    Recently, we've acquired quite a few expensive test in our 
-test suite.
-     +    Recently, we've acquired quite a few expensive tests in our 
-test suite.
-          For instance, these commits add several tests that require
-     -    multi-gigabytes:
-     +    multi-gigabytes of memory:
-
-            - 9048b48fb (t1600-index: add expensive tests for over-long
-              tree paths, 2026-10-16) added tests to t1600
-     @@ t/test-lib.sh: fail_117 () {
-       	return 117
-       }
-
-     -+# EXPENSIVE tests can need many gigabytes of memory or disk, so 
-two of
-     -+# them running at the same time under "prove --jobs" can exhaust the
-     -+# machine. Allow only one at a time across all test scripts that 
-share
-     ++# EXPENSIVE tests may need many gigabytes of memory or disk, so 
-two of
-     ++# them running at the same time can exhaust the machine.
-     ++#
-     ++# Allow only one at a time across all test scripts that share
-      +# this TEST_OUTPUT_DIRECTORY.
-      +expensive_lock_="$TEST_RESULTS_DIR/expensive.lock"
-      +have_expensive_lock_=
-      +
-      +acquire_expensive_lock_ () {
-     ++	local owner waited=
-      +	mkdir -p "$TEST_RESULTS_DIR" || return 1
-      +	while ! mkdir "$expensive_lock_" 2>/dev/null
-      +	do
-     @@ t/test-lib.sh: fail_117 () {
-      +			rm -rf "$expensive_lock_"
-      +			continue
-      +		fi
-     -+		if test -z "$expensive_lock_waited_"
-     ++		if test -z "$waited"
-      +		then
-      +			say >&3 "waiting for another EXPENSIVE test to finish"
-     -+			expensive_lock_waited_=t
-     ++			waited=t
-      +		fi
-      +		sleep 1
-      +	done
-     -+	expensive_lock_waited_=
-      +	echo $$ >"$expensive_lock_/pid"
-      +	have_expensive_lock_=t
-      +}
-
--- 
-Sivaraam
-
+OK, I'll resend the series when needed. Thanks,
+Elia
