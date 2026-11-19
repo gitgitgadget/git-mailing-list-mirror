@@ -1,72 +1,72 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.70
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795116185;
-	b=Jp9cDbm9ewqigi2JIUKcpgFnNRQgeXANmJ2UupG9HF4xAxveBrN+BLBhZxrEEwvOP45h
-	 sxxHvVePbqOdWxqcIhOU5zSGeAsL2/wGBxDXMFw3ztLRqHIfRgFfDZ8tsV1cGQG2tV8B0
-	 ayoRLtvTsWvHLiZfS2pwHzfKcQ7M5nqeB/0oQ7zFe/MmjC0lOyOmmoL68O78brkMaYadF
-	 v2ckXccQ0q2dftEXGoHL5/Fa6I37SFClx0/Qy5pFL7/iWqozFtRMdWtqt4ZWyN0IOk/MB
-	 DXjy5czkJ7SoTLQPF6gWg6gEiF8ZOH5F0Y/yw9cGYvMz1PNh+Stmmu7TIoqA9ECHnxw==
+	t=1795116190;
+	b=tevvZ4Ki+h+Bpt40vP/LbIhQ1QVMPXrMs9E/BynFDtth9riOukNghSDPVOpiykw8i/gw
+	 k9apSf4+3pMvAf3MLXTwPqlHeKPp1PcDTsVfLuCkeV4MBXqPdoBoAQZkul4pwCOUjpqjf
+	 T/m8xOrnFMCkp2g9TkC+4wizNIy5gqonTW/CFH8fvOqXwO5O0tCcifY6XJzJOvDGvXi0L
+	 M1P3ySLIL7epYwoKv7Mh8fb/lGHkLqud1XHLLlHabtqtoHibRlKo+SnGGuHNqCR+vjAUg
+	 mYFRPxsEXCvf9utICkMxGeczqX81yUe+X4+6B/I72+tz2+Tt3dlmkbkRJVhWXV5WrOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795116185;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795116190;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Received:Date:Mime-Version:X-Mailer:Message-ID:
 	 Subject:From:To:Cc:Content-Type;
-	bh=iTfr4+i5OneiGGLMo+O7xfdZ15OGfSVPrHzTzCcOMVs=;
-	b=s6aROtVdjCCTys83fdgdnZSt2cJCFCqbNgQINwCjLGFOhLr2MDMq24lPMR1D1EzWJtO3
-	 BU4hCJHCfCJdbCD88kmPHHCiaKx3j2o6kiznpT4XaOF72xshrGAJ3xu4ZGr62FgbqOiQX
-	 U3mZJRMsdNnsYDBhnWahLSrrRLlOSVLX/GeO90wp+SeoKVa86ECyMvHF3ecMcGVPSFz+I
-	 TQ4pSoge7+HhNhaZNoVubbwqbnqQ7ECF33kbcCS7wkfj1uSzd48pIKt4o4+UkODIOgcgz
-	 y3oAN1sGIpayZEDM/4g+kxcYTwfosAEITPMAhIOpolpFq2fb6XuqEmgDtYJJ+mGDuiQ==
+	bh=bl6b335osx2VBSN1AlnDLapOZX2b75tgBaDszQ9n0hg=;
+	b=cH/k2KKDgakUIjDxNq2Nw2/ODcjmNoO4p9NoMWwezAwcb2qGQeWhmakssmQqSKGxf5w/
+	 xYeCOo0aTgVtYOdpgtL0uir0Kvk8UoA6NM2mahhG9SH78sVbaKLDL3K0mS/ZIiF1KnmFU
+	 T9g+MQeKen21CIHMSasM31AvT0jMqXpXrcB75xGxvNS4HVvi53lxx2QRJDN4yDwbDuYAR
+	 //5N56Z8S3ZeuGyOTWZwrcJx4gm+vKG+nwXLv9EhMBKV4etnOc9kgNFswvHUmNIo3W3FJ
+	 uvVWKmW846xLX1UsTE4jq1VHz8Y1U+70N8bzDgC9kpBfc4SDNx3DxfWID0RtuOV0I7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=google.com;
 	spf=pass smtp.mailfrom=flex--dmnk.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=R3B66Exl;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=gOlsLzKF;
 	arc=none smtp.remote-ip=209.85.128.70
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com [209.85.128.70])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B8B606A320
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 19:23:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 95B8B606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3767C606A32A
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 19:23:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3767C606A32A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--dmnk.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=R3B66Exl
-Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-4b9fde3044dso341245e9.0
-        for <git@vger.kernel.org>; Thu, 19 Nov 2026 11:23:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=gOlsLzKF
+Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-4a009f82bedso337835e9.0
+        for <git@vger.kernel.org>; Thu, 19 Nov 2026 11:23:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795116184; x=1795720984; darn=vger.kernel.org;
+        d=google.com; s=20260707; t=1795116189; x=1795720989; darn=vger.kernel.org;
         h=content-type:cc:to:from:subject:message-id:mime-version:date:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=iTfr4+i5OneiGGLMo+O7xfdZ15OGfSVPrHzTzCcOMVs=;
-        b=R3B66Exl0LI7tf56Nk2M7rdZ6QYjEBsV/k41YnLE4llCzI6Ilx927T0KcV2rmfdP2N
-         wZwnQcNgV0/DlJo7XcesVveCiTzQDG83BOK1C2jyNMhP5GgxRA0qCSKSl+W868JiOGMD
-         CfhBXG4h6TDaAzXP1wmPR0RTZ85iVzA3Uo9nBpwv1/t8+Lw7PZUuxoYIrlDNFD71jdBL
-         UvH0x7jmKdeaRPpFT46hTZpv+wZt9XRHhZKU5dvj9d55kEbWBn+jG99Yo5yar3w6ekIt
-         2KdFtSvmo6AiAJZ21Vz8xJK3i/ikr30XYU/HwIUgVOjZgzM++v5MLeEBqXYG6idBMNfB
-         KJVg==
+        bh=bl6b335osx2VBSN1AlnDLapOZX2b75tgBaDszQ9n0hg=;
+        b=gOlsLzKF/SkyuJaxWQpifoAmBItI/9yhkczr9x7t5xDzN3Ym9oq2jVdWxQBOVeZBOm
+         Rr4FbPf9PcJfHdhsqeNL+hRJF9dM3Bwu+BDNlqz2NRarE0cjBmEd1BsKQCzZZkHIMiT4
+         As26s4JLDni4ayBWI8BZ4tPBORlW89rN6dEzmzG7m02Ie8i07B7GTSrVffhL3cQL6oGL
+         xo7xcVtCwshYDisjVe7EL8XqzQ2dFlGm5I9JN5i1eZhgQQ+Ffi6MMYsQcpxEgRWaJNbW
+         3TYTo1qSyH7sUx7JT7Yihh6fPmTDgL5lUXF79NR55GWioXe8kOEretRMGbNxzbigHMy8
+         U7kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795116184; x=1795720984;
+        d=1e100.net; s=20260707; t=1795116189; x=1795720989;
         h=content-type:cc:to:from:subject:message-id:mime-version:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=iTfr4+i5OneiGGLMo+O7xfdZ15OGfSVPrHzTzCcOMVs=;
-        b=Gl9UEFkJ7XGMpEXikTRDmivFKTvIt4TPJrXjIKc2ZsIhxhxaG3NrdTf/b6vLYQp3D0
-         I0mO9EHcJrMsjjybU4HbOXCdllcLsRcdLX9IN+9PcW8fCnGdHfdtmCmWMU9+p6lCkIUm
-         HDIxd2L4jEqCq6tHdnU9MKxWSidUdOvpzbF4R0WCshmlzl9Tu/6kXYovjBjeF7f+YUuu
-         cDbtb3WsqnOc72T7eQH313sJKAjDnCgUzcLEr+LWKRDnl+tzX2Nao/UpT8S8dM5bzP5R
-         thX1wlOmwyEYdYG70F9BHyesH7Sud0JyxG3hx2CmggpsKYocm2sVk/Tx8ZLwox8QYzFV
-         VmHQ==
-X-Gm-Message-State: APuU4Z/peYrcynfoHnzeiZVObIeA9M2JctgMO5zjq8+WLxfJK9ZW5cm7
-	brEaa3SbIfl13WRC16tgcu79lbtSk8Oin0UHzGODvc0KX63dNfdnx3sE8pYydOEM5WhB5AUydIT
-	eKrqJOI0NaK7nonbwIJSYW0VR/cIRheVfZ0IM4Tv1jxVwJV41flcCiVAOGv3Kdx/SWfUOo4YeqA
-	vAXyhFEbamWOPRo89pH7nzGA==
-X-Received: from wrmz5.prod.google.com ([2002:adf:e545:0:b0:49a:19b9:9a09])
- (user=dmnk job=prod-delivery.src-stubby-dispatcher) by 2002:a05:600c:4f4e:b0:4bb:6c71:b268
- with SMTP id 5b1f17b1804b1-4bb8882672fmr13225445e9.6.1795116183739; Thu, 19
- Nov 2026 11:23:03 -0800 (PST)
-Date: Thu, 19 Nov 2026 20:23:02 +0100
+        bh=bl6b335osx2VBSN1AlnDLapOZX2b75tgBaDszQ9n0hg=;
+        b=jtG6/d2L4W5xe0wUbxKKJTQmTOkVSAySqYfpZMgk9D+i5y/M5dSteT3q2nrGkeamM6
+         1QWkpYrjSMY06Od3WYRxvSdD7SyE10dYIfPQw4RMZZqTnDOuvg4kVVoo07hqtPk+3nkx
+         IBz6SrySd0purUlDMpoUa8PhO/Bf7e0U54PzLAl3+mudoMiaj4pfR0VyWZMNlWxQNka6
+         NK6svpKs3BfWUsZ78iPgIKSjPdyOPDLLwtioh2MX1eP7zWKykRYEEuwLVZ8bwrS8K+e6
+         WGY/owEMvD8xr3nnF7+wF9ZnHnf1/bdff5LPjkzPRDH1sPlmXyNr0wHMyNV4gHayAe/+
+         z/3w==
+X-Gm-Message-State: APuU4Z9cABUvsfaf3ep0TugvIYRBLwckpR5pGHWRKeV75Hkt0Ie4H8wX
+	qw4eItLsPHey0sG8AVvGSo0EpzhtMGLKDdoqLVfWLFPLeanpcS/a8075Cd3Szo4+NTx2iVRsJVT
+	R5ApnKOuxwupLsAQeJ99t9xNIXlSevg6cSxNr4RtGm6PE1zkCeJvG7Zl2pXkuQnx/vXO6H6KYJr
+	G4jSOoQuw/oHwn2haI1BH41Q==
+X-Received: from wmdn7.prod.google.com ([2002:a05:600c:2947:b0:4a2:8ef:a5af])
+ (user=dmnk job=prod-delivery.src-stubby-dispatcher) by 2002:a05:600c:4ecd:b0:4a3:12fb:1ef1
+ with SMTP id 5b1f17b1804b1-4bb8881e81cmr11388395e9.29.1795116188411; Thu, 19
+ Nov 2026 11:23:08 -0800 (PST)
+Date: Thu, 19 Nov 2026 20:23:07 +0100
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -77,94 +77,214 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.56.1.809.ga0b61035b5-goog
-Message-ID: <20261119192302.2681052-1-dmnk@google.com>
-Subject: [PATCH] attr: do not traverse leading directory symlinks
+Message-ID: <20261119192307.2683812-1-dmnk@google.com>
+Subject: [PATCH] config: skip continued lines when matching section
 From: Dominik Maier <dmnk@google.com>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>, 
-	Elijah Newren <newren@gmail.com>, dmnk+artist@google.com, Dominik Maier <dmnk@google.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, dmnk+artist@google.com, 
+	Dominik Maier <dmnk@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-Commit 2ef579e261 (attr: do not respect symlinks for in-tree
-.gitattributes, 2021-02-16) taught read_attr_from_file() to open in-tree
-.gitattributes files with open_nofollow() so worktree lookups match
-index lookups and do not follow symlinks outside the repository.
+repo_config_copy_or_rename_section_in_file() scans the config file line
+by line and treats any line whose first non-whitespace character is '['
+as the start of a new section, without tracking backslash-continued
+values across lines.
 
-open_nofollow() only checks O_NOFOLLOW on the final ".gitattributes"
-component. When an explicit path such as "symdir/file" is passed to
-"git check-attr" and "symdir" is a directory symlink,
-prepare_attr_stack() still traverses "symdir" to read
-"symdir/.gitattributes", and builtin_object_mode_attr() calls
-lstat("symdir/file") across the link.
+When a value in the target section spans multiple lines via a trailing
+backslash and a continuation line begins with '[other]', removing or
+renaming the section stops early at '[other]' and leaves the remainder
+of the continued value behind as an unquoted '[other]' section.
 
-Check has_symlink_leading_path() before opening READ_ATTR_NOFOLLOW
-files in read_attr_from_file() and before stating paths in
-builtin_object_mode_attr().
+Track backslash value continuations (including quoted subsections and
+quote state across continued lines so '#' or ';' inside quotes are not
+mistaken for comments) and only treat '[' as a section header at the
+start of a logical line.
 
 Signed-off-by: Dominik Maier <dmnk@google.com>
 ---
- attr.c                | 10 ++++++++--
- t/t0003-attributes.sh | 10 ++++++++++
- 2 files changed, 18 insertions(+), 2 deletions(-)
+ config.c          | 101 ++++++++++++++++++++++++++++++++++++++++++++--
+ t/t1300-config.sh |  33 +++++++++++++++
+ 2 files changed, 131 insertions(+), 3 deletions(-)
 
-diff --git a/attr.c b/attr.c
-index 0e63f1b6de..50e25a3ee6 100644
---- a/attr.c
-+++ b/attr.c
-@@ -24,6 +24,7 @@
- #include "revision.h"
- #include "odb.h"
- #include "setup.h"
-+#include "symlinks.h"
- #include "thread-utils.h"
- #include "tree-walk.h"
- #include "object-name.h"
-@@ -699,10 +700,13 @@ static struct attr_stack *read_attr_from_file(const char *path, unsigned flags)
- 	int lineno = 0;
- 	struct stat st;
+diff --git a/config.c b/config.c
+index 215dacb6b3..f5fcbd9b84 100644
+--- a/config.c
++++ b/config.c
+@@ -3427,6 +3427,97 @@ static int section_name_is_ok(const char *name)
  
--	if (flags & READ_ATTR_NOFOLLOW)
-+	if (flags & READ_ATTR_NOFOLLOW) {
-+		if (has_symlink_leading_path(path, strlen(path)))
+ #define GIT_CONFIG_MAX_LINE_LEN (512 * 1024)
+ 
++static const char *skip_section_header(const char *line)
++{
++	const char *p = line;
++
++	if (*p != '[')
++		return line;
++	for (p++; *p && *p != '\r' && *p != '\n'; p++) {
++		if (*p == ']')
++			return p + 1;
++		if (*p == ' ' || *p == '\t') {
++			while (*p == ' ' || *p == '\t')
++				p++;
++			if (*p != '"')
++				return NULL;
++			for (p++; *p && *p != '\r' && *p != '\n'; p++) {
++				if (*p == '\\') {
++					p++;
++					if (!*p || *p == '\r' || *p == '\n')
++						return NULL;
++					continue;
++				}
++				if (*p == '"') {
++					for (p++; *p == ' ' || *p == '\t'; p++)
++						; /* skip trailing space before ']' */
++					return (*p == ']') ? p + 1 : NULL;
++				}
++			}
 +			return NULL;
- 		fd = open_nofollow(path, O_RDONLY);
--	else
-+	} else {
- 		fd = open(path, O_RDONLY);
++		}
 +	}
++	return NULL;
++}
++
++static void update_line_continuation(const char *p, int *continued,
++				     int *in_quote)
++{
++	int in_value = *continued;
++
++	if (!in_value) {
++		while (isspace(*p))
++			p++;
++		if (*p == '[') {
++			p = skip_section_header(p);
++			if (!p) {
++				*continued = 0;
++				*in_quote = 0;
++				return;
++			}
++		}
++		for (; *p && *p != '\r' && *p != '\n'; p++) {
++			if (*p == '#' || *p == ';') {
++				*continued = 0;
++				*in_quote = 0;
++				return;
++			}
++			if (*p == '=') {
++				p++;
++				in_value = 1;
++				break;
++			}
++		}
++		if (!in_value) {
++			*continued = 0;
++			*in_quote = 0;
++			return;
++		}
++	}
++
++	for (; *p && *p != '\r' && *p != '\n'; p++) {
++		if (!*in_quote && (*p == '#' || *p == ';')) {
++			*continued = 0;
++			return;
++		}
++		if (*p == '"') {
++			*in_quote = !*in_quote;
++			continue;
++		}
++		if (*p == '\\') {
++			if (!p[1] || p[1] == '\n' ||
++			    (p[1] == '\r' && (!p[2] || p[2] == '\n'))) {
++				*continued = 1;
++				return;
++			}
++			p++;
++		}
++	}
++
++	*continued = 0;
++	*in_quote = 0;
++}
++
+ /* if new_name == NULL, the section is removed instead */
+ static int repo_config_copy_or_rename_section_in_file(
+ 	struct repository *r,
+@@ -3434,7 +3525,7 @@ static int repo_config_copy_or_rename_section_in_file(
+ 	const char *old_name,
+ 	const char *new_name, int copy)
+ {
+-	int ret = 0, remove = 0;
++	int ret = 0, remove = 0, continued = 0, in_quote = 0;
+ 	char *filename_buf = NULL;
+ 	struct lock_file lock = LOCK_INIT;
+ 	int out_fd;
+@@ -3496,9 +3587,12 @@ static int repo_config_copy_or_rename_section_in_file(
+ 			goto out;
+ 		}
  
- 	if (fd < 0) {
- 		warn_on_fopen_errors(path);
-@@ -1274,6 +1278,8 @@ static const char *builtin_object_mode_attr(struct index_state *istate, const ch
- 	if (direction == GIT_ATTR_CHECKIN) {
- 		struct object_id oid;
- 		struct stat st;
-+		if (has_symlink_leading_path(path, strlen(path)))
-+			return ATTR__UNSET;
- 		if (lstat(path, &st))
- 			die_errno(_("unable to stat '%s'"), path);
- 		mode = canon_mode(st.st_mode);
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index 582e207aa1..c252e7ed55 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -533,6 +533,16 @@ test_expect_success SYMLINKS 'symlinks not respected in-tree' '
- 	test_grep "unable to access.*gitattributes" err
++		int was_continued = continued;
++
+ 		for (i = 0; buf.buf[i] && isspace(buf.buf[i]); i++)
+ 			; /* do nothing */
+-		if (buf.buf[i] == '[') {
++		update_line_continuation(buf.buf, &continued, &in_quote);
++		if (!was_continued && buf.buf[i] == '[') {
+ 			/* it's a section */
+ 			size_t offset;
+ 			is_section = 1;
+@@ -3550,8 +3644,9 @@ static int repo_config_copy_or_rename_section_in_file(
+ 					strbuf_release(&copystr);
+ 					copystr = store_create_section(new_name, &store);
+ 				}
++			} else {
++				remove = 0;
+ 			}
+-			remove = 0;
+ 		}
+ 		if (remove)
+ 			continue;
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index 876d376cc7..3b323f95f8 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -3049,4 +3049,37 @@ test_expect_success POSIXPERM 'refuse to "overwrite" a read-only file' '
+ 	)
  '
  
-+test_expect_success SYMLINKS 'leading directory symlinks not traversed in-tree' '
-+	test_when_finished "rm -rf ext_dir symdir" &&
-+	mkdir ext_dir &&
-+	echo "* test" >ext_dir/.gitattributes &&
-+	>ext_dir/file &&
-+	ln -s ext_dir symdir &&
-+	attr_check_basic symdir/file unspecified &&
-+	attr_check_object_mode symdir/file unspecified
++test_expect_success 'remove-section and rename-section ignore bracketed continuation lines' '
++	test_when_finished "rm -f multiline.cfg rename.cfg subbracket.cfg" &&
++	cat >multiline.cfg <<-\EOF &&
++	[old]
++		key = "first \
++	[smuggled] \
++	# quoted hash \
++		evil = yes"
++	[keep]
++		ok = true
++	EOF
++	cp multiline.cfg rename.cfg &&
++
++	git config --file=multiline.cfg --remove-section old &&
++	test_must_fail git config --file=multiline.cfg --get smuggled.evil &&
++	test "$(git config --file=multiline.cfg --get keep.ok)" = true &&
++
++	git config --file=rename.cfg --rename-section old renamed &&
++	test_must_fail git config --file=rename.cfg --get smuggled.evil &&
++	git config --file=rename.cfg --get renamed.key >actual &&
++	grep "\[smuggled\]" actual &&
++	test "$(git config --file=rename.cfg --get keep.ok)" = true &&
++
++	cat >subbracket.cfg <<-\EOF &&
++	[keep "a] = \""] k = v ; \
++	[old]
++		secret = should_be_removed
++	EOF
++	git config --file=subbracket.cfg --remove-section old &&
++	test_must_fail git config --file=subbracket.cfg --get old.secret &&
++	test "$(git config --file=subbracket.cfg --get "keep.a] = \".k")" = v
 +'
 +
- test_expect_success 'large attributes line ignored in tree' '
- 	test_when_finished "rm .gitattributes" &&
- 	printf "path %02043d" 1 >.gitattributes &&
+ test_done
 -- 
 2.56.1.750.gf70dc682cf-goog
 
