@@ -1,72 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.71
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.70
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795116200;
-	b=ekphK4gL6+pc80a066eiPoaJPt/lT75h7pGx1Q5xNkv6xBKMKlrFIi6842Wlae7P9Xos
-	 2vHVPhe+GgmhiKeeUpSz99xSUOSU/UDTBiK/FiUVTwc8cNHakg1yjLVSczhgi/X0mq+40
-	 VyDtwJ4v8VVvalUWa/C9U2gDm6+NP1nfogv9feFzn31UfEINKTXf87yxrVyIVa4TQ6lRV
-	 VfoE7FT8Ael8wPoPWPmArnz+Vb/UMp9026/PkS1cBgF7ehatROAcN89UuRdT8hL08UQlP
-	 jKG4RRVMooIHK6XoKdShvg91nTt8BGmRmD13aShXX7wXDO9m1DdUK+/EKQSPtqPr/Dw==
+	t=1795116204;
+	b=4KcsYQ4wRTStffV4fOQ1LYYWhyBYZ7ZDJYPKVkSb6l54FoNd1kJxvBochzTf1USlvmLW
+	 4BpA6WJBVyvTIeMK8jfLEil58ZhkU2DqK99Hy95ZEFLWy9Is8MDRgxTP7OMuo6WSB7KDz
+	 b+YAtaPqs4cpeSpJHLd0kRqYW8Zv2MNDt9UQLVfhq4AEZRUYfkWyc50jHjSSMyBjQCTuw
+	 8sZKl26QacoWu0ZotFi1iqcnkVFtU3eRhthNDfMAH/k1q+ef59GnEe2D1XP6ea4jdRgtF
+	 /h98MDj0M6QDzBtY5c2fBstvD7Qo2lfcLE0kYWC+DKw4xBwS6RvcRoj2WJqD0CQw7jQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795116200;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795116204;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Received:Date:Mime-Version:X-Mailer:Message-ID:
 	 Subject:From:To:Cc:Content-Type;
-	bh=Ao2xJHBC/1U+S0ToTgL9ZqkzBGZpJYHrnznFLLa1mqQ=;
-	b=e3T7l/VqFk8o7Gx29ZQs7+FKiSNuEtMcFmRBubXiH6I0JNfvKrp/YegTo2RRr5bXn2DQ
-	 a9KgXL/Z9cDeMzu0ZOqRiRF+6iLE0cH4ncyh7TIUDzR+TviRMQVdQDTOLJPCpwjrMxyA0
-	 f0th2TLeP2Z8OpjCsRVROjfBa/rEw3gOIL1s12q2dEaZQihJfzKcP0I3gm08WnZWltPsF
-	 14fWSweV8ra2ILZ7KClXPgFrFPXctFaFO0eJorV3P2KUVctn131KJprpJMnCj0jhoDBkS
-	 IZKZSYmqYvGu4UX9l1BFb9rI7OGne2EMIditYb5MUt8JJm2p8fNnGSe/UIOsyFlV8qg==
+	bh=jb3MRrNIoVPjKz0sLOrz21qw+fSdqafQ0wY5bj2arH4=;
+	b=vDpykQRz9tPHSwzkZPO6qTfhKfYaqCZVj4zxMb1JEegpWSWVhWCBoCu1lR2JFjMpqnjo
+	 WkbpS6VJHwQ5CSdsdf8WwHEXjv4VQvyLVGKMNNmk0IMJCV+qIw5djR2oe4GkhlkQBfM1f
+	 HsItLaHLj/yXP7qLccYSVEIyKAEd2Ts48xnYFWiHZX1UbRy08fyFbkRkNpdRLmBC7Ecgf
+	 /9xVZcNHT5JAIzKerYEen6uWdYNjmyxW+nHJoEvd31uwjmokMGPnf/tSf58PVmRjlykJH
+	 WztQQPW/GgZ220iNk3/MOOTryPl0MlQnHFveU1Azo7ZSoqwd58nqzaJ2Z/C797rc98g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=google.com;
 	spf=pass smtp.mailfrom=flex--dmnk.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b="BFrWlKq/";
-	arc=none smtp.remote-ip=209.85.218.71
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com [209.85.218.71])
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=XMAsPwrZ;
+	arc=none smtp.remote-ip=209.85.208.70
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com [209.85.208.70])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96960606A330
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 19:23:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 96960606A330
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 842F7606A320
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 19:23:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 842F7606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--dmnk.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=BFrWlKq/
-Received: by mail-ej1-f71.google.com with SMTP id a640c23a62f3a-c50547b4992so7402166b.3
-        for <git@vger.kernel.org>; Thu, 19 Nov 2026 11:23:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=XMAsPwrZ
+Received: by mail-ed1-f70.google.com with SMTP id 4fb4d7f45d1cf-6b582b355eeso87986a12.3
+        for <git@vger.kernel.org>; Thu, 19 Nov 2026 11:23:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795116198; x=1795720998; darn=vger.kernel.org;
+        d=google.com; s=20260707; t=1795116203; x=1795721003; darn=vger.kernel.org;
         h=content-type:cc:to:from:subject:message-id:mime-version:date:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Ao2xJHBC/1U+S0ToTgL9ZqkzBGZpJYHrnznFLLa1mqQ=;
-        b=BFrWlKq/JQmFbHp/uRpgDIRILNVY1+YkWgR0xPi6mGCAEjfXCoGF97bNFosf0uaFSs
-         oA5dek4v0WerkLTxsNiBzSXLYchsvj9tpG9RQz+WTDzUpjbDxESo93jJ8RbMDXfZM+Mw
-         mWQj7beWvJS8QleNCxNoaPy+71lgNDj7TM10CNeSv0bKXutsegc4cBzclxUT1aS9TUkp
-         PGNSbAxvj3/oawNs3L+6vYZ+S2a4Kk3DrdxMKGFJ8v6tKmTOWI2aywKnnl1QtYeyEn/n
-         X4xmMjbTa64qduG8h3NlxhdEeWYzfaPHfhm981UluK7Nqamezd5acNRRdwhHf/4tTqAa
-         cG4A==
+        bh=jb3MRrNIoVPjKz0sLOrz21qw+fSdqafQ0wY5bj2arH4=;
+        b=XMAsPwrZICKQRrcN9XFkvffr5gRSLGH+TFMeL2gx2rvM7FhEalrST3pBJ6XL8gdje5
+         T0A1dvPHYrqHKlINKmIw6ZxUoLAQiUcxzue4JDY8srxHAhB6oo16Vump+llnbMNAsLN3
+         CbEq3DYpNRcnnOEiEaSV69jkY8zfZSibAMiq+t+6Ois+3q+E+XdeyKC+xkq6IUybhD4r
+         jGVyfcCpjKwRKFsTwMHiKCpNk4lRBd0fHmV+IUQDzLkn0X0v4WHwvR3Fa8W3fOQmi6WR
+         F3QOKE5GFgHXhy0q10r1REZzXiZlKleaWtzzuOxLED1GRgUAGbYYZRea/R1hU2nxTZby
+         Bvew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795116198; x=1795720998;
+        d=1e100.net; s=20260707; t=1795116203; x=1795721003;
         h=content-type:cc:to:from:subject:message-id:mime-version:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Ao2xJHBC/1U+S0ToTgL9ZqkzBGZpJYHrnznFLLa1mqQ=;
-        b=tqgokM8y9RbFWVHroEw53FjIL0yeD4ovWJpS/olVb5dfS/k6QLzUE+UAWeQqyJMcl9
-         7nX5DgG4WRnDnNzv2Eek7Pj1GRNMwzuwBHkh3BajY242EC9Sswo+y3CYX92l5v+9ALPN
-         PEIkoXfe5ZMiZcKH2ZtjNHxcNu9o7d7BzNFEUJFNGsfFVgexoJw4uY5o3ZOzv0EiWcZ3
-         tESDXwSs/2sbeIYXuVevcIVxVbexPJW3OLBmKtw2hijxl3nKF9lDBj+Gm2N1Xscixe99
-         +7ePuPW4d3YRHcC1KRcVnmluRmoiIyWfCaksUP47Z8gkO0pHcI7+3JsTTGjC4if2XY4L
-         +oaw==
-X-Gm-Message-State: APuU4Z/gZ2Sn9zLbmaun4eR/QWSAIfxPgrsPWOAg+cHEgcQ7En0v2SLp
-	BmqzublhE5VochjW7w5jAEYq56HsEyzxKoS+hBQr2WG9NcAi508DvseziLA4Gl7UavqcT7PyHRo
-	n7SABxMcTJ7wAAWX+OXCfnGoV/glDEXvfsojLLt0fbLGzRdNtuskWukJwjIuQWHXB8ru9+CUme3
-	Jvp+q/2YUxcCJBepjSmqgoKQ==
-X-Received: from ejbdx3.prod.google.com ([2002:a17:906:a843:b0:c4d:2eea:d325])
- (user=dmnk job=prod-delivery.src-stubby-dispatcher) by 2002:a17:907:a890:b0:c40:5ee3:8698
- with SMTP id a640c23a62f3a-c513ab0efcbmr106717166b.31.1795116197705; Thu, 19
- Nov 2026 11:23:17 -0800 (PST)
-Date: Thu, 19 Nov 2026 20:23:16 +0100
+        bh=jb3MRrNIoVPjKz0sLOrz21qw+fSdqafQ0wY5bj2arH4=;
+        b=drY0itXJCtNyVs+cC5CgzkK7rYn+VLOqadRU9gsdEMJAOIwZm3mMq8YucfxiVyTnDw
+         B5Rgbn0MRNzvxtoxk2PJWWbhVJIyFZioNaLxae2t+L+oHuDYVx4m1xNSZeEiTIrBuby4
+         XRXR9nXU2Bp3tOYih89MxbhwpTqlOZ3GEEwzQ2RF9LXIg0+JxfT3hh2Tz57nq69AaTvP
+         p4/LFAlc7Ej1QMhvMniwSIBqru6HMY/KQVpKOm+ncwv1L0fi9ZpPLZl0aoTUY3rRiKMP
+         IAcKKzMR41XEb/AgVE2C2Uzr9djuPHRsYC0OzwTCKRq4T/jvZFNufI6TM2GmgedbGegZ
+         GYBg==
+X-Gm-Message-State: APuU4Z+beWbnoplwqmxN2CoSsX7AmAN5hVkACgFnq7gavRoa/fvY8wRb
+	0sRjXTLcHeYJpdb3LLyePb4tdd/rpDkJ9vaHz0ahxAMSEH9MBY1ckBYxq9umkIaJedG6LXcyeMd
+	twc0lutc/x/UMBC/j49MRo62fhnL5s0v5SuwXnL5vlP7O8wNGVYr1ODv4OwtHSZvVAAV0Pzr5zn
+	OTPZhj5x1Rt/Ir2ZosHaALPw==
+X-Received: from edc27-n2.prod.google.com ([2002:a05:6402:461b:20b0:6b8:afbd:bc1a])
+ (user=dmnk job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6402:1d4b:b0:6b7:9ced:824
+ with SMTP id 4fb4d7f45d1cf-6ba37e97cf6mr300510a12.26.1795116202515; Thu, 19
+ Nov 2026 11:23:22 -0800 (PST)
+Date: Thu, 19 Nov 2026 20:23:21 +0100
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -77,92 +77,93 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.56.1.809.ga0b61035b5-goog
-Message-ID: <20261119192316.2688525-1-dmnk@google.com>
-Subject: [PATCH] filter-branch: check hex oids in state-branch map
+Message-ID: <20261119192321.2690660-1-dmnk@google.com>
+Subject: [PATCH] cvsexportcommit: avoid shell in -W git calls
 From: Dominik Maier <dmnk@google.com>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Grant Moyer <dev@grantmoyer.com>, 
-	Michele Locati <michele@locati.it>, Patrick Steinhardt <ps@pks.im>, dmnk+artist@google.com, 
+Cc: Junio C Hamano <gitster@pobox.com>, dmnk+artist@google.com, 
 	Dominik Maier <dmnk@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-When "--state-branch" loads an existing "filter.map" blob,
-git-filter-branch splits each "from:to" line (restored to "from:to"
-order in 4811dabed7 (filter-branch: fix commit map init from state
-branch, 2026-10-02)) and writes "../map/$from_commit" without checking
-that "$from_commit" or "$to_commit" contains valid hexadecimal object
-IDs.
+When "-W" is enabled, git-cvsexportcommit reads "$go_back_to" from
+"git symbolic-ref HEAD" and passes it unquoted to single-argument
+system("git checkout $go_back_to") and system("git symbolic-ref HEAD
+$go_back_to"). Valid Git branch names may contain shell metacharacters
+such as ';', causing Perl to invoke "/bin/sh -c" and split or execute
+unintended shell tokens instead of restoring HEAD.
 
-A malformed or untrusted state branch whose "filter.map" contains empty
-keys, slashes, backslashes, or ".." segments writes outside
-"$tempdir/map" instead of failing cleanly.
-
-Read lines with "IFS= read -r line", and require "$from_commit" to be
-non-empty lowercase hex and "$to_commit" to contain only lowercase hex
-digits and spaces (allowing empty "$to_commit" for pruned commits)
-before writing "../map/$from_commit".
+Chomp "$go_back_to" and invoke list-form system('git', ...) for the "-W"
+checkout and symbolic-ref calls so git is executed directly without a
+shell.
 
 Signed-off-by: Dominik Maier <dmnk@google.com>
 ---
- git-filter-branch.sh     | 14 ++++++++++++--
- t/t7003-filter-branch.sh | 19 +++++++++++++++++++
- 2 files changed, 31 insertions(+), 2 deletions(-)
+ git-cvsexportcommit.perl       | 11 +++++++----
+ t/t9200-git-cvsexportcommit.sh | 19 +++++++++++++++++++
+ 2 files changed, 26 insertions(+), 4 deletions(-)
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 9aa07be6e1..fbf7882a70 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -298,13 +298,23 @@ then
+diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
+index edf02f9964..ce21d1ac8f 100755
+--- a/git-cvsexportcommit.perl
++++ b/git-cvsexportcommit.perl
+@@ -142,7 +142,9 @@
+     $opt_v && print "Resetting to $parent\n";
+     $go_back_to = `git symbolic-ref HEAD 2> /dev/null ||
+ 	git rev-parse HEAD` || die "Could not determine current branch";
+-    system("git checkout -q $parent^0") && die "Could not check out $parent^0";
++    chomp $go_back_to;
++    system('git', 'checkout', '-q', "$parent^0") &&
++	die "Could not check out $parent^0";
+ }
  
- 		git show "$state_commit:filter.map" >"$tempdir"/filter-map ||
- 			die "Unable to load state from $state_branch:filter.map"
--		while read line
-+		while IFS= read -r line
- 		do
- 			case "$line" in
- 			*:*)
- 				from_commit=${line%:*}
- 				to_commit=${line#*:}
--				echo "$to_commit" >../map/"$from_commit";;
-+				case "$from_commit" in
-+				"" | *[!0-9a-f]*)
-+					die "Unable to load state from $state_branch:filter.map"
-+					;;
-+				esac
-+				case "$to_commit" in
-+				*[!0-9a-f\ ]*)
-+					die "Unable to load state from $state_branch:filter.map"
-+					;;
-+				esac
-+				printf '%s\n' "$to_commit" >../map/"$from_commit";;
- 			*)
- 				die "Unable to load state from $state_branch:filter.map";;
- 			esac
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index 801cc83e5e..cab97e0e0b 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -560,4 +560,23 @@ test_expect_success 'filter-branch handles ancestor rewrite' '
- 	git diff-tree HEAD^ ancestor
+ $opt_v && print "Applying to CVS commit $commit from parent $parent\n";
+@@ -331,7 +333,7 @@
+ 
+ print "Applying\n";
+ if ($opt_W) {
+-    system("git checkout -q $commit^0") && die "cannot patch";
++    system('git', 'checkout', '-q', "$commit^0") && die "cannot patch";
+ } else {
+     `GIT_INDEX_FILE=$tmpdir/index git apply $context --summary --numstat --apply <.cvsexportcommit.diff` || die "cannot patch";
+ }
+@@ -410,9 +412,10 @@
+ unlink(".cvsexportcommit.diff");
+ 
+ if ($opt_W) {
+-    system("git checkout $go_back_to") && die "cannot move back to $go_back_to";
++    system('git', 'checkout', '--end-of-options', $go_back_to, '--') &&
++	die "cannot move back to $go_back_to";
+     if (!($go_back_to =~ /^[0-9a-fA-F]{$hexsz}$/)) {
+-	system("git symbolic-ref HEAD $go_back_to") &&
++	system('git', 'symbolic-ref', 'HEAD', $go_back_to) &&
+ 	    die "cannot move back to $go_back_to";
+     }
+ }
+diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
+index 8e0272df20..74058f0128 100755
+--- a/t/t9200-git-cvsexportcommit.sh
++++ b/t/t9200-git-cvsexportcommit.sh
+@@ -341,4 +341,23 @@ test_expect_success 'use the same checkout for Git and CVS' '
+ 
  '
  
-+test_expect_success 'state-branch rejects non-hex or path-traversing filter.map entries' '
-+	test_when_finished "rm -f escaped && git update-ref -d refs/heads/bad-state" &&
-+	bad_blob=$(printf "../../escaped:injected\n" | git hash-object -w --stdin) &&
-+	bad_tree=$(printf "100644 blob %s\tfilter.map\n" "$bad_blob" | git mktree) &&
-+	bad_commit=$(echo "bad state" | git commit-tree "$bad_tree") &&
-+	git update-ref refs/heads/bad-state "$bad_commit" &&
-+	test_must_fail git filter-branch -f --state-branch refs/heads/bad-state HEAD 2>err &&
-+	test_grep "Unable to load state from refs/heads/bad-state:filter.map" err &&
-+	test_path_is_missing escaped &&
-+
-+	head_oid=$(git rev-parse HEAD) &&
-+	bs_blob=$(printf "%s\\\\:%s\n" "$head_oid" "$head_oid" | git hash-object -w --stdin) &&
-+	bs_tree=$(printf "100644 blob %s\tfilter.map\n" "$bs_blob" | git mktree) &&
-+	bs_commit=$(echo "backslash state" | git commit-tree "$bs_tree") &&
-+	git update-ref refs/heads/bad-state "$bs_commit" &&
-+	test_must_fail git filter-branch -f --state-branch refs/heads/bad-state HEAD 2>err &&
-+	test_grep "Unable to load state from refs/heads/bad-state:filter.map" err
++test_expect_success 'cvsexportcommit -W handles shell metacharacters in branch name' '
++	(
++		mkdir shared_meta &&
++		cd shared_meta &&
++		sane_unset GIT_DIR &&
++		cvs co . &&
++		git init &&
++		git checkout -b "topic;false" &&
++		echo init >meta_base &&
++		git add meta_base &&
++		git commit -m "initial" &&
++		echo added >meta_new &&
++		git add meta_new &&
++		git commit -m "add meta_new" &&
++		git cvsexportcommit -W -p -u -c HEAD &&
++		test "$(git symbolic-ref HEAD)" = "refs/heads/topic;false"
++	)
 +'
 +
  test_done
