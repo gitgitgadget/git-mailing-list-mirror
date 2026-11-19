@@ -1,126 +1,127 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.156
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795120110;
-	b=GTBNuCCMGl8EueZNbnenyQbrnGcrbnYZ9YsQIbXARcYRzjsWJCubhhaZ8YFqyJd5GMUJ
-	 l6ZNbvupysrQV9nOAZ8q9OU6rF5v4npvDROer20sHcm83WzwdzIL4yXMklEMXDZqEWnu8
-	 gLEmn1lnUdY/a8UwlKCxoSgtGzZTukzXSHipjEia4Gjm17pAZgt7ManC6nB3pXeoUso4/
-	 R4nuUe0jqAiUkvRDY2tTawhihkxczWmwm8mhnEFdulIgKvYYHUbiI3L21v86Suzd4wakP
-	 KQOw2M9Aa5zsLuEfcPNehqA0kKqFv9ffyF02sddxYq9yXLW5+Xdh5eDn0zNpd/bdu9w==
+	t=1795121018;
+	b=jmT1lhiQGlYQ3ww3WrM0ZyHSjD76PdQc1p4oPtJ3GTkcXRbImwrVamQlN0GdKdZGCV9C
+	 s9qoC8oWWCokWzzdve+xlKWnv7dqWnESViuynCUGd/BfM83uEFL87nb+kWDAZ+4VCgHyw
+	 9zEHsVbsoo4fAMFWl3iKcj6irU+J6En1uN5KaenbOelwBsujS0NJSRUNKCHzCANCiiHq0
+	 UwtoC8hFwJUKschX3nIe4sT7093rSkHb1DI/FZp3ChXtQHu8UuIRu0xKTVNDou+khlSQr
+	 H4lNbUp2HGD4dwKJmI7iBL8hGQHaE1tXGZ9ayJd7gfpdTvq2z8OtPb819MLB0Xi06KQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795120110;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795121018;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=FlUo1iOhyEtgckbAS9emBrl8piySYnoGHHrky4weu4U=;
-	b=X51la7DwDECRD0KQa3j0QmMHy6cfzCRtMjHiH4pJ3i2T1zOwC7Oz/HkMCIK/dtxNvIyz
-	 r7jZY5T3t4IW0DWaUpY7NHdbFiaSaKOr826nNUcuFlCns68hYTYGrmRY/XQkIb0b4WIUL
-	 2t9p4CCl0maHGGKTPJSoZdMmEqDa+pkHl4jVeJEZM5qWL2mCd1ciZ3lJWswJhlVNDIGl8
-	 h3PEMqvdCFuw+Ix8cnTHM+43TourZwuZJQCcZYOanJHvbTUChxs0OGWpS0kfAoe//BqnH
-	 ib8RP0t794QAYIs3nqZMQvLvzTZRjdeAF1r6EQT7tiukpqv4DG4vpNtRxUlPU6aTcTQ==
+	bh=gfVQEhJgzSMJPltxOo9ePckAGC2Zn/i8iEOKBJuUz2o=;
+	b=xIqlKOl2WYvFsZEmifHg2Dzd0vNuja1kHQg50L/s4GhwZMb0HikmUpNn1tK2iszuR4lP
+	 UURqpYmsj9X/2viRZAGuqywiMq7GvlCNMnpH98u3ukW3v8hCdxxIUf2iccnNlMBDLNwy3
+	 ODww4YFrzu7LXNwRtiKTiCh9/DG8ieQOp3iICv8RPaU7JeiimRMO6n2i9X0gzM1Yl0mPH
+	 oJOBJwjdgow5Rc9jVy7JfurQaH8LYJyXM8OgssqQCyDG5seaztjxtpx42WBtiZ5yvMUF9
+	 QOF74Ql4hDCs7F2ku9KCykWphEkUWeg9X5Y/WwPkt/nfEsxdcsLQfkCATY7iSZWHmUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=QSTA53GU;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=q+mjuc+j;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=aKpLG06J;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=0iGgihfG;
 	arc=none smtp.remote-ip=202.12.124.156
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A721F606A334
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 20:28:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A721F606A334
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B44606BB80
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 20:43:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 78B44606BB80
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=QSTA53GU;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=q+mjuc+j
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 089877A0341
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 15:28:29 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=aKpLG06J;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=0iGgihfG
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B51197A0335
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 15:43:37 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 19 Nov 2026 15:28:29 -0500
+  by phl-compute-04.internal (MEProxy); Thu, 19 Nov 2026 15:43:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795120108; x=1795206508; bh=FlUo1iOhyE
-	tgckbAS9emBrl8piySYnoGHHrky4weu4U=; b=QSTA53GUI8Kmn2M5wf6jj26jlx
-	JV1VJMN0u01MrhwXEWUs1OJDqs5hFEfoWPphsetngCK/eP7RYzENa/AsrgxksGly
-	hOWtehML7RhUYatCZdFn1AxjZuLlhRPqtrqAXDMbYQAKSqYJNT6KgKcEE8fO5qiD
-	P/2w8cJDKvvg/Q+B1Rkjj+d/7GQswBI5DM5WN1OJoUNSAYQFgKCKtgujcFOjVZ32
-	aU1wInPLLXSVRpK7fmLhJaB0gNyHkgv2C1zJwqIFfFCXZz6RW/tTNH4CErPgj1it
-	/Xhsu3NUVm65ZUHmdVLrA8OmMmc1tVh+8OQbeXHM0sHIn3sWoJaVD3/rnQgA==
+	:subject:to:to; s=fm2; t=1795121017; x=1795207417; bh=gfVQEhJgzS
+	MJPltxOo9ePckAGC2Zn/i8iEOKBJuUz2o=; b=aKpLG06JKLPhkwrl2FBGzcc6KF
+	WUU2dcAoTLXvbQbGugZPdUZEuQfx0ic0X0Yb4Jm+fEfrvc//4F7BOAQvPzjF9DEN
+	UfHVCp4W9t2xxNqaOQMe3c9EOgCO3BxKIKm14SW2o73+FtJAD6kGJdU9ZCx330aD
+	E5wrU9vvkVocH8CNP7tyl+C/hZskr5NxmJ0lGtq2oR8k+P4Tcew07zAu+8ffOaiC
+	V9B7EH4Jsz9jLAr3bWTWIfGyeqdav/WkfPplZozBCP7gkP2zshVsLphRUo+hV/Gy
+	TheL+nyZwqJ1GlP7yU9VBXI3dVC5xHNBF9jStlSZJSAkQLm5fEbLKPFLdO1g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795120108; x=1795206508; bh=FlUo1iOhyEtgckbAS9emBrl8piySYnoGHHr
-	ky4weu4U=; b=q+mjuc+jHQSgR0byMinr+y0BfZxWD9bxwZ56OrKctKhaa4KASKE
-	WI/9cGvUqBYhfztpkYLZROGfgA39R+OpmmBv4S2gN+ow7gW5oxvauV3ZXN4homX0
-	JyZ8EhIEM9nGvnO5ctuupZOPdz/rzR+tC0a9ctFRs6EnLCUegp/+YpWa3oKzmeir
-	5oP12v6VOIT/5m5u/JEU3lRn69RfLs2M/wBuBZQwBd3cH+anx/qtC8I7OE23fJhk
-	dllO/LPR1EJqayiRR3yFtosW0BKZMWiziJK126fw0bofPMRjVSToCXL8VXaPKFIE
-	eqZx+YjT0700HHP9D7sWut+sUh0frLTk9Dg==
+	1795121017; x=1795207417; bh=gfVQEhJgzSMJPltxOo9ePckAGC2Zn/i8iEO
+	KBJuUz2o=; b=0iGgihfGL0+QBZ6ldoJJh7pVHVvGzHrz6VeWGvJ4kRQUF1AsKdC
+	b5l/xVslexeHZ28woQvWQDBU0zihK4gnjt1/1VhhQeXQjApWpvJfvskerZ9eyThw
+	insMljIrCIG9CTxGdlRLJVo4VuI7ohrUbAnrb4LPzCm4b2jzOyC9jnfJAgxHreHD
+	KjAT5E6sH7R/BGsIOYY9ghiGxj8jZYjIRWGFFxSCxiXqSPn5foAbY2lkjO1kSka6
+	3CD7b3DKaebxn71qKqwvgGXTc4ZINqvIam7g+drLHjY4ZwpsGlLv7LHsTTC9JFwe
+	go1OJJNsLxBII9VweetsG7aDBjGEEiKs6kA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795120108; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1795121017; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:neZ37nlaPcHE3tYg22ZPl2W1CN40svKuAkUyN1Aw+D9j5VC
-	+grPTBFKRORkGNWJlVbgm3HoiItyDFyEkXcp3gK31Kht0xnDCdyxCTNu4vLsOEq2
-	X0vw8PnCUGUNw6gLf6ol1eHB2Gqo1oTujQIeP7Azuf8hpsy/rYa/nA2/evVO+lHr
-	Gn/q6GY8Ady7EIZtuq9WY/U86T1Pn+PqIxVNgX8a5d9m+ZcyW/pbKW5C5XU6TdE/
-	Un3vlKxx1lfiSOjQNNg99RF6xMXexfoSEHnpzNHwbuB5bcF7/A1f/WCge1dasGp5
-	y17cvduqXWhcxWajUl7szEA5IS5Y6qXQuE0qHrQ==;
+	s=fm2:rsa-sha256:ndh6Cvi/lCdWvEOpAUfRfhs9MIH3JQxmKNJrj1/lbkVMX5o
+	W1fZtJtlvr640aWnRnr+VyaYHWHpE+B3lNzyi7hRMgUy4iDkZs0pmxOCZ99VgVpt
+	25tKWoPTuAYREga2pJF/1M0YIUfqVacYUGhdQ4QuLNiKdeZ0pYRrDlJM1xwaZwq9
+	DawZ0kHn4aGGLbENhnH/+Aby1ZoCBSc+MeYjcncXSWPthQTKixi09Zqvn6tobVfW
+	gDsc/37fpL8BbOfLDah+NCEZUMOk1u3hnHtoC9ILljMhFLO3Sj8cPffb7HilfH8c
+	zvbinGui8oSRMzFUExCXy5Z9obwujNNV7Bfitew==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:fnUUz3RJTMkJbH1CJXnXYCuoSt9ag06BGI+7M3a0Al4=:wJswkxQkR5YssmX2nb6hoQ/L4Cf54ssi4UXbw2Hbgp4=;
-X-ME-Sender: <xms:7Fv_atGAwtoVylJtvfU1bZGySN_2DVrHP-CW2XEqZbFQhvRuJXB__Q>
-    <xme:7Fv_anRUxfDrCTw0LpjANjmbptTQhmK9QWWQoeZrYJhGOe0R8Cjsfv9xZp_yI7HpZ
-    n1QlvTfQ9l8I0qD_sAeHaIl9kwper7hwJe3UKqScFgMsWxkWl2M97U>
-X-ME-Received: <xmr:7Fv_ajZdVcJdjG0Ma-Grk0dMqSSymVylNSYGE9z6fAa97r-iHDSkqGCsPZisIIxAXc_iZMKLPbdeiadjqB1Buy76gtCUq9EpHoO2>
-X-ME-Proxy-Cause: dmFkZTFxGhXE03qtSYufJJf9gLbDGc/woXBtu5hVUy2rqTjpxqBvzUkZBCyVtGVMVjCnjy
-    KAwVu3MIPN/+Z87Sq6xZ/CfrLCj1MS49XN9T4E5dc62kKTzbGIruUGU1nElArdW8Ny4+h7
-    lgaRBfvSS6rHh5RnTIKohPpGft7LXWGToyv6r/kYjkuC3lLP+IWMZ/qbRomZKmKn6WD1OH
-    IkKlU8xBWEf+75dunIf9qKbji6GzU1N8a1Vh/gjPf2OfupHIq2gDmKR1a75SbpnyU8PmLF
-    jxJfO4CCppHu1xSJODckmExuu6RUh9ZjoZXDpsPe1xUh4g9PB2DnGYMlQ2pMjY32CWsCnY
-    cZIZW6bu2jRjMHcLm4zO04d8hMM8uEJ4nrJCJlA/DCp56sTYnroOsp2EuDXfTVg5kzJIA3
-    shkw+/rahYmSnBCKLwjG6bldj8wtPa0sOFwgzlNT1ujzS5jJj2n6WBHBbYtVXbxS4Z4Wua
-    5/mtSS4lUWa6qztLwnNxurTYLLwK/qfEBednDrBNU4rix1e/8WJBJb3UDAu/sKC8AY87z7
-    Woi2t//CUBauHjKESjIjNTW1GLiyY9lIkYDztH55tdQfC+tGIUq/4K5LN7oghkBy0zqu/g
-    vKRISR1LsJ59r+jAO6yEKx3ocmxByGzI3xo3cGDf4ErjCkUh8vAP0hSMenjQ
-X-ME-Proxy: <xmx:7Fv_ai3qgENh9kGrZlpVF8ttBPUi3JUE1Mb5LdKfg7AfeJulkMgKDA>
-    <xmx:7Fv_amofy0Ce4JF3hT8_uqmMVT9LcqQLOogSUD-IiaF0FLTuWU9VUQ>
-    <xmx:7Fv_ahODOW7n9ZNNUMt86cIQCI7dYSlNl99I2JaaajuUX5czk7mYiQ>
-    <xmx:7Fv_avoZal3Vl1ej9LLrcX-Ad820MVreEy2k4iNicolQUJviDT6Uag>
-    <xmx:7Fv_ao5L_VlccUFFeAKCdmHUN4ccEGHCnIT9I2ai-iqbiJARigF3_q9o>
+Message-Instance: m=1; h=sha256:oaGq82KkyTtg19DkjMKiLz+PAiS0rz6RAzAzfhiniqc=:mn6cLtgh0XYB7jkXP5sWavrHN5A6Rarzairl3xxkc+s=;
+X-ME-Sender: <xms:eV__ai_Nvw5TBYZg0tU0ofGCzP0C4Fajtz9P4Adwc-wE0d78A1ybOg>
+    <xme:eV__ak-bJILb54sRB0lr7KoM52DJUYkkhuvjgXSgTxTCCPU_Yo60KBMlJtQU_4GhO
+    QPAj7I6k_WXI21sYzHs66eVEPrD2Obg1zNw4KY3KVb5_570FHM7Xhs>
+X-ME-Received: <xmr:eV__aqT2NucLy00lrR9PXcrzkOVvTqC4O-P_UtKsa3uUyTDE_ApheucJ_-pQjxnRCQ1mIrkhBZDXzSZic3t82zvsoMBqCBM0uly2>
+X-ME-Proxy-Cause: dmFkZTEKiSMjTBSxy2/I4611tqSaS+z9a8u9sMM96GTj8/Zob5NGWtmKn0uL3einF7ww2x
+    12C1EET+92n8cBj+z0cDtIedNi8p7eufqYdvUd6oel1RNAoVMpuSJ/jv+D7bBpfoZsFeci
+    QIxeIWML3DTaEOqF7lnNaoZHB0lqQrPkJjCEqS7QEjcMJKIgeBllpE9EQ3Vcy/GJHQ/4nS
+    1UAa/w6xPJ7Ujgp1XjDWGvlOzGxhSDA1ZU0Q4FxwvrQb6JLvhrhBP/L7Ax1U2J8JwCT6vY
+    0RoFm5wpShAIfk+soulUFH1lm+WVm1xhB/hgKLw0ALrS0HpNT96kjmTWikCzBOt/TizQmR
+    PJpXBzVeYeF6tEeC8Ri0YD/J+YiBdqOEzzDGDOWB9LQTekG5o/oZ+bXJR0+I3N4/he66+I
+    p1dJQSggod2FmxSXXFqcTLh1vSaZXNBPi6GwLfY+m23JjKE/zQr1T6rLqE4nnrJMOn0ubk
+    nko9m3OUwDBBnqsVZvnqpkLWjsBg6Z/SS5kZNmqbye/Pz3A7aUgIuzOYaueadRkMJF97pj
+    5HE4b9xQre1kPkD22jd6jY3l5zvYCbLKIwal3eXrOJVRWuTvwQppoBsptlTTvm75He28An
+    rUTTLamXCAoP/jLSs8vSLPIjj/ADNcXS761HClPHHQdHidzn0FS2JsPC/LYQ
+X-ME-Proxy: <xmx:eV__agfK3fnB1LtLT_o-hcY4z26iMHP49lC9YuxaGpDRtN-sDuipiA>
+    <xmx:eV__amAjGj_EQDg7cb8h0C_gyZlAyldM2xdCCuhUWZWGBd9fSedvNQ>
+    <xmx:eV__aqmvtoh9O4pMeHmV8V2MNT-VxuVVpznLHSNY65S27od1s4BbGQ>
+    <xmx:eV__apf8QEn42pwlE2oBxaMURJSzqJhz2zl1SWkn2A31ebkUx069VQ>
+    <xmx:eV__amLiAqeL8igdDSwJNwxGFt-gM2YSJ4gP_dCcBouag41NCK0so_Mv>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Nov 2026 15:28:27 -0500 (EST)
+ 19 Nov 2026 15:43:36 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Tanga Joris <tangajoris@gmail.com>
-Cc: git@vger.kernel.org,  siddharthasthana31@gmail.com,
-  phillip.wood@dunelm.org.uk,  jackrawlings2011@gmail.com,
-  christian.couder@gmail.com,  kaartic.sivaraam@gmail.com,
-  usmanakinyemi202@gmail.com
-Subject: Re: [Outreachy PATCH v3 1/3] apply: free the old def_name in
- parse_git_diff_header()
-In-Reply-To: <CAKrRMNoB-4==1EPLAAXE4M1J6bUwuWj=p32CedDvOTi3tzO7=A@mail.gmail.com>
-	(Tanga Joris's message of "Thu, 19 Nov 2026 02:32:26 +0300")
-References: <20261114012055.127905-1-tangajoris@gmail.com>
-	<20261117004348.806694-1-tangajoris@gmail.com>
-	<20261117004348.806694-2-tangajoris@gmail.com>
-	<xmqqh5hd50e2.fsf@gitster.g>
-	<CAKrRMNoB-4==1EPLAAXE4M1J6bUwuWj=p32CedDvOTi3tzO7=A@mail.gmail.com>
-Date: Thu, 19 Nov 2026 12:28:26 -0800
-Message-ID: <xmqq5wxswoph.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Matt
+ Hunter <m@lfurio.us>,  Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v14 1/5] fetch: add remote.<name>.fetchRefmap
+In-Reply-To: <2111d174-9571-4eb5-82cb-92f5330ae24c@gmail.com> (Phillip Wood's
+	message of "Thu, 19 Nov 2026 10:53:36 +0000")
+References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
+	<pull.2412.v14.git.git.1794681496.gitgitgadget@gmail.com>
+	<c63699b40228b1d47368778d7397b1ddc6ba2a36.1794681496.git.gitgitgadget@gmail.com>
+	<5a1a9f6b-48c8-4daa-9059-bf9459587a17@gmail.com>
+	<xmqq7bibh3f5.fsf@gitster.g>
+	<c40477c7-e1d8-4af1-859b-b739dac4bc86@gmail.com>
+	<xmqqfqwzcgmu.fsf@gitster.g>
+	<2111d174-9571-4eb5-82cb-92f5330ae24c@gmail.com>
+Date: Thu, 19 Nov 2026 12:43:35 -0800
+Message-ID: <xmqq1p8gwo08.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -133,46 +134,40 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Tanga Joris <tangajoris@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
->> I do not think we should ignore such a bogus "diff --git" line;
->> shouldn't we diagnose it as a corrupt patch input?  I do not think
->> we are there yet without making find_header() do more work when
->> punting, though.
+> Great. So I think we'd want a preliminary patch to ignore --refmap when 
+> there is a destination on the commandline and this patch to be tweaked 
+> so that
 >
-> I agree. I think find_header() should just stop and report it as a
-> corrupt patch when a "diff --git" line has nothing after it, instead
-> of going on to the next line. That would make 1/3 unnecessary, and
-> 2/3 a lot simpler.
-
-A line "diff --git a/f b/f" would not be followed by another "diff
---git" line immediately after, I think.  Patches without any ---/+++
-lines are very much possible (e.g., 100% rename or mode change without
-any other change), but even in those cases there are extended header
-lines like "rename from ..." and "old mode ...".
-
-> As far as I can tell, Git doesn't write such a line anymore.
-
-Have we ever produced such a patch?  That is what "anymore" implies,
-and I am curious, as that may indicate that our above assumption is
-incorrect.
-
-> I tried
-> a few things like "git diff -w" on a whitespace-only change, renames
-> and merges, and every "diff --git" line had header lines after it.
-> The apply and am tests also still pass with the change, apart from
-> my own test in 1/3.
+>      git config remote.cabal.fetch master
+>      git fetch --refmap=refs/heads/*:refs/test/* cabal
 >
-> Is that what you had in mind? If so, I'll send v4 with it.
+> and
+>
+>      git config remote.cabal.fetch master
+>      git config remote.cabal.fetchRefmap refs/heads/*:refs/test/*
+>      git fetch
+>
+> both fetch "master" and store it under "refs/test/master"
 
-We should be strict in detecting a malformed "diff --git" in our
-input.  Silently ignoring them is simply wrong.  We do ignore
-non-patch material after a patch to one path ends and before another
-patch to another path begins, so that authors can add commentary to
-e-mails they send their patches in, though.  We shouldn't be
-tightening the parser rules on them after the fact.
+I thought "master" as a fetch refspec element is a short-hand of
+"master:" that tells the machinery not to store the fetched result
+anywhere (other than FETCH_HEAD that is).  So the first one of the
+above should be how the current code (without any of Harald's code
+for configuration) behave, and the second one should be how the code
+we have been reviewing should already behave, no?
 
-Patches that begin with "diff" that is not "diff --git" are a
-different story.  They are parsed in different code paths, and I
-would prefer to keep parsing of these third-party diff outputs as is,
-to let the sleeping dog lie peacefully and silently.
+With the first line in each sample replaced with (with or without
+the leading '+')
+
+    git config remote.cabal.fetch +refs/heads/master:refs/heads/main
+
+the first one should store what it grabbed in two places with the
+current code, and the proposed update will stop touching refs/heads/main
+because refmap will take precedence.
+
+Do I understand what we agreed correctly?
+
+Thanks.
+
