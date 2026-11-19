@@ -1,79 +1,66 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795059793;
-	b=hlLRlVUVUqg+1RAx78XPZeRuyxPNIcG/ra/Uv36sz7ZAmT1Y0fjrHiHG5ujJ+2VfKSzX
-	 4Pjopny157L1YFrhsgompsD4Hk8PWj50NZq9OWTOCsVGBtbQydcBSAiLU5Xvu6ysCRCtA
-	 +1GEudT9Q1yiVbSxj5DHXjKwwECI7YMKAR9sBD9nQ8swzvf5wr2yT2IyctDjq4HsxXIvN
-	 bL06xd0mwFBi97oJuJUaC/ug86QRiHuPyN4nYjD55d9gTxLzKi5PhRY2nHkj5HKLQhjpC
-	 gHQ4vzYUV6aaCp7/YiOMf6BQeJ/N7PKdRq0lpVBFmT/LRzENVFON527UUaycYgCnqOA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059793;
-	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
-	 Content-Type:Message-Id:X-B4-Tracking:X-Change-ID:In-Reply-To:
-	 References:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key:
-	 X-Endpoint-Received:X-Original-From:Reply-To:
-	 Content-Transfer-Encoding;
-	bh=x2UbesA3pNoU2k8kREXP8A9hhrEal2TgtnATlGa/hZY=;
-	b=O1l766baz8qr2UVindiI9Gg1w0VK86/roFrrbyKIoWMLD3rftkTazE6CrGL9r+noqt8K
-	 FDxi8kyrOZub/NKWzJaIXel331hzBYBrpswEJB+O6tzhpMGWmEod7PN9Uk0/YXYqmESd5
-	 d3Ht0u7bULgvQtfF/FeiAsOmD1itEwN7VPrsFm6AQJzQa0QLdZMRNI4eYIznRBucQ4Ivz
-	 OMxWLBcjGWpvjC3IWkuUWQMBjD/2LoJZ+UMVjaOYwjjnWTT2zOQ36Gy8+uKutssDIQuWS
-	 wmKfKSXu1/XRY10uT36WreqMqYH86LUBS2lEm9dHnuaSdqgp5F9d889iDgDzYY4yiDg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=W9MOPOmE;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC15606A325
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 03:43:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=W9MOPOmE
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
-ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1795059793;
-	b=QOXRBV4UGhrfgGUk4ODowFdz1DOqsuaSOdyYs+cnXxOleNsWy7GMX5kTacnqWyfTyusH
-	 OzQixqgY2r6U1bQbZ5bajYO1vOKDUcAXpX5q25fJG4jFNnLP7anWugAR+hf6i4DxGXMHi
-	 EzjpTrEdu6llxHuZgtFhvooVptx8w1TG0iQMsLxQB8EJ+abT2dWeZw+HIOGr70KuErc37
-	 ZW7HmUmQUvHctSZjfcra7LZNde2Thlgp8vAMFq08PltmvnuwCpVu40nhO2J2fpetKNofP
-	 8JQOxyaDXKuxORCHIk9TEmQdqUdsFLba8gTO/s5HRkhyI3tnuzPWxa35b7AwE3FzwaA==
-ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1795059793;
-	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
-	 Message-Id:X-B4-Tracking:X-Change-ID:In-Reply-To:References:To:Cc:
-	 X-Mailer:X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
-	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=x2UbesA3pNoU2k8kREXP8A9hhrEal2TgtnATlGa/hZY=;
-	b=Rq/v+aJI8ZOY/xex2bfw2oCdux6PAOPazUpMHHgrrwyLJ6Rna/k6e0DTwo4Qnnm6n8gk
-	 fN1KFtKNSTS4zHTMrxs9Nt/a4ts7ZGdrNUA3buIu3/aengvROqUvO9XPKxGsndZsLHR53
-	 W9HRwhQCZL6Y2EwGd9RDUE079KiGNwQuuPmP+bT100DoW6CGYh6h68ziyLj7u97g/jAH2
-	 ISpEFANHALbeu/HPq1ousX4bxFD4r1TGAl4AZK62h2lKqkQ86ZEJozYju80sdQkofGTTR
-	 kMMq1M4zaia0jk6nFcciaG+B4UVI5jVcjrXGXFplffWG4zxIcAqtvIVzpDyhFSeLh+w==
-ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	arc=none smtp.remote-ip=100.80.115.77
-Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.197
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795065131;
+	b=ytK6kDgYs/8AtWCxm//0Y4cAqxnJtgY6olFH5XAtj02EtX49d+FP9siWNaVm5uF16eus
+	 NAJwLHk7d5M7bif5/BG5+gmpXr+TYvXuVFD6UyXs8mqPgte68ms2j1Mybsic296V8HpuM
+	 fRNgG4JguZa/k+OJjToj1wFUPwp1Rallao4dLOwnHmuRxLTuc6YZzPIiefqIpCogbqlMJ
+	 z4XHpFTzklohNp5EfI61atxm1C0UXoxDcS28iw9HSyB5578wnZzjhQuxdxKj8/pijtul+
+	 kewhfRV88/SG693F5P/uhak3U7KM6CboPTnm3W6ujQc7o3ktER3xMWWRoE/DxlKyniQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795065131;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:MIME-Version:X-Received:Reply-To:Message-ID:Date:
+	 Subject:From:To:Content-Type;
+	bh=S3gttaxALnZBd6UjNTczAjuXFNuJlb8JRYSrRl5fycA=;
+	b=gdsbUPd8nUBPv0SewTgJknalU6Hh8p4CI03kqeBaO/KLinSY7Rnn14KFa08HH4t/KW5+
+	 QTHTWMMHGlcbfi1yLLpCwg1JGxxiNBH1pcGw3YACuI7xiBShCaLWX8nryDllZLrajyzJA
+	 saALcC5zCx858ae0ViQCZtPuUZA/rUkgj1oNH/sRAdp7afx+86+F7Ul8mgKwGuRtPJSny
+	 IjMauVOQGVd3rvwWEPE4XHcrNNhxcTEGGEqSbyLNsbfE6zbhoMNO3jEJfTx0PUg73rc4/
+	 PBypX609vOcqyu7N8N5bz6LQ+wm4/h+6Runuuy/KsyBB995fNoLS33PZYWU37VeTcHg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EGNRJExC;
+	arc=none smtp.remote-ip=209.85.214.197
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 8B6D81F000C4;
-	Thu, 19 Nov 2026 03:43:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795059793;
-	bh=x2UbesA3pNoU2k8kREXP8A9hhrEal2TgtnATlGa/hZY=;
-	h=From:Date:Subject:In-Reply-To:References:To:Cc:Reply-To;
-	b=W9MOPOmEPe8M5BhCIW3f9YBHuTs2OZOQkbBbRXK5SaDAM6gSRTOlm0vwKncFQP5p8
-	 XQhs5OEfvbE4WdBgtgJH1d4l9O8bsnnaVCIA6DAXpAr99MU6WdbXvmnqQxj2Sr1aEe
-	 RCsTCprMoT3JjmUqekA1CkbC3kIi8wolIlsP1c+xoLCEeLKeKquQXwfs5HoBCbVAbP
-	 s1OphQVWdRK6v+tBHKAngUDF1awmT8/hjpNYqzp48o6lyPpgvNIl/7/2jgHqFe7/8+
-	 NLVKcHGJUZJXjzwJsBBqyaZJJ77wNXUtTzFju3BWkufwiY+8KXq7AqgHMXVM2fbOCO
-	 96EafOTJonHLA==
-Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id DCE9D4B0A7;
-	Thu, 19 Nov 2026 03:43:11 +0000 (UTC)
-From: Noam Cohen via B4 Relay <devnull+noam.noam.me@kernel.org>
-Date: Thu, 19 Nov 2026 03:43:01 +0000
-Subject: [PATCH v2] ls-tree: do not quote %(path) with -z
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A8D606A320
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 05:12:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 92A8D606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EGNRJExC
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2efdc279d95so5839235ad.1
+        for <git@vger.kernel.org>; Wed, 18 Nov 2026 21:12:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795065131; x=1795669931; darn=vger.kernel.org;
+        h=content-type:to:from:subject:date:message-id:reply-to:mime-version
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=S3gttaxALnZBd6UjNTczAjuXFNuJlb8JRYSrRl5fycA=;
+        b=EGNRJExCyFUWrTAc03M/BJrDR6uqsmAGDFWKGbvSj4liBqt0PP2bcTTvMZ/KxaVatT
+         9aHm8+FhCfy1a0ET5ELVpq7UEiEH6/gh+0pWo+CKULsvEVdjPjZeyBm3QWo7AI4OcMpE
+         uSjQD5QmB3ggspEOvjE/vcvBeSsfxo4i+iiH5fT4hYwFkhDkz5rGiobvJadF1/ERphph
+         bM+y85x3S7iFPuBRoU0WFfjzhqw/I+Dq/TJwhHhV4540MidkoI9q39dB3hqu5wqpln/F
+         FB2p68s5kMWwkd1VVobT6E+pUT/+t2O221s7nR6QV41aDyq3Ve9xl3yK1oJU2ZnE68D4
+         LX7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795065131; x=1795669931;
+        h=content-type:to:from:subject:date:message-id:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=S3gttaxALnZBd6UjNTczAjuXFNuJlb8JRYSrRl5fycA=;
+        b=f6m3xtsOoXDvVA9DXPL4W+JkaoE/9xzSDJ0NbMFxXWMTZolVzJO3EbD6lHYHWXDtvr
+         zS/IRurWQai0Zi2jVYv9J6Um0c4+xsx4uBtiPY0iKBWj+81+AVAdU372LCXIk00LAiIs
+         MI+2Qi7BjwZr/yyptgR1vm1uo7UbC3+D0Q1BJRt0uByMfl0+000lY3ZqAHb5C27/X+i5
+         XjqPGt+qsZ9Jo9kYc7hPAR//wpLgswUn6+IGwUljYksFHUbnGeZ0EEzW9EjEtXTz5fVj
+         qmLze/cLFO0v0edWMLjvn/vwgl76PqRDv+tNFm5C9QZIxDCuWBlVAHAV5OSVvXYrpRfr
+         f8pA==
+X-Gm-Message-State: APuU4Z8avcGCPXzVwebf6OuD2PPNIrIw/k29dS3LGC+ENyJ2wedJ7OyM
+	Ya9WYmZSVidl/k4axluMAPkH6Teo9l0Z2zVrUqwRcK5Sn5SZsuLma6GcNfrXgMB5S550ZNcjspU
+	VyHo=
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -83,95 +70,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Message-Id: <20261119-ls-tree-format-z-verbatim-path-v2-1-c014e4e4c96f@noam.me>
-X-B4-Tracking: v=1; b=H4sIAERw/moC/42OQQ6CMBBFr2Jm7RinKlRX3sOwKDiVGkvJtDYq4
- e4CXsDlS17++wNEFscRTqsBhLOLLnQTqPUKmtZ0N0Z3nRjUVhVEpPERMQkz2iDeJPxgZqlNch5
- 7k1q0h1Lv6oKs1RamkV7YutcSuFQ/js/6zk2aV2ejdTEFeS8PMs3e37FMSFiSPupS7UkXdO6C8
- RvPUI3j+AXhR0br3AAAAA==
-X-Change-ID: 20261118-ls-tree-format-z-verbatim-path-f5783b61ff8f
-In-Reply-To: <20261118-ls-tree-format-z-verbatim-path-v1-1-718987241861@noam.me>
-References: <20261118-ls-tree-format-z-verbatim-path-v1-1-718987241861@noam.me>
+X-Received: by 2002:a17:902:f545:b0:2e9:6645:e9a9 with SMTP id
+ d9443c01a7336-2f031cffc9bmr218095ad.32.1795065131088; Wed, 18 Nov 2026
+ 21:12:11 -0800 (PST)
+Reply-To: editorgkxjournal@gmail.com
+Message-ID: <autogen-java-ac7f1428-2d28-4c96-b430-06cf23a0ce5d@google.com>
+Date: Thu, 19 Nov 2026 05:12:11 +0000
+Subject: Multidisciplinary journal details
+From: prakashrao1346@gmail.com
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Teng Long <dyroneteng@gmail.com>, 
- =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>, 
- =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, Noam Cohen <noam@noam.me>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1795059791; l=2205;
- i=noam@noam.me; s=20261118; h=from:subject:message-id;
- bh=vgoVj7DmaNqL+zpYiTvi4MOrtN+qceluz1+GNCR8MPM=;
- b=LEI5IdnifZQZ2djQax4CVk2oD9+Hn/nrk5SKW2mpYdaH9Sk/r8l409Z919/CxEaPB+3J8WJj1
- PWktBhqQ0HHCHrlZdd1H966agWs6wOb6X8yxy3BuekPJQWHxMMC6RwN
-X-Developer-Key: i=noam@noam.me; a=ed25519;
- pk=qyNqXh2nrM20rNZXIQMjH3jLUPgL/RaLrmNnO0YOpp4=
-X-Endpoint-Received: by B4 Relay for noam@noam.me/20261118 with
- auth_id=1563
-X-Original-From: Noam Cohen <noam@noam.me>
-Reply-To: noam@noam.me
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
 
-From: Noam Cohen <noam@noam.me>
+Dear Researcher,
 
-With -z, "git ls-tree" is documented to output the filename verbatim,
-but since 455923e0a1 (ls-tree: introduce "--format" option,
-2022-03-23) the %(path) placeholder of a custom --format is always
-C-quoted.
+Gongcheng Kexue Xuebao welcomes submissions across multidisciplinary  
+subject areas.
 
-Output it verbatim when -z is given, like "git ls-files --format"
-already does.
+The journal is Scopus indexed and accepts multidisciplinary scope in all  
+subject areas. Research funding support may be available for eligible  
+authors.
 
-Signed-off-by: Noam Cohen <noam@noam.me>
----
-This makes "ls-tree -z --format" match "ls-files -z --format", which
-already outputs %(path) verbatim.
----
-Changes in v2:
-- Use a path with a double quote, built with "git mktree", so the test
-  stays within US-ASCII and does not depend on the filesystem.
-- Force core.quotePath=true in the test.
-- Link to v1: https://patch.msgid.link/20261118-ls-tree-format-z-verbatim-path-v1-1-718987241861@noam.me
----
- builtin/ls-tree.c         | 5 ++++-
- t/t3104-ls-tree-format.sh | 9 +++++++++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+Please visit:
+https://kexuexuebao.org/
 
-diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index 46edaffc2e..d25bbffcdd 100644
---- a/builtin/ls-tree.c
-+++ b/builtin/ls-tree.c
-@@ -130,7 +130,10 @@ static int show_tree_fmt(const struct object_id *oid, struct strbuf *base,
- 
- 			strbuf_addstr(base, pathname);
- 			name = relative_path(base->buf, prefix, &sbuf);
--			quote_c_style(name, &sb, NULL, 0);
-+			if (options->null_termination)
-+				strbuf_addstr(&sb, name);
-+			else
-+				quote_c_style(name, &sb, NULL, 0);
- 			strbuf_setlen(base, baselen);
- 			strbuf_release(&sbuf);
- 		} else
-diff --git a/t/t3104-ls-tree-format.sh b/t/t3104-ls-tree-format.sh
-index a1b2069a25..0df216909b 100755
---- a/t/t3104-ls-tree-format.sh
-+++ b/t/t3104-ls-tree-format.sh
-@@ -76,4 +76,13 @@ test_ls_tree_format \
- 	"--full-tree" \
- 	"--full-tree"
- 
-+test_expect_success 'ls-tree --format with -z does not quote paths' '
-+	blob=$(git rev-parse HEAD:top-file.t) &&
-+	tree=$(printf "100644 blob $blob\tdouble\"quote\n" | git mktree) &&
-+	printf "blob double\"quote\0" >expect &&
-+	git -c core.quotePath=true ls-tree -z \
-+		--format="%(objecttype) %(path)" $tree >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+Would a brief overview be helpful?
 
----
-base-commit: 03b41523c576f26ad34085378717a0c1b287470f
-change-id: 20261118-ls-tree-format-z-verbatim-path-f5783b61ff8f
-
-
+Best regards,
+Journal Team
