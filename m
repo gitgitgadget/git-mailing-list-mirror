@@ -1,95 +1,69 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=172.105.7.114
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047660;
-	b=YPj2+dHBUTjgisSc/nbao7z82DnNa5FV/OgmSFjrYsghy2dDENrnKQ0q5YeOUfFEzccg
-	 vy9b8L18qPIapCfB1/NnymY4SMT6Zlp6PIe2zUrqTXj6O6F75simZKm64KPgGU9I5J8g5
-	 /0KGVEpgUuHqsFGh8mW6RxEzDwxZ33ydP6S5EAq2+7smUasYXG9OWz6U3mJqvNuY3RvAU
-	 PnKnKlDErnISf7TjDs/e9G7x9DFZmaKYlREjf4mpNS5n4j9kOU2/3kdJxEBZLkWu5/LF+
-	 u/Q6PopaCk1ESMULsypftC7Kvyyutbwd03KdAjDTJ79Vmw4IeEFunMXk8qWp5p6I9gg==
+	t=1795050385;
+	b=Y2tKfl06bfaIlplXk1tAHShe5DrJuGAXLPkMETUWeNdEZG1jiN4mLPXJFqRNhPsvnvEq
+	 CSoAhomovKEcTKGeDmBS8LT94TtgS4aAT/MEluY0Qz/XcWEjxmKowmvxIpCMeht4g7g9X
+	 Zhe/248Lac4i+waRM4sd+V01cly6RjE9SNF4FxQl8kf10EOXbXywWd/4n2A1r/3Xr/QuI
+	 4I+xM8UsxTVz0Z1+L3m3Yp6FFNev8DEykMuVCWur7JJowKHEcT5sLpyIiDhjIPnACfD91
+	 3mbkxMl67Z6KM8xWyOkxTk99kOabKor69QOY1xOIueDsmFaRaew/QzOsruyxQj6zchw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047660;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=XUUqE1XrIoxP0AJd9iz0zC8BQbRMogpYKh0LrcLZrSI=;
-	b=OrX5RkdPT8C+m7P5+tDQasntNO/77i0RYwK5Tx/oQUu3Sa4GUH7gEHuUeHbXm3E0r08I
-	 9dj+AugagOVZuwH65yiyxcTrgoPjA8rWN9pMhew1+0RSnxiEkCvIYYc/q4NvjbkzR91oq
-	 /QtZcVOQj8AMsEVIhvcBO3qSgxEf8SnKPZjMVoeHhjKlx0P6j0X9FjaFjTqtlw0ha7Am7
-	 x4juJ2tG7jy/+axpah4YOG3UwV6gUdEuZulgQsKxtHWMmzVY93f3LhVCyKziCOD4Um463
-	 LbiOAJ+7UmLH7tBbgvHXAGwEMAQJmxZYQ+9faTJA58a7PAhvAVEuNFrwg2RUpAOmFpg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050385;
+	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=1n/yyqlQIHO9AQ32biL3pQuHach2CjNrWamKIvTCJ/w=;
+	b=iKErX+mo7ynP+Gcrz7bZDArIOWNn4z7jAb2fRBa5W6K2PFxSQyb2FvdXUOH8/VQVGG9b
+	 v2PFNek1ge8LvpK/4blLTdOWyvFKLwN8VGHyDg7kfEs9KAtl1l28e9Sg5RvWLqcT6Ves3
+	 FzVvyr+mc05JGl4Uox22jYQkwgRC0M1fo5agkC+sKB8CFj3ICQoS3GgUfRCwlGXLrW2x3
+	 6GhhDfmB4F+n6ZW+2OzIvenhXqmsJ2hh7IWB3ofqn+k/XU1XkVdLyqeNQuSeE7zNUsk1w
+	 q7s+juy6UG2LRLkSw6fCxfRENPw8CFe6H6L6ksrn64fiAsIn2FhjPygnUJokkhUUZ1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wwnzAFkS;
-	arc=none smtp.remote-ip=209.85.210.45
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=crustytoothpaste.net;
+	spf=pass smtp.mailfrom=crustytoothpaste.net;
+	dkim=pass header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=EaBL+koL;
+	arc=none smtp.remote-ip=172.105.7.114
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF89160A2608
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 00:20:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DF89160A2608
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1C8606A334
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 01:06:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BA1C8606A334
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wwnzAFkS
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-85c1135c286so1222051a34.1
-        for <git@vger.kernel.org>; Wed, 18 Nov 2026 16:20:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795047659; x=1795652459; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=XUUqE1XrIoxP0AJd9iz0zC8BQbRMogpYKh0LrcLZrSI=;
-        b=wwnzAFkSWGvs5oNOqLWqBl1ALSPe/WQWFZ0cRBNuLTfD300pWmW2uNSSkXaty35n5b
-         OLWetwwG3KCKC+gAb0SRIvO62sCGR27vZMwRSPg8L8NsinV9HNgAJwu3g02muUAQn9g8
-         Ejx8cHWVjlUDo5IHKGEX41dPYhBEyt8b/SDgeGfjKHCGb6nh66dqzb3/fQ0sDvhdZBx8
-         j4vYKG4NgD4yN+0udBzWm8pIUO6VVOG4pWX+8A9iQ7nq2q79OHC+Fhig0+ggKd79xksJ
-         MVPT4ju9LlOk/4FlGmCAlRNY9ZPC53ihWU7BeFHzIZASp8kzH1wWeJpIAVLG04+4a1Ou
-         wnHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795047659; x=1795652459;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=XUUqE1XrIoxP0AJd9iz0zC8BQbRMogpYKh0LrcLZrSI=;
-        b=ytdNqT41Ch8G15dUC/jcoZlcWtqH3/v15vatiBywrllDiiT+mlRA5PHaDfsJlqHYOp
-         2ylBRUImLcZdb/GWSKSs8IWBX05DkdKLdwSLsEcX0Joq4S3P8nMRTeUVjrVU3GAQCMcS
-         B53ITTpUHr8dpnk8kOYlACP18kaHdGWJmKNZvP5WcWYx5tj0RPjcMqkrRFQLDaXN65Fs
-         JJUVX53C9TExAJpQ7enCLGD5YbJwkDwEbW/hW1rii3+CikWMG+plR6t0/uDuLMFSHSg3
-         jpPyUYjNjwFF0/FCh8Oc8y03AP1s2Ks4KuRyKCCjnSK+ovT3rqWp3ett37H66uTNJMov
-         Cc1Q==
-X-Gm-Message-State: APuU4Z933AygMBDiJjaKz3wcs9608DLXEga9BzMorD/iXc1f73wwgeTD
-	n+CvZ1DKpglSYmIHXHQmBHYF2/W9R3ib9v37KGagDPwzHABy41Gk33uTdef1UQ==
-X-Gm-Gg: AYBFou0L+uaC2ZOR7QhWEb4GBZC70YB3tXR90LVplXmHNsiJwg+X85kyUdXApjZb535
-	V+ZOfkLDZyI3C0jGO5Wdc/FpCja9kEf0IvXLHGFBO/sx3wMTjhGXDOnS4Gt6jO5SFzHkRSUfNdF
-	0YE89y7MD5vmwlad7l8kfjTr9W8a2oYhohhlN54CqLg0a7uuJX3hzh0ZCzq/aoZigDkme4W8y7r
-	piEjtjATq/nYMzqU2Mf5fDmolAj+1bw8jDIxvJ6ieu7KJVu46J23b/1bh0tzXgKK+IwrkM8Ywv2
-	hFsvU67hdzDVvibA2RIQj3BGAhVz83/or9P0zTqRq8P2SSFXxSUBQLUFNHnox4kpAzZ4tNjYokX
-	XWJQVD/XaTZvilwEuNGq5oSkRDEcS5znLw0SsOW9A5XirIeyxZDffrEARDHFXy8DCuQCV0i/U0Q
-	JXoGNsmjWkLCBPCWK4XEVyWr/vEyTjx9GYxueySjOEtWxSTqeOgZX45OG1DZJx4Flr/IAzyPRuA
-	+4LJ0nr7tH1hbbVuqnrh8JB9dzcp/gcpnd1ycj3KarKn4xS1Bpt1/uYHzXzTsg7N2b6OhRuVwWi
-	GiohgyOTdJI8C3V8ynJ0v9yU/NRMm8V5Kiu2wuLfjCUcj7vSlz3GbHcBNbcEYySIzJP9
-X-Received: by 2002:a05:6830:4429:b0:85e:ff79:a340 with SMTP id 46e09a7af769-862f09063fcmr4478658a34.11.1795047658838;
-        Wed, 18 Nov 2026 16:20:58 -0800 (PST)
-Received: from denethor.localdomain ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-862f01d492dsm3293400a34.6.2026.11.18.16.20.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2026 16:20:58 -0800 (PST)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	karthik.188@gmail.com,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 6/6] object-file: create ODB transaction temporary directory eagerly
-Date: Wed, 18 Nov 2026 18:20:43 -0600
-Message-ID: <20261119002043.2108654-7-jltobler@gmail.com>
-X-Mailer: git-send-email 2.56.0.173.gf57c9a7388
-In-Reply-To: <20261119002043.2108654-1-jltobler@gmail.com>
-References: <20261110002251.2007617-1-jltobler@gmail.com>
- <20261119002043.2108654-1-jltobler@gmail.com>
+	dkim=pass (3072-bit key, unprotected) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=EaBL+koL
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1795050376;
+	bh=vwD+e15Y2QSMGiMZ7lucwcFwRvcSI7Xdqgj2r6WdGOc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+	 In-Reply-To:References:Content-Type:Content-Disposition;
+	b=EaBL+koLxq8lgBgJG5x+qgW9/rWNvaB+FefrDmkG0gHjXt1S+5/+IceXWZPT/K3wi
+	 eS2T7y3Hmp3U2aMGoabgjCLb3SdrHVBhgWAXi9+eaK7MsG0MjosxE4yu8tAkk2hWmO
+	 AqTQR1BmbdxLAJ2G/yij57Val5nCSVV6Xw4eAo3a+LgV3AI9k9iTP9CddMecElUgHl
+	 8mfQ8Bdo23ad7EMeV+WZcIZVb1LKGSpCM7a773ygxNpsgOVweq6VwLEDEROE1/8vUv
+	 4ZgkhymVYLwf24TjAFOVa8NuPzR6yOuouj+xVH51DvR2Ulkdm0l1wYlUr5Ycg+X29f
+	 eiMjsmPOKoJcVRe5eDmOK8IGx3DyVg1wdga2qS68uyo+Prioldm32ZzlFNxyCzDm4O
+	 q1zjDP+YodK84RHShSOVlgPdv0EB03ErN/S49BUDMYEnMq4mWEKIUejUjQAFNdxQrd
+	 SaIxZEPK39h6JwioqJ4LbtQ+zIvR512qcXnAVnE97LqHxPeQa6M
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:7c90:2995:a14c:f1da])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id DDAE0200BF;
+	Thu, 19 Nov 2026 01:06:16 +0000 (UTC)
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Adam Dinwoodie <adam@dinwoodie.org>
+Subject: [PATCH v3] setup: fix hash algorithm detection
+Date: Thu, 19 Nov 2026 01:06:12 +0000
+Message-ID: <20261119010612.687733-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.53.0.697.g625c4fb2daa
+In-Reply-To: <20261108011633.1772000-1-sandals@crustytoothpaste.net>
+References: <20261108011633.1772000-1-sandals@crustytoothpaste.net>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -99,246 +73,166 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-By default, ODB transactions for the "files" backend create their
-temporary object directory lazily once the first loose object is about
-to be written, and only if batched fsync is enabled. Transactions
-configured for git-receive-pack(1) are the exception as the directory is
-needed to quarantine incoming objects up front. Lazily creating the
-temporary directory in this manner is awkward for a couple of reasons:
+Our current hash algorithm selection code has a few different problems.
+First, we do not actually default to GIT_HASH_DEFAULT.  Second, if we
+have an algorithm chosen by init.defaultObjectFormat and we re-init a
+repository, we will change the hash algorithm, which is very much not
+desired.
 
-  - Writing loose objects has to know about the transaction internals to
-    trigger the lazy creation of the temporary object directory.
+Let's restructure this code slightly.  First, if an algorithm was
+selected on the command line, assume that's what the user wanted.
+Otherwise, the other options should only be chosen if our repository
+doesn't exist (that is, repo_fmt->version is -1) or it's specifically
+detected as having no hash algorithm.  In that case, first use the
+environment, then the config, and finally, the default algorithm.
 
-  - Whether objects are staged in a temporary object directory, and thus
-    whether they become visible at once on commit, depends on the
-    configured fsync method.
+Then, if the algorithm does not match the repository, complain loudly
+and refuse to reinitialize the repository with a different hash
+algorithm.
 
-Create the temporary object directory eagerly for every transaction when
-it is started instead. This also ensures that no object is written to
-the main object database before the transaction is committed.
+With this change, we will choose SHA-256 in breaking changes mode and in
+Git 3.0, which is what we want.  Add several tests to cover this case
+and several others discovered along the way.  Remove the now-inaccurate
+comment.
 
-Note that committing a transaction migrates every written object into
-the primary object directory even when batched fsync is disabled. This
-adds some minor overhead to ODB transaction callers that previously only
-used a temporary directory if batched fsync was enabled. The following
-benchmark uses the default fsync configuration and adds 10000 files of 4
-KiB each to a freshly initialized repository via git-add(1):
-
-  Benchmark 1: git add . (rev = HEAD~)
-    Time (mean ± σ):     895.0 ms ±  23.8 ms    [User: 545.3 ms, System: 340.7 ms]
-    Range (min … max):   866.7 ms … 928.7 ms    20 runs
-
-  Benchmark 2: git add . (rev = HEAD)
-    Time (mean ± σ):     956.3 ms ±  26.1 ms    [User: 541.4 ms, System: 405.2 ms]
-    Range (min … max):   923.9 ms … 993.6 ms    20 runs
-
-  Summary
-    git add . (rev = HEAD~) ran
-      1.07 ± 0.04 times faster than git add . (rev = HEAD)
-
-The overhead is a small fixed cost per object for migrating it into the
-primary object directory, which is minor compared to the cost of writing
-the object in the first place. It is most visible when adding many small
-files at once, as in the benchmark above. Otherwise, transactions
-typically write only a few loose objects, for example when unpacking a
-pushed packfile with fewer objects than the unpack limit. So the
-overhead is not expected to be noticeable in most cases.
-
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
+Reported-by: Adam Dinwoodie <adam@dinwoodie.org>
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- object-file.c         | 56 +++++++++----------------------------------
- object-file.h         |  1 -
- odb/source-loose.c    |  6 -----
- t/t0004-unwritable.sh | 19 +++++++--------
- 4 files changed, 19 insertions(+), 63 deletions(-)
+Changes since v2:
+* Remove comment.
+* Use `$GIT_TEST_BUILTIN_HASH`.
 
-diff --git a/object-file.c b/object-file.c
-index 1926f61f53..8af9b0975a 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -489,7 +489,6 @@ struct odb_transaction_files {
+ setup.c         | 27 ++++++++++++-------------
+ t/t0001-init.sh | 53 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 66 insertions(+), 14 deletions(-)
+
+diff --git a/setup.c b/setup.c
+index cedc031c54..5d7e8d590e 100644
+--- a/setup.c
++++ b/setup.c
+@@ -2887,25 +2887,21 @@ static void repository_format_configure(struct repository_format *repo_fmt,
  
- 	struct tmp_objdir *objdir;
- 	struct transaction_packfile packfile;
--	const char *prefix;
+ 	config_with_options(read_default_format_config, &cfg, NULL, NULL, &opts);
  
- 	struct strvec pack_names;
- 	struct tempfile **pack_lockfiles;
-@@ -497,27 +496,6 @@ struct odb_transaction_files {
- 	size_t pack_lockfiles_alloc;
- };
- 
--int odb_transaction_files_prepare(struct odb_transaction *base)
--{
--	struct odb_transaction_files *transaction =
--		container_of_or_null(base, struct odb_transaction_files, base);
--
 -	/*
--	 * We lazily create the temporary object directory
--	 * the first time an object might be added, since
--	 * callers may not know whether any objects will be
--	 * added at the time they call odb_transaction_files_begin.
+-	 * If we already have an initialized repo, don't allow the user to
+-	 * specify a different algorithm, as that could cause corruption.
+-	 * Otherwise, if the user has specified one on the command line, use it.
 -	 */
--	if (!transaction || transaction->objdir)
--		return 0;
--
--	transaction->objdir = tmp_objdir_create(base->source->odb->repo, transaction->prefix, 0);
--	if (!transaction->objdir)
--		return error(_("unable to create temporary object directory"));
--
--	return 0;
--}
--
- void odb_transaction_files_fsync(struct odb_transaction *base,
- 				 int fd, const char *filename)
- {
-@@ -1547,13 +1525,10 @@ static int odb_transaction_files_env(struct odb_transaction *base,
- {
- 	struct odb_transaction_files *transaction =
- 		container_of(base, struct odb_transaction_files, base);
--	int ret;
- 
--	ret = odb_transaction_files_prepare(&transaction->base);
--	if (!ret)
--		strvec_pushv(env, tmp_objdir_env(transaction->objdir));
-+	strvec_pushv(env, tmp_objdir_env(transaction->objdir));
- 
--	return ret;
-+	return 0;
- }
- 
- int odb_transaction_files_begin(struct odb_source *source,
-@@ -1561,6 +1536,8 @@ int odb_transaction_files_begin(struct odb_source *source,
- 				enum odb_transaction_flags flags)
- {
- 	struct odb_transaction_files *transaction;
-+	const char *prefix;
-+	int ret;
- 
- 	transaction = xcalloc(1, sizeof(*transaction));
- 	transaction->base.source = source;
-@@ -1572,24 +1549,13 @@ int odb_transaction_files_begin(struct odb_source *source,
- 	transaction->flags = flags;
- 	strvec_init(&transaction->pack_names);
- 
--	transaction->prefix = "transaction";
--	if (flags & ODB_TRANSACTION_RECEIVE) {
--		/*
--		 * ODB transactions for git-receive-pack(1) eagerly create a
--		 * temporary directory and use a different temporary directory
--		 * prefix.
--		 *
--		 * NEEDSWORK: This transaction flag is only used by the "files"
--		 * backend to special case temporary directory set up and
--		 * handling. Ideally transaction users should not have to care
--		 * though. To avoid this, we could eagerly create the temporary
--		 * directory and use the same prefix name for all transactions.
--		 */
--		transaction->prefix = "incoming";
--		if (odb_transaction_files_prepare(&transaction->base)) {
--			free(transaction);
--			return -1;
--		}
-+	prefix = flags & ODB_TRANSACTION_RECEIVE ? "incoming" : "transaction";
-+	transaction->objdir = tmp_objdir_create(source->odb->repo, prefix, 0);
-+	if (!transaction->objdir) {
-+		ret = error_errno(_("unable to create temporary object directory in %s"),
-+				  source->path);
-+		free(transaction);
-+		return ret;
+ 	env = getenv(GIT_DEFAULT_HASH_ENVIRONMENT);
+-	if (repo_fmt->version >= 0 && hash != GIT_HASH_UNKNOWN && hash != repo_fmt->hash_algo)
+-		die(_("attempt to reinitialize repository with different hash"));
+-	else if (hash != GIT_HASH_UNKNOWN)
+-		repo_fmt->hash_algo = hash;
+-	else if (env) {
++	if (hash != GIT_HASH_UNKNOWN) {
++		/* nothing to do */
++	} else if (repo_fmt->version >= 0 &&
++		   repo_fmt->hash_algo != GIT_HASH_UNKNOWN) {
++		hash = repo_fmt->hash_algo;
++	} else if (env) {
+ 		int env_algo = hash_algo_by_name(env);
+ 		if (env_algo == GIT_HASH_UNKNOWN)
+ 			die(_("unknown hash algorithm '%s'"), env);
+-		if (repo_fmt->version < 0 ||
+-		    repo_fmt->hash_algo == GIT_HASH_UNKNOWN)
+-			repo_fmt->hash_algo = env_algo;
++		hash = env_algo;
+ 	} else if (cfg.hash != GIT_HASH_UNKNOWN) {
+-		repo_fmt->hash_algo = cfg.hash;
++		hash = cfg.hash;
++	} else {
++		hash = GIT_HASH_DEFAULT;
  	}
  
- 	*out = &transaction->base;
-diff --git a/object-file.h b/object-file.h
-index f44758c4f8..9ad79bbde0 100644
---- a/object-file.h
-+++ b/object-file.h
-@@ -177,7 +177,6 @@ int odb_transaction_files_begin(struct odb_source *source,
- 				struct odb_transaction **out,
- 				enum odb_transaction_flags flags);
+ 	/*
+@@ -3022,6 +3018,8 @@ static void repository_format_configure(struct repository_format *repo_fmt,
+ 	 * current storage formats do not change.
+ 	 */
+ 	if (repo_fmt->version >= 0) {
++		if (hash != repo_fmt->hash_algo)
++			die(_("attempt to reinitialize repository with different hash"));
+ 		if (ref_storage_format != repo_fmt->ref_storage_format)
+ 			die(_("attempt to reinitialize repository with different reference storage format"));
+ 		if ((ref_storage_payload || repo_fmt->ref_storage_payload) &&
+@@ -3038,6 +3036,7 @@ static void repository_format_configure(struct repository_format *repo_fmt,
  
--int odb_transaction_files_prepare(struct odb_transaction *base);
- void odb_transaction_files_fsync(struct odb_transaction *base,
- 				 int fd, const char *filename);
+ 	free(cfg.ref_storage_payload);
+ 	free(repo_fmt->ref_storage_payload);
++	repo_fmt->hash_algo = hash;
+ 	repo_fmt->ref_storage_format = ref_storage_format;
+ 	repo_fmt->ref_storage_payload = ref_storage_payload;
  
-diff --git a/odb/source-loose.c b/odb/source-loose.c
-index 50cb388c35..9330ae94b5 100644
---- a/odb/source-loose.c
-+++ b/odb/source-loose.c
-@@ -769,9 +769,6 @@ static int write_loose_object(struct odb_source_loose *loose,
- 	static struct strbuf tmp_file = STRBUF_INIT;
- 	static struct strbuf filename = STRBUF_INIT;
- 
--	if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT))
--		odb_transaction_files_prepare(loose->base.odb->transaction);
--
- 	odb_loose_path(loose, &filename, oid);
- 
- 	fd = start_loose_object_common(loose, &tmp_file, filename.buf, flags,
-@@ -860,9 +857,6 @@ static int odb_source_loose_write_object_stream(struct odb_source *source,
- 	char hdr[MAX_HEADER_LEN];
- 	int hdrlen;
- 
--	if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT))
--		odb_transaction_files_prepare(loose->base.odb->transaction);
--
- 	/* Since oid is not determined, save tmp file to odb path. */
- 	strbuf_addf(&filename, "%s/", loose->base.path);
- 	hdrlen = format_object_header(hdr, sizeof(hdr), in_stream->type, in_stream->size);
-diff --git a/t/t0004-unwritable.sh b/t/t0004-unwritable.sh
-index 3bdafbae0f..4dca4ada91 100755
---- a/t/t0004-unwritable.sh
-+++ b/t/t0004-unwritable.sh
-@@ -24,8 +24,8 @@ test_expect_success POSIXPERM,SANITY 'write-tree should notice unwritable reposi
- test_lazy_prereq WRITE_TREE_OUT 'test -e "$TRASH_DIRECTORY"/out.write-tree'
- test_expect_success WRITE_TREE_OUT 'write-tree output on unwritable repository' '
- 	cat >expect <<-\EOF &&
--	error: insufficient permission for adding an object to repository database .git/objects
--	fatal: git-write-tree: error building trees
-+	error: unable to create temporary object directory in .git/objects: Permission denied
-+	fatal: failed to start object transaction
- 	EOF
- 	test_cmp expect out.write-tree
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 9e57a06cea..d89f60bab9 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -516,6 +516,17 @@ test_expect_success 're-init from a linked worktree' '
+ 	)
  '
-@@ -39,8 +39,8 @@ test_expect_success POSIXPERM,SANITY 'commit should notice unwritable repository
- test_lazy_prereq COMMIT_OUT 'test -e "$TRASH_DIRECTORY"/out.commit'
- test_expect_success COMMIT_OUT 'commit output on unwritable repository' '
- 	cat >expect <<-\EOF &&
--	error: insufficient permission for adding an object to repository database .git/objects
--	error: Error building trees
-+	error: unable to create temporary object directory in .git/objects: Permission denied
-+	fatal: failed to start object transaction
- 	EOF
- 	test_cmp expect out.commit
- '
-@@ -55,9 +55,8 @@ test_expect_success POSIXPERM,SANITY 'update-index should notice unwritable repo
- test_lazy_prereq UPDATE_INDEX_OUT 'test -e "$TRASH_DIRECTORY"/out.update-index'
- test_expect_success UPDATE_INDEX_OUT 'update-index output on unwritable repository' '
- 	cat >expect <<-\EOF &&
--	error: insufficient permission for adding an object to repository database .git/objects
--	error: file: failed to insert into database
--	fatal: Unable to process path file
-+	error: unable to create temporary object directory in .git/objects: Permission denied
-+	fatal: failed to start object transaction
- 	EOF
- 	test_cmp expect out.update-index
- '
-@@ -72,10 +71,8 @@ test_expect_success POSIXPERM,SANITY 'add should notice unwritable repository' '
- test_lazy_prereq ADD_OUT 'test -e "$TRASH_DIRECTORY"/out.add'
- test_expect_success ADD_OUT 'add output on unwritable repository' '
- 	cat >expect <<-\EOF &&
--	error: insufficient permission for adding an object to repository database .git/objects
--	error: file: failed to insert into database
--	error: unable to index file '\''file'\''
--	fatal: updating files failed
-+	error: unable to create temporary object directory in .git/objects: Permission denied
-+	fatal: failed to start object transaction
- 	EOF
- 	test_cmp expect out.add
- '
--- 
-2.56.0.173.gf57c9a7388
-
+ 
++test_expect_success 'git init uses default object format' '
++	test_when_finished "rm -rf repo" &&
++	(
++		sane_unset GIT_DEFAULT_HASH &&
++		git init repo &&
++		echo "$GIT_TEST_BUILTIN_HASH" >expect &&
++		git -C repo rev-parse --show-object-format >actual &&
++		test_cmp expect actual
++	)
++'
++
+ test_expect_success 'init honors GIT_DEFAULT_HASH' '
+ 	test_when_finished "rm -rf sha1 sha256" &&
+ 	GIT_DEFAULT_HASH=sha1 git init sha1 &&
+@@ -602,6 +613,48 @@ do
+ 	'
+ done
+ 
++test_expect_success 'init refuses to reinitialize with different hash' '
++	test_when_finished "rm -rf repo" &&
++	sane_unset GIT_DEFAULT_HASH &&
++	for algo in sha1 sha256
++	do
++		if test "$algo" = sha1
++		then
++			other=sha256
++		else
++			other=sha1
++		fi &&
++		git init --object-format="$algo" repo &&
++		cat >expect <<-EOF &&
++		fatal: attempt to reinitialize repository with different hash
++		EOF
++		test_must_fail git init --object-format="$other" repo 2>err &&
++		test_cmp expect err &&
++		rm -fr repo || return 1
++	done
++'
++
++test_expect_success 're-init does not modify hash from config' '
++	test_when_finished "rm -rf repo" &&
++	sane_unset GIT_DEFAULT_HASH &&
++	for algo in sha1 sha256
++	do
++		if test "$algo" = sha1
++		then
++			other=sha256
++		else
++			other=sha1
++		fi &&
++		git init --object-format="$algo" repo &&
++		test_config_global init.defaultObjectFormat "$other" &&
++		git init repo &&
++		echo "$algo" >expect &&
++		git -C repo rev-parse --show-object-format >actual &&
++		test_cmp expect actual &&
++		rm -fr repo || return 1
++	done
++'
++
+ test_expect_success 'extensions.objectFormat is not allowed with repo version 0' '
+ 	test_when_finished "rm -rf explicit-v0" &&
+ 	git init --object-format=sha256 explicit-v0 &&
