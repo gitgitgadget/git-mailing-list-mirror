@@ -1,90 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.174
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795103889;
-	b=mEwrctVmQXNh6E58sSy1ai9RMP89DOhu7EmYejkCYt7y7c3G/DJyOv8JJ8JTyTcvNlDH
-	 a5y8B3zAbP/nJdzf9ETx4vXGxkqTWVEiMU1p4n2Xf/agUpL5It/0Abmgiw7EbQEI26qA7
-	 XuOmwCJYR+OwQA6gep0D9u2+1aWrbK5PkeaRIHkhEmjSCHROS4tPPHuaxuaxhgIu4hPbM
-	 4QCVch9FKYTFbtjL3b6Es3uecUlUhHReIDXNIH36+OCzAcJi17VgvN0htDR+nr8jtjt2+
-	 DAh5eZv9glwlVAruFap29HoO3qttzWsNq0mRaUCXcSg7eIedC+PlTXzrqfZzqapdfUg==
+	t=1795103887;
+	b=KEFrYUmG8yH3kQ6rjHJtk0m7Bbu3lrQ6eR3qibwgZXnaGhWWhFrRzzxxP3z1q4fOOaGW
+	 Mye1B2yk0QgYE4i4dR28M/DuozbTxuR9qVaZKbiayU/vISDNR9QQ8V8rvNeUUjmOW/tg7
+	 LPKiql2MVdq274UjGseLCga97jFxkkSERoZoGFgOOUj7ELBZPx3mQVqNZf4Dorsoq/Ejk
+	 rU5mwP4KVz/jeCiaBpfUqiiKMJox9Dqe4cjZI0Cbh16mWrxAQRzgYRP0PjtEWzsJtv/1v
+	 u80zNWmtRtOH2/yIUELsXY8ObvvfzHqo4zd24QGlPKezB0cRtWQJwYVbM7VpJAqktkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795103889;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795103887;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=4J9Vonx7afoKdvySHvczhxBRdGtDAwu6Vcee2rTO310=;
-	b=Esz9DJuRrXgyn5NgQvCBIjvRWhOiFQx6M2+5hGIrA8XC+1RX13tEVF+StzeHTqJPmbFS
-	 R6qYVCCWKKobGKIzFD6MfYpYZOJo7j10aLiiqwNurfzAkrjxf2XwJrYyatjSw7eqhoYHb
-	 bA1Er+ZkJRr7aj/BNWnSI+dPG+EGUpcJE1E4jLJsG2Jzb2JW9+mjAEe6AktUoOA7o1kE4
-	 QYMjQ3FSSbmuZhL7BCEkBpeP8jigvtpybdKvPrIp11Jqd8WttEZRMLObIPT5HgFSa30jb
-	 BP+50OMOtfhDrb0jB/YuSczUS5X4xV7ubYUPZg3adrIaJoHwZYL1Cemy8c2UzHXQRnA==
+	bh=UDp3PI/TMlQSH4xcRUFNiwFphbLraNKrIR4v6YllvJY=;
+	b=yyiYz7yz4Bqyw2eE/6vKcGEGSn05xlQYg2PLsKmMTS/eBTzIvB380lXSBdCwqig08jts
+	 1gP+lMIjhRFrKRFEEH2f7uYMP6ohGL9k+8rGXTvYBO8FKxB8Wy1GfhrYHF/uWZVox4zJI
+	 T/n2+TOMgS63fIFKKp8srSo6f2MBx8Ff7W2Y9zBX5uhwnjrm7sGKL4vbinCw43/6cUQhZ
+	 YpwiKlgfw1V9zNvSYRG2vXE2bvaMHhKdx4EQm/LZJixXj5rcPV2VJoLUrd+OSb5vW2dPY
+	 ZzpmsMNFnl5qAJWz0VDZaHccFOpLu/2Sw9jBxqdJ8Lpjl3jSUQtXqLAgf0nWodxKzqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=MwcrChAT;
-	arc=none smtp.remote-ip=209.85.216.53
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=F1CfDsEW;
+	arc=none smtp.remote-ip=209.85.210.174
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A53B606A32F
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 15:58:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3A53B606A32F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7052606A331
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 15:58:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A7052606A331
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=MwcrChAT
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-3b40f4d4b5dso264926a91.1
-        for <git@vger.kernel.org>; Thu, 19 Nov 2026 07:58:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=F1CfDsEW
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-8a0880a46e7so787620b3a.1
+        for <git@vger.kernel.org>; Thu, 19 Nov 2026 07:58:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795103888; x=1795708688; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795103886; x=1795708686; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=4J9Vonx7afoKdvySHvczhxBRdGtDAwu6Vcee2rTO310=;
-        b=MwcrChATiFdyGOSJK3sSrpASdBqyD3HvK22e2ohYqJlFU2nL0u5JDO9j2em9cJnBNo
-         lL235kju8ojq2rIQi4itWs0kcooWCi8WjGgqyWy8y2kMd3X9yRYoLzC58duulfS3euc8
-         rGn6GJeu4RuYeapCMydUp6nJUlz38B03D5IU3azPaFchEotuEb688zhegQAzp6r18N+N
-         aF56Oky6frqq9ikOx9uMEnxiAoxJ3KS7IdybhmOXHE8Bm+L/+eHPdWYN6lKCBqJYRVcU
-         /vVQ6IUFhRpsSDLBaTg/UhhD7mqYaxR3SCuf7ZwwQBcxV4YQUEabTczCe6SJk4LUHZ1C
-         flXg==
+        bh=UDp3PI/TMlQSH4xcRUFNiwFphbLraNKrIR4v6YllvJY=;
+        b=F1CfDsEWIl22jpN7LQgQL/NUFO3B+ZLdbc7LcdBqIzt9TJz1sK4QuvhyV7C/R36zpW
+         TzOqdrYTI7IANdTZxp8OpxnCb5/c66EVtJxm1aBd+I+8d4vbi5EgNePR5l1UvgmgpZyt
+         ybc9cIGA48Ujmx6BikovBhDFO1/nDXvXkNlk/yKhv1VC3FdnC4T/S7fa4ZYxRHwHsaJV
+         R6tLiVswTe8xa7SUBnXC8Lwv67wKPRZIT1SbbYpKat3xbE73Hp69oS8G6bbXMN+VoNy7
+         jlwa7044+NI7Uu/x3FcIajEhIKBOY5ZZIbm1lxmd9AkRYNcz2xsRHMnDHj2t+P9wi8Oi
+         kaOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795103888; x=1795708688;
+        d=1e100.net; s=20260707; t=1795103886; x=1795708686;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=4J9Vonx7afoKdvySHvczhxBRdGtDAwu6Vcee2rTO310=;
-        b=a3jfrQ7kV39yBw7OyNQdga26dLP8dGmgcOgdHdkW4QsmUfPwnW/HW2cE12Dw3J+/mA
-         rEl/Y5PJaya9vR+vYq243Lhh3xrsLLklJ/XA4VAXrJbS+G/MeJtASyIR/zm2ArYVxfAl
-         tsGArvDvDgpm8+4bSzoJSskkK2V2Hehco2bCMvWyKOXBZ3lviW8ZOTilRFmfR5r6OD4z
-         h0gCqgazEbdFVyjEg+QW+uA4roArKgO9if39Su1z7qIBCkBEASQBlL77KN9Vihrae9DO
-         qjyNvrzuRkzSDzwfK4UZkWkZT2QzwOza+oMTFWECV47YlPj3RY1OPjqJtaRHsBjWoHMw
-         eySA==
-X-Gm-Message-State: APuU4Z9K/TBmabooKiVMIqzvXYDWoDHXTLqAeexNRZvfkuU2k8Vd9s/6
-	y3IPSe635shdY7d6bdHgr/5BgGUHBVSPIldj32Ax+dOLQAqcrjrUhwUOzes2u2M7
-X-Gm-Gg: AZFdTZfiCx86B/y+cm8FDz+AyHZ0K2MDbtGhkJ0Rx4yq3N8TMVlgYhqgjeMIrsZPcxT
-	FMNjGINer0xby/fZdXA/0eB0gNguMXEiNJ4OJvZ34bs5JnwOrn9uq5f00gdOEwdXhwE7dCgxDT9
-	oHU6EwKlZfwUkqzrb4lmOm33rMR3pe5436gVkDb1thn/Zpoy7zW8z7AgmU+KcCdpA6SyRm2VPat
-	5mrV2MWsHbTNvvSrvO6tNQjddkMw62xxrTMMN/JDpiU1zwsn0blPeEVY4KNJqdTMsnT810rMQXC
-	9B3RVL54H+WgXFLwY4rAzZqJ6vUK6XXxc0KiNchhSO7SOtbVY4ARmYrc4L7VMS+8HUNwe1ngV1b
-	eCuKBoInHrzyJlEMej5jZHz6+xejGDA/ZtFK0OyqLPxw05dBQTX860LlwhN7omH3JJN1PTxoNfQ
-	BrE89dehkmlQIO1OL7v17uvRIzEUWAXRjwX9PazxPxO8zBfGpHuj7vM9/RXB28Lz919dy142Owu
-	57eRIT1mpbVm8QnpD9Q2fgGoDzj6zJ6ek4CbcAnwU+u6g/tEOkgQ31ZpXfw1t2/KfIxuvM8mJTr
-	nJ4xgALeD51LUzf9o51kuGZ6FxmvmWV4CIM=
-X-Received: by 2002:a17:90b:224c:b0:3a8:7096:9b48 with SMTP id 98e67ed59e1d1-3b3d0645da8mr6371226a91.1.1795103888106;
-        Thu, 19 Nov 2026 07:58:08 -0800 (PST)
+        bh=UDp3PI/TMlQSH4xcRUFNiwFphbLraNKrIR4v6YllvJY=;
+        b=N6djZm+PIThMwChDRZKafkH4DAdJ2C7y4V+D09XRYTz1ASVzij/6+v+Hc59MEv5jKH
+         qEP/Yut9r2nrjc77S7nBkJCc06wiEIThJJEr/OaQTM1ogzlVWq6RgU3j4Rem9hzfkH6+
+         5IRzK660j7zICYf0ns7uQeW9mRU4eETwCXX61z/8Yqd87HCm5O1ZBiseXtN3bxS4h3pa
+         vTHQXnMI6h3gPcAm0+/H0GJ3iaRoTyY0Tl5RZiQdMDUMx0ChXdJPd+azLoJ3vczmUNg8
+         QTCf4mh8CoycvJ2rhkAME7QHu6lSJu2DexFoReGqI7K2XvN0qcbqrpZQtAJICKIpNVDl
+         H0lA==
+X-Gm-Message-State: APuU4Z+wW0ukdoSP+v8hzvruXY7xu+CZEhinvXS/0pWhPwm3zw6nSGiB
+	VWkHFK0hKk/av1hlRJzVofAV8rWvssE8lL4r/8O5R+0qJFTTPFfDTtJCR0OyWw==
+X-Gm-Gg: AYBFou26Fj3QMjdXbCV86v2JOzAn42EWg72ByR7u8wrFQruivy91wWl7ORKhzzBkjWG
+	lyh+zFo+jduR+L13k7dYOzYfwNDH6A7qqRq7KZDx8Hoi2aJeKjV1I98ShvDpVLCOUSy30Cy4YXp
+	AJlSP7Qrb4ozqtUze4/tTpYRNGS5Nr9EP345plfckzl6guqggH67F8ev75tActEp4oMAvsfPJtG
+	cgZE4WrbCR3GoyRNtWMjHAKlNxLsRiWIqKrmZixLAquIwcFHgHTIIlM6uPE6dESH1wfJQWB0jFb
+	Ts3dAZ1MklG0tsWzDIUmZtPsvIkBJwlnWOMvrJaW4B50BKLzygVPJO3ZgTgxtqhyJHeMpf9aWA8
+	QH8VyvTlGg3YqAJbJqYSvGfbrPp6Qebn8YwAyvdFv9nidIauU4YKUyIvyz8CdRPsIMEhNqabw3d
+	AoNx3U620Cpekjhnfy9XF0LgzK6wcUrKM8njeQkXmQThrYjJ8tblysorYGPHLnru+K3zIPIJORr
+	YDyK5z2YNLA6wwQq94LnvJyKAhpDMSjogts906fP3HrLx3Vx75yokrbMN7MbBryHBDtVJzegUhi
+	srVHqqMd7gopgty9Dp72Yg1FkCCuHEfpaUI=
+X-Received: by 2002:a05:6a00:2e1e:b0:8b9:227b:c0a with SMTP id d2e1a72fcca58-8c7db1ecac6mr1087301b3a.5.1795103885910;
+        Thu, 19 Nov 2026 07:58:05 -0800 (PST)
 Received: from [127.0.0.1] ([172.171.119.251])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cde534a4784sm1939340a12.18.2026.11.19.07.58.07
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8c872d50fcesm118912b3a.23.2026.11.19.07.58.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Nov 2026 07:58:07 -0800 (PST)
-Message-Id: <8dc66bfca4f42b1d847cf5e39d5940e0150ef2e4.1795103883.git.gitgitgadget@gmail.com>
+        Thu, 19 Nov 2026 07:58:05 -0800 (PST)
+Message-Id: <d4d34077283370cfa22e9d8f57edfb35de9c692a.1795103883.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2287.v4.git.1795103883.gitgitgadget@gmail.com>
 References: <pull.2287.git.1793462224.gitgitgadget@gmail.com>
 	<pull.2287.v4.git.1795103883.gitgitgadget@gmail.com>
 From: "Ravi Mistry via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 19 Nov 2026 15:58:01 +0000
-Subject: [PATCH v4 3/5] http: add http.retryStatusCodes config option
+Date: Thu, 19 Nov 2026 15:57:59 +0000
+Subject: [PATCH v4 1/5] http: fix retry count and Retry-After timing
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -107,315 +107,185 @@ Cc: Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>,
 From: Ravi Mistry <rmistry@google.com>
 
 Commit 640657ffd0 (http: add support for HTTP 429 rate limit retries,
-2026-03-17) hardcoded HTTP 429 as the only status code eligible for
-retry. While service providers are expected to return 429 when
-rate-limiting or overloaded, in practice reverse proxies, CDNs,
-client-side proxies, and servers also return transient 502, 503, or 504
-errors when a connection drops, times out, or sheds load.
+2026-03-17) introduced two small bugs in HTTP 429 retry handling:
 
-We should not retry 5xx responses unconditionally by default because in
-some setups they point to a permanently broken proxy or server. Keep 429
-as the default and introduce an http.retryStatusCodes configuration
-option (and corresponding GIT_HTTP_RETRY_STATUS_CODES environment
-variable) accepting a comma- or whitespace-separated list of HTTP status
-codes in the 400..599 range (for example, "429,502,503,504"), documented
-as a temporary workaround while underlying provider or proxy
-infrastructure is fixed.
+1. In http_request_recoverable(), rate_limit_retries is initialized to
+   http_max_retries (the number of retries to perform after the initial
+   failed request) and decremented with pre-decrement
+   (--rate_limit_retries) in the while condition. Because of the
+   pre-decrement, setting http.maxRetries=1 performs 0 retries, and
+   more generally N configured retries only retries N-1 times. In
+   addition, if the first request returns 401 (HTTP_REAUTH) and the
+   re-authenticated request returns 429 when http.maxRetries is 0,
+   --rate_limit_retries wraps from 0 to -1 (truthy in C).
 
-Keep the existing "rate limited" warning and error messages for HTTP
-429, and report the numeric status code (e.g., "HTTP 502, waiting <N>
-seconds before retry") when retrying other status codes.
+   Fix this by checking http_max_retries > 0 && rate_limit_retries-- > 0
+   in the loop condition and checking http_max_retries <= 0 after the
+   loop (which handles both an initial 429 and a 429 after 401 re-auth
+   without logging "retries-exhausted", making the pre-loop check
+   redundant).
+
+2. In http_request(), CURLINFO_RETRY_AFTER is queried after
+   run_one_slot() has already called handle_curl_result(), which logs
+   results->retry_after to Trace2 ("http/429-retry-after") while it is
+   still -1. Move the CURLINFO_RETRY_AFTER extraction into
+   finish_active_slot() (initializing slot->results->retry_after = -1
+   first) so that both handle_curl_result() and callers of
+   run_one_slot() observe the parsed Retry-After value.
 
 Signed-off-by: Ravi Mistry <rmistry@google.com>
 ---
- Documentation/config/http.adoc | 37 +++++++++++++++++++++-----
- http.c                         | 42 ++++++++++++++++++++++++++---
- http.h                         |  6 +++--
- t/lib-httpd/http-429.sh        | 10 +++++--
- t/t5584-http-429-retry.sh      | 48 ++++++++++++++++++++++++++++++++++
- 5 files changed, 128 insertions(+), 15 deletions(-)
+ http.c                    | 27 +++++++++++++--------------
+ t/lib-httpd/http-429.sh   | 31 ++++++++++++++++++++++++++-----
+ t/t5584-http-429-retry.sh | 21 +++++++++++++++++++++
+ 3 files changed, 60 insertions(+), 19 deletions(-)
 
-diff --git a/Documentation/config/http.adoc b/Documentation/config/http.adoc
-index 8e7538ab76..726669e85c 100644
---- a/Documentation/config/http.adoc
-+++ b/Documentation/config/http.adoc
-@@ -328,7 +328,10 @@ http.keepAliveCount::
- 
- http.retryAfter::
- 	Initial wait time in seconds before retrying when a server returns
--	HTTP 429 (Too Many Requests) without a Retry-After header.
-+	a retryable HTTP status code without a Retry-After header. The
-+	set of retryable status codes is configured by
-+	`http.retryStatusCodes`, which includes only HTTP 429 (Too Many
-+	Requests) by default.
- 	Defaults to 0, which retries immediately without waiting on every
- 	attempt (unless a Retry-After header is present). When set to a
- 	positive value and no Retry-After header is present, the first
-@@ -340,17 +343,23 @@ http.retryAfter::
- 	libcurl 7.66.0 or later. On older versions, configure this setting
- 	manually to control the retry delay. Can be overridden by the
- 	`GIT_HTTP_RETRY_AFTER` environment variable.
--	See also `http.maxRetries` and `http.maxRetryTime`.
-+	See also `http.maxRetries`, `http.maxRetryTime`, and
-+	`http.retryStatusCodes`.
- 
- http.maxRetries::
--	Maximum number of times to retry after receiving HTTP 429 (Too Many
--	Requests) responses. Set to 0 (the default) to disable retries.
-+	Maximum number of times to retry after receiving a retryable HTTP
-+	status code. The set of retryable status codes is configured by
-+	`http.retryStatusCodes`, which includes only HTTP 429 (Too Many
-+	Requests) by default. Set to 0 (the default) to disable retries.
- 	Can be overridden by the `GIT_HTTP_MAX_RETRIES` environment variable.
--	See also `http.retryAfter` and `http.maxRetryTime`.
-+	See also `http.retryAfter`, `http.maxRetryTime`, and
-+	`http.retryStatusCodes`.
- 
- http.maxRetryTime::
- 	Maximum time in seconds to wait for a single retry attempt when
--	handling HTTP 429 (Too Many Requests) responses.
-+	handling a retryable HTTP status code. The set of retryable
-+	status codes is configured by `http.retryStatusCodes`, which
-+	includes only HTTP 429 (Too Many Requests) by default.
- 	If the server requests a delay (via Retry-After header) or if the
- 	configured `http.retryAfter` value itself exceeds this maximum,
- 	Git will fail immediately rather than waiting. Exponentially
-@@ -358,7 +367,21 @@ http.maxRetryTime::
- 	capped at this maximum rather than causing an immediate failure.
- 	Default is 300 seconds (5 minutes).
- 	Can be overridden by the `GIT_HTTP_MAX_RETRY_TIME` environment
--	variable. See also `http.retryAfter` and `http.maxRetries`.
-+	variable. See also `http.retryAfter`, `http.maxRetries`, and
-+	`http.retryStatusCodes`.
-+
-+http.retryStatusCodes::
-+	Comma- or whitespace-separated list of HTTP status codes (in the
-+	400..599 range) that should be retried up to `http.maxRetries`
-+	times. Defaults to `429` (Too Many Requests). Can be overridden by
-+	the `GIT_HTTP_RETRY_STATUS_CODES` environment variable.
-+	See also `http.maxRetries`, `http.retryAfter`, and
-+	`http.maxRetryTime`.
-++
-+Service providers are expected to return HTTP 429 when rate-limiting or
-+overloaded. Configuring additional status codes (for example,
-+`429,502,503,504`) is intended only as a temporary workaround while the
-+underlying provider or proxy infrastructure is fixed.
- 
- http.noEPSV::
- 	A boolean which disables using of EPSV ftp command by curl.
 diff --git a/http.c b/http.c
-index b766bbf035..4b92819abd 100644
+index d79678d01f..0308f973a6 100644
 --- a/http.c
 +++ b/http.c
-@@ -156,6 +156,7 @@ static int http_schannel_check_revoke = 1;
- static long http_retry_after = 0;
- static long http_max_retries = 0;
- static long http_max_retry_time = 300;
-+static char *http_retry_status_codes;
+@@ -345,11 +345,20 @@ static void finish_active_slot(struct active_request_slot *slot)
+ 	if (slot->results) {
+ 		slot->results->curl_result = slot->curl_result;
+ 		slot->results->http_code = slot->http_code;
++		slot->results->retry_after = -1;
+ 		curl_easy_getinfo(slot->curl, CURLINFO_HTTPAUTH_AVAIL,
+ 				  &slot->results->auth_avail);
  
- /*
-  * With the backend being set to `schannel`, setting sslCAinfo would override
-@@ -607,6 +608,11 @@ static int http_options(const char *var, const char *value,
- 		return 0;
+ 		curl_easy_getinfo(slot->curl, CURLINFO_HTTP_CONNECTCODE,
+ 			&slot->results->http_connectcode);
++#ifdef GIT_CURL_HAVE_CURLINFO_RETRY_AFTER
++		{
++			curl_off_t retry_after;
++			if (curl_easy_getinfo(slot->curl, CURLINFO_RETRY_AFTER,
++					      &retry_after) == CURLE_OK && retry_after > 0)
++				slot->results->retry_after = (long)retry_after;
++		}
++#endif
  	}
  
-+	if (!strcmp("http.retrystatuscodes", var)) {
-+		FREE_AND_NULL(http_retry_status_codes);
-+		return git_config_string(&http_retry_status_codes, var, value);
-+	}
-+
- 	/* Fall back on the default ones */
- 	return git_default_config(var, value, ctx, data);
- }
-@@ -1518,6 +1524,7 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
- 	set_long_from_env(&http_retry_after, "GIT_HTTP_RETRY_AFTER");
- 	set_long_from_env(&http_max_retries, "GIT_HTTP_MAX_RETRIES");
- 	set_long_from_env(&http_max_retry_time, "GIT_HTTP_MAX_RETRY_TIME");
-+	set_from_env(&http_retry_status_codes, "GIT_HTTP_RETRY_STATUS_CODES");
+ 	/* Run callback if appropriate */
+@@ -2286,15 +2295,6 @@ static int http_request(const char *url,
  
- 	curl_default = get_curl_handle();
- }
-@@ -1579,6 +1586,7 @@ void http_cleanup(void)
- 	proxy_ssl_cert_password_required = 0;
- 
- 	FREE_AND_NULL(cached_accept_language);
-+	FREE_AND_NULL(http_retry_status_codes);
- }
- 
- struct active_request_slot *get_active_slot(void)
-@@ -1928,6 +1936,26 @@ void normalize_curl_result(CURLcode *result, long http_code,
- 	}
- }
- 
-+static int is_retryable_http_code(long code)
-+{
-+	const char *p = http_retry_status_codes ? http_retry_status_codes : "429";
-+	char *end;
-+
-+	if (code < 400 || code >= 600)
-+		return 0;
-+
-+	for (; *p; p = end) {
-+		while (*p == ',' || isspace(*p))
-+			p++;
-+		if (strtol(p, &end, 10) == code && end > p &&
-+		    (!*end || *end == ',' || isspace(*end)))
-+			return 1;
-+		while (*end && *end != ',' && !isspace(*end))
-+			end++;
-+	}
-+	return 0;
-+}
-+
- static int handle_curl_result(struct slot_results *results)
- {
- 	normalize_curl_result(&results->curl_result, results->http_code,
-@@ -1981,7 +2009,7 @@ static int handle_curl_result(struct slot_results *results)
- 			}
- 			return HTTP_REAUTH;
- 		}
--	} else if (results->http_code == 429) {
-+	} else if (is_retryable_http_code(results->http_code)) {
- 		trace2_data_intmax("http", the_repository, "http/429-retry-after",
- 			results->retry_after);
- 		return HTTP_RATE_LIMITED;
-@@ -2296,6 +2324,7 @@ static int http_request(const char *url,
  	ret = run_one_slot(slot, &results);
  
+-#ifdef GIT_CURL_HAVE_CURLINFO_RETRY_AFTER
+-	if (ret == HTTP_RATE_LIMITED) {
+-		curl_off_t retry_after;
+-		if (curl_easy_getinfo(slot->curl, CURLINFO_RETRY_AFTER,
+-				      &retry_after) == CURLE_OK && retry_after > 0)
+-			results.retry_after = (long)retry_after;
+-	}
+-#endif
+-
  	options->retry_after = results.retry_after;
-+	options->http_code = results.http_code;
  
  	if (options->content_type) {
- 		struct strbuf raw = STRBUF_INIT;
-@@ -2407,7 +2436,7 @@ static int update_url_from_redirect(struct strbuf *base,
- }
+@@ -2461,10 +2461,6 @@ static int http_request_recoverable(const char *url,
+ 	if (ret != HTTP_OK && ret != HTTP_REAUTH && ret != HTTP_RATE_LIMITED)
+ 		return ret;
  
- /*
-- * Compute the retry delay for an HTTP 429 response.
-+ * Compute the retry delay for a retryable HTTP response.
-  * Returns a negative value if configuration is invalid (delay exceeds
-  * http.maxRetryTime), otherwise returns the delay in seconds (>= 0).
-  */
-@@ -2514,7 +2543,12 @@ static int http_request_recoverable(const char *url,
- 				return HTTP_ERROR;
+-	/* If retries are disabled and we got a 429, fail immediately */
+-	if (ret == HTTP_RATE_LIMITED && !http_max_retries)
+-		return HTTP_ERROR;
+-
+ 	if (options->effective_url && options->base_url) {
+ 		if (update_url_from_redirect(options->base_url,
+ 					     url, options->effective_url)) {
+@@ -2474,7 +2470,8 @@ static int http_request_recoverable(const char *url,
+ 	}
  
- 			if (retry_delay > 0) {
--				warning(_("rate limited, waiting %ld seconds before retry"), retry_delay);
-+				if (options->http_code == 429)
-+					warning(_("rate limited, waiting %ld seconds before retry"),
-+						retry_delay);
-+				else
-+					warning(_("HTTP %ld, waiting %ld seconds before retry"),
-+						options->http_code, retry_delay);
- 				trace2_data_intmax("http", the_repository,
- 						   "http/retry-sleep-seconds", retry_delay);
- 				sleep(retry_delay);
-@@ -2530,7 +2564,7 @@ static int http_request_recoverable(const char *url,
- 			return HTTP_ERROR;
+ 	while ((ret == HTTP_REAUTH && --i) ||
+-	       (ret == HTTP_RATE_LIMITED && --rate_limit_retries)) {
++	       (ret == HTTP_RATE_LIMITED && http_max_retries > 0 &&
++		rate_limit_retries-- > 0)) {
+ 		long retry_delay = -1;
+ 		/*
+ 		 * The previous request may have put cruft into our output stream; we
+@@ -2518,6 +2515,8 @@ static int http_request_recoverable(const char *url,
+ 		ret = http_request(url, result, target, options);
+ 	}
+ 	if (ret == HTTP_RATE_LIMITED) {
++		if (http_max_retries <= 0)
++			return HTTP_ERROR;
  		trace2_data_string("http", the_repository,
  				   "http/429-error", "retries-exhausted");
--		return HTTP_RATE_LIMITED;
-+		return options->http_code == 429 ? HTTP_RATE_LIMITED : HTTP_ERROR;
- 	}
- 	return ret;
- }
-diff --git a/http.h b/http.h
-index 729c51904d..5985a0f71f 100644
---- a/http.h
-+++ b/http.h
-@@ -167,10 +167,12 @@ struct http_get_options {
- 
- 	/*
- 	 * After a request completes, contains the Retry-After delay in seconds
--	 * if the server returned HTTP 429 with a Retry-After header (requires
--	 * libcurl 7.66.0 or later), or -1 if no such header was present.
-+	 * if the server returned a retryable status code with a Retry-After
-+	 * header (requires libcurl 7.66.0 or later), or -1 if no such header
-+	 * was present.
- 	 */
- 	long retry_after;
-+	long http_code;
- };
- 
- /* Return values for http_get_*() */
+ 		return HTTP_RATE_LIMITED;
 diff --git a/t/lib-httpd/http-429.sh b/t/lib-httpd/http-429.sh
-index bd06d94c16..d42feae8ba 100644
+index 1a5d7987db..bd06d94c16 100644
 --- a/t/lib-httpd/http-429.sh
 +++ b/t/lib-httpd/http-429.sh
-@@ -75,8 +75,14 @@ then
- 	exec "$GIT_EXEC_PATH/git-http-backend"
- fi
+@@ -32,12 +32,33 @@ repo_name="${repo_path%%/*}"
+ safe_name=$(echo "${test_context}-${retry_after}-${repo_name}" | tr '/' '_' | tr -cd 'a-zA-Z0-9_-')
+ state="http-429-state-${safe_name}"
  
--# Output HTTP 429 response
--printf "Status: 429 Too Many Requests\r\n"
-+# Output HTTP 429 (or configured status) response
-+status_line="429 Too Many Requests"
+-# Check if this is the first call (no state directory exists), or if
+-# the retry-after-value is "permanent", which indicates a 429 must be
+-# returned for every request (even if the state directory exists).
+-if test "$retry_after" != permanent && ! mkdir "$state" 2>/dev/null
++max_fails=1
 +case "$test_context" in
-+*-status-502*) status_line="502 Bad Gateway" ;;
-+*-status-503*) status_line="503 Service Unavailable" ;;
-+*-status-504*) status_line="504 Gateway Timeout" ;;
++*-fail-2*) max_fails=2 ;;
++*-fail-3*) max_fails=3 ;;
 +esac
-+printf "Status: %s\r\n" "$status_line"
- 
- # Set Retry-After header based on retry_after value
- case "$retry_after" in
++
++should_fail=0
++if test "$retry_after" = permanent
++then
++	should_fail=1
++else
++	mkdir -p "$state" 2>/dev/null
++	i=1
++	while test $i -le $max_fails
++	do
++		if mkdir "$state/$i" 2>/dev/null
++		then
++			should_fail=1
++			break
++		fi
++		i=$((i + 1))
++	done
++fi
++
++if test $should_fail -eq 0
+ then
+-	# Already returned 429 once, forward to git-http-backend
++	# Already returned 429 max_fails times, forward to git-http-backend
+ 	# Set PATH_INFO to just the repo path (without retry-after value)
+ 	# Set GIT_PROJECT_ROOT so git-http-backend can find the repository
+ 	# Use exec to replace this process so git-http-backend gets the updated environment
 diff --git a/t/t5584-http-429-retry.sh b/t/t5584-http-429-retry.sh
-index f0c3cc3b61..f3e7dbaaa4 100755
+index a22007b2cf..d92a26893d 100755
 --- a/t/t5584-http-429-retry.sh
 +++ b/t/t5584-http-429-retry.sh
-@@ -317,4 +317,52 @@ test_expect_success 'verify normal repository access still works' '
+@@ -51,6 +51,27 @@ test_expect_success 'HTTP 429 with Retry-After is retried and succeeds' '
  	test_grep "refs/heads/" output
  '
  
-+test_expect_success 'HTTP 502/503/504 are not retried by default' '
-+	test_config http.maxRetries 3 &&
-+	test_config http.retryAfter 1 &&
-+	test_must_fail git ls-remote "$HTTPD_URL/http_429/default-no-retry-status-502/none/repo.git" 2>err &&
-+	test_grep ! -i "waiting.*retry" err &&
-+	test_grep "The requested URL returned error: 502" err
-+'
-+
-+test_expect_success 'http.retryStatusCodes retries configured 502, 503, and 504 errors' '
-+	test_config http.maxRetries 3 &&
-+	test_config http.retryAfter 1 &&
-+	test_config http.retryStatusCodes "429, 502, 503, 504" &&
-+	git ls-remote "$HTTPD_URL/http_429/retry-status-502/none/repo.git" >output 2>err &&
-+	test_grep "refs/heads/" output &&
-+	test_grep "HTTP 502, waiting 1 seconds before retry" err &&
-+	test_config http.retryAfter 0 &&
-+	git ls-remote "$HTTPD_URL/http_429/retry-status-503/none/repo.git" >output 2>err &&
-+	test_grep "refs/heads/" output &&
-+	git ls-remote "$HTTPD_URL/http_429/retry-status-504/none/repo.git" >output 2>err &&
++test_expect_success 'http.maxRetries=1 retries once and succeeds' '
++	test_config http.maxRetries 1 &&
++	git ls-remote "$HTTPD_URL/http_429/max-retries-one/none/repo.git" >output 2>err &&
 +	test_grep "refs/heads/" output
 +'
 +
-+test_expect_success 'HTTP 503 honors Retry-After header when present' '
++test_expect_success 'http.maxRetries=2 fails after 3 failures and succeeds on 2 failures' '
 +	test_config http.maxRetries 2 &&
-+	test_config http.retryStatusCodes "429,503" &&
-+	git ls-remote "$HTTPD_URL/http_429/header-status-503/1/repo.git" >output 2>err &&
-+	test_grep "refs/heads/" output &&
-+	test_grep "HTTP 503, waiting 1 seconds before retry" err
-+'
-+
-+test_expect_success 'exhausted 502 retries report HTTP 502 error, not rate limited' '
-+	test_config http.maxRetries 2 &&
-+	test_config http.retryStatusCodes "429,502" &&
-+	test_must_fail git ls-remote "$HTTPD_URL/http_429/exhausted-fail-3-status-502/none/repo.git" 2>err &&
-+	test_grep "The requested URL returned error: 502" err &&
-+	test_grep ! "rate limited" err
-+'
-+
-+test_expect_success 'GIT_HTTP_RETRY_STATUS_CODES and urlmatch http.<url>.retryStatusCodes' '
-+	test_config http.maxRetries 2 &&
-+	GIT_HTTP_RETRY_STATUS_CODES="429,502" \
-+		git ls-remote "$HTTPD_URL/http_429/env-status-502/none/repo.git" >output 2>err &&
-+	test_grep "refs/heads/" output &&
-+	test_config "http.$HTTPD_URL.retryStatusCodes" "429,503" &&
-+	git ls-remote "$HTTPD_URL/http_429/urlmatch-status-503/none/repo.git" >output 2>err &&
++	test_must_fail git ls-remote "$HTTPD_URL/http_429/max-retries-two-fail-3/none/repo.git" 2>err &&
++	test_grep "rate limited" err &&
++	git ls-remote "$HTTPD_URL/http_429/max-retries-two-fail-2/none/repo.git" >output 2>err &&
 +	test_grep "refs/heads/" output
 +'
 +
- test_done
++test_expect_success 'Trace2 logs actual CURLINFO_RETRY_AFTER value instead of -1' '
++	test_config http.maxRetries 1 &&
++	GIT_TRACE2_EVENT="$(pwd)/trace-retry-after.event" \
++		git ls-remote "$HTTPD_URL/http_429/trace2-retry-after/1/repo.git" >output 2>err &&
++	test_grep "\"key\":\"http/429-retry-after\",\"value\":\"1\"" trace-retry-after.event
++'
++
+ test_expect_success 'HTTP 429 without Retry-After uses configured default' '
+ 	# Enable retries and configure default delay
+ 	test_config http.maxRetries 3 &&
 -- 
 gitgitgadget
 
