@@ -1,72 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.71
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.71
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795116195;
-	b=a/x9MiwnnfRGirLwTgN6PtGBJJ+E0911MOPo8niod2iKeBrQkNv8loIys0+SjUVkpduH
-	 0bOgqbkAB4Z35n44tEiGr9pnTRSxfNTXjnWAuaNMFgkpcV+a9a44HLO1RA9fDrcWQp9/7
-	 ZNpRXaTWNao9tal2fj1Z1xzKnm7+C0FgwcpPt+M9ycsAIc+A+VPDvtHUvcj3N8odDwz+z
-	 Tuhagmn14q+K+vEVHchsayq1r0crxr/o0/E/sn+ubx8rXSDy/KnwFDo7+McTZSYn1FgVE
-	 4ZY1ky00upYBXIYpnV1RUUR3Jm2+S/JrOB8sx8rvitPOhxMnQnsBOE4vQU9CsElt44g==
+	t=1795116200;
+	b=ekphK4gL6+pc80a066eiPoaJPt/lT75h7pGx1Q5xNkv6xBKMKlrFIi6842Wlae7P9Xos
+	 2vHVPhe+GgmhiKeeUpSz99xSUOSU/UDTBiK/FiUVTwc8cNHakg1yjLVSczhgi/X0mq+40
+	 VyDtwJ4v8VVvalUWa/C9U2gDm6+NP1nfogv9feFzn31UfEINKTXf87yxrVyIVa4TQ6lRV
+	 VfoE7FT8Ael8wPoPWPmArnz+Vb/UMp9026/PkS1cBgF7ehatROAcN89UuRdT8hL08UQlP
+	 jKG4RRVMooIHK6XoKdShvg91nTt8BGmRmD13aShXX7wXDO9m1DdUK+/EKQSPtqPr/Dw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795116195;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795116200;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Received:Date:Mime-Version:X-Mailer:Message-ID:
 	 Subject:From:To:Cc:Content-Type;
-	bh=lsiH1ANFKe3n8tPu6el6rYQDZA94XwU8nrNc/8y4lrY=;
-	b=CuhFo7yU7xYaKndDkW8c8n+TwkQEJTK9UL/anYlM2RX+gwt/jdKw95mggggDrxG0njwu
-	 SVo+/vE1AT1cIg814VcXHHwciw8evJedKTfVEKtOxd2ekAcbW8M7mi/2r4pqQQ+EYouPJ
-	 hun265T77qy4njKjn8sz6STaRI0lPvMbAWJ+dXqkyUi7bTgdZjkFIGqWIKWIQNJx5lMKI
-	 uGTx/RETXOafMJpla095nlWaYBgXQ+u1OD9OOOYamsEwpYlC6bqnj6VhqrqeM9mzhADDh
-	 IwZjVT6eRhNvlwYxNn6L5SVRna3ScBGe7BohSQilib9Svo/2WdZWUpPivRddXRJ2gdw==
+	bh=Ao2xJHBC/1U+S0ToTgL9ZqkzBGZpJYHrnznFLLa1mqQ=;
+	b=e3T7l/VqFk8o7Gx29ZQs7+FKiSNuEtMcFmRBubXiH6I0JNfvKrp/YegTo2RRr5bXn2DQ
+	 a9KgXL/Z9cDeMzu0ZOqRiRF+6iLE0cH4ncyh7TIUDzR+TviRMQVdQDTOLJPCpwjrMxyA0
+	 f0th2TLeP2Z8OpjCsRVROjfBa/rEw3gOIL1s12q2dEaZQihJfzKcP0I3gm08WnZWltPsF
+	 14fWSweV8ra2ILZ7KClXPgFrFPXctFaFO0eJorV3P2KUVctn131KJprpJMnCj0jhoDBkS
+	 IZKZSYmqYvGu4UX9l1BFb9rI7OGne2EMIditYb5MUt8JJm2p8fNnGSe/UIOsyFlV8qg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=google.com;
 	spf=pass smtp.mailfrom=flex--dmnk.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=RIRLVySh;
-	arc=none smtp.remote-ip=209.85.128.71
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com [209.85.128.71])
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b="BFrWlKq/";
+	arc=none smtp.remote-ip=209.85.218.71
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com [209.85.218.71])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11C7606A32F
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 19:23:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D11C7606A32F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96960606A330
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 19:23:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 96960606A330
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--dmnk.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=RIRLVySh
-Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-4a20e41008cso258765e9.1
-        for <git@vger.kernel.org>; Thu, 19 Nov 2026 11:23:14 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=BFrWlKq/
+Received: by mail-ej1-f71.google.com with SMTP id a640c23a62f3a-c50547b4992so7402166b.3
+        for <git@vger.kernel.org>; Thu, 19 Nov 2026 11:23:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795116193; x=1795720993; darn=vger.kernel.org;
+        d=google.com; s=20260707; t=1795116198; x=1795720998; darn=vger.kernel.org;
         h=content-type:cc:to:from:subject:message-id:mime-version:date:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=lsiH1ANFKe3n8tPu6el6rYQDZA94XwU8nrNc/8y4lrY=;
-        b=RIRLVyShFrqlHBupVvKtzRflC+JTCWMusZ1XJRdYxaczxPPzRNH16n/aYVRnx9aWib
-         0N1K1YqOJfsZtEMRM7urNod5dQtF1PlEttciuDPegJ0G8a3vfwtmmXFB2TeamCSa1E+i
-         VPukOg8QjRZ7gN7pN8kXjH4O3f4KK6T194XrpBXwj+L00Y1fXhOW5PXNzv2ZRgD0RDlA
-         a8ULDJmoTgW61sNmvWD1s/yebuiGWeVrtvI1XqjFBGjJ5Gz4PYcjcvrqwwgvgaH7ikO4
-         GQVShf8M4/Aohk0vgYbp1tiUqy3uQSnrVgy0uMiLaGhD5iH+RBBXNqjt76yn7Be6U43I
-         CQnw==
+        bh=Ao2xJHBC/1U+S0ToTgL9ZqkzBGZpJYHrnznFLLa1mqQ=;
+        b=BFrWlKq/JQmFbHp/uRpgDIRILNVY1+YkWgR0xPi6mGCAEjfXCoGF97bNFosf0uaFSs
+         oA5dek4v0WerkLTxsNiBzSXLYchsvj9tpG9RQz+WTDzUpjbDxESo93jJ8RbMDXfZM+Mw
+         mWQj7beWvJS8QleNCxNoaPy+71lgNDj7TM10CNeSv0bKXutsegc4cBzclxUT1aS9TUkp
+         PGNSbAxvj3/oawNs3L+6vYZ+S2a4Kk3DrdxMKGFJ8v6tKmTOWI2aywKnnl1QtYeyEn/n
+         X4xmMjbTa64qduG8h3NlxhdEeWYzfaPHfhm981UluK7Nqamezd5acNRRdwhHf/4tTqAa
+         cG4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795116193; x=1795720993;
+        d=1e100.net; s=20260707; t=1795116198; x=1795720998;
         h=content-type:cc:to:from:subject:message-id:mime-version:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=lsiH1ANFKe3n8tPu6el6rYQDZA94XwU8nrNc/8y4lrY=;
-        b=n+JIAfm7Vu4lRlTm4oMp0RQHFZVaS995tLiYPNQcnsjg8AxEKD4bU16KerEIflYmXN
-         2J35ZSl4UMralUS4odK0zJ7q1YTUSM1ahBujnLK4KjeTlmo88KGdt6N7lobelfd0+Axq
-         Tv35OXrxPhk0RUllXhbozgxm6hQKJXNGsL5MpX5msF5zdjNpiljiozWK2Gh9pikIeOSB
-         E+IJaiTxJC8Gp/O+RKu1R6SXzVCioDA4xDAJrhfKi/7DXS8IXTo9O/UDSa2lHdQ2reaM
-         3R1n+1mSbg56tKt+TxH8y/HAz7kQwWld2Y/l0Ijq9drKTfP4nh+N5GumpPdinfwCnWx3
-         bj9Q==
-X-Gm-Message-State: APuU4Z8h5SUavXFEzcRafd7Inwq22ihxQdBbKd8NXlBYhH4qbYTBK+Qp
-	Q014UBvJTgfoV97dNS6w51ry0b9aW6voidJXra43zL1ZXCB93BMRlba3XjlX9TEQpkrlgH2mAXv
-	7b3JiwKdyGqp7bzvNL8PAD88DRH2JyHJfbswaRxpI6oGb4sTOq7fKufJ8UEO1zFj9CKXsblBkUm
-	OeSU70l9H1BWgEd1O3RhhKpg==
-X-Received: from wrbdm12.prod.google.com ([2002:a05:6000:bcc:b0:4a5:8df0:1304])
- (user=dmnk job=prod-delivery.src-stubby-dispatcher) by 2002:a05:600c:1548:b0:4a1:e00b:a10b
- with SMTP id 5b1f17b1804b1-4bb88800020mr13201225e9.7.1795116193034; Thu, 19
- Nov 2026 11:23:13 -0800 (PST)
-Date: Thu, 19 Nov 2026 20:23:11 +0100
+        bh=Ao2xJHBC/1U+S0ToTgL9ZqkzBGZpJYHrnznFLLa1mqQ=;
+        b=tqgokM8y9RbFWVHroEw53FjIL0yeD4ovWJpS/olVb5dfS/k6QLzUE+UAWeQqyJMcl9
+         7nX5DgG4WRnDnNzv2Eek7Pj1GRNMwzuwBHkh3BajY242EC9Sswo+y3CYX92l5v+9ALPN
+         PEIkoXfe5ZMiZcKH2ZtjNHxcNu9o7d7BzNFEUJFNGsfFVgexoJw4uY5o3ZOzv0EiWcZ3
+         tESDXwSs/2sbeIYXuVevcIVxVbexPJW3OLBmKtw2hijxl3nKF9lDBj+Gm2N1Xscixe99
+         +7ePuPW4d3YRHcC1KRcVnmluRmoiIyWfCaksUP47Z8gkO0pHcI7+3JsTTGjC4if2XY4L
+         +oaw==
+X-Gm-Message-State: APuU4Z/gZ2Sn9zLbmaun4eR/QWSAIfxPgrsPWOAg+cHEgcQ7En0v2SLp
+	BmqzublhE5VochjW7w5jAEYq56HsEyzxKoS+hBQr2WG9NcAi508DvseziLA4Gl7UavqcT7PyHRo
+	n7SABxMcTJ7wAAWX+OXCfnGoV/glDEXvfsojLLt0fbLGzRdNtuskWukJwjIuQWHXB8ru9+CUme3
+	Jvp+q/2YUxcCJBepjSmqgoKQ==
+X-Received: from ejbdx3.prod.google.com ([2002:a17:906:a843:b0:c4d:2eea:d325])
+ (user=dmnk job=prod-delivery.src-stubby-dispatcher) by 2002:a17:907:a890:b0:c40:5ee3:8698
+ with SMTP id a640c23a62f3a-c513ab0efcbmr106717166b.31.1795116197705; Thu, 19
+ Nov 2026 11:23:17 -0800 (PST)
+Date: Thu, 19 Nov 2026 20:23:16 +0100
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -77,129 +77,95 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.56.1.809.ga0b61035b5-goog
-Message-ID: <20261119192311.2685319-1-dmnk@google.com>
-Subject: [PATCH] archive: reject remote --add-file in callback
+Message-ID: <20261119192316.2688525-1-dmnk@google.com>
+Subject: [PATCH] filter-branch: check hex oids in state-branch map
 From: Dominik Maier <dmnk@google.com>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, Johannes Sixt <j6t@kdbg.org>, 
-	"=?UTF-8?q?Jean-No=C3=ABl=20Avila?=" <jn.avila@free.fr>, dmnk+artist@google.com, Dominik Maier <dmnk@google.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Grant Moyer <dev@grantmoyer.com>, 
+	Michele Locati <michele@locati.it>, Patrick Steinhardt <ps@pks.im>, dmnk+artist@google.com, 
+	Dominik Maier <dmnk@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-parse_archive_args() only checks "is_remote && args->extra_files.nr"
-after parse_options() returns. When git-upload-archive parses client
-arguments, add_file_cb() runs first and calls stat() on the requested
-path on the server filesystem, reporting "File not found" or "Not a
-regular file" before the "--remote" incompatibility check is reached
-(and succeeding altogether if "--no-add-file" follows).
+When "--state-branch" loads an existing "filter.map" blob,
+git-filter-branch splits each "from:to" line (restored to "from:to"
+order in 4811dabed7 (filter-branch: fix commit map init from state
+branch, 2026-10-02)) and writes "../map/$from_commit" without checking
+that "$from_commit" or "$to_commit" contains valid hexadecimal object
+IDs.
 
-Pass is_remote into add_file_cb() and reject "--add-file" and
-"--add-virtual-file" immediately before touching the filesystem.
+A malformed or untrusted state branch whose "filter.map" contains empty
+keys, slashes, backslashes, or ".." segments writes outside
+"$tempdir/map" instead of failing cleanly.
+
+Read lines with "IFS= read -r line", and require "$from_commit" to be
+non-empty lowercase hex and "$to_commit" to contain only lowercase hex
+digits and spaces (allowing empty "$to_commit" for pruned commits)
+before writing "../map/$from_commit".
 
 Signed-off-by: Dominik Maier <dmnk@google.com>
 ---
- archive.c           | 31 ++++++++++++++++++++++---------
- t/t5000-tar-tree.sh |  9 +++++++++
- 2 files changed, 31 insertions(+), 9 deletions(-)
+ git-filter-branch.sh     | 14 ++++++++++++--
+ t/t7003-filter-branch.sh | 19 +++++++++++++++++++
+ 2 files changed, 31 insertions(+), 2 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index 59790be986..b983209ce4 100644
---- a/archive.c
-+++ b/archive.c
-@@ -559,15 +559,27 @@ static void extra_file_info_clear(void *util, const char *str UNUSED)
- 	free(info);
- }
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 9aa07be6e1..fbf7882a70 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -298,13 +298,23 @@ then
  
-+struct add_file_data {
-+	struct archiver_args *args;
-+	const char **basep;
-+	int is_remote;
-+};
+ 		git show "$state_commit:filter.map" >"$tempdir"/filter-map ||
+ 			die "Unable to load state from $state_branch:filter.map"
+-		while read line
++		while IFS= read -r line
+ 		do
+ 			case "$line" in
+ 			*:*)
+ 				from_commit=${line%:*}
+ 				to_commit=${line#*:}
+-				echo "$to_commit" >../map/"$from_commit";;
++				case "$from_commit" in
++				"" | *[!0-9a-f]*)
++					die "Unable to load state from $state_branch:filter.map"
++					;;
++				esac
++				case "$to_commit" in
++				*[!0-9a-f\ ]*)
++					die "Unable to load state from $state_branch:filter.map"
++					;;
++				esac
++				printf '%s\n' "$to_commit" >../map/"$from_commit";;
+ 			*)
+ 				die "Unable to load state from $state_branch:filter.map";;
+ 			esac
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index 801cc83e5e..cab97e0e0b 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -560,4 +560,23 @@ test_expect_success 'filter-branch handles ancestor rewrite' '
+ 	git diff-tree HEAD^ ancestor
+ '
+ 
++test_expect_success 'state-branch rejects non-hex or path-traversing filter.map entries' '
++	test_when_finished "rm -f escaped && git update-ref -d refs/heads/bad-state" &&
++	bad_blob=$(printf "../../escaped:injected\n" | git hash-object -w --stdin) &&
++	bad_tree=$(printf "100644 blob %s\tfilter.map\n" "$bad_blob" | git mktree) &&
++	bad_commit=$(echo "bad state" | git commit-tree "$bad_tree") &&
++	git update-ref refs/heads/bad-state "$bad_commit" &&
++	test_must_fail git filter-branch -f --state-branch refs/heads/bad-state HEAD 2>err &&
++	test_grep "Unable to load state from refs/heads/bad-state:filter.map" err &&
++	test_path_is_missing escaped &&
 +
- static int add_file_cb(const struct option *opt, const char *arg, int unset)
- {
--	struct archiver_args *args = opt->value;
--	const char **basep = (const char **)opt->defval;
--	const char *base = *basep;
-+	struct add_file_data *data = opt->value;
-+	struct archiver_args *args = data->args;
-+	const char *base = *data->basep;
- 	char *path;
- 	struct string_list_item *item;
- 	struct extra_file_info *info;
- 
-+	if (data->is_remote)
-+		die(_("options '%s' and '%s' cannot be used together"),
-+		    !strcmp(opt->long_name, "add-virtual-file") ?
-+		    "--add-virtual-file" : "--add-file",
-+		    "--remote");
-+
- 	if (unset) {
- 		string_list_clear_func(&args->extra_files,
- 				       extra_file_info_clear);
-@@ -645,6 +657,11 @@ static int parse_archive_args(int argc, const char **argv,
- 	int i;
- 	int list = 0;
- 	int worktree_attributes = 0;
-+	struct add_file_data add_file_data = {
-+		.args = args,
-+		.basep = &base,
-+		.is_remote = is_remote,
-+	};
- 	struct option opts[] = {
- 		OPT_GROUP(""),
- 		OPT_STRING(0, "format", &format, N_("fmt"), N_("archive format")),
-@@ -653,20 +670,18 @@ static int parse_archive_args(int argc, const char **argv,
- 		{
- 			.type = OPTION_CALLBACK,
- 			.long_name = "add-file",
--			.value = args,
-+			.value = &add_file_data,
- 			.argh = N_("file"),
- 			.help = N_("add untracked file to archive"),
- 			.callback = add_file_cb,
--			.defval = (intptr_t) &base,
- 		},
- 		{
- 			.type = OPTION_CALLBACK,
- 			.long_name = "add-virtual-file",
--			.value = args,
-+			.value = &add_file_data,
- 			.argh = N_("path:content"),
- 			.help = N_("add untracked file to archive"),
- 			.callback = add_file_cb,
--			.defval = (intptr_t) &base,
- 		},
- 		OPT_STRING('o', "output", &output, N_("file"),
- 			N_("write the archive to this file")),
-@@ -702,8 +717,6 @@ static int parse_archive_args(int argc, const char **argv,
- 		die(_("the option '%s' requires '%s'"), "--exec", "--remote");
- 	if (output)
- 		die(_("Unexpected option --output"));
--	if (is_remote && args->extra_files.nr)
--		die(_("options '%s' and '%s' cannot be used together"), "--add-file", "--remote");
- 
- 	if (!base)
- 		base = "";
-diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-index 3ad600c793..930a9fcb29 100755
---- a/t/t5000-tar-tree.sh
-+++ b/t/t5000-tar-tree.sh
-@@ -237,6 +237,15 @@ check_tar with_untracked2
- check_added with_untracked2 untracked one/untracked
- check_added with_untracked2 untracked two/untracked
- 
-+test_expect_success 'git archive --remote rejects --add-file before stat' '
-+	test_must_fail git archive --remote=. --add-file=no-such-file HEAD 2>err &&
-+	test_grep "cannot be used together" err &&
-+	test_grep ! "File not found" err &&
-+	echo untracked >untracked &&
-+	test_must_fail git archive --remote=. --add-file=untracked --no-add-file HEAD 2>err &&
-+	test_grep "cannot be used together" err
++	head_oid=$(git rev-parse HEAD) &&
++	bs_blob=$(printf "%s\\\\:%s\n" "$head_oid" "$head_oid" | git hash-object -w --stdin) &&
++	bs_tree=$(printf "100644 blob %s\tfilter.map\n" "$bs_blob" | git mktree) &&
++	bs_commit=$(echo "backslash state" | git commit-tree "$bs_tree") &&
++	git update-ref refs/heads/bad-state "$bs_commit" &&
++	test_must_fail git filter-branch -f --state-branch refs/heads/bad-state HEAD 2>err &&
++	test_grep "Unable to load state from refs/heads/bad-state:filter.map" err
 +'
 +
- test_expect_success 'git archive on large files' '
- 	test_config core.bigfilethreshold 1 &&
- 	git archive HEAD >b3.tar &&
+ test_done
 -- 
 2.56.1.750.gf70dc682cf-goog
 
