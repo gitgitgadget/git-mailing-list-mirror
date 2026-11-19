@@ -1,72 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.69
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.70
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795116181;
-	b=WLeuIyy0Aey+WAXMlPM8L8L2UKtEoK7Zo8C+TJsmPfh6iRvK0AS2PxVBNet42djSpI1W
-	 KGwdz4sBjsvNST4vixIL4m8IKX33fUHnHmeKEAtKCTDzm4tYRK6p3QP0VALTBA724dekD
-	 hF2npoDji55wo+PX93//pApbEq27dJO0CGfvQSfJvTsVwHRghFcqnZ0yw5tcCLJO89hfA
-	 1c5Cd3GOFu19iOQWY8FO3p8Ll0DUe5bT6KwsMcyPyepiI+htwwPJ7QD/pgCzm9kovrpzT
-	 NyTfaoiSBKZVgTq+cfFklFCV/51wXVHVRsPyrMoRk/rBqtPMjbYUcW9eScIOxB8smMw==
+	t=1795116185;
+	b=Jp9cDbm9ewqigi2JIUKcpgFnNRQgeXANmJ2UupG9HF4xAxveBrN+BLBhZxrEEwvOP45h
+	 sxxHvVePbqOdWxqcIhOU5zSGeAsL2/wGBxDXMFw3ztLRqHIfRgFfDZ8tsV1cGQG2tV8B0
+	 ayoRLtvTsWvHLiZfS2pwHzfKcQ7M5nqeB/0oQ7zFe/MmjC0lOyOmmoL68O78brkMaYadF
+	 v2ckXccQ0q2dftEXGoHL5/Fa6I37SFClx0/Qy5pFL7/iWqozFtRMdWtqt4ZWyN0IOk/MB
+	 DXjy5czkJ7SoTLQPF6gWg6gEiF8ZOH5F0Y/yw9cGYvMz1PNh+Stmmu7TIoqA9ECHnxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795116181;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795116185;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Received:Date:Mime-Version:X-Mailer:Message-ID:
 	 Subject:From:To:Cc:Content-Type;
-	bh=EG8CzoSos9PRgHTfYc/hZkYbOFOIe8gTlLgsOlNj5FU=;
-	b=m/6iBuHKnSihC4mQiGk2QdTU4hyvHngr5cb8VfDW53PelPS/cs/G8BJtPeQhjnN+VGhK
-	 +W91ZinJ1oqHxPBXo+PghMY2q7eE/aQ8k0ma7smbf7r+Z6CWCSN8MdEUs1Zxwci7ZZ9F5
-	 t0BFhoMdAGYafeFKsAiLdoQ+mOMaAOhOu6p2m2rYQCnVuLH+bJzKOzfa9dPdadh9aL/zu
-	 LjO+a4QIslgwwwhXYXvV6JalcvE3Kpn5rrj8Pr37VdZCakcS1V1pBWIdwI8Q9E8kWRJl9
-	 Z41ldkH2Vny9RP4T1N6djmqJtS8dnk/JVFHMhPYItUoXk77U5qJn82l2Vm4zoceSVfQ==
+	bh=iTfr4+i5OneiGGLMo+O7xfdZ15OGfSVPrHzTzCcOMVs=;
+	b=s6aROtVdjCCTys83fdgdnZSt2cJCFCqbNgQINwCjLGFOhLr2MDMq24lPMR1D1EzWJtO3
+	 BU4hCJHCfCJdbCD88kmPHHCiaKx3j2o6kiznpT4XaOF72xshrGAJ3xu4ZGr62FgbqOiQX
+	 U3mZJRMsdNnsYDBhnWahLSrrRLlOSVLX/GeO90wp+SeoKVa86ECyMvHF3ecMcGVPSFz+I
+	 TQ4pSoge7+HhNhaZNoVubbwqbnqQ7ECF33kbcCS7wkfj1uSzd48pIKt4o4+UkODIOgcgz
+	 y3oAN1sGIpayZEDM/4g+kxcYTwfosAEITPMAhIOpolpFq2fb6XuqEmgDtYJJ+mGDuiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=google.com;
 	spf=pass smtp.mailfrom=flex--dmnk.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=LaCSqqqu;
-	arc=none smtp.remote-ip=209.85.208.69
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com [209.85.208.69])
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=R3B66Exl;
+	arc=none smtp.remote-ip=209.85.128.70
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com [209.85.128.70])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169CC606A320
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 19:23:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 169CC606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B8B606A320
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 19:23:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 95B8B606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--dmnk.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=LaCSqqqu
-Received: by mail-ed1-f69.google.com with SMTP id 4fb4d7f45d1cf-6b7d9eab7ffso65056a12.3
-        for <git@vger.kernel.org>; Thu, 19 Nov 2026 11:23:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=R3B66Exl
+Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-4b9fde3044dso341245e9.0
+        for <git@vger.kernel.org>; Thu, 19 Nov 2026 11:23:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795116179; x=1795720979; darn=vger.kernel.org;
+        d=google.com; s=20260707; t=1795116184; x=1795720984; darn=vger.kernel.org;
         h=content-type:cc:to:from:subject:message-id:mime-version:date:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=EG8CzoSos9PRgHTfYc/hZkYbOFOIe8gTlLgsOlNj5FU=;
-        b=LaCSqqqu10bbDsaj9RKUtYh92DHsiVlkdZc2nV6Fz5RQ93D3JlWMpoJgZjFPfYKu7B
-         JBX0uoaN9o5SRuQupyncZ9FOkzR16RjayOxxXifjYu8TwnDtntl4+eqeGDE9LOhTO0+U
-         9utk20+tLAws+2Kvpft93qap07uJ4woceTgJRASpI/mjmAJP6ev+l4UjpkTi0ZgdacJM
-         CDDni6c0ZXDLnMkkdcvbeqkscnCrZnvVglwIsocB/iLBomPQCCFuqGwrjHuX7NKjtLwv
-         rh1rXPgw/NHnT3qMITO329TT4vrs6uVaiyNjF9mMv4UT8DCzBmrnYwM8AAfG8w6hieWY
-         8B2Q==
+        bh=iTfr4+i5OneiGGLMo+O7xfdZ15OGfSVPrHzTzCcOMVs=;
+        b=R3B66Exl0LI7tf56Nk2M7rdZ6QYjEBsV/k41YnLE4llCzI6Ilx927T0KcV2rmfdP2N
+         wZwnQcNgV0/DlJo7XcesVveCiTzQDG83BOK1C2jyNMhP5GgxRA0qCSKSl+W868JiOGMD
+         CfhBXG4h6TDaAzXP1wmPR0RTZ85iVzA3Uo9nBpwv1/t8+Lw7PZUuxoYIrlDNFD71jdBL
+         UvH0x7jmKdeaRPpFT46hTZpv+wZt9XRHhZKU5dvj9d55kEbWBn+jG99Yo5yar3w6ekIt
+         2KdFtSvmo6AiAJZ21Vz8xJK3i/ikr30XYU/HwIUgVOjZgzM++v5MLeEBqXYG6idBMNfB
+         KJVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795116179; x=1795720979;
+        d=1e100.net; s=20260707; t=1795116184; x=1795720984;
         h=content-type:cc:to:from:subject:message-id:mime-version:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=EG8CzoSos9PRgHTfYc/hZkYbOFOIe8gTlLgsOlNj5FU=;
-        b=c3n1VjC/vsyuITPGC6DILyeGlxT9FG41fzoePs3IHZs7D0A0m9m0fxHnE9dSecFPsV
-         3aOrnxdJWBg48Mr1UpWc77WqwFF4rny4zOQ/uJGB/TJGkzNghkM5eNO44xJ5Oifp3bQY
-         xuVnsBCBCZLVLkjEU1YyLJm0PeZ2klhxSw9ELnwiKwtnhKdOUuwEQOohzLhtzlW2etn+
-         Cv7WK+mnm5z7nXXExHs6JS2Hw47tMvWBmxOly3/XJqgPpwQhUQPAXpXn5+rY1/4VwsTQ
-         lbVZgRZf3l8dyU4zlpK6TcPGpc8Bz3J3A/acYLqf41Z4EaSor3yr5ibdHDypq9CtXJTB
-         IZ8w==
-X-Gm-Message-State: APuU4Z9QHFqIY6L7VXcn0BhMza5yd/Bza5VXp0SlNg7Z1//2jm+HWnai
-	t0hNcBziQCi3VjB7HAp78E8Pyxs2akyMa66p3waEoE7A5qVLjSdtradmb1U3vBx8dggNXsYHMnU
-	A+eg89m0TuBbFeIgtWQOkFHGloqx1OYA6AcO3K9DrYYreW856A6m5lA/EVEdo7plAqCFzwVEOz3
-	Pf1T9SH0zGMbyw/xvZfVnECQ==
-X-Received: from edcns3-n2.prod.google.com ([2002:a05:6402:c6c3:20b0:6b8:9a3c:9b74])
- (user=dmnk job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6402:42cd:b0:6b7:b872:27c0
- with SMTP id 4fb4d7f45d1cf-6ba37ebff16mr287579a12.44.1795116178996; Thu, 19
- Nov 2026 11:22:58 -0800 (PST)
-Date: Thu, 19 Nov 2026 20:22:57 +0100
+        bh=iTfr4+i5OneiGGLMo+O7xfdZ15OGfSVPrHzTzCcOMVs=;
+        b=Gl9UEFkJ7XGMpEXikTRDmivFKTvIt4TPJrXjIKc2ZsIhxhxaG3NrdTf/b6vLYQp3D0
+         I0mO9EHcJrMsjjybU4HbOXCdllcLsRcdLX9IN+9PcW8fCnGdHfdtmCmWMU9+p6lCkIUm
+         HDIxd2L4jEqCq6tHdnU9MKxWSidUdOvpzbF4R0WCshmlzl9Tu/6kXYovjBjeF7f+YUuu
+         cDbtb3WsqnOc72T7eQH313sJKAjDnCgUzcLEr+LWKRDnl+tzX2Nao/UpT8S8dM5bzP5R
+         thX1wlOmwyEYdYG70F9BHyesH7Sud0JyxG3hx2CmggpsKYocm2sVk/Tx8ZLwox8QYzFV
+         VmHQ==
+X-Gm-Message-State: APuU4Z/peYrcynfoHnzeiZVObIeA9M2JctgMO5zjq8+WLxfJK9ZW5cm7
+	brEaa3SbIfl13WRC16tgcu79lbtSk8Oin0UHzGODvc0KX63dNfdnx3sE8pYydOEM5WhB5AUydIT
+	eKrqJOI0NaK7nonbwIJSYW0VR/cIRheVfZ0IM4Tv1jxVwJV41flcCiVAOGv3Kdx/SWfUOo4YeqA
+	vAXyhFEbamWOPRo89pH7nzGA==
+X-Received: from wrmz5.prod.google.com ([2002:adf:e545:0:b0:49a:19b9:9a09])
+ (user=dmnk job=prod-delivery.src-stubby-dispatcher) by 2002:a05:600c:4f4e:b0:4bb:6c71:b268
+ with SMTP id 5b1f17b1804b1-4bb8882672fmr13225445e9.6.1795116183739; Thu, 19
+ Nov 2026 11:23:03 -0800 (PST)
+Date: Thu, 19 Nov 2026 20:23:02 +0100
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -77,94 +77,94 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.56.1.809.ga0b61035b5-goog
-Message-ID: <20261119192257.2679418-1-dmnk@google.com>
-Subject: [PATCH] connect: clear v2 server capabilities on handshake
+Message-ID: <20261119192302.2681052-1-dmnk@google.com>
+Subject: [PATCH] attr: do not traverse leading directory symlinks
 From: Dominik Maier <dmnk@google.com>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, Ivan Frade <ifrade@google.com>, 
-	Xing Xin <xingxin.xx@bytedance.com>, dmnk+artist@google.com, 
-	Dominik Maier <dmnk@google.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>, 
+	Elijah Newren <newren@gmail.com>, dmnk+artist@google.com, Dominik Maier <dmnk@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-process_capabilities_v2() appends capability lines onto the file-static
-server_capabilities_v2 vector without clearing entries recorded during
-earlier handshakes in the same process. Because server_feature_v2() and
-server_supports_feature() return the first matching entry in
-server_capabilities_v2, capabilities advertised by an earlier remote
-bleed into subsequent connections (including v0/v1 handshakes that skip
-process_capabilities_v2() before callers such as get_bundle_uri() query
-server_supports_v2("bundle-uri")).
+Commit 2ef579e261 (attr: do not respect symlinks for in-tree
+.gitattributes, 2021-02-16) taught read_attr_from_file() to open in-tree
+.gitattributes files with open_nofollow() so worktree lookups match
+index lookups and do not follow symlinks outside the repository.
 
-For example, running "git remote show r1 r2" when r1 uses SHA-256 and r2
-uses SHA-1 causes the second handshake to read r1's stale
-"object-format=sha256" capability and fail with "mismatched object
-format", and a stale "session-id" from r1 is logged again for r2 even
-when r2 disables transfer.advertiseSID.
+open_nofollow() only checks O_NOFOLLOW on the final ".gitattributes"
+component. When an explicit path such as "symdir/file" is passed to
+"git check-attr" and "symdir" is a directory symlink,
+prepare_attr_stack() still traverses "symdir" to read
+"symdir/.gitattributes", and builtin_object_mode_attr() calls
+lstat("symdir/file") across the link.
 
-Clear server_capabilities_v2 in discover_version() and
-process_capabilities_v2().
+Check has_symlink_leading_path() before opening READ_ATTR_NOFOLLOW
+files in read_attr_from_file() and before stating paths in
+builtin_object_mode_attr().
 
 Signed-off-by: Dominik Maier <dmnk@google.com>
 ---
- connect.c              |  3 +++
- t/t5702-protocol-v2.sh | 23 +++++++++++++++++++++++
- 2 files changed, 26 insertions(+)
+ attr.c                | 10 ++++++++--
+ t/t0003-attributes.sh | 10 ++++++++++
+ 2 files changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/connect.c b/connect.c
-index 87d2e8bccd..b620cf2286 100644
---- a/connect.c
-+++ b/connect.c
-@@ -133,6 +133,7 @@ int server_supports_feature(const char *c, const char *feature,
+diff --git a/attr.c b/attr.c
+index 0e63f1b6de..50e25a3ee6 100644
+--- a/attr.c
++++ b/attr.c
+@@ -24,6 +24,7 @@
+ #include "revision.h"
+ #include "odb.h"
+ #include "setup.h"
++#include "symlinks.h"
+ #include "thread-utils.h"
+ #include "tree-walk.h"
+ #include "object-name.h"
+@@ -699,10 +700,13 @@ static struct attr_stack *read_attr_from_file(const char *path, unsigned flags)
+ 	int lineno = 0;
+ 	struct stat st;
  
- static void process_capabilities_v2(struct packet_reader *reader)
- {
-+	strvec_clear(&server_capabilities_v2);
- 	while (packet_reader_read(reader) == PACKET_READ_NORMAL)
- 		strvec_push(&server_capabilities_v2, reader->line);
+-	if (flags & READ_ATTR_NOFOLLOW)
++	if (flags & READ_ATTR_NOFOLLOW) {
++		if (has_symlink_leading_path(path, strlen(path)))
++			return NULL;
+ 		fd = open_nofollow(path, O_RDONLY);
+-	else
++	} else {
+ 		fd = open(path, O_RDONLY);
++	}
  
-@@ -144,6 +145,8 @@ enum protocol_version discover_version(struct packet_reader *reader)
- {
- 	enum protocol_version version = protocol_unknown_version;
- 
-+	strvec_clear(&server_capabilities_v2);
-+
- 	/*
- 	 * Peek the first line of the server's response to
- 	 * determine the protocol version the server is speaking.
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index e5e73eb407..3716e43bb1 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -548,6 +548,29 @@ test_expect_success 'invalid server-option configuration' '
- 	test_grep "error: missing value for '\''remote.origin.serveroption'\''" err
+ 	if (fd < 0) {
+ 		warn_on_fopen_errors(path);
+@@ -1274,6 +1278,8 @@ static const char *builtin_object_mode_attr(struct index_state *istate, const ch
+ 	if (direction == GIT_ATTR_CHECKIN) {
+ 		struct object_id oid;
+ 		struct stat st;
++		if (has_symlink_leading_path(path, strlen(path)))
++			return ATTR__UNSET;
+ 		if (lstat(path, &st))
+ 			die_errno(_("unable to stat '%s'"), path);
+ 		mode = canon_mode(st.st_mode);
+diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+index 582e207aa1..c252e7ed55 100755
+--- a/t/t0003-attributes.sh
++++ b/t/t0003-attributes.sh
+@@ -533,6 +533,16 @@ test_expect_success SYMLINKS 'symlinks not respected in-tree' '
+ 	test_grep "unable to access.*gitattributes" err
  '
  
-+test_expect_success 'v2 server capabilities do not bleed across in-process handshakes' '
-+	test_when_finished "rm -rf cap_r1 cap_r2 cap_client trace2_caps" &&
-+	git init --object-format=sha256 cap_r1 &&
-+	test_commit -C cap_r1 one &&
-+	git -C cap_r1 config transfer.advertiseSID true &&
-+
-+	git init --object-format=sha1 cap_r2 &&
-+	test_commit -C cap_r2 two &&
-+	git -C cap_r2 config transfer.advertiseSID false &&
-+
-+	git init --object-format=sha1 cap_client &&
-+	git -C cap_client remote add r1 "file://$(pwd)/cap_r1" &&
-+	git -C cap_client remote add r2 "file://$(pwd)/cap_r2" &&
-+
-+	GIT_TRACE2_EVENT="$(pwd)/trace2_caps" \
-+		git -C cap_client -c protocol.version=2 -c transfer.advertiseSID=true \
-+		remote show r1 r2 >out &&
-+	test_grep "\* remote r2" out &&
-+	grep "\"category\":\"transfer\",\"key\":\"server-sid\"" trace2_caps >sids &&
-+	# Only r1 advertised session-id; r2 must not inherit it
-+	test_line_count = 1 sids
++test_expect_success SYMLINKS 'leading directory symlinks not traversed in-tree' '
++	test_when_finished "rm -rf ext_dir symdir" &&
++	mkdir ext_dir &&
++	echo "* test" >ext_dir/.gitattributes &&
++	>ext_dir/file &&
++	ln -s ext_dir symdir &&
++	attr_check_basic symdir/file unspecified &&
++	attr_check_object_mode symdir/file unspecified
 +'
 +
- test_expect_success 'upload-pack respects config using protocol v2' '
- 	git init server &&
- 	write_script server/.git/hook <<-\EOF &&
+ test_expect_success 'large attributes line ignored in tree' '
+ 	test_when_finished "rm .gitattributes" &&
+ 	printf "path %02043d" 1 >.gitattributes &&
 -- 
 2.56.1.750.gf70dc682cf-goog
 
