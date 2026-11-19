@@ -1,120 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.69
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795114389;
-	b=IptgTpk5xtqLbzlQLZCfiEscZ8En82iNoJNL2ghS2Dz8A2d/V+LgN9nK9MziLbNuHTCc
-	 mzpNEi4XL07wDMU70LPN9n2923zVRtLVQ0/2EetbOGguSTofFk+mzlNzlm1FEh+RvxCFj
-	 LYP87wUCYBWCvI7CfLg51tpda+xBhE3/bMnHUEZX01b/m9KmXJkjvnbDFVkV6x0YGphtr
-	 vTt2RZovj34vBHdcyVErYcN3vou7QBLnNe0WElhJgXcfyIqfLgovY/rAdp+cI/QwzIwkC
-	 yDNPfUh/yqcgRTSLpNVH1TOyXGYqpzWf7iMWgSb2d5gbLi3nQKVtz1AYD7bLyqemgFg==
+	t=1795116160;
+	b=n2N3om/1Qr5wbZQNLX1/zMH2QN1GiyKOtwEkNW9AmXk5z9qLHcuEBlktmrtEl/wlKAk2
+	 UiT/xzwcNKTJ6cQc2UkpEncz/Mnc8POrUevIDOelLba642PL/ZCPY4sY1FDP3XE9QQuTd
+	 11eKjLQe6NZTDYIrULPpCBz5Lbsd6GgtNtnQAEyzw+Xk8hE08IuFeSTERO66XFt5aL6hJ
+	 2qgB57jhfUniJE5fXmB56aZKrMFrKHbbLKKI9puQ1QtakE3zS2s0qODfgPheFcYByD8sA
+	 5r0ZqeVZ1IkxXB/msT3ZBdATSXeQuKRu/kdbD5o49J1NkHV4qT1tsrJvq0ZMrGUMChw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795114389;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=7U6e15C8L8jm24W/dXb2pOljDuE82OVr+bNs7Q9LUwI=;
-	b=j2KlRmFtoc9N8AEUG1PB/6ghYoM/Kw6HsmzGNYk/e4Dtg59wAA8nJAZLQiTi0lpEuH24
-	 BF0WeFuDyAJhtA9dg3rbbkTB/ZCNCILOe3NOZ+Arc1omy3PKIBAmr5oCAOdyAfL1PRgQl
-	 4g1eM8qflsSlFTlBRTcuH9lmeFJ/Y8TGGMX8ntVof1awUDkZlifC+/CEzAAlQaeveLJfZ
-	 mlZpfasy7RUcjAcRXanZubi7VsDR+fYbqJcnoQWuEdt+aPgiPGvVV7Rwawqp7Pa/PohzD
-	 eWE2S1hwafRUAv66G4Fq4CnG67vgL2b+at7Qn7boVgil+Tdxqhpf8rOPKY7PoZqE0eg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795116160;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Received:Date:Mime-Version:X-Mailer:Message-ID:
+	 Subject:From:To:Cc:Content-Type;
+	bh=xfwHsZ02Id7r+S/HT3ZM2XnSEQqvoTh+iFcAFN9S9gM=;
+	b=ghu/zrmhoDP3o0zvUXZN3b8H4KTzkArvOhY9RDI00ueFXshuqtMEKe8J422FrIcfjj2i
+	 w/q8jWi9F+Hl2dPgPraw1NhMNb9bCDs4GF7rnGxloVJTMEUOt3TYBgBCIWPIckzF0d5Tk
+	 twZ1J004SfRl/Kd0EFHgkM7g+7HGc7bPETBTaVU8257MFCAuj04L1+ALwA/OWv4CWxdAH
+	 6HmFrjQEhTCxkQAQKqJVchILKOXc9TKdeGL/6hUI+WTzb5Dg6obrMdxyzvzmZmIAgPK8a
+	 4J6iFsBTrrJcD6XcS/AvRwvigLUBYkyjzuoQVd0aHcsTQ05mAFs0QgzyLguCpeay9DQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=hKdGuqLT;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="rupH5m/R";
-	arc=none smtp.remote-ip=202.12.124.146
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--dmnk.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b="BMZiF/9F";
+	arc=none smtp.remote-ip=209.85.221.69
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com [209.85.221.69])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4ED606AA88
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 18:53:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6A4ED606AA88
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 377B7606A320
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 19:22:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 377B7606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--dmnk.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=hKdGuqLT;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=rupH5m/R
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id AF7C71D00244
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 13:53:07 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 19 Nov 2026 13:53:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795114387; x=1795200787; bh=7U6e15C8L8
-	jm24W/dXb2pOljDuE82OVr+bNs7Q9LUwI=; b=hKdGuqLTyvkin3AA4kunFQh0u9
-	vVXyAKnrCX3zfxdZD+IHWxfCN0+PV/OD0QLbYJv6uqCD7wKC1s8uRs/5NTYyu3Rz
-	YQk269JoicPWv0pnS2bw6l30VYHBLE9liNqxoipXiYcjKkx3uDO648uDhDPBziEQ
-	6L9vxwi1aHGRHWQ+1Lk+pfMp1Deg+7fudy7+FJPGOkj1Fwh4U62rn1vnMLY6ywPV
-	BsbWwU90ENElRmLIXORrEEU3WEILtPuOksgx/WH7K24HzeWSghG1hN0Q/Qqm7+Q7
-	KtAGYB/o/Ff4BY7ZOyiKaPtaS7rbH7xFbQ/xc30Evp4M45uo6IQJzKVs4ehg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795114387; x=1795200787; bh=7U6e15C8L8jm24W/dXb2pOljDuE82OVr+bN
-	s7Q9LUwI=; b=rupH5m/R1tYdO/orY8wu26zqCspUjtVCdk8qys3uA45FcFIuLVO
-	LzhaNOxPUe4jB/ORUJBQaCwB7sbpPt5ekt8C0SSJbT2xyA1bybbIuTfPqM2DjBMx
-	ppg2G4rEWrOsrw90lgWtI7XFx2Q6QmKY2c+lhtZbaAisev9bXUCnlTxZpoq82lNZ
-	NL4uClxnTkykbAXj+sDK5WCnat9V+Ofuu/vhnVXjp3viIDJlNtbdJfSgWrjDVmVY
-	hdCXVNoLUFz7WW+8TN125mjZVnH3AvgsgnNPu6mjM2PNqY4EMauE8yAn3NCpHdFc
-	MiFNYO4CVFggegvB3U1dOiJZumouLcwRnGg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795114387; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:IOFywbZ9GQ4M844UlC3lLjeXpiduSJkUP5Smuwx9YFV35+E
-	YmXYTx8hLGH9Av4qpYRHte5Q9qXAlMGtGDicaBZkrsNpDLccKGUtNc2l62f45X3Q
-	8EWaK7VlgK42iJxReu4Zf8mTh+XqsdMIzMVUJMR/Qav70rb3g1hrKAhfXXT8EiIQ
-	L2JNtooqMivxN2RpnU1DZ7okBSqU8DH8x56q4Zk3qSKArnDaHJTygbwwacOH8dVB
-	6XSjWG0BHLoO8ZVwwCicMZhXRAyRw2rcVQSjs8Oxd0VHM37W4FMBvnJwG/yPxmAW
-	/7fvjt5uqeNjfES099xuo0cTut6vSLv6z4XG0aQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:QVTrXi7sOZyU+oHfyPDeUbWiimGwx1BI/sCtXdaWaG0=:058E7ZFkV3Qu5HxbyG2ZRbJCqftsrUULI44cT/fDGZw=;
-X-ME-Sender: <xms:k0X_aormG3C8wzCEQgK4oySG0__-Nj0xrl3eXRHMpznWfsZOwUvrKA>
-    <xme:k0X_amEcC7I6t0qlZwgpWGegpJkQvCxXqI8IUUemH9r2a5UPXNCduNTX_m2xW0gm4
-    NjyeL7c3ayDanYaYwE_iVFiMWA51Dir0i8FA2eiAZQ4sQICHJe3dP8>
-X-ME-Received: <xmr:k0X_aqlDJEZ2FoeB69f1p1W6GlLIgmR0JdIfy25nf7QM1IGY2Uql2GDeSQFdhWadxdQqa4c8g5LH6OrbiqUDyJO7Mu9iTcbcYPuz>
-X-ME-Proxy-Cause: dmFkZTFyjxWISUnG1q7QhZD6h8w7hdtMZmxPJatLLPMbjjjZtEh33pEKyjLwGDE5c2xWnf
-    6v5MfNuZoV3Ac2dntE+XFYDBuSXVxz6xfnIVWR0NI6XHUtGs0Q8fQ5rTeeENcyKlgTRyo1
-    PfIIM/wEaWLO+bwNG7MjBJpcaPB/CW5BcJxZr9csvulECl+O/nAXxGWVH80PmdnWONqqcY
-    9HQeHhJSopPahQClAWPXH2/K1Xd4kaBCVauM9CddRvyUK6PyhI40RRbOxHUVCw7TXEWDmg
-    f/x9leL+mYpDU4HElczwDOlYJE4HH+YMoKu1TgyYc+8clfComn6pVW2wP/97NhUwhc0UWR
-    EGozNdjPm3fUnNpKaqMSOaEz8udkAEAvqctXaiyLzpIZTSA/JyCBgTUQFE3RqLD44T+Z89
-    qQ1DlAJxlFVqDbioDl6XCJo3SKfYMWD+PU5wXT6DeQ0RQUwQ3yeNPcM4q5uimMQz+BwuIk
-    htgkuqnFI70t3EHkZqWH6Rl7iqcwZvSwFLTgCtJHRb6P3WyLNoLu9a3PBPW2i2Td+T3wm7
-    wpDzYffiK3v7l2erhN0l18jWbYi1Ki4xSkui8qZkBU83vMjZebq+cBN1Vygv5StBov4pEy
-    UKZEdRmRNsu/3BVyl6QwPThMlg/t7tyAbNnFC108oFnYEku4sZgoSXZDsgPw
-X-ME-Proxy: <xmx:k0X_apko0UjwwMrVC0fLqa091yvDo2ylUZLDxmpLkKqMzrXnTXuuPQ>
-    <xmx:k0X_ars69XDSNYcshKkiVtQj8YvJWZRSyJnIyJNa_QM7_PGEq65Wsg>
-    <xmx:k0X_asmEI8REYTO1o_e3-lFH8wOdx-hgaJ0m6f0_u8vWX_qXLiJ0dw>
-    <xmx:k0X_amspi5HHcJoBmXCKSbfxU05jRH4K_Sy_C55uGxoqL4-ZR5E7fg>
-    <xmx:k0X_auGpkls_JLDlKsjdgghj2-dJTYQW9-7v1JDRM3izn-RN3aNLzGTe>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Nov 2026 13:53:06 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc: Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] fast-import: do not show the path when "feature
- export-marks" is forbidden
-In-Reply-To: <20261117-ks-fast-import-consistent-check-unsafe-v1-1-fc1ed53c79b2@gmail.com>
-	(Kaartic Sivaraam's message of "Tue, 17 Nov 2026 21:33:05 +0530")
-References: <20261117-ks-fast-import-consistent-check-unsafe-v1-1-fc1ed53c79b2@gmail.com>
-Date: Thu, 19 Nov 2026 10:53:05 -0800
-Message-ID: <xmqqbj7ky7ou.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=BMZiF/9F
+Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-4a3705ea6ccso14790f8f.2
+        for <git@vger.kernel.org>; Thu, 19 Nov 2026 11:22:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20260707; t=1795116159; x=1795720959; darn=vger.kernel.org;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=xfwHsZ02Id7r+S/HT3ZM2XnSEQqvoTh+iFcAFN9S9gM=;
+        b=BMZiF/9F/mr04ZIxwGoOPBP6apy/xxNHIdSWq3QAeJ/5eh4vt/4aWISHmeZhMYSf2E
+         fvTlTOdP40jdwz/QaGszJHaF1WTHQo517usdIZfrcfDWvijqrrLevmAB4TcoFirXg+Aa
+         ldQ8emhqt50H/VQaOzgXr9qSNxDpiM7v3IbeoxwUidzBiU2B/dMFNsmYPn+ymxdXiDUV
+         ODDB/ocmwhHhg9z/R2e582XRcaUw4qp4Rplko/lENycxyTVfQbxL/xncLzWiFQKQUEnl
+         dm3g1eY6Y3RGSZCi3bBsGKRVl3fJuctgoOpX46Qi4JtOpO2vxxZvrYop5VfEvEUlDBnA
+         ftDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795116159; x=1795720959;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=xfwHsZ02Id7r+S/HT3ZM2XnSEQqvoTh+iFcAFN9S9gM=;
+        b=djYNc/4KSepwSUEMjAIMP/pAg6goRTgSLJP2PB4fFcIJAvZTbY9ngan+gAUizq2Chf
+         zMSZvMoLo5diVVeonKOXtTUDms38L9v2TT6gke2HKcXupWgc5hmvX8DS/maiE8+Y6aQn
+         UEiE/tOy6aHOA5u0kKXrBl53K912Y9bbqMMlxhRVWmaCFyl9Jfyyqnsn3qqfJA9bGFxB
+         wkGA6kR6W8xoUouNHT5IZGjUXG3eS7czEt23zse9x+A+VVUsIdH45qKKjbaIAGtdWQv/
+         OL3kXDQwC4XuVTHPwjLgRp/1OzPOcZ8M1FpkuQtcXqxzx/T8+FprLXN/O5vd/nXOiMeF
+         1yUA==
+X-Gm-Message-State: APuU4Z/J2bypUEW5QinsCo6YJGgxNTlQngU8V5yvkI/3PoKPKgCKA/In
+	F4n3BZEirRH1IkHxEjsW5Tlmsho3fNj8z54uxL8PTiRCdW4aUpmIwJHTZ4JM6rwbU01/FqWOP+y
+	2J7inu25KWjbS5/AFcLdt16LDGXgDmckbgcYYzmAKKnM993yz/2YMQRx6qH0ven5U0QST8cRB5J
+	2JpJLbd4EiB9CDVDzs75gzPw==
+X-Received: from wmdn7.prod.google.com ([2002:a05:600c:2947:b0:4a2:8ef:a5af])
+ (user=dmnk job=prod-delivery.src-stubby-dispatcher) by 2002:a05:600c:6749:b0:4a2:d99:3171
+ with SMTP id 5b1f17b1804b1-4bb8881b52dmr11213525e9.23.1795116158504; Thu, 19
+ Nov 2026 11:22:38 -0800 (PST)
+Date: Thu, 19 Nov 2026 20:22:37 +0100
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -123,80 +75,281 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.56.1.809.ga0b61035b5-goog
+Message-ID: <20261119192237.2666510-1-dmnk@google.com>
+Subject: [PATCH] ewah: validate rlw bounds in ewah_read_mmap
+From: Dominik Maier <dmnk@google.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>, 
+	Lidong Yan <502024330056@smail.nju.edu.cn>, 
+	Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>, dmnk+artist@google.com, 
+	Dominik Maier <dmnk@google.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+ewah_read_mmap() trusts the serialized word count, RLW offset, and
+per-header literal word counts after reading a bitmap from disk. A
+corrupt .bitmap file with buffer_size == 0, an oversized buffer_size,
+an rlw offset past buffer_size, or a running-length header whose
+literal_words exceeds the remaining words in self->buffer causes memory
+leaks, huge pre-check reallocations, or out-of-bounds heap reads in
+ewah_each_bit(), rlwit_init(), next_word(), and rlwit_discharge().
 
-> diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-> index ab5d2a2344..998167794c 100644
-> --- a/builtin/fast-import.c
-> +++ b/builtin/fast-import.c
-> @@ -3918,7 +3918,7 @@ static int parse_one_feature(struct fast_import_state *state,
->  		check_unsafe_feature(state, "import-marks-if-exists");
->  		option_import_marks(state, arg, 1, 1);
->  	} else if (skip_prefix(feature, "export-marks=", &arg)) {
-> -		check_unsafe_feature(state, feature);
-> +		check_unsafe_feature(state, "export-marks");
->  		option_export_marks(state, arg);
->  	} else if (!strcmp(feature, "alias")) {
->  		; /* Don't die - this feature is supported */
+Validate non-zero buffer_size and available mmap length before mutating
+self or growing self->buffer, verify that every RLW header's literal
+word count fits within self->buffer_size and that the serialized rlw
+offset points to the final RLW header, and clamp next_word() /
+rlwit_init() against the buffer size as defense in depth.
 
-This is an obviously correct change, but doesn't this bug caused by
-forced repetition annoy anybody?  This if/else if/else cascade is an
-obvious trap waiting for another similar bug to be added.
+Signed-off-by: Dominik Maier <dmnk@google.com>
+---
+ ewah/ewah_io.c          |  43 +++++++++++++----
+ ewah/ewah_rlw.c         |  17 +++++--
+ t/t5310-pack-bitmaps.sh | 103 ++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 150 insertions(+), 13 deletions(-)
 
-Wouldn't it be much nicer if the above hunk can be rewritten like
-so,
-
- 		option_import_marks(state, arg, 1, 1);
--	} else if (skip_prefix(feature, "export-marks=", &arg)) {
-+	} else if (check_unsafe(state, feature, "export-marks", &arg)) {
--		check_unsafe_feature(state, feature);
- 		option_export_marks(state, arg);
- 	} else if (!strcmp(feature, "alias")) {
- 		; /* Don't die - this feature is supported */
-
-so a separate call to check_unsafe_feature() can be lost, and we no
-longer have to repeat "export-marks=" and "export-marks" for all
-these "unsafe" features?
-
-If we plan to ever add an argument-less unsafe feature, the helper
-needs to be updated to require NUL (instead of '=') after we find
-the end of the feature name with skip_prefix() when the feature is
-an argument-less one (perhaps signaled by arg==NULL or something),
-but you get the idea.
-
- builtin/fast-import.c | 33 ++++++++++++++++++---------------
- 1 file changed, 18 insertions(+), 15 deletions(-)
-
-diff --git i/builtin/fast-import.c w/builtin/fast-import.c
-index ab5d2a2344..673d3f2289 100644
---- i/builtin/fast-import.c
-+++ w/builtin/fast-import.c
-@@ -3896,12 +3896,20 @@ static int parse_one_option(struct fast_import_state *state, const char *option)
- 	return 1;
- }
+diff --git a/ewah/ewah_io.c b/ewah/ewah_io.c
+index da005523b0..551aec22d3 100644
+--- a/ewah/ewah_io.c
++++ b/ewah/ewah_io.c
+@@ -21,6 +21,7 @@
  
--static void check_unsafe_feature(struct fast_import_state *state,
--				 const char *feature)
-+static int check_unsafe(struct fast_import_state *state,
-+			const char *feature, const char *prefix,
-+			const char **arg)
+ #include "git-compat-util.h"
+ #include "ewok.h"
++#include "ewok_rlw.h"
+ #include "strbuf.h"
+ 
+ int ewah_serialize_to(struct ewah_bitmap *self,
+@@ -93,21 +94,32 @@ ssize_t ewah_read_mmap(struct ewah_bitmap *self, const void *map, size_t len)
  {
--	if (!state->allow_unsafe_features)
--		die(_("feature '%s' forbidden in input without --allow-unsafe-features"),
--		    feature);
-+	const char *arg_;
+ 	const uint8_t *ptr = map;
+ 	size_t data_len;
+-	size_t i;
++	size_t i, pos, last_rlw = 0;
++	uint32_t bit_size, buffer_size, rlw_offset;
+ 
+ 	if (len < sizeof(uint32_t))
+ 		return error("corrupt ewah bitmap: eof before bit size");
+-	self->bit_size = get_be32(ptr);
++	bit_size = get_be32(ptr);
+ 	ptr += sizeof(uint32_t);
+ 	len -= sizeof(uint32_t);
+ 
+ 	if (len < sizeof(uint32_t))
+ 		return error("corrupt ewah bitmap: eof before length");
+-	self->buffer_size = self->alloc_size = get_be32(ptr);
++	buffer_size = get_be32(ptr);
+ 	ptr += sizeof(uint32_t);
+ 	len -= sizeof(uint32_t);
+ 
+-	REALLOC_ARRAY(self->buffer, self->alloc_size);
++	if (!buffer_size)
++		return error("corrupt ewah bitmap: empty buffer");
 +
-+	if (skip_prefix(feature, prefix, &arg_) && *arg_ == '=') {
-+		if (!state->allow_unsafe_features)
-+			die(_("feature '%s' forbidden in input "
-+			      "without --allow-unsafe-features"), prefix);
-+		*arg = arg_ + 1;
-+		return 1;
++	if (buffer_size > len / sizeof(eword_t))
++		return error("corrupt ewah bitmap: eof in data "
++			     "(%"PRIuMAX" bytes short)",
++			     (uintmax_t)buffer_size * sizeof(eword_t) - len);
++
++	self->bit_size = bit_size;
++	self->buffer_size = buffer_size;
++	ALLOC_GROW(self->buffer, self->buffer_size, self->alloc_size);
+ 
+ 	/*
+ 	 * Copy the raw data for the bitmap as a whole chunk;
+@@ -115,11 +127,7 @@ ssize_t ewah_read_mmap(struct ewah_bitmap *self, const void *map, size_t len)
+ 	 * the endianness conversion in a separate pass to ensure
+ 	 * we're loading 8-byte aligned words.
+ 	 */
+-	data_len = st_mult(self->buffer_size, sizeof(eword_t));
+-	if (len < data_len)
+-		return error("corrupt ewah bitmap: eof in data "
+-			     "(%"PRIuMAX" bytes short)",
+-			     (uintmax_t)(data_len - len));
++	data_len = (size_t)buffer_size * sizeof(eword_t);
+ 	memcpy(self->buffer, ptr, data_len);
+ 	ptr += data_len;
+ 	len -= data_len;
+@@ -129,9 +137,24 @@ ssize_t ewah_read_mmap(struct ewah_bitmap *self, const void *map, size_t len)
+ 
+ 	if (len < sizeof(uint32_t))
+ 		return error("corrupt ewah bitmap: eof before rlw");
+-	self->rlw = self->buffer + get_be32(ptr);
++	rlw_offset = get_be32(ptr);
+ 	ptr += sizeof(uint32_t);
+ 	len -= sizeof(uint32_t);
+ 
++	if (rlw_offset >= self->buffer_size)
++		return error("corrupt ewah bitmap: rlw offset out of bounds");
++
++	for (pos = 0; pos < self->buffer_size; ) {
++		eword_t literal_words = rlw_get_literal_words(&self->buffer[pos]);
++		last_rlw = pos;
++		if (literal_words > self->buffer_size - 1 - pos)
++			return error("corrupt ewah bitmap: literal words out of bounds");
++		pos += 1 + (size_t)literal_words;
 +	}
-+	return 0;
++	if (rlw_offset != last_rlw)
++		return error("corrupt ewah bitmap: invalid rlw offset");
++
++	self->rlw = self->buffer + rlw_offset;
++
+ 	return ptr - (const uint8_t *)map;
+ }
+diff --git a/ewah/ewah_rlw.c b/ewah/ewah_rlw.c
+index 76b4c6c19e..9db47ab6f7 100644
+--- a/ewah/ewah_rlw.c
++++ b/ewah/ewah_rlw.c
+@@ -25,13 +25,20 @@
+ 
+ static inline int next_word(struct rlw_iterator *it)
+ {
++	size_t avail;
++	eword_t literal_words;
++
+ 	if (it->pointer >= it->size)
+ 		return 0;
+ 
++	avail = it->size - it->pointer - 1;
+ 	it->rlw.word = &it->buffer[it->pointer];
+-	it->pointer += rlw_get_literal_words(it->rlw.word) + 1;
++	literal_words = rlw_get_literal_words(it->rlw.word);
++	if (literal_words > avail)
++		literal_words = avail;
++	it->pointer += (size_t)literal_words + 1;
+ 
+-	it->rlw.literal_words = rlw_get_literal_words(it->rlw.word);
++	it->rlw.literal_words = literal_words;
+ 	it->rlw.running_len = rlw_get_running_len(it->rlw.word);
+ 	it->rlw.running_bit = rlw_get_run_bit(it->rlw.word);
+ 	it->rlw.literal_word_offset = 0;
+@@ -45,7 +52,11 @@ void rlwit_init(struct rlw_iterator *it, struct ewah_bitmap *from_ewah)
+ 	it->size = from_ewah->buffer_size;
+ 	it->pointer = 0;
+ 
+-	next_word(it);
++	if (!next_word(it)) {
++		memset(&it->rlw, 0, sizeof(it->rlw));
++		it->literal_word_start = 0;
++		return;
++	}
+ 
+ 	it->literal_word_start = rlwit_literal_words(it) +
+ 		it->rlw.literal_word_offset;
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index b75a35707c..7679166c37 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -566,6 +566,109 @@ test_bitmap_cases () {
+ 		    test_cmp expect actual
+ 		)
+ 	'
++
++	test_expect_success 'reject ewah bitmap with invalid buffer_size, rlw, or literal words' '
++		rm -fr repo &&
++		git init repo &&
++		test_when_finished "rm -fr repo" &&
++		(
++			cd repo &&
++			git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
++			test_commit base &&
++			git repack -adb &&
++			bitmap="$(ls .git/objects/pack/pack-*.bitmap)" &&
++			chmod +w "$bitmap" &&
++			cp "$bitmap" "$bitmap.orig" &&
++			algo=$(test_oid algo) &&
++
++			# Corrupt the first type bitmap buffer_size to 0
++			"$PERL_PATH" -MDigest::SHA=sha1,sha256 -e '\''
++				my ($file, $algo) = @ARGV;
++				open my $fh, "+<:raw", $file or die $!;
++				local $/;
++				my $data = <$fh>;
++				my $hsz = ($algo eq "sha256") ? 32 : 20;
++				my $off = 12 + $hsz;
++				substr($data, $off + 4, 4) = pack("N", 0);
++				my $sum = ($algo eq "sha256") ?
++					sha256(substr($data, 0, -$hsz)) :
++					sha1(substr($data, 0, -$hsz));
++				substr($data, -$hsz, $hsz) = $sum;
++				seek $fh, 0, 0 or die $!;
++				print $fh $data or die $!;
++				close $fh or die $!;
++			'\'' "$bitmap" "$algo" &&
++			test_must_fail git rev-list --test-bitmap HEAD 2>err &&
++			test_grep "corrupt ewah bitmap: empty buffer" err &&
++
++			# Corrupt the first type bitmap buffer_size to 0xffffffff
++			cp "$bitmap.orig" "$bitmap" &&
++			chmod +w "$bitmap" &&
++			"$PERL_PATH" -MDigest::SHA=sha1,sha256 -e '\''
++				my ($file, $algo) = @ARGV;
++				open my $fh, "+<:raw", $file or die $!;
++				local $/;
++				my $data = <$fh>;
++				my $hsz = ($algo eq "sha256") ? 32 : 20;
++				my $off = 12 + $hsz;
++				substr($data, $off + 4, 4) = pack("N", 0xffffffff);
++				my $sum = ($algo eq "sha256") ?
++					sha256(substr($data, 0, -$hsz)) :
++					sha1(substr($data, 0, -$hsz));
++				substr($data, -$hsz, $hsz) = $sum;
++				seek $fh, 0, 0 or die $!;
++				print $fh $data or die $!;
++				close $fh or die $!;
++			'\'' "$bitmap" "$algo" &&
++			test_must_fail git rev-list --test-bitmap HEAD 2>err &&
++			test_grep "corrupt ewah bitmap: eof in data" err &&
++
++			# Corrupt the first type bitmap rlw offset past buffer_size
++			cp "$bitmap.orig" "$bitmap" &&
++			chmod +w "$bitmap" &&
++			"$PERL_PATH" -MDigest::SHA=sha1,sha256 -e '\''
++				my ($file, $algo) = @ARGV;
++				open my $fh, "+<:raw", $file or die $!;
++				local $/;
++				my $data = <$fh>;
++				my $hsz = ($algo eq "sha256") ? 32 : 20;
++				my $off = 12 + $hsz;
++				my $words = unpack("N", substr($data, $off + 4, 4));
++				substr($data, $off + 8 + $words * 8, 4) = pack("N", $words + 64);
++				my $sum = ($algo eq "sha256") ?
++					sha256(substr($data, 0, -$hsz)) :
++					sha1(substr($data, 0, -$hsz));
++				substr($data, -$hsz, $hsz) = $sum;
++				seek $fh, 0, 0 or die $!;
++				print $fh $data or die $!;
++				close $fh or die $!;
++			'\'' "$bitmap" "$algo" &&
++			test_must_fail git rev-list --test-bitmap HEAD 2>err &&
++			test_grep "corrupt ewah bitmap" err &&
++
++			# Corrupt the first RLW header literal_words count past buffer_size
++			cp "$bitmap.orig" "$bitmap" &&
++			chmod +w "$bitmap" &&
++			"$PERL_PATH" -MDigest::SHA=sha1,sha256 -e '\''
++				my ($file, $algo) = @ARGV;
++				open my $fh, "+<:raw", $file or die $!;
++				local $/;
++				my $data = <$fh>;
++				my $hsz = ($algo eq "sha256") ? 32 : 20;
++				my $off = 12 + $hsz;
++				substr($data, $off + 8, 8) = pack("NN", 0x00001000, 0x00000000);
++				my $sum = ($algo eq "sha256") ?
++					sha256(substr($data, 0, -$hsz)) :
++					sha1(substr($data, 0, -$hsz));
++				substr($data, -$hsz, $hsz) = $sum;
++				seek $fh, 0, 0 or die $!;
++				print $fh $data or die $!;
++				close $fh or die $!;
++			'\'' "$bitmap" "$algo" &&
++			test_must_fail git rev-list --test-bitmap HEAD 2>err &&
++			test_grep "corrupt ewah bitmap" err
++		)
++	'
  }
  
- static int parse_one_feature(struct fast_import_state *state,
+ test_bitmap_cases
+-- 
+2.56.1.750.gf70dc682cf-goog
+
