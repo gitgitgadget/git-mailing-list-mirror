@@ -1,103 +1,103 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.180
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.173
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795101282;
-	b=zXur7uTVG7v+QWVRimO0k+LbMCc3OtDm2UOZsqkTMSlJVE3oOG+743dAduxR1YY2XaTY
-	 29mhh/eFUXs7BFgACs6evvDR7aUYEnV5VL2gEp9U14W444I7stmlC+eCcKx/LVKbunHJp
-	 QSnwoAOflMvJxBUG6QYtYZjGZb8hjGZ1e/D5m8Z+3XiQfyO/BdWg+ED5pr3Rv5KQ7hl0w
-	 kDPBINVqzrXMgvwUhGOePh0kfxA7kTozJZufOPUNfu5aVwwWvUfhoelYtysFDKSc9QVt5
-	 Zowl/Qy75wjO5vihw64aPVjgcqPAQ+QQwrXQ2U6w4mZirGoEYvsrb/igTPMA95kM/yA==
+	t=1795101295;
+	b=yTY0d6QhOOwVmnR8kP2Vzd8oJB4chMINGrNHwnTR+CR94hwvz8XdrHLMO1/+HJg4RwEG
+	 gycaBS+eUsguENjY+q+IH6CiXTAdXNKZcp6nbFp54GFcpyZYKeffChBfRjLCy7+GcC76+
+	 FtLz2GzmTygqXy+Dl9d7u+mEUr5znnK/tJRLsKxhyAs+AkbfWlKSTvF+R9VDjh5NrQmGS
+	 GrQE0ukZNMacmMC8oIKujGEOK+OaI1oFqg0eE59brmCAlxEcJeSqS8/IN0U6DTN0pjR3J
+	 jt4XdOn5/NWk4YdOyI1QRG0Q7RX4tTQ6FtVcj22Hi7M1gV83gzQxIh0iOKbwRMuorMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795101282;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795101295;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6YBk2u0n84qTWR5L3ETU6MyJ/TfvAuPYFc0pt1MFIps=;
-	b=nELAlNS2dW4H8DRj2sKCdcNWn/MSmEEMs7QgKp74wHLT4bjkD//5DY8vmdunoQ9Jnn8Y
-	 4VVgEMWDCXceuLrIrXdnhgNJRMnnfCWIZFH6mV+frCB9/rnpkL6XjXpqFI+jUhO40sEKG
-	 x4cdglPUExPg/1SI9sMNUzGPDR6zwErEZdxocumF9nbn6dw6P6LG+PdLFF3diecKTH+6P
-	 zBF1VmLc71oRGWmsirvoXOmZ6o1MRzj2B9WPJ3Q2l7Q+cm2tbFS5h4izgJ5t03P2psp4j
-	 xJsUDl8gEYe6S4TfHKCp1DYr6RlQtCAUAm1TQlBypBD+/+9Ffhz+n9Wzrez81Al0W6w==
+	bh=e8/YTB0X9DBvQycE1S/uvLlTC0vSWH2aM57/poKOSuU=;
+	b=ajyMJlWYJ8ZLfzluSpJ/zwdRY9Zd1WsJhqO9RFxqDks5T2BRPeAFQIe8M8Q3CbFcGdiW
+	 aSJwDz5BIjD15sKXAOeUl4y5bEllriHBYkwYfi6qB0MTNNAOUf9CGezVii99/uxvkvMlw
+	 GgGaDgJgtEdei0fjZPPHrWLUuywQC84v47do9hbKCRhQAKrKAuoop3aZY0g6rbxTjuW9D
+	 CStmY2QlKYn1qzc3adt9vaFCVmNuPagXJ2vAsXJOL9CLxUQPzVXyocpnndB0xOfla/qTG
+	 slZV1+MDnAb16zGVnRkEjTARs31mVh/Zwnl0pK9pLxmmnaQMWXNA/Gqf5ge+8GIlHEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=jaspermayone.com;
 	spf=pass smtp.mailfrom=singlefeather.com;
-	dkim=pass header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=OUc2lEAx;
-	arc=none smtp.remote-ip=209.85.160.180
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+	dkim=pass header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=hZWg1Buz;
+	arc=none smtp.remote-ip=209.85.160.173
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A62606A32A
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 15:14:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E7A62606A32A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5EA606A330
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 15:14:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DC5EA606A330
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jaspermayone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=singlefeather.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=OUc2lEAx
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-55c35262674so17064711cf.0
-        for <git@vger.kernel.org>; Thu, 19 Nov 2026 07:14:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=jaspermayone.com header.i=@jaspermayone.com header.a=rsa-sha256 header.s=google header.b=hZWg1Buz
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-53634b8328eso22988311cf.0
+        for <git@vger.kernel.org>; Thu, 19 Nov 2026 07:14:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jaspermayone.com; s=google; t=1795101281; x=1795706081; darn=vger.kernel.org;
+        d=jaspermayone.com; s=google; t=1795101294; x=1795706094; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=6YBk2u0n84qTWR5L3ETU6MyJ/TfvAuPYFc0pt1MFIps=;
-        b=OUc2lEAx3x4MokbutrgsYb/65Z4HjTeGFVS2sThbc754xUEABIOK/0Nw/ZO29x51X7
-         J/wk5HWZ5fnO+7db/dPp95ptO+v0Scv81kXjTIpjG6x5mLqhusG65jfdpwalIJffeZiW
-         SakTucAdcTg7H/+Bb+/TM0Q2DsoB1QNYgP+BYPCPSkLH40q8zVD+V753rKB+wmQxsHYx
-         fUvUxtjcidj6GdCH5U+dOX8U/ix7kGbVEsHo/ZMaE8EK+ezJvE/Byc6DYlPJ+kxehdrV
-         N78RVjEi4kYlVcAMk64aJrmOrelRvdYT6C3B4ZMJEcTGyLQqp6V1srQnASDDEF8O6uQT
-         Ht+Q==
+        bh=e8/YTB0X9DBvQycE1S/uvLlTC0vSWH2aM57/poKOSuU=;
+        b=hZWg1BuzFF1pFOJ6ZYm0zh3VST8KeGLgBl6tSECzm7YIH37I4Bw1ZOub12ILKVRMro
+         ai9Z6tGz02t2lNlB7ARtsEjs1GVKt4dpREY7JP3y7JZvyKAVqr95IcXKfOk0uNxognAx
+         79Ye5v6NmVG9O9XObnxuBpppC937ULS/ExQ0WCVbRVIVXQ9qzbBMT9GGlEmVRvaalAcw
+         Kt+n0cqL4gQvRfXo28vI3xdaKMO7NtC4gE45N9Gd0DYuiNsVJIU6fNsevBhBcvyNIzRs
+         63vBJkgN6O5wA/NJssaG6gG3lP1goEuNswAzSVh7OHvpUUKypcTigX1nGwFM9AJZJBGb
+         VcKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795101281; x=1795706081;
+        d=1e100.net; s=20260707; t=1795101294; x=1795706094;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=6YBk2u0n84qTWR5L3ETU6MyJ/TfvAuPYFc0pt1MFIps=;
-        b=Q1fnQDSSkltm1lkThEUH/hr1j6elNlpgy4gyB49Zz0jyFMW/LbqG+6ds8Akk+TXjRf
-         1HGdiGtgfKLtA3+zhXVD8aQdWZkbOrnd0IHzTihnUV4orXw3jO/p0gWOY5ebmzcY3dE5
-         Sd/eN0Vk3uuux/oQpEa1khxrJBz+/x1EbASeil0vTA4WAm/bd06pAxNv97zTRPorj/Hz
-         9Qfrt2NX9ub7dHaUXIuUzps4NbbmZXmd2+D2m7jlgPXeNwQxm3E1EGhDzND72DPNOjON
-         J1BTDDLIDyh5atASp33guruTRp2VVFPkcMX6o0llbocbp/Gxng4wcWBmAgVlFgThLuFy
-         dsuw==
-X-Forwarded-Encrypted: i=1; AL+hErHZCuzj8YKgUa06GaBZs3Lj5QKnGQIHO4uiuIgNEvlHmdS1qREJbdaBHP4MQbxcos6Kp10=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/pDvkA8jt+3b4I83Ga36Q/Hdc1QCuOpCan8HGmElJ4N7vDbylr
-	l9Z8XJ804w8xTJq2Z8QIE3nM0dPMSzC6UL/iMg5fxQxZJOK1L/mocYIGl7WixNzjQ9sQgj5ECWi
-	zQhWwAX6FL+0/ln+VFFyp2zLMGVMBvOgtG5oP218uhLcKkYGAN59/+jC1m/lT1mwFGHv7T9hYum
-	bDd+3HGWwlbPW/qoB7+CcmLHJCd10usA8=
-X-Gm-Gg: AYBFou2MaZOY1FbmC0dKC2CCX1bEOTD44eaw4zh5fkmXECU7K3RgjJZg8fC7x1lKScg
-	KEbHwpLpbubF2g2ef72CPaXVEObgbzvpoO705xc8RJ6X8M5qzAc2QMc42bIIaDY2Kmnzh9cO0w2
-	ERxa94coi1bt80M5LAI3Wux4iGMgqoatZdUIISo4H1ck8s6B1PYy4GYij7eEo6WlLU4TVoXMlkl
-	WdSgpGyXCUDhssoNCGvf6oXpDDBi67UC7UfyljOQbzoM18IfmxLJP5DEQWx3t8xMBvjlyM+NqMW
-	6iCmRjhAhQsXIlw5dvByBnlG5Xt9vecS7T9wRLCQjd04O3Sr3Pu19QwAlcwTiNUDuALDjsCxA4+
-	zCgxMC0+BDqe8S+l3R9rbPpq1HbmGU9xKhTyvqk3gopHhLvbQBTHqpkWQRhjSYnAhro1XPi8iBm
-	Nef5jUFXJrL+DHF7K0x9Kqf/0UVC/+qq2IYWbz5LYkFTqcnLhtzhq3v/qAbFUy/GiOnfm7r8p3r
-	oh1KItAIqf3lyJgLD2NGn/944/4RmrITiX70SrCgps7pD1msxFWK6Wvu3KTDZxWpwM/D8U8S81U
-	73JieyahVe8qlI1bX9PGf/bX5gMMS7bh0/KIfGkpBpUP3RqgXPvOeiYaFsQ6PvUgLz3zzct13bt
-	0Vlu/3Av+2WUAdkIL7mvv6RqBiOZcjSnOQVPLqxa4dk89y3Qy1pxHUbwSI2D6sni7NC08GaCxLq
-	3YaZPJDu9hGXgTM/bTGmL+q6J5D1NkSunhovTHAXCZ1HSqqPdGRRaGG+RNZ1Kdi+IZuU+TBbQoz
-	lK2odYCKtE=
-X-Received: by 2002:a05:622a:c15:b0:532:af50:8d7d with SMTP id d75a77b69052e-55d769f2c23mr3334111cf.33.1795101280548;
-        Thu, 19 Nov 2026 07:14:40 -0800 (PST)
+        bh=e8/YTB0X9DBvQycE1S/uvLlTC0vSWH2aM57/poKOSuU=;
+        b=hkqMwcKBR6nwfdlCEXPszeEQ3TmqZFnEp0l4D9nJaMdn/0/05DiKwWKwr8Z4w/J2O3
+         N1faVmHWzPkPFbPUyDEyVaXDrpANe2sUEPY7Z4qjQEVn2JCgJG1L7hXSij+CfleNSmuu
+         MW+56OunQzckZ0wUapKrp7KbEyABt5FsmSr2gXkVwT37P15P1WsbDDOTCrtCrzdi2EZM
+         RO54MK4qIj3JKf6n42C0mkeG7mwqaEw1vUKv36uiVg9+fuq9QeJ+ki0t4p4vhuFM9uvH
+         TI5slW4uvSRXUtNDbg8kBtEVbKDydBLNIFMqv6kJHgawrJxtsBjc4Z1KlLyAZa5yZs7S
+         Xnuw==
+X-Forwarded-Encrypted: i=1; AL+hErGwWzAl61lXMOZ73a+vB16hOrTnpJ88elP034Z2vCvtH0slbeJUF7pjy/zTSBM1gBZ3B84=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+1LKIPf2EF3sdG3zu3wBni4zrFWLcAIS71X0yhFgN75lx1PI9B
+	6RS/c9AlVTwlcfo9Xgt37ESjAk3Wa9Zp+QEeH5Zot2g3RuXW+C2PE0GhCD/My7bGxTRmstmM/jJ
+	JfrvawSkupUSucZHjrBhO/9ao9TeCSRjX4tsr3mlWvsKzQcU0xHfzgYqM+x7LxkasUsRh45t8Be
+	amJNaHdxaX2vs39tn/Mf4SLceE0tpoOQA=
+X-Gm-Gg: AYBFou0Pf9cnkfdMhrZzlcR6os6Vw0db+jLlprpsqi4dEbpUtHPWDkNlKdLldj6SHfo
+	ZWFfhUwCp5qZGO10F58A5CPXuhM7RB3pHZGmnCYWAnXY+W70EF3WdN1/sv2f+ZMCxcK8RrDnnta
+	1/B5hIjy7f8dzDMp4m3cizXOjdjB5Grler+oQWlwWKlxXweJBEKVuxa5yKNXGy02mSkJQ+Uu52G
+	qh2faN6LxXRbbZbREk+fcdfXWNFCFHjtDn6udj4Rq2olNGC5eq5qUTYXKp56aB8SJ6tchq/V5r6
+	OD1Er4lLo/xEtSQi6Iq1krkXhFQ0Qod1t2B5IcdNjFtFWnbhzKBPlgL5hxEoFQOT4myf2FZB5yp
+	0wspVN/eHeAocZf2edqdDYA8YcZAt31/Gr7RcVuOFi3MuN1oRajUrtq6IvnQ2oOVwmbsJ1RBXb5
+	Q6oDn0d0N/znum+b4cFOFfMh9pwCMbTmGWQeSx0sYVWgUj3//epBn1ele1Iwfcds5khmXBTF5uT
+	tZ7bqdQ99ludeaG6Qlj+RKI4xWCNNsaWpSipfjwZ5miqwAexAe72cAe3mVHJGTp1dwHtdi3VJds
+	w6Il3Xfd5Jtq65EdYEGfqrjntCSSko9usV158sRl56jx6/L3b2s0rogZSrIjRCBU7tQ1A9ujioI
+	boB4u/LNvrppKlW8IF4bMaIt+Vnaf89bFVPjNFKSEQwRbRQPIUXtx3ESeUHKwmCSaSRNWBb/v+f
+	s2CMRjvRONvZA+tpxVxme5/3rS9gX9vC2wgLrOPyyxeVsZmjiLTId8MhWvMrYsciLuhYxrzof5Z
+	YCjKGtYtx8=
+X-Received: by 2002:a05:622a:487:b0:536:64ee:73cc with SMTP id d75a77b69052e-55d76a62980mr3249661cf.39.1795101293575;
+        Thu, 19 Nov 2026 07:14:53 -0800 (PST)
 Received: from remus ([69.43.65.112])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-55d669b7075sm25479431cf.2.2026.11.19.07.14.38
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-55d66c52318sm25373141cf.29.2026.11.19.07.14.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Nov 2026 07:14:39 -0800 (PST)
+        Thu, 19 Nov 2026 07:14:52 -0800 (PST)
 From: Jasper Mayone <me@jaspermayone.com>
-To: gitster@pobox.com,
+To: phillip.wood123@gmail.com,
 	git@vger.kernel.org
-Cc: haraldnordgren@gmail.com,
-	phillip.wood123@gmail.com,
+Cc: gitster@pobox.com,
+	sunshine@sunshineco.com,
 	kristofferhaugsbakk@fastmail.com,
 	ben.knoble@gmail.com,
-	taahol@utu.fi,
+	haraldnordgren@gmail.com,
 	Jasper Mayone <me@jaspermayone.com>
-Subject: Re: [PATCH v8 4/4] branch: let --delete-integrated find branches merged onto changed files
-Date: Thu, 19 Nov 2026 10:14:36 -0500
-Message-ID: <20261119151436.86191-1-me@jaspermayone.com>
+Subject: Re: [PATCH v5 4/5] ref-filter: add %(currentworktree)
+Date: Thu, 19 Nov 2026 10:14:48 -0500
+Message-ID: <20261119151448.86546-1-me@jaspermayone.com>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <xmqqik1t2119.fsf@gitster.g>
-References: <xmqqik1t2119.fsf@gitster.g>
+In-Reply-To: <641e821d-ec7a-447c-8311-9cd395d9a5c5@gmail.com>
+References: <641e821d-ec7a-447c-8311-9cd395d9a5c5@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -109,58 +109,23 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Phillip
 
-> ... this code to call merge_keeps_upstream(), causing read_mmfile()
-> on the gitlink commit from submodule object database, leading to a
-> crash, no?
->
-> Or am I misreading the code flow?
+On 16/11/2026 16:42, Phillip Wood wrote:
+> When I suggested %(currentworktree) I was imagining it would be a
+> boolean format like %(HEAD) (i.e. it would print '*' if the ref was
+> checked out in the current worktree).
 
-You are reading it right. I tried it on v8: the upstream has "lib" as
-a gitlink, the branch replaces it with a regular file, and the
-upstream replaces it with a different regular file. Then
+Thank you for the review. Our emails crossed: Junio was against 5/5,
+because in a long branch list he wants the "+" next to the branch that
+his own worktree is bisecting, and I agreed to stop the series at 3/5
+[1]. 4/5 existed only for 5/5, so it is dropped too.
 
-  $ git branch --delete-integrated origin/main
-  fatal: unable to read blob object dae1aadd914ecfe1e09b3adb3c15abdd0085e238
+Your idea to extend %(HEAD) to branches that are being rebased or
+bisected is interesting. I will keep it, and your two points on the
+implementation, in mind if I come back to this later.
 
-It does not segfault, because read_mmblob() checks the object type
-and dies, but the command stops and no branch is deleted.
-
-Recording the mode of the base and requiring a regular file there too
-fixes it for me. The branch is then kept, and t3200 still passes:
-
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -864,7 +864,7 @@ enum change_state {
- struct branch_change {
- 	char *path;
- 	struct object_id base_oid, branch_oid, upstream_oid;
--	unsigned short branch_mode;
-+	unsigned short base_mode, branch_mode;
- 	enum change_state state;
- };
- 
-@@ -901,6 +901,7 @@ static void collect_branch_changes(struct landing_search *search,
- 		       &p->one->oid : null_oid(the_hash_algo));
- 		oidcpy(&change->branch_oid, DIFF_FILE_VALID(p->two) ?
- 		       &p->two->oid : null_oid(the_hash_algo));
-+		change->base_mode = p->one->mode;
- 		change->branch_mode = p->two->mode;
- 	}
- 	diff_flush(&diffopt);
-@@ -943,7 +944,8 @@ static enum change_state change_state_at(struct branch_change *change,
- 	if (is_null_oid(&change->base_oid) ||
- 	    is_null_oid(&change->branch_oid) ||
- 	    oideq(&change->upstream_oid, &change->base_oid) ||
--	    mode != change->branch_mode || !S_ISREG(mode))
-+	    mode != change->branch_mode || !S_ISREG(mode) ||
-+	    !S_ISREG(change->base_mode))
- 		return CHANGE_MISSING;
- 	return CHANGE_NEEDS_MERGE;
- }
-
-Harald, a test for this case in t3200 would be good too.
+[1] https://lore.kernel.org/git/20261116161553.56756-1-me@jaspermayone.com/
 
 Thanks
 Jasper
