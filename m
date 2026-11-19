@@ -1,126 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.51
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795083131;
-	b=gnYaH8k02VvmG7drnYhpEzPJR7B7kjoVwXdx6xFDR/QZvenR7+BuOMukOCA+x3MgoN+r
-	 z5xmPtlBYTIaepvy1iXYFBNwQD4Vs83IrrIzFgkZqoJkRBb7EKuYLrYq7P8o5Fw9zZKDr
-	 DcECBULp1/bdeCkTWqrZJO1myoTDc8iJgjsNFWXUOz48egJwYpMJnJF+K0bHdK9oioUMF
-	 1rgAZmhKp52cZoVishfFWmbDmTu3962lDqjs43ae9iSJ/LgjRrXJYrI/diYUmtFc7ixg9
-	 mhiQxgbJg6zyljgGu+REW4nE6+oXY0l7lBW5fdbVxob6jui254jh02OorncuDmrqrMw==
+	t=1795085057;
+	b=MRKJa9FMDa/8Pvk6c27L9FL5c7os5MFdBGNzsq7y/7SrsJnWHtnX9a6p/L3yY21JGSRS
+	 dUtDmWc4sIvAkV7ZQPGkkL0g0UMxPmaULuqbE5FP3zzN4DWUWaNifUMRZuG67NmMg0/D7
+	 azOVbC7zgfVSvHxRDDWIgYnWTT+LxoGRIpO5zwT5tJCvJRJdM1Fe+Scut9vT4nvEeGjuY
+	 sxmKzAunqvis0hCspqPzAm0/mT8nKUUC0Yq48msN5esZyodJCTxr72HCAFF4zUAAkminH
+	 cV8aJKPE/FbdAXhZpctkox3fOiBAHS1+vpCHf2A2bD5tVdmMbgCek63pBKVSSdHJkZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795083131;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=lryUmWkDmni/zCrsmgTSb+jjfF6MmyKYWYeBRaiFRH0=;
-	b=NgbDvu7HhND62VdecM9DJ69pY5XWGgsa4srnRKnU/em2W8oAEWKy2dmtvBDqhb5zJdGT
-	 242RYXReUX5jFFWfuzLhN621tuD+37Y9gbp84/iXPZtxpchNUfhoQk7BSd6dJfLvIJscO
-	 aOB4p/mm0Wf19vagSLa2pjgQQVvEUXWptCi+wxVR3ZdCiDGcAOKGVOv75ICsSsl8nPPTa
-	 9eVNp3G9NNs8igWfhh6zkIjia1g1P8/LIwstHbog3GlxtE11EUbMdKOt4FypP8IAe/iHT
-	 GLv/e1yWIbcF8eqihz+2WDeYHzu9tCBqwEpbme+HLgrsnXqkWeGfVSskVHOyauwdz8w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795085057;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=HL4vYVHCSKGHhDc7A7KE2aWNWSjFIYqCjZmmX7dPs4E=;
+	b=AOhV9kBd/xNBWFh9P20875GqRsVYzaYahxKYqcMIQUrwJTvoaD3ZXkbcLsdml7paP5ia
+	 /CZ3pCSmaohE8WJR0jwb34Mw+SQzUvzNf3B2ZQhK3PtF3oJ5nTenQFcRZaqbb0RZzJgE1
+	 k0o6VYyuWrCCW7juUEQ4ZlDQ3IQ9WxeiXHmFUmTetzcOHrbLxH84p41wItJXhfsMsFHEM
+	 EjiPUjmiYvzLUR4XHLQVWl5bslY8Ov82WO3tIFODJH6rydI5ytWCDpQy0fYZ2Vhxdbqz1
+	 Zo/ixx9TIaJqS3yau0UtCAKlGjLMuzr9+S0RNChIIuKF8sK1LO9pECXzx7rs0FyICEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=JEYMkC9C;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=SKPkGnBI;
-	arc=none smtp.remote-ip=103.168.172.156
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xRj9vHn3;
+	arc=none smtp.remote-ip=209.85.128.51
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB573606A320
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 10:12:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AB573606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1079606A324
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 10:44:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D1079606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=JEYMkC9C;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=SKPkGnBI
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 59F2F14001C5
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 05:12:09 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 19 Nov 2026 05:12:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1795083129; x=1795169529; bh=lryUmWkDmn
-	i/zCrsmgTSb+jjfF6MmyKYWYeBRaiFRH0=; b=JEYMkC9COEZn8dhsnSGrvDdQvj
-	UZi4VqPt87TyU7ZH7GEPy12WbqfnPFsq40wrtjs5dGnJUE9g85DyxpY2QF+bxS9u
-	GcIBykn9moJ1D01iBWYjGEijFAOg+ZwS257CFAaLRwX1/jQbGx1oztej/iXg3ziW
-	mLJDRaIhrd84gk/lt+fzhHvsAI1F8gHEIVd/YLf2SFR0txa5LwGXXGUm4j1hE8Lo
-	3VrjHn+oZhbBYEHr6Sn8QcmitHYEp/muzlcRKLFogadTp+bMCDqnhMo33zGjX3jw
-	fBovvr5AAzmREgcpxN8EulC6qceMhHznJ8+PCI+kBc5bmuAOPmRqB99ESQIQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795083129; x=1795169529; bh=lryUmWkDmni/zCrsmgTSb+jjfF6MmyKYWYe
-	BRaiFRH0=; b=SKPkGnBIZbUESVZcw/IYjkONgq/g2WI7msKUwwsx4E0Dw3k1Vri
-	wLtseHMR53iyWd4YqvgrJiWuQi+jbMBDD27tlMzu2m5jwNTKdHzNPsXBFzmHfT6y
-	5V2ioBlHNEGgStQNlXKeAqoBasKni52CH2nToeijLK/L23BJa9SOpPCxPGoybKym
-	idzLSyUDRJ95XnyGurxydVLPKYBPjyXYhLTisu8px3sf6XnpIQUWj3hb2DhTInBz
-	Ps0gB0/vcQmhQglEvlYRmB0ZMVMcdbSqUjJdjtbt1FnHzdpr4i+6l+Co4fcFLzqA
-	9IbcY4Jy11wWoCdZJIisK1Hb9gDA2Do4XAw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795083129; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:FScGzedy48Ntcfq10e5QIJA8Yi3Xd9LzBIg7xndLIxMgbMr
-	BMeK3gpuJnrJtBo7iv12Bx0QBjj86tN2HfxbElIBKoKVghKGKKLcyjxDr7Ku7ngR
-	2+fjuD3bY5bGrk9FnfSN24LIKcIFdpLEWcioFJoQ0pyiyXfdeTKc4B+MOO275txs
-	ljnIywN987izMHB9YXfOlbCKvQvadxqWIMAd46jxn/hGMJd1uhB02x9TX9lnfHq8
-	ARYUGfMcva08VDVnB55CCtP3ZH5rFWjxDGkLkikcHEPjVjMOQJ5IAbBVK5bYKoQg
-	bUWECqYfewrSuJ/po64qHiUR3ovtET1bCSpFHWQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:ZORBF2QagNDAxvOiGbAR0cs/u3HqgAJ+KAdUaFCToBc=:aSu3dF+zOEBGYZQki36BDpOIGbCg6hsUJpDqgvIVc2g=;
-X-ME-Sender: <xms:ecv-aqVW2GWqACqnJNtPYwu1Qahk0dH1lp387AP0z8CrAVpAR2gn_A>
-    <xme:ecv-alodej_Nanr11BeuRPDNMk4l5CyBk-XVKvcwMf0d3JS2QCWrl-YL5knvkHs6o
-    uCg6chX-6R6q5pDWv5ifXH-AUIRaMEorkbRCTRa6YkDiXvxVlVVIXY>
-X-ME-Received: <xmr:ecv-akkZ4mtu2UwM2pr-Iue4h7YmevaNza1shXd-057BrJ4Rqr9D7YLe9dCZ9g-NH_qsrQY>
-X-ME-Proxy-Cause: dmFkZTECyeg1aWG7hrj0fCMNc8UDPOKzhyaLoCRfwNP3zaEvaYdhwD6/HfMyHp4C3FVlPp
-    lnTV9aBajPfZk4yjQLeXJ5NyDQMh/QKZoegir0uXvHhrKB0WgCA9KwNwM1r90uxKKNsx6w
-    q8dqOIO3afhS3HFKfE1huX2NTWNnhMIR4zww624l1pgQie+sGu3DJAPtONpCdmlJK3f3a9
-    2qFRcSZbagzinmhkR5sQjzipC0iOPLVfwsgqG1R3n6ZHq0lnDpSmiVmDoC7+r74NNxzqRL
-    mDaoMSvLwAw5Qpky8uFadR0DPeFKOU1dV3Uzk2XzqPsrFfFS90cwYg0i1WmFuAyJFHc5B5
-    UW9BogrUjbZZ/WLlWZYelJ+yv2wmn5FbQ8cNpLN+54PgmF3hbwqnCVzWHZ/benhgfP5b4Z
-    xP4QQ6HtUh26nHquW3hs/tD/KmQTiXNN3VmhLBBhQC1NefWwTNE6c85K2OAgB9Nv9OeYED
-    +P3Cmku+TTj2go8VzBXTmmcIeg//14H0ZRZxtW2fdj+1yNbMm6QH5yo4CO0nRIZ0NjMEZM
-    g9s9+NfnUJ5+ow2WXFbQniQO/DkSNNrokXf6dYI7YdQ0kIcP5ud/pYHZco0sj7sqQz44r7
-    k+8nSfSmsZBB1p7dBGIh/XjSWB41QNvwWZAGl//HtlCIMZuEGl/H0eyh1sQA
-X-ME-Proxy: <xmx:ecv-at13MSSBHjwPnI4YDf0V6ksy-HvxNekdfTtnJwPfrVrCSglSDA>
-    <xmx:ecv-apQluyipQ0tdds0qDTseHJ7Hydy7sqSQ35Gu4zQ1frRjt8GgyA>
-    <xmx:ecv-auz1mVgDyxUv7NiBf-9TjTWywD5RaOacHT3KJ2wxhj_mNGKRSA>
-    <xmx:ecv-ahAO0-xObjp9eQnQZj71oUCFSIJ5W9MsfeLd_M0ThsbobmwlMQ>
-    <xmx:ecv-ain9Cx5xIIdN6g2k35NPINuEbt5WhIipdGHiOU4UUQXPpnFGpV97>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Nov 2026 05:12:07 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ded48703 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 19 Nov 2026 10:12:06 +0000 (UTC)
-Date: Thu, 19 Nov 2026 11:12:02 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Elia Pinto <gitter.spiros@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Kristofer Karlsson <krka@spotify.com>,
-	Han Xin <hanxin.hx@alibaba-inc.com>,
-	Han Xin <chiyutianyi@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2 1/4] unpack-objects: use size_t for object sizes
-Message-ID: <av7LcjLcTocYH8b-@pks.im>
-References: <cover.1793446357.git.gitter.spiros@gmail.com>
- <cover.1794984184.git.gitter.spiros@gmail.com>
- <b2c3d349a4ac73da7e1d066ac43754d3e6939b9f.1794984184.git.gitter.spiros@gmail.com>
- <av2pBh7vLj5DVDha@pks.im>
- <20261119060524.775205-1-gitter.spiros@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xRj9vHn3
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4bb69f5b161so13109105e9.0
+        for <git@vger.kernel.org>; Thu, 19 Nov 2026 02:44:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795085055; x=1795689855; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=HL4vYVHCSKGHhDc7A7KE2aWNWSjFIYqCjZmmX7dPs4E=;
+        b=xRj9vHn3edMlo58o3PwE4qF5FjsmxWY+7oiuN92CeODH+8zaKcnkcEqivvpqBn0UmM
+         kVdjVVs8BZdmZwV6Is6CFMm4H/WT7rZ7pDFXG/vO4n/HslFtn/lWIKyfs46tfOU48POU
+         6RhhS5Nc6qMG5GTHD9fFscIs2lhO7FZtnrQSzbQCJvjSOD2P8zNI8jE5gzV5cH4ZDA2H
+         6aLyzlWs6T/ehvGb1l3JVKhng9hVAo9GxT6EkwPOBZMpeaoGCwjoZnrsx0owrQCUdkgk
+         pq6bZm0dhfrRpyI1v61UvQJwHlYy/sb84OrvqFrn6L+46oywMi/UqKp0Lv5n2l5ZeEHE
+         IbRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795085055; x=1795689855;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=HL4vYVHCSKGHhDc7A7KE2aWNWSjFIYqCjZmmX7dPs4E=;
+        b=mTg4dq6H/IoWdVfA36yNb49+DabYUMv2RKSlRajFVLqMVUiPB9cnxUr3MNIPeTYhDI
+         IVNNL/sokRpDbSNgiOjHkgsp3AL8tkTTQVaqQTDUqvsyjmqiwDzDTtpqHXHMMHIPEH09
+         oDx9zeHlF5qi7cIvlwwazg+TNPSdzrwnJmrpsFn534ZfSZaRNXzwibqIzo2942UCOz0l
+         0MkbKksJZSILvvHb15hvs475YvRV03QvQJxfHj4g18gKuNf9DPlea1AAByDLyRpAxUU4
+         +d8uI5DsEud5k5yF5STgIITpp6dQAO9DkbhwwOd/WPsPMg3EEQH8KfPuJZnMeu0P0ctp
+         HPGw==
+X-Forwarded-Encrypted: i=1; AL+hErFPbjKyPGPAI7JId82B6f3Hg58bRRhrCxRbDwSE1l7Lko8f9RzIQRixaAvjwjUQOEXNZk8=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+YIPrAod05AZKuJ5X+2xqdH1r0cmWhVB84ENzq/Vf9hWhaBbh9
+	legUHrZ06LcxdfG7X7zHQqGYKcvf0EQ3njK+6LQ0mvnmHLhySFTxw+RW
+X-Gm-Gg: AYBFou1HecY3oWHXN3WKHRT5iZMh3wwIiotqbcHohKrHaQR1QQOiKhM1TFgbx1mOZdp
+	VDTLu1Yq2ZIX7jHESk7IrvPW1qCqV02q9VfgSYZOazb4jYaUaggrgkmRynsfsYDAtMgiQRnU+DI
+	9/Jnw2witfNaEvzhkkpDsPJ0RjwJLwgPpjKy55fN8bt6vnR1tOmg/2htMEsFnhmnCYfmaU109WE
+	qiPzFIWn3esLYoom9SwHQHJjet0phrRpaW02LHdFp5NRwpk6qO7oICh6UdjwJhieXkzty6W150v
+	kXx3PlyvfdIJIGNIoMAS+RIcTCn2M75BkVYoAAoAhrEa5uoWDTF/Aing19XYRbqDZ0LxKWKRdw/
+	Gk1DhKsO0ORu2ourcfAYw5OWFuC++hch0e81AMeYG/HFU97qFLAiXbn+bpyHVGhh/C8edMWENjc
+	PeFmfmx/sY72tzAsqcH47EoVitY0lSn5hl558rU3uktxvKE6Gb//Q2EOe1t8uW//XhqJTmT6qpA
+	W843o54E7J9ahTUWsb/QJoHfwndML+q4NUD9pQpnOdA0Ihx42SeJsOvqIgZTOQJtl9xtfT/itmG
+	t4WOFtFVXymXT+2pDwko78nG6HAJKyQ0Qhbr1VgjtzlifXQikEpGv92OOW87GwbzZ+TkO1EEjtq
+	nx/gosxBxnODvYgcr5wSyaOx4Nlzm
+X-Received: by 2002:a05:600c:470a:b0:4bb:6fd3:5ac0 with SMTP id 5b1f17b1804b1-4bb7da2b98fmr108924215e9.28.1795085055143;
+        Thu, 19 Nov 2026 02:44:15 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb853a9846sm32491475e9.11.2026.11.19.02.44.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Nov 2026 02:44:14 -0800 (PST)
+Message-ID: <ebcf98af-a633-4e51-97f0-099084beeef5@gmail.com>
+Date: Thu, 19 Nov 2026 10:44:12 +0000
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -130,47 +93,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261119060524.775205-1-gitter.spiros@gmail.com>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] CodingGuidelines: !! is not all that exotic
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqq33sy6lgb.fsf@gitster.g>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqq33sy6lgb.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Nov 19, 2026 at 07:05:21AM +0100, Elia Pinto wrote:
-> On Wed, Nov 18, 2026 at 02:33:12PM +0100, Patrick Steinhardt wrote:
-> > Phew, this commit message really is extremely verbose, and I eventually
-> > lost steam reading through it halfways.
-> [...]
-> > So overall I bet that this message
-> > could be condensed to half or even a third of its size without losing
-> > much information.
-> 
-> Fair enough. I will cut it down to what the diff does not show: why
-> the cast moves to write_object() and what changes for the user.
-> 
-> > These casts here make me a bit unhappy, as you also have a patch series
-> > in flight that fix `odb_write_object()`. So you'll have to send another
-> > patch series after both have landed to remove those again.
-> >
-> > Would it make more sense to defer this series here until the other one
-> > lands?
-> 
-> Yes. odb_write_object() is changed by "use size_t for a few more
-> object and buffer sizes" [1], and parse_object_buffer() and
-> fsck_object() by "use size_t when parsing and checking objects" [2].
-> Once both are in, write_object() can pass the size on without a cast.
-> 
-> 4/4 depends on [2] as well (see my reply there), so I will hold back
-> 1/4 and 4/4 and resend them on top of [1] and [2]. 2/4 and 3/4 depend
-> on neither: 2/4 fixes a bug on all platforms, 3/4 a false "SHA1
-> COLLISION FOUND". Unless you or Junio prefer otherwise, I will send
-> those two on their own as v3, with your comments on 2/4 addressed.
+Hi Junio
 
-Do we maybe just want to hold off the whole series until the dependency
-lands? As you've seen, having a bunch of similar series out there does
-not guarantee that all of them land faster, but rather has the effect
-that some of them don't get any reviews at all.
+On 18/11/2026 18:31, Junio C Hamano wrote:
+> Remove the clause against "clever tricks" that cites !!value that is
+> a standard technique to normalize a value to 0/1 boolean.  We could
+> resurrect it if we can come up with a truly exotic example that we
+> would want to avoid, but this is not a good enough justification for
+> this rule.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>   * I think we saw a good example that !! was used in a recent review
+>     thread, and the idea to remove this rule was floated back then,
+>     but without following through.
 
-That's not all that surprising, as reviewing these kinds of series is
-a bit tedious. That doesn't mean the changes are not useful, it's rather
-that we are short on reviewing capacity.
+Yes, its come up a couple of times recently, thanks for putting a patch 
+together.
 
-Patrick
+Phillip
+
+>   Documentation/CodingGuidelines | 4 ----
+>   1 file changed, 4 deletions(-)
+> 
+> diff --git c/Documentation/CodingGuidelines w/Documentation/CodingGuidelines
+> index 3c8d6c7dd3..4bfa615bac 100644
+> --- c/Documentation/CodingGuidelines
+> +++ w/Documentation/CodingGuidelines
+> @@ -522,10 +522,6 @@ For C programs:
+>   	    that_is_used_in + a_very_long_expression) {
+>   		...
+>   
+> - - Some clever tricks, like using the !! operator with arithmetic
+> -   constructs, can be extremely confusing to others.  Avoid them,
+> -   unless there is a compelling reason to use them.
+> -
+>    - Use the API.  No, really.  We have a strbuf (variable length
+>      string), several arrays with the ALLOC_GROW() macro, a
+>      string_list for sorted string lists, a hash map (mapping struct
+
