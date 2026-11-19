@@ -1,120 +1,64 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.147
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795090536;
-	b=qVIOPlbYHuG16H/evToXL4vFCQ95L0KvmTBzxhTPSmGdmAVmur6BxupIqUa1s2kVRju3
-	 /Bh23P9TmeInnu8UwqqY9LNAN5HiG3ieSCsVgi9Wd0I9W18aeg+FKElP9pB1MuYmiJqKE
-	 BntGUGQL1dk+LyJRAOkjHffjaO6VAVsjyODTiswYegbshWGG56QLCGfgQNaTLoUhcxMGr
-	 LyTCOL706RsUDupQmyEhrLnLsF4pMsW7hB5GSziRfBsZrnluRidw4TOoBnFsBu242VoaV
-	 8fE5LQazLktF1Op/b54/3I7+TT3aaWuwFFeHY2IADVL90ZUkyvF+/Ejh01IWBLm7F5w==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795090536;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=qH1h1HN/ww+TEkMRFr9hsZOOCUZCsoMKAde60Q0NeQ8=;
-	b=Tk4Rmgu96fxLZ9aDQmbjjU4TaKTNlMQiDogHY2ASJ/bVHA5PknydpAj75Ys7PdFUhFR/
-	 D2dn6telAoS6hFaayD5w3q1jgD/xL31T9xl6J7tx9/rBVVLmOnGmQxDJVUT3ZAY9gmco9
-	 ES6HbrucgBtcN7sCz9EbJZNnnngp694jFpJ8n/QBZQDcIsChDdZzkIf6CJD2RkiKp1Lj+
-	 Vh3boBDQQtCa8Dv2BylHyf6M0qR6KkkNntTxaN7ewPGO7Uwl7+Fx9DDvTne+WjJSGob+A
-	 xLaImadSVch5Bf6QgUk0s1HahCDce2fW9liuHFIlYRpTNxAkqqKd7GXebraBRWuF/SQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pks.im;
-	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=OwhZ1hsg;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=R0MLcV3W;
-	arc=none smtp.remote-ip=103.168.172.147
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.12
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795090778;
+	b=mRxW/WhqCgdBoeJZJdnnNJN6U1czekkr+Ug/eomtd2an/WLFN1Ij7Ch9flJxJulDuWw5
+	 P9LGh1MbfcXhvFL7aLE87G+ppDrOGGY1E1aA4W6W1584ZFCsXu3YY+un4WC+CttdYLfHX
+	 advwnByRvuw1b0eujE68aAvRMyjIFDwaH8vfRJfLaAq33IB1updn6b97E4bScFYJotFL1
+	 pdMgEtX29eCMzMQQb42C3XQZMqJoc741W9OEtdSN66mfFyz4z1P53Q7krt20lkqv1w7Gl
+	 VsFoRjFrojUY239r9l0uzTliIi8+m4ld7X5Q/5mlqB160MY7BWFC0hSp7jHhbbgC2Gg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795090778;
+	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:MIME-Version:Content-Type;
+	bh=9lI+sXnNdiG+I1Lg2bK6OK4M1Y4rN5HBGA/El3cqc3U=;
+	b=F0bWy1GfU/9vR8KVZWbVvYbUkC3CsAY5RHE3GJh2Zfd9obPp76+1jhgQDIVCYxlCjdPB
+	 RnhCVmbr9+hPm7EuaCoy1A2rj9I8dl/g8+rnm8HhGEQgHgKFz+51d2u8p/+zSvHugvzqF
+	 J6ESRZGb1fc8QH6p2ENLal3XJgH2YWREPMxxT6HAteymXe9dZw1a9cONMUvInNjdN/HHd
+	 Gu2dZT5ad8tZgx4QRkv3+nEcU/Kegn2hyBopBfOJyLykK4Za3Z94bm7O1rxQrYWGkUWX4
+	 2m8gIgwhnMKmhTKXNchI6VaNLnDHZvNUWLUWKExp6uycE1QsdM4MspR06J7P1KLKIdw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=collabora.com;
+	spf=pass smtp.mailfrom=collabora.com;
+	dkim=pass header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b="dp/kLZBV";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.12
+Received: from sender5-op-o12.zoho.com (sender5-op-o12.zoho.com [165.173.182.12])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9BC606A32F
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 12:15:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3F9BC606A32F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED46606A320
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 12:19:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9ED46606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=OwhZ1hsg;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=R0MLcV3W
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5BD02EC0933
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 07:15:35 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Thu, 19 Nov 2026 07:15:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1795090535; x=1795176935; bh=qH1h1HN/ww
-	+TEkMRFr9hsZOOCUZCsoMKAde60Q0NeQ8=; b=OwhZ1hsg1zl2gxIeP5A7k0heMZ
-	eRbnCqYM+TLJ/MoRHYa5N7OrPXPuGXtqoIK9zMu5f6ewJ2wlU+GryhQCLOItL9fT
-	xT7IYjRGfWYgZLJ6U9Cdg66YrfqRiiRUjXfLwjyfP7oJpcBk5WMMx/AO1HfYHOvA
-	ztfj4bcXMH1CUFsZfD8PjBBgeLv6w8DCGZcTG+Z8D29SVJxPgdEpurSZtEZEou20
-	yyufhRhdp9JhH3KUitIURZvq1aUExqsm4/rjxS6ufJN39HSz69Wx2+t1rCr9HVDx
-	8QJmPjXJ1a+iVjp7BNQNp7Lv6i+9y/KsuVHaLgoKyrxVUyGdtceutw+OIVuQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795090535; x=1795176935; bh=qH1h1HN/ww+TEkMRFr9hsZOOCUZCsoMKAde
-	60Q0NeQ8=; b=R0MLcV3WtSxmIs3eVDRu3gLH8qhiutKDfUfuZ/TGYD9K5GB1sLs
-	X88lZqp6NC+gSmirZmjCs1ReMiXmm6pGZFyOSkr6NqZ9aMcggGFIRRAhuaJBy8PF
-	StNB7YBsUihT6CIqpAAqPLftPXBNLMnBWYMATtgqFhLRVVuJ7y8bjhbdOcSPFJTF
-	EDBwgjaTo1Q+Rk8ByoKN6LfRuMSAVq9X+Kw8ZykT4erlllOnjXgoAho78aXOVcdW
-	NUZ8T2JH1lxWejt+aDhqdKf76Z/eVCWGkWXrsAORkGyywehw2n44uECyzS1YWHmv
-	z1a7bpB9KIoSrtTxHzH94TUQV6x263c/rFw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795090535; d=pks.im; mf=PHBzQHBrcy5pbT4=;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:BjdOctiof+RWjg2h4jBSFyHA+CKkBYrHaTVo4x9XrDabSj+
-	P3K6AEFj2vw82jTMDjf3QSyfntKc7wnslra8ji7b81hV0O8kqLB16bWHm1OGLOtH
-	ZGyiBmUk3nAmbPtM1zSPL9AHiDthBlaC7nFCyTlYFxdGA3dNPRxylKqP7/Swbh4c
-	K3e/pGpN8FUJu8x4teg4MFsjQyX3XaceVwYyioKiOwDuObSifmlDOOd0Iia3lHpB
-	tXdFVJjLwzM2b+Eg/GgjoMZA/8PydNIH//PZHUta3eAPoIjK+I/QRaTvkVRBzhvb
-	9H2iJQllNEyyyVztizI5XUdSR5D6ejQWE0fNUrQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:m4Fc/mwqkgmV7N2R4jNicM+/UBa2eFDBlL1dOcvY+ew=:qH1h1HN/ww+TEkMRFr9hsZOOCUZCsoMKAde60Q0NeQ8=;
-X-ME-Sender: <xms:Z-j-arAwBImhrhY8vm6g9ytyZErqIACxWPeD5CpbYKD6BcVCDMrzRQ>
-    <xme:Z-j-ao_SmE6Qw6LZb0mpPXkrGYi64kf74ZO4DxDgGPWMZKIWHVYQD13FMf_yyg435
-    _JUWX5aWCGUJMyE_syzxEgw6CHNnFY4dAHiUUuVDPEHAaA9l1d-fa4>
-X-ME-Received: <xmr:Z-j-aj8pkBYNmIWwVGyLZP5FPTuwNDzHP-8gns1bxdItHxhRzR4_juwGDcKwQLU4rla86SQ>
-X-ME-Proxy-Cause: dmFkZTFZnGOdKRzMJBlowx8UXfAYey+ZiD2Ikd3gz8d5/ww6MTbrduy5AwAKH4jAjt/6Zc
-    TC/LB+ym4Pe8WMcD7MFCk3UDlueSO36jQtRXvsX+1CvrPNQbW3Ytzcw43TpxtCIaE36QPk
-    g1tREoqc9hMZDtf5m+WZJlBbiqyafKeEhznrOEGeTZcv4x/vLhxWOMOP3TVn5xJfqquYKH
-    zkJhz6sjqk3bvva0rsjrrLkIPwc8+5JAl2r25St8vSbhfhQx88g5NikaGWiOZvyzkVIeW0
-    NFxAN2kHPOTnhiVyfI6udMNHA453IocFaTqdhnv6efX5WxxApC20PlHTOz0LfjQDXQBIZP
-    SB2ldlLarIIQRzdEOVAHAE/VcVXLfn9FRb0YyRBEXM4ySxWKPzY6wifx1N51vze5qmrYVW
-    4R29bYWT48snFJQ1yZOVtK09ksyU4ryYtz1HjB4seS35paH+3F4RiDkIzARVnqTggOib7X
-    Ss7X5AnUGmVBTWNmfsM0FKegjcQSKe7xjLy6Z0yeXvzF8VPrnQy9RAlB2Wn8KKA3N8gmNR
-    PT35+0yYSWlu/3Naqj+EO4FOideAxIOvF2NMAfTm9n69Tp1IHIhABHZf3UseYMbDJvU/MJ
-    55Io6WgBdQ6rb2qUfd45EHtSFVX6V7ZR9bbXYNCQNwOKGoCy3mhYI2ofLDnA
-X-ME-Proxy: <xmx:Z-j-anetTrFbg5rU4BFg6cfk9H9BPd8D77HYqlZ-eWZySY1lOQB4TQ>
-    <xmx:Z-j-akFBbrQXYC9-fbdgaFmYNvnkCu1sU_tN519gV_5ZedgU35BaMA>
-    <xmx:Z-j-atevD3I0_mOYJ3Znd2YrVNUv3NyaSDkhyIOV0LKYLEe_EhUiXQ>
-    <xmx:Z-j-amESsKJXoYQQ4wKs9-Mc-F5mgNL1itX4R5bqn6PHGNraXBzSew>
-    <xmx:Z-j-al6fByh6Bj7QyGDq2-qACEjqGfnzFwPgRWVvMLn55cNBvY6Vu2Bk>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Nov 2026 07:15:34 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e83c7c3a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 19 Nov 2026 12:15:33 +0000 (UTC)
-Date: Thu, 19 Nov 2026 13:15:29 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, karthik.188@gmail.com
-Subject: Re: [PATCH v2 0/6] object-file: eagerly create ODB transaction
- temporary directory
-Message-ID: <av7oYYvxdMutzgyP@pks.im>
-References: <20261110002251.2007617-1-jltobler@gmail.com>
- <20261119002043.2108654-1-jltobler@gmail.com>
+	dkim=pass (1024-bit key, unprotected) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=dp/kLZBV
+ARC-Seal: i=1; a=rsa-sha256; t=1795090763; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=eOzyVuCjnXEeN0eRm8c76JLOO2PKnYFb7hUbftmddpl2nrW6aDmMTJH46cpG0za2abIdxDoyDkcE1+18fk7LJTcFJuymV8N9F2lEkGMKpbK+sMobLXSEMQVAN7k4gIMEPc8DtkKGZUzaGpbQQ2MmZGLjRmN56sOlOrPPSUTsDNI=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1795090763; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=9lI+sXnNdiG+I1Lg2bK6OK4M1Y4rN5HBGA/El3cqc3U=; 
+	b=ADVwnhU0T/gl4FMrNyrFJl62QnstZVYp9v+j4sB0GRRmbLiQQ6TIvXu4xcPpQ36pwJalPj/AG1WNtHsxbcqadxvSySqbQcuPZ2COUhe9VGk7vjBJ+n5hXQviqP4GQ+8NEZdjpciIph3YE43qUusRBQdH7ZNLju72VoSVI6Hed40=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: a=rsa-sha256; b=dp/kLZBVjJcoH8X+Rf3ZWJL3KiHpauZw1XcixE7tsyLhUZxG0mcX+mc+ix0gwImPSgJ9n6SqypSNGTFOkd99L2ReE/3ASngcn3nouGHT2VPkgDoozoLD29hSwZTfRiCz0dw63GZkLMtp4g7PzjvQDE0q/+ozAJODModksDet0/8=; c=relaxed/relaxed; s=zohomail; d=collabora.com; v=1; bh=9lI+sXnNdiG+I1Lg2bK6OK4M1Y4rN5HBGA/El3cqc3U=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
+Received: by smtp.zohomail.com with SMTPS id 179509076145181.70465685333068;
+	Thu, 19 Nov 2026 04:19:21 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Andreas Wendleder <gonsolo@gmail.com>, Phillip
+ Wood <phillip.wood@dunelm.org.uk>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 3/3] submodule: accept a linked worktree as the
+ submodule's git dir
+In-Reply-To: <xmqqv75t534o.fsf@gitster.g>
+References: <avuJBGlB3pRU3JU0@pampelmuse>
+ <20261118163249.1693361-1-adrian.ratiu@collabora.com>
+ <20261118163249.1693361-4-adrian.ratiu@collabora.com>
+ <xmqqv75t534o.fsf@gitster.g>
+Date: Thu, 19 Nov 2026 14:19:16 +0200
+Message-ID: <87y0aphv3v.fsf@collabora.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,14 +68,65 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261119002043.2108654-1-jltobler@gmail.com>
+Content-Type: text/plain
 
-On Wed, Nov 18, 2026 at 06:20:37PM -0600, Justin Tobler wrote:
-> Range-diff against v1:
+On Wed, 18 Nov 2026, Junio C Hamano <gitster@pobox.com> wrote:
+>> @@ -2191,7 +2232,13 @@ int submodule_move_head(const char *path, const char *super_prefix,
+>>  			submodule_reset_index(path, super_prefix);
+>>  		}
+>>  
+>> -		if (old_head && (flags & SUBMODULE_MOVE_HEAD_FORCE)) {
+>> +		/*
+>> +		 * Do not reconnect a linked worktree to the submodule's
+>> +		 * main git dir: that would take over the git dir of another
+>> +		 * working tree.
+>> +		 */
+>> +		if (old_head && (flags & SUBMODULE_MOVE_HEAD_FORCE) &&
+>> +		    !is_worktree) {
+>
+> If a linked-worktree submodule 'sub' contains a nested submodule
+> 'inner' whose .git is a directory, submodule_uses_gitfile("sub")
+> would have returned 0 (because the check is recursive), we ran
+> absorb_git_dir_into_superproject() (which is also recursive so it
+> would cause .git in 'inner' to be absorbed), and is_worktree is
+> still 0 at this point, which means if() condition here is satisfied
+> (if forced) and we will enter this block.  Would it cause an issue?
 
-All of the changes look sensible to me, so I'm happy with this version.
-Thanks!
+Yes, good catch. I reproduced it with a "sub" linked worktree and a
+"sub/inner/.git" directory, a recursive checkout absorbs the "inner"
+and then rewrites sub/.git to point to "$GIT_DIR/modules/sub" which
+does not exist:
 
-Patrick
+  fatal: gitfile does not point to a valid repository: .git
+  error: Submodule 'sub' could not be updated.
+
+It's basically the same breakage this patch is meant to fix, just
+reached through the absorb path.
+
+>
+> I am wondering if the check for is_worktree should be moved outside
+> the else clause, i.e. making the overall flow look more like
+>
+>         if (old_head) {
+>                 if (!submodule_uses_gitfile(path))
+>                         absorb_git_dir_into_superproject(path, super_prefix);
+>
+>                 /*
+>                  * Now path/.git is guaranteed to be a gitfile; 
+>                  * validate and detect worktrees.
+>                  */
+>                 ...
+>                 is_worktree = validate_submodule_gitfile_dir(git_dir, sub->name);
+>                 ...
+>         }
+
+Yes, that fixes it, the sub/.git is left alone and the submodule is
+checked-out at the correct commit. The validation also runs after an
+absorb, but absorb puts the gitdir where submodule_name_to_gitdir()
+says it should be, so the check always passes.
+
+> Or am I grossly misreading the code flow?
+
+You understood it perfectly. :) I'll do this in v2 as well.
+
+Many thanks!
