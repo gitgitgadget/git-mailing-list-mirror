@@ -1,85 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.174
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.61.206.94
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795074050;
-	b=X5nHwuM1HBMPn9oPiuE+I42VSh5X2Sb3yY5kOsi2rE2ZKhnwNnMRg9IAjfGwvHwpRxo6
-	 OZ/OOnAlCShOxRUCFlOmRq0MblWQD38MsCpHFfvIrB/L5a7RYgBNYraogCfZdH0i+ehja
-	 hEdpyZldbHRbvMyeIwUH93orGiSWAeJSqn8p9+aDn1Gmq5BK1K4SgSG5OWHVqUR9bfahy
-	 FvV72XboJ3j+hBQlUZEicU7Ov8PKdQwIotnP1M57+/6Jhca2/6X2DL+Z9axu3YkBAKSAf
-	 xCFUBn4hLuFVyD0hOooexwdZE22997a5Zu80XDbFzDZPgDBReu0gTJ+TI4nJKz/+E4A==
+	t=1795074225;
+	b=zqW4AlBaPdCLLPNfpB7C1ee/5/8IJ8NQd/gv7yCQ351Gno3CcSfeGXSxeejE2t3Qqmcd
+	 WfE4H9YNhaa4q1Wys16VEU+tuFq5HDsANBDiKKePdQppacdLELvnWEMGRRI7+EB0W4+WL
+	 x5bj3GhqsSEvacBSH4yjTCWNeivjG92xh5cWLvHvIXgDwq8iXG+75nfiuZHC88oqWeK6G
+	 T42wb1DcaAD7TIbecC3OdVZyZO5mJFOtVqQA2jHG+9AfhtgLdP7jsu9BcoSR16UFcKIoo
+	 zMVdA4sCzQ08bjyZxcEm2z8mgScY3wzl/XnoozrJu0Ao5JpkDbiLyWr/+2c4Uzc+Apw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795074050;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
-	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
-	bh=L656aHRm0NyqZzLDd1dJqJ/DLa09M4QOKKY60xV2V5Y=;
-	b=Pj7t5iXIR+eLmb2Pw0fdjKjgkf6vd8v5VTzaNAUhweCkN9ZNcc4xjaoN4IYHelVNxLLN
-	 jq7KGvXYSsAOYc/jPGc84E3SKytCyqIS+gV75oC23i5UajFkmKazhSz5rAUJlpmoKKs2K
-	 9D0OGSlNcayf7MeXytA2Y9pebFdj96BWowxYaSftm+1MavGkI+H3DCiBnSKBcE82NvMYo
-	 OMZkPk/1IuVt8YjttF0LUT45zOMYNydWwdWyKaYXpdL/smn7ff//JKbB6CHT9Jk7eHFvG
-	 mIYNX4tc+hF0vwgPO6+TlVuDABZzfOmmhOiCRLReY4YGMHSWjdhWtzmmHv9IC0YomCg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795074225;
+	h=DMARC-Filter:Received:DKIM-Signature:From:To:Cc:Subject:In-Reply-To:
+	 References:User-Agent:Date:Message-ID:MIME-Version:Content-Type;
+	bh=1V2qDZEVlYkNc/gA88z6YcwCZ9VmHiXl+hmhj5r2A6A=;
+	b=CfOB1h77mFiamFcY163mhz/FbXKnIwAWLr94z8f0Ud8unxVi2Gzm576nYixM5K2fxPIt
+	 xinmn3dnJ0VlkK3xUVsJ50ATjFk5ONuqMm/W/ewTgBfqjJO+ZrFXXoGWU0hB/kt8xTf9E
+	 EJ11eceoUhKp4ZXnuE0gSEAgPaN+zKJZ5fmUM/SoH1xNOzeQZiD8fs1v5H7hmR72rMai8
+	 H/ZZRCPCNIOiV247zdYYqv/BGVU9PGQ7YTDRNLba7nTH1lMdM8UMsDnjcDfk5kjJZ1UpS
+	 dyQRaJ6cenTTs6CKfrZ7NTSzzaDe+5RFVyoZm+VO+zQEFzeoLzazcUEj7wvTwnnCqOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=I75DyXV0;
-	arc=none smtp.remote-ip=74.125.82.174
-Received: from mail-dy1-f174.google.com (mail-dy1-f174.google.com [74.125.82.174])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=gouders.net;
+	spf=pass smtp.mailfrom=gouders.net;
+	dkim=pass header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=KzRcZeQF;
+	arc=none smtp.remote-ip=202.61.206.94
+Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160A4606A324
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 07:40:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 160A4606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B78D606A324
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 07:43:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3B78D606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gouders.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=I75DyXV0
-Received: by mail-dy1-f174.google.com with SMTP id 5a478bee46e88-380b40312e2so5296727eec.1
-        for <git@vger.kernel.org>; Wed, 18 Nov 2026 23:40:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795074048; x=1795678848; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=L656aHRm0NyqZzLDd1dJqJ/DLa09M4QOKKY60xV2V5Y=;
-        b=I75DyXV0tl6BodBll7KJwxH0WRCCGujfqKfzMU7o5kzIRCF/4dfdFAkVlktb752JEu
-         GlJP8yyPKi+IaPvgNMoeu9sr3Wus4STApVoIScoV06QoGeKLWDfmztvyCg+OkGtERt4o
-         kCvylsG2VTVwmzqa7381yZ3eypPyZW08zPprlBteBgjjgkusReIHwXPvy+JL5w6Jt94/
-         tq/n0tPaeCsrjzCCR/Nsp6Yl3ahO11m6q3tTraQO7bJa0BYypc68eFykD3gv4N91+I9o
-         yzuYxeEIjK3Y2vgOsOP9mcNzL/hs8MOqgehT5CBa7Khn258mVQ7zqglq4+hankd4kwMK
-         Oq0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795074048; x=1795678848;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=L656aHRm0NyqZzLDd1dJqJ/DLa09M4QOKKY60xV2V5Y=;
-        b=EO2wo2J7GObfBVQUTj9AbUy+ZShfCZjhL9n19mek2MGjP4wW6/9jzdM/jrE49ic9S0
-         LuitjXQF3l6luI12HKSEm7j3wSr/i02V3bCKEHYcuRHf1LgbHmy3SEGHxGeyaqt+H03p
-         1Hs6+V43KcoxotnBY1cxCxl2z4t7YhpJHFzbDwgoXCr0CXtlQ+ct5saDCwND/sqqfKWx
-         vToQ1+P5wD+9QA6Il8rxwkWD+AHsvYAmsCwIKoX+6ez436jATXc3VrcV726Ec5aweDWO
-         2qqkLPgEwJCMEuTinSndmydfRZyqKsL0CTiKOuM6NSSQRAnaa6iK1yRiW83Urq1kzhRq
-         gJRg==
-X-Gm-Message-State: APuU4Z/zrvfmwhDoFIWpGHWGfQAZHnYphbd0HFk3JT5fcMRu/LocaA3A
-	7ukmFrCKDCg2ZniLvNmopg9SSUBDhdfnINXpBpWvDEOB7WLoVYJucWWtfDYD3w==
-X-Gm-Gg: AZFdTZehRDxme9pVyBCkLt5T8OzwycWXM9JhbR/aFYV6X5GbeGHjsVtHuzGZeBpn9p3
-	bIdaLdlWtVxLKu7HgimoHY0Ooe1/evxNm5CPnSXSiyZXnoMrlX6G83xwuCh7/opPKfkNQzK2w8P
-	fs3A8f4k0RiV5Ank81A+5l4vML3LzGa38sTT00papRJvPml1khLb/3WQ19uv/zo9JcN2uKMt7qP
-	Y/kizHiVy8Kr/L6NyAMkAS6gZmrdSlLS1Op51sz+nuR6f6zxjiwye78Wn5nb65ZcmP/oiQla0GT
-	F081izWpVN+6JsATJeZUtQ/kbC3Hl10f04N56gH+sAAMrBtGXoP4P9X2kdOkpqgPsrshKouafZU
-	cwAxDJtP3sfuovT1MQY8kWzNI3cfml7nu15m6dMPn7IIsiv1LZiqoVzIT4PmK7u1xfwEN+iZWpy
-	0H2nOXc8o1D5DbrUWii4bDaKfCDeWLARjr9IkgkfkFM82DXqASZZiMNk11k6Tpfq3bXeJSxlxHa
-	YSEAlTBgs/l/gNtB23MccqtamLGheZkdRQVXEGsIaufDQtf5eHoMM4VDNIOUcQAC92q/meyYGMO
-	znyPRgbJX1UVC+DxSuJHqX1vIvmyG2NP25WJ
-X-Received: by 2002:a05:7301:fc13:b0:37f:73f9:aee7 with SMTP id 5a478bee46e88-3827da11e94mr5128011eec.5.1795074047948;
-        Wed, 18 Nov 2026 23:40:47 -0800 (PST)
-Received: from [127.0.1.1] ([106.51.27.147])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-382a45260a8sm25234574eec.3.2026.11.18.23.40.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2026 23:40:47 -0800 (PST)
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Date: Thu, 19 Nov 2026 13:10:31 +0530
-Subject: [PATCH] test-lib: run EXPENSIVE tests one at a time
+	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=KzRcZeQF
+Received: from localhost (ip-109-41-49-52.web.vodafone.de [109.41.49.52])
+	(authenticated bits=0)
+	by mx10.gouders.net (8.18.2/8.17.1.9) with ESMTPSA id 6AJ7hb5l1968466
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Thu, 19 Nov 2026 08:43:38 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gouders.net; s=gnet;
+	t=1795074218; bh=1V2qDZEVlYkNc/gA88z6YcwCZ9VmHiXl+hmhj5r2A6A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=KzRcZeQFrfE/zl/pgMniFfF2cEKSqtE6waGRbB19A4AP+DQS1+3Ky1rBkndlZhT6I
+	 Jc0GivWI8Lsn0ftIstgWrnjOe4Bre096L4G3ybEKh10/xy3O1757oAOGPqeVh3MU+P
+	 X6Tm7/x9Nmv6EIX7ptvZ6xGECXmyAwDhJ0ad4taU=
+From: Dirk Gouders <dirk@gouders.net>
+To: Andy Koppe <andy.koppe@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/4] utf8: add display_mode_esc_sequence_len_counted()
+In-Reply-To: <CAHWeT-aWx1VwUjM+hZ--jjSAbcMenz5Mw11y9ouFavGndUMrSA@mail.gmail.com>
+References: <20261118-master-v2-0-3f2aaec15d31@gouders.net>
+	<20261118-master-v2-1-3f2aaec15d31@gouders.net>
+	<CAHWeT-aWx1VwUjM+hZ--jjSAbcMenz5Mw11y9ouFavGndUMrSA@mail.gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Thu, 19 Nov 2026 08:43:37 +0100
+Message-ID: <ghse0x9sgm.fsf@gouders.net>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -89,166 +63,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261119-ks-ci-long-test-hang-fix-v1-1-45c2fff6d9f0@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAO+n/moC/yWMQQrDIBBFryKzzoBKSUqvErpIzJhOG7Q4JhQkd
- 6+2y/f57xUQSkwCN1Ug0cHCMVQwnQL3mMJKyEtlsNr2xpgBX4KOcYthxUySsZ3Q8we1vtJg/XL
- RroeqvxPV+Zce73+WfX6Sy60H5/kFoVe0MHwAAAA=
-X-Change-ID: 20261117-ks-ci-long-test-hang-fix-008e72fd40c6
-To: Git mailing list <git@vger.kernel.org>
-Cc: Patrick Steinhardt <ps@pks.im>
-X-Mailer: b4 0.16.0
+Content-Type: text/plain
 
-Recently, we've acquired quite a few expensive test in our test suite.
-For instance, these commits add several tests that require
-multi-gigabytes:
+On Thu, Nov 19 2026, Andy Koppe wrote:
 
-  - 9048b48fb (t1600-index: add expensive tests for over-long
-    tree paths, 2026-10-16) added tests to t1600
+> Dirk Gouders wrote:
+>> +/* Same as above, but for a NUL-terminated string "s". */
+>> +size_t display_mode_esc_sequence_len(const char *s)
+>> +{
+>> +       return display_mode_esc_sequence_len_counted(s, strlen(s));
+>> +}
+>
+> This is a performance regression compared to the original function.
+> Calls that previously returned immediately because *s != '\033', or
+> after a few bytes of scanning, now scan the entire string with strlen.
+> It turns scanning a whole string for SGRs with repeated calls to the
+> function from linear to quadratic.
+>
+> Therefore I think that if the original implementation isn't going to be
+> kept, it would be better not to provide the wrapper, and thereby make
+> callers think about what they want to pass as the length.
+>
+> Uses on strbufs can of course compute it with `sb.buf + sb.len - s`,
+> but they don't actually need this safety net, because strbufs are
+> guaranteed to be NUL-terminated and the function stops at NULs.
+> And the length calculation itself adds a source of errors.
 
-  - 288266c11d (xdiff: use size_t for merge buffer size computations,
-    2026-10-16) added tests to t4300
+There is only one user in pretty.c that uses the wrapper.
+I can change it to use the _counted version and we could then drop the
+wrapper.  Junio's v1 already included such a change and I could steal it
+from there.
 
-  - 55c54fd375 (apply: reject binary patches greater than MAX_APPLY_SIZE,
-    2026-03-25), added tests to t4141
+Would that be OK?
 
-We also have the memory hungry 5GB filtered hash-object test in t1007.
-
-When GIT_TEST_LONG is set, "prove --jobs" happily runs several of these
-at once. On the 16GB GitLab CI runners this exhausts memory: the
-sanitizer jobs have been hanging in t1007 until they hit the job
-timeout ever since the new EXPENSIVE tests in t1600 started running
-alongside it. Running the two under a 16GB memory cap reproduces it,
-with the t1007 git process getting OOM-killed.
-
-GitHub CI runners are no exception and observe the same behaviour.
-
-Take a lock shared by all test scripts around each EXPENSIVE test, so
-only one of them runs at a time. The lock is a directory in
-TEST_RESULTS_DIR, created with mkdir(1) like the existing valgrind
-symlink lock. It records the holder's PID so that a lock left behind by
-a script that was killed with SIGKILL gets taken over by the next
-waiter. It is released after the test and its cleanup finish, and from
-the EXIT trap when a script dies or is interrupted while holding it.
-
-Cheap tests in the same scripts keep running in parallel. Only the
-expensive ones wait for each other.
-
-Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
----
-In recent times, we've been noticing the sanitizer jobs (linux-leaks,
-linux-reftable-leaks, linux-asan-ubsan) hang and fail with timeout in
-our GitLab CI runners. On some digging, it turns out that this is
-because of multiple memory hungry tests running in parallel.
-
-So, I thought of suggesting this patch to serialize the expensive tests
-at least to avoid the putting the CI runners under memory pressure.
-
-The GitHub CI runners also observed the same behaviour.
-
-Both CI runners are happy with this change.
-
-GitHub: https://github.com/sivaraam/git/actions/runs/43281285339
-GitLab: https://gitlab.com/gitlab-org/git/-/pipelines/3079929506
----
- t/README      |  4 +++-
- t/test-lib.sh | 44 ++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 47 insertions(+), 1 deletion(-)
-
-diff --git a/t/README b/t/README
-index fd7e8504b5..c156dd3af6 100644
---- a/t/README
-+++ b/t/README
-@@ -117,7 +117,9 @@ appropriately before running "make". Short options can be bundled, i.e.
- -l::
- --long-tests::
- 	This causes additional long-running tests to be run (where
--	available), for more exhaustive testing.
-+	available), for more exhaustive testing. These tests can use a
-+	lot of memory and disk, so only one of them runs at a time, even
-+	when several test scripts run in parallel (e.g. "prove --jobs").
- 
- -r::
- --run=<test-selector>::
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index c56654b7c5..4d29172c9d 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -784,6 +784,7 @@ die () {
- 	# test script run with '--immediate' fails, or when the user hits
- 	# ctrl-C, i.e. when 'test_done' is not invoked at all.
- 	test_atexit_handler || code=$?
-+	release_expensive_lock_
- 	if test -n "$GIT_EXIT_OK"
- 	then
- 		exit $code
-@@ -1089,6 +1090,42 @@ fail_117 () {
- 	return 117
- }
- 
-+# EXPENSIVE tests can need many gigabytes of memory or disk, so two of
-+# them running at the same time under "prove --jobs" can exhaust the
-+# machine. Allow only one at a time across all test scripts that share
-+# this TEST_OUTPUT_DIRECTORY.
-+expensive_lock_="$TEST_RESULTS_DIR/expensive.lock"
-+have_expensive_lock_=
-+
-+acquire_expensive_lock_ () {
-+	mkdir -p "$TEST_RESULTS_DIR" || return 1
-+	while ! mkdir "$expensive_lock_" 2>/dev/null
-+	do
-+		owner=$(cat "$expensive_lock_/pid" 2>/dev/null)
-+		if test -n "$owner" && ! kill -0 "$owner" 2>/dev/null
-+		then
-+			# The holder was killed without releasing the lock.
-+			rm -rf "$expensive_lock_"
-+			continue
-+		fi
-+		if test -z "$expensive_lock_waited_"
-+		then
-+			say >&3 "waiting for another EXPENSIVE test to finish"
-+			expensive_lock_waited_=t
-+		fi
-+		sleep 1
-+	done
-+	expensive_lock_waited_=
-+	echo $$ >"$expensive_lock_/pid"
-+	have_expensive_lock_=t
-+}
-+
-+release_expensive_lock_ () {
-+	test -n "$have_expensive_lock_" || return 0
-+	rm -rf "$expensive_lock_"
-+	have_expensive_lock_=
-+}
-+
- test_run_ () {
- 	test_cleanup=:
- 	expecting_failure=$2
-@@ -1103,6 +1140,12 @@ test_run_ () {
- 		fi
- 	fi
- 
-+	case ",$test_prereq," in
-+	*,EXPENSIVE,*)
-+		acquire_expensive_lock_
-+		;;
-+	esac
-+
- 	setup_malloc_check
- 	test_eval_ "$1"
- 	eval_ret=$?
-@@ -1115,6 +1158,7 @@ test_run_ () {
- 		test_eval_ "$test_cleanup"
- 		teardown_malloc_check
- 	fi
-+	release_expensive_lock_
- 	if test "$verbose" = "t" && test -n "$HARNESS_ACTIVE"
- 	then
- 		echo ""
-
----
-base-commit: e1ec09b23c8e0deb21a0b95ac5996422277395d4
-change-id: 20261117-ks-ci-long-test-hang-fix-008e72fd40c6
-
+Dirk
