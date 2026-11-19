@@ -1,97 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795110538;
-	b=WAANYwQhbPl2g4nESGV0pgNFJHl1HgV4eMJqiv89fZzMn/UILkjaffftTIqVQXy0PvPJ
-	 we1WAPmf7eB8i6E7iqvdlwBoWIuWuZ7MKjgm48qIOFVCAv8qFaEeeOG/wtDZn2EdwYg5m
-	 VKJaUy7SAHON6wTW9jlSJeEWBFibHMeYyL0gZN5HiwIZjyIJROvbZyS1FKlAnL4+NIgto
-	 jP91Mj2lA9c7LTjrtPo/yG8ubKPP1GtDJ80DfHfXI1kcmHf5C1ogNyjrWUdUFrson1Xg0
-	 0cQMDetyPqdzxij2xhT5vWdypWWSFXgYjSHqNLpsZS/KB6ACw8oL/Sm5E0DlKuxNVsg==
+	t=1795111540;
+	b=g+rRXJRNz8kKm72PlJEUpwtvmuHwx2HVpGzX466gA1RuC7qcFhqa9imurSsVIuxWOWgf
+	 2BBST7xXWWGzNHfnZ3vbz5eRPg+QYMg+iRXlj1MP7tRwK3FGaWp+J41NNeWEhwDpnElan
+	 C+ejfkb6kBq7A9dcqY0hsfmVFN0/vF/O5ymcHGFzwejAtcaa2a1X80A42qlpILYPVIPAO
+	 d4vYfu6iJGMkWi4ugroZdsIAfxzj85mmdxP5gX5On4cDjTQR0MclAL5c7S0lHSc8RcGO7
+	 eoSChrTfpSzQMSffv28s1+3/mvqckDmB2xOBjaC0kcUSjRDBtuWtsaZJ61+WM4gVHQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795110538;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=jwlg61NUOc4xs8l+sLUkgCxBzgtDSjPT6mOzXwoXKWE=;
-	b=Zcd46AjQWe1CWnzZizw/gsoLUp+VBLftBkVxKS+2gK6wsk083P5q2nwpJ9jzubaCfgBX
-	 meH5Vxx/4S/eT27Bk12uXX2DfFFqzmrqUmaQJ4ZM7MW/OLCyUmXSmbNonGBVnW3ZXGSEj
-	 ofDedLKze8FonP1+cHfdb9iMhhpi2u8BMGrOMtQKLR2abRlMb3rkdabBUfKCFvEzAod9X
-	 Wdq7wd/i5eW9C6odoVYobg2WskJdDUrW/wPfZYK7FO0G7s4RTHvT91Qnewn1AK3LRjhQx
-	 mSAdavVr4gC7PoO5usLr3R1O50pv0uFkqgYb1KmapF63AMBUmXr+VBq3YS/z3DWI47w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795111540;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=Iogx1E4F1qXqp3KhjHt3IVGKaqUtmr5f3fUxV2RqCZw=;
+	b=HyWG488pJDUdp1RxmhLbgxSaSMTbx119ZLSHBqyJhvI66n8Co+6Gq68RD0F6Uc3bp/qg
+	 JTrwDYkfJT7YEQcyedadnHuqthXZLmFvW+VVur1T3enU14AodDdekR4WaRrsu14fuQaj0
+	 UTGaL4AypwuFEES8GgosidGP5jVb+/gjV4mdqLtEmslD0cx+Gl53eA/3qrp9fTV7IeEQd
+	 83aZRkDJOdGv4JwIthC5l73ZVV1pyqMrjXqgRnp1NBnlYKAR13zGO3FnixHG23Eaib73T
+	 kx7p7U15iEvBf1sr1HZHNDKOLzyIml9OFH31UecMrf+fbpkOsnfe6OhQXs/blFFHOVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=q+GToDPh;
-	arc=none smtp.remote-ip=209.85.128.54
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=AzQJht0D;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=GHe3T8oX;
+	arc=none smtp.remote-ip=202.12.124.153
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C794E60A2601
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 17:48:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C794E60A2601
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2636B606A324
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 18:05:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2636B606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=q+GToDPh
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4a35a60499eso19837315e9.0
-        for <git@vger.kernel.org>; Thu, 19 Nov 2026 09:48:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795110536; x=1795715336; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=jwlg61NUOc4xs8l+sLUkgCxBzgtDSjPT6mOzXwoXKWE=;
-        b=q+GToDPh54FghhcMKsV9lON+4TT+xrrPThTtKU+0uXAz/mtbWl/0Lgm9mD/QmhOWTU
-         M5TM0/a0lqRGoq58NSC6zQ5dCMj1PgYs/CPK98ig/W11RstKXDaq8pm3GzT4+eZQ7gb6
-         BB6hUN1r7uIR/hlBWa4e2xcZY0dUr678rALjUlhxwI1sbETpdgOFMZbYTCARSEP04f83
-         IueNFX5D++oqI0w/MGPf1690FrZ45TvoULcxl9L9bsYM2qLtllAoaZYjhzblfskBMiC/
-         JyM1y1mV6Tn8mDWGBWMsjp9pNobSxTOb6ka/XfizKIeO2vV4q3OcjQTDPj/KJ4+0SqG2
-         x7Dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795110536; x=1795715336;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=jwlg61NUOc4xs8l+sLUkgCxBzgtDSjPT6mOzXwoXKWE=;
-        b=dH+9YhAkWqJ0tZldEnHcf0qLz1SzEblfQeO0lhabKCgysvT86Dx0jkTK1v5a9tYX4r
-         sy5+KXK6pnYBOCcrc/wkmhe5THYUDxFkr+yYnivLm82U/AjR+RdUvtbtCtyP38IKt4AR
-         iOfp5eECash7LpeVyzwOmzwSmN9Dxq5oNpoPmQo2yVdf99uBu/ETx2xum5LpuC11908Y
-         3nTVI2iZbFy0YKfPIJLeVOiwQW3WezUayFHjE0O9+Jvedt3hUu0fgkeoVXgxv7yOsZGa
-         xqHTtU8Bo6qobW1MdGb5eKRrJ9GGY3JveJmvkey8vKoq6dyJo5XY0Qycmw8han+7xt7a
-         Jitg==
-X-Gm-Message-State: APuU4Z/kHF1Ell24S5XhKjYZQq+6iBQCxbTTWYk1uQpe3bh2pp49hfGr
-	tod7/xmALhtahmPGz/480EjyCfV1rXTCjKYd3ec+0dbDbhWUJYQ5U06xEw6IXQ==
-X-Gm-Gg: AYBFou1X7WJMU5AaBPsEBy6nHnebbZDoFmWk7MKGNJQulc0KOKdGzm+Y8g4hszMLyU2
-	Eg5Aa0/7qsKM12ctuthSNMWgXgasN5qzatFyEYDCIVlRKUMv6djvNk+RynCNI78gdxYZucOod93
-	+o1W+zwe9d+Mei8J6h7kr/7Keaqk6inRbN7TnWABtLqCGo+LVI45TAyznWdsMod6dK7caVnsZ8b
-	qhwD6TmX6Mq6HGUb8yVjjB9ZUW9hiDhbyIo5VSt/eQALdv7a9t8K0cfWLouonNbBS08ZixCuq4h
-	Cia6Xq7ajDCyKuUZurn815z+42Nx6Kms1+hO52IpEwUgOL4OvPSYoSwE/ZHmTjZCy4g1V6C+pTr
-	gGfsc8DPIib6CiMGRFpINV09DWr4r+80ycZrmD12h9bliNF6UPQts/ugxC/4EqGLMRSYzJaKYpc
-	sE6ftEkeP2CLtaAqu412uA6NJpIzkExBxG2rm6zfatkDmZeL4elKFYORIB75d+oRZV8zPB+bXK5
-	S6/LBil5NcFAIy6bN+bHH8NvgcKjswINQV14KDEKxL8+QL9T359pRsF/xW8J4mZUOcTjMwBaWmf
-	OTGbmnvj3ST2egVtsRw2dOogZztftxaERQOAZv8IqB/64G8XwY5bRCjcV2iOKLFh
-X-Received: by 2002:a05:600c:4e0d:b0:4bb:69b2:d3b3 with SMTP id 5b1f17b1804b1-4bb8881eea5mr5786055e9.27.1795110536004;
-        Thu, 19 Nov 2026 09:48:56 -0800 (PST)
-Received: from ubuntu26lts1.example.com ([151.31.213.44])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb84cc09b1sm45969445e9.0.2026.11.19.09.48.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Nov 2026 09:48:55 -0800 (PST)
-From: Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org,
-	Patrick Steinhardt <ps@pks.im>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Kristofer Karlsson <krka@spotify.com>,
-	Han Xin <hanxin.hx@alibaba-inc.com>,
-	Han Xin <chiyutianyi@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
-Subject: Re: [PATCH v2 1/4] unpack-objects: use size_t for object sizes
-Date: Thu, 19 Nov 2026 18:48:53 +0100
-Message-ID: <20261119174853.829455-1-gitter.spiros@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <av7LcjLcTocYH8b-@pks.im>
-References: <cover.1793446357.git.gitter.spiros@gmail.com> <cover.1794984184.git.gitter.spiros@gmail.com> <b2c3d349a4ac73da7e1d066ac43754d3e6939b9f.1794984184.git.gitter.spiros@gmail.com> <av2pBh7vLj5DVDha@pks.im> <20261119060524.775205-1-gitter.spiros@gmail.com> <av7LcjLcTocYH8b-@pks.im>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=AzQJht0D;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=GHe3T8oX
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 39C267A02C1
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 13:05:39 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Thu, 19 Nov 2026 13:05:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1795111538; x=1795197938; bh=Iogx1E4F1q
+	Xqp3KhjHt3IVGKaqUtmr5f3fUxV2RqCZw=; b=AzQJht0D5192NQ8biQhDLltf4Y
+	P2oTvczMGJd5gNlerryiViwZsiPhIzQLiV7uCtLCJX5hko0CsKaiq9Ow7qt3OHrZ
+	N9h3+L9tefNmoH7aPftU9N8S65E+udpLTsKi6C56y1kUnt45j1N0E/U/aMaVrlNu
+	8bSL6bNQk6q2Px0ZsInEE0OMsj2ch5PO6FxTros+cxlK7cw+t2veG1H2yZ1L6LSX
+	0w3JJgcvGTRpsO4xUg6uRTvi0dEMacTrnFAUYJUrE0eMSWHFUqka78Q8WaTuvWXm
+	dQwhaZW9dTFPFzveotSVNrhfJYoDc8nAFD80PfAvlL6XJSgWeqox5O3/G6hw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795111538; x=1795197938; bh=Iogx1E4F1qXqp3KhjHt3IVGKaqUtmr5f3fU
+	xV2RqCZw=; b=GHe3T8oXyzI0oRs7y7sdULVrJa0Rt44CjmzOcnOmW1Fx+2dnsRI
+	cS0je01BKNYjCYgKw8l6ZSiqvObRsXxpahrMgIaOvOYLkbzDS5R8Dw0M1gLBp3d+
+	J9sXTcjkzUpNhAPg2ELwicmu1ApcYwTPClLcgvSpcFlnegcEWfr2wDqzxsgQ0qeY
+	+3zWB3xToz366GqdFMu0rGYtwsts4Gb1Fj2gwVZ2HH3Rg0Y4RWg3zdVYyj+aAEWx
+	ckD1AGTtXA4djEDMdNvjS1cA7uaYIg+zQT6AF3CmDSzZ8jJOz5O+JMx86HtUdWB2
+	0g0BBz7Xud5h0vZ2d4lZymwI36kxmXkxMeQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795111538; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:SMqXNpZNPR8aspTfsJXexan+Qc8jbtyxms8r+A1G01oUh6q
+	sgF0IpVgItkZwPHaQDaPSGwXrEZGGVUR3EXiN6fa9WSx0CEHJhvc8bSd19WoUyKr
+	vzAvTBjR1rSrGFXjvzDyVOBzmw+7da/qvYGOA5hhoNX6W4oQ13v+XVEWrRJTX9vc
+	hpNleonofeVZ6+sEdyFGX3z27QdiKRvjXbbgBmMB9RTLYAXhvpYDLxz+cQsYfoAb
+	ufqVGW6t3SnBv2Mfc3nyfMZksNYRJGccx6eeBWDT76G9cwMfUTeRgT6QIo7go2pL
+	Irmo+G2+1tFt7xXSzmgW7mCrVmWTSn/CHXcDLaw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:S0HVL1Bxvzmtp5zR2XNsmmCKER2rQ1gfAkHV+vIC88Y=:fEozSQFGgzgPIUq/6Etjwf1VRX2/y6IJq4Zl+R2ZpjE=;
+X-ME-Sender: <xms:cjr_asTZZIQKz5gszce9jqqbpcopm0h2eSwlkBaPOJ4MQLRvuV12_g>
+    <xme:cjr_agq3c87x07uiMaBEvrfsaYPhDQDUcdmcadaKXxOuJ6iV75CWSbNqF3qXl_FLP
+    hUNqDD30939UzoR8wXWI4S_OWpGAeZl0Dytv4d9Tzl6gKTSw4rD79A>
+X-ME-Received: <xmr:cjr_aiJ-Auq5hwP49ZRkzvonQu5kwIDuSwJE9Mn3aJ_etbheXzrVkG7hm4wOZEoezi9VId2P2NILiFhQ0KwAE00SV8dsCNZpxCYz>
+X-ME-Proxy-Cause: dmFkZTELRixaFPZ7Men2EoEMA6VAQz3fHCLNzxgf37ZCz+3UFSrzLQbFZgV9fIV3czrH8r
+    TCEh4GympjCQu3WIB/AtiT4PnIQhDhNhQyx4GxUZNjaI2CmgLd7RhEmeXTEjOW0nsb/Uk4
+    qJVCrGRe4JLdX04rNYsnkh1P2hMJF9csYPchXLRmPc7W8dHrp5IUH6FozX4/gHp5m4XXWi
+    wxpTRXY+Bs0N/+nWYeVQwiRaWOMhwxZ+YX+CXpqZibqU7YyIsqGgjC2qnW0mcmQkWrf+HI
+    AibjKheMixIGEMq7D7UxGzWmsnkDYUtePw7RGAEEtr+Ft6TGzQmnuUciQGc7XomifwcyE8
+    TE2Ea56xbdFxQqjJV/E9HJpSEMzSPWGmDGcDZr6/IPygPF6RZZa3/1/2DaYyEPtkA6zMyA
+    jWVx0rPrIHI6QPC5xcdvpbujxTjhp0N+l8emvKhoOVlN76XzOZZ4X4cT2kLxQZQj59LsCX
+    7koHD4toOxcXr9hxM0mj7frGM66TBMNXrFUMYMhMfkxafrX0MfGNZYo4N47z94bDqw/WbD
+    updRUSuNTE06SS8AvVmA5w3QU80jYyi/dzxc49tRajZZ8qzWJ0HtWXcJbmnqaEdV4VzdDc
+    /vkRZtmCGHurvmRwHk0oWySAn7SaTZxnmoQsnjTb16A8vwrpDxPkchDLu6JA
+X-ME-Proxy: <xmx:cjr_arpqWylCfy9OfNC68DMoVk3wObfrZ4mYziUwUAW0mx7bEQXDqw>
+    <xmx:cjr_aixKXaJiVHayKOmJzkeKv_aC7m6bRld5NToMnpoZKYj2s1XDZQ>
+    <xmx:cjr_anN26H5anlIIFCgdX3FQuNHzjNieOgYUoaj8yQr8X_6yBjcddg>
+    <xmx:cjr_av4IoyVlANI3GWYzNAjYMgrhhNZVMz7eqHc3KlwA8WPBL6Ey8w>
+    <xmx:cjr_am656o2i6qdXvSzXMlP8O8Nczu9bAa8Ck0NtfTTP7MkpeO-1yH8->
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 19 Nov 2026 13:05:38 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elia Pinto <gitter.spiros@gmail.com>
+Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>,
+  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v3] status: reword message for a missing upstream branch
+In-Reply-To: <20261119055726.774485-1-gitter.spiros@gmail.com> (Elia Pinto's
+	message of "Thu, 19 Nov 2026 06:57:26 +0100")
+References: <20261021072137.258934-1-gitter.spiros@gmail.com>
+	<20261119055726.774485-1-gitter.spiros@gmail.com>
+Date: Thu, 19 Nov 2026 10:05:37 -0800
+Message-ID: <xmqqjym8y9vy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -101,11 +125,147 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-On Thu, Nov 19, 2026 at 11:12:02AM +0100, Patrick Steinhardt wrote:
-> Do we maybe just want to hold off the whole series until the dependency
-> lands?
+Elia Pinto <gitter.spiros@gmail.com> writes:
 
-OK, I'll resend the series when needed. Thanks,
-Elia
+> diff --git a/remote.c b/remote.c
+> index 49ee2ea318..7e26088f65 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -2449,6 +2449,47 @@ static void format_branch_comparison(struct strbuf *sb,
+>  	}
+>  }
+>  
+> +/*
+> + * Would a plain "git push" create the remote-tracking ref "upstream"?
+> + *
+> + * Only if "push_ref", what @{push} resolves to, is the upstream. That
+> + * rules out push.default=nothing, push refspecs that do not include
+> + * the branch, and pushes that go elsewhere, e.g. a mirror remote when
+> + * the branch tracks a branch of a different name: @{push} does not
+> + * resolve or names another ref.
+> + *
+> + * Even then, "matching" only updates branches that already exist on
+> + * the remote, unless push refspecs or mirroring override it, as in
+> + * branch_get_push_1().
+> + */
+> +static bool push_creates(struct branch *branch, const char *push_ref,
+> +			 const char *upstream)
+> +{
+> +	struct remote *remote;
+> +
+> +	if (!push_ref || strcmp(push_ref, upstream))
+> +		return false;
+> +	remote = pushremote_get(pushremote_for_branch(branch, NULL));
+> +	if (remote && (remote->push.nr || remote->mirror))
+> +		return true;
+> +	return repo_config_values(the_repository)->push_default !=
+> +	       PUSH_DEFAULT_MATCHING;
+> +}
+> +
+> +static void format_missing_upstream(struct strbuf *sb, struct branch *branch,
+> +				    const char *name, const char *push_ref,
+> +				    const char *upstream)
+> +{
+> +	strbuf_addf(sb, _("Your branch is set up to track '%s', "
+> +			  "which does not exist.\n"), name);
+> +	if (!advice_enabled(ADVICE_STATUS_HINTS))
+> +		return;
+> +	if (push_creates(branch, push_ref, upstream))
+> +		strbuf_addstr(sb, _("  (use \"git push\" to create it)\n"));
+> +	strbuf_addstr(sb, _("  (use \"git branch --unset-upstream\" "
+> +			    "to stop tracking it)\n"));
+> +}
+
+OK.  This kills two birds with one stone.  An early return based on
+ADVICE_STATUS_HINTS omits the call to push_creates() that is only
+relevant when giving the advance, and the overly long lines in the
+caller due to a deeply nested block are now much more readable.
+
+>  /*
+>   * Return true when there is anything to report, otherwise false.
+>   */
+> @@ -2510,12 +2551,8 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+>  
+>  		if (cmp < 0) {
+>  			if (is_upstream) {
+> -				strbuf_addf(sb,
+> -					_("Your branch is based on '%s', but the upstream is gone.\n"),
+> -					short_ref);
+> -				if (advice_enabled(ADVICE_STATUS_HINTS))
+> -					strbuf_addstr(sb,
+> -						_("  (use \"git branch --unset-upstream\" to fixup)\n"));
+> +				format_missing_upstream(sb, branch, short_ref,
+> +							push_ref, full_ref);
+>  				reported = 1;
+>  			}
+>  			free(full_ref);
+
+When the push.default configuration is set to 'upstream', and the
+branch.<name>.pushRemote (or remote.pushDefault) configuration is
+set to a remote that is different from branch.<name>.remote, because
+"git push" would detect misconfiguration and immediately abort like
+
+    fatal: You are pushing to remote '<remote>', which is not the
+    upstream of your current branch '<name>', without telling me
+    what to push to update which remote branch.
+
+Yet, we suggest '(use "git push" to create it)' with the advice, it
+seems (reproduction added at the end).
+
+branch_get_push_1() returns the upstream for PUSH_DEFAULT_UPSTREAM
+without checking whether the push remote matches the upstream
+remote, and that is what comes back from branch_get_push() and
+stored in push_ref.
+
+push_creates() checks !remote->push.nr and !remote->mirror and
+push_default != PUSH_DEFAULT_MATCHING to decide if "git push" would
+create the upstream we want, which says "yes" unfortunately in this
+situation.
+
+But in builtin/push.c, setup_default_push_refspecs() has a guard
+"if (!same_remote)" in PUSH_DEFAULT_UPSTREAM before allowing the
+branch to be used as the destination.  That is what makes the advice
+message incorrect in this case.
+
+I am not sure what the right fix should be.
+
+Intuitively, the correct change may be to update branch_get_push_1()
+to pay attention to the remote being the same (in other words, we
+are not in a triangular workflow), as that would match what "git
+push" does.  Such a change, however, may have fallouts and break
+other callers of branch_get_push() that have been assuming the
+current behaviour.
+
+Adding a band-aid guard to push_creates() to specifically detect
+this particular case would be safer, but it is far less satisfactory
+and makes me feel dirty, playing whack-a-mole with the code.
+
+Perhaps branch_get_push_simple(), which is a relatively recent
+addition, might point us in a good direction? 
+
+I dunno.
+
+ t/t6040-tracking-info.sh | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git c/t/t6040-tracking-info.sh w/t/t6040-tracking-info.sh
+index 1f0583b391..4752559280 100755
+--- c/t/t6040-tracking-info.sh
++++ w/t/t6040-tracking-info.sh
+@@ -221,6 +221,14 @@ test_expect_success 'status (missing upstream, pushRemote is another remote)' '
+ 	test_cmp expect-no-push actual
+ '
+ 
++test_expect_success 'status (missing upstream, push.default=upstream with pushRemote)' '
++	test_must_fail git -C empty-clone -c push.default=upstream \
++		-c branch.main.pushRemote=fork push &&
++	git -C empty-clone -c push.default=upstream \
++		-c branch.main.pushRemote=fork status >actual &&
++	test_cmp expect-no-push actual
++'
++
+ test_expect_success 'status (missing upstream, advice.statusHints=false)' '
+ 	cat >expect <<-EOF &&
+ 	On branch main
