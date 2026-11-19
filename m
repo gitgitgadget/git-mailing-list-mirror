@@ -1,95 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.52
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795071436;
-	b=TQ8GoV8h2R+shH5l+08i4QjQa/IhKf24Oh6ZQ8WmXc5knBDxzmjNCPC6que09TL7H8Mb
-	 9F0wMWxeR6RlXGS4XuCZ3QI3HAaoMpT0N2GlCmG09JeareJ+rAdvafyjp5rmzHIpUr2l6
-	 S9YnO/3znM4CZzHh0m3QsCFz6Qo3OJFmOIq5r7z5aEfSaT1Ud6B5ryi6xM2lRAJfYnspc
-	 sIBGOoTCj7NCNvETiTOR7cB2H0DxQ9EzKLKIhn1S3nNo72k8Iosmls9WBB4VoWoXXKAXN
-	 JZeW7Q5uNIYW027ZCyoOKhHxK9oQ3fVm9h1NtioI5erosIe79M64Ua97CHR+MGENGLQ==
+	t=1795072343;
+	b=vqF9DLCf5JmbxCGs73KlH92piJiMIqUQeqttBID1RDEirYhUvKi4TXiOWjfoX/71X14P
+	 dz8PALXbcBjH5lHOp5x4B22Fqouc+7ZZC5kDVzLOGBWAIVxvAoYp8q5j3KGTVeFUcwtgU
+	 5Bs9J1ln0LDaHlTeIKyguFpaQZ3VjB6uRDPuiH9ClX5HfPhNzeZHZHdJyl1DaMx7Ybf7b
+	 GsaglMSpOiaskcI4Kgr/L7X89BpQnCn2WCUn1NLSmgfIAmn2WYXiSD0U51xDSldCSXbps
+	 3AAYWz0WulJppE7b+2Ykc4HHKQcIqkY+Ijd+Kg1BmkETD+HYzuKuHRmE04M2cyMmO2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795071436;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795072343;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=ajLSumPrH2Wgm5GXb9uyCpHFBo5R1rCPDQdpdYNmZAE=;
-	b=UGdDuXQduOMJ0SzlaxQyI7JKIdjtgI1oak4At2pIr77eyABr+Xf/5u6ybnA9qTdJto84
-	 yk91/pk8gKxCpp+lm+son2Si7QBqNhB3p2mJbbFtWVbviIVYY8f8NsawMA+rmxy2MgbwM
-	 la6bKaRwsIL/Xk/8a00ezcWjqUxW7WMpmBfrbMWi6RGFiKKIhVfMO3AOwIouJecdcs4a4
-	 moJURIZZwg9JhgOWWnoJ8KG7u6AZzMe8Q1gEzQOt2v7kuJdjftZVeGkgsiP2BgvSwt/2C
-	 dilsk8or0CNH1t7odCD7qzMuSMz30dqrBJwNCV8471lejYw+fqvLzKzGbnPcO0qxH2A==
+	bh=OJp0HR3fjMG8tOxkelfC2twovoBbavaNkH/vAOwIehM=;
+	b=1QlOjvi30LH2I+Q3n9UHrAsgixzJDqU5Lr+AgfmKgBRLCtEROV3T6ZGSIUqaXkqrrLJY
+	 fBIqF6SrS5DoOBwp3TufQuMnKH/0D5TfFqt37/kTUU1yjRUkKybdPi9ghFcqarMywYjWW
+	 MiDGuYaTcJorKhtn0Ngg5NaIxjKjPVbqGemio4DvVR5hC9vh4WjL/lMhAWOoGh69c6ERB
+	 cSHIRK/92Vkq0qhq5k6P3pj8FsCV3hIVzkXVcMpDpsylH2KEXIfzWW4NKNIlmIijeIYql
+	 TO/Iv1IZmY/78W/BMAyHC/a4x2baEysR9aqXEJbCrYUI+TDjucEaRJSw4kUbYyGcgvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xTYuZpeC;
-	arc=none smtp.remote-ip=209.85.128.54
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SIF94jIq;
+	arc=none smtp.remote-ip=209.85.128.52
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93731606A320
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 06:57:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 93731606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A071F606A334
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 07:12:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A071F606A334
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xTYuZpeC
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4a2153c8525so13607705e9.3
-        for <git@vger.kernel.org>; Wed, 18 Nov 2026 22:57:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SIF94jIq
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4bb64ef5a00so13718205e9.3
+        for <git@vger.kernel.org>; Wed, 18 Nov 2026 23:12:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795071435; x=1795676235; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795072341; x=1795677141; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=ajLSumPrH2Wgm5GXb9uyCpHFBo5R1rCPDQdpdYNmZAE=;
-        b=xTYuZpeCfLdKAC9CF5THQKkN+sTNi/pusGC0DjQRdYzwoc1LytAINu9Qk1MOczLb49
-         RjeM2mHD34VsLPlc0tu8QwStvlxPFZEHnLwbQ+k5dF1KPZm0p1XWfJ9trwfUVC15CaTT
-         REK0ci6JL4LmbQoGYcYO81gqAezYzHHCQiNtZOx+Mb813pCLvZ+Vm5x/p0oqs24dpO+Q
-         1nXF4yMazmre1thSIgdSjGQXN+JOI6OweRwkFRqJoYVwHQrgcYe0Htxjbq690CzHQ2qX
-         lw0F/YQhXAry9n99OwNb5rj4G54wL18bDQlnk22HIBPrQs0cwZbl2MO+9XAdFRacuET9
-         1Vdg==
+        bh=OJp0HR3fjMG8tOxkelfC2twovoBbavaNkH/vAOwIehM=;
+        b=SIF94jIq3RO+AtY/2SQNmazPfcZbx9tanYey8mQ8fKLFnCFmBHuhZXMy+4k6vT26Xj
+         +Vhxm+ZqZmTtEiZb5xdCBM/B7AMELtmBBABBQLXOIW8FdjVBLPO9iNWFvMzbQKA0Ye9k
+         YgBUFqiKV6L1F6dZDEk9USYIdo7z/NVA5aaVRzQzEJAORinw3yi4i6YKNhWYGpdrur1t
+         dcocSQ3eCOUYIhjubXqt3GyXDl9tQV/QxV7VQ95rbatzIfF8OFKUhZcz0APfr7m3Ui3D
+         tB1BnauKByNtyK/KCMxxddbDcxq1ztEqrcb+2/hzUhmbH3+q+QCx2DIGMtzXQifbWNJm
+         c+1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795071435; x=1795676235;
+        d=1e100.net; s=20260707; t=1795072341; x=1795677141;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ajLSumPrH2Wgm5GXb9uyCpHFBo5R1rCPDQdpdYNmZAE=;
-        b=F3HL4UJjWjWF71YVQQyvuMVakL7m5ZSYlcNaAKphNk+waX/SIytMqwGeYifYCirfyP
-         UVbSUE7xa8L7Swq5LnBQq7FjgNW11on9YCEEIHkklNfHx7GaTGonpjg7aSCe0GPoC1nT
-         S+shUZTRQE8QUfG5rUyWLpJ2JsqTNOidviC/U6eKTUYmKajygJJ1UlhpFv4QdKZgqi9s
-         feKd43/gpIgFxBD8y2En4s/xAPwLl0nicrGHAQTQQS7qfMsGz2eV4kqOitkRyEPcDJe3
-         b01strR9XKIV9MTNxiR0+rCRSm7RiOhdUT/fAaziA/FXtF7+Q2mYV9Y2fOHYtbmaCZ+q
-         048g==
-X-Gm-Message-State: APuU4Z8D54aG8ZC8SpHAH+eXIBwIg98VdOjficwWr223ThM6s4M04IvU
-	PUxJ21shOK/xo8SNl0QlmdKgf6p5lqB02xjeeZ1mmpbCn5KFj7/UbYXBdHL9sg==
-X-Gm-Gg: AYBFou0BBeRE0BZMGu96RMZ4pL/SiT1E++juM5OA/d3BBCJouuCGb1LZHgyrkI/CRNL
-	UN2H57DFEY07aoAdC30a0qFPvI/UGcrb0Tk7vs4hIt40ZknZxc39YnSFmL+OzyAVrtnGUqPIheX
-	VOyJkNzTXpyIrTRm7ta+ThLlRs1QT6CKycGEVkBbGnHPROSUMaUNqTlUt4sbPj/2m5TadIGJJHx
-	uyYru8gQ3fj8rPzEB3Ss6jR+v3empEPxmkO0e7iRlRwma3FlZEdFQSxMzOzv0KMa8Iq+H9QHBjq
-	4/3Tjgt7FIYt/DeTnQjKLs/nkT43y58fj71oBYEAyJYOycgUtZfrepEzmFpXPrnrDghyn2hArAx
-	VaPwZ324f2d8rFGmRfMA+6Z9u6W/37zi4R6UyJU18y0PuVT7XqgjNr/E7siIo0EGVK4HYUyPmfT
-	1PNs9lSg9lOkb4kf+xcM5QCZ+vSdTSEfyOxV5aJ5bchR32RRvdr1pjbvDYQ/MFhLzkKLorNzcE9
-	a7CWU/LSVa9JcCp9KqX2A9VWCTRPYUzkcdx+ZNFfHEabaBO+Xjn/tErjDK17UW7t6vRvFSpHu5D
-	DIj9D9+obE2or3YqzREV436T56HRAiedX43lVpxJeGCf9EKWYDJSseUNa84XY8g=
-X-Received: by 2002:a05:600c:4fc5:b0:4bb:71c1:3ca6 with SMTP id 5b1f17b1804b1-4bb7da27e95mr96947015e9.21.1795071434790;
-        Wed, 18 Nov 2026 22:57:14 -0800 (PST)
+        bh=OJp0HR3fjMG8tOxkelfC2twovoBbavaNkH/vAOwIehM=;
+        b=S6QmrEPEHgs0lPM/8lCJwqB6gAnY3F1P0NNWpCRbg1HfJOy3DT23wAM8MM9JrmXusu
+         oOxuk8Cw7lcsk4jSxHgBPq9PIwi2MFQqBoNe8R2Dhro7FtJgtOWZ43TlsjS8H2234h7K
+         itlHcJgSNLZaeMoCZ+W5Xdfl6luATQ+n1lkeOhoh1XLaPxDdDROt4MohEyLjFm8CFmFe
+         elHJdJfEZ39cs6HaZBLh0MyikO+BoaBu1OXlNaEl/B+3t+LsZ18e+cZsFnJhHARAFqm+
+         VeMlpEpUscjJsY+WQiSDNf2fqBCJm3XELdv4SUenITvsZfClayGVh0WLsz914AXuX2he
+         o23A==
+X-Gm-Message-State: APuU4Z/ExkalJY/hX4HXFf+nPE/hwj7zCUfXPv5c/5d3EPeYS4IWoilj
+	WnpeGxH/H6Clz8bXdzXWQ/vHraCkllP2eTAX/E7tiqEw56VJVtR260lYOD89/Q==
+X-Gm-Gg: AYBFou0+k8F4JfS8zrn0esQuzSKUdjMCZUcZH4uHv6pzBh1iUjMr4Qp3WmOM1yCW61k
+	c6iJPy4K/bXkIfH3J3Qz+8r7LjB1KKzwdYUA3m95gpC3JQzB/05fjY9OgLEAzOOiOuQV8PBmFLN
+	MqJvy88zR8cPEdcnEenpqc/1Gh6Q0CPSMUwZbFt2Ed78VP8LjmDov3KqKD0LVY4mYdSme9/L4ZJ
+	LwMBnb5UF4CTXYRgPcWEsWzGYja2K+dRCxwc2AKKli/NKWF0LlZN27NkTzxdYbwJj93tdD4hRT3
+	VKy5vNdYpqN5pezr/+jXZg39wgBaTtCj9M9FYQdR4jL5YVUfnkUnZx5zJ5Uao485bokXEy3ZLvU
+	WHUAnJncSJIN/UUiH5aE0mpogE09/xf9xUFDXvN9DcdpAu+uHVbikKdABcFo+62A/3kJSRyltYu
+	NAdyYZQJEd6kdvuK7/PymI16GaaHjJ7CL7ANZBxiG4hcTRVL5dKH9lS2cPc79+GxOM7V8UvUeoc
+	UbNSo+hUa1RsV6OovQRVQ+Il7JjkZoUR7MIPH0SIBh5tKCJZhECGcDj+M/uyf/iacvJ/MHIgFG0
+	p+l6an5Wy5kq5TzKmZ211eA8yGbXoixwVTEczVUKhcT3EyK9o+Mw70wlrbRKsJw=
+X-Received: by 2002:a05:600c:5012:b0:4bb:6847:7927 with SMTP id 5b1f17b1804b1-4bb7da0f629mr93842195e9.7.1795072340889;
+        Wed, 18 Nov 2026 23:12:20 -0800 (PST)
 Received: from ubuntu26lts1.example.com ([151.31.213.44])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb85372d15sm15933565e9.14.2026.11.18.22.57.13
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb84e06c73sm28817095e9.2.2026.11.18.23.12.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2026 22:57:14 -0800 (PST)
+        Wed, 18 Nov 2026 23:12:20 -0800 (PST)
 From: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-Cc: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Matthew E. Luallen" <m@sph3r3.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 0/2] archive, apply: do not truncate files of 4GiB or more
-Date: Thu, 19 Nov 2026 07:57:11 +0100
-Message-ID: <20261119065711.827536-1-gitter.spiros@gmail.com>
+	Jeff King <peff@peff.net>,
+	Toon Claes <toon@iotcl.com>,
+	Shuqi Liang <cheskaqiqi@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
+Subject: Re: [PATCH v3 0/4] use size_t for a few more object and buffer sizes
+Date: Thu, 19 Nov 2026 08:12:17 +0100
+Message-ID: <20261119071217.828481-1-gitter.spiros@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <cover.1793524457.git.gitter.spiros@gmail.com>
-References: <cover.1793524457.git.gitter.spiros@gmail.com>
+In-Reply-To: <cover.1793439137.git.gitter.spiros@gmail.com>
+References: <cover.1793439137.git.gitter.spiros@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -103,33 +106,13 @@ Content-Transfer-Encoding: 8bit
 
 Hi,
 
-A gentle ping on this two-patch series, which has had no comments so
-far. It still applies cleanly to current master (e1ec09b23c) and
-merges cleanly with 'seen'.
+This is a gentle ping on this series. v3 has been on the list since
+October 31st, and it still applies cleanly on current master.
 
-1/2 (archive) stands on its own. 2/2 (apply) has a question I should
-have raised in the cover letter. It fixes the file written to the
-working tree, but with --index, and so with "git am", the result still
-goes through odb_write_object(), whose length is an "unsigned long"
-until "use size_t for a few more object and buffer sizes" [1] lands.
-Where "long" has 32 bits while size_t has 64, the blob written to the
-index is then still truncated, while the working tree file is now
-complete.
+Two other series of mine are waiting for it:
 
-I see two ways to handle that:
-
- - pass the size through cast_size_t_to_ulong() in add_index_file(),
-   so that "git apply --index" dies instead, as 5/5 of the loose object
-   series [2] does for notes, and drop the cast once [1] is in;
-
- - hold back 2/2 until [1] lands, as Patrick suggested for a similar
-   case in the pack-receive series [3].
-
-Which one would you prefer?
-
-[1] https://lore.kernel.org/git/cover.1793439137.git.gitter.spiros@gmail.com/
-[2] https://lore.kernel.org/git/cover.1795069177.git.gitter.spiros@gmail.com/
-[3] https://lore.kernel.org/git/av2pBh7vLj5DVDha@pks.im/
+    https://lore.kernel.org/git/cover.1794984184.git.gitter.spiros@gmail.com/
+    https://lore.kernel.org/git/cover.1793524457.git.gitter.spiros@gmail.com/
 
 Thanks,
 Elia
