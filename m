@@ -1,121 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.175
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795111540;
-	b=g+rRXJRNz8kKm72PlJEUpwtvmuHwx2HVpGzX466gA1RuC7qcFhqa9imurSsVIuxWOWgf
-	 2BBST7xXWWGzNHfnZ3vbz5eRPg+QYMg+iRXlj1MP7tRwK3FGaWp+J41NNeWEhwDpnElan
-	 C+ejfkb6kBq7A9dcqY0hsfmVFN0/vF/O5ymcHGFzwejAtcaa2a1X80A42qlpILYPVIPAO
-	 d4vYfu6iJGMkWi4ugroZdsIAfxzj85mmdxP5gX5On4cDjTQR0MclAL5c7S0lHSc8RcGO7
-	 eoSChrTfpSzQMSffv28s1+3/mvqckDmB2xOBjaC0kcUSjRDBtuWtsaZJ61+WM4gVHQQ==
+	t=1795112834;
+	b=salr5gXNJ4iD78Cd9u/XhdnhPQL9w3QGB+j90ft5KhZAoAdB2RQpoRbvDxMHXDPKCNP/
+	 Dl40pcQrKygyXfj44DGzfKn1MFhOdFK6H/BFbqF9Eb98foP3El3IFDcbMVxXYaCYIxGYP
+	 PpwfMPPasdrAyQyiK9ptvQAArZCDVx0TwypszIQcQ2aWUCymaNbvF3qNn+O4yvG7r4tiW
+	 5e6l9bLmWvLGtL80G8qxLkF7GjvgGlKF6zBZK/Q9ZIGWYSGY4tqdN1EQaSxGEsUvCPANM
+	 KTv+CeYRpETBXBI5540seaNO2STtYshpo7gfXAojNyrmPpVwRYkClYV3D7aGNeQEGWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795111540;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=Iogx1E4F1qXqp3KhjHt3IVGKaqUtmr5f3fUxV2RqCZw=;
-	b=HyWG488pJDUdp1RxmhLbgxSaSMTbx119ZLSHBqyJhvI66n8Co+6Gq68RD0F6Uc3bp/qg
-	 JTrwDYkfJT7YEQcyedadnHuqthXZLmFvW+VVur1T3enU14AodDdekR4WaRrsu14fuQaj0
-	 UTGaL4AypwuFEES8GgosidGP5jVb+/gjV4mdqLtEmslD0cx+Gl53eA/3qrp9fTV7IeEQd
-	 83aZRkDJOdGv4JwIthC5l73ZVV1pyqMrjXqgRnp1NBnlYKAR13zGO3FnixHG23Eaib73T
-	 kx7p7U15iEvBf1sr1HZHNDKOLzyIml9OFH31UecMrf+fbpkOsnfe6OhQXs/blFFHOVQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795112834;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=VAsa4lta98+3tissfpMDUdT1YfRaLFW8L92UB+M2cSI=;
+	b=EsKoB2DYwKQUAjICvAfXXBh7vvoWqjUPEdVPDlP2FlWSaabOB7VDY+o+lkm2ed1gWptX
+	 ZU+IyV1oc/YKgvXsnXlX9r577G8Skg+QWskmA89ShJxfZ345HSG92iF0jg5G068hI7iov
+	 JYijaOz2olQ/t1Ez4zFcJMyvtCiewQbQ7HGNl+YmHd3Z521VPo4+5VekW/sUTGu9T7QMX
+	 KsaaKL+4NCN5KAS9XZs3hTyC57wFw2fWVmQToV+Rd8uQ2tItYYxQmrK7GOGb3BSw4ylxK
+	 asfLhcHU/X8zkCHUAB9fsyrHchNkEr5U4kAE/OSQ8akRw2jkHLhCpUGbavioK1+OxXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=AzQJht0D;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=GHe3T8oX;
-	arc=none smtp.remote-ip=202.12.124.153
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=l6D5azaC;
+	arc=none smtp.remote-ip=209.85.215.175
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2636B606A324
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 18:05:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2636B606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E768606A32A
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 18:27:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2E768606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=AzQJht0D;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=GHe3T8oX
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 39C267A02C1
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 13:05:39 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Thu, 19 Nov 2026 13:05:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795111538; x=1795197938; bh=Iogx1E4F1q
-	Xqp3KhjHt3IVGKaqUtmr5f3fUxV2RqCZw=; b=AzQJht0D5192NQ8biQhDLltf4Y
-	P2oTvczMGJd5gNlerryiViwZsiPhIzQLiV7uCtLCJX5hko0CsKaiq9Ow7qt3OHrZ
-	N9h3+L9tefNmoH7aPftU9N8S65E+udpLTsKi6C56y1kUnt45j1N0E/U/aMaVrlNu
-	8bSL6bNQk6q2Px0ZsInEE0OMsj2ch5PO6FxTros+cxlK7cw+t2veG1H2yZ1L6LSX
-	0w3JJgcvGTRpsO4xUg6uRTvi0dEMacTrnFAUYJUrE0eMSWHFUqka78Q8WaTuvWXm
-	dQwhaZW9dTFPFzveotSVNrhfJYoDc8nAFD80PfAvlL6XJSgWeqox5O3/G6hw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795111538; x=1795197938; bh=Iogx1E4F1qXqp3KhjHt3IVGKaqUtmr5f3fU
-	xV2RqCZw=; b=GHe3T8oXyzI0oRs7y7sdULVrJa0Rt44CjmzOcnOmW1Fx+2dnsRI
-	cS0je01BKNYjCYgKw8l6ZSiqvObRsXxpahrMgIaOvOYLkbzDS5R8Dw0M1gLBp3d+
-	J9sXTcjkzUpNhAPg2ELwicmu1ApcYwTPClLcgvSpcFlnegcEWfr2wDqzxsgQ0qeY
-	+3zWB3xToz366GqdFMu0rGYtwsts4Gb1Fj2gwVZ2HH3Rg0Y4RWg3zdVYyj+aAEWx
-	ckD1AGTtXA4djEDMdNvjS1cA7uaYIg+zQT6AF3CmDSzZ8jJOz5O+JMx86HtUdWB2
-	0g0BBz7Xud5h0vZ2d4lZymwI36kxmXkxMeQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795111538; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:SMqXNpZNPR8aspTfsJXexan+Qc8jbtyxms8r+A1G01oUh6q
-	sgF0IpVgItkZwPHaQDaPSGwXrEZGGVUR3EXiN6fa9WSx0CEHJhvc8bSd19WoUyKr
-	vzAvTBjR1rSrGFXjvzDyVOBzmw+7da/qvYGOA5hhoNX6W4oQ13v+XVEWrRJTX9vc
-	hpNleonofeVZ6+sEdyFGX3z27QdiKRvjXbbgBmMB9RTLYAXhvpYDLxz+cQsYfoAb
-	ufqVGW6t3SnBv2Mfc3nyfMZksNYRJGccx6eeBWDT76G9cwMfUTeRgT6QIo7go2pL
-	Irmo+G2+1tFt7xXSzmgW7mCrVmWTSn/CHXcDLaw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:S0HVL1Bxvzmtp5zR2XNsmmCKER2rQ1gfAkHV+vIC88Y=:fEozSQFGgzgPIUq/6Etjwf1VRX2/y6IJq4Zl+R2ZpjE=;
-X-ME-Sender: <xms:cjr_asTZZIQKz5gszce9jqqbpcopm0h2eSwlkBaPOJ4MQLRvuV12_g>
-    <xme:cjr_agq3c87x07uiMaBEvrfsaYPhDQDUcdmcadaKXxOuJ6iV75CWSbNqF3qXl_FLP
-    hUNqDD30939UzoR8wXWI4S_OWpGAeZl0Dytv4d9Tzl6gKTSw4rD79A>
-X-ME-Received: <xmr:cjr_aiJ-Auq5hwP49ZRkzvonQu5kwIDuSwJE9Mn3aJ_etbheXzrVkG7hm4wOZEoezi9VId2P2NILiFhQ0KwAE00SV8dsCNZpxCYz>
-X-ME-Proxy-Cause: dmFkZTELRixaFPZ7Men2EoEMA6VAQz3fHCLNzxgf37ZCz+3UFSrzLQbFZgV9fIV3czrH8r
-    TCEh4GympjCQu3WIB/AtiT4PnIQhDhNhQyx4GxUZNjaI2CmgLd7RhEmeXTEjOW0nsb/Uk4
-    qJVCrGRe4JLdX04rNYsnkh1P2hMJF9csYPchXLRmPc7W8dHrp5IUH6FozX4/gHp5m4XXWi
-    wxpTRXY+Bs0N/+nWYeVQwiRaWOMhwxZ+YX+CXpqZibqU7YyIsqGgjC2qnW0mcmQkWrf+HI
-    AibjKheMixIGEMq7D7UxGzWmsnkDYUtePw7RGAEEtr+Ft6TGzQmnuUciQGc7XomifwcyE8
-    TE2Ea56xbdFxQqjJV/E9HJpSEMzSPWGmDGcDZr6/IPygPF6RZZa3/1/2DaYyEPtkA6zMyA
-    jWVx0rPrIHI6QPC5xcdvpbujxTjhp0N+l8emvKhoOVlN76XzOZZ4X4cT2kLxQZQj59LsCX
-    7koHD4toOxcXr9hxM0mj7frGM66TBMNXrFUMYMhMfkxafrX0MfGNZYo4N47z94bDqw/WbD
-    updRUSuNTE06SS8AvVmA5w3QU80jYyi/dzxc49tRajZZ8qzWJ0HtWXcJbmnqaEdV4VzdDc
-    /vkRZtmCGHurvmRwHk0oWySAn7SaTZxnmoQsnjTb16A8vwrpDxPkchDLu6JA
-X-ME-Proxy: <xmx:cjr_arpqWylCfy9OfNC68DMoVk3wObfrZ4mYziUwUAW0mx7bEQXDqw>
-    <xmx:cjr_aixKXaJiVHayKOmJzkeKv_aC7m6bRld5NToMnpoZKYj2s1XDZQ>
-    <xmx:cjr_anN26H5anlIIFCgdX3FQuNHzjNieOgYUoaj8yQr8X_6yBjcddg>
-    <xmx:cjr_av4IoyVlANI3GWYzNAjYMgrhhNZVMz7eqHc3KlwA8WPBL6Ey8w>
-    <xmx:cjr_am656o2i6qdXvSzXMlP8O8Nczu9bAa8Ck0NtfTTP7MkpeO-1yH8->
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Nov 2026 13:05:38 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elia Pinto <gitter.spiros@gmail.com>
-Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>,
-  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v3] status: reword message for a missing upstream branch
-In-Reply-To: <20261119055726.774485-1-gitter.spiros@gmail.com> (Elia Pinto's
-	message of "Thu, 19 Nov 2026 06:57:26 +0100")
-References: <20261021072137.258934-1-gitter.spiros@gmail.com>
-	<20261119055726.774485-1-gitter.spiros@gmail.com>
-Date: Thu, 19 Nov 2026 10:05:37 -0800
-Message-ID: <xmqqjym8y9vy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=l6D5azaC
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-cc147d86bebso2530a12.0
+        for <git@vger.kernel.org>; Thu, 19 Nov 2026 10:27:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795112833; x=1795717633; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=VAsa4lta98+3tissfpMDUdT1YfRaLFW8L92UB+M2cSI=;
+        b=l6D5azaC8AA5u6uczy6cpfRagYR2Emo5izw0PH7Y8pl9sAcYuavGRSYBTQZEmOF+wi
+         ufdX89RiALpLgIAfqVtvoDklBOxbV0QHC1VYqmlUpShQ1dCVSEss3NlpYq3ph6N37TpD
+         cipIWUm3zatTdmogKC1PhiyisVYy5IF6gZWFsBFZsK2iqtlqcpiTf1p3OG/IvU/0dsSP
+         Dt+9/PoP4cnlIRQ4PXCgtk+gp/ih67GcHJm1xL31LtBBosIYdhRJ3w0U3N5/BUlGGJYl
+         n7un2ecNcxe3xSUEZSs31eEuFvtMARrMRE+K8QCedcyvDT6mD4PpoGfHtMJ9RTkmOF0X
+         TIoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795112833; x=1795717633;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=VAsa4lta98+3tissfpMDUdT1YfRaLFW8L92UB+M2cSI=;
+        b=vaW10vyyZonNQmAWhzCagCB57/4BDrYBfTH9POBE3FPzfteixmKsZ0OWgne9geWP6s
+         ZvB/Es8o+oyi+8DOYS2HrpQgif9daox/GfMIBnhJyJt9z4ZmWkO0Cg8UeGzAMKemhnj3
+         tf4/VaqnDNZ7RU2A5v8dQLOl0MvSUus68jC5T+YUiaNJJXsVzWg6od/3xuKdT51o3xlk
+         FbHofRFTAkD0oeqMy6W5s5iMtCR4Euyi0POxvzri9ebw55nfiOnSheAEfOYgeRXA/ODN
+         CDpV2V3KHgzl1nWG32JAaIZBUGCawdPBua2SzoiBDNgdAQMuR1Z55hTB9M2KZDNs3HOE
+         dpzA==
+X-Forwarded-Encrypted: i=1; AL+hErGt7vjl2nb3X0PKM0nybrFeXDZiVcCU5/ABOiHQ4UBmolqRXXRHrk9tzUmdfDwLzmmrktE=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+kjdgLvS6eqqubzCyofR8lHeffzN0SOy4107YjHj3s3Pl+2NNG
+	Mc+t1oRw6+KjIK8CkNqXOHx4v57O6l3g6uMhmhea/VcEfA5VzRx7DXW0
+X-Gm-Gg: AZFdTZcA60IE1a5UaHQniEvlql9islTVV8DNo7uYaThVMGJ2aOLSirZm2B71OodLrvF
+	bntRkfim8ZZT37Sa6D1GgHShJ3P7rNzV6YnF3VPHlA8oKv5WftNcdu4ozwnuc5oHMc/EhtqmAL1
+	pGMyPFwD8I+lfwLJbn+GOSQZD5lTUrSfAkaAGGcEExkwGHrDWL2C5JFMLKOLP/Ks9N6DQDE+8jk
+	a+T8FKDa4Hm4oya1Y14WFp4ndRR678UWXDSJ1sEWiZoKq1n2YEsbZ6gqNbD+aBVBRj912PhdSDG
+	Gc6LAG/xRALAHO5ry9XDsmWVEMad3Xg47Kd+bKrcyEqog3qn3ybvawuTjsNvqjv1CP8WS2Xer6U
+	X+Rgh0GnGiEiR1C511lS/js/lRG0xtQpVPoFLVj/SlMB2umXjbdChilwpmIkAsTA3PJ7cCfxe+a
+	sPz/eTvBY1cryX9K+JjyCshGD+B3nR5h8sJFFULg6qJpaxVFDkpMjjSYx95z+BEXhDrIvJKFNW4
+	D9g3RksKheR+i6GpVJFneB0DUVx6ybR8HheHV+oXmNJobFT6YozbhFH1KPuVUNKITfz553LHNww
+	0rwNLWLUCvAoxfrlYLTv5ctjGkwdi/8H0+5SiPx4
+X-Received: by 2002:a17:90b:3cc7:b0:3b3:c6b1:2277 with SMTP id 98e67ed59e1d1-3b41c93cdc8mr126198a91.32.1795112833373;
+        Thu, 19 Nov 2026 10:27:13 -0800 (PST)
+Received: from [192.168.0.11] ([106.51.27.147])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b41ad0b2c4sm469084a91.4.2026.11.19.10.27.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Nov 2026 10:27:13 -0800 (PST)
+Message-ID: <a9916667-f53b-4611-892a-047728c22f53@gmail.com>
+Date: Thu, 19 Nov 2026 23:57:10 +0530
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -125,147 +92,70 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 04/20] t9300: make the series S tests self-contained
+To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Cc: gitster@pobox.com
+References: <20261112-kn-fast-import-tests-1-v2-0-b8c3a0ab27e8@gmail.com>
+ <20261112-kn-fast-import-tests-1-v2-4-b8c3a0ab27e8@gmail.com>
+Content-Language: en-US
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <20261112-kn-fast-import-tests-1-v2-4-b8c3a0ab27e8@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Elia Pinto <gitter.spiros@gmail.com> writes:
-
-> diff --git a/remote.c b/remote.c
-> index 49ee2ea318..7e26088f65 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -2449,6 +2449,47 @@ static void format_branch_comparison(struct strbuf *sb,
->  	}
->  }
->  
-> +/*
-> + * Would a plain "git push" create the remote-tracking ref "upstream"?
-> + *
-> + * Only if "push_ref", what @{push} resolves to, is the upstream. That
-> + * rules out push.default=nothing, push refspecs that do not include
-> + * the branch, and pushes that go elsewhere, e.g. a mirror remote when
-> + * the branch tracks a branch of a different name: @{push} does not
-> + * resolve or names another ref.
-> + *
-> + * Even then, "matching" only updates branches that already exist on
-> + * the remote, unless push refspecs or mirroring override it, as in
-> + * branch_get_push_1().
-> + */
-> +static bool push_creates(struct branch *branch, const char *push_ref,
-> +			 const char *upstream)
-> +{
-> +	struct remote *remote;
-> +
-> +	if (!push_ref || strcmp(push_ref, upstream))
-> +		return false;
-> +	remote = pushremote_get(pushremote_for_branch(branch, NULL));
-> +	if (remote && (remote->push.nr || remote->mirror))
-> +		return true;
-> +	return repo_config_values(the_repository)->push_default !=
-> +	       PUSH_DEFAULT_MATCHING;
+On 11/12/26 23:04, Karthik Nayak wrote:
+> Similar to the previous commits, modify the tests in 'series S' to make
+> them independent of state from previous tests.
+> 
+> Replace the 'S: initialize for S tests' test with a
+> 'setup_marks_repo()' function, so each test can invoke it to setup its
+> own repo and tear it down when the test completes.
+> 
+> 'S: from with garbage after mark must fail' used to create the 'S2'
+> commit which 'S: merge with garbage after mark must fail' needs. Create
+> that commit in the merge test instead.
+> 
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>   t/t9300-fast-import.sh | 332 +++++++++++++++++++++++++++++--------------------
+>   1 file changed, 198 insertions(+), 134 deletions(-)
+> 
+> diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+> index a0e322b866..f9359bbaf3 100755
+> --- a/t/t9300-fast-import.sh
+> +++ b/t/t9300-fast-import.sh
+> @@ -3100,10 +3100,12 @@ test_expect_success 'R: --git-completion-helper-all does not read from stdin' '
+>   #
+>   #   invalid dataref ..
+>   #
+> -test_expect_success 'S: initialize for S tests' '
+> +setup_marks_repo () {
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+>   	test_tick &&
+>   
+> -	cat >input <<-INPUT_END &&
+> +	cat >repo/input <<-INPUT_END &&
+>   	commit refs/heads/S
+>   	mark :301
+>   	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+> @@ -3140,142 +3142,168 @@ test_expect_success 'S: initialize for S tests' '
+>   	BLOB
+>   	INPUT_END
+>   
+> -	git fast-import --export-marks=marks <input
+> -'
+> +	git -C repo fast-import --export-marks=marks <repo/input
 > +}
-> +
-> +static void format_missing_upstream(struct strbuf *sb, struct branch *branch,
-> +				    const char *name, const char *push_ref,
-> +				    const char *upstream)
-> +{
-> +	strbuf_addf(sb, _("Your branch is set up to track '%s', "
-> +			  "which does not exist.\n"), name);
-> +	if (!advice_enabled(ADVICE_STATUS_HINTS))
-> +		return;
-> +	if (push_creates(branch, push_ref, upstream))
-> +		strbuf_addstr(sb, _("  (use \"git push\" to create it)\n"));
-> +	strbuf_addstr(sb, _("  (use \"git branch --unset-upstream\" "
-> +			    "to stop tracking it)\n"));
-> +}
+>   
 
-OK.  This kills two birds with one stone.  An early return based on
-ADVICE_STATUS_HINTS omits the call to push_creates() that is only
-relevant when giving the advance, and the overly long lines in the
-caller due to a deeply nested block are now much more readable.
+Ok. So, the setup needed for the 'S' series is a bit more involved and 
+it was done once initially before all tests. So, turning this into a 
+function and calling it from every place that needs it makes sense.
 
->  /*
->   * Return true when there is anything to report, otherwise false.
->   */
-> @@ -2510,12 +2551,8 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
->  
->  		if (cmp < 0) {
->  			if (is_upstream) {
-> -				strbuf_addf(sb,
-> -					_("Your branch is based on '%s', but the upstream is gone.\n"),
-> -					short_ref);
-> -				if (advice_enabled(ADVICE_STATUS_HINTS))
-> -					strbuf_addstr(sb,
-> -						_("  (use \"git branch --unset-upstream\" to fixup)\n"));
-> +				format_missing_upstream(sb, branch, short_ref,
-> +							push_ref, full_ref);
->  				reported = 1;
->  			}
->  			free(full_ref);
+The rest of the patch looks good just as the commit describes it to be.
 
-When the push.default configuration is set to 'upstream', and the
-branch.<name>.pushRemote (or remote.pushDefault) configuration is
-set to a remote that is different from branch.<name>.remote, because
-"git push" would detect misconfiguration and immediately abort like
+-- 
+Sivaraam
 
-    fatal: You are pushing to remote '<remote>', which is not the
-    upstream of your current branch '<name>', without telling me
-    what to push to update which remote branch.
-
-Yet, we suggest '(use "git push" to create it)' with the advice, it
-seems (reproduction added at the end).
-
-branch_get_push_1() returns the upstream for PUSH_DEFAULT_UPSTREAM
-without checking whether the push remote matches the upstream
-remote, and that is what comes back from branch_get_push() and
-stored in push_ref.
-
-push_creates() checks !remote->push.nr and !remote->mirror and
-push_default != PUSH_DEFAULT_MATCHING to decide if "git push" would
-create the upstream we want, which says "yes" unfortunately in this
-situation.
-
-But in builtin/push.c, setup_default_push_refspecs() has a guard
-"if (!same_remote)" in PUSH_DEFAULT_UPSTREAM before allowing the
-branch to be used as the destination.  That is what makes the advice
-message incorrect in this case.
-
-I am not sure what the right fix should be.
-
-Intuitively, the correct change may be to update branch_get_push_1()
-to pay attention to the remote being the same (in other words, we
-are not in a triangular workflow), as that would match what "git
-push" does.  Such a change, however, may have fallouts and break
-other callers of branch_get_push() that have been assuming the
-current behaviour.
-
-Adding a band-aid guard to push_creates() to specifically detect
-this particular case would be safer, but it is far less satisfactory
-and makes me feel dirty, playing whack-a-mole with the code.
-
-Perhaps branch_get_push_simple(), which is a relatively recent
-addition, might point us in a good direction? 
-
-I dunno.
-
- t/t6040-tracking-info.sh | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git c/t/t6040-tracking-info.sh w/t/t6040-tracking-info.sh
-index 1f0583b391..4752559280 100755
---- c/t/t6040-tracking-info.sh
-+++ w/t/t6040-tracking-info.sh
-@@ -221,6 +221,14 @@ test_expect_success 'status (missing upstream, pushRemote is another remote)' '
- 	test_cmp expect-no-push actual
- '
- 
-+test_expect_success 'status (missing upstream, push.default=upstream with pushRemote)' '
-+	test_must_fail git -C empty-clone -c push.default=upstream \
-+		-c branch.main.pushRemote=fork push &&
-+	git -C empty-clone -c push.default=upstream \
-+		-c branch.main.pushRemote=fork status >actual &&
-+	test_cmp expect-no-push actual
-+'
-+
- test_expect_success 'status (missing upstream, advice.statusHints=false)' '
- 	cat >expect <<-EOF &&
- 	On branch main
