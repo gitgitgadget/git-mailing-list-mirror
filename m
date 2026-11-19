@@ -1,88 +1,118 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.149
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795082780;
-	b=FybNbwBi5xfwKzOVE7BXoADJTC3pxIyTNC6dWL6reTAFpyN2B+EdfzDRT9yTIYIJXGs+
-	 50Q1bWQoxiKpKUk4R9dSUDM9fVCDFQfb71o9cLLzGBkW8kC7h72qYBpWqpYKcplctuiy3
-	 hiAgfqFOguCwKGkVe25kNbTv2vlpUZJKWGm3Y9qDyEscRqScuZ3RTUo0Pxe8iZAaSf1o0
-	 6Q69x6QD372qmYv1Tpn2WBOeI8Hs9Msp1lap7Vvm8Subsb5iOci/cxycsHx/pYMfD26b2
-	 ZAluh+QP6cqzdWRSlB6flUc/IJpine4ZKnlbP30f4krNrnj98TBdf2CV7ShA8WGqFvg==
+	t=1795082829;
+	b=e1Ps0ohC+GpeswCdHZDKLZm/qy/+bkNWZn3qE6OIOJ8QU/1I3NK2T1PJA+ulqueQ8w79
+	 j7PWRFwncKZQ//IVeJjJTZzRzzcIgpgBEihjeZU1/uLAbfVhzrMpcBj+Cpasc3d9xiP9R
+	 OTvVtbyo/zXETnG6OhivvWy/LPTf1GQbxK7jaVv2Fuxsdhee6Cc5D2jGnP0IXHQRyjVFE
+	 PqlTr2VWF5XT0cX/xaT+nP8UKSEwr9hgtbLoBgz1hf0TiNDttal8JShZKy5J2OTBMSFWQ
+	 1uBPsCwSufjdJo2wl6RcItsFIiwmdkTHLpJh3jrxwbyBbDhS1KQv7C9/D4ln7WYgPeQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795082780;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=/b3zE6cwrZVIfg3dwieXXdtOE4QFmc7f6DT15g+lROk=;
-	b=H5NTytNxK5XK5hvK9UU6XTRD3EedBOkQ4oIxrv85o4dytjjUkNuWhrUpH/QVKRRZOZoa
-	 TIYbuLsAvPv0Lzrst/M68jnWhDdvLAWgaF1+V0dXMqXPpurDAKkJW58F1qvzD/YJni2M7
-	 lJt9Nlzuwwrn3NwDy6osagQaXtAKAJr7tIy7veOUPjk+URYtNr5KDL2ea2T+5hbGa58/S
-	 47iFRJOZEXBDCvVjKnmI1kpFz4d4f3K8baQRmS8wjDX7kMdW/H81vqSjnVEkUJNnOVxDS
-	 XJP88LU7zuRblLoXVubfWmv7uzmxh2P5x7i4yGznswh4Qw7+/W9qOh6ZmpcfosuaUQQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795082829;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=VEqluHHH2f0/XTJQ3L99iSHo7k5gurryhC75HuVffPY=;
+	b=kRYWbkyz0ZMX422xACFrly3epWvKbDG1aFjzo1ipPUIYTMjbonPGJQj2WeXnWZok0NVs
+	 7csAqzmmLZEtiy6ljCxzLJOCTasrDn0oL8XtPqq1ho+LrBf9VHDtPAO2DuhsVZdGqER5p
+	 INfZRPkEBRtuLrOStfoUXSrYr7ZUGErNNpji5FfrW/Db5yCJ4e4425xQHY1lg+L5IKKU4
+	 jRnAI5xiPWtZp2WMvN87Hefto+2ggCtK1LscTt6Hunk8aDw3xu9qf8ewtNW/QCptC/yWc
+	 dpH2G+kkeTA8kGbl3mYfFLQHM3JS2RrBod3LlzF+Bl8Qbmo54PViAEmbfC8cPo3PhUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gOD081tn;
-	arc=none smtp.remote-ip=209.85.216.41
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=ELF9w52N;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=zVLn407u;
+	arc=none smtp.remote-ip=103.168.172.149
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B48606A320
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 10:06:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 73B48606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F42606A320
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 10:07:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 23F42606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gOD081tn
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-3b197cd42b0so1467568a91.2
-        for <git@vger.kernel.org>; Thu, 19 Nov 2026 02:06:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795082780; x=1795687580; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=/b3zE6cwrZVIfg3dwieXXdtOE4QFmc7f6DT15g+lROk=;
-        b=gOD081tn0CcXEwRDKmApCJqRq48EYbHABftq5NJ6aWSTwhqRK4kTlMxAaRrrrKCP0s
-         X0Jzv47jENfoiZOCjoKwGEJt9Xo1Q3KXnIKLPb0Yco1gAiK2sTLoahFNDzTMRF3W8+65
-         sJZfnggFmmgSeIFAUlCOs/+8D/Syk/HZWNw4WfaN/vn/EV29ot87/tHsEkV69oxOEx3L
-         5YrhruQF/qbUKy7ugqpwT6+wqhMQ7pu+/gOggY/ShNywDWeXzs3r8KdVakSqZHPCdU0C
-         X5bGHKwXbhQ4gRcFXfSWKric2zmjk73Oqe4DmQBG3UgLui03YhLghlguFkACB5pkXimt
-         QsfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795082780; x=1795687580;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=/b3zE6cwrZVIfg3dwieXXdtOE4QFmc7f6DT15g+lROk=;
-        b=ndHSRJ92syTgZPwDv/xqeKaExf0NBfjDmk0hw2jcvPP/XF+okPBpEtBK/uAYpVIHB6
-         TBYQU37ZyKgo7Nf3wMlZJ8WgJ9wF9SXrYaDXhK8nvJUG0KIevNd7bGxiUugCsvHdBT9s
-         RtoSHmmW6lTeENepC5lPyqyjeTuocb1Y05meOSGl9jS4Z2S2hlXyAAzMu57pw7RcfeUy
-         QTT77I9IKCXWqQEj2WTfq4xKZMJojm89eAEu2/m0DYTg7GvAuHEYOryFSs1jc+rZzP64
-         D/Evk4MtI+YrlihPNGvshduQwhewobzx6wyOvwfRHjOwdxQDyUjeqeLZ35T1sc8mAADG
-         OzGg==
-X-Forwarded-Encrypted: i=1; AL+hErHgHwdduAoKi4QcRPhUCpvV/EMB7v2fPY1k+fV7+bxsUBGFdNL+lT4GuptTsRih2NV2mBE=@vger.kernel.org
-X-Gm-Message-State: APuU4Z+MeFLpJUrpimjmWzh0Ym7ziAmrnq8wKQDgl3csd+cFD42CgZWY
-	fpKWNkeo3RLSDuSF+1/b53fy0ITSadTdpzAWLgdENtLFEOZ6yQ75PN2f
-X-Gm-Gg: AZFdTZdeeAqFtQYcs+TEOqnjn2hLm964Cb1alHdbV3AvrZiSDmnv3rJGFxioDcDKSpZ
-	6oMm3wGJ4NasM+tzyWjrECmokGXf1ShHqBXKRsx2nN1lfj32fdb33POs/XxCXMDGmQD0TBfhdOy
-	OmFbaOrZHhi0Wf5ZgHyju1MbqZPibZRVRTfSbJZQ3wodN0ELqTyz0cYytoihookhVTI7mAYH6iA
-	z2fcTzmoZ1zZq/h3F5W4PBllfNHO5FHIik/P+IT1HLXjlEmaEOJzc0AgjlUby6E6PA2nF6QRSsc
-	xQ/fHJ+GDGvCJZcgJwtYmXMHZmmrOQYiFZ7U52ekfUqSL9mWHFjgXAAj5wfW1LJJ5bYO5bj10i/
-	lVMBSV/gza8dMxN1bgzWJRgUS2BDLLgJa8h5QhG6DrVYbnuwqTNdZKi1NeLyIP7rG+1X61AZ3CW
-	aTj5yjPZ59rY+EWNRp2RG29dDl9xlN7mZu4wt9LXDKG/sI+8sZ8z43nRSBQ05qR96pVZ8uATnx+
-	kEJwIiSSCFNIN+gYSKnCJqWVyBAoM2PCWZZAmX4ssc0v6b12vN1GluwV0hZHUEEvZKgoBLG3lQ0
-	YavBd+fOzQU5a8ZW5QuAWbXGx2Otsn3rZcpxPopb
-X-Received: by 2002:a17:90b:52:b0:3b3:ba43:54c3 with SMTP id 98e67ed59e1d1-3b3d07c61d4mr4820380a91.33.1795082779738;
-        Thu, 19 Nov 2026 02:06:19 -0800 (PST)
-Received: from [192.168.0.11] ([106.51.27.147])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b401f4d058sm1225190a91.0.2026.11.19.02.06.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Nov 2026 02:06:19 -0800 (PST)
-Message-ID: <953176e8-e475-4a99-b2d3-725fd346c19e@gmail.com>
-Date: Thu, 19 Nov 2026 15:36:16 +0530
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=ELF9w52N;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=zVLn407u
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1B0FFEC022B
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 05:07:08 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Thu, 19 Nov 2026 05:07:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1795082828; x=1795169228; bh=VEqluHHH2f
+	0/XTJQ3L99iSHo7k5gurryhC75HuVffPY=; b=ELF9w52NwDHLaZyRp98dGkr+Om
+	YRRuZOJbbVNAgtWXBJoY87qMY1ijBaP7SZiYckj05sObCm2iTs1TFChQaGjTbwM1
+	QvLh3k0G716cyJU395a+Ohyqy1fJk40ywSl0MKSQefVDRxY9buV6uFibc9INdbh9
+	KRC1SG3yiQnqIZfqDVRzOL+31ohSFicVxzHaDv1xYjwvcsyyZbNL9djzcw38ZVXR
+	LlgOFf+QFDC99OXi/jty+J91IBNx+/zzNa6SxYgAgUQrgqQKtsQgi66NmLzOPKIk
+	p3RN6dH/VZxOJmZxANSXI3bz80p/rVM7iVABL1eINNKtkIIXrPZFWt7gmx6A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795082828; x=1795169228; bh=VEqluHHH2f0/XTJQ3L99iSHo7k5gurryhC7
+	5HuVffPY=; b=zVLn407uZH6m55mJAKmbGO3r+Hv/ZAefuSM5MYsqBkmW0FbApDI
+	G7fyJtCuTVNncOYGKl+4gD9W7sPmMUWsJJ6fcczj3LYwpxqEq+C8j9608yjCRpC5
+	g5YbsyJ4EQP/seCQQigjz1PtW5zu4FVCKjQYdEkEbae/ucazL8cGV/XvrfbpX/f9
+	Z1DW7KR7W/H/M8gHFWh3Q6qgXYCH/xAHOqiA8dp5VDMhJ2K/Kiuh8ozgJ8KGcySU
+	nzPBs66FRbP6D1nadCTsObtsPppvmsABF83GOqFS9NMfpp1TnbECXTqtKneTgcYm
+	4V5w2T7XvzF+/uIP6+1hNmm5t3fU76Vh4Zw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795082828; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:VTIz/ambwxofbpbvjaaA7sonbvzL852q/zuQ2JPPnZ/hKo3
+	BRglvvJtQ9xqLqD6lbheFatijEpwmOx2qQLDAuD5IuT3stBO0DyaWjegmiYzkBqo
+	WsXEuSCiCXoRzpLtXz0tgNcCpfdIFOAunfKGMymoYu61+c+yuQCC150xK1tqIpSD
+	/yD9vz1slyjgtn2qZOhn2Zz2p4GzNl4YeuaUW/a9ShBQH1e93OHXUWap/+mMo6Pe
+	cGitvvKOtLQOyKGnfbeN4wNhz7WW9b+77iWgKDwnz9Vn5E/1ogkjaVNijv0ONUWd
+	GUKqNR8Gy0wGdMFMzGhCGYi5P4Rzmd9RsmhHc8w==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:le3SK4d6kk4Rq26MhOYiF7FZhEnC3RnvUlNuCqhYIpI=:xr5KWxKwvWWC/Q0fMTSrbjk91iFZxQH2xWrPiuSXMSg=;
+X-ME-Sender: <xms:TMr-aiuHYHI_51-1YE0qs78oRih_KDs-oQXS79YSJ1gocDouu_HGrw>
+    <xme:TMr-atfOwSr8acJfvz16kuCO9krreTfEM-LaYex5-m-JHOPPwnmimcAwk5cHSISoZ
+    8_N7gCA04JjYUQQoOAhbOuvyWuT1uMdZ1wmVMSv0NFjYp4xpHZMh98>
+X-ME-Received: <xmr:TMr-arYx16goP8L-KhZ5-nBuouIYNVj_N5JQnq3gC3Mlh9gD4NLCDqKksUyQUcpqlwyYeYo>
+X-ME-Proxy-Cause: dmFkZTECyeg1aWG7hrj0fCMNc8UDPOKzhyaLoCRfwNP3zaEvaYdhwD6/HfMyHp4C3FVlPp
+    lnTV9aBajPfZk4yjQLeXJ5NyDQMh/QKZoegir0uXvHhrKB0WgCA9KwNwM1r90uxKKNsx6w
+    q8dqOIO3afhS3HFKfE1huX2NTWNnhMIR4zww624l1pgQie+sGu3DJAPtONpCdmlJK3f3a9
+    2qFRcSZbagzinmhkR5sQjzipC0iOPLVfwsgqG1R3n6ZHq0lnDpSmiVmDoC7+r74NNxzqRL
+    mDaoMSvLwAw5Qpky8uFadR0DPeFKOU1dV3Uzk2XzqPsrFfFS90cwYg0i1WmFuAyJFHc5CS
+    +H64amU/Wi3jWbhzcSWl4xIF5amzEoZfUMNatoYwKk5xi0QSjARJsTwfPyfiHrdKId3fvd
+    Gbt7dTZ0NIvJJUx1753oFUeTSr4+qLqH/Mdl3UU6tWmucoRh5a/P6t4Blpbf1S3zGD5KjL
+    2jUEsQt8ODft3LDswY0EKS6vFZpVWaUHAxkHnZyvRTxMVZHtIfKrrhU01yPwiUqE6/t+GN
+    CceSx79FFot9tWvJZXNFiR+fvCgP96z9hnobL1EbD12elULgeDxVrW64M/dZX6FljLv4pU
+    Vevj3aSa8yDLz3WmXrjatKlXxtG5nNcmFZ0RPTouYRJO6if0KHS81ybdgBZQ
+X-ME-Proxy: <xmx:TMr-aoX36wkERerUXOHz76FJ97OSL5zbK8nBMbgQg-pjJmh7Y3tAoQ>
+    <xmx:TMr-alhfPKgVVwz8y97XI_Nnog49x-RxG0Smf68r0kSo1AM8WTVsOg>
+    <xmx:TMr-auWTFbKSeINdAqUVLyS82PmJ3hEd8B7RjgrWZT0jRw4e0iZIzA>
+    <xmx:TMr-akNpwP4NL0UR8vOeEYZAJgsRF03YPXHh02fSOrpFVHiIVy8vdw>
+    <xmx:TMr-ate8zuC3F3fCEbmIu51-wWE1wkOBvcO-dV_JRrjV-_4y18Ppd9Jy>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 19 Nov 2026 05:07:07 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 34e7725b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 19 Nov 2026 10:07:05 +0000 (UTC)
+Date: Thu, 19 Nov 2026 11:07:01 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH] test-lib: run EXPENSIVE tests one at a time
+Message-ID: <av7KRbOGWeV-Qof1@pks.im>
+References: <20261119-ks-ci-long-test-hang-fix-v1-1-45c2fff6d9f0@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,70 +122,94 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/20] t9300: move 'fastimport.unpackLimit' to the
- required test
-To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Cc: gitster@pobox.com
-References: <20261112-kn-fast-import-tests-1-v2-0-b8c3a0ab27e8@gmail.com>
- <20261112-kn-fast-import-tests-1-v2-1-b8c3a0ab27e8@gmail.com>
-Content-Language: en-US
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <20261112-kn-fast-import-tests-1-v2-1-b8c3a0ab27e8@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261119-ks-ci-long-test-hang-fix-v1-1-45c2fff6d9f0@gmail.com>
 
-On 11/12/26 23:04, Karthik Nayak wrote:
-> The 'empty stream succeeds' test sets 'fastimport.unpackLimit' to '0',
-> so that the following imports write packs for the 'verify pack' tests
-> to check. The test itself doesn't need it. A following commit makes it
-> run in its own repository, where the setting would no longer reach the
-> tests after it.
-> 
-> Move the configuration to 'A: create pack from stdin', the first test
-> which needs it. The configuration must persist for the 'verify pack'
-> tests of the following series, so set it with 'git config' and not with
-> 'test_config'.
->
+On Thu, Nov 19, 2026 at 01:10:31PM +0530, Kaartic Sivaraam wrote:
+> Recently, we've acquired quite a few expensive test in our test suite.
 
-This makes me wonder if there is another patch later in this series to 
-turn the 'git config fastimport.unpackLimit' into one that uses 
-test_config instead to make the tests more self contained. Or may be it 
-is planned in the follow-up the cover letter mentions.
+s/test/tests/
 
-I'll see about it. In any case, I think it may be worth a noting in the 
-commit message your thoughts about a change that turns the 'git config' 
-into a test_config one.
+> For instance, these commits add several tests that require
+> multi-gigabytes:
 
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->   t/t9300-fast-import.sh | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-> index 15f511fb6b..4cffe43a71 100755
-> --- a/t/t9300-fast-import.sh
-> +++ b/t/t9300-fast-import.sh
-> @@ -38,7 +38,6 @@ echo "$@"'
->   ###
->   
->   test_expect_success 'empty stream succeeds' '
-> -	git config fastimport.unpackLimit 0 &&
->   	git fast-import </dev/null
->   '
->   
-> @@ -47,6 +46,7 @@ test_expect_success 'truncated stream complains' '
->   '
->   
->   test_expect_success 'A: create pack from stdin' '
-> +	git config fastimport.unpackLimit 0 &&
->   	test_tick &&
->   	cat >input <<-INPUT_END &&
->   	blob
-> 
+Multi-gigabytes what?
 
-Change itself looks good to me.
+[snip]
+> In recent times, we've been noticing the sanitizer jobs (linux-leaks,
+> linux-reftable-leaks, linux-asan-ubsan) hang and fail with timeout in
+> our GitLab CI runners. On some digging, it turns out that this is
+> because of multiple memory hungry tests running in parallel.
 
--- 
-Sivaraam
+Yeah, our pipelines are currently a mess because of this, so I'd be
+really happy to have this resolved soonish.
 
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index c56654b7c5..4d29172c9d 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -1089,6 +1090,42 @@ fail_117 () {
+>  	return 117
+>  }
+>  
+> +# EXPENSIVE tests can need many gigabytes of memory or disk, so two of
+
+s/can/may/
+
+> +# them running at the same time under "prove --jobs" can exhaust the
+
+I wouldn't single out `prove --jobs` here, as we know to run
+concurrently without prove either via our plain Makefile or via Meson.
+
+> +# machine. Allow only one at a time across all test scripts that share
+> +# this TEST_OUTPUT_DIRECTORY.
+> +expensive_lock_="$TEST_RESULTS_DIR/expensive.lock"
+> +have_expensive_lock_=
+> +
+> +acquire_expensive_lock_ () {
+> +	mkdir -p "$TEST_RESULTS_DIR" || return 1
+> +	while ! mkdir "$expensive_lock_" 2>/dev/null
+> +	do
+> +		owner=$(cat "$expensive_lock_/pid" 2>/dev/null)
+> +		if test -n "$owner" && ! kill -0 "$owner" 2>/dev/null
+> +		then
+> +			# The holder was killed without releasing the lock.
+> +			rm -rf "$expensive_lock_"
+> +			continue
+
+Okay, if the previous owner does not exist anymore we prune the lock.
+Two racing processes which try to acquire the lock may race in a way
+that the "/pid" file does not exist anymore because the other process
+has already deleted it. But you protect against that by checking whether
+we have been able to read a PID in the first place via `test -n`.
+
+> +		fi
+> +		if test -z "$expensive_lock_waited_"
+> +		then
+> +			say >&3 "waiting for another EXPENSIVE test to finish"
+
+Hmm. So file descriptor 3 points to stderr or to the test output file.
+And if I remember correctly, we're indeed free to write to stderr
+whatever data we want without breaking the TAP format?
+
+> +			expensive_lock_waited_=t
+> +		fi
+> +		sleep 1
+> +	done
+> +	expensive_lock_waited_=
+
+Should this be declared as a local variable?
+
+Overall this is a rather pragmatic approach to solve the issue. I was
+thinking whether it would make sense to distinguish e.g. EXPENISVE_MEM
+from EXPENSIVE_DISK, and have different locks for each of those. But I
+doubt adding this kind of complexity would really be worth it in the
+end.
+
+So I'm fine with the approach. Onward to green pipelines again! Well,
+until the next thing breaks next week...
+
+Thanks!
+
+Patrick
