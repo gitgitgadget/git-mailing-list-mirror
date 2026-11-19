@@ -1,93 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.42
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795067432;
-	b=t//TmXbyVkC+m4Xiibb0BFR9GJ0h1U0BqVGzhuMXpBZLYrvnsTYQfpESnVsf8MZ/psK1
-	 Cc9KWzH39bfq9I9DyY3rQrRysQDQ8KZuX8qP4fM1VxQSWtWvNJj4/Pjbxs6YAN2odiedU
-	 4s/HFYczrRMYPwna16pVjGP8RgAfX0hSFZ2WDvBDUKd7pTO54kRA+6Npig30vv+pvVBAE
-	 7TwrnQcSu12NyCzUebrRqh/e5I394dYGnUwFnycYskDEnbGcfwbGD6Qak+Z2Lhg166vyN
-	 C3Ifdsj05Puz4KshxWCpz+nVbJ9wBKSHYa1jThpvRlaD3RcOfC1vkoOPUYPhNXBqJog==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795067432;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.46
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795067704;
+	b=AX/1IS0yOs417bzpnC2xiKBIkCuhLLKUGfyyCR8jNUJFwqxHwsbzdPVRbm62+iajsFfr
+	 i7huEp+4x9hyFd0d0kMOFKybA5k0Az/yd84QA/Q3d0MKTOn+AugciQ0sWz10Q7YeJ/UFR
+	 izVdu6RTcUOFAlfu7diwz2oFWIEBbbDC66xZxXi6Gf5muvmK1hHWY40e8m/47J6pe1APq
+	 E/sqATa3SQxXwr/U6MkD0WHXW/l6L1GwfRtd4a4V7/w3AvmbMTkeu/sTkN9wZD3sMHSWi
+	 VT/ezffAcY0+RmEIpRvZ977qSlSDsLjknOMdWdauNiC2XZCuENE6YYNyEVCegQcFHvQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795067704;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=rhQWeIEP+TC2rsoFHjG6i/NESEouLzUOjr/Qp1CIBwA=;
-	b=UwX99RY2wYiMbpKQR6yXRiGI0GRQlv+Bk6I7Tlesbsv+rPGsa8VHZ8kRNbGIKR8usfWK
-	 FXZy/W1kZ1D6osQSrjOWzn9IUW8cG+skSzbUqrX2HghKsH1AqNPq+9K80qpfDsiJS7+iJ
-	 FyhiKzbuz/YcigmnhkcikOOrMzeFeyxzV9/0gJCOgWRtqC+LGmWxfy9iduxJktzKUi6Wy
-	 EW20+7L2RZ/F2xEzq9EUegVrnRwG6hzIjrB5FRhHf/gIpwJ98GuThV6Zl48YRXYbL1c2j
-	 iUiMJxAniQ/Gq6zpoW/++3q9DrKtow5sLTpTRimOVoqU6qgICbmFpOnxQGf8xEO3AbQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=GVrD/puzAFCaIov/byTWKS9l7++jMgpSN37/6gVb0IQ=;
+	b=YmsohqwP0+u/RewFphtPMvlPppNEDNloZZx6BXSNX8iadrDZvaPUk0G/OI9GA2NoCz48
+	 DnQ6nvFhY9z+gcLouZzFSKcwmYhLa9HgqEGn2UozGFA2wOpW4PeKKWLwFpTFE8ZpEn16G
+	 /ysY7hdQ5UhAbmlJZAe70uB2Jg5vAEBC4a7+M9GLrQch54PH7rdmcwO+Jvx8I7BmCRRNW
+	 XNW3cnK/Ibiun0r1f36pUOFw1KfH0CyFn8Qz0u+n4rQdtAKa+RQwuwEkedLJP1WESLuJe
+	 qws9lJ8S1wrwEqpt+63rHfF8uszor227ISzt/xWQp8ZXuwwTOxpP0kQtIv8tiZfbNug==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fCnYlXsW;
-	arc=none smtp.remote-ip=209.85.221.42
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZFofScFe;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.46
+Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF01606A320
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 05:50:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DFF01606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033E2606A320
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 05:55:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 033E2606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fCnYlXsW
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-490d59c3edaso368816f8f.1
-        for <git@vger.kernel.org>; Wed, 18 Nov 2026 21:50:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZFofScFe
+Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-6ddef424972so1567087eaf.3
+        for <git@vger.kernel.org>; Wed, 18 Nov 2026 21:55:03 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795067703; cv=none;
+        d=google.com; s=arc-20260327;
+        b=oPEWpS2k10k26DeK7qKY48DAeW4ozoC2J0OFqCtbn9eN53twkeiE2vRBuR7xzcRjor
+         /r4+pTHh7H7bVg8MIpIAdLsx6WsVCti1LqtbWqOr+O+c5vWF6w3pv4RkOveedrXZqXtO
+         UmW/mjECm1+7Dr8lM6+jUJbysZR4JHNEIrviynl69jqk3/6/MFk2CfgHluCmP37OpKFR
+         E6cuRXVs4wETniGj7D7IfOl0cGRz0npEx0NubwS2ZVNF6fUQ2NBwp2DkiKKjcU6BLlvs
+         m4HvFffKmls/NgQ4Vl0KDS1K7+3v8PoL9vao3bbGdj8uiUPRrvNLc01FJQDaiaML/r3w
+         PY9w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=GVrD/puzAFCaIov/byTWKS9l7++jMgpSN37/6gVb0IQ=;
+        fh=azt8TgWTl01NptQZMw9NPhZWceF2SXJbJqFTBR6uZLs=;
+        b=PrO5OQmrzUd0qhXky47wRovgMWwdvZft8eY4f8+sFEdRU5k8JFJ1l8rezLfNFOnPRc
+         3jhHw712EUT54bEX9wABvfK9xO51OvsDYP9PGFUBILhpJxq9HUsRlYzFhw6JhujOrQ/v
+         SBGL5JysKXBabh36DxYsg3dDOQjMllvkk3rUXKDeGhpx/gx+TCTpL5Lyp6SCldw1kA6S
+         DuqsAYNZa1Tg6cEBkDN0c+qYofGvX1fpGWgswVp4+Qz+IpZykFg6hnY/YQvtY7RYUIeK
+         pSBkr6FkXblKlkqPhWRTGUlxGdh5P/aAOOa6a2qwOZsHIy72XfKBI2eNR1ZdPLYQNQtp
+         sQMw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795067430; x=1795672230; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=rhQWeIEP+TC2rsoFHjG6i/NESEouLzUOjr/Qp1CIBwA=;
-        b=fCnYlXsWbdm82qRiVqQbwL+8+HFBi0at2U+UMxHHlFU9PlaFbOnFha+y7RGswjZUrO
-         gMjHKrfS8g1SEb5Pg2kZa7oF0rYeMWEHTTpJ2CvoMOxJ+6822cRwrT6BRT2rtc1dRGEB
-         si8i9atxHEu1sr0mlbJWH23mPFusDNb4F6ZAEi3+MQtRQYmEtIGXL5DgJdeRhDkMmrB1
-         R53XhSMgJM850TkwZaot2Co1OKyJ3ehNkDUUVTvd7u0MoF+qEY+l2VIWX8NEWgBJJebi
-         LV0ofCMKID8c4eG58PuIpBb3UDcMRV7uKjDWRGbtpL/Ab0AHeOPgnv2i1SIV1iQoEnMQ
-         yi0g==
+        d=gmail.com; s=20260707; t=1795067703; x=1795672503; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=GVrD/puzAFCaIov/byTWKS9l7++jMgpSN37/6gVb0IQ=;
+        b=ZFofScFektoxhniuPqhzlWPp0oED8j3Q5gDC0byrKmbuOPGmSfzttsNTz7br1XPf8q
+         CbW/FKLakVtd3ogA89s28MF1R3YQB68TEeTfmeqK1HQ3rZYhpQQS+iy+EoJrUyyWz4kH
+         UBwUULwI8dFSGXzjxP6XglXHLYrwbmIcpK/HxqPSQP5CpWyQGQ6iXnltXEF55qzt29Ms
+         j1TbHM0aY3xZZnPuKZPgXh5mJSvuKMQf7ADKjkbKzUU1FE7FysSzvEqW/luu306ntzhf
+         c/hvRtewGTkoi7GmoJG6kWtHb9moTFx2E8/cyr+6I06C5SsjvvDxfKzEw4UQ2BHS7nVk
+         XvuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795067430; x=1795672230;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=rhQWeIEP+TC2rsoFHjG6i/NESEouLzUOjr/Qp1CIBwA=;
-        b=JqZOxknJV1NUOadiV23HU6JS+8ulcnZwWo6NQBT1LXUYpo4U+9P8H98WFVKrgadnU7
-         EPtdsbqYRcPD/pbI6aHZ4wfjoGGJeYG4Bl4Ioy/OVr5ooyJHmsdYhY3SSrSdovk9WZRx
-         xO2XhvVkIQcuZRz/MMHx+GdKnKtLfJvsChjRZugHLZ0zFWZ/2bByP83MT8nQrMd/ref6
-         B/ve561kTvxrcP2L1zJtdsjNE9J0VjAOGknzU/qdbnMZEGtfHW5CMhCAXv6UJBRodVu+
-         TInexvtjIJBbK/N/8Sx43FVC/dC4H49PyBfr9bdF9K5VNLHkwyrB1CSq2CTZKLQ9CIYl
-         Ba+g==
-X-Gm-Message-State: APuU4Z96iFO6PQsECO1kOWpK3+VfLEcbPtAGoURI+opw7fAILKvi80LU
-	B5WoN3xRz0tLnBT8t5Hb/meu9K1MYX/MVQ8jmnj5pGhBS5h2l5FQ5H4vBPlmEw==
-X-Gm-Gg: AZFdTZeYhOZdk542z/NsemflhZ/PftLW85YVMkOJEyjof3j6+A6SJcqYY+iZHgwp5Ka
-	8cU/6z7v2zlR+Rty+gTFUM18Bt5YbBrpYbPydvA0lnGIr7lI0Z/yroQwfwlCxuSvmYNncogWubB
-	MMht0X+qTrOHqGXOsLRoXs/TGO66Pgymg+8MzCnzffg9CNcBa0Gf76xfEZ5uDo+Il0aWSik5aU4
-	hK03q6tr5AH/hWkbGsjJcAoTrw6xy+FPv5a4fmXkIa1q5j9E/qRWhvHIiXrby8hu2+scuIqusQG
-	Y2d1+bhrcZtgZnl5uoomjXZMi5MKFrHZMWDLrC/kz2p0uVdB/5FSo2qyW2YJ4qM/2sloJacX6bS
-	fOfyXJk4uJblTk3HCO2zVGE3KpdH4Pob4sEfCH7ZDnOBG8+GYx5f+C5XD5D1hMf18B99nwX97tu
-	GssDAY6AT1zfhUQYyyN802rM5BhGe/7p59TpZcBSsecX3KFczadpcNUSwLDiFiMNaHxUZQ2oFpN
-	jxV3PEMU46YHVq0YkIkP+V+/aOPZwKo+EZeAMQjKh1yyehzskeUCsJ2BR4EdxLoQKqhC1R2X21a
-	eYRZDaToDzGVju6uqMi1BGTq7xF8Mh15iosUka3D52aBV7pYL+jW68NvMPFhdcQ=
-X-Received: by 2002:a05:6000:250e:b0:48e:d7c:4bc3 with SMTP id ffacd0b85a97d-4aa5805e1e3mr135563f8f.21.1795067430071;
-        Wed, 18 Nov 2026 21:50:30 -0800 (PST)
-Received: from ubuntu26lts1.example.com ([151.31.213.44])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4a65100c6bfsm8242025f8f.2.2026.11.18.21.50.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2026 21:50:28 -0800 (PST)
-From: Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Harald Nordgren <haraldnordgren@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
-Subject: Re: [PATCH v2] status: reword message for a missing upstream branch
-Date: Thu, 19 Nov 2026 06:50:26 +0100
-Message-ID: <20261119055026.759205-1-gitter.spiros@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <xmqq5wxu87es.fsf@gitster.g>
-References: <20261019175722.5223-1-gitter.spiros@gmail.com> <20261021072137.258934-1-gitter.spiros@gmail.com> <xmqq5wxu87es.fsf@gitster.g>
+        d=1e100.net; s=20260707; t=1795067703; x=1795672503;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=GVrD/puzAFCaIov/byTWKS9l7++jMgpSN37/6gVb0IQ=;
+        b=JAd88WCpStZeyxQ0deYnsCP1xw3kQMq6HtRxKVlVz0XpWApL8XoXpFUcBPRFIaklJ3
+         ndiH5dx96lpXbm3CxT/2k9l7pBlwvNXM6hD5NCEPbCWiU3ysHvVMafrKjssfrEJP1bk5
+         39Bar38cfldIXpGtxJgyz1a3DAdnV4L8SKFqxCfDPi2ofEejybbR50b3R3javkwt1YP+
+         3dHsIHMomp04nihWxrUtq6rdgDVmR7Itk+xoypqNXTfpZ0uh0T+1OALJa19gwBids7lF
+         2aJC485dUj+2bwrMPvtSaHf7CsE+Y2OoGp4hgJTS3SxPcO4iZo7N4kLXltS/Cr9wrY7Y
+         7cMA==
+X-Gm-Message-State: APuU4Z9AG2E167d1bmEyF8MRg+mD6rwEGmlHsyMr6lPeR4sJB5DycitA
+	f63FC7fL5VWS6LT4HxT1EXmHkZeGo3u9X6TkYgEm1FWBxSy9GyA1vl+z0gP6W4s71ordg5fGX9r
+	w1IQPNkPzzTRpReqiSL/Xke+h61EmyqRwCcSH
+X-Gm-Gg: AYBFou0d1fpTi5taCxhsgHS76XTVhDXk5BW3WJLtqgddrdtBsoudQ7PdoR/jh/0vusQ
+	fwdeGih5i7CxRY0bRe2XDnqra6VvWRdOzqTwCZoeK9+yPCaHlftoWqnWPn1TsfCHRw2MXJabtqw
+	7QvuujU7Jik8E+iuHVbBs3r2lwtI8gAQ3jPZ4zPYLbr9pbDk0xTwBdzlkmZ9fksjXbK3o7TH7Q2
+	17k6DmSeMPMD9zrNGtC4g2RoPy0qO0vFrjhikU+67wVIvmcQkYg66zeTodIjqnzcGM80V7GC9Ee
+	72jJgNihanmq3fE7Z3XB6QKXxrgQ3tDLPx9VfOio9d3kxNmzmW79UhgXE22wA/ow2vDbaNloexN
+	IcqZSpW/4pce0ZxjPGRCBlB6pJ1Hmlj5cYtQ=
+X-Received: by 2002:a05:6820:820:b0:70d:9be9:5351 with SMTP id
+ 006d021491bc7-71b185a9e15mr3769986eaf.36.1795067702931; Wed, 18 Nov 2026
+ 21:55:02 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -97,58 +102,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20261118-master-v2-0-3f2aaec15d31@gouders.net> <20261118-master-v2-1-3f2aaec15d31@gouders.net>
+In-Reply-To: <20261118-master-v2-1-3f2aaec15d31@gouders.net>
+From: Andy Koppe <andy.koppe@gmail.com>
+Date: Thu, 19 Nov 2026 05:54:50 +0000
+X-Gm-Features: AclHuK_5BsJAPJjyshTYFbCGvwbNZVWDTnCbhIQ7XLVIivafm98MOd-Cyc3eBSA
+Message-ID: <CAHWeT-aWx1VwUjM+hZ--jjSAbcMenz5Mw11y9ouFavGndUMrSA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] utf8: add display_mode_esc_sequence_len_counted()
+To: Dirk Gouders <dirk@gouders.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
+Dirk Gouders wrote:
+> +/* Same as above, but for a NUL-terminated string "s". */
+> +size_t display_mode_esc_sequence_len(const char *s)
+> +{
+> +       return display_mode_esc_sequence_len_counted(s, strlen(s));
+> +}
 
-> Using --mirror means the local branch we are interested in (e.g.,
-> 'master' in your example) would be sent to their 'master'.  Do we
-> need to check if their 'master' is what our 'master' is based on,
-> though?  Can our 'master' be tracking their 'main', for example?
+This is a performance regression compared to the original function.
+Calls that previously returned immediately because *s != '\033', or
+after a few bytes of scanning, now scan the entire string with strlen.
+It turns scanning a whole string for SGRs with repeated calls to the
+function from linear to quadratic.
 
-The first check in push_creates() catches that. push_ref is what
-"@{push}" resolves to, and for a mirror remote branch_get_push_1() maps
-refs/heads/master to origin/master. That differs from the upstream
-origin/main, so we return false before looking at the mirror setting.
-With remote.origin.mirror=true and branch.master.merge=refs/heads/main,
-"git status" gives only the "--unset-upstream" hint.
+Therefore I think that if the original implementation isn't going to be
+kept, it would be better not to provide the wrapper, and thereby make
+callers think about what they want to pass as the length.
 
-> We are content if there exists one or more "push" refspecs for the
-> remote, regardless of what the value is, but is that really
-> sufficient?  What if our push refspec is deliberately narrow to
-> publish only selected branches, such as:
->
->            [remote "origin"]
-> 		push = next
-> 		push = seen
->
-> and the current branch in question is not among them?
-
-The same check again: no push refspec matches 'master', so
-branch_get_push_1() fails with "push refspecs for 'origin' do not
-include 'master'", push_ref is NULL and we return false. The refspec
-and mirror tests only come into play once we know that @{push} is the
-upstream; they are there because push.default is not consulted at all
-when either is set.
-
-> You mentioned "nothing" in the log message; shouldn't that also be
-> special cased?
-
-With push.default=nothing @{push} does not resolve either, so it ends
-up in the same place; 'status (missing upstream, push.default=nothing)'
-in t6040 covers it. "matching" is the only mode in which @{push}
-resolves to the upstream although "git push" would not create it, hence
-the special case.
-
-None of this is said in the comment above push_creates(), which is why
-it raises these questions. In v3 I will spell it out there and add
-tests for the mirror and the narrow refspec cases.
-
-> But we call push_creates() to compute suggest_push whether we have
-> advice enabled or declined.  I wonder if it makes the logic flow
-> cleaner to give a few more arguments to format_missing_upstream()
-> and move push_creates() call there, not here?
-
-Yes, that reads better. I will do it in v3.
-
-Thanks for the review.
+Uses on strbufs can of course compute it with `sb.buf + sb.len - s`,
+but they don't actually need this safety net, because strbufs are
+guaranteed to be NUL-terminated and the function stops at NULs.
+And the length calculation itself adds a source of errors.
