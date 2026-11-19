@@ -1,121 +1,121 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.157
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795089489;
-	b=FVwRCUo1vZoMF4YrdFBguO62VAUtSwQ8Ua3ec0IJNoeElVo7JFfjLsa98Ac2eHGhzGJ5
-	 gOdaD5/ZWYm9cLofMLMQSI1rC/sEJTy5PSuGdpCltgDtEDOR2IFbiPX7NgLDcW6wa+2VC
-	 jwsSR9bj33Xbc16cly7Ii4MSHU9lH8sS68HcypoukkClwLgqi+hGfZYTtSaGpn47rWhOx
-	 KAq8Fn+oChKswJLZfelXDjJI8rbYHzv13O28J4M0GOGGBfKetNvYmIARp1DstmNXsGKhg
-	 t0FwN6lNzq5JXCVOW7nvSupz3CsVJ5nvIrmPgMxzMRhtlT+Q9o23ubbWsLt+7NS4TZQ==
+	t=1795089527;
+	b=HeR+OAAKyyHQ9F7YRmFEFlDxkTkNOeR16yNtpMQZ4v+G75fxBzh+ZTd136cknbeElFdR
+	 Yzz9LDOMyvImGNru6gsId2C2pkCAyFOqH8hIWxorrLrHGLgaejFe/85U9DH9cwSz876ln
+	 lLHwXRZf+9iPetXIndO2yyFtq5Ui3vQH1YO0JeRIyHcQctCHQMLJ7kzngp3LndoQtpM7b
+	 T39ANFjlMuYPK1wM3eEhHtZ42yOhtG7TxOPjhE404O8begkVERRbZFPSAwchCDF1KzevP
+	 jkuF1cTLq8RtmsK1Wb3eV/v2VeVUoeWJ7fxOvR0GNyfx/UBXsEOAkEUoLojxnXyU16Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795089489;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795089527;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
 	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=YiHsJvmZNBT3PSZFo11XvVMpJFfTIW6Lxd9my0Ee46E=;
-	b=YjpEuL6KJxgRWtTt6dK2holpGBuBZIbbDXIgMKsy/Zd7X8QnzRwim2D1vpiPiccIrwbu
-	 56aJ6rvkKir0Npnacq+WmMMt5jJzeEi/BBQNQIsOg9Zp0LZRhHP8KzsLLWGXlqjC7ognG
-	 0lMHvHY4cEJZz6NpVlut88b3DJUZpxT+cKPjYVW6iDRO+bUoXp8M4ERozoUZrMCxUb2Lh
-	 mai2OYkD5+Au5w9qGVLpxhaB2wUcfPzisteAKIhK8C+BoWAmJ8oZPfGUIrcMr6wgHaEPT
-	 Dw55521gTT/lakfuow97CIyLFwOkdLpDYQ76e0oaTZjZfJZ48QAZOgYgQVBz0o4NPBw==
+	bh=xYCwQO1N/BVzX6aOPrJ76LO5/WAoXGV+NWhXgjYs9yc=;
+	b=roTU0GsoDhzjKijOruQ2Tea9g0LCs7xS0WvXy+O+cmG32qPOkCHj1Y7rdfdD07UNey3F
+	 LuNpjx0RyphiIvgdWijbeeHSjM42/b6/BwH9gVeADyXmEghzopSkrU9I9MEgOv7ECuLep
+	 Mv2uYvme/KGE9Qcyx6AINE5ehhFktkO5ZzKyFuX0g3EY79GZVn9okYPsB9iIvJs596Bd1
+	 SfKPq2p6KLQEePUohQF8Lf9C8NM1VY5VQzWcQXKbZ5s3zXgccQzQUmBJQd4CfCAPfvaaZ
+	 zOaBfQFfEkvhSQLuMskrQa5i2m5WnvMBu8LTH8nYzJDi4U0TWf0M6CFVt2RQq/RdkXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pks.im;
 	spf=pass smtp.mailfrom=pks.im;
-	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=gqjbWSHE;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=B4SW+ekx;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=QThLw8f2;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=fOazvRYF;
 	arc=none smtp.remote-ip=103.168.172.157
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77849606A320
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 11:58:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 77849606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9992606A320
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 11:58:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D9992606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=gqjbWSHE;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=B4SW+ekx
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 900DD140014D
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 06:58:08 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 19 Nov 2026 06:58:08 -0500
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=QThLw8f2;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=fOazvRYF
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 174A014001C0
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 06:58:46 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Thu, 19 Nov 2026 06:58:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1795089488; x=1795175888; bh=YiHsJvmZNB
-	T3PSZFo11XvVMpJFfTIW6Lxd9my0Ee46E=; b=gqjbWSHErHs3HMRja2BThZoYc5
-	FdL/EJCwnFP/ZMv1ND79wbMm0THGSEIB1A0R6dCcWru3ipsIII/qaVss9H1gR/sT
-	7uXRbsvVMwGYiFUfGl5AJGcI9t1xtzlQlvpjkPN5xl3/LBUQfo4/h7U5n25hTNWC
-	ItVGts2WbnXd+l5q0MZ+8ZFXQ17BNhHiLRA6QbNeFl0UcZkSsHQ8PA/RPm1JfBT6
-	nDjnAAivnYy3xCDfp/nwNOHXVFhMxQYAw7Z7vk8WwxuIJGpD1zq+VmC8hH7uGXhl
-	KqsgLmzlg/VFuETbXGLS2AY2kZfrGGLBcXXs+CvU+oWgBSmbIebBhm5rc2Yw==
+	:subject:to:to; s=fm3; t=1795089526; x=1795175926; bh=xYCwQO1N/B
+	VzX6aOPrJ76LO5/WAoXGV+NWhXgjYs9yc=; b=QThLw8f2UiDGsa6mXnxv4O6BL9
+	LUGT0B4RgjgPrRKXMPaymMJm0Q9gK+liTK6EH7CF3f31m6w4ivet6fRKC/SVcIQx
+	9VoJiHm3HctKJXeaRkmTg45HTcnaEEeSyra84mq3upKg5tS2w3eOo5In6UmhKsBz
+	XsBpz/SNFKDnSa5dQbtu7JKc/+umCSW0oH4WMPAXBWhJqoz/yZljJU0H6+XBnrAH
+	6ETAmM7KvQ5ylQiG3DXxSmZ+WRwjtil73otkGz6imod2K6zqXpW7drTb75zJ9cBD
+	NvjXgJKKZbQMFOOMDEgIXcLefnfsi2g3E5hcrELwDNos+n1LbrncZQh5NXsQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795089488; x=1795175888; bh=YiHsJvmZNBT3PSZFo11XvVMpJFfTIW6Lxd9
-	my0Ee46E=; b=B4SW+ekxgj3zI7QHAop+C8N//U/HMTyT/b6IxREyywiNkdh15xQ
-	bfT42yRLohw5wlDtP9/Im4ZUqNdVskPUNNG2SSOgg87QWgMFfH7mFRtjO6XhP/jZ
-	2NtTsYNQzw5oS7O6rlnAV819PYC2eUuec57J9LKMIn4MXk6NcvjRo1HhL/un8bRz
-	A0Svk5Hd5es6w1BinJlCNKbm3hGA7P9lx1b9wMlpelo2ZWTz6V4TM5mU40bEMiCc
-	QqVRXH/nvVQVnxl5uyRGIcYFbP+pSlvCssS3O2DPiYtenfyvweYIFvCsJYMsTjHM
-	vTkxC763D9ShXhQPDeFHxdYY/HkauIHUrFw==
+	1795089526; x=1795175926; bh=xYCwQO1N/BVzX6aOPrJ76LO5/WAoXGV+NWh
+	XgjYs9yc=; b=fOazvRYFbRJXvesVkpTOJFzxWorESIsNCmZ1icmBwhxyTMCRc2q
+	NU9+ReKkbRr7Ahl7hJb8Rwuau1T9m260VpNgoM2d9SEPpIRngMw4xG7Hd5YHHUsq
+	t/gUeIouGDoqWhwAQWWo/NPrfpYQl746k6dHWOrGQ5LPH8ko9TKJz6eQzcyGk7sw
+	d98M/gG7WossoSQSJGRxsRvkrRDgzmxcwvCJIa5zAatRIGGZkqo2xSdX8jmpsheb
+	JKpZN/o2qyzDpZcp36GyBjO4XP0M0HTkbrhh8GH4DQaFM2+JKU/XKyHHoJQaWxcc
+	GJ5qb5dUpD8oQip1NRebANhjWHa2tHwqnuQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pks.im a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795089488; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+DKIM2-Signature: i=1; m=1; t=1795089526; d=pks.im; mf=PHBzQHBrcy5pbT4=;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:jsFqEEbHvsTqJYawTbz93rwU5APl9wOyJEMOHr70zotnW+f
-	j9gTu7+xA8UwmzQ6R5hJ3PrKWGGTr5DaoAqyqWi2mLucmR0kp9Fmlp0wLLbMaZJl
-	QbC8e6bbiFDB2rBENOqvm/5I/39B3zDVxF2GRiInj0TbW/EJZjN/UFbBuMq5OqIw
-	t4lrLY3wF7vx0ry6V4miRUS0tN6QA7qdj4JF8yx5JPd8j1WmELSidj/G5PwiRj30
-	z+N+2/JjdRDPW76N4bH5/SiNC5P9fLztzzJczlz8Ko6dFkYEqUlhAmAk+VUGVDHW
-	N78+LFhq03cTAR/7FfmaC+fNVYXbZLpAZj1zhbQ==;
+	s=fm3:rsa-sha256:DLcZxBeVTGKD5jlinrXA/8nqbbCUNT18YmSN1CUDPp98DFu
+	D7N+m/mGOPV+TabD1plG08D7QmFOQ1GiOKcnNp/ErX3roMsxaSjldBwkL3pe7Kk5
+	yOIXkNoE1rQTY2wkxfRxZhhc3xqansj0ny039I7kvxNSor2NWidCDXaFS6kx0iH4
+	AM1V8uVomIp1hHf9K042gXtLBeHaxC8rYNxAPK00mM3HfSuVZu9FTU/yCkrPQZ4j
+	ue8n0YSTqAYyx+2R3F6E1BWpgiKaBDyHuMj5XDzlc9JAnI3HfCfJdgBNKf6dCO/U
+	kUYjO8cARvyycV1qDXW0NAl3JzA4SS/C2F+O8Ow==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:9qUzCsG9TRdKkQjZYP+gsPBMduAmhsSNhhHtBoPXTVc=:sPUzpvayj/WiHDT0UzVefE0Iw4Rzaw46A4x7FxIwZgE=;
-X-ME-Sender: <xms:UOT-anP0PVne-RJHFnf5LWCVVYA70Xp5yxnzniKPPQU_X-lrwkdaXg>
-    <xme:UOT-an8GmJXNErqA8uV0jIkHM7hvUZeSAgatpVNW9wqDAXV-C1M1r8MtMbZ0eV7FS
-    o_yrqFFhEQaXMVTT6_vJEeOIHwEke1mlzR9167TdNeW_5L5IZiFmp8>
-X-ME-Received: <xmr:UOT-aj7U7ZpnXQr-NF26asm3HDHP5frFIQksd-nBhYWDezOYCu_pNfyBtJZLl561I1Fj6c0>
-X-ME-Proxy-Cause: dmFkZTFTy9HdFjUvbgocAWysPQZxTFK888d1jDT9oHlDbasVQclKNnJPaOv7QjW3B/KLCC
-    fA4rSt+nRlcL9UoxMdO8YTw9PawBTiuRUGtqZU6ArTlGDoLU73QUDsurlivFzzdjnVfCKz
-    XxeYVky5dzoG6tUQtGS3iIMrf0gK3ASrOQueGvpAI/5r4djimnpOm6uSjQjmu2DV/eU6Ko
-    oKvDHRPSsalqA3PdFs7VuLNyu7WGnsrNeAuLoVvlpch74DeNGdy87Ecgp0vHNsdjS23qiB
-    Gvez2rNZgF0RUo0LLoDjqh/galX2/JQndYSaEXT7awvGA3TPpuOalf3uVoUwqmVmX6aOpE
-    FkX6ItEijgcEIrPqt4/7WF2aQRiTVE7JIkGDTxspvKixfv3qGByNXFIGw6fzejSJGbkQ4/
-    mUOJtmWN/hQ/ng2nshuigPBxIkMbTmbGaqJsWweVQqSgIOmg7Gyop6R1SW20gj9y276d8v
-    /oha0z2Kj0ngAo7UWMVBo3pr/R3sOj8Vx4qi6lYhOMzcb3i45y3FZBe0DvYsJnKjPTolQL
-    iHZp7+VPvxS6aXgRdttzkfoMqRUBhB4u4A0dq0WEXQfcsdAOZExn6IJbt2IDe4zLLpDNmS
-    dUCPNN3jcJRsSn4j/5C4JkXGsOXdDBxtAxvfyif2/u3Z2vmCqDzCvaWSDwYQ
-X-ME-Proxy: <xmx:UOT-am1b9TiixE32L3vIjuaJ8eRb62EsblIcUEAthkzClWs7kAvU2g>
-    <xmx:UOT-aiBZ3mhwuPSnWqdh4lQakIv5idMRIX-tm7V2A5L7mzTABdlN6A>
-    <xmx:UOT-ag2e1vHs3QoLmRAebSICJjUBhX_Gtfi13K3mGSnx7oBuoRn-mw>
-    <xmx:UOT-akus8Z9nyMNHaJ_QBU_Tqcm8IRv3GgE5m9K6I3uU8q-VhFDr_g>
-    <xmx:UOT-aik4HYIYsdUBTqTMOt7n66S8qDRRjEfZOb4cKgkKEKnjN4_5xWwg>
+Message-Instance: m=1; h=sha256:YkAahoIUwcLhLBXVjp3516mljqQ8FQ38nfvnXllk2UE=:ihcQUYKy9u8R8/UTHWkJuc0TTbxNeUFx/cRVx2jUv0M=;
+X-ME-Sender: <xms:deT-aiz0zR7-4iNLxfKn-2E-SQ6md2g-OHBReHnrU6yj96Y3gZyWQw>
+    <xme:deT-akQeNECvNJrj7Knkpcon-drF9ypovYr4xbMnrJPcSlV5Q-2OrliGF60MbON_b
+    R6jmfA4U4BFEF9hR_NLPeBgzSXwOGYz5iRBS31g2kUo4EaCKS7oqA>
+X-ME-Received: <xmr:deT-ah_xWjyYYXgu-XdqTz4VAR4C5vWZFjGSsdKyazhLxpfa03U-iyoJcLbyxj83NU0Sbrk>
+X-ME-Proxy-Cause: dmFkZTF/pgHeYl/zTTcgs8O4xATC2fmYuNR9fnrmXQ8YCKEeWkilu6sD/HBw9yhHGFTzzb
+    f93I19TtzI4girHnAb0+N2j3DKKxFULQRNa5Q/gNw3d2j/2dpQa8JMJWiFA1QD2HCfRI1s
+    dBr3TtEEtEariyR8eEIRwOQmEGaTsROZpgA9avXDQ2dnNabkmRvFkd0eRWl5BMTIfquuKK
+    OGeV4sXdjrJX6FWEttcmDRTfm+h2dHGiBMHZYLaE4pxkaY9To6faUIl55uf4dYuLmozSie
+    Pc0YQdDuCDaQK5rWfreutgZelIF8eviRn8KvE4If0n/gIIrhBGWzR66DRf8S4GEcT120D6
+    NQFrhfNlJLkVIR64IXr82JhL6+nkc+9eOOfXvtmcmYe2o369KV36HgVxHF4hef3sJ4nFL9
+    3fnAwj/tHlc+CtI9ssaqmv1LaJZzQgq+gMhULQbXk2V6wE2sFxijyUb0VD5jfhz6w1R7Uu
+    Eo3ON/ghaK6CWXKJW5knuSTMcoQAtZLCJwZS21u+qEdFU/4Qeu27odAu/AAct00yDQ8eVK
+    6UgTbNLy1/Yw6hthPO73DaDl7iFDhUOkvtJUWDHLLCs4iAC82tlxBxueni7RDo1LdT/4Rb
+    zZYEqdHpE+hXDlxz7VC+149ccC6PzqjGMnGdMBGMGbHz+4x/hibGBlDxalqA
+X-ME-Proxy: <xmx:deT-ajrNyLm-HQYbtvC2sU0ZYsSaVpiJ3dt98BG3khl5TEEkFFDnZg>
+    <xmx:deT-amn7H-pUxmvlI1dJ7I4hPYIulQuslE5EbIJTvuLDjQj5Fedfsw>
+    <xmx:deT-aiJN4ts4R0LU29nmUrnG1bw6vnOO450pTTbBicVfw_98GRDm8w>
+    <xmx:deT-ajwWlGN0w9IOyJpm2iSifMyIwmijcC7JQ2rZOSpn16-fZCP-3w>
+    <xmx:duT-amKI7AfVQ3E_y5f3_AXAFj64EFqX_d9mQCk0YLfB8jqqopF9hLf4>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Nov 2026 06:58:07 -0500 (EST)
+ 19 Nov 2026 06:58:44 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 598a3b2e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 19 Nov 2026 11:58:06 +0000 (UTC)
-Date: Thu, 19 Nov 2026 12:57:58 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 4ee78c67 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 19 Nov 2026 11:58:43 +0000 (UTC)
+Date: Thu, 19 Nov 2026 12:58:36 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Toon Claes <toon@iotcl.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/4] refs/reftable: don't write new table when expire is
- a no-op
-Message-ID: <av7kRjkcrmW_FtQK@pks.im>
+Subject: Re: [PATCH 3/4] builtin/maintenance: only consider `gc.reflogExpire`
+ for "--auto"
+Message-ID: <av7kbFW33jKrm7xb@pks.im>
 References: <20261118-pks-reflog-expire-performance-v1-0-10b9263566a8@pks.im>
- <20261118-pks-reflog-expire-performance-v1-2-10b9263566a8@pks.im>
- <87jymajgqw.fsf@dev.null.iotcl.com.invalid>
+ <20261118-pks-reflog-expire-performance-v1-3-10b9263566a8@pks.im>
+ <87h5hejfw2.fsf@dev.null.iotcl.com.invalid>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -127,30 +127,43 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87jymajgqw.fsf@dev.null.iotcl.com.invalid>
+In-Reply-To: <87h5hejfw2.fsf@dev.null.iotcl.com.invalid>
 
-On Wed, Nov 18, 2026 at 04:34:15PM +0100, Toon Claes wrote:
+On Wed, Nov 18, 2026 at 04:52:45PM +0100, Toon Claes wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
-> > diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-> > index 4216a18684d..e2027bb9c02 100644
-> > --- a/refs/reftable-backend.c
-> > +++ b/refs/reftable-backend.c
-> > @@ -2696,17 +2697,25 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
-> >  				    logs[i].value.update.message,
-> >  				    policy_cb_data)) {
-> >  			dest->value_type = REFTABLE_LOG_DELETION;
-> > +			has_changes = true;
-> >  		} else {
-> > -			if ((flags & EXPIRE_REFLOGS_REWRITE) && last_hash)
-> > +			if ((flags & EXPIRE_REFLOGS_REWRITE) && last_hash &&
-> > +			    memcmp(dest->value.update.old_hash, last_hash,
-> > +				   ref_store->repo->hash_algo->rawsz)) {
-> >  				memcpy(dest->value.update.old_hash, last_hash, GIT_MAX_RAWSZ);
 > 
-> I cannot help being bothered by using GIT_MAX_RAWSZ here, and
-> ref_store->repo->hash_algo->rawsz the line above. Would it make sense to
-> be consistent?
+> > The "reflog-expire" maintenance task is responsible for expiring reflog
+> > entries that are older than either "gc.reflogExpire" for entries that
+> > are still reachable, or "gc.reflogExpireUnreachable" for those that are
+> > not reachable.
+> >
+> > When executed with "--auto", the condition that we use to trigger this
+> > task verifies whether the number of reflog entries that we would prune
+> > is larger than "maintenance.reflog-expire.auto". This is evaluated by
+> > walking the "HEAD" reflog, where we then check every entry by calling
+> > `should_expire_reflog_ent()`. That function will then check whether the
+> > reflog entry refers to a commit that is reachable or not, and depending
+> > on the outcome compares against either "gc.reflogExpire", or against
+> > both "gc.reflogExpire" and "gc.reflogExpireUnreachable".
+> >
+> > To decide reachability the caller has to call `reflog_expiry_prepare()`,
+> > which amongst other things also performs a reachability walk for a given
+> > refname. But we don't do that in the "reflog-expire" maintenance task,
+> > and hence every single reflog entry will be considered unreachable and
+> > thus we'd consider many reachable entries prunable even though they
+> > won't be pruned. So we overcount the number of prunable entries quite a
+> > bit and will thus trigger `git reflog expire` even though it won't do
+> > anything.
+> >
+> > Now we could easiliy fix that by calling `reflog_expiry_prepare()`.
+> 
+> Do you mean "not calling"?
+> 
+> Anyhow, from reading the diff and the surrounding code, it's not clear
+> to me where this is/was called?
 
-Fair point, will fix.
+It isn't called, and that's exactly the problem because we need to call
+it to compute reachability. So we could fix this by starting to call
+the function, but we instead pick a different route to fix this issue.
 
 Patrick
