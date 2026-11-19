@@ -1,59 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.61.206.94
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.156
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795074225;
-	b=zqW4AlBaPdCLLPNfpB7C1ee/5/8IJ8NQd/gv7yCQ351Gno3CcSfeGXSxeejE2t3Qqmcd
-	 WfE4H9YNhaa4q1Wys16VEU+tuFq5HDsANBDiKKePdQppacdLELvnWEMGRRI7+EB0W4+WL
-	 x5bj3GhqsSEvacBSH4yjTCWNeivjG92xh5cWLvHvIXgDwq8iXG+75nfiuZHC88oqWeK6G
-	 T42wb1DcaAD7TIbecC3OdVZyZO5mJFOtVqQA2jHG+9AfhtgLdP7jsu9BcoSR16UFcKIoo
-	 zMVdA4sCzQ08bjyZxcEm2z8mgScY3wzl/XnoozrJu0Ao5JpkDbiLyWr/+2c4Uzc+Apw==
+	t=1795081940;
+	b=cBBbryRaErene7+DCVccR96B1wsOWAtdYyd2TRkHTY9zmDtMx5yoWEJHXQZsz/cT9fMB
+	 VMpGrAXZA+iERrt1FEkHYlNxz09qPaSHapAWwcAhrEs0rPAOjOTowMMnpP3JUbSUGfAWy
+	 XzhtmvMmnEtqWfNQ85ZIbS874M7i1rt/S6pzrjPZ60ok/0cBN1pgO9Nq6O1OfjjNBI88p
+	 V/r+fbcAHAuLlRCntee9x8nh0in3modUHm1CZQrvKrItai7bwOZ35f8WmhQMirTG9ZxBZ
+	 F0XKFBx0pQNkCUZvaX+4uJVnx15oVwtCSFF11nO2DqGdmh6JfN06gHBN34fD9EFzWYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795074225;
-	h=DMARC-Filter:Received:DKIM-Signature:From:To:Cc:Subject:In-Reply-To:
-	 References:User-Agent:Date:Message-ID:MIME-Version:Content-Type;
-	bh=1V2qDZEVlYkNc/gA88z6YcwCZ9VmHiXl+hmhj5r2A6A=;
-	b=CfOB1h77mFiamFcY163mhz/FbXKnIwAWLr94z8f0Ud8unxVi2Gzm576nYixM5K2fxPIt
-	 xinmn3dnJ0VlkK3xUVsJ50ATjFk5ONuqMm/W/ewTgBfqjJO+ZrFXXoGWU0hB/kt8xTf9E
-	 EJ11eceoUhKp4ZXnuE0gSEAgPaN+zKJZ5fmUM/SoH1xNOzeQZiD8fs1v5H7hmR72rMai8
-	 H/ZZRCPCNIOiV247zdYYqv/BGVU9PGQ7YTDRNLba7nTH1lMdM8UMsDnjcDfk5kjJZ1UpS
-	 dyQRaJ6cenTTs6CKfrZ7NTSzzaDe+5RFVyoZm+VO+zQEFzeoLzazcUEj7wvTwnnCqOg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795081940;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=qjYPEPs9THPYJK0LUFIj/ayGFVbMT3gVYMWkKxCMb+8=;
+	b=iV/kyvLfPaW674/c8Cr345KAAEdP+QlJGdVDmJ5HTLuY6Iq2GWPXbkkVa7XEltUcNAAM
+	 w4Cao6fAb15dHwNUecQ2JcYS61kw3TJmVyQmW7PqbtHyApyFEDJL8DAff7moL9yYUsSPH
+	 pE52+wlOs2II6rvi05qZBQnKqdfYY4I7QFPGMuiZGzfA4A/XA8zla2MOXXfshEnqj16Ia
+	 h6Z8BnppbJqijJPWelBX74TAlcAjeJNE2oh9CFvjL8cWu9A/i+oI4RlQNVOC4/gNFSVvZ
+	 1LosdzPCZF+kLmRN6DirFjnfbGDt9JBsqp58GhO+8/oJ5X2820izBGIp9LvZ2rzmI4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gouders.net;
-	spf=pass smtp.mailfrom=gouders.net;
-	dkim=pass header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=KzRcZeQF;
-	arc=none smtp.remote-ip=202.61.206.94
-Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=m8RX6kHl;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=hD0sgHz1;
+	arc=none smtp.remote-ip=103.168.172.156
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B78D606A324
-	for <git@vger.kernel.org>; Thu, 19 Nov 2026 07:43:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3B78D606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gouders.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ABB3606A330
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 09:52:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8ABB3606A330
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=KzRcZeQF
-Received: from localhost (ip-109-41-49-52.web.vodafone.de [109.41.49.52])
-	(authenticated bits=0)
-	by mx10.gouders.net (8.18.2/8.17.1.9) with ESMTPSA id 6AJ7hb5l1968466
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Thu, 19 Nov 2026 08:43:38 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gouders.net; s=gnet;
-	t=1795074218; bh=1V2qDZEVlYkNc/gA88z6YcwCZ9VmHiXl+hmhj5r2A6A=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=KzRcZeQFrfE/zl/pgMniFfF2cEKSqtE6waGRbB19A4AP+DQS1+3Ky1rBkndlZhT6I
-	 Jc0GivWI8Lsn0ftIstgWrnjOe4Bre096L4G3ybEKh10/xy3O1757oAOGPqeVh3MU+P
-	 X6Tm7/x9Nmv6EIX7ptvZ6xGECXmyAwDhJ0ad4taU=
-From: Dirk Gouders <dirk@gouders.net>
-To: Andy Koppe <andy.koppe@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/4] utf8: add display_mode_esc_sequence_len_counted()
-In-Reply-To: <CAHWeT-aWx1VwUjM+hZ--jjSAbcMenz5Mw11y9ouFavGndUMrSA@mail.gmail.com>
-References: <20261118-master-v2-0-3f2aaec15d31@gouders.net>
-	<20261118-master-v2-1-3f2aaec15d31@gouders.net>
-	<CAHWeT-aWx1VwUjM+hZ--jjSAbcMenz5Mw11y9ouFavGndUMrSA@mail.gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Thu, 19 Nov 2026 08:43:37 +0100
-Message-ID: <ghse0x9sgm.fsf@gouders.net>
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=m8RX6kHl;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=hD0sgHz1
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4D1C11400080
+	for <git@vger.kernel.org>; Thu, 19 Nov 2026 04:52:18 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Thu, 19 Nov 2026 04:52:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1795081938; x=1795168338; bh=qjYPEPs9TH
+	PYJK0LUFIj/ayGFVbMT3gVYMWkKxCMb+8=; b=m8RX6kHl8QEPqNgImxsHFMU1qK
+	jUld13/m1kNqbBAbXv0IxrlmMNCcUVa5bOmopFy3+q/Cmkg3ihxvtrBSPcOqJqoj
+	3regVxLxytX0lM2jiDnkiRNus5WVhIa8Vv8Ng9WJpcrtp2ojXovQh+mh3sGQAeB9
+	g0kv19jjqhbkp8rK9k9S5L8+uuddicmR6m3N/3kGTbR9tdmoniCnlgIu8n4lWSNh
+	qVISjK1l//mLJXVJaGn+myRs5O4Jv24pJEQpiIswrbR0dAg4aLnhfkwG98X6PqQW
+	LZaO5EZhaGsPtVOe7PM3ueHMasPxeU+rOY8ffAN5nTg9LesUsDbmnFCXmUcw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795081938; x=1795168338; bh=qjYPEPs9THPYJK0LUFIj/ayGFVbMT3gVYMW
+	kKxCMb+8=; b=hD0sgHz123RwkNrK9iA/k94HWFAe+r1Ee380yPhyQ11KbK/6xod
+	OKwYWYHJWtT8ZCHhzJ+ORGLbKX+WjPFx7Vp5LnBAFcuyK2k5672iXk44Plp/UFSc
+	ZvMft/VssIjVQJrCLspZN7CkHLMHH9GwHBUqS5S4gOY7P50qKne5eiPxemApEN39
+	dfvVhvGYy0vc3uqpMc8vWN4ref5hsWgDfz749egfDRc2VoexPF05Gxny35ouvb/g
+	iAInwP135eiGv3lwSZ7dtAWIhNgpsp8wW7JNq3/ADjZcz3mwxVxXK0thM+gVbyBh
+	88kF3x1WXpVUYYT7tL1fMAY7pSLX+izhUeg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795081938; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:I0nSn2kAvORgh2Sy6pfO7jSChIcLR66ZualjQ6Nkz8t7Bg8
+	gl9mbq/I38SxwMT7zbCTy2KVrVBbpHip90wf5mZvtbYpaiXi+Gl03wchh4gHbx+I
+	F5/R4d337aZwhEmeqOfXWlF/8BWBA782RtEPb5bv8i0bckHSjHkXA+f2xemYd3Gv
+	M/r8cdLRqYG9Y3dtWZDuhrsqkiXtF6aCbvQZ7kQQ/qRmpZWxx9Dha/EadAewjms+
+	q4RENcwxjhrV7WwOpq0n3bdrVxGtTeRtNpAC3oqCLYF5jkJqmXYegkTUszv+xbnd
+	sjctXL5F/05oIXrr6IBk59QBkpgRT85px8jlsMg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:7KSFa3QAfCWtTuOeZdsimWAqmMj2/jU0S5nmXXo7Ycs=:qjYPEPs9THPYJK0LUFIj/ayGFVbMT3gVYMWkKxCMb+8=;
+X-ME-Sender: <xms:0cb-ajhILTuA3MH_XVZJrmFAuX7JLM_YPKv6_2lmoRiGY8WbZFACBw>
+    <xme:0cb-anDQ-Gcxn8a_LlD0JoaTGIZU2LJP2lalmMnHsi0zBVrZNflFTQ5iT7twYVWov
+    PXxNHCUVJPxkS1obIm6v7LmIjXCwN-Pfh7arczHzrftPHcCu7qYXw>
+X-ME-Received: <xmr:0cb-aoFtX4WqvGoo-tFb8ndffS8Ttu6AivfNSsBosxWNeZLdRymCI4RV6-0TZZ6hJCIzviw>
+X-ME-Proxy-Cause: dmFkZTFrnfmw4gJlWku8vZnvcpWTXDGiF7Jqm2WtEe2oWMqR8dMxBc4kiH3pwLCbuC3Dfk
+    kF+odFSGuMf+DLeWDP1FZ/EXTSB91NapBrsAIw7FX38ywANIDArucl8C1SZz2PaY96uRl1
+    E+QobHDNzYFfjkIU2yFJ8hsnWPX+WO4o9AUP1FslGRCM6DU6/hv4iKKBOz7ZW4xZWRCFDj
+    5f4HtuDyB6b7/Fey77jbnUCkIUE4B0dIeE1SQmfP1WoOY4ayj/An/uj2zxZam4OuPa9oDk
+    SHZcLKK3wYdYx9E6SIzRvQ607e+yJFeDB+g+tROQ6018wT2VzIjvgBvlcgvq54OjH5Bnb6
+    LxdlPUmBjIbPZtsQ6IzW7Yq4SAvrRBIxFElPKkqY832EGMdBP3Zn7KlVKwSht2C0cpV1t4
+    cOn2BEvUsGBleWMmhlUMuVY3ul/QLw7mtcbXU5Wq/uDmZi4wf42QoOp9fB3y98lfmfSJkr
+    WCsF0D8ph1BKVIrD1YGxGhybf78QsnfjmVEJvhSQkwKp3sMIsL/ZLmYyOV+0LbCr8pgz2p
+    djviwBdF1kTSmhSfJKBD7LQ1WH8QalVeUE76rPpgWTE5qxJJYoVm9DoeEY+dA38+xBYSMw
+    e0gr/ZtV4wgmbSVVuJbB8Omcj1MX2/xZv8zygb8gjPPi6TLjGVrYSdZu3lIQ
+X-ME-Proxy: <xmx:0cb-avKTDzCxRjrgzerGSVQhRIVAcy-gpyiAfAJTUH6SxYHMSpHU2Q>
+    <xmx:0cb-asmf5mF3lFObREdh5U55MFbbppcMYMFiccVSVEt66jOfnUeFlg>
+    <xmx:0cb-anTsoswHc5hgfCa9Oq5gNaVPL7JG7fdj-FUqzoh-pDVpbJm9rA>
+    <xmx:0cb-auL4qZxPIDljxNOpMfZPjB77Jm1OYDkBHPoN77Tc-FcWGiwE-Q>
+    <xmx:0sb-avX6SgZYppHFC2BSwkzw9Vn9EAnGYWUqIdb-aLsPMcLRIHvSoA-2>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 19 Nov 2026 04:52:16 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 28120e5f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 19 Nov 2026 09:52:13 +0000 (UTC)
+Date: Thu, 19 Nov 2026 10:52:09 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Adam Dinwoodie <adam@dinwoodie.org>
+Subject: Re: [PATCH v3] setup: fix hash algorithm detection
+Message-ID: <av7GuJC5gMVsTaQL@pks.im>
+References: <20261108011633.1772000-1-sandals@crustytoothpaste.net>
+ <20261119010612.687733-1-sandals@crustytoothpaste.net>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -63,37 +124,15 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261119010612.687733-1-sandals@crustytoothpaste.net>
 
-On Thu, Nov 19 2026, Andy Koppe wrote:
+On Thu, Nov 19, 2026 at 01:06:12AM +0000, brian m. carlson wrote:
+> Changes since v2:
+> * Remove comment.
+> * Use `$GIT_TEST_BUILTIN_HASH`.
 
-> Dirk Gouders wrote:
->> +/* Same as above, but for a NUL-terminated string "s". */
->> +size_t display_mode_esc_sequence_len(const char *s)
->> +{
->> +       return display_mode_esc_sequence_len_counted(s, strlen(s));
->> +}
->
-> This is a performance regression compared to the original function.
-> Calls that previously returned immediately because *s != '\033', or
-> after a few bytes of scanning, now scan the entire string with strlen.
-> It turns scanning a whole string for SGRs with repeated calls to the
-> function from linear to quadratic.
->
-> Therefore I think that if the original implementation isn't going to be
-> kept, it would be better not to provide the wrapper, and thereby make
-> callers think about what they want to pass as the length.
->
-> Uses on strbufs can of course compute it with `sb.buf + sb.len - s`,
-> but they don't actually need this safety net, because strbufs are
-> guaranteed to be NUL-terminated and the function stops at NULs.
-> And the length calculation itself adds a source of errors.
+Thanks, I'm happy with this version.
 
-There is only one user in pretty.c that uses the wrapper.
-I can change it to use the _counted version and we could then drop the
-wrapper.  Junio's v1 already included such a change and I could steal it
-from there.
-
-Would that be OK?
-
-Dirk
+Patrick
