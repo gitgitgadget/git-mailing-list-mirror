@@ -1,127 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.144
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795203184;
-	b=cqM9s5JcIznhdbf8dAO8is2FNa5CsyvcVm63hpYYr0UzS9l/ydoucDSv6w0LdpeRZB3i
-	 54EGJP2XqypAGqyEos6gzQ7cOxl0Paa3EhLuu/yOe5BX3EaZvhJ0VT5s5ms0nnt/3dEax
-	 q2fI4840XaBD073n7VUnYRDpjdeJP6WiWZVlEqwsFk0Utt528Stw5YWtBnUj697U8vVch
-	 ZRN8w8QpnI8rbp4yKZPInSy5Nu3LtfBv1Tehmj3ztzc9ma5q/Puiyn/gUAE7kHEObHwTu
-	 S26IiK0zwssyoOZ90UK4zUkjodagGfD6ZEfh/v4xCtxDkftbDOUtJ339omVhep5bjYA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795203184;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=3587j5sJfHqgZCM2fNXrGV/TGcybPfDziCsANiDi1lI=;
-	b=0yABAPvAWQhUkYyKkdPvy0RraS+GpBBl1y3ZDgakCzby0i9ffEk1ikGZX0dS2ObuBt1a
-	 Y2mhRnG/wz/cxlOWjOd5eeLu6vxIAZ1eEzk+fVqeJP+D6b+VWX0NpDZeNPd6VaDOAgAFr
-	 kXdBeeSfpke+3RsYym4aHdhCr57ia9FA+Hp9MuRmz6OfIxcQqGZRSMcD2uGaEE24VMra5
-	 1mVLqwgpagdOow/1G5TPFgLMij3N6A1ZK6rTc4E4cA8m2RwYmysuoMvFaVj/LnnL4/fwt
-	 kMDchfzroYotq6xLkOxH6xaeiuqGGYE+YmaM0gnIIphApuwVIHA0wnmJ4sgjp+AOXug==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=eKr9f7m4;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=CjKzDOH3;
-	arc=none smtp.remote-ip=103.168.172.144
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.48
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795203348;
+	b=AHZwHeq7fVDxmJw/EaulLHInX6VG6N18sfrZbBphzRlRFKY/QdXG5LQTTD1FOTzRcgjA
+	 C8+MRozZhZP2yYjqkn8HAlZUljJEjWzRCGlZid7dSZEoFaVwV0WAyCxBXvxeFoQADjJBu
+	 aFkW9PsBC/h1dHT12XBLvLZZ7U78ojLfj2e/VwpKay59KWyMLkeVHXX+TrOVT6I/cdL/s
+	 GsavXS+yatEOo5HcZtbgpYmWMASEhs1rK2TLvWz/oSZYU9OwolMPefc6u2cXDypkw7W70
+	 eHjQ49VyjUS1yCFExTlkEGgfaxYBpKCpL3k6E/4wl1aBLDn0vTB3L8JQ0fs2hvEek/w==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795203348;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=21qrh+8o/e9eOBKwthSO1HAj2ndSWyBq8L0dxVJlSzk=;
+	b=xjsJ32lkaF1mb3Y1rsboOVwtBf+UhNrc32q5F+9LnkTTQHELDsS3vN4f3APr3vDf0kVG
+	 ThT8pbqxp2hr/8z8SuO4RhRDIMmunvrsdCWrLoYtEwtI370CA/zV0sEm/RxaOeJNxiKKn
+	 Npju8nA25JdLuCCSwVMbhx2EXw/jxJHYhzuPtq4FCo5Bulol003CsqIPayy0Q/hF9sI52
+	 +nYjFptKxLlM+/Yf4Xmkv2xHVZxSshj2xaJbWzBVT7cQUFgCCScUIyrLZ9sfcCGBeX2BJ
+	 oBuLdZhe5bI5GoZj8jPLgDEI+cT7tMkBOf9+kXGUpsUdATAzUrito7MddkRGC1/AKAw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VJmyoeFr;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.48
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003CC606A6F3
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 19:32:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 003CC606A6F3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3E5606A6CF
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 19:35:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8D3E5606A6CF
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=eKr9f7m4;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=CjKzDOH3
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 15600EC0B25
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 14:32:53 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 20 Nov 2026 14:32:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795203173; x=1795289573; bh=3587j5sJfH
-	qgZCM2fNXrGV/TGcybPfDziCsANiDi1lI=; b=eKr9f7m4SxBkaMXS1k+dxKt81j
-	wTV6U3I9QWKr2lY6k2PGCCiNAt3jNIgT0GtktL5VhZz37BoqMn3iWvFH02Gnyis5
-	tfRTRQqPTzZMDn9coyXqHCJ7LEvpDPR2D/uCk+lHyOb13rEQ3bd084F6VXx5EzUj
-	PBhIRnnOR07SyvBeqa9e+PBcBULuoT1/CN4D56YHeUz3CKZDDG1ZO1CdNA8qs9KY
-	42mYqvYqC/VbYW7qdGoSFb8rxkh8x96nBlZgAZzc6azCgJR0dRwZofUpQTZmJ73T
-	O6wxsSkqPdeiL+HBekZgliScVwYigarw9UYRAOQ12tr6Kbn9red1MxhlFXNA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795203173; x=1795289573; bh=3587j5sJfHqgZCM2fNXrGV/TGcybPfDziCs
-	ANiDi1lI=; b=CjKzDOH3DfqDza6Gzqt0/FRDsiAG4UggUnRNoPFPfSiKL1w85Pd
-	Pf9oLQi/x58mI2nk0qKtDwdLdlrMeXLb2zqH3g5kWC0giyOlz4xM9OYkqHSyaRY0
-	0xbY64OpVFGXRS+Te/QPpSyhc+Yt393USZgJLOignT9G7iP/s7c9/jCEGa9WSyut
-	B1gnVc07Czl9gAObiBMaob9qJ1rrj/0u/YhYOYlT/8Ob/NyuvR1sudWnNFax/axa
-	L9MHudMfCOFmQcXyiceaZUOJsmfI3mwxr9cpgJHZCFUm705Em+Ne2msKgeLXSdSI
-	HvUPSwEDYraevfxYRB1TlT2lhmWcRSV9ecg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795203173; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:CJ+tU/Hmz3idSoSRKSnukkGaoWGezA8BgQeVRObZSMBIchK
-	yMKPntMSpKaUNj23FK5oLLGa86y6RFcLLfTQ/As4LZunQnB0qFlB5fvqTDMORnBS
-	eo69R2MoLmWrS8SGXXYG7fNJUc0jY52PHADSl2fbf4sU+lckGU20xnKvjXhfGvKD
-	FytB5Oup7MUtLCIIeWYEPrjEKNf/j6YAz3fYsK6qLoYP/lokUuCojJVMQvGCgN/i
-	jJryC0b79VYx8W7pwmF2Dxucy/1YxR1GK3/4vJ+I2aAdKlZFXnFf6LaSS7uGnzjE
-	J4j+Z97VSJadnRIYR+7WI51EUbjr3zURJqeItCw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:WCyNadNLCUE438Wi0Oi7OepfSY/Vy/a+Sd9cBqRTFIc=:mvwuhKWiDXDMb6LeyxSw9Wd0hEB53xmdPJO5gRii5Xw=;
-X-ME-Sender: <xms:ZKAAa6Ag9Rd7wGfnQaYkrv5N-PUcv8eH2NBJjdkj8r_KRCueUf4WvA>
-    <xme:ZKAAa3GE4nSyf6xhnP4pCCGJUMoeLXTQBiCcT1_LLGLWTr8_V_sEh46uUNNLH08AE
-    sabYUo6TqEQT0c_3GSrtHbRvh2UZUcDosTGCU-I4to8c1CibRKN>
-X-ME-Received: <xmr:ZKAAaxO_ueRSwlRHtMvW_2edxXpenfyrEbgUXtjtX60QvZawiErc0XRrZMjzMQ7sQITWcV_NX3NWYApCQl2LzkJNZwzdfrTm-MTl>
-X-ME-Proxy-Cause: dmFkZTFlQN4pE11kG+sSgaW1tjQ83AR6Q78fucHK1hATlM9eQBDiioOAXwkyxgJ+OU66K6
-    zM4+kHJ3j7gtKamFI6w0Gv/TvFNP5cqgW/QM1WWe3CJ3mP9KL2miP9BnsDaxYQL6OYHCUf
-    weIiIIANq9Qy8HZPECRUPgxIK13b/OrvagJz5yYRAfptXec9DMZ5AMiPGFYj3GgodWqoBN
-    +4Chlx/QkLs48x13EfHT5l34/hxeOiI1ZNb//4K+OTvj7oS8/234Doh75/fssDmJ9fp0W8
-    i65GAY2/7+OD8zURsKrhR4fku59BzKFxVVyvSpw9zG/vOfqq2AYef++9ruRkeCBia3DREi
-    M/cPTUUHFqm6eQ7O9z3R/zjcIjtQWluZyjTQYg+oKrJ+4w4oAHKYrS1+v8HOaWJK3D6++0
-    iFImdY5ricOqp88t9VSGsp+Na9plAv0Ifvdn2pYhnSun6GBYIrUBQBQnh1njQSIG28jwIZ
-    RN2n4mYNpz8cAYdbjHKq/O6IETwbbPAJ0p1dm5FNFSdg598gOB4NSkq8j6eLuSFzlUF5MT
-    8btNwqM7qK52OK1v+8P1CajO5GT+tFhMpkvvSAH1GFBsaPpU0eoTzeBMHTzU4Q/rkj1+p3
-    SH+oeGpTDy+YbDzjroQFIWnHkqRuROLCSyUbQxkmu6cA5WxFzh20MaE8+oMg
-X-ME-Proxy: <xmx:ZKAAa44i0vE1OdSX8cb5ODiVcMDTHoNfaW0NeKbOuJun3ID6mHThMQ>
-    <xmx:ZKAAa0h67EG9F2RipWClXgjkaxtSMwwkkXoj7KDm3AOd-xacHoXZHg>
-    <xmx:ZKAAa9d2jsPeU7RaUYGCIrztOGCDY6Rigli1Yz2AzPwd1UvyKHE44Q>
-    <xmx:ZKAAa8y_qAseunpTE8_j1oZXeJNRv5LXQugyagvNKVKouwr6vta-wA>
-    <xmx:ZaAAa74Tz2mofL644zDvGGJXhi5Wi9MBYhNB1nH6jw-3_HW2EE1CMkX4>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Nov 2026 14:32:52 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  "D. Ben Knoble"
- <ben.knoble@gmail.com>,  Phillip Wood <phillip.wood123@gmail.com>,  Jasper
- Mayone <me@jaspermayone.com>,  Tuomas Ahola <taahol@utu.fi>,  Harald
- Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v9 2/4] branch: let delete_branches() name where a
- branch landed
-In-Reply-To: <c4513f9ec1315c34b7a75b95bf50bba59043c274.1795184664.git.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Fri, 20 Nov 2026
-	14:24:22 +0000")
-References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
-	<pull.2425.v9.git.git.1795184664.gitgitgadget@gmail.com>
-	<c4513f9ec1315c34b7a75b95bf50bba59043c274.1795184664.git.gitgitgadget@gmail.com>
-Date: Fri, 20 Nov 2026 11:32:51 -0800
-Message-ID: <xmqqeccfpacc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VJmyoeFr
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-6b8784a3284so1894076a12.1
+        for <git@vger.kernel.org>; Fri, 20 Nov 2026 11:35:45 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795203344; cv=none;
+        d=google.com; s=arc-20260327;
+        b=J8gZJiBZypXr6bcrWjnDU9GY6RP7SahNkR/KZm8COSLHVeTjEIbelyM2kcta5uBZkE
+         iMowNzPw+paUOgZpYnyaQoq5ZMOqQOI0ZhkgFP4pr/pqtOWRl94NtCe8J2KIBTIkF20M
+         U5m4TX6hQR5F4cce88XLojRoti7ubA/XUN4WCWChuzUcCNmXhHs2UxD/QX1BBOijplDX
+         ywfg43IODsTY3ylJIjNojfZAGblvqbusRJyW3Ae0r6L6YBBqXnBzxjZEudf3G5qwQcip
+         wN/Hot/Jh7v8csDdr3WFFXNB8NrFhIGOopEAaiNZdf6GwaZ+m5JBShFwDlxuRZLAh0Ce
+         nXuQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=21qrh+8o/e9eOBKwthSO1HAj2ndSWyBq8L0dxVJlSzk=;
+        fh=4p7AWUdCb8Bjx1k5s0WSGQWH2VPRMsaoxx46XhGw5g8=;
+        b=Dx4gv1rsi0NRkI9lzJoElwonZseAwIXQ+EZ8Tx6JUgDiu/YAsE0H9uNAllMevhF54Q
+         5pSkfySJD9dQJw0Y89rOIJl3IhbM83du9xPBnS5s4kDFMNCFCudmC8AoxU4X1hGBRHOC
+         tNU9SgoZTln/BNiQ+jAnWiqWcpIMGusfLEk6N89Tx3qXBRALDJbGvn/HGYTgPYOt5cc6
+         I7CnlrbO6QGtGt/PN/UD4WTQAuc9cJon7xxwOYVxEb7Oc3oOt4G7Ft4i8QNIAow1OvjJ
+         T+oq9Dse/4+RL0e7eu6lEITpdiibNJkgslogpLA8xmbgkA+uJWK/VyjYbu1yNyimnF1x
+         13Sw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795203344; x=1795808144; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=21qrh+8o/e9eOBKwthSO1HAj2ndSWyBq8L0dxVJlSzk=;
+        b=VJmyoeFrbM+ivBho6xZjXjfiK7mpjHcgqA5KYgqM926Oc7FRLxOpe1Kxy39PJ3uL+w
+         IZUN7g7LvNmUqPI/I2Hjm+f2dVlamSCjLJ8tgaRiT/dkhzlXkC+sqSGUIhZLX8CecT8b
+         +gSyd9rNQajXC/g8wQVirzggtyqV6ENBSX5NPSFZ4AcyvdiZnUrE4rNbsrEdgVrl90AP
+         u839MVhsuPe1cWbbUt2W7zE+B2ZZ1o8je4/mu7u9BRRDn4blcJ113V1F4pmBQOLgsiEW
+         IGihez2Bt24LPXpWPgeECHkk4FPh8NwFoY7PaRAahfOFT6kNInhxLP8DWqnZqoSpZfRu
+         hsxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795203344; x=1795808144;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=21qrh+8o/e9eOBKwthSO1HAj2ndSWyBq8L0dxVJlSzk=;
+        b=RlizPCJX9urSkx8xGgsj+fkoI6haC4zq2JuKU9VwdBbk/LJ2/Bpke0d01/XXocOQj3
+         F2JaJ/sh6naecZ3B4NtTZChGatdMRb+frQ34wEOM1aDQ+IDxcDVoqyEo/+2hsnpIdC/A
+         GzQftG6huLOtKs+wzy6m2i7Ux0A11IXABw+d4g9TjpMDskPrLU7rpGPU5MiKMfueWF0o
+         PxaukPWzYe17FXj6YZURFSQZB4JFxaArpVrAcgh8sffB2X1hCFGOToCiKPIs5bFIJjTd
+         486d8/Zin1ct+IjmMorBZd7WkyDJVj4KNSQQRt19CW9k1HEI9i2NXGi6okaa2hrLSyD8
+         ao6Q==
+X-Gm-Message-State: APuU4Z9ssP8Jvsc+jyjxzAqQBWek7b1eu0kZ7xYG0/gtBID5cQM1bVnI
+	DCYTRjq2ziymD8rQbGkSyqIDEdsvbloEqnqN5G+Gg89i3njr6wmM33MNdHlE5ig6n1vS884UZRj
+	HiyRYh8f6wwI8aJhhQwfS6bYUrVa/izY=
+X-Gm-Gg: AZFdTZdGvAAlRxSbFmJCkGfEAIo793s8SGGOwBidok1La8klNn7qXmutkQIL21ugBsE
+	JiokbJJxwwTwI3CgliInYkkZqHauIikbCtRLyObmQW1YFVtafDWz1pyNkaB1XLSlQt/uSZaNsxk
+	Eg8SuyUZUHtaaEhnK//77xOgiX/SsBJ8/oIPo5nGBCwiR69GZUQkLvTV8LM/odEpk31Ocq/RQEh
+	wIS9IJ3YzKAlD2B23g5G2E4g63L6WkquJ6L97x9q6/ryBEuKDWUKWhZqZA/ekJ7T00h27b/IVDn
+	3ZA3N542OAKxXF/K/+lT4+3NexPSMielXzv9qtV3udRI9WuftbDcpjjfzYM/GHoSEVb2vtHTjKp
+	QW/cAgAsH3t39NArFQ9CZXyGCdJQ+1cxG8Ftm
+X-Received: by 2002:a05:6402:454d:b0:6ba:139c:47b2 with SMTP id
+ 4fb4d7f45d1cf-6ba37eb1950mr2774866a12.25.1795203343648; Fri, 20 Nov 2026
+ 11:35:43 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -131,89 +102,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2437.git.git.1791270504.gitgitgadget@gmail.com>
+ <dc0efefa0ef02a04f211cf7e24a8b6855f36e12f.1791270504.git.gitgitgadget@gmail.com>
+ <20261120190246.79249-1-aniketgupta3001@gmail.com>
+In-Reply-To: <20261120190246.79249-1-aniketgupta3001@gmail.com>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Fri, 20 Nov 2026 20:35:04 +0100
+X-Gm-Features: Aa3M54pCMA5WShfA26z89hJ1NIImx6O8ezaSOE_Egh15AMeahgYkY30ATAU7nqc
+Message-ID: <CAHwyqnXks_cnmLrBxO0E-HkhvMNmnRx8cW9K2Lcyj6tnPUS0hQ@mail.gmail.com>
+Subject: Re: [PATCH 2/6] status: say when the push branch was rebased cleanly
+To: Aniket Gupta <aniketgupta3001@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> This makes git status slower when the branches have diverged as every
+> commit on both sides now needs a patch id. With status.compareBranches =
+> @{upstream} @{push} and 3000 commits on both side the status goes from
+> 25ms to 150ms. With 10000, it goes from 60ms to 500ms. And with only
+> @{upstream} it stays the same.
 
-> @@ -357,15 +359,33 @@ static int delete_branches(int argc, const char **argv, int kinds,
->  	for_each_string_list_item(item, &refs_to_delete) {
->  		char *describe_ref = item->util;
->  		char *name = item->string;
-> +		struct commit *landed = landed_commits ?
-> +			strmap_get(landed_commits, name + branch_name_pos) : NULL;
-> +		const char *landed_abbrev = landed ?
-> +			repo_find_unique_abbrev(the_repository,
-> +						&landed->object.oid,
-> +						DEFAULT_ABBREV) : NULL;
-> +
->  		if (flags & DELETE_BRANCH_DRY_RUN) {
-> -			if (!(flags & DELETE_BRANCH_QUIET))
-> +			if (flags & DELETE_BRANCH_QUIET)
-> +				;
-> +			else if (landed)
-> +				printf(_("Would delete branch %s (was %s, landed as %s).\n"),
-> +				       name + branch_name_pos, describe_ref,
-> +				       landed_abbrev);
-> +			else
->  				printf(remote_branch
->  					? _("Would delete remote-tracking branch %s (was %s).\n")
->  					: _("Would delete branch %s (was %s).\n"),
->  					name + branch_name_pos, describe_ref);
+Hmm, that's bad.
 
-The use of an empty "if" statement body is a clean way to express
-that nothing will be emitted under "--quiet" without making the code
-too deeply nested.  Nicely done.
+> Would it make sense to count without --cherry-mark first and only run
+> the patch id pass when the two counts are small?
 
-This is not a new issue, but this makes me wonder if giving the
-"--dry-run" and the "--quiet" options together makes sense.  Would
-users really gain much information from "--quiet" when they are so
-paranoid as to want a preview of what would happen with "--dry-run"?
+Maybe, but maybe the user experience will be weird if people don't
+understand why the check is suddenly gone?
 
->  		} else if (!refs_ref_exists(get_main_ref_store(the_repository), name)) {
->  			char *refname = name + branch_name_pos;
-> -			if (!(flags & DELETE_BRANCH_QUIET))
-> +			if (flags & DELETE_BRANCH_QUIET)
-> +				;
-> +			else if (landed)
-> +				printf(_("Deleted branch %s (was %s, landed as %s).\n"),
-> +				       refname, describe_ref, landed_abbrev);
-> +			else
->  				printf(remote_branch
->  					? _("Deleted remote-tracking branch %s (was %s).\n")
->  					: _("Deleted branch %s (was %s).\n"),
 
-Likewise.
-
-I wonder if it makes the code structure cleaner to follow if we swap
-the order of checks between "are we doing dry-run" (which is on the
-outside in the current code structure) and "what is the reason we
-remove this branch" (which is the inner if/elseif cascade) by having
-these different message templates (currently a pair of three-message
-sets) in an array and choosing which set to use based on
-"--dry-run".  There are of course a few things that are done only in
-the non-dry-run mode (like removing the branch configuration and the
-branch itself).  In other words, a code structure like this
-
-	const char *msg_templates[2][3] = {
-		{ "Would delete branch %s ...", ..., ..., },
-		{ "Deleted branch %s ...", ..., ..., },
-	};
-	const char *use_msg[3] = msg_templates[!dry_run];
-
-	for-each-branch-to-be-deleted {
-		compute if branch has landed;
-		if (quiet)
-			;
-		else if (landed)
-			printf(_(use_msg[0]), ...);
-		else if (remote_branch)
-			printf(_(use_msg[1]), ...);
-		else
-			printf(_(use_msg[2]), ...);
-		if (!dry_run)
-			remove branch and its configuration;
-		else
-			what is only done in dry-run mode (if exists)
-	}
-		
-may make it easier to follow for readers?
+Harald
