@@ -1,88 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.224.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.146
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795197280;
-	b=0m1tOdDKSN7zH2uWU0vVVv6kYL7mS7BeI/G2vam78goHt1Z7bYQPEnCEdeAzglqyHrTz
-	 GUnElZ4qxcCcgyYFEBEN7dF4LqJ7EDVO7KLM47zwoVkwOrTrY8wjgMXYkHRzSA/eZxB6E
-	 eaA9mbmpAcuP/pG1UP8CdM57+I7vCZ44IFxv/957O1Saq2jFbaaZ+a61CCtLKZkMivtDP
-	 0Sgekwf4rff4yCHnJKKHZvreHizqNo+nOljgVBdatxsiJbSCqTifoc93bGwytu23ND2Gp
-	 XMG8ThzaiPW7k5wWO1oJz689O1tffDZUnWnswNYmg8yvnZCZPRI/bBPBj8PIXxjp8sg==
+	t=1795197537;
+	b=q8u4LFZkMaOO+FBW+OaOZlLMM+0ZhCObpn6iBuNcPIWVApecqAt8Sogig1927KwydmP4
+	 vumlv+3L0Rs2Y4A3Fwrj6RkdDljEBHBEJ08fgmmErhfzAlaqzidYYz0aiyGpsMF7nvpmW
+	 Im8mW8rvTGnag495gDnoH/3j/bzguKlIYaH1ITDnueHl7eIgTfnQPKbN9r9xWN5eL5DHQ
+	 aBHCNuJyf01AzhTxAN9HiaZCIAZsccud/twpkqr71W/dHTFfZcUgA+NMCKus9Y14HWeek
+	 7/R5dTa51mLf6goxlg318HERPN9I62WIISDUMsijHzikMRZb65RPF8yPSYZ8jKk4ZQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795197280;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Content-Type:
-	 Content-Transfer-Encoding:From:Mime-Version:Subject:Date:Message-Id:
-	 References:Cc:In-Reply-To:To:X-Mailer;
-	bh=MzqCFUeulzPUE8XllfqL2qN677IXq9OdqBD7lLlt8gM=;
-	b=RGgGdwjroMSM6ysbeNjrpE/VtkLb5/eyghznHkkLn/xSjKDGRYJSwK2G/maWgekjsHEs
-	 3Wt6YrC0zeNX0wR0H0+gPE2vrD4YPshsWc4+RqXaBv280XxBxm5v5JzvXhd4N9Pxkmnx3
-	 ibrf1z3LFdJ9vvP6x3tBB3zncoUdr9xFovnUlhJj9fjvbWrXC/YUMxX4VXkOPIDdAlnc+
-	 FOjEqb8PyINgXJ2iQP2OfbnE9BiegA3trj5OBEo/1W3QKTvNnwDiSaYV6EkOPAl/U1m4D
-	 ApyDR4ncKJrybiQM9e0O6+Kq/nCRmqukm9ys2k/r4aVK0YHYfDdv4Eb0itULwP4jPBQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795197537;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=w6fE/pceAsFaHmAklHfmlz8R9rI/ZjMsT2JPSCNoe7k=;
+	b=kqY5nUDoM9IjfqGgEUblhMRABd6azsRYwCBd9L84r0eZHJBbkPGn69uFPM3XiCM2kikN
+	 /BbMPWOcM+CIk4Uy4TZXZNQQ1NJvoRzgOb+CcGcy+LCE3RInd/OZJPumLMrAV3L0tASwj
+	 uS6A4QdpFAkvynLeEL4CIS1/d3/3gX41y180h+Aoi+jNg5nKeVJS977d3JW7ZGS06NiEQ
+	 LKniw3hVewYXkV78aH8EVx4oOLdF9v6u9wxKy/5TLWu/PGNAWUO9mGLM43NBltudM0XUi
+	 1i/qoG18zEItXQYFievJnk1p8OPIbgDCHR/NPXb8I2X90fKucsz8z43zxgsMt0o9atQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="ZJ/TZ0Dz";
-	arc=none smtp.remote-ip=74.125.224.45
-Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=gxxC2zXz;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Kw6hpL5X;
+	arc=none smtp.remote-ip=103.168.172.146
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C42760A5BCE
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 17:54:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8C42760A5BCE
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A08560A2608
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 17:58:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2A08560A2608
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZJ/TZ0Dz
-Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-67921b515a7so1393834d50.2
-        for <git@vger.kernel.org>; Fri, 20 Nov 2026 09:54:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795197275; x=1795802075; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=MzqCFUeulzPUE8XllfqL2qN677IXq9OdqBD7lLlt8gM=;
-        b=ZJ/TZ0Dz9bfzniqLgTUxCV+tRCiNaVgktgy8tUjLsEH00Al1rdluS+9Q4j7zG1O3ng
-         9cJ+ctlVF/kwpwMf+gMqzLxW65akFw+8lWVKJnwIUHCm5tz/85Sgy5N7vWKHT5WghvJU
-         cihTNArc4DFTcEyUNKRgitiXYqBRsBEqgB3M3dQ1Szo6Udu8iK/p6YdZhJOygstgaw64
-         z/MnnIUbdsEbZsH8E9GFtZxJS5EiMBuo+HLgFFnZUABbzIPj25xTv9idnjqXXSS/1wfV
-         Er7kIKnuZv+Bot0h90wZxUa3a2dX/PJS58nofw6lwhn3rHzKkHFubMy29tq/77xgHXAZ
-         5hTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795197275; x=1795802075;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=MzqCFUeulzPUE8XllfqL2qN677IXq9OdqBD7lLlt8gM=;
-        b=Ep1XnNiWpP4KIlt99SjWBeM5+zmTDqHg5Dn2q5QrZBL429G7uVzuwnBf0zqVek0/rO
-         LLPH/Swry8ZVv61rVrKgnkoyX8WX72Vui4ruojWEAS1c3XB6an29RskKjYn+lMjUqrEJ
-         ZYWNHFYu5T7jdkPNDqQC7e8voaUsQf+mrHKKOb/24OmIVXYmOoJJp+fcZ0QIhToTkvXN
-         NR/BA3Xopo4JTNog5OQ6IAKia1zzSvQZRaUfP1qOOIA4QO2kWTD8F3PMS0AeHCscVsYz
-         /JAq17bcCvGPAMiuoMNbLNWjkoOOafPK00cKvVV/eJT6HdVMnyEM9qykxUxIEJXMcefd
-         QGbA==
-X-Gm-Message-State: APuU4Z8FeetRHV0BGzO3qModtOsrvnHfrVp8T653uVEBLUxKzHFDC6Dz
-	CClJAw5+UGZUtClWxGFH50Khi6kxAoOS/9KpvridY/UMLV+Nl9XSFpmg
-X-Gm-Gg: AZFdTZfFWEQdLVUhc1tu3/KZ5Flrh4gAAmRd8rY/ls/ScpLfF1OgsGuvoUTcmQWHF0I
-	XbPXxrpC2DfmoJCO3BwGf5TEjFdxgFpGFzqeD+1kKTXVnbdYHU3FJJz14+aktaiaqHPIDp8k1l7
-	T+heobfTaXu4QAcrzWcMUKUd4m46XwCx9YXHGd1I9uAe/1H0JgFOmXd6S1hebI8+qsW2UOBsLwv
-	m07yFWiGAlKNGV1qjxzZdx2nDbLEn4/foWpgM/Dv6r5cw9CAMDJZI03ba6kAj/vAhJHmdT6rxVS
-	AQQQCWxBfNWwAnOaOOlNtbU4jzxG6ywxmgk+S7IU7xD9Z7E6EwjFquKVKlIoZ3acL4ny8LbO2dA
-	s95F04bYLHcJQKKCIFCYSoXw6zaTABtvPXt4TSYoNAeedLy97H9S3RSmpuOH0xYbXPim5F6+RmW
-	D23nysVI4KNUAo27Eet+o5u5BGPOQt47HR54cY+0/8ayOMc/SrFgb7j4t5kxkD00/8Iyyqu5O6q
-	IP61K58MWUbaAKiyuc1etf26uhgAb94x03E0rNGUBIeJF2rH1xswC/2X9RcQS3ELZ2P1Cg7/Djx
-	x2xqsSKbglFCiXfpcFYmV+IGTkENm7J56ci+7Vp9mRDLa71bl1EEtJMSi/YdIHi5MSESYqbeiUa
-	aR3iz6RQVl2AxuqeUIVrc7Jn4x4bujiUNzuVtwk/Mis24dViwY12g7yU9AB5cTdcuvvZhT6PMym
-	KO0lE=
-X-Received: by 2002:a05:690e:484f:b0:67c:2396:325b with SMTP id 956f58d0204a3-67df441fbe2mr1185329d50.59.1795197275525;
-        Fri, 20 Nov 2026 09:54:35 -0800 (PST)
-Received: from smtpclient.apple ([2605:a601:9d46:600:41d1:dc7e:670b:ca07])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-67df3353258sm2002677d50.9.2026.11.20.09.54.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2026 09:54:35 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=gxxC2zXz;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Kw6hpL5X
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 35861EC09D4
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 12:58:56 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Fri, 20 Nov 2026 12:58:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1795197536; x=1795283936; bh=w6fE/pceAs
+	FaHmAklHfmlz8R9rI/ZjMsT2JPSCNoe7k=; b=gxxC2zXzAnUw83mXouDlarl9fG
+	Xy8lGvDBKryMr2YBYMqbZsbmixW2cul2GFRnOOo7+EgZcF1iWJt87Ijfn124t8aK
+	obOJhBa2HDiBqMXdkoejjNbei2Dz0TMwpSGDxvBh+A8dad/glL72BHdqFDbn8dN5
+	TUfeWa8BiCUFLOr7w/vJ97OANo28iJ9WCcQDiS+LnUJx62q/ohv5R6oleNbhacW3
+	JDTmk+wA13hapEwAMNEb0XxBtw9jdB6kOq8fvSjd5c24BiZO4UzH2zF7kSp2pI7z
+	WtCRknXk+xv+dCOlS4Q6FFDijC2mWie1lXP3UVRnxMFN8mBLysnbaEUQpYhQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795197536; x=1795283936; bh=w6fE/pceAsFaHmAklHfmlz8R9rI/ZjMsT2J
+	PSCNoe7k=; b=Kw6hpL5XQ3xy4ErW2qg23L0ph7WsfOmROEFYR54w6biWh9icpd7
+	Gx8X2wAfd7c6m8JdPYMdVyBa6aRtjyZ6Ntc3uJ9P0ogllhexLeb2cKNrlQOSSseJ
+	BZbLL0cIhJO/jw/7JFvbnuiv8DHshKxKx9hAn8kU73BLYwfYNHN9sBnJBbnHmT6L
+	UhB++FDAUzrac18kbFH7nW66pPQFh5SLDZbc3TeriHjyD0dIhJrhR2ckKHguW/Z0
+	HXSXPkbLrbJJ08b8ukkiyAVnI4LvpigCcR3u75a+9ks4ba3oC8QLq66ONSXpiaMc
+	G4sCV6O2PPYyLzM5fgrYfttgoqbc0GmE/RA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795197536; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:IZHMKw1sHiRXjQj20wpsTDFV2MHZJU/aUl1MA0mif6UbikC
+	9vMt+jOs1FpC02eR4YVLs5PlG9NrJl2ultNYTT/0QHiemGO8pRFp2DVfNpOGdhZB
+	Bf188FfNPBQPGj3GQtpSap8BQ7ynlyXW12MSA1q6mO3z8cWNVmI3MA43GcupkTx6
+	hOWAYToX3qvWfpXug2XshJ8yJsJBV8zlkkCmD+Y2t/B3yWpTAO7IUtSc36kuRcDv
+	Z7/9N+1MxU0G6Znyb4dEFlUNNwVFw13WqLz8pmxRRH7IWuKGhlg1qCP4S93Zv/Bg
+	oE2Kt4IxucG1fRGdWBirpU20zvzSCILfndcNwzA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:y5OFnD/ZH1TC8tveEnrovqpi1HsBwomW1CJe6InyHeE=:zzzjlnCdYV8adbfViDJPhT9O6HALSokmvSAxJPa8gW8=;
+X-ME-Sender: <xms:YIoAa6mScv_IjKifseFD16EUtMaQqYaitx3eCC1p96P5e4pOVs3qQw>
+    <xme:YIoAa5Q_KieJrz8VbmOfz9RenpcFweY6c57Sa74bZvBOhCOHj4Y1HBGfueMXWB4hC
+    cbOOyf_REQHBF8PLBk7JRX_QjCBqY4JtYyAqC6UTgKexT1f5EP2p1I>
+X-ME-Received: <xmr:YIoAa2ASCsuJfOWP3wXaKNjrQ1YvCP30mbiRzfQe4wV1Ky7Cvq6pSu_Obukb5ezKSNgdvslfTog20vzhH7rFh4JHjILwkrj-7pOc>
+X-ME-Proxy-Cause: dmFkZTE0RcdBK+JRBkB82PxsrNJpFDepxuDl1Vf1cVKq0HynOlqSKm9PsEqONfktcClvbF
+    XE5pcFSrYp8RkZbN/IwACW+CJnqbdUVaTB4RammtjCEatTZLa+MTP53eP2YQF95DmW2ZEn
+    XOYy1mc1qhHDvrA0JCc868o/QPnmRWTRvsocuA8EHuRPNlGGpD99ZVDq8UWAP3wkmhc3hx
+    7H5xVuGIp1UTeq1guD/kLXyCgv2UaX939uU3ca6wJuiyALbtaoc3BxP3RIK82kayCEUl/C
+    YCSgItTXanzbfBmtcnB4YGAID1kcnXwtM1f/0E5mGaMCXd/IR7G4xYAfOR+6ujl3aVx+Ms
+    Hbk/sZbNHZO1Z3iTQz/YtWMCsAqwHi8+EwpTR3bJUKB/U7+KloN+XgvnR6MbPYFYJEM7Zk
+    wz+UjqAE4ImEObGqAGo4dVxuFMbRiH2ITNjcj22GeLE3jVX54Zff4XM0HR5eSt9ezZ6kov
+    1BBspphyYWLNOUZbupyvIysYwzs/P98t7Gwtgn81g5ckeNfRkUGPbFbvLnRH1UB91wifRv
+    XWBXPEC4g21dJafj6m09OxfPJxX6T70V8RLI+Ti/Kg/Q9i74oxB/sfWYyGxKvfLz3Zyp8j
+    v4o4hVnKi5JlBSNQGX4+Kf3AD+m2uSTnFH8ErzeRGxAxxwwzRw40aiBC3qCQ
+X-ME-Proxy: <xmx:YIoAa4SWFplguNK22j6Ofcm_jpGAOCMrvEQNc_qy1dJheUFICfFr9g>
+    <xmx:YIoAa8op6h0dMzozkFqI2YR1cW6-DHxK18FH2_FKMQCyNiPl1RRp1g>
+    <xmx:YIoAayzICNusUzMwjXKLMBcJq-Z6COczbhPV3OxFG5qiHP6bWg9qoA>
+    <xmx:YIoAa5LM90QZ_BPLNs4049sySf-0iAqQ2FoXcYxHgWtEQRcOt-Q7TQ>
+    <xmx:YIoAa9Sqtxj7z1IsGe_d5F-Oun4xZGqW9iojfSjeHenkJ3ACILkZrI61>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 20 Nov 2026 12:58:55 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v3] doc: wrap emailed text to a maximum of 72 columns
+In-Reply-To: <20261120110215.42209-1-okhuomonajayi54@gmail.com> (Okhuomon
+	Ajayi's message of "Fri, 20 Nov 2026 12:02:15 +0100")
+References: <20261120055908.83043-1-okhuomonajayi54@gmail.com>
+	<20261120110215.42209-1-okhuomonajayi54@gmail.com>
+Date: Fri, 20 Nov 2026 09:58:54 -0800
+Message-ID: <xmqqmrr3qt9d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -91,78 +123,75 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH] doc: fix AsciiDoc syntax
-Date: Fri, 20 Nov 2026 12:54:24 -0500
-Message-Id: <93127462-BCFD-4086-B19D-4B640F515140@gmail.com>
-References: <pull.2496.git.git.1795194752259.gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Ophir Bleicher <ophirble@gmail.com>
-In-Reply-To: <pull.2496.git.git.1795194752259.gitgitgadget@gmail.com>
-To: Ophir Bleicher via GitGitGadget <gitgitgadget@gmail.com>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+Okhuomon Ajayi <okhuomonajayi54@gmail.com> writes:
 
-> Le 20 nov. 2026 =C3=A0 12:31, Ophir Bleicher via GitGitGadget <gitgitgadge=
-t@gmail.com> a =C3=A9crit :
->=20
-> =EF=BB=BFFrom: Ophir Bleicher <ophirble@gmail.com>
->=20
-> The Documentation/MyFirstContribution.adoc file accidentally used
-> Markdown syntax for a link:
->=20
-> [here](https://gitgitgadget.github.io/#...)
->=20
-> Fixed it to use AsciiDoc:
->=20
-> https://gitgitgadget.github.io/#...[here]
+> CodingGuidelines, SubmittingPatches, and ReviewingGuidelines do
+> not say how long an emailed line should be.
 
-Good catch.
+This initial observation of the status quo is given clearly, which
+makes an easy introduction for readers to the issue you are
+addressing.
 
-While we=E2=80=99re at it, =C2=AB here =C2=BB is generally discouraged as li=
-nk text.
-It=E2=80=99s not particularly accessible for screen-readers, for example.
+> State the limit in
+> each: wrap the text to a maximum of 72 columns, matching the
+> commit message convention, so it still fits on an 80-column
+> terminal after a few levels of quoting.
 
-> Signed-off-by: Ophir Bleicher <ophirble@gmail.com>
-> ---
->    doc: fix AsciiDoc syntax
->=20
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2496=
-%2FOphirBleicher%2Fpatch-3-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2496/Op=
-hirBleicher/patch-3-v1
-> Pull-Request: https://github.com/git/git/pull/2496
->=20
-> Documentation/MyFirstContribution.adoc | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirs=
-tContribution.adoc
-> index c58253fd54..3b531b24fa 100644
-> --- a/Documentation/MyFirstContribution.adoc
-> +++ b/Documentation/MyFirstContribution.adoc
-> @@ -931,7 +931,7 @@ either with the "New pull request" button or the conve=
-nient "Compare & pull
-> request" button that may appear with the name of your newly pushed branch.=
+The above says what we do and why we do so.  In a proposed log
+message, the latter is more important.
 
->=20
-> The differences between using `gitgitgadget/git` and `git/git` as your bas=
-e can
-> -be found [here](https://gitgitgadget.github.io/#should-i-use-gitgitgadget=
--on-gitgitgadgets-git-fork-or-on-gits-github-mirror)
-> +be found https://gitgitgadget.github.io/#should-i-use-gitgitgadget-on-git=
-gitgadgets-git-fork-or-on-gits-github-mirror[here]
+> Leave a blank line
+> between paragraphs. A block of quoted text counts as a paragraph.
 
-So perhaps we could reword this to something like
+Contrasted with the above, this lacks the "why", and is written with
+a funny verb.  "State the limit..." was an instruction to the
+imaginary person who is making the change to our sources, which is
+the "imperative mood" convention our SubmittingPatches specifies.
+But "Leave a blank line" is an instruction that the imaginary person
+is adding.  You need to tell that person to tell our readers to do
+so.  Something like
 
-    Further [differences between =E2=80=A6] are described online.
+    Tell readers to leave a blank line between paragraphs.
 
-with the brackets marking the link text?
+In order to properly give the "why", we'd need to go back to the
+initial observation and say that these three documents do not say
+that there should be paragraph breaks for readability.
 
-> Review the PR's title and description, as they're used by GitGitGadget
-> respectively as the subject and body of the cover letter for your change. R=
-efer
->=20
-> base-commit: f7de81456940dd6f3274e461149bba12965de609
-> --
-> gitgitgadget
->=20
+    Side note: if your convention is "each single long line is a
+    paragraph", then there is no need for a paragraph break.  That
+    seems to be the common format LLMs produce.
+
+    But our convention is "lines in a paragraph are limited to a
+    comfortable length of 72 columns, and the beginning of a new
+    paragraph is signaled by a blank line".  In other words, line
+    length limits and paragraph breaks go hand in hand.
+
+> + - E-mailed text, including a patch message and a review reply, is
+> +   wrapped to a maximum of 72 columns, matching the commit message
+
+The phrase "patch message" is not used elsewhere in Documentation/.
+We use phrases like "log message", "commit message", and "cover
+letter".  We do not want to use the word "patch" here to avoid
+giving a misleading hint to line-wrap diff lines in a patch ;-)
+
+    - E-mailed text intended for human-to-human communication, like
+      log messages, explanations in cover letters, review comments
+      and their responses, is wrapped to ...
+
+> diff --git a/Documentation/ReviewingGuidelines.adoc b/Documentation/ReviewingGuidelines.adoc
+>  
+> +- Wrap a review reply to a maximum of 72 columns, matching the commit
+> +  message convention, so it still fits on an 80-column terminal after
+> +  being quoted a few times. Leave a blank line between paragraphs. A
+> +  block of quoted text counts as a paragraph, so leave a blank line
+> +  before and after it.
+
+"before and after it, too."?  I personally do not see a need to
+specifically say ">" quoted text and what you write in response
+to that quoted part are different paragraph, but some people may
+need to be told, I guess.
+
+Thanks.
