@@ -1,52 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.61.206.94
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.175
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795187501;
-	b=LES1FTsZEdFxGc4OZexKgfQ9YfRlQiSar70fWtJ6l8gDD1y4g03FzE46wkCBg8A27L6u
-	 o+en5eeKTALp6aa3Un3gxDjOYPDMrpVxcoJVPwKZW0/lQZ/kRQtJ7n4C6HvVz0jiA5Xqy
-	 m/R9bq4UsdrZtLiEDOM12roXNzabx8ZpgVy0pHYYMRycf3rixHYooF6pHvPZ1+fnnPd60
-	 Ll5P8SLWLK2byZ1E6COBbLsVW0N0XbiA+KEj+D7nVhECyZGBmZXdA96CbS0oGgUSjavJC
-	 +hdNLh7SUiIor+xfI7USmeQekPa99SFKDDZV492QDT2HX3UUmsjHpB9bo/GwTC+vZ2A==
+	t=1795191153;
+	b=JckkDpxt4g2bf1yf/T68E8z38t+eHXpsAAEQNkPpHnAl48kZdFpE0HrtZM4MUFJWdZ1q
+	 yGfPFSrfFewBjBL09SlbGfr9WzCvs+92viRsY7LkUPL2gq32oZMAA6NxtM8MpbSIpOQnB
+	 Hb5jyhu9FnojNqUQ1PgUwawmV3Qi2FFNTJHd5iAtEhe7nDHdc6RtUf2HNwRurgHmvNXG2
+	 Tgd8Qg2SCiz6MJ1sIx72qRtaXtBEto9l4slwnk/7qZvWYosaK3yYJ6eqCpObfKcFhZAK/
+	 j5oClNKmfeM/dMfkvNnkgHPJrv/GSlJ737dQhy2lidLXc9F1h7MyDoj91/EGAThpOKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795187501;
-	h=DMARC-Filter:Received:DKIM-Signature:From:Date:Subject:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:Message-Id:References:
-	 In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key;
-	bh=j4sxIOvMu+q16IHN7AJO+PVupexDDytY9LOBwjatk3o=;
-	b=zZjP96Ko2Np/T6cDds31+aVYmS0lYg/yCJfv42AbG8EReE/1ASdLvjAZGDMpbPKKN9Ch
-	 b+eZ80ioMSiuosTu2YO6ZKzpU3zmtAj9dhvZ3Nb0hrBTO+LNvQ09C7JVVe6IZKlNtvUDw
-	 tsIRMIVjqoxOrtDaajQPUUYi4WTaGxOr/oVjG2TqMQXYms9CEQG8Vfvi4Y6IldKbHSTHt
-	 DifwmnA0Yf58mp/+ZoVy9dh1L2ih1Tq3bDtu7Kck7mtQp+lFEm64I6JpYbSzDn1kVvAfZ
-	 9ukZhgOzEVwUDLRjQPby4jhHr97BMLk9t+ZZk3nKle0DrixCI1onXmU1dn/fn06tmvQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795191153;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=rD/XNSmRVvHa73iEerkLW1s3YrtSlV2IPjXdgBIe6YU=;
+	b=g9lyWw+yWyAuTAxNQhf4LG5ba9odixlWxTO+WXINAkJGyZVBCfWhZ23mRV8XidcIe31a
+	 2wLX4iZPgynen0kPTtWPLLcn5/09/JoJmecexGahjnsMX6Xxow+vBW7K2n0WmgACi0tP1
+	 NVy889+lmC/Lp2mdNhvV4BMktpRyAhCgwOi3iJ6ZoWLbhgYUJnz50I6BrVeROoVDLFVjd
+	 qRFmuuDKlOyYXIL7lXDaEwGS3mbPLVdp+E08N52FU9rJOLMYBjoX49MYWmrgDYRb8uvcc
+	 +uVmkGRIrpHNLxdvnxrJ2+7/a0hdVB7mszIWotT/q+OIZI1wnyzlR5zXIK1E4gQcrVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gouders.net;
-	spf=pass smtp.mailfrom=gouders.net;
-	dkim=pass header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=YE9L57w1;
-	arc=none smtp.remote-ip=202.61.206.94
-Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qZYOEV0L;
+	arc=none smtp.remote-ip=209.85.214.175
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDB260A2600
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 15:11:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BFDB260A2600
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gouders.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8640606A320
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 16:12:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E8640606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=YE9L57w1
-Received: from lena.gouders.net (ip-109-41-49-183.web.vodafone.de [109.41.49.183])
-	(authenticated bits=0)
-	by mx10.gouders.net (8.18.2/8.17.1.9) with ESMTPSA id 6AKFBTTi2082197
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Fri, 20 Nov 2026 16:11:36 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gouders.net; s=gnet;
-	t=1795187496; bh=j4sxIOvMu+q16IHN7AJO+PVupexDDytY9LOBwjatk3o=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=YE9L57w1rW0rYzAY6vPAyjZez/sCHAX/QLKz3LXB0W/jwzga71GokcmoTDrxdkr0C
-	 T03KtyXBiFgF/bXUx8ThJhWZMbZFnRAB1W4ywfSXN2GNDnAGY2NP6t7J2yjT3D/qaV
-	 x6yRAB34MaNKi/KZM0kBgQL7YC35wQtGL3utud2c=
-From: Dirk Gouders <dirk@gouders.net>
-Date: Fri, 20 Nov 2026 16:11:28 +0100
-Subject: [PATCH v4 5/5] utf8: introduce display_mode_esc_sequence_len_all()
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qZYOEV0L
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2f04bea9a93so6277255ad.3
+        for <git@vger.kernel.org>; Fri, 20 Nov 2026 08:12:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795191152; x=1795795952; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=rD/XNSmRVvHa73iEerkLW1s3YrtSlV2IPjXdgBIe6YU=;
+        b=qZYOEV0Lb9D8hIfOub3XfNGoRhlZgOWeERKgtUKnJLf2eJQVshZQDHdWv2nuy4qeDp
+         SunWteSpRcJ0HG+zFQhEcBLv80Q0qauy0a7k1g+pcofWOLVCRPH7iyWyf+m+OCm/c4UK
+         Qv+orEc1no8fZRzR6c2qKv6mCQNpzXa+l0sQxi4g0cb2s+jiJ2jJC6iwTNKJbalRF/0Q
+         1bdlatfBFJfHaCL1UUIHOaemRto3VG7cTFDO9oWJrDqhzkgM8ULJmGOevgGRlf6lLZzl
+         GTQsK/OuEnTBj3juGJDbGhaJQwXDV5+CbKwzPWRYXkf0ybt0LIw9q9lSfOKEyE0TEJDd
+         bagA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795191152; x=1795795952;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=rD/XNSmRVvHa73iEerkLW1s3YrtSlV2IPjXdgBIe6YU=;
+        b=EGttnm+7FyzATG54K0dVlXYDolXg0uVkdDLJA32Y8FlJQTodac16AiEJW3nGkLE7Pv
+         jmRjTxk1w9OQfQiF5G4gAs3ymcLyKbCgc+zu1sQkc3qw3CmlU0RDUG0YaK9iAKhnWGrX
+         Z/jUhmwS4dG2TvvxS++lijfluQf1OsVopWkpg2+zGHa+Q/EXAshLbzj3qlUem0YC+WUt
+         RsGiMgdLt4s97EbGMDh0wUJKDN0PVjZnvfJlx+MTldkdFEahz5Nl7TCeQsONC0pRd9bY
+         EhEjrsuKkiz6B+LGtn/oFXdu5S9cwhC+SXSu2Rtmm02T8ktDSau2nTC1IpKCLFH5AmOo
+         Trsg==
+X-Forwarded-Encrypted: i=1; AL+hErGga1OKlsGjoQ7GXQMnjdczOezuTJp4rIZifMs0Yf+nMomFuk2/Zv1Sk9+z8rlIdEa/UJk=@vger.kernel.org
+X-Gm-Message-State: APuU4Z8lGEJLX9qIsoWy5M8oOhPAi3Xv1cRvnBM0y4EjwMbBXMGsuj2s
+	N99BgZ31GtRjyNgQo21oT9Dnx9coKoSEOKICXZ9qy/k9aprGVcO7YA3c
+X-Gm-Gg: AZFdTZeup2e2B1Ao37dUgnKeYdKUnZjx0GP/vtguVPygOgvGb4Y773m0mskFdFK3gfu
+	4lkv9n+Ed0y6KF45cnZUJc6PCTRvcTKhqYgzh/w1gXVq6GffR7QHlv87FKrcE/wKb3gifbXqEs+
+	prvJwSHDF1RlCMT2KMUwFyBOTO98ox7QEKtnAF9SD0BiGfEmSiuM8GgJgQf/l/6GQc3/c219aOL
+	uFPgG/zx5KSyfwPdwFi6DeFDKyvm8xEZNtR/8E82bvkeT77kGySyPCUu9WKPwIFhRqCd+VmCKh/
+	ptb6KJE63Fb435wUis8fcQuy5FJWH9HT4KJgFYVkovTTWoIomnWtda1CQSpJ8mvJ7ZYIwH+Oe29
+	jpw1llU/qI5Tg0a5CaTjnLUuRSkQ2AI5K+IrHyM7O95VjMlqPkBaZ7lyXPxT5NsK8ifhwaL49as
+	iQv1EC5ZXw2Jy9VW7AvuL9BMWZ9FeuwX/b96pJU3AQL+Q0vTiID4IUbDr4oFBxA/4JKn4NHMQw2
+	St326dlh/aMF5W0LnVzLXkgmPENTT3N7HZ76/gabBSKftEHscmGoA39GWNSNVaL+nvCTTxbyzio
+	JD+21efx/DYfgTUhmpU4klTwJodq0EFfSHAw6fQV6wjJKlodHhIJsqRfL53zXIaomXtE27tKPaP
+	t/U1TcJUI91/WKP/hItMY
+X-Received: by 2002:a17:902:e551:b0:2ef:ee74:792 with SMTP id d9443c01a7336-2f03f232b03mr42053195ad.41.1795191152088;
+        Fri, 20 Nov 2026 08:12:32 -0800 (PST)
+Received: from localhost.localdomain ([223.190.83.65])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2f03f0fdb1fsm16263025ad.42.2026.11.20.08.12.30
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 20 Nov 2026 08:12:31 -0800 (PST)
+From: Aniket Gupta <aniketgupta3001@gmail.com>
+To: l.s.r@web.de
+Cc: m@sph3r3.com,
+	git@vger.kernel.org
+Subject: Re: [BUG] ZIP timestamp conversion and strict fast-import date validation
+Date: Fri, 20 Nov 2026 21:42:27 +0530
+Message-ID: <20261120161227.58989-1-aniketgupta3001@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <f8dc40a4-920d-4dc5-9f71-7686bfc6255b@web.de>
+References: <CA+h9NxRT-9QzLGihdL_Bp-yyt1AdXJ79YYgpK-OaegUz8e+HcA@mail.gmail.com> <f8dc40a4-920d-4dc5-9f71-7686bfc6255b@web.de>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -56,161 +99,15 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261120-master-v4-5-5ff523db7285@gouders.net>
-References: <20261120-master-v4-0-5ff523db7285@gouders.net>
-In-Reply-To: <20261120-master-v4-0-5ff523db7285@gouders.net>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Dirk Gouders <dirk@gouders.net>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4257; i=dirk@gouders.net;
- h=from:subject:message-id; bh=RjG+fnepNNTE4w00aY4Af77Qa72+8JT9B1/UMs+CGOQ=;
- b=owGbwMvMwMW4JPzVNXNTrzmMp9WSGLIZkpWmr08y57ROeBnwdjsz45XcBJYLoc99Vrvaei3JD
- lPcGu7XyTiBhYGRi6FKTJFl6aQiuzSVFS/KvqlmwgxiZQKZIi3SwAAELAx8uYl5pUY6Rnqm2oZ6
- hkCGjpEDRI6fQSO9IN0hPb80JbWoWC8vtcTR1NLI3MjY1czMyMTRwtXC3MzNzMjUzNLRxNTc1dH
- FzNjc2NTE0dKZgYtTAGbdm0McDCtXnIg4mvzZtCd2acqB34FfHpj6PXG+2duz+tr3ewWtu63//b
- r1PUnp49zF73K9vJvfvlIrTCmvfh20afrLmGinqcUu660WXC7b86sxxHeB8bXpPK8X/PWUNrDOU
- YyK8GBm5rLX3N2hEHS6e2OE5rU9K6wErb/xWj077py66ceKGgOHp96Ba8RevXz6p9VJzGw9U2Ty
- 1418qhwX7h65+8jG/OC16BRTH+N1AYbzW6qTmL8o5Gw40N7dUP5V9+HXL9fFJ4e93m4zzzmwQOZ
- iAYuH8LwlMf+PVt+cLdRyuvvrqmS9youfZrGfqnzy90RJoJGxyLl9llyyV7YnPAu40jA7rk9JrI
- b5xKL4xyvuWAIA
-X-Developer-Key: i=dirk@gouders.net; a=openpgp;
- fpr=943B4FA3CAB8EBC55754E5EA0DA2395F431875F6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Most users of display_mode_esc_sequence_len() need to know the length
-of *all* leading ANSI display mode escape sequences and use
-display_mode_esc_sequence_len() in a loop.
+Hi René,
 
-Introduce display_mode_esc_sequence_len_all() for convenience and
-to reduce the risk of bugs.
+> The latter function contains two NEEDSWORK
+> comments about perhaps adding more checks, though.
 
-Add tests for this function as well.
+It seems nobody is onto this and I would like to take this part. I will send a patch so that plain "raw" rejects dates that fsck rejects and leave "raw-permissive" alone.
 
-Signed-off-by: Dirk Gouders <dirk@gouders.net>
----
- t/unit-tests/u-utf8-ansi.c | 26 ++++++++++++++++++++++++++
- utf8.c                     | 34 +++++++++++++++++++++++++---------
- utf8.h                     |  1 +
- 3 files changed, 52 insertions(+), 9 deletions(-)
-
-diff --git a/t/unit-tests/u-utf8-ansi.c b/t/unit-tests/u-utf8-ansi.c
-index cb75c8612b..909643d07d 100644
---- a/t/unit-tests/u-utf8-ansi.c
-+++ b/t/unit-tests/u-utf8-ansi.c
-@@ -2,6 +2,32 @@
- #include "utf8.h"
- #include "strbuf.h"
- 
-+/*
-+ * Test the greedy function display_mode_esc_sequence_len_all().
-+ */
-+void test_utf8_ansi__sgr_len_greedy(void)
-+{
-+	char *s1 = (char *)"no ESC sequence";
-+	char *s2 = (char *)"\033[m";
-+	char *s3 = (char *)"\033[0;31m";
-+	char *s4 = (char *)"\033[0m\033[31m";
-+
-+	/* no sequences */
-+	cl_assert_equal_i(0, display_mode_esc_sequence_len_all("", ""));
-+	cl_assert_equal_i(0, display_mode_esc_sequence_len_all(s1, s1 + 5));
-+
-+	/* single sequences */
-+	cl_assert_equal_i(3, display_mode_esc_sequence_len_all(s2, s2 + 3));
-+	cl_assert_equal_i(7, display_mode_esc_sequence_len_all(s3, s3 + 7));
-+	cl_assert_equal_i(0, display_mode_esc_sequence_len_all(s3, s3 + 3));
-+
-+	/* multiple sequences */
-+	cl_assert_equal_i(4, display_mode_esc_sequence_len_all(s4, s4 + 4));
-+	cl_assert_equal_i(9, display_mode_esc_sequence_len_all(s4, s4 + 9));
-+	cl_assert_equal_i(0, display_mode_esc_sequence_len_all(s4, s4 + 3));
-+	cl_assert_equal_i(4, display_mode_esc_sequence_len_all(s4, s4 + 8));
-+}
-+
- /*
-  * Test display_mode_esc_sequence_len() for NUL terminated strings.
-  */
-diff --git a/utf8.c b/utf8.c
-index 291f34db7e..9478985cbb 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -39,6 +39,26 @@ size_t display_mode_esc_sequence_len(const char *start, const char *end)
- 	return p - start;
- }
- 
-+/*
-+ * Count the lenght of all leading ANSI display mode escape sequences that
-+ * are a prefix of the string at start up to end.
-+ */
-+size_t display_mode_esc_sequence_len_all(const char *start, const char *end)
-+{
-+	size_t seq_len = 0;
-+
-+	while (start + seq_len < end) {
-+		size_t count = display_mode_esc_sequence_len(start + seq_len, end);
-+
-+		if (!count)
-+			break;
-+
-+		seq_len += count;
-+	}
-+
-+	return seq_len;
-+}
-+
- /* auxiliary function for binary search in interval table */
- static int bisearch(ucs_char_t ucs, const struct interval *table, int max)
- {
-@@ -227,8 +247,7 @@ int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
- 		size_t remainder;
- 
- 		if (skip_ansi) {
--			while ((skip = display_mode_esc_sequence_len(string, end)))
--				string += skip;
-+			string += display_mode_esc_sequence_len_all(string, end);
- 
- 			if (string >= end)
- 				break;
-@@ -313,10 +332,8 @@ void strbuf_add_wrapped_text(struct strbuf *buf,
- 
- 	for (;;) {
- 		char c;
--		size_t skip;
- 
--		while ((skip = display_mode_esc_sequence_len(text, end)))
--			text += skip;
-+		text += display_mode_esc_sequence_len_all(text, end);
- 
- 		c = *text;
- 		if (!c || isspace(c)) {
-@@ -394,10 +411,9 @@ void strbuf_utf8_replace(struct strbuf *sb_src, int pos, int width,
- 		int glyph_width;
- 		size_t n;
- 
--		while ((n = display_mode_esc_sequence_len(src, end))) {
--			strbuf_add(&dst, src, n);
--			src += n;
--		}
-+		n = display_mode_esc_sequence_len_all(src, end);
-+		strbuf_add(&dst, src, n);
-+		src += n;
- 
- 		if (src >= end)
- 			break;
-diff --git a/utf8.h b/utf8.h
-index 7eb7bf042a..fdde5af782 100644
---- a/utf8.h
-+++ b/utf8.h
-@@ -6,6 +6,7 @@ struct strbuf;
- typedef unsigned int ucs_char_t;  /* assuming 32bit int */
- 
- size_t display_mode_esc_sequence_len(const char *start, const char *end);
-+size_t display_mode_esc_sequence_len_all(const char *start, const char *end);
- int utf8_width(const char **start, size_t *remainder_p);
- int utf8_strnwidth(const char *string, size_t len, int skip_ansi);
- int utf8_strwidth(const char *string);
-
--- 
-2.55.0
-
+Thanks,
+Aniket
