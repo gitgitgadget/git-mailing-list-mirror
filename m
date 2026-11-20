@@ -1,101 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.44
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795170429;
-	b=dMAdpqHx/kIxPShES9/3wnZ6qijGVN8Q/lkEUIzIWeVjXC7tabeM5sVMEUY1d16BC+hH
-	 RdTTguBpqZrwLKt0iQ1++3XyhdAyXo3coPwBA5sKBSk4zpb7nR7wE5KbzET5QV//2rs7H
-	 Btdlmb0GtoHPHDq+EP3OWZP0WbJbeGCBwM6YTt/8CazWtCIS0ZlGQbLgHd1sQLhTXCGtZ
-	 gmyB2dI4NUB5wBRMIdZzyFSXIEDbT+da3FdapzmVM/QoXi8XN1VnnFY/nNm/vwuniya5H
-	 eRSxubreXGJDEd0ivd1KyXxtZTexK9ojGertDlWOfWHAxzfzm80CjK6HQ/5zmyodZWA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795170429;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.172
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795170936;
+	b=IFn2u0DSzWUUN8MrDi9CNiM8b0VYaCqmIAHnJWht/eHx4dhk+KNMPhzht7U3RgUitP1b
+	 3tau1SoXAKlTlOlhPpApfIbGwL5TOJoqO5BnQcSQzIAS97DqcTiS0+6Esq6aBoHbhPGyH
+	 duq+AE+ay15bY5sH7RSOPsDuO7dFrf05pLKsyq3XanUQSk3lucK/e0ttuaXHBd4AQCSUk
+	 2t0rlDrqPk77chdiHN5TItJRGmyVRJg93VEaM3FrL0wdGz//s+HipAxP3XBM2VV56ie82
+	 XzpjecttDkixvh02kcdv9FnYjBQFcvhdjSZ4gLjfVA2YNBC6N+2llJqlhvxEQzo+67w==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795170936;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=eE+ur9onEoXZIpEU7i+KHJS0bV7aVJ9k0kZungtfYkY=;
-	b=RJr9UNZzV1EIyFHvG/6VUJTx13t9EBbCDy4evrDZ/0iQCWKOtZzzGRrDl+RN0O2V0LHQ
-	 2vQqrCIOz6rf8Kg9LaAFHeF3avXYJGJqS8q6dagXDdl0I1OMq+g1R3r8BZsSWOUpHNoKW
-	 Lvq20mTvSabdH04swTiwdNt/mKiBP7tovFcnS+c1xZQFYS39jEaK/rk3BM4ldfkHyKeN3
-	 AeI6dE9mDKs7smS8cFsRn0XxHPRfYvQyx71ukFe/HG+KFC/fVm0N2tyDbQgjxWaiQV34v
-	 Ohc4z1aiEPLFCVcVTkJfGelvh+7vcOQWm6Wsk2p8erAZhd/dHQAZOMz8Qq6ip+/HQaA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	bh=thgmRtCdNWM3/3eFmrd3sXf65yxKOQwndR0NtdaUY4s=;
+	b=BJx/sb/ZUojal13SDmi+6wyQ4S0bTPn9fX6tTq7sSsD8yxIphadFKt5fkrJcodoqiNBc
+	 79Q/t2bQVDtX21DIH9byqOFJpA66TNlXMU1xBJRu4a+aZSvA8hN6tUoolH4IkKQN3+mIU
+	 wZadrYzMP/SUgMxAuGLmAbEMZn+nyVgV7Hf7FswlzjkCKe9N/ZH1z3CXQGp8+irpCGi0x
+	 uakMn2HbAzb7LBPwdiQa3MXd8d0N1vCAfUka0/2kkHtfxzADB2A0pybvPAOrbrWEG/eQj
+	 6UZ5QUbYGRlFM2Qe5kNM7jO0t3jHOYX78FHlZg0RgIfqCLf1/LlfAZTtzFdTik5zuSA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=jlAfJJa3;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.44
-Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zqDIrDsi;
+	arc=none smtp.remote-ip=209.85.210.172
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3BEB606A332
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 10:27:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B3BEB606A332
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC17606A320
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 10:35:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BFC17606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=jlAfJJa3
-Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-675617e81f9so891582d50.3
-        for <git@vger.kernel.org>; Fri, 20 Nov 2026 02:27:08 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795170428; cv=none;
-        d=google.com; s=arc-20260327;
-        b=BUycABcSIMrCc5SsE4CSi5NuM5hDt1KD4FJDezt7nFhvmkF3qzWvT1gnih+HhbLF/z
-         XpUCFvJhrb8/HYT7aOdIdf1J/6DpF2kOViGp7NDeZiTL2YFQThRhXvGjK2WBKVvJl0OW
-         wgY5sithClQ5vjhIbHuChoTtD2ip27HcD+vRtj4YYbXqJkqIjGADo/RLycLHYYRE0/Vc
-         DiWavESFegq5+e5hmPD2DBj9+FlIqkuJOnsL8mz4RsZqGzDowEntTbjzBrjUw0/xy+Hj
-         G3G4ayvXPs7eIlEwXE5h/FWKiLZ0pUyNHEXgq8cQd2K6yr2E4acBn/y1DWpeDWQ4zLIC
-         XwnQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=eE+ur9onEoXZIpEU7i+KHJS0bV7aVJ9k0kZungtfYkY=;
-        fh=uLroqYqcx80GBCiwIGXxfGNsg5J6DEKTsHj898AfvWc=;
-        b=hADWx2wy0PqHhnTXWImGbN6S/SaU9Wjrtp3UgVBMqE7OZ02eEkE54W2Jydp2JT1XLS
-         lO+Y8p4NndEqLsr345WH3WYR3s2t0V2P+1M3aOIvmyGH41XexIAJFIZyEth5Mn9ceFpp
-         ybfMh349hQnk5VQppIURkIvuj6pzR/DyGzBN/bTe26K5Fhb3DG44LchCZAxX3qHDmp3q
-         78gDflqaN9+jot7J98+bC4bLsWgKBYqmqnte1KhT0BB/zWWKbCVaLO+SBNpMhZjoJZQ4
-         No1KNU3uXdkyv8bbH2PvkDUFdCG0M586aIXjX6v9fexeYboXcArIyBVRHsZPttFPhKJm
-         Fsvw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zqDIrDsi
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-8c5ebbc5150so620814b3a.3
+        for <git@vger.kernel.org>; Fri, 20 Nov 2026 02:35:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795170428; x=1795775228; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+        d=gmail.com; s=20260707; t=1795170935; x=1795775735; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=eE+ur9onEoXZIpEU7i+KHJS0bV7aVJ9k0kZungtfYkY=;
-        b=jlAfJJa3Si2IZykdcC3/ffzQJGOYIoTMqE7rS07icsHxqcapPlBwMjMNEX+mwL7Y48
-         LtQhbHkKlCiBxmY3t9IlLb1i/Ba1w7YQ9y50xTQXrdUN+E8dK99E/PyGvKsiWwV4sceY
-         0e4E4oqCgH91fWVjgkKChP0Dxzp27GWPeBR6L3/GOda+uCDUqcA4ItFGOJRCuURpmJTd
-         3xK/VgyP/J7jc8lQWuSzDvbhbDYgAAx2ecNQ9FDx38rE+2Dh6AIaZwV9lpemHyIrtMaH
-         MsN2smMNxQOszgYa4aY1+mbmiK/dJGufm7eYrwl7KEcZRNvlIk2dV/ocoMEAi3kupq4Z
-         1I9Q==
+        bh=thgmRtCdNWM3/3eFmrd3sXf65yxKOQwndR0NtdaUY4s=;
+        b=zqDIrDsiIC9A5XwMm/C5XLsqzThtrmSlp9QXhZHFB/DLpyrwlXhouJ3y8qnxs4rbEr
+         6lm30WBLFB1Z7vIlP7J0+qxPVnEEUnbAVNa9y6cr6QnXQB+jxyw6QnqehVBeSGVCepmq
+         bMBNKR/p0eTXuCn7L8GdmoVExF/sT9M17hF4/yTd0J5dFlB5yeAdzYqnhje644Oz/Exs
+         WKzPJH/U+8i55+k1Z6tRnta0ykFffEkGF2WqmTbv2eKFC6MjgTYFu5IbOtvTaxeLufAN
+         Xrm43QsMjVfxZA8HAY3FncGvgmu0+FAsu0RNGj6OGSZMgoLCFg7pbD2UK00pdJIhkVBD
+         Xj5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795170428; x=1795775228;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1795170935; x=1795775735;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=eE+ur9onEoXZIpEU7i+KHJS0bV7aVJ9k0kZungtfYkY=;
-        b=pcQCw4Z1aMMiNGa4z38OvN5c2+xk29DvI2Q77DVf9oKVTxSz8fI9eOfv7ZAIl8wO7N
-         pnZPJ2JlTaKebJRUrJG94ZmzJtJgt+Vg2eP23G2SiCSCcLTSDi4DuJ5pBU4QllkzNwWu
-         BF2uxXHlPZsO/esQ25hC4gfD9k9aa3Krpw5Lmq9JyN1nu29wdzwDge5uAzwW0LCSDuKK
-         2/zjMT0ggi5ZDeqjN6RgL2jInci/wqbDDUMG6NTBh8/3uM29hzT7MD0WSdifEqJyW0gm
-         935O6ViEtW9jtNYnE/UgQRrLwFK8mL4EIAYcLyJGxhDvN1eHlYtuZRdu+s3W4IfnYbiv
-         Qy3A==
-X-Gm-Message-State: APuU4Z9wjc9XVnAR3skx+ib9f1jR0awBoFRpbQQJ65UqlaTHWcWAKb54
-	Itew1qCiJk1vMa0Vv3VwcHcoMHL1yDihQWBDfIFprer/u7AISPq7E7pQmWqS5yX3S+tOSG6AiKE
-	WoZRHfhFCJ2SH6lRcYsboxy+d6G/HQBE=
-X-Gm-Gg: AZFdTZfROZy7Fwlr8hyHQ1wJT7+4CE4jKt1c0mrgyuOvOOr4BK07CSmGjyIi1UeIy8t
-	qt34yi/94QMwEHv5WKdRaAc1FCmH9UEGDI7/1E8OP7XPtdOedmOi5aNmlalFBwdh6vT+Z50hY6p
-	GC3ohcYtWp/mAJ7+Or8gLWn9HKQWUSA/cWoVnBA66hmw3TpRed8/zL6Ki+HGC37eB1410XRHHye
-	OvLrdEH5T+Kv6ngEXIvMZ70oEwJ0DZ7unLVS+nSo0sQMxklzxzwUXWXImnyHYPDTrs2C3AxReMd
-	cJlksfuT5M1wSSVUfp22S/D5U4z5/dTWYBCLS2fKpT12pUpIHoFLJiRJG+YDUFALauSpKdotpjz
-	Gi1F7XivMBjX5usOoosFLRbYlrRHDFgh+lg9V7yaXhukrrEB+vpvuZ+1IwhiMiT5RPz8lucgpvF
-	cRZqfPmj5azoriGtFCgMtSISuinvWCIdFlf+Wg16a/4z75YEjbnMZhXIn0rBqyufDUQ0EnbKs0r
-	YmoDUp1qJ07fRPuwY2bbyxvs3cFdMcn93jEBQ==
-X-Received: by 2002:a05:690e:1187:b0:67d:ba3f:a9a6 with SMTP id
- 956f58d0204a3-67df43ce269mr1135771d50.21.1795170427754; Fri, 20 Nov 2026
- 02:27:07 -0800 (PST)
+        bh=thgmRtCdNWM3/3eFmrd3sXf65yxKOQwndR0NtdaUY4s=;
+        b=rbAvU49+aAmJ1HP/ry8+a2GywysnP6iwemdcaFI//A196Z3z5UYQPCtOj0HsFzhmlv
+         N/Eji9HaH61rQA9g/qVl9OW3ZRF2AUrNDVIMvRYD2DsY4ErO4HfoaUFbf2k3uxv0r88T
+         YKG4WogBfj2XTTeltPWNYkT4OoXFaAflQ5IyinM8ZyhshKp3VeDFDL4ltEEct3HExXed
+         X/0AqstXGaJbVnIn7EB6dq2Hx4PKomQ+oa9n/mosqXNflKGOQt7uar5fM7Q8G86v0rc9
+         Ws/1iKnlvqTFOcflMQlKsingDsNTHk9C4isq5BtI/DU67ysuAStAIsHwdYnuva3mihX5
+         xUSg==
+X-Gm-Message-State: APuU4Z+a+oTOI9hHam2t/hXIZsbBVJqSIX43lrglx3ldvYUdlJaT9oHx
+	RFTLB2yjLe4SPPfzCiJCGva6OrFlj+BBhb1m3eAU/Q0uwgiIOeZf/g7GdI6IoVos
+X-Gm-Gg: AYBFou0SWlYO9afmIpZte2EODm/C+HcL+wjU5vogNlMTkb9msnWavCQW25a88yQUyWh
+	QuXnGO19KgKfdEUv1BvH1vW2M3m3lmCV3qQA5cF6d3Oy3BR8QsRJqP5VYPHLSzhdySq4+7UR5pu
+	hJOkOGCRCOJ4AJUAMSJ8t0pWV1r3/ZhnBsgM+NRZKyN6PYcLjycaiv8xUEpmsJGD+w6x7KRBEmJ
+	3QUyD7JiYgjpqDHiSAo/JAl7mqPcD8QCf9vmMwmdVGv4w/5oHzEzUW+d/kTG/iOn6WPnD7jCE4O
+	MuNnQFFzbAn/3KyKTRbIdfWlTlGvbPPZ943/LB/Md9eV3W9Rn5LONaK5Cv6Q0Hva/OHVoAvbHd9
+	ldq9ZLHoJCZKdddnbpLiTAd39j1CY+QK4d0hhbwdDhVH0fT6Y4pUMi33MhOn0xm5CBdY/q/btz6
+	7WFUVYvuTyElXquhtkXf0Oj4bywrGNIYB5mZ/cC2tsfLadQn2KbvHvb2Lg3heec/mpN8Gwvi0sL
+	d8q+BiUNKoEgZekjgyvCZdST54bKg/b/uZTHLb3dr3+5DmjGcT2px6UeKrkuYaH+kFHGw15FUE8
+	7+7cK6XqweXsnb01gcnlBiKYGSZl
+X-Received: by 2002:a05:6a21:4849:b0:3fa:5900:6e51 with SMTP id adf61e73a8af0-4014d4559e4mr2142805637.31.1795170934913;
+        Fri, 20 Nov 2026 02:35:34 -0800 (PST)
+Received: from aeron-host ([103.177.178.109])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cde6d0818c1sm1089321a12.30.2026.11.20.02.35.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Nov 2026 02:35:34 -0800 (PST)
+From: Abhishek Agarwal <agab0323@gmail.com>
+To: git@vger.kernel.org
+Cc: =?UTF-8?q?Rub=C3=A9n=20Justo?= <rjusto@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [GSoC PATCH v2] add-patch: use Q_() for split hunk translation
+Date: Fri, 20 Nov 2026 16:03:17 +0530
+Message-ID: <20261120103317.160931-1-agab0323@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261110193804.76958-1-agab0323@gmail.com>
+References: <20261110193804.76958-1-agab0323@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,29 +98,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261119105300.95746-1-okhuomonajayi54@gmail.com>
- <20261120055908.83043-1-okhuomonajayi54@gmail.com> <CAHWeT-ZJHZrAtVEC+-WOy0HPRZuepdYVzPNw86DcTysf5z-gXA@mail.gmail.com>
-In-Reply-To: <CAHWeT-ZJHZrAtVEC+-WOy0HPRZuepdYVzPNw86DcTysf5z-gXA@mail.gmail.com>
-From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Date: Fri, 20 Nov 2026 11:26:55 +0100
-X-Gm-Features: AclHuK_Zx8klq_QiZmoQ0EIqEoH2tWpUw7bNYaKu1HKGkgvVzk_HeC7MVJjzxwo
-Message-ID: <CAFpMFfD_OgaRFLiscoSDpH-f_T_T1PLikOJLsYvHWxAv8oy-Yg@mail.gmail.com>
-Subject: Re: [PATCH v2] doc: wrap emailed text near 70 columns
-To: Andy Koppe <andy.koppe@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, Nov 20, 2026 at 11:08=E2=80=AFAM Andy Koppe <andy.koppe@gmail.com> =
-wrote:
+The "Split into %d hunks." message uses _(), so a translation can
+have only one form for every count. Some languages need more than
+that. In Polish, 2 and 5 take different plural forms: the current
+translation "Podzielono na %d skrawków" uses the form for 5, so a
+split into 2 hunks reads "2 skrawków" instead of "2 skrawki".
 
-> I'd say "to a maximum of 72 columns", to take out the uncertainty and
-> match the convention for commit messages, which of course are quoted
-> in the same way in replies.
+Use Q_() and pass splittable_into as the count, so that gettext can
+pick the form that fits the number.
 
-Agreed. "Near 70" leaves the width unclear. I'll resend with a
-maximum of 72 columns, matching the commit message convention.
+Translators of a language with just a singular and a plural form,
+such as German, now have to translate this message twice. In
+exchange, translators of languages that need different forms for
+"2 hunks" and "5 hunks" can get them right.
 
-Thanks,
+Signed-off-by: Abhishek Agarwal <agab0323@gmail.com>
+---
 
-Okhuomon
+Notes:
+    Changes since v1:
+    
+     - Replaced the last sentence ("keeping the English output
+       unchanged") with the trade-off for translators, as Junio
+       suggested for a similar patch [1].
+     - Author and sign-off now use my real name instead of "aeron-gh".
+     - Rebased on current master. No code change.
+    
+    The count is always 2 or more here, because "s" is only offered
+    when hunk->splittable_into > 1, so English never shows the
+    singular string. Q_() still needs it, and translators fill in
+    their own forms for the counts that do occur.
+    
+    [1] https://lore.kernel.org/git/xmqqv76vnd5h.fsf@gitster.g/
+
+ add-patch.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/add-patch.c b/add-patch.c
+index f27edcbe8d..4e75e2ceda 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -1942,7 +1942,9 @@ static size_t patch_update_file(struct add_p_state *s,
+ 			} else if (!split_hunk(s, file_diff,
+ 					     hunk - file_diff->hunk)) {
+ 				color_fprintf_ln(stdout, s->cfg.header_color,
+-						 _("Split into %d hunks."),
++						 Q_("Split into %d hunk.",
++						    "Split into %d hunks.",
++						    splittable_into),
+ 						 (int)splittable_into);
+ 				rendered_hunk_index = -1;
+ 			}
+-- 
+2.56.0
+
