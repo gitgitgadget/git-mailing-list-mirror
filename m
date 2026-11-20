@@ -1,94 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.177
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.231.85.169
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795207020;
-	b=Aif74hnb8LSIEm8toe9S9iO33hUgftZHh7yDeVZ0sX4pnypjGN0jcuuFRAAWVIzaxvjq
-	 YhMYtPWDoPTIrNoIN9/R9AiEc+BdWEejXBJac3yynHdu5/enM0ddytx3x3rK/6LduH0TN
-	 J3r0SBGbhBCG9Kyn5o4jkx3360pEEXEFdnPv14jmIchLs1BByjuchFSUPWdwbVH3xoQ2a
-	 HEonPORNmuvaLPpf2IOsU4yVox+bTjCNoMWkjol/mUSP/W9uwXEuCaWD5Tpc8NYLvJpuI
-	 V2JdlvyVT7MioPKI1Q/qPos9heQqAkQto7YOI0O6DIQZcHu+TfOVPN3BYngWxy7WQ4A==
+	t=1795208982;
+	b=Cwur8iZRETwMy5CXEesS6Ur21nPFrMVk2ekIECW3VOcL3I9WsOkTiLojC5zlrZIiyrqX
+	 UZUQ4r7Yo+kfTNSIWCbrQxLBpkrgB9u9bJ77gbRUNlC95ZdBsAh+C6CLzxEB7aRPbbSbS
+	 IbaLjzzB56ZiYmV/vnqqADJAVn4ZPhIpCyunFsVXiGDDlRrMHKweANVewkzu0qrOZ9Mu3
+	 T226/WVi402a7zP1Dfr49o1nFLMD9yogP2FSbSappSn0kmzY969Ivr1SkMeYMiq8Dm+Su
+	 aGpv9LHTYRNq4z7JZieBzYPU6J/94zYeKBJAm92Gfj0HNuZWAIl8e7mOOitNn7YO6Ng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795207020;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 In-Reply-To:References:User-Agent:Date:Message-ID:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=RYg3qjip9zduv+mbRo4Qm6OFpSXOnWKZH8f29ubtZpo=;
-	b=DkH73A1bpAUChXCwwB6K32rhPa0SQUEyVKSp7GX3Fcn7Pv8UwBfSI5PC5RRcy4SX1YsA
-	 SvXFke9JSfG2ixea3jFEeGMJx7HqVDZw1MkxpnxXUDypCBqD5FXZHkZRZ8+6FC7/ogApX
-	 mQ7vS+OaHwY68fx9+9zrgBa59+FkGNaDNVpuJeuHgsXTJVZUtscrJv1UcqxkXvT3YCujr
-	 rQ5EEbBGMLLYA2y4Q7j5RFcNv69gkKvAmOn+pJjg8DI5ZmoRqL6k+CgnBTNgneviu7Bnl
-	 LkB+c+MyLcen+U1I8/Zp+O7wAx3nKsGo0UMpe4mYPTRW79VXweLPFsqQhUQKUHF/BUA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795208982;
+	h=DMARC-Filter:Date:DKIM-Signature:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:
+	 X-Spamd-Bar;
+	bh=DzvJCuZDxhK4GnGt9KvjgUEEWVRWbmH0AYVhvVTH/Xo=;
+	b=ggXIx1+AeSOH6xX9tTqbjRmBLPB/lCcYIF0GxCoo+tw2M7J+bKlPHUnGjRnufE2WOF16
+	 KKP9l7ufLDk+TcWRctFROrYRMhNNvlbX+0CdghD0bfgKQ06YjXXTF/JCKRP0NKgew/FW8
+	 SKARDZ5FUp4Z47THCr2KWxTbTFMSjM3KN7iCSKcM8LwV0mSSTw9BonApmsiX7qiGiqM82
+	 hDBTDfMUda8V32fnrBLdIgXuJuvXPVZT9in64VHmHFnX6QZO0yBzRc8UMOe199ClDRWhc
+	 ADiPe0R8o1h7HdMyyG+OxVjwndpzk+rQhO74LIxi6bhO+HYKZH1BisWn+AglKFREIKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zDI224tX;
-	arc=none smtp.remote-ip=209.85.210.177
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=delayed.space;
+	spf=pass smtp.mailfrom=delayed.space;
+	dkim=pass header.d=delayed.space header.i=@delayed.space header.a=rsa-sha256 header.s=dkim header.b=eMKLCiAg;
+	arc=none smtp.remote-ip=195.231.85.169
+Received: from mail.delayed.space (delayed.space [195.231.85.169])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB06606A6CB
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 20:36:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BCB06606A6CB
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F5D606A692
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 21:09:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F2F5D606A692
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zDI224tX
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-8bddb1172a4so80560b3a.1
-        for <git@vger.kernel.org>; Fri, 20 Nov 2026 12:36:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795207018; x=1795811818; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=RYg3qjip9zduv+mbRo4Qm6OFpSXOnWKZH8f29ubtZpo=;
-        b=zDI224tXbsADSOhxaLk7GnQVcIxYbgolwqqKeMVrg/QBqmIbi2HbUUexMvQH6VSzj6
-         rB3ZIYRHT9YDNXD+jv8DqN4upkrZ0j7hbhIlzPv+P2roMXS36KJl6t/ayskZ1QTfxNz+
-         FGvMpL6LTFB1zZ9oGu+vl2Moob/lm+NJ4CaBZaq0eh1atPmBk54bxCJ9agTUFUGiyXKp
-         t0IJwXVvQJFmkZ8aXQNgfnYoLp4Sdc5CopcY6QSNsCDJ1lvUNOtVw6KYAOCVjjiIuPxe
-         qbF4G8KJERNugV5+P+Jd4eG0utb9nlVXWu3K5gR/tiLvbA12Sghn1JzC8rl34HoPqJCC
-         8pVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795207018; x=1795811818;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=RYg3qjip9zduv+mbRo4Qm6OFpSXOnWKZH8f29ubtZpo=;
-        b=XppxKFro4rIfF4ZbVzElKcD/tVc4furO2drxLwWFX2XOGIdiYu3cpbd1SoDfkr3V4d
-         rGHy/e5N4ThTfHwtAEP3fGx7QrUQGxY1zSY08RTgkhOUflyNFvZyU4kO/vf3sYR47NyG
-         yHWX1apcHm0gJeOboZwXQPXJb6gFNOR8W/lxdsR+oAM1yBzZqvC1KSyDjF7O9P4C4zCJ
-         3HQzADJtZTUCMyHkkCYYiz/9b6zvc0m2XTBNU/7WNbF85mEDukGKlFI8gpnPXSV6FBGj
-         6F4KRgH1NG2ndedgSaZJwoW6TyKMnjMKVFSCOZ/Q/ZybW38rmk/xEy2q8ERfJoujmibx
-         PTqA==
-X-Gm-Message-State: APuU4Z8s546MOA/v2xUMyQ0MXNTPOsBo+gVBkiIhcDZ0zW/3cLuaao+C
-	Wvqx6ioplvJPLWk7yV6t4+GI62QnNaaJS6Y+6gpFn8Q0NxHjFQHJ0qELVCjc4Sck
-X-Gm-Gg: AZFdTZd5DlCnrqvdhYcDJVvAG7Jt9exU/yrNgcp2V4Qann22u2vgTTdMGpmcUKl2cnr
-	O7iO5A37UtolwmBnIZ3h2MTVnaDoHbEmAo0RcOto/4eis8hhzZkBIAlA+i6i2op28QIDGqNJzyX
-	4sf5Ar51Gpp6Fg+Bj7QYsREw/RjfGJ+qBkSS1clmbj0szDhEEDngoHxI082/rXXNnF7tSorWt09
-	RO8eJKSH/iWyQIVVpp5VGCmNi3/W6W3QBaqzcXp13xQ9NDix1xvOe46NJr2mc9B/crG55c6EH1C
-	prOc/VCg6fFFXQcNA7EFASOkzehy5qtHIfk5CJMog5lz5JkGlAcE5chXs0scwUhCWLZT9avE4kS
-	mq3z5c46/BEKRt99Q6tJVt8L9mkPKuSrX/wlQ64u5jFg+wy9Z3yl/oCBHZII7ULd2p3pyaupY23
-	cDSFYFwt5xA4Uz19Y/1Foh7pNXP6pWRUDQqDK2on5NcVk9eoGFrVlb9a85hUP8HJreVvpl4YfDt
-	r312FdwOgNzjIZ2qEh2s/af2KiQ1zgfBFS6Eamciba2nqN7QEgmsjxoteiJMy5v0qECtrf7DG7T
-	gpQCNNjaous92MS/5wvZvEsc8lqPe7S6GFU2HlI47tGAjbV6GwUqmo3Jcw9jAhZ/N+3T3dy9xr/
-	D8Uhp+iCwdbs7ms+zHdLVv+O8MvzTRqDxaWNclH7Jb3ftlt/VSGpoDHFwbyHdm95Rx9RZ5h1hdq
-	E57JW3lm9l
-X-Received: by 2002:aa7:804c:0:b0:8a0:646e:7e16 with SMTP id d2e1a72fcca58-8c87b4f38cbmr4306915b3a.2.1795207018080;
-        Fri, 20 Nov 2026 12:36:58 -0800 (PST)
-Received: from canneberge (dhcp-206-87-134-18.ubcsecure.wireless.ubc.ca. [206.87.134.18])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8c87344184fsm2032029b3a.35.2026.11.20.12.36.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2026 12:36:57 -0800 (PST)
-From: =?utf-8?Q?Andrei_=C8=98ova?= <andreisva2023@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] builtin/clone: fix --revision with SHA-256 commits
-In-Reply-To: <xmqqv75rqubf.fsf@gitster.g>
-References: <87mrr486sg.fsf@gmail.com> <xmqqv75rqubf.fsf@gitster.g>
-User-Agent: mu4e 1.14.4; emacs 31.1
-Date: Fri, 20 Nov 2026 13:36:35 -0700
-Message-ID: <87eccfutnw.fsf@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=delayed.space header.i=@delayed.space header.a=rsa-sha256 header.s=dkim header.b=eMKLCiAg
+Date: Fri, 20 Nov 2026 22:09:32 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
+	s=dkim; t=1795208973;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=DzvJCuZDxhK4GnGt9KvjgUEEWVRWbmH0AYVhvVTH/Xo=;
+	b=eMKLCiAge737Sgh5f57bLt0QTsLicpMofxeDbJ9qtGAR1AcnALhTJEcvjFcy6Rc40vzdBu
+	vomtK+PXx66Y70ZaY3gXdqpISSOGEQGiAP4MOfsWLmoncDfriJt9KzXSJC79gxbn7TufBR
+	QZlzHBT0XobGAfHKASPkE7+n7VC3or9dWl31vSEg22YpeDuSSnwGC8C/E6LkhwzGP1OMCX
+	Eh54+3PY14NwPuRZtBaBjt/ffavf2ml9/zJBVQVvm9EoXmxuu3CjC6Wf2xEVALK4TAv6Pc
+	CdK5Wp1rfHEjppmmQH09yVo1UX5vJwHIqDgtUEg2XbcPETah1D7yq1bhH5n9PQ==
+Authentication-Results: mail.delayed.space;
+	auth=pass smtp.mailfrom=mroik@delayed.space
+From: Mirko Faina <mroik@delayed.space>
+To: Steven Rostedt <rostedt@goodmis.org>
+Cc: git@vger.kernel.org, Mirko Faina <mroik@delayed.space>
+Subject: Re: Prevent git reset --hard from losing data
+Message-ID: <awC0MJDYS88yEtgm@exploit>
+References: <20261120145444.13061eb7@gandalf.local.home>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -98,35 +62,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261120145444.13061eb7@gandalf.local.home>
+X-Spamd-Bar: --
 
-Hi! Thanks for the review.
+On Fri, Nov 20, 2026 at 02:54:44PM -0500, Steven Rostedt wrote:
+> Too many times I do a "git reset --hard" in the wrong directory and end up
+> losing uncommitted changes. Is there a way to add a configuration to have
+> that command check if there's any uncommitted changes and ask if you really
+> want to do the reset?
 
-> Having said all that, if the problem is "the refspec item is created
-> before we know what algorithm to use", wouldn't that suggest that
-> the right conclusion from the observation should be more like "so,
-> swap the sequence of initialization, keep the command line argument
-> as an array of strings, do the handshake with the other side first
-> and *then* finally create the refspec"?
+You could just reset without the --hard option and restore what you
+don't want to keep. Otherwise there's the --keep option that aborts the
+reset if there's local changes, but you'd have to remember to type it
+out every time.
 
-Yea that was what I tried doing initially. Unfortunately it does not
-work because the ref prefixes have to be initialized before we can fetch
-the remote refs (and thus find out the remote hash algo), and we need
-the refspec item to exist before that, so there is a kind of circular
-dependency.
-
-> Undoing what was done in an earlier step and recomputing may have
-> been possible without losing information in this particular case,
-> but that does not look like a good design, just sheer chance.
-
-I agree. I originally did not quite understand the purpose of
-refspec_ref_prefixes but I looked into it some more and I think it is OK
-to not initialize the ref prefixes when using --revision (IIUC the
-prefixes are used just as an optimization?). This also allows to get rid
-of the extra case in the if (refs) as it should be non-NULL now
-(previously it could be NULL since transport_get_remote_refs would
-falsely return nothing because of the incorrectly parsed refspec item).
-
---=20
-Andrei =C8=98ova
+Maybe a configuration variable that makes the --keep behaviour the
+default could be added with a --force flag to override it.
