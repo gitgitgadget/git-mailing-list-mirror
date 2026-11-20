@@ -1,93 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.148
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795172571;
-	b=5Ed2nKF8KhKtVcVkVsMkCPbhp1yY5OIgvmc1qagGjbXtvEJJJCTdwvKCD00z69Iv3mL9
-	 M+hT66BZ56bF1lhfUf9S6vYe2TvKUFoYlP0C2yrDrNLwsddkAar26LCJbDrEfzadhmRRw
-	 If6kf8tTwFjSy0Brfv3mVehvme3+0MWMKDcCI5Fm0UuF+RCmDJnutNPC9JyB8Bn5nHhBt
-	 Ufu7t1ZIzrEntI4XEd6heJVDVUt8H57qu+/vbDaYZdQ8xyWr+/bs7j/Y65RiVGbrjFXsL
-	 JUHOLIph1gZ/71oJvUyqDR/hAF53E30R8XtNGq9QvfsRo4Vaft/MBq1e3XE76TUMkrw==
+	t=1795173344;
+	b=uozBo2jAjKrdm0/dCqUy6shMY+MXk5+Pvk0PQhZc9mDUvgps/+1s/GiCkm4Eioyh1aTa
+	 beci0hnlwcEE5ze8EjWGpsFgAdOg5GHBM9OtGQAcDgmoA5CWlYMVvTDuQYJysxZhlOadR
+	 gnHvTp+Ls0qU21a0xWYUOVQDlS2W7BZ36qllK2ZGhEcflOd+dacxImnvAKTtVWd5GjI9R
+	 pGkuDTmOAsSD5WAy1qZlxjySmd5UNXBxPAYO/ePdazwCOhXFokCgRKorHWU0inYKWksIX
+	 r/I+cJMAEW6CiO+/xzP19EO1gx7Aczqzi71R2ySlhTRr1GgAqE0/loWI2VCZL8dUaKg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795172571;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Subject:Date:
-	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=uFwYHYFnl2QKX8zXAJQw3kIROE3oakGspOaYfG+7eKo=;
-	b=RD5FOMALlP7CaWtWQE3tpow1gEUMQC3CS5vaT7BpzjOu0PoTmE9GmChAnIis18+pFMEJ
-	 BRwm/FR13X/Up21BAGTBEAPPg1qpSo2bomWuqxQHQ/DEVZHVhA3N9BCpOi+ZsE+6SWLxJ
-	 +Nemh2cq9ZuyHuvxYK8Cz55ySrqafHDqW9F30fDqd5UesrnJVte50nKS5DfNOLen/Qfdm
-	 PLhMzibnNzkWDQhpl0CXo1wmQmckzLyg1eUx3A81NzWMZx29Uhd7LOWgFH4iRqDkWbsdw
-	 kVeYd1Rn/qtvjbhSWzot5eyDJeb7hxLPP0KZ0AnNh9wGOON4Ol1Qrx+OFriAnCYMY1A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795173344;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=nNCKtNYc2CSI8JjMNgNfdIM//HnaYVYTmuT9qgxcAs8=;
+	b=SgWdYmlfzBlXztnhsJinRwgEdlZdPqQqc3xITlEJQ/mTT0qfRbd8Dm1KsBCieXpJjJYU
+	 Q/MZY4I5PmMjd6v1WBgeL85seiHdyx73znoqoRHcIbwsVjYfye+IUGTMKrH4QJQW0Sup+
+	 L79RU80Bu1469KzYOQaojcWpJrubnsmpxY7EPvnx33/tmw9I985foxBjjThOQjMuMrIXA
+	 e0ksX3pdEmcH0AgZEmEyyYoofnFZ5WHjtlFFt5R3eKRmCfk+NRldPV4psYaFjh/AS7C2I
+	 llGJiFIFARnfWy8emN+Yu1KmSVlzZ/VMz56UK7nm3E8sh+wXEdmml3u+w6mjXe850Gg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hMwAudWB;
-	arc=none smtp.remote-ip=209.85.208.53
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b="DTq/nuuG";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=IT1kUWA5;
+	arc=none smtp.remote-ip=202.12.124.148
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE36F606A320
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 11:02:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EE36F606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D24606A33B
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 11:15:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B9D24606A33B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hMwAudWB
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6b87408c797so958291a12.1
-        for <git@vger.kernel.org>; Fri, 20 Nov 2026 03:02:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795172569; x=1795777369; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=uFwYHYFnl2QKX8zXAJQw3kIROE3oakGspOaYfG+7eKo=;
-        b=hMwAudWB2iY7kLeZh5nCNMcdTbMR/qhbmqtkBxSApe6239AmaNToDFhWtC/aogwDh7
-         CJ25c4tS3g4QEMKinMPsil56Fwi77Lp5Jve0Af/wfx1UbdEYppWKPP8g1+bJbqn87BXt
-         z3wDd6QkXKnW299jNGp/jy3CN60/murJOcr6WGOuxynijYzTHOqcK1V6nRna3OtByMLF
-         8XlZcnKCYkkD1R4lRphsqbyjs2yowv1Ccr8NGm3Mk2cS3fr8YQEn0g5YaPTo+DO3SSd2
-         3MOsCxD2m8rUpFRBNqWCnQYJsfhCdyP3xsdPLZjx+8u7ZBbc5pIn0MrKIpvhX+Jms2uw
-         eItQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795172569; x=1795777369;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=uFwYHYFnl2QKX8zXAJQw3kIROE3oakGspOaYfG+7eKo=;
-        b=AglStluer53DxaOz5nIowWQEzXw1kJSkRVH+JzkPW0mA8PxFVuVOTSKEgh/j8L3bfp
-         XPsfi0LB1w++bvOKqqqVDGXp+q/iFcAXGWeL73pQtnqbpkg/tnqYVxyyyhWC37uTqJk4
-         dHc5uWiAd/Z6ZENZcIFrilyruEogj1cMbk+U0Djpg1f9bmFeVZ7DoQ/lnWgayL0OfgUQ
-         jbkKjFTfkeNAbdWac5CGwDEq0GYHILYnyMCC2pwAHFsVfsJtGocu/IEDtlpqB51pWVhq
-         cNKJ7H4r4zJb8qhB3m+iPfL1sq3dBh/Mn6HWPpMTh9xRY84lopHs/TSNc5VPPa2gX5w6
-         g6mw==
-X-Gm-Message-State: APuU4Z82To+2m9h1+u2OiBaWrqHcvMxEpLvM4lszj7m3+chz1rPqJ4r5
-	e7U3qkd21YsJY5iIi29ZbM80zIgTQI+EbjbDBBwlWPziD/GbSrPHVTzbBKLOPM8X
-X-Gm-Gg: AZFdTZfLaUAXV9WOVSuufXtX1Pwo+QQMQt26eE7UXxBXHnCU1+YO3A/jMCahKgZpAmf
-	ua04Q9Slpj1/HtwylU9g77FVNu/sZ9tpkGXXO59Pj+BVkgWqFqxDqLSOwjFBn+u9ssaeNS6JSQ7
-	gDGYwb4EC2Ofpp4dBTb12KVtwppx/jgjhyllenAyfiBd91FdLpszJ/UNnbO5cpi2ZAtntYI+gsc
-	pdDFgBo1QIslRS+d+Ds0nzpFfFSIv7AckW0BaqRKY2HETDjH9hPZIMa5HRlTA/LUB0YCDkCfP9X
-	ORnZMczmF5uZ61j+Scnvh3J1KzxFVuFX1K5CXIUF3WTRAHldfl3Z8FPe51xUqkvWJB+2k+KsqII
-	vZwVVbfE9Tb9tU1aZ6EZT5TAAf6prj9uyps9Twf+XtoRNOWX1H8wXKglmzYYZt1tDNwxVvZXDkl
-	p0HwXl7rWHOOgKPJ15/uXVFiu62eGWMwLIXYVqgTgfk2tBeXD5j8a5ZDDLPLu5fzRB0MOMW2Shq
-	Ji9uRxkS9jmxIaoCHslf5vdYQb/tT42MIgB2buDyRSHvAhopBZGIusGdZkz6DveIfj3LUgPoD+Z
-	4XhBB6PEywO0zaeWG6YfkBunG7W2C6sd2Ew1Vzguh+A3bPz00smJ4WNPe8LFk/e9V1doEk9DhYS
-	Aj7Kzs4nkoqUfFkGBFauOMKqGYPAbIjhgUTEvOL9UlCyc1zppNZxXrC5pGl48VHG981g56467nF
-	f1uoqu89wGoxgSQPBKP50M2e1MHs/0
-X-Received: by 2002:a05:6402:1e96:b0:6ba:2f05:2508 with SMTP id 4fb4d7f45d1cf-6ba37ec0a65mr2280696a12.39.1795172569047;
-        Fri, 20 Nov 2026 03:02:49 -0800 (PST)
-Received: from localhost.localdomain ([104.28.251.97])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6ba370faeeasm1046759a12.22.2026.11.20.03.02.46
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 20 Nov 2026 03:02:48 -0800 (PST)
-From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-To: git@vger.kernel.org
-Subject: [PATCH v3] doc: wrap emailed text to a maximum of 72 columns
-Date: Fri, 20 Nov 2026 12:02:15 +0100
-Message-ID: <20261120110215.42209-1-okhuomonajayi54@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261120055908.83043-1-okhuomonajayi54@gmail.com>
-References: <20261120055908.83043-1-okhuomonajayi54@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=DTq/nuuG;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=IT1kUWA5
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0B8F91D000A7
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 06:15:43 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Fri, 20 Nov 2026 06:15:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1795173342; x=1795259742; bh=nNCKtNYc2C
+	SI8JjMNgNfdIM//HnaYVYTmuT9qgxcAs8=; b=DTq/nuuGjg7HbHjS2rpzXcLGAI
+	z2V1/76vr6Zi+a40SF02nlzyF/WLl+c1+U7+TVftmTj4kmDUlEn44+W1xAKQXdsX
+	HOMwlGVABCns9TdjliOc3kLjdwc8oCvHkitJDLJkf/ExFQvrHj6MRNEcJtGf2V19
+	xoNF1+ExPpTg2Vzhc0RnkMCC0daHoSVKCox/9/Y5xkKqGx4KX9GrdgT1lM9lSF04
+	au0Inyoc426BYAIQD9B8w3E7OK2rrYMq7F0nQBYgy9fieTCsDWoSGd6hyaMSVuj/
+	BLDI+1BOBj6iDudAHSAcAuPzE15v+qepsXgP/rdqewA0L4rV1Ofwj8HFua9w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795173342; x=1795259742; bh=nNCKtNYc2CSI8JjMNgNfdIM//HnaYVYTmuT
+	9qgxcAs8=; b=IT1kUWA5mKhbF1QGquymXPd6eNKNFJH7rJ/s41ThgcTi078RWbs
+	k7Wvbt73vnDO4o/PtHG2qhnkwYaeSw8zrhYaO8z9sAa4IETsM18iSu6DScx0fFiT
+	wGwYiVU5kYJHELnf409a6GMZQUwDAmH2IMRCYUi/IbuRrhTLjY1yoewLAN5pYXPO
+	msKUkF8Rmc7myEw8khRpVCGAiJ88x2/zqqwedcFmIhLzE58tV/O1kMPjurkHW/mm
+	o1kUESryI9zQLpUPGN/pPKJ0n3txxAJ6hDv1F7sKi+fMbbUf6uH6fegIZqc/o0I1
+	be5tBBAQ4nO/AOMWClUabrrPyhuHjmlBn/A==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795173342; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:XHA4phbHwyk+G6OzfD2lejtHr+N0Zo8/b3kOo7VE3wxRnn9
+	lkvQnGIZYoi9eDczTXGzVE2UdRpe/y51bXEYiewhMuqTclZBWouQ84fLkD6zWCPI
+	BPUXDoZm9EHKZ7+Ftzg+CZFEcVvWDZn0SW82NzrPlw5gUW19+oQ0azHmJ2krsW4Z
+	MBeLDhnKarvheWroaL5X4eZ5Fwtu7oXsn7XvzTnkZBUBWM1lfng/0hjTkR8wp/QL
+	OaU6CaLdCGIfyeGcOhhlVmP9SwJAVl8owjv+6mLiBm/ubUigBZlU7jcj3G/ZKM4O
+	Eh7tc2Hf0z5qhWmKJu9zcHvHSFMhtozUo4DohmQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-disposition,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:anOaNeMc8RupkGSkYLHmxoRFeNWGnEf5CLObBnwpvpE=:lpU6jpV6LJj89vs+nEPBgh9yMQIvryx2SWQDQYn0UXo=;
+X-ME-Sender: <xms:3isAa-i_c1xkrxK6Mn-81GDVn17V6nTEGpYzaZdIlycli3CVzcrkpg>
+    <xme:3isAa1DFJk7nD58hvWfnLLllG8kkdPb_UqENe6lKhNwJ3QVZujHnn6_fjBTjsPpXg
+    qM4hu8QLei-aC92WH7T2NFPYxLuUy20H3sJW7uUfTprMRYpo83cv2Bx>
+X-ME-Received: <xmr:3isAazvZ0JVpBSt3q_sm94uKNGHi22Kr4qqtADN8gl4bv1hLCIbW_MBZziJEaCPAocBhIWQ>
+X-ME-Proxy-Cause: dmFkZTGttkAbzpYhnJo7NzNld9gBRqlZJLRMAQP0QZd0ZBWbKnCdJB3r70C9sm4Eb+a0Q3
+    /hKS/tJmUxfK0wQMDGuvCKN4VsU7vHsRNFwp093LavHRlChWyMhhTCWmbalWbZ5D5oh5Fv
+    4uQfmR6E6uy1I+OFyWx1d6LpKWxnIRWRF78/LZOAILN/GQYHkHdGAtkgcLsMR+nC3/SRNq
+    Yxs9eVpAZ7rfW31lPpxjS8YTxyapgI3aN7c/U4M8HpQ74shuE3df7uZlqk28CDM7nPbfM8
+    nvvuS7vQAJX+/54wGxa6I0ph3lWMhe3NmaRs6TLkMq+4pVppFd4zUTTnxVaBtcfA3dbxjp
+    I/HdaucQhtI8+38twEbYR6xcYZAGuTnmDn63L5HUNwWz0RpvRqymXMbuEjALADoC6eQ2qM
+    cGE9hJqE6gP1cPHWmkAxV8RVlQVaFCICVa9TNEnmhEfAadFBg//5bZXYlrSsmLgxXf6x7l
+    RiAtVzG8/9O+jVnSmhBDJl+UfOq6GBWWEgotFntpsd8FnPjv8HYk/912W76q3ABdLD0O9f
+    VsM0dZUc5NByxgpXICLp5GqbfRcXjseA86JkGaeTvxiVhr/FurM9+QZMmSv7mLBpzEWzpj
+    GDmmlEYeLQ6ynZBT/Cp6RwhkRd+mP4MFKFLRCeyKg4bUkurdkYDKv92swMTA
+X-ME-Proxy: <xmx:3isAaybJVQF81RNdhiDVdKO5ubEbjZV3N31h_eQfuvuNmvNnDNRpzA>
+    <xmx:3isAa-VGDfGArE6JhzZ2gXAujFlCH29ibZAE41nChunRRiJFIzBhPA>
+    <xmx:3isAa-7YDB8UREfgz7duLGdvYxmt3tziPjgKDNcT63iquwQgeS2O_w>
+    <xmx:3isAaxjkWv5P2JZp0mDqbx6U64xjAI1FfOcoa1ezezc8f5-TMkvQpg>
+    <xmx:3isAax7ibgHnnQIHqHCoQjSK42uO1dfw-T_egwsuuPbDIWjuuYHMW64_>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 20 Nov 2026 06:15:41 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 7baba197 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 20 Nov 2026 11:15:40 +0000 (UTC)
+Date: Fri, 20 Nov 2026 12:15:37 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 01/12] commit-graph: simplify linking commit graph chains
+Message-ID: <awArrFeY_B98IGoI@pks.im>
+References: <20261116-pks-odb-pluggable-commit-graphs-v1-0-a83fc1ff0808@pks.im>
+ <20261116-pks-odb-pluggable-commit-graphs-v1-1-a83fc1ff0808@pks.im>
+ <xmqqqzgkjy57.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -97,80 +124,95 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqqzgkjy57.fsf@gitster.g>
 
-CodingGuidelines, SubmittingPatches, and ReviewingGuidelines do
-not say how long an emailed line should be. State the limit in
-each: wrap the text to a maximum of 72 columns, matching the
-commit message convention, so it still fits on an 80-column
-terminal after a few levels of quoting. Leave a blank line
-between paragraphs. A block of quoted text counts as a paragraph.
+On Mon, Nov 16, 2026 at 12:53:56PM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > diff --git a/commit-graph.c b/commit-graph.c
+> > index da65cd3deb9..94c761907a0 100644
+> > --- a/commit-graph.c
+> > +++ b/commit-graph.c
+[snip]
+> >  	if (n && !g->chunk_base_graphs) {
+> >  		warning(_("commit-graph has no base graphs chunk"));
+> > -		return 0;
+> > +		return -1;
+> >  	}
+> 
+> It might be obvious when reading (and writing) this patch, but it is
+> a welcome change to standardize on "0 means happy" convention.
+> Should the fact that we now use more common error reporting
+> convention be mentioned in the log message?
 
-Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
----
-Changes since v2:
-- Use a maximum of 72 columns, matching the commit message
-  convention, instead of "near 70".
+Yeah, that's a good idea.
 
- Documentation/CodingGuidelines         | 7 +++++++
- Documentation/ReviewingGuidelines.adoc | 6 ++++++
- Documentation/SubmittingPatches        | 6 ++++++
- 3 files changed, 19 insertions(+)
+> >  	if (g->chunk_base_graphs_size / g->hash_algo->rawsz < n) {
+> >  		warning(_("commit-graph base graphs chunk is too small"));
+> > -		return 0;
+> > +		return -1;
+> >  	}
+> >  
+> > -	while (n) {
+> > +	for (layer = base; layer; layer = layer->base_graph) {
+> >  		n--;
+> > -
+> > -		if (!cur_g ||
+> > -		    !oideq(&oids[n], &cur_g->oid) ||
+> > -		    !hasheq(oids[n].hash, g->chunk_base_graphs + st_mult(g->hash_algo->rawsz, n),
+> > +		if (!hasheq(layer->oid.hash,
+> > +			    g->chunk_base_graphs + st_mult(g->hash_algo->rawsz, n),
+> >  			    g->hash_algo)) {
+> 
+> We no longer check cur_g->oid is what we expect, because we lost the
+> array that holds the value to compare.  Would this make cur_g->oid a
+> write-only member that is only computed and written but never used
+> other than reporting purposes?  In commit-graph.c before this step,
+> I think this is the only place that reads ->oid for purposes other
+> than passing it to diagnostics like die/warn.
+> 
+> We seem to still be making sure in load_commit_graph_chain_fd_st()
+> that the line we read into local oid there is a hash, so perhaps it
+> is possible to validate g->oid against this oid after we load g?
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 23a4d2186a..c5bb6ce120 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -33,6 +33,13 @@ Git in general, a few rough rules are:
-    achieve and why the changes were necessary (more on this in the
-    accompanying SubmittingPatches document).
+Yeah. The thing is that this whole is somewhat flawed in the first
+place. It seems like this check is designed to verify whether each
+respective layer that we load matches the expected object ID in the
+chain file. But that's actually not the case: we don't verify the base
+layer, and we don't verify the topmost layer, either.
+
+So the obvious fix woudl be the following:
+
+diff --git a/commit-graph.c b/commit-graph.c
+index 94c761907a0..47a97c9fbc0 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -679,7 +679,10 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct object_database *odb,
+ 			free(graph_name);
  
-+ - E-mailed text, including a patch message and a review reply, is
-+   wrapped to a maximum of 72 columns, matching the commit message
-+   convention, so it still fits on an 80-column terminal after being
-+   quoted a few times.  Leave a blank line between paragraphs.  A
-+   block of quoted text counts as a paragraph, so leave a blank line
-+   before and after it.
-+
-  - A label "NEEDSWORK:" followed by a description of the things to
-    be done is a way to leave in-code comments to document design
-    decisions yet to be made. 80% of the work to resolve a NEEDSWORK
-diff --git a/Documentation/ReviewingGuidelines.adoc b/Documentation/ReviewingGuidelines.adoc
-index 6534643cff..be15ea6fda 100644
---- a/Documentation/ReviewingGuidelines.adoc
-+++ b/Documentation/ReviewingGuidelines.adoc
-@@ -116,6 +116,12 @@ guidance, and concrete tips for interacting with patches on the mailing list.
-   unrelated to your review from the email reply. Make sure to leave enough
-   context for readers to understand your comments!
- 
-+- Wrap a review reply to a maximum of 72 columns, matching the commit
-+  message convention, so it still fits on an 80-column terminal after
-+  being quoted a few times. Leave a blank line between paragraphs. A
-+  block of quoted text counts as a paragraph, so leave a blank line
-+  before and after it.
-+
- - If you cannot complete a full review of a series all at once, consider letting
-   the author know (on- or off-list) if/when you plan to review the rest of the
-   series.
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index c60855f706..94a33b9421 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -700,6 +700,12 @@ WARNING: Be wary of your MUAs word-wrap
- corrupting your patch.  Do not cut-n-paste your patch; you can
- lose tabs that way if you are not careful.
- 
-+Wrap the prose you send to a maximum of 72 columns, matching the
-+commit message convention, so it still fits on an 80-column terminal
-+after being quoted a few times.  Leave a blank line between
-+paragraphs.  A block of quoted text counts as a paragraph, so leave
-+a blank line before and after it.
-+
- It is a common convention to prefix your subject line with
- [PATCH].  This lets people easily distinguish patches from other
- e-mail discussions.  Use of markers in addition to PATCH within
+ 			if (g) {
+-				if (!commit_graph_link_base(g, graph_chain)) {
++				if (oidcmp(&oid, &g->oid)) {
++					warning(_("commit-graph chain does not match"));
++					commit_graph_free(g);
++				} else if (!commit_graph_link_base(g, graph_chain)) {
+ 					graph_chain = g;
+ 					valid = 1;
+ 				} else {
 
-base-commit: 7fb6055e678f800320d8ab8cd8f201d9493d1ba0
--- 
-2.56.0
+But in fact, that is a stricter check than before, because we now verify
+that every single layer's trailer hash matches what we have in our chain
+file.
 
+From my persective that's an improvement, as it improves the validation
+and also makes the code more obvious. But it does cause a test failure
+because we implicitly rely on the base layer not having been verified in
+t5324.
+
+I'm inclined to add another preparatory commit to this patch series that
+fixes this issue. Which makes me wonder whether I should further split
+this patch series in two, as it has grown quite long by now and is thus
+quite involved to review.
+
+Patrick
