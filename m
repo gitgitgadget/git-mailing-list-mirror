@@ -1,92 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.176
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.182
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795201221;
-	b=YcmQKKBL2AELbGfzfBXkpcoN1jathLiWkmBxyidpXiz0XzXNl7TZpfl5AZWw22wosSHU
-	 4gbI6YiQ2kD3oRkIqg6+o3FBVDsSsl9jf2ZmHHz4EqCY3o3Xpj5Nw/MVOsNi+wybjeZ+G
-	 Wyz3h+l11DW8w2/wEYVUkjlnOGlgP0OLb2WtNdpU5uJZmY+88WCVw7L5CaofDp0v8cGpo
-	 WM6X1pnCmVtuBg9oVhrbMj91jmo2WeJWpmRBd/0k/zy12kZfGiMRkhZp4vjPqGdyCW/Iu
-	 g6JZV8aPSQzK9nUzhbxAF6yOtGjb4ozuYrAHe9QeTyDvE2pjABacjpZawnwentEPIBg==
+	t=1795201374;
+	b=n1MqzjAgkrgaU+IoTHod2JYcbnK+hTLR5rqV+4fmHEslGbUM+rtkfOY+4UZsaLsp7Rdl
+	 R8+lkhQ/SBZcdx40+PisjVqdmmQ+tQo+h7YUb4BRHtG2gSSs/NL4aPG+HX+bpNZA4xeoD
+	 LFt7B1Y5ZQ/4YCFISgQNtvvFEF9dh3PgCMr7raqIeauqPdR8fNw0T/pfHGXz11um6d7VA
+	 nkkCi5L5Y8oym7r3cW7x85k7aIQZE1zBHCutdRqp093avMU45oAYIztLNME+NvBX2RU+r
+	 H17hml/j1vYxrPijPBAtTjLS/OOxUr/8YqJfrzsFnMJj0vktEHv1YnDHz0fSwhNE7OA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795201221;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795201374;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
-	 References:From:Date:Subject:Fcc:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=mLnfIm80TyxU/GPDi2I1GYN9H9afPuqt8Zn7QRRkJfM=;
-	b=usPDt8nYSQ121TZnBo4NoDaMzQjPiz3KdUsgGtiDwbpYUu2XbPdQuIyd2lehfbA1W+To
-	 P8au/4qY8gwot/l5tyeCrQTh/LxzodzKNfOQIENOs5hay2j/Ooue6ObDyfMBim5HF2tsS
-	 UvpqlYu0LF0+9Y8kkk8HOrcrXJ2p7oBLxP4Sw8OCcXUVvsk0RTIFDbSgwvQRT21sIhI5+
-	 B1hT9OjXz4b0aTUoE6OyyrV500ypjHYdj5n5ex+ZYz/y9beZFls3ZOOtG1txX36yKAm4R
-	 +2TjaYA8/1y2bic8Bw0wnpH7wEvAgYW8y9EdNlDrMNdEaGIgc9+IpavyHP0cJzTbcyA==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=WEENBKeuJDD8LJ/+dVq1XN5zecyhShKP8eMH3nWMsyQ=;
+	b=yRHstH+4aqE5DIyRZq4k3kAF0arTzf3oWTOU5Ywl1LMFCkBjqKxYA8xRuOHHUwNwSRZS
+	 AqKcxxeiS4IjyUGmeHvEhklSkOgStKO7f5x7g9qNRDQOCRaiifiv0vPZIirB2TlIf0V4O
+	 oLt+UBDEsb76bnMKN2vOyOT/pKtEGxn692X3Nsksv5kGiVzYx5LhO/LyyMGW7QwpPn7Ve
+	 xClFEzoOqpHIDaAJassxKeUr1jacp4mX65mRQY4SAm3ZWYONnjz2BGUFnuiGfodjMBTif
+	 bCIo0lKulWHRwiaTJx6q3U99i1+awUBMpqvxRdfU7uwkGgkqFHNw9X3vzpVOLmliuhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ps5T3BzO;
-	arc=none smtp.remote-ip=74.125.82.176
-Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0EXjV8bt;
+	arc=none smtp.remote-ip=209.85.215.182
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702D560A2619
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 19:00:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 702D560A2619
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C723F60A2620
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 19:02:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C723F60A2620
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ps5T3BzO
-Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-38190551625so2073007eec.1
-        for <git@vger.kernel.org>; Fri, 20 Nov 2026 11:00:14 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0EXjV8bt
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-cdb2893531bso742738a12.1
+        for <git@vger.kernel.org>; Fri, 20 Nov 2026 11:02:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795201214; x=1795806014; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=mLnfIm80TyxU/GPDi2I1GYN9H9afPuqt8Zn7QRRkJfM=;
-        b=ps5T3BzOmhbhXsydvrQ+2pjzPG9JU7EBZj7skhV3reY/HAwapUsU/90MlTkSM7DrJ9
-         IZXX9x7WgKgHISC+Mny0VaGqAcJr0YlyBxl5kFayEm0KPYq29y4nsOjtX+ySpOlh031u
-         z3HG74J6fS1bDLX8VKBl7BPrFeOtNEG6EifHzlhIgsErRb5hLF2HKI/4vIUmzF52H29f
-         UAFdrDmwTHBe1B7rsoM8V0Uh2t11vOhH9Hzrd4PHgnC7a0sHvRI4LMu/7irP1Bb0jqCd
-         XE1so68NbrcVmuL6Ha0hj8wMAKNo89rt/zYx70/0hk0Yn3CMA+Ifdh5eNRrkrwVmNeCR
-         ThTA==
+        d=gmail.com; s=20260707; t=1795201372; x=1795806172; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=WEENBKeuJDD8LJ/+dVq1XN5zecyhShKP8eMH3nWMsyQ=;
+        b=0EXjV8btMt3qUnv4bH1KAg5Jhp1+8+emKbSIbZddPDKXJ5PJJUCbZlZyGF8h6I/QMW
+         8jhXcEjm/Q/mz4rTb1Kv6rBPj+PVXs3XnVw501hvT2ZFXQrAEhNLikICdlQ1yEEhnnJL
+         +LoAk5SoBRz9UBKCY7mSTfe50ysVxr8xsPh0Fm7KmzMCFHtSlsNLq3dZA+/awW1Jy/GE
+         rYo7J1idCo6NsKHeR743xw3plZ75Ni5j5SfM8EYu73g1GKw8EobgswiL8KPFoLHgA30F
+         Hs8KT654iN+QU+dF4X6W2lZAcZeXW5HP2/JXRd5vJ4V7X3n0tdmke2Zcq9SpJeZt6Veo
+         PnZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795201214; x=1795806014;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=mLnfIm80TyxU/GPDi2I1GYN9H9afPuqt8Zn7QRRkJfM=;
-        b=SPXvuiljkEOUYtt+riCrRnhxNh8KyhMFXPKR/13EpDgh593frTObHnn2pDwhE/ZpCL
-         2M7rwAnInTRbCNL634erev61qXZTZXGqYIgWFmqrW8ktLtIGao1fdVCi6F1gY9HZmmaV
-         oHVuZZvZOA80XwwV3nuQ15UVcTgm+8zaEESfEceXLfllwCwaLjIi1b5DZVT2KSMVulbV
-         QKfOQa+gfEv3oAwK2z0pUHtPDY2/WkcIaTRDiRypbYAi31MtJ9213AOlfUQY3cW27I6W
-         bi2XxmZ9EOmxQ0CgBkpWk24bV73K6ltQqr/niinxbwyK8tYHe3n2syn2TRoNLIp29gQt
-         I5YQ==
-X-Gm-Message-State: APuU4Z9wNtmZExLOnXLovAbKnXPApHT1c/RGLe08eJihYoySLwjSjEF3
-	66Xggxvb/XwJQVbTltDV7IJZN+CXnF1+RcqeuT0rDOaDHRFppUQ2hyrGxr0T+w==
-X-Gm-Gg: AZFdTZeJliNBQHKlOmnPch3jCK7Qa1OIV0FI6sBt3R1HnyYDiEeQk11AjiioAiCg8PT
-	NIhVP48lNgsG9E7ZTWdpWopwMkDfFV05yi9CQW4OP/ucGwuqkbgstC5z1kf2Avq8XaRF3fODDdR
-	VDuXmte3ePKK1i6ToghUFVJuNzeagxzsGuGkse15qpFgchhSjpbficc1KrM/FICzMNqAkbcErZ2
-	Fe3nH8vn5pke6yp+VGtkXMWKkANiBVu3l7OoheVrlZgdiG4JQTcE/0OyHuva38kFAQutWXslVGL
-	krzITE+P7H2/k/mzBXCXKv3mipdpQmpHM6gj6vnOJfbmQ68ECjJbf+8g1TIQ5sZM1YPR43NjJW7
-	LllvukzF0nq9NPcWquCD4Qwbd20Dgu1KL6gcvPhbEL1ekrID6+jzfX9aN1L6E62wINBhClqst6Z
-	qk5V18g6jGuVL9wq9j9c9sj2eRB2QsbZc4xZvNFhrw3yjRNcrXUqfBw4wvQYsfQbAUBBQAzwbtz
-	AwofIG/TkvIpM+f4YNWOPaYxfm2ZVVFQrz62PfeeETq3x3z/RYyQ+wHPDDzT7x0PcGebc5e2kQA
-	Vu48YV3pO3jU3MPtlgT0aPkkFQPwIEeO
-X-Received: by 2002:a05:693c:42da:b0:386:95e7:8497 with SMTP id 5a478bee46e88-38695e790e1mr838855eec.28.1795201213282;
-        Fri, 20 Nov 2026 11:00:13 -0800 (PST)
-Received: from [127.0.0.1] ([40.75.135.110])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-38567cafec4sm11652481eec.26.2026.11.20.11.00.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2026 11:00:12 -0800 (PST)
-Message-Id: <pull.2493.v2.git.git.1795201211980.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2493.git.git.1795177398801.gitgitgadget@gmail.com>
-References: <pull.2493.git.git.1795177398801.gitgitgadget@gmail.com>
-From: "Ophir Bleicher via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 20 Nov 2026 19:00:11 +0000
-Subject: [PATCH v2] doc: correct typo in 2.46.0.adoc
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20260707; t=1795201372; x=1795806172;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=WEENBKeuJDD8LJ/+dVq1XN5zecyhShKP8eMH3nWMsyQ=;
+        b=zED2aahdDW3Fneqm2+T/TWPVYCZlkJaW/hkwiLjDXkW2XuE4lB+BStwaBeCCj66aAx
+         wppTeLGZ591ToV8Rb9Z0vbUnOX/GkhyJTL3xwyQfu4Unv70D5+4DHmlww+OWwMrg7L+d
+         IpaBJMthgII+fFMkyVmBKMQDIaXFZIJw8qEnLt44myoDUf2aD2OrsBZ2O5j37BfxDdK/
+         9M8VIByI4l5IVk03puS6WUTfvrFwtWaJDI/rFxM5WADeTjZN0rjL+8knn6who6dvVi0Z
+         mmcglim6RiyIMSnGcD0V7WJcnlhTdSNHETJ1hXLytJhaQw+BDRNx219EUKKPRQwH45op
+         4iQg==
+X-Gm-Message-State: APuU4Z+nRwC+WxNNR0hKt7foKp019AYUyJiB/L8zCfgoRWcZthI+ChoD
+	u8pAIfoMRedMOaUjDhL6n1TDR5+IUdPWTXe3oTTw9zHHGRbfqvfjTrGRT3oYuEbecII=
+X-Gm-Gg: AZFdTZd07tEgWOp3dijyS4EFo/klkV/MNQgs5GtqMOPOdsnpwJLjv/F97jB9RVeVhMe
+	1JbIh7NOASZUpP1RxVYuQMCgLSqyZcmtXdnEaspx9p7pcskM6TuHDqLMn9I//prdPS/uoFblM8W
+	+/caZhVO0UN9swly1X+0qwBGfsieqZ4bEKn+zjsy00R1MgZ1MFPR5eaHXg2ffUnAvbloTJRFLbB
+	UcdjqXSFrHspyoAABE81v8Vy5Uf8vv4gQZEz+p9zRhiGxguiL66NUNPf/bfqi0uFTbN/c8HdUtq
+	Y8jfkLz/Siel/2cRqw/99cMu+GYN0yadNUF651nTfM6frQh84nXvGiY79wqUz4IV78OwBQsQRPy
+	3NKuL5BVeQLeFAQ4554txcfJPCPu4HFr1H8SHFL0qZpNZ/qHKpV19GKlB4cwBjLkyVqIHsMnImd
+	BGbKm7d5xXUoadmVZIQpVjJ28mR5jFbp5Sps8C1mv2tM8GiI67VsBYGJOm7v75UqgZb28YiH8aQ
+	onO7FKDPXgn5r1zOkI1KY/hNZL1O5gZVfBWD7XYKJnNjLR9Pi2vsYlBFGrnn7aR4lv3xmm3M/3+
+	MyMInln30uByX5fNO+eDvuXJ35NvSFIJd8/9+iq0yKOhIDiJZEdFADgLNK4Gu7Cu8FIKkahAHvK
+	dBRR2+Qb1mdFJGxTyXxL6G6BfbFcFh0NTa/4Hu1eHzQ==
+X-Received: by 2002:a17:90b:498c:b0:3ab:be66:ddbe with SMTP id 98e67ed59e1d1-3b41c902f3emr3684713a91.28.1795201371924;
+        Fri, 20 Nov 2026 11:02:51 -0800 (PST)
+Received: from localhost.localdomain ([223.190.83.65])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b44b75f2a4sm168216a91.2.2026.11.20.11.02.50
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 20 Nov 2026 11:02:51 -0800 (PST)
+From: Aniket Gupta <aniketgupta3001@gmail.com>
+To: haraldnordgren@gmail.com
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/6] status: say when the push branch was rebased cleanly
+Date: Sat, 21 Nov 2026 00:32:46 +0530
+Message-ID: <20261120190246.79249-1-aniketgupta3001@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <dc0efefa0ef02a04f211cf7e24a8b6855f36e12f.1791270504.git.gitgitgadget@gmail.com>
+References: <pull.2437.git.git.1791270504.gitgitgadget@gmail.com> <dc0efefa0ef02a04f211cf7e24a8b6855f36e12f.1791270504.git.gitgitgadget@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -96,58 +96,20 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Ophir Bleicher <ophirble@gmail.com>,
-    Ophir Bleicher <ophirble@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-From: Ophir Bleicher <ophirble@gmail.com>
+Hi Harald,
 
-Fix typo in the 'git describe --dirty --broken' section of the
-release notes (chang -> change).
+Thanks for working on this.
 
-Signed-off-by: Ophir Bleicher <ophirble@gmail.com>
----
-    doc: correct typo in 2.46.0.adoc
-    
-    Changes since v1:
-    
-    Correct commit message
+> +	if (num_same)
+> +		strvec_push(&argv, "--cherry-mark");
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2493%2FOphirBleicher%2Fpatch-1-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2493/OphirBleicher/patch-1-v2
-Pull-Request: https://github.com/git/git/pull/2493
+This makes git status slower when the branches have diverged as every
+commit on both sides now needs a patch id. With status.compareBranches =
+@{upstream} @{push} and 3000 commits on both side the status goes from
+25ms to 150ms. With 10000, it goes from 60ms to 500ms. And with only
+@{upstream} it stays the same.
 
-Range-diff vs v1:
-
- 1:  5cb57274aa ! 1:  c9356bf90e doc: correct typo in 2.46.0.adoc
-     @@ Metadata
-       ## Commit message ##
-          doc: correct typo in 2.46.0.adoc
-      
-     -    Fixed typo in the 'git describe --dirty --broken' section of the
-     +    Fix typo in the 'git describe --dirty --broken' section of the
-          release notes (chang -> change).
-      
-          Signed-off-by: Ophir Bleicher <ophirble@gmail.com>
-
-
- Documentation/RelNotes/2.46.0.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/RelNotes/2.46.0.adoc b/Documentation/RelNotes/2.46.0.adoc
-index c06a04a91b..2d7b7a0bc5 100644
---- a/Documentation/RelNotes/2.46.0.adoc
-+++ b/Documentation/RelNotes/2.46.0.adoc
-@@ -406,7 +406,7 @@ Fixes since v2.45
-    (merge 4b837f821e rs/simplify-submodule-helper-super-prefix-invocation later to maint).
- 
-  * "git describe --dirty --broken" forgot to refresh the index before
--   seeing if there is any chang, ("git describe --dirty" correctly did
-+   seeing if there is any change, ("git describe --dirty" correctly did
-    so), which has been corrected.
-    (merge b8ae42e292 as/describe-broken-refresh-index-fix later to maint).
- 
-
-base-commit: f7de81456940dd6f3274e461149bba12965de609
--- 
-gitgitgadget
+Would it make sense to count without --cherry-mark first and only run
+the patch id pass when the two counts are small?
