@@ -1,119 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=216.40.44.13
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795212141;
-	b=ylKGO4q/Xz68FuHSGbyfOKzN5/NeAfIzwgP1ctzbQ61PAD6jvxJYZoQjEiS6sQOBUflh
-	 Ts2Ce5SHLqf1zpCYF9Rv66J/Og2lw681iLRPHHWuKL4QPUKocMvsUXkKTi4aWY/MOQAac
-	 Ejl/vi/b1okMViz1MTW9EkGwc2EjaRZq1nIrmlYjKE4T2P5HUEHKddwZUDhASqaZUJCbG
-	 X2a8i6lOFT/ZdMvSp6plqtzPxghLKUp66+qnpeFInYXXuTQVAfxivvt/l/CisQzkIN2Mj
-	 OgX5RBFhfLNLbLekWVfWH+mM7ay3+iXWdyvXtuxXf+oSYWW7XR5SlW+BGxJ2L8clpgg==
+	t=1795212934;
+	b=Sy+KzsBEg84FJ3ZQRyj/h09TUHYaumBDjQoAeifvnJjppKfDV2iKO1o60GT22CZimBEo
+	 NMo00baGWHS8pwkF5huMPnI0G+FFxLhjlvlUSxKhv7MyR/E5jran9ZG1EdVHWsqN5xnQY
+	 ypju02ZF71/9FC5qW/Bl3zJERGVOImN8NkOfTTHXU58+kMoPmIPTKhSXjxiijTFVJTOE+
+	 Pp836I2YCFkfmmo7KJy/0QRP0TcACLVLE1ths2TamWnQFLn/sxL/Or/5E0qjP7B35M9OE
+	 AKGe5aEGsYWyzA0fFaCdX4o+23L6jxahuKWVGXSIe6zkCmu0Hb6HNgVcuP+xdDpkryw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795212141;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=S7DrcGtc0NMKC42nPOh3me0LRqiMexxCCDbOkD4KZzo=;
-	b=rsJ2CkJtmJj3nphLs/RbjDkJTJ7IJtUV3LAnePkMlS9hy15dsArfpkr9VzVZB8egUqG+
-	 4Wm4eXtlo9jqnQnYGYMUUiM8JneRWDEYDreypd9Rgx7z0cZpp9Xt82RI6qX8yzeEbqeM0
-	 ax+TPqFfRDvc2WeTi0LJ0tXfI+1TWD8o3XYVmWcIJBMIWp+gjZ8jav4gd2DgeIhnxDZC5
-	 N61AleqM1yLM7Q9S4B2sY/tm/9nqfNxIpG1LexZs9JqpRMxncg7KzIIt2nC3A0hmWXRi+
-	 JjvLWuiwX2W+9SCc/9ZGp8iNF00hrzDbWkfr13iGNzZUV3BUhPe4vTdGI8AaqeTo6cQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795212934;
+	h=DMARC-Filter:Received:Received:Date:From:To:Cc:Subject:Message-ID:
+	 In-Reply-To:References:X-Mailer:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:X-Stat-Signature:X-Spam-Status:
+	 X-Rspamd-Server:X-Rspamd-Queue-Id:X-Session-Marker:X-Session-ID:
+	 DKIM-Signature:X-HE-Tag:X-HE-Meta;
+	bh=6hsxUyPAHnYTfuRL4Xi2aRrH5zuLLWsN4KyS5r8mSc8=;
+	b=PT8YapQEzpsS+l/PsNL/E3WVX0zxzipeeuETKw/ANPPOMVquz2/mYfW24arbIP5GTZew
+	 nt9AEX1JLaP7ugSUaC7oKge0PyNCp9NXEo1bUS5npiWoD5bAc42S8rOhA4C2PSCC1Pxns
+	 nvU0OYNbglOyEWYqaGp7CuMgPAEJ0UI+seeXdbNnCUlVRww6St2ce6n7NEkOgfJsq7d3j
+	 lsy0ykeOBcRAlRrQB9osyRm87/q4KHEAWGQHxOdwdcWQ5lAbEJ1UzUMOmo0oFTgXuCE9W
+	 FfXe09VV6zGBHP2ak5F63+ZgqeN2BhjbxpLq3XJ+MQ3nrJEX8Qlf4rCuhFe++bK72ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=VPwp8q06;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=GngQLmyO;
-	arc=none smtp.remote-ip=103.168.172.153
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	dmarc=pass header.from=goodmis.org;
+	spf=pass smtp.mailfrom=goodmis.org;
+	dkim=pass header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=aGBptfID;
+	arc=none smtp.remote-ip=216.40.44.13
+Received: from relay.hostedemail.com (smtprelay0013.hostedemail.com [216.40.44.13])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738B0606A696
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 22:02:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 738B0606A696
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F7A606A68C
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 22:15:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 87F7A606A68C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=VPwp8q06;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=GngQLmyO
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 93F0D1400190
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 17:02:18 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 20 Nov 2026 17:02:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795212138; x=1795298538; bh=S7DrcGtc0N
-	MKC42nPOh3me0LRqiMexxCCDbOkD4KZzo=; b=VPwp8q06URMz1AURCvYGkIupLW
-	lVaQDc3llCFIlzDbobGNRRm7Myb4vm+SdXOD0z5XDMTqsXEjnqS+8/zZ/JzW0Bn4
-	yDK0bALdNya4Gv5a25xQ4/M8qKT7gDSDPfzAEHtnJV/5vwobQsCHfRu3Ai8jIsRA
-	NLkTA3Ciccq6dX+ai6r3RPy6EtO0Ne+UPDU7qPv4s3dX4eecU1q7DcLy0Fj3U99/
-	Nt6UirvRT7F7I3DtbAJrpEEbULrpV4L4cEfV0zIfCPIY3gGi+RFT4HNq4uvaVL73
-	DylREBnL6lbiOppqHUye2NmbbvVncQ9IJNzAniav1+uhchULbwIgzxFTX+ng==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795212138; x=1795298538; bh=S7DrcGtc0NMKC42nPOh3me0LRqiMexxCCDb
-	OkD4KZzo=; b=GngQLmyOq4O7ggO6BmII0YRshOb1wXYzsJwUt2UbZCoqGc5Ebow
-	NsUJI9KHfxusRddu9wNn1nM+ronFFO/ob9IlQXVPFJUKtI2U5MHFrtHlCe3HhU48
-	gL09KlFFyVv+kPU1zkUjIzbvHuzPytU1wOB0uDU5l0Dm5/G2JDgh5858x0SWLdqn
-	ohMAHg3CiNzfjLnx2c1lzNwLwwR9Qh8YvS7FleckG7B1TK7rNh4CVkHLLTky7SEg
-	ToAkDFrV4et0HbA1mMVsHUtKhVVuAl8iP/mKAp1KlJ1tA0YyWJyzJQ8vEu3+Hopb
-	whrxU2lyPJfzQcpHPjTV/9XaKdZMcRVS19w==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795212138; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:gde3MG3JRtzOwqA9CIXJvgAlQDmW91uh6YwYvwGibHXD11+
-	k88wxug8XN0DXRvdYDlKgPAfMJKcXYkAyKGYPYSlSYgYhzGqm4p+3SbxvnFj0dPi
-	GyPw2Zw/soxmp9AwQP27on++6ieK/rsAXTQN5sS+hKaOGm8E9Kke08ljQ1P3/GEv
-	EWjWA0ZHwgFC0PV+gaX7wIN6s0trCrXFkLgLcGI64uZxI/QwjYzNOiGrNs98LIPI
-	MTqefRjUcoyRFoLkW3By5gnOfe43oh0ee3A6KCzKJrdnugtriRNQ7AWsaPOyvEki
-	Ji3xRqro03eZLVIj/e4PifmayTkHCuuqwQR6CBA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:JtBZEWXtXjWnNETXMaX6+P6AqpPeTkPdXj0DZydOeuA=:ybxsU2/tRfW7MLlvprG2SC8iKJS0uRbTFCU5JcnkU2U=;
-X-ME-Sender: <xms:asMAa8g4PqWCct6-mXdA1sEFU4ybsLsLJDCmwkT9TXYI44UOuYbZLg>
-    <xme:asMAa8fUs7wT8cHv5i869uZkNH-gztT9alyV3nA999u39e7gFbMtsYgmDzJlhjWJX
-    aILGFru_5vw27_haSiQGnf0dumeBYJjL7u71niIKhJftfgQVqLFMMo>
-X-ME-Received: <xmr:asMAaxdrrtfRW3-TTx4svkLyEtaPu_QnCJk_i1Pd6p8qoYKtqlVVLnsSNcecaVEOrYHKyIFlOmEpmkBtFPh-vvipcS88yDKc-xYR>
-X-ME-Proxy-Cause: dmFkZTFCBIqEtoBDktFt5WZfDIWeeje5HiWBnV+t7pvM/NYenzgc38Vp+QYbB1jq1lcRpe
-    DLSuuDq9hjr0zHF+0U/ZF3kiZ5pMiWcV3G+xCadAlSf/u7MtQrCZfPzN9NWuiyr+ONqFaa
-    7dG7PtCM+coJk9wM7F+5ssxAZpbQaiYU8odHdA54ZijmksKz9MmJdp8JC8UKRNXiyEMDu3
-    Xi/VMagTBSiN9xsmYiNo/ZkKaDMAlv86YNzKs1MzToDa85Wr0tPncWfZcnpxmKyKqny6MB
-    aSZmqR0X11odfUGcFCQR6tYKb6qDnATNOIZquEqbzhP0UgYTRfeiERrhQH6DT9qWKnlStR
-    p0MBpfsE3XH2B4vNMAmBvJTURz8zO7pUg72VGz78ltPZbmf1q3MD1vDnT1kWSoBYgD8Ofc
-    dV/m5i5RLttHwrBes/w5MS9SerJLWFXzeU1W/zALg3kuUAMhqGlMFZ6EQW/OMS0ipA1vzT
-    VG3Dxykx8wML6/8g5ukPalNFi9hNCSAWBYzWmU/zwiE3mFU8oCEnC2Zy+7i53wW/99ZD1i
-    tw1O9bJ6PnM4OsoyUaZmIl/Xedvj7T1BoPR9Bc43aWVTX/Lo12QgIPD713YnKTdmYrvbdK
-    +g89eA4Bi3jZyq9i5WKmhICSmyu2NRnKoIOAkDFtZBT4HOME0puGYQI4mp4g
-X-ME-Proxy: <xmx:asMAa2_GeB2uF4J3PLMa3dlv0X6vCbbyAQ33P4SBsDW3DMTFF5IUzw>
-    <xmx:asMAa9myaamhCF2xyMMINsIYFCDlsnv3qNZ3Qgk3157MsNpKYU7GxA>
-    <xmx:asMAa4-dTTEHYN3kwTe-NrU17AoUL_q7_Bq3QWLSmDxFArgFqCxIYw>
-    <xmx:asMAa7mZQWlxPGP4KHFqaPoIiG5OpKGl9XjBGN57QSQ_drvRGQXwYw>
-    <xmx:asMAayPMRR695eVHdLD7D7FX06fmRP8LXIGDx7WswJmqrinV9Qk3j_Yv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Nov 2026 17:02:17 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Steven Rostedt <rostedt@goodmis.org>
+	dkim=pass (1024-bit key, unprotected) header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=aGBptfID
+Received: from omf06.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay05.hostedemail.com (Postfix) with ESMTP id 56D02401CB;
+	Fri, 20 Nov 2026 22:15:31 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf06.hostedemail.com (Postfix) with ESMTPA id CE56220010;
+	Fri, 20 Nov 2026 22:15:29 +0000 (UTC)
+Date: Fri, 20 Nov 2026 17:15:28 -0500
+From: Steven Rostedt <rostedt@goodmis.org>
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
 Subject: Re: Prevent git reset --hard from losing data
-In-Reply-To: <20261120145444.13061eb7@gandalf.local.home> (Steven Rostedt's
-	message of "Fri, 20 Nov 2026 14:54:44 -0500")
+Message-ID: <20261120171528.3e6c3f5b@gandalf.local.home>
+In-Reply-To: <xmqqqzgfnouv.fsf@gitster.g>
 References: <20261120145444.13061eb7@gandalf.local.home>
-Date: Fri, 20 Nov 2026 14:02:16 -0800
-Message-ID: <xmqqqzgfnouv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	<xmqqqzgfnouv.fsf@gitster.g>
+X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -123,29 +59,67 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Stat-Signature: 6h8z3i9nqe4f7rhmnhwif73orp1igscd
+X-Rspamd-Server: rspamout04
+X-Rspamd-Queue-Id: CE56220010
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX19icT3UWr6Wmq7/sQhZENOq2ZoTlDs1xiQ=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=6hsxUyPAHnYTfuRL4Xi2aRrH5zuLLWsN4KyS5r8mSc8=; b=aGBptfIDwsarclSHOvBUDn9icvIKxbfs+Mpz6t7Sh5oXTELGDG+N1kv12ksOg5GVEAnVkYSQErbhwHnxELtdD4/FkLs/7kMVK4DmnC5dN/irx29JPIJcaxzuBbWA0GpQr95rQZXKvEkruhANTMFtc326p9t89Ju+hicV9ijRImA=
+X-HE-Tag: 1795212929-99685
+X-HE-Meta: U2FsdGVkX187ddYt6MWUhr0kM1moKawC4Hj+lPDLxqwCGY+IOUzl9jKYaUhl8xECNAJwFbR5aE/yKbkxby6ADI1poueNejs8EALUE2OGPE9Tag5VDgNh2OvsxfOZPR/SL7lisQu3yNzMBAJHb89uaTJBefrXmhO1adhj9hxaDM5xaU6lsL0QG4DLz86CcSqZTji17cXXO5tSpIH0kitK6qpDIm/aipoOm7h4VnXCmNddRqx9M3KskcDWG0lMuCBxGqiuQw3kwEHkJEKTfBNB0AdC9Qs4eDeiMdup0BzVxh6kTddEjax6/wJsLQUUFUSxwwJKzPqN9yjX0be02GrjWHX8BRIMLG6F9dAWfPTkaFkDvjQ8cOYRsZh6fHuB10x7+3xiL8RJTPVK/Sy90ekHOIwsItYnNE+R9U1apDqnbMMXUsIiW/h0+aZu+thbZ5HP
 
-Steven Rostedt <rostedt@goodmis.org> writes:
+On Fri, 20 Nov 2026 14:02:16 -0800
+Junio C Hamano <gitster@pobox.com> wrote:
 
-> Too many times I do a "git reset --hard" in the wrong directory and end up
-> losing uncommitted changes. Is there a way to add a configuration to have
-> that command check if there's any uncommitted changes and ask if you really
-> want to do the reset?
+> Steven Rostedt <rostedt@goodmis.org> writes:
+> 
+> > Too many times I do a "git reset --hard" in the wrong directory and end up
+> > losing uncommitted changes. Is there a way to add a configuration to have
+> > that command check if there's any uncommitted changes and ask if you really
+> > want to do the reset?  
+> 
+> I do not think so.  Castrating an existing command without harming
+> others is a hard thing to do once the tool gains more than a few
+> hundred of users, and we probably have more users than that.
 
-I do not think so.  Castrating an existing command without harming
-others is a hard thing to do once the tool gains more than a few
-hundred of users, and we probably have more users than that.
+I was hoping that there was just a way to add a hook that could run before
+executing the command. I wasn't suggesting that we make that the default.
+Just some kind of .gitrc that says "do this before executing X".
 
-I think you need to go to the root of the issue.  Find out what made
-you want to run "git reset --hard" and see if there are less drastic
-solution to the same issue.  And come up with a way to package that
-less drastic solution in a form that would be useful to many people.
+> 
+> I think you need to go to the root of the issue.  Find out what made
+> you want to run "git reset --hard" and see if there are less drastic
+> solution to the same issue.  And come up with a way to package that
+> less drastic solution in a form that would be useful to many people.
 
-That way, people would start using that newer solution and less
-often be running "git reset --hard", reducing the risk.  When
-somebody really needs to do "git reset --hard" or a script that has
-happily been running "git reset --hard", it will continue to do the
-destructive thing as it was designed to, and everybody will be
-happy.
+Well, it's something I do on a daily basis and have for the last decade ;-)
 
+The reason I use git reset --hard is because I work on several topic
+branches and create development ones all the time. Sometimes I add commits
+across branches. I'll create a temp branch and work on it until I like it
+and then copy the sha1 of that branch, checkout the branch I want to use,
+and do a "git reset --hard sha1" to convert the actual branch to the temp
+one.
+
+> 
+> That way, people would start using that newer solution and less
+> often be running "git reset --hard", reducing the risk.  When
+> somebody really needs to do "git reset --hard" or a script that has
+> happily been running "git reset --hard", it will continue to do the
+> destructive thing as it was designed to, and everybody will be
+> happy.
+
+I could just make a script that would do what I want (do a git diff, and
+ask if there's any changes pending before doing a git reset --hard), and
+then train myself to use that instead.
+
+I simply emailed to see if there wasn't a way to do that type of hook
+before committing to that. There's a lot of things git does that I wish I
+knew before and I was wondering if this wasn't one of them.
+
+Thanks,
+
+-- Steve
 
