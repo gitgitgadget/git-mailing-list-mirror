@@ -1,90 +1,117 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.178
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.156
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795174448;
-	b=Aaa9MDNz+9nqwl46qNXvYWBRbNsbBuXpwz2Oik3azskdm9E+jmKfBiVvabDzs7RN8aGC
-	 bAvGXtn3r4I3WjCHE8TAL0e661MF+mvX7H0z6r6jw3LMjN6K5b5iQ2GWkLBGvm84a2OxL
-	 89TuNRBQcHex0uhElrxHCIDund8wp+5oaigmyEfjceaALDYKeU/EJjSAGZEXVlNVB1HSC
-	 uDJV+oqUPa7wFqk4ixSOoYT2/CBP+4hd7XYtW7cjmJ6FSi6n6/ufA3E/i1hc5ik2Fqr97
-	 NO1c1Qib+EUKNfMoVxpDLG2H91ioc5H14oB5AGWTha6+9ZFUyccn7WYhasZJPyW9yZA==
+	t=1795176157;
+	b=i6HOx/03Gl7Cdlqm5ZK4/CRiTWZF4388lUUQLMy7yz/0v73lFSsBsJhb0Q95mrYty4fZ
+	 SjNHBW9fwfx5NMPJttzYlmp0mBzxN+LNUK/8/lnLwhLXaQ3HgI3J6k7DiQP2zCTIAGB60
+	 5UAQfU/O5g+4sQ2VIDyofjbxG2FBAalw5xlS0tH0MUUHaXb2htOQ9d4UUK3VE/hOQ481f
+	 N/OJsipNllULXYQ7fUXT61fBckZSFvnU3CDITT+rKv37fmKo+bOF/k+DdVlaAMBPhbMII
+	 SOX6vn3yWVfEBgzqHnmOtdh++QXtRjwSh9yp16/bwVQdg3SWnjL9jj1qYBZn7X2S0oQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795174448;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=nd1cROn/xmhzVm3Xw6VWazSGiRd52OyCERH25GG+pZM=;
-	b=buR8HVdqz1twOS7vLw1m08FZqwju4G/GoLw9XXSgAk05c9SGs4oMr8Yf4pnRVcSSFqDV
-	 lz38WhD3icO/pwv0MWrVTSkSmdBYYc1BUdjlfceFx4BpgkX+8AUPfOcDAcBCT/YTsamEb
-	 4okaMWuDDdYqEmtPL61FMvn475E/R0n7f27Vv1MPY6JX0eRB1qt8WBFfQQLiAJUDVE6/N
-	 8EtTX6ojZr1523bHNuHcZ7VU63XvOSxZv7zoSEdhNWIPI+YwQDciM/+iCdmNEbmPcsq3J
-	 xAeX3+cnFdvha+Hq2xQFRkhpb3K+BR7syV/+X2HJJr9mh0RbnNA4cpGZ29nKwVZTNfg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795176157;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Received:From:Subject:Date:Message-Id:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:
+	 Cc:X-Mailer;
+	bh=Oe8PMyEoeE6rINCeBHAJnZtROWupxIzPSM1xtXBCpMw=;
+	b=L/0r9SCbx3UbtIXwkz272+UL4/rfNGJ81FI/tKY1vv1PP5hS3khjGVcQkfyIeRc6AwOf
+	 Trdm1r6CLL+eJG9BAhOFOQ+7ioqWkfP11RiL+7rvm6uVGZfYtrktg5U2dp1I/dl6GISDc
+	 XnoOrJ8L+Do8qoT/FRrlu4yESVVS2zsb4cL1JkxfiHcjhLK/NvCSUh/6t553COC372hl8
+	 fJvGrG9AUc0TLo847GDlt4395ooUmDG0Km6zLczQZWcESrZke7b/QOcsqLOiiRouTha02
+	 OZ75XnQgwZlKJ14gP8aynH7H/3J3KmrX7Kz9BFzB0JzKnf1ij9VKdXbETLFSYA8iF1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=d2RYEnbR;
-	arc=none smtp.remote-ip=74.125.82.178
-Received: from mail-dy1-f178.google.com (mail-dy1-f178.google.com [74.125.82.178])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pks.im;
+	spf=pass smtp.mailfrom=pks.im;
+	dkim=pass header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=gWVlmPKx;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=DGZnPga3;
+	arc=none smtp.remote-ip=103.168.172.156
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC73606A320
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 11:34:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EAC73606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6369D606A331
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 12:02:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6369D606A331
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=d2RYEnbR
-Received: by mail-dy1-f178.google.com with SMTP id 5a478bee46e88-385c497bf94so1210584eec.1
-        for <git@vger.kernel.org>; Fri, 20 Nov 2026 03:34:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795174447; x=1795779247; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=nd1cROn/xmhzVm3Xw6VWazSGiRd52OyCERH25GG+pZM=;
-        b=d2RYEnbRcNfAW/UPveawYUVK1aHVQRtuFMI39q1RS/F8khp6Y+X+0C3WRjNexQCnAi
-         dnG0v9xIh3WzLfmsTlrS5nzEIts4+L/WWSE2+PXiHfQaXzxsU42PunYYrJrvEmAaXG+b
-         YwCZ4DGyPKJ9Ris0sHATUVD/VPCHKI9vGGDdfVyANqeb8J9K225KXbh3/4MTyud/PUz9
-         WXoGgYqZ76P3VVwNI/XkWQA8koyb8oZ+/oTEyW5UOdL5filgfpEC1BYGtP0X2ygZNPT+
-         fV+4DXW3axtQ1Z1y6SFfIFLnzyzp7jtF8Bra1eetbxyA2Cqd6aoVKpMz7nihpGHfeTm7
-         x+bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795174447; x=1795779247;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=nd1cROn/xmhzVm3Xw6VWazSGiRd52OyCERH25GG+pZM=;
-        b=VmZTx0dgqE5wJZBfyPV5RwweUYy9uNlKy8RaZw6SsTzvXWoTj7zvfqRo814CBhKZ8j
-         L2xCjuYLuQamCyYEbvoXzPGfvs2rPqXmX9mjL+43j7ejMDk8Xl2R/G/3wrh7aHGqfg8a
-         grdFN+ReXJ6SqZ2tn6dYCmHyEhMiJOzHJ/1kNSNuCQQ6VPWGRUziHJRi80GiVsuEiaFE
-         0V14SkPfYWAB3h3mXgrFQuJtO4/jaLMUxpFZJQo4XwD0epudmwF3smHUVlS/SBrZXmke
-         LtafHU+JK3QdyWswAWsfcqc6vcFKNpAW6g1pZUjFnWl2X2+1sDxqynKQgYZFTyFJ2+Uf
-         3DsQ==
-X-Gm-Message-State: APuU4Z8wkMOHGEAQb2XWRCDAkwDrMXzAKyrLzFsLqoxFL10VA6G89hhL
-	UbEKefdYEVttSo9HpW+o6NdY7zqfxbVwnQNCSP/sVvoMI26N2UZyD7rnmOrvMjcz
-X-Gm-Gg: AZFdTZeHPhn+iNqIUYx+nuT9MFkMb3CuVlggtCqO0t2XUhpEqrrBK5AS1/AH0sCdjNe
-	oyu+UKpSuFz1EL8GwL9XdiJUJM/DgKPMw6JJI/vOaFxLGYwcqiAHVAKqJpbbeCnApTDG6rhT9B0
-	ihloRht7IT53pt/h2MSul3zBSdgjRq+MzVFIY1sIvwjc6aMmmI/0KC4WNRSgGXEXKQePTJkDvtz
-	EZmd3mG1cdFFChg1xxMh4uDHUq8oAfsQcgJJr5vRGpWItN+RPlUg7pgPChFgt1ZsOF6Ze2cQQTY
-	zl+1xafXAQ1Zb9Ud1Eykt0UKMLC58oG+Pk+JEFom1OkMkoZ6YUttKblikgkeUzAp2QyycghaQyr
-	nlj+KXiiCm9gPnj1ftoOy86nRliOdE2b1Noe61Vu4jRWQ55DzTzdFivn7sNxpgjM6YS2BhEX8oZ
-	a0UNu0FH92b/t8Q703oCVXHOlQInLUT9AQzSfSrVRvvTEnrYi/4p3MefRPUPs13h9azmz/7ivGF
-	BXRFyM+WlXUOdELgFpWtrLXTUC7rrC2ijTVIuJLwNm9h3vPWJ0fUUv7ULB7hoK8IKrtcI39xEuG
-	QB3ia2zjCOLxF0kem9f3b43banuF
-X-Received: by 2002:a05:7301:dd94:b0:36c:9afe:fcd8 with SMTP id 5a478bee46e88-3856f559cfemr2353569eec.30.1795174446950;
-        Fri, 20 Nov 2026 03:34:06 -0800 (PST)
-Received: from aeron-host ([103.177.178.109])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-385672c6f31sm7385010eec.15.2026.11.20.03.34.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2026 03:34:06 -0800 (PST)
-From: Abhishek Agarwal <agab0323@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	=?UTF-8?q?Matthias=20A=C3=9Fhauer?= <mha1993@live.de>
-Subject: [PATCH] submodule--helper: check 'update --jobs' like submodule.fetchJobs
-Date: Fri, 20 Nov 2026 17:02:33 +0530
-Message-ID: <20261120113233.783523-1-agab0323@gmail.com>
-X-Mailer: git-send-email 2.56.0
+	dkim=pass (2048-bit key, unprotected) header.d=pks.im header.i=@pks.im header.a=rsa-sha256 header.s=fm3 header.b=gWVlmPKx;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=DGZnPga3
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 98047140020B
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 07:02:35 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Fri, 20 Nov 2026 07:02:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1795176155; x=1795262555; bh=Oe8PMyEoeE
+	6rINCeBHAJnZtROWupxIzPSM1xtXBCpMw=; b=gWVlmPKxL03QaTc/5XbAwJ6Tlx
+	y4F3259qKXR53jwZeA7NQwofXyfCN7unkIYuFQT8bZp5PwsXbGwe4Lrf16+YQkrJ
+	6cVJCycpIU6T8Kg2OSvem8FusbyJPH9RhVgS+5K5a7+4HskL/m/W6MOkZvatoq11
+	g4T53TQkSlACLrFUbHXAVqc2rDoIhUA27ykbRpTFMotPqDBm5DNcAuVLljNQqmQA
+	vDA2+tagkQwe9GAnNeT4mLUP7/F6JbJJil52/dKhXwFAsvu17tbsgbNGyhR5shND
+	Gs/J9OhkcyT3xrM5Mjxg9GwJCj/YyMRcof/BvizbpY1lj7JxaWhd+msv4iMA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1795176155; x=1795262555; bh=Oe8PMyEoeE6rINCeBHAJnZtROWup
+	xIzPSM1xtXBCpMw=; b=DGZnPga3jmQ6V9z5cEXXDaed+qRbIK6vRLg3xq+dZ1iT
+	J0VVOFfwB66P3qOJFqP0n/A6VAd1xRnKqKyD6ue3kg+lnQkcGyPLoALe45wZRSsb
+	CSitpVaxnOX6JP/j31NLRTxNSHfxDqEQME66huqC138cirYsFipcishe5d8TBkxz
+	ZPw4gT3QSMjcQrn6qnCSvyO5JmF9CCmrxB3oQ7ZJkcgslTXCGHLpJOeG6KhsnUUx
+	ty1Semy3VOkHV2Ro4kfMbtBTI9omHv5YlAedJD+9odWokL7xw4aeZ8ekTgvizG+d
+	frRxGBXhnIw+tSoqPtcFpv5x3XaS6xVwvZ54wlvvHw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pks.im a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795176155; d=pks.im; mf=PHBzQHBrcy5pbT4=;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:zUQ03xOER71o+n2WNUMCdTkPDBjuBH8CHicGEHlus7eDTcb
+	Lt4apKaCqOQJLKy9bfjwoLEcA0bAgxe3WNRCehhEjQt7F8xdlRUV+MPAixitV1rW
+	O/ZgcuTU+VUSRSTwjYDNZHRv3u7Hru/ebjvhxBiEL50XjVJeLm6xfKOGzeh013vx
+	0PNZggWkuNEpn0F3VtnILwiPcWaueMdvKl+kf7E1tjQtNqiM/8upJ2qtWufWNf/4
+	lTPmUXcOvDVFOBZUFgyLWp3CmV/13DxvKUHqn7NCtMjGnAxqLzCHCkEEtf94uoKW
+	f0VkGM7J/z/iDi8GpFGwiZiRfs31R4qJoG/+V3A==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=10;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,message-id,mime-version,subject,to;
+Message-Instance: m=1; h=sha256:MXIiCsqe5TsNU6NOjRzcgcG29/2vkftcHxoOhRiEuck=:lQ4+FgwYAKInVFNZ+gGHWRlID/2hyklZ6pdS4BDipyk=;
+X-ME-Sender: <xms:2zYAa66xnEjuXvKiXFSShiH-rdPRJgYw2hf-Psw_TQzVMXGuGSFRAg>
+    <xme:2zYAa60PYgksQsRIY1hzEQUnygt6bMnJToJg5SZq3lurDpGPc3FOcEVlS6u_umlen
+    _nkExG41luM5CN1IDS9SP8csLPe-6VNkts8yZw-wB_7n5ssD6bd8Gs>
+X-ME-Received: <xmr:2zYAa_GFdA6azyvHkX8KiOzkvEwZ3zIMyPz-iTwB3nUpCGxJxQwD4FC-adNULbnQss_dwJ4>
+X-ME-Proxy-Cause: dmFkZTFnm+ppWlR7FG30OKHM3IByVAjs/69AsVvXbUqO9QuLko4zbooZbC2uSpTlPXTLfc
+    QL9V2M3nzXWkk6T3qG3qkp907MusFHRLQKmmJ7u0StM6oLrpuar4TZLKCkuVrUFVGLkrXO
+    pOfHhlZaMJO6aWv2zKKKRhj73ZnEohYfHZp0gCCCeJZVT/SppOyM1BImrxfscz7ZKNxNSo
+    VjvW/1DcxFBMYXADclRkMyseX4Loew6YhjYbn9DNrAPC/M5U0qXjgPaMZFFqCFKMhia9AJ
+    iXBpdDnWA8g/TdKN4JnaZylv0cSBeeKrf7xGzSUovUNZVvvQMGwOvEO61cG0ivlcopSfD6
+    Uw6heK3/ZVdXhUHSRdr0sdIaRB3XhPWx/RnOR3ZMFqgGpWdz06uI2eZaD8GVnDnJYkVEie
+    sxv/oIunYDUFOHuq8wPAc9cjT+MJaogKs0sVaLCFbh507LaI4QPlB2LRNZ61VqmzcGOIII
+    8fvuojQ62OkCjG8KOTayPckZsn+n1Y5M17Iap7fV4RU7Fn/Q7EzLtCS6C0LT+nT2HgBwOQ
+    4ZnVtDFQHrRN0IEUotpu2i2difVimjYxHPRJlimenyuErWVi81LqjIIvU8UqNbqT/fYqfs
+    pr49YL2INVZcNRdIcRaqmoPORrIqnY7P9s40+YrNn/maSAZA+jF80LawivIQ
+X-ME-Proxy: <xmx:2zYAa8QOlbio60p0XZwwecKRrLY7uxulMFYxggVTXr6bDYVtkzp2gQ>
+    <xmx:2zYAa-BWkLj9-4v5frp5j_79b2PyrJuX4VLpYR9nihVKQQtjIftZBg>
+    <xmx:2zYAa00qrVtzKm66QqYjVO2hFvMRVXCHdkp1C_L3FBu5NMKSHrOhWA>
+    <xmx:2zYAa0U6t3BPKM5IEkbyFcHXYmU5041PHWu2i1n80VQA3yPMy9YuWQ>
+    <xmx:2zYAazaXupo_gIT6lvkehjxY6IsD4P78WI5ympIcGoIRfBf-tWtnfOeO>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Fri, 20 Nov 2026 07:02:34 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 9cd03f1d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Fri, 20 Nov 2026 12:02:32 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/6] packfile: some lifecycle improvements
+Date: Fri, 20 Nov 2026 13:02:27 +0100
+Message-Id: <20261120-pks-packfile-global-statistics-v1-0-19beb83b145f@pks.im>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -94,129 +121,80 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXNMQ7CMAxA0atUnrFUZwCFqyAGJzjFNGqjOCCkq
+ ncnwPiW/zcwqSoG52GDKi81XZcOOgwQ77xMgnrrBje6I5EbscyGheOcNAtOeQ2c0Ro3tabR0Dv
+ 2QfyJiRL0SKmS9P0bXK5/2zM8JLZvFfb9A66lSRSCAAAA
+X-Change-ID: 20261120-pks-packfile-global-statistics-92a9be97a11f
+To: git@vger.kernel.org
+Cc: 
+X-Mailer: b4 0.15.2
 
-"git submodule update --jobs=0" aborts:
+Hi,
 
-    $ git submodule update --jobs=0
-    BUG: run-command.c:1574: you must provide a non-zero number of processes!
+this small patch series polishes our lifecycle handling of packfiles a
+bit. The original motivation of this patch series is really only the
+last patch, which fixes how we handle process-wide limitations. But I
+took the chance to also polish this subsystem a bit, as a lot of its
+parts feel rather dated nowadays.
 
-"git clone --recurse-submodules --jobs=0" passes the value on to it
-and aborts the same way. A negative value fails with a confusing
-message:
+There's a minor semantic merge conflict with "seen" that can be sovled
+like this:
 
-    $ git submodule update --jobs=-1
-    fatal: data too large to fit into virtual memory space
+diff --git a/odb/source-packed.c b/odb/source-packed.c
+index 77f8227ae52..e24f6cc7ef9 100644
+--- a/odb/source-packed.c
++++ b/odb/source-packed.c
+@@ -898,7 +898,7 @@ static int odb_source_packed_map_oid(struct odb_source *source,
+ 						       &hash_algos[src->algo] :
+ 						       repo->hash_algo;
+ 
+-		if (open_pack_index(p) || !p->num_objects)
++		if (packfile_open_index(p) || !p->num_objects)
+ 			continue;
+ 		/* Only v3 indices store object IDs in both algorithms. */
+ 		if (p->index_version < 3)
 
-Before 51243f9f0f (run-command API: don't fall back on online_cpus(),
-2022-10-12), run_processes_parallel() turned any value below 1 into
-online_cpus(). That commit made 0 a BUG() and moved the fallback into
-the parsers of fetch.parallel and submodule.fetchJobs, which already
-die on a negative value. The list of callers in the commit before it,
-6a48b428b4 (run-command API: make "n" parameter a "size_t",
-2022-10-12), describes "submodule update" only as a reader of
-submodule.fetchJobs. But its "--jobs" option is read with
-OPT_INTEGER() after the configuration and is used as is.
+Thanks!
 
-c39952b925 (fetch: choose a sensible default with --jobs=0 again,
-2023-02-20) fixed the same problem for "git fetch --jobs=0". Do the
-same here and use online_cpus() for 0. Also die on a negative value,
-as parse_submodule_fetchjobs() does for the variable. Negative values
-meant online_cpus() too before v2.39, but they have failed since
-then, and rejecting them keeps the option and the variable in
-agreement.
+Patrick
 
-The documentation of --jobs in git-submodule(1) and git-clone(1)
-only says that it defaults to submodule.fetchJobs. Say what 0 means,
-with the wording used for "git fetch --jobs".
-
-Signed-off-by: Abhishek Agarwal <agab0323@gmail.com>
 ---
- Documentation/git-clone.adoc     |  1 +
- Documentation/git-submodule.adoc |  1 +
- builtin/submodule--helper.c      |  6 ++++++
- t/t7406-submodule-update.sh      | 20 ++++++++++++++++++++
- 4 files changed, 28 insertions(+)
+Patrick Steinhardt (6):
+      builtin/fast-import: stop reporting packfile statistics
+      packfile: rename lifecycle functions
+      packfile: inline `open_packed_git_1()`
+      packfile: introduce function to free a packfile
+      packfile: maintain process-wide limits globally
+      packfile: skip closing packs marked as do-not-close
 
-diff --git a/Documentation/git-clone.adoc b/Documentation/git-clone.adoc
-index dd3b44817a..a64084488c 100644
---- a/Documentation/git-clone.adoc
-+++ b/Documentation/git-clone.adoc
-@@ -375,6 +375,7 @@ repository uses a non-default object storage.
- `--jobs=<n>`::
- 	The number of submodules fetched at the same time.
- 	Defaults to the `submodule.fetchJobs` option.
-+	A value of 0 will use some reasonable default.
- 
- _<repository>_::
- 	The (possibly remote) _<repository>_ to clone from.  See the
-diff --git a/Documentation/git-submodule.adoc b/Documentation/git-submodule.adoc
-index 57a21bc8d9..8abeb69cb2 100644
---- a/Documentation/git-submodule.adoc
-+++ b/Documentation/git-submodule.adoc
-@@ -465,6 +465,7 @@ NOTE: See the NOTE above for the `--reference` option.
- 	Clone new submodules in parallel with _<n>_ jobs.
- 	This option is only valid for the `update` command.
- 	Defaults to the `submodule.fetchJobs` option.
-+	A value of 0 will use some reasonable default.
- 
- `--single-branch`::
- `--no-single-branch`::
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 461b682d0d..e06a724ad9 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -37,6 +37,7 @@
- #include "wildmatch.h"
- #include "strbuf.h"
- #include "url.h"
-+#include "thread-utils.h"
- 
- #define OPT_QUIET (1 << 0)
- #define OPT_CACHED (1 << 1)
-@@ -3079,6 +3080,11 @@ static int module_update(int argc, const char **argv, const char *prefix,
- 	argc = parse_options(argc, argv, prefix, module_update_options,
- 			     git_submodule_helper_usage, 0);
- 
-+	if (opt.max_jobs < 0)
-+		die(_("'%s' cannot be negative"), "--jobs");
-+	if (!opt.max_jobs)
-+		opt.max_jobs = online_cpus();
-+
- 	if (opt.require_init)
- 		opt.init = 1;
- 
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 10adeabf0f..2b5551044a 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -1096,6 +1096,26 @@ test_expect_success 'git clone passes the parallel jobs config on to submodules'
- 	rm -rf super4
- '
- 
-+test_expect_success 'submodule update --jobs 0 uses the number of CPUs' '
-+	test_when_finished "rm -rf super5 trace-jobs.out" &&
-+	git clone cloned super5 &&
-+	GIT_TRACE="$(pwd)/trace-jobs.out" \
-+		git -C super5 -c submodule.fetchJobs=1 submodule update --init --jobs 0 &&
-+	test_grep "up to $(test-tool online-cpus) tasks" trace-jobs.out
-+'
-+
-+test_expect_success 'submodule update rejects a negative --jobs' '
-+	test_must_fail git -C super2 submodule update --jobs -1 2>err &&
-+	test_grep "${SQ}--jobs${SQ} cannot be negative" err
-+'
-+
-+test_expect_success 'git clone --recurse-submodules --jobs 0 uses the number of CPUs' '
-+	test_when_finished "rm -rf super5 trace-jobs.out" &&
-+	GIT_TRACE="$(pwd)/trace-jobs.out" \
-+		git -c submodule.fetchJobs=1 clone --recurse-submodules --jobs 0 . super5 &&
-+	test_grep "up to $(test-tool online-cpus) tasks" trace-jobs.out
-+'
-+
- test_expect_success 'submodule update --quiet passes quietness to merge/rebase' '
- 	(cd super &&
- 	 test_commit -C rebasing message &&
--- 
-2.56.0
+ Documentation/git-fast-import.adoc |   5 +-
+ builtin/count-objects.c            |   2 +-
+ builtin/fast-import.c              |   8 +-
+ builtin/index-pack.c               |  16 +--
+ builtin/pack-objects.c             |   2 +-
+ builtin/pack-redundant.c           |   2 +-
+ commit-graph.c                     |  12 +-
+ connected.c                        |  10 +-
+ http-push.c                        |   2 +-
+ http-walker.c                      |   8 +-
+ http.c                             |   4 +-
+ midx-write.c                       |  23 ++--
+ midx.c                             |   6 +-
+ odb/source-packed.c                |  14 +--
+ pack-check.c                       |   2 +-
+ pack-mtimes.c                      |   2 +-
+ pack-revindex.c                    |   4 +-
+ packfile.c                         | 233 ++++++++++++++++++-------------------
+ packfile.h                         |  30 ++---
+ repack-geometry.c                  |   2 +-
+ repack-midx.c                      |   2 +-
+ t/helper/test-bitmap.c             |   2 +-
+ 22 files changed, 182 insertions(+), 209 deletions(-)
+
+
+---
+base-commit: f7de81456940dd6f3274e461149bba12965de609
+change-id: 20261120-pks-packfile-global-statistics-92a9be97a11f
 
