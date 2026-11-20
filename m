@@ -1,89 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.180
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795194756;
-	b=Ye8ziudFBTp4GUgxI+T/lBIpp7SiEA+ty1vcuppvaDSHFNxR1qogeSPJiu78sGviQ74D
-	 0ZNTvuvB0Ib4zUT9Nk6T15ImyY079TkrFmJlextFp5i/9Z3mrtxuk0uo49v2HdqsInw9L
-	 CxSaMRj9Bo2kc8QmY6hjK3knk0qPHPUSGfxbNqec60Ul6AKmRrloxgLAksBK2l6UQM2LL
-	 Sm3K/aw1RgqdX42hijqLe1oEiZ2txNXqyDoMMJFrvhPrzBdsmNoPxAO3/yM4/R4y/5AhQ
-	 rHCiEp2HtB7waIfLgrZjDbicmzX03OF4dmouk0hyI3i8DBaL/0iKTsAjB5v5bnhspdQ==
+	t=1795195469;
+	b=zGruZ1q8VZpdF86fKS6ZZfkp4Z/f2bFQ/Yxo/Bnea+vvHutvasgH3/siqk7vRK2xCvmW
+	 VKnAwmXT3Uvy9VknF+UTeGKZCigeFlgveralPNkn0dOGkJ8koeuug+DLtXX7sCjycogGb
+	 61NL0wV/ezCXtcDdDv4T6L+Ln9bedhHgQ3+0zG8fzxOwfwJsM8h2nR0PY6dj7Jl836Fji
+	 uqIN2jrdEZa2CqanNpqpSiTXH3yLnqAw1dJqHVzy7oGxM0ZnHUuJv1VmuB5VEiHsN3eM+
+	 ONU+UlozjwkoE9ERkyS9D/8uFMjBKIEl7Skf8VuZHkoNnW0VonEQiHdgueAMYRxiErQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795194756;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795195469;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
-	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
-	 Cc;
-	bh=FNP/r7Q21Bx+vYNS0rYe5vKPZNO248YuxTovS3f/YKk=;
-	b=w0EuopsKVhoYNtSMzHHtV2wkqn7LjHUBUBGOOKu6IP91Q0Vj1tKPXfHAEEcPGpbTEnx1
-	 erXczJIfl6FRWzOa4YDqIHpePp4dFtlaWExnoXGz2MRYn19GWWjRY+dEj3I37gsB0/NQR
-	 BHf5klbb38jk/LJvVjLqNrbY2sOO8Q8I6tQ8KjiQPWLbhyY5iPf/qW9IZirPyQE3MEKm2
-	 HS/ejWyUdzpio8clOdU+loDMdlU+58qzMwhZ4uX6Fy2YOhXHqmS7ZoS2IfYS0PJQLlhg/
-	 bZlwr5ypp/Hety7S0+zP/lW5ZbshhKW40fE64yWylhXJ20+JF2qa3NhrH2NRBmdLQDw==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=a2s+YiFhEz3qCysVTj/ouzCGZ3ME36BSorTyLJg/oR4=;
+	b=ssqF4Vt1Jg1UYoX5PYID56rqA5XhclLp5BVGeceD6vuzI7I0SiVjgnmL0gs2pb8MXVxp
+	 1mxRVlvhzvM+T4SdDk9/iPEBfyd1xj5j+fyT48dYsPN47kMVex7e05a6Q3MW19eUj9AQP
+	 q9Nl+8zjHKlinJNy4fjUrNW0t0BXqZ5KrGI/glOlNUlfaDFV8cJrGT/CsvujD3iZvBeh2
+	 JNd54kQMw+M2peNDBvqeU0aaZOYItnQoOHi2p4BtROHxHqQoH1AcwrOmb8ZhEkBqQJ4lT
+	 8LgtAn8bSaS49x+iTrY6U9e76lKch79Z49uq4kKU37fK+eZikpZsiF7Fg/9gIYDSjnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Zsqxs9Ct;
-	arc=none smtp.remote-ip=209.85.167.51
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=S18wvXMI;
+	arc=none smtp.remote-ip=209.85.210.180
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB145606A320
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 17:12:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DB145606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA70606A32C
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 17:24:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DDA70606A32C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Zsqxs9Ct
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5c14a204305so792170e87.3
-        for <git@vger.kernel.org>; Fri, 20 Nov 2026 09:12:35 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=S18wvXMI
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-8b3577deeb0so569143b3a.3
+        for <git@vger.kernel.org>; Fri, 20 Nov 2026 09:24:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795194754; x=1795799554; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=FNP/r7Q21Bx+vYNS0rYe5vKPZNO248YuxTovS3f/YKk=;
-        b=Zsqxs9CtUQQcrvuhxYqERbd8kGkPM2I0qEhpSFsT+GXNd7JGJKFOm8vM6L2FXA2JGl
-         ODWd4QLdcO7YCcIv4NApQZAutFHrLYQz8CijN5423mWABfum5JIViPDEAHAYtBDHtIc9
-         KnstZiBEHx6wOmX0ZiQWyAc5B1YRff9HYDy2NW3cik3FoME9S03kPAMjcqQ8VW2KGKJ8
-         Ig5gaczG8d+E5AeoxHmictq2IzUOvl2abeU1rw65ipzAbNb47VEK2XdvgpLPbNpQ+UT0
-         I5+bP3TXH/hLTSconHTfML2+xp4+uBiryBw+AR4TOwzNi6XT/hivKPEJ5Vjxz/2IfFXy
-         nwAA==
+        d=gmail.com; s=20260707; t=1795195468; x=1795800268; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=a2s+YiFhEz3qCysVTj/ouzCGZ3ME36BSorTyLJg/oR4=;
+        b=S18wvXMImVaLeib78UAWExrqsDTxFQrr3z8t3z1mpN209i6+ZoCY0ZdIpKlqe6Y52l
+         KHCrGaQHX9IauMIUas0QUqqvodeCncOzSX3YMvbUIIagiP0E+xGrKiI2TQe6rqExth7Y
+         FPosia40YuuzVlXWwsROq80NK4RBd4mR+CA3QrRmxTueDwGjb4PDVCVfalJ8sXNK9nnI
+         s8JKrsTnAeA6B+lrq8VkFi9OPEVl+63xtWX/jI+1MW4HkDU9brrI6T47FODgwubIoDOr
+         xr8pHlI0p/vUtF36oGvbZRXL3vTKGwRQnoWk0sxbSTvdrs8lr5qBorg3WYCjwnEuxWE/
+         2rZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795194754; x=1795799554;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=FNP/r7Q21Bx+vYNS0rYe5vKPZNO248YuxTovS3f/YKk=;
-        b=uThUQLTSQIPp8NKo+6HR991E2JNSQvfERrlquPjLTWgtZSTfghnC182zfADK6aIIjG
-         xmMMVx0C7BQiMWVAoMkj99v6ZILCmjpYfxChKUG1vRZV2l5QADaa/4p+rP8Vy+0G3srC
-         HLRusOyFYUFW3oo4qTwoaWl1h7dx3iY4IuLpYDGkLjirGUTXsPiQZUa/dnu2JyRfQtFS
-         DEyBFe1WNu1tDFQqGizNPKpivpRgudotLCKz4KdK8WPNBOkD4DUCBBc35i3NOM5zvnw5
-         Oh8HwJapQ3036sWUE34kD3ru+1klaI8b0Knx+J3i5c9JGi/4hXHYaBHozCTxqrlOmVgP
-         qAxQ==
-X-Gm-Message-State: APuU4Z9RWCHKhMqYwCz+p4ZNS/Rr6aDWwNv9zMiTkXSe9IBe8hzUvGxZ
-	qVh6j7ICuQsDpi4xRm+pPa/bt5GKK+byeTHc604coq8b15tvEbyUrdJ/ao7yr54F
-X-Gm-Gg: AZFdTZc4NzR6i+m/E9Dk10yXsKxqnSYx2R+903WzikkDoiDb0bPrutrWg063BOJeXah
-	AQmhZNXwT26s+fB2q2Fd+CUigQ1otdqX1uNoj8ExB/nx+fneIKZGqQfOdZT1LHgnngkjOCriwWC
-	feV84RNtfoxogkyHsweESKgTgaBtcmXe+HMzIwIaLo8bMgv+9r7T0IhtYSYd+LJ33IFrBlILOpB
-	WcysWK5osAd1cHA92FmAy66akOq9LZhIA+OW1Zut9MRIAf+fhoheSxrrNhRUei/6Unu4HRW+B9E
-	6gyjagJDmeim1rWfKK7/T8Igf7q4QxmFE3rrr5tSywKlbPmkmI309/h4ct8P2E9HKhCA+Z0bHBm
-	ggBZxW/opYRy+3C7tAIr5icWDLGvFqIUvG3EXzEGLdjr/4vdw+kLGnTWSlJw4rOUubb4H3LoWsY
-	0YJs4opO86IuGzOtje9sjC0TYoPaTgh+3bomhvnUH983DpfdvQ7xFdIlZzPajE42ljYkqd4lgrm
-	5VzULkS3SJADy9NZWIW9PtCqrysZcCYKwGHJKaNg708pTDK9ekcEYLMD/lmWTl8R+E+e8UI50yo
-	Uc2js534Meq+0k/InaQ2aiO/GwadAf5jX/oVEp8Ouh5yx4vxc+bVTw==
-X-Received: by 2002:a05:6512:1152:b0:5c1:4e2d:58ea with SMTP id 2adb3069b0e04-5c1bc81b0bemr1149853e87.53.1795194753820;
-        Fri, 20 Nov 2026 09:12:33 -0800 (PST)
-Received: from [127.0.0.1] ([68.220.157.62])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5c1bd0176fcsm724346e87.34.2026.11.20.09.12.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2026 09:12:33 -0800 (PST)
-Message-Id: <pull.2496.git.git.1795194752259.gitgitgadget@gmail.com>
-From: "Ophir Bleicher via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 20 Nov 2026 17:12:32 +0000
-Subject: [PATCH] doc: fix AsciiDoc syntax
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20260707; t=1795195468; x=1795800268;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=a2s+YiFhEz3qCysVTj/ouzCGZ3ME36BSorTyLJg/oR4=;
+        b=kuRR2cHJZQVgQYJAlf2ObxJbdZPFeRXubqtLKhFb0Oa8K3kTnggglRTvbM6tYrsia0
+         cMUV+a9fdImSjzFo7UUK8XRM1uwhxY8rVBwHlfBWdl5qW4934u5+QFAbZTRYMw7Q/B73
+         DbW9xhRWh03i2RdylcnGQkTHHgc2YN/suc8qwnTQZFQWVEaqlehfc+gcVgTaG/W4dEM7
+         ch27bg2fUO74GMzE+YzVW1oCKovQgVyldUUpIs/7XD13zLQPmwGN2axTY+tsjU6Cx+JQ
+         q+6QzFuoC4sbHjlZOqGMKo2c77MaHmn9sILZnl0lYLqYRkDOIAU+fPlz2wg6tSF2WUF3
+         xnOg==
+X-Gm-Message-State: APuU4Z8BDrEGdqJv15IDh+ii6F87dNOxL9h1nci5q8Ejc2rpqyNr21ZU
+	5G/8eVp4L3Wi0C06hqYtMQGn/lF/Yz5Q3TXflNkSQdcf0FAhpqIqb9W4
+X-Gm-Gg: AZFdTZfST23XpbpvWBeVUV/PpB0VMIdJ+23DofB3Ta+kWWdbeSjpTev+povHcDzbQFS
+	lQ3uQAseAVfawrxkm7i36ZqehuGdvjA4onmKcMz46S3LfeFPR8UmKnmDw7ub3IZfPoo+BGzdT01
+	h9JLAUZcMcUL6HdktwCChnW+sdPvQKuczdsSTubxYbnVTs3Uy+4sD18YzbbgBkyG4QNbD0TOeCn
+	m/gzeLosrgb4cAHeb4VCaIRVuLZk4nkFoITKDlSO6p97zCbct+IwqHhH5bDt4CW4q8jG2VQZGgK
+	Q/hpHevW7vAzRV1YmdvyzgSx3h2YWWRhhX8wUmqgpDPM7ZzbiUdT2nh7YGV6DwyPRJNnk5dcaks
+	boYlG2dXlHhKZtz6EcDkhZ5UPdN9E6/k4/tdTbsXmz58e73LeQcTg9uMu0on5l8fZKS/GPCGrBC
+	z1Jmf83oWFlHfS5wvWVNb4WFBNL3KZ1CIIVJPuWaUceUryutOIiSmwjuZhwOHzX2AvEcg5AcPnd
+	KeUIGvPUa01l2jHcCZGJbMUwPAN+xnmmxiiIw8HXvw5GcF/TGlKMivQTLYLvJfJp6neiCxf3z3l
+	T/0dDrX8km2Y8HPUhMbZ1WxnedDigctPJOXYwAmgvNRVRd2r9fdVwNy2qOBfVJF164qTls7WoIz
+	guviPZQ7re5x1g2WzLwdk
+X-Received: by 2002:a05:6a00:130f:b0:8a0:7ba9:93c9 with SMTP id d2e1a72fcca58-8c87b9d0a17mr3499854b3a.15.1795195468044;
+        Fri, 20 Nov 2026 09:24:28 -0800 (PST)
+Received: from localhost.localdomain ([223.190.83.65])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8c87420be40sm1807675b3a.57.2026.11.20.09.24.24
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 20 Nov 2026 09:24:27 -0800 (PST)
+From: Aniket Gupta <aniketgupta3001@gmail.com>
+To: tamird@gmail.com
+Cc: git@vger.kernel.org,
+	tao@klerks.biz,
+	gitster@pobox.com,
+	newren@gmail.com,
+	peff@peff.net,
+	avarab@gmail.com
+Subject: Re: [PATCH v3 3/3] ls-files: use and update the untracked cache
+Date: Fri, 20 Nov 2026 22:54:20 +0530
+Message-ID: <20261120172420.47728-1-aniketgupta3001@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20261023-ls-files-untracked-cache-v3-3-292260e95f53@gmail.com>
+References: <20261023-ls-files-untracked-cache-v3-0-292260e95f53@gmail.com> <20261023-ls-files-untracked-cache-v3-3-292260e95f53@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,46 +101,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Ophir Bleicher <ophirble@gmail.com>,
-    Ophir Bleicher <ophirble@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-From: Ophir Bleicher <ophirble@gmail.com>
+Hi Tamir,
 
-The Documentation/MyFirstContribution.adoc file accidentally used
-Markdown syntax for a link:
+Thanks for working on this.
 
-[here](https://gitgitgadget.github.io/#...)
+> +	 * With index.skipHash, the checksum cannot detect concurrent index
+> +	 * changes. Lock the index before reading it.
 
-Fixed it to use AsciiDoc:
+With core.untrackedCache=true and a cold cache this holds index.lock for
+the whole scan, so a concurrent git add will fail. With 60k untracked
+files, a background "git ls-files -o --exclude-standard" and "git add
+new1" 30ms later give
 
-https://gitgitgadget.github.io/#...[here]
+    fatal: Unable to create '.git/index.lock': File exists.
 
-Signed-off-by: Ophir Bleicher <ophirble@gmail.com>
----
-    doc: fix AsciiDoc syntax
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2496%2FOphirBleicher%2Fpatch-3-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2496/OphirBleicher/patch-3-v1
-Pull-Request: https://github.com/git/git/pull/2496
-
- Documentation/MyFirstContribution.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-index c58253fd54..3b531b24fa 100644
---- a/Documentation/MyFirstContribution.adoc
-+++ b/Documentation/MyFirstContribution.adoc
-@@ -931,7 +931,7 @@ either with the "New pull request" button or the convenient "Compare & pull
- request" button that may appear with the name of your newly pushed branch.
- 
- The differences between using `gitgitgadget/git` and `git/git` as your base can
--be found [here](https://gitgitgadget.github.io/#should-i-use-gitgitgadget-on-gitgitgadgets-git-fork-or-on-gits-github-mirror)
-+be found https://gitgitgadget.github.io/#should-i-use-gitgitgadget-on-gitgitgadgets-git-fork-or-on-gits-github-mirror[here]
- 
- Review the PR's title and description, as they're used by GitGitGadget
- respectively as the subject and body of the cover letter for your change. Refer
-
-base-commit: f7de81456940dd6f3274e461149bba12965de609
--- 
-gitgitgadget
+master doesnt do this and cmd_status() locks only after collecting. Does
+the lock need to be taken before reading? verify_index_from() seems to
+handle skipHash and locking after fill_directory() is working except for
+the t7519 skiphash test.
