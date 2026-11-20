@@ -1,111 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795184710;
-	b=KiTrFT3GutAhaVK0L6RzHEE4qw1EuyDP44wKT9JftVdZtpFTpd+iliYPgHBGoL423DOj
-	 MUSFsPSG74PBOy30/GAyPMzSVgZ+JjqOoP1rqFmT68gJcvLIevbly7KnAUULul4Bi6zYw
-	 ObpuAqNxydGQv1misj89hUyFUshEtL8bMk5tSx/7aLtrSGr1b/X2EfagyNdGM96RoVGvW
-	 tQQ5LY9iPcJ56JfMP3g712P4C1eERizJyC1z0trcQ8rhmxHx2KFz2sbCCkbX6vDLPBPyF
-	 ZlwfnLixcAs0Bg/ykUC2BRdg8/bPLdj0zJq8fy9o5nptgawcksOQvI6x0hRnP2J7Hvg==
+	t=1795185215;
+	b=R5fpGFWcVrGXRaibUK13f7rwMz4EgQ3YXq0MV54zRwXD25LUfifLIzhgHPOR2uXQoMwa
+	 8Xjt5IXsZ12zqCMVtyDYUaolrGRIGXGwDHB/BSZBQsKNA/yBUHV3iv1wR+9o/GwTvgc7Q
+	 Cb/s/J9o9vykYyy4oZtfSnxSCCsW19b1OSs2MNmHvB9bbTP+b4EvHGR24t8FKkjyJ1v1h
+	 qUzQ5bFlhlsVztmke3Juzh/R6kzAYed+j27Cug31auqrgToR5biOEhC5r8/DYa9xnpxUC
+	 t4PTKQkaJJq97gu4z7cVW5S2m7Ez/7l9ClzPqr36v5CcIYKyy63Z3YreaLquGSMFdGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795184710;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
-	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
-	 References:Subject:Content-Type:Content-Transfer-Encoding;
-	bh=wn/vpoXwQ8SIUpZ+FySeJbl3rD5izd7q1WlM4dBokRM=;
-	b=m2xez90lhvUDv5a9CX5gCD6FydwA9gl1EQy/uBALUml+CG6gYzxSeKlhxcuqwebMcQm7
-	 PK6C+dYNhNl0QuCQ+SUAAzWvrFqvSAn2Yn/dKdUuA92+WLBX+U5ks5XTIq7LwTtQ07wtm
-	 46NZvyUSaWhxFSImW0MSzVOXh8J310kRQme0DEnosrJHpDPRWmAEDoZ1c6O/M2d0a+DF/
-	 6gNOTDWFHEYSc+48oxCvnw70aum7qN1lr+r6qLLR++3xRXaxkZdchKUOvktFCS0b8a9S/
-	 qsmLcgNvPKjUEM8RA8JHy8nce7DF4cpZQ0QkCbT8WAw52+ZdGh5SQSoh8imC2UwGoEg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795185215;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Reply-To:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=kgZUwW5OgVNmb+zH549NbV9n/X8QLmkj0lull3sXsH4=;
+	b=rqcZVaqEOCCQ0S1du+9CS+64hDbnmTItuOTmZDE5iQAeAVWyxJA6c44h42tRI4CjdKHz
+	 KwqfRlxhZYBWrvJ50BstEBLs1dSEf28HIoOUfkdM1Ir+PPswTm1z8V3h2GFiBhclQsCCH
+	 UilSOlYOAveOt+7uw/6FuBtPuSashbvyIzFdQtma+L4Z6sg2qKrvLPNFqRk9FQopgLd0s
+	 Dig6VA87uR7rHjLduBnYVqzAKlHFngQpM25xTBiCwVbNis91iLYfRUalA2xiD2FPaEWhC
+	 F7z5KURB246OMEfpw37CkLxzvt9LldJt9Pbb2rNv8ghtPcpGVHdR7ez64pEGALNLBNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=fastmail.com;
-	spf=pass smtp.mailfrom=fastmail.com;
-	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm3 header.b=iZ20l2zC;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="f/yUNE5L";
-	arc=none smtp.remote-ip=103.168.172.147
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iARPI6rH;
+	arc=none smtp.remote-ip=209.85.208.44
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613E1606A33A
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 14:25:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 613E1606A33A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73237606A320
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 14:33:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 73237606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm3 header.b=iZ20l2zC;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=f/yUNE5L
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfout.phl.internal (Postfix) with ESMTP id 43B8BEC09E5
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 09:25:08 -0500 (EST)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Fri, 20 Nov 2026 09:25:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1795184705;
-	 x=1795271105; bh=wn/vpoXwQ8SIUpZ+FySeJbl3rD5izd7q1WlM4dBokRM=; b=
-	iZ20l2zCO7cTltdbVeeeneb5MzNPHW7tKVAEBTaQUZt92kWtbR2S6JLjZ67t3xVp
-	83xfcHSKf/sshF65kJ/s7L0LvWX+aIxFL2k4RHvn/xOqzRqt8k22AdgsFBUtCs8i
-	5hPEylsdXuPAp9kpRVl6ykDBp/MyJW6iI05yLKBYF4FqDOsIpROfprxm5J2CWUjx
-	SglYJ1BqMPuE1NnFWG6uv9yG9fb/TA8Xm4jgcn1gy7YnS1tOBtzNnnFfA4KZaHTr
-	FmPGr/V++L5eVkdm4DCshPPzI7AN03FSKo4WkO4z9rgpKis5B7FYXNytpt79BEm0
-	51tsd/esMFczX4DIoxBCNA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795184705; x=
-	1795271105; bh=wn/vpoXwQ8SIUpZ+FySeJbl3rD5izd7q1WlM4dBokRM=; b=f
-	/yUNE5L5EAhNgNrw/bEZ8w+Bv4wHdbeYP1Ln6xNincSgPGn4aDCDcqopNFmVrVgX
-	uZmEHmgqNJn43Yy9ukMuV678brsI59UPxkNmlY164ylNPiCeOVTMwa7p5wdHaOGl
-	EPXK4NX6Ga8mrHn/28gjojbk7qN/KRBva5A6OBjEsCCNlmSEwlpKRPZmU7qwfy4u
-	jdd/dWb3XaUS18g4MxvICzdgM/w9fTK/FTbhfWFd+3zfEXeImMRXnpdhhaiuAq/d
-	VjBga7z503zcaJ2SA3Yze5hHpHQwWsyccmIpusp64bJ2l1Jq5z7Aqrfv1foGlUGY
-	hFLNXmISxZNaC+mHENbnQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=fastmail.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795184705; d=fastmail.com;
-	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:G8AGH/lbv1TxILVvBOaDpSpptERgE/32ChVNtbSEopK5zOl
-	cQoBttjlomfVlE6KcIB+f9cXIk42w+1G+cInRvM++APptcUt+/8RB0gVV7iZtP72
-	s02CFeurb39n2Tg1+968QoqzO/27OXT3Pp4h4qM6OyHVs4G5r2Kz5eG3QLZ3biuL
-	6UEcbnmNG5eUpEOn/vJbk9UmlRo7d8sidLYk2Oi17CQgPyAxp3edTJs9q+scAYIN
-	IDYCDoogDMk2JEt+rsuF934lxVBwtHWocURtIzILS6tzG0a5p3VFEod+LVYNbYQ3
-	/hGWMagvQSw3K7Rp44k9YEJhHC9HTTi+mDpHpyg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:xaeXrgoXwEH6UHQts/Y4p9KzttAWljdoYzC9k8v25vY=:0m8DvkStWhvfqIT+AsTqO9HCGqHu5ALea9J4G56QCWU=;
-X-ME-Sender: <xms:PlgAa2X3mXJNjaBZ4mH-bqH6aLI8_OHHtN4yYSnnC6wWDtAXSQVFsZ0>
-    <xme:PlgAa9bnfaJWyJMb-9OAC3WLvjEjWs9c_enFkaURNOeHUPdgGffyoLGDUyMELxW8t
-    F61Qu8urr5sjC7gn0q7D1P0hOxw1hky6LD2KZ_8HKdVyvKS5q_r7Ug>
-X-ME-Proxy-Cause: dmFkZTFWioBsIBpDOutJEWDZ0k3XKmYoVj4+GjxF2x20wiZ856wkgKeUrbPIlyOeAYT2Ck
-    h8mH/7ODGeZenPWipTmFTP2OFe/tKgWwDJEoN4AIvKsr6KFN9k7dP2NELDaZT0fu88j2SA
-    nHq5NdqDlD2lPP/4KqkGbs4eTC4fWRBJp197DzlKIdwvx0F7qFy+TyJ1OwNiUC1Fv6n+0g
-    hXWdPo1WmXd0vNigvMnCRRfrzr9pgSdBC0CSPZtf9EE3DHKrkaz9/V0rCjB6w7NrteMctp
-    f6Wb/0gXe+QFoR5o3Ziwg3Qsx3y+BJSuvz5V/NwcuhWBvPmwfeol9ThxZEyjptJk0uvgiK
-    4Ck6O6teLdRCpZOwcpmYGDbhoyothQ74W/UUKtQoKVyuVKvr9gjjSw0Op5DypCoAkou5DG
-    jlbivs966BYkTniLuDeVw1RG2IlDTaMHJfgN3nNQOlQiKN8KbZpJGkDOS8gP+VVVP/USd0
-    8NvUNjXuqlChYV+aX+mCNiM1yyDjDehnIFeOO3AKTMmUd1wOZQdyyQjw0PvublIbJXsn6b
-    2+LRgPOxfptXmFmmbjHPEAmCI/DhjQQH2y4g2o1gFiljFRBGARNs6TmaNb0llH9WwTnYtY
-    jcAjzYmcl7svrc3JjRMwHErNFIqHMGTzrpmc+q9X+19gr8WPdP1ZWDPp9F+Q
-X-ME-Proxy: <xmx:QFgAa-0ESBy4c2gHUGVWeCEaEgwaU0fam8ZUA3uDxkCSFCtTarUoxQ>
-    <xmx:QFgAa8Alw15OmyFYhQkrhkw0Cq0gTVQTArAaMlO4d-9gkIsddj9mSQ>
-    <xmx:QFgAa14JCgi2TG3cMCSSZXsC_Tndtxrv82ONm_90rZ3Oy0WWagsviw>
-    <xmx:QFgAa1J1JpYwrs9X1ZFKS5IDruUO_K-779jTcwgtfJelLs1TrUTmDA>
-    <xmx:QVgAaxAdZURy2K_M28r8iF8cDBj_7t4QzlS7M3Tn9bU3KsaKDkOwt8GU>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id CE95122C00A1; Fri, 20 Nov 2026 09:25:02 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iARPI6rH
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-6b596afb4c5so1072567a12.1
+        for <git@vger.kernel.org>; Fri, 20 Nov 2026 06:33:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795185214; x=1795790014; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=kgZUwW5OgVNmb+zH549NbV9n/X8QLmkj0lull3sXsH4=;
+        b=iARPI6rHpSvYh6ZFl/sqJT+FFxjogZEjUoB714zpzKrZ1HwYcpi4u6ViRm/zDUSovk
+         Y7NE/BzCHnGB2ee7z8UE3pZOtrU/FUIpu3WE04xWfPgz1TRlBbbvfWz8ZV1XVuQR6J5O
+         xIlEejCOg/4LAgzJZWkxSCgE4RMDUX1Jg2vTM0R3OSTtpndBYLXWBoZR0fIpzcDDs6bg
+         WpFHCvWRsIe+R825gsZgczsPia96HRQjbrunCVUnmLuHFmbOArK1gyix+GCF2+mxSeag
+         wTWdx3YfXfLEWL6K0a58/JyKZtooMuKKdG9ej9vX/Tx3Ubkg/RMM1gZOTLVLyRgA8KIU
+         mM5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795185214; x=1795790014;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=kgZUwW5OgVNmb+zH549NbV9n/X8QLmkj0lull3sXsH4=;
+        b=mo2qpKGSZKQu7h7NA7mOMvp7TD8cFooWiVp3FmFOGXRSjuvjuQ8eSm+nytSuBboRDn
+         QqMSLNfjuidTWlpkXCViEteBK6hBx5zaAYwEWlCFnrBn2pZV2NpgI7BPC84up9JA+oRF
+         PdXSie0a65P9zG9fqQdQeL1d6RcwkWYjadkvPv3bfQX6+sRNWRm1xoYnntdEI9m3a0B8
+         +mEHww+X8Wy9sP2J46HBnGhhd3SdG/de0ES1kF1EAQL3XmqmfHsoLcVg/LcNvSIX19/t
+         zC54fOSeMtA+hnvZLWx6f+drYuy915pNoZ7aFDNuIWUPe/xVn3fS788BtZOsAtWlAnQO
+         DdDw==
+X-Gm-Message-State: APuU4Z+Lb44cAdYkpVwGDbBy2x+i8Yj1jGcJfZeNlDje++pILjlJsSjU
+	5GyHXnJfZ/GjTSz4D181UEvMJQR14MJGx+QL9uCdNmYz3h+zWk0lKQc88DXEng==
+X-Gm-Gg: AYBFou1zEK8G5qCsVSWQ6nMB5mM6KgpYy8WVdq3RNukY5xZC7tKAwKY2mvXBl49YwJM
+	tGHWmg5FuQXyu+lXG4v01nkcafvXnlzPNei5jyTUmxC17WZpFGuB5dSHxLz1WpKoLGh3u3pa61B
+	oruEq5XDMsZ5FVzWIenA7A0ClXrEjgns9YhmwyHWVfC5josLmPD6hqOSGA2ookLkM0g0Mr1Sf2t
+	3e/BwIMUayPpRPQITULNS1QCFibW7IZRe4+6ICemV/CUOVzgwZl2X3yaeDFW2zdcH9SZbIPyi+c
+	r6oFkAe2PjutCQe+B0XjuISAkK8TreyrxfDLXOWuwv5A9edgfNDf4n1SwKcw0yfN9e5uNtu/gvV
+	BhW2H0WMlbZz2tAza2ZI36TQIqVcvQJVoroimcOEWPH+7WpQMA71oKbECGE0tdqasoocsb2dH4u
+	/bM2XHgR/g1H8nmRazlI3a/uptmIdLa6+HcpdfXqs/xphEE6FFS/tJHH4GDih7tLQhq/X/38+W9
+	XGm+DKW1euFJ+I9FNI3MFjponCsBcGHLIsuOdfhw2ar9KsCNPy93N4ogd8Yt+N9F+n/IM4OHVgI
+	10LjpLnph/Gr10Xguu6CLnVscuNoh4is5R8evTOqvGqoaRwu2hLUL6FRzsR8K9MvTX0pCiG2GdR
+	gNLwwZx4fLHaeE03LwctEE67yN5HE
+X-Received: by 2002:a17:907:a890:b0:c41:266:68a7 with SMTP id a640c23a62f3a-c513aacd82cmr355062066b.10.1795185213593;
+        Fri, 20 Nov 2026 06:33:33 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c513afdf022sm99407666b.67.2026.11.20.06.33.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 Nov 2026 06:33:32 -0800 (PST)
+Message-ID: <67c5d781-bfe4-41b7-ae1d-0b0c473e9979@gmail.com>
+Date: Fri, 20 Nov 2026 14:33:31 +0000
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -115,152 +92,83 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-ThreadId: AJccvP-DtkM7
-Date: Fri, 20 Nov 2026 15:24:42 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>,
- "Junio C Hamano" <gitster@pobox.com>
-Cc: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
- "Thomas Bachem" <gitgitgadget@gmail.com>, Git <git@vger.kernel.org>,
- "Harald Nordgren" <haraldnordgren@gmail.com>
-Message-Id: <f0dd8e55-5165-4a28-a623-748bf6c86d76@app.fastmail.com>
-In-Reply-To: 
- <CALnO6CB5uqHpeJm9QUC-J7n=RBVB+0pXRuMfaSQZt7mHoZbasg@mail.gmail.com>
-References: <e6af5d1e-4ca1-48a5-8a84-5e0cefbdbc2b@gmail.com>
- <E50044F1-41F6-4FD8-9A22-A43FF36932F2@gmail.com> <xmqqmrrwywq8.fsf@gitster.g>
- <CALnO6CB5uqHpeJm9QUC-J7n=RBVB+0pXRuMfaSQZt7mHoZbasg@mail.gmail.com>
-Subject: Re: Notes, refs, etc. (was: Re: [PATCH v10 1/5] fetch: add
- remote.<name>.refmap)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] config: skip continued lines when matching section
+To: Junio C Hamano <gitster@pobox.com>, Dominik Maier <dmnk@google.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+ Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>, dmnk+artist@google.com
+References: <20261119192307.2683812-1-dmnk@google.com>
+ <xmqqbj7ktjp7.fsf@gitster.g>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqbj7ktjp7.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, Nov 7, 2026, at 21:20, D. Ben Knoble wrote:
->[snip]
->> Ben Knoble <ben.knoble@gmail.com> writes:
->>
->> > Yes, I would love to add pushRefmap atop later! It would
->> > ease my working with notes, I think.
->>
->> > Yes, I would love to add pushRefmap atop later! It would
->> > ease my working with notes, I think.
->>
->> Tell us more when you are off mobile ;-).
->>
->> I do not think I planned to add '--refmap' support on the push side,
->> even from the command line, but I can imagine there would be
->> reasonable workflows that benefit from having one.
->
-> In my local copy of git.git, I want to have both Junio's amlog for
-> spelunking and my own notes for patches. I only want to push out my
-> notes + topics to my remote, though (I work on Git from different
-> machines and it's nice to have the notes sync'd on both). Here's the
-> hack I ended up with, and it has some downsides.
->
-> In particular, "git push" in this configuration does too much, so I
-> usually have to think about whether that's ok. A pushRefmap would let
-> me separate what to push by default (push.default!) from how to map
-> pushing when I want to push, say, notes or other things. I have to be
-> especially careful with a "git pf" (push, force-with-lease,
-> force-if-includes), since I usually do *not* want to forcibly
-> overwrite the remote notes---instead I should pull those down and
-> merge them=E2=80=A0.
->
-> So, here's the relevant config (I have a remote "benknoble" and a
-> remote "origin", among others):
->
-> [core]
->         notesRef =3D refs/notes/benknoble/commits
-> [notes]
->         rewriteRef =3D refs/notes/benknoble/commits
->         displayRef =3D refs/notes/origin/amlog
-> [remote "origin"]
->         fetch =3D +refs/notes/amlog:refs/notes/origin/amlog
+On 20/11/2026 00:44, Junio C Hamano wrote:
+> Dominik Maier <dmnk@google.com> writes:
+> 
+>> When a value in the target section spans multiple lines via a trailing
+>> backslash and a continuation line begins with '[other]', removing or
+>> renaming the section stops early at '[other]' and leaves the remainder
+>> of the continued value behind as an unquoted '[other]' section.
+> 
+> If the behaviour was to treat these as continued values from day
+> one, I would have agreed that it would be a reasonably design, but
+> offhand I do not know if this is a breaking change in behaviour that
+> may negatively affect existing configuration files.
 
-I don=E2=80=99t use multiple computers right now. But I do have both pri=
-vate and
-public Git notes. In the work repository I have this
+As I understand it, this patch changes the way we parse the config when 
+we're renaming or copying a section to match the way we parse it when we 
+read config values. It does not change how we read config settings so I 
+think it is simply a bug fix for an unlikely corner case when copying or 
+renaming a section. It's a pity we don't share a common code path for 
+the parsing and end up implementing it twice.
 
-    [remote "o"]
-            [...]
-            # NOTE =E2=80=9Ctracking=E2=80=9D idea came from the Git mai=
-ling list
-            # NOTE We cannot use a negative refspec to exclude branch th=
-ings here
-            #     (what I wanted) because neg. refspecs cannot have
-            #     the destination part
-            fetch =3D +refs/*:refs/tracking/o/refs/*
+I had a quick look at the code in this patch and I'm not sure it handles 
+values and subsection names that contain carriage returns correctly. As 
+far as I can tell
 
-This is from some email thread(s) about using a namespace for tracking
-all remote refs instead of just branches. Now I have the state of the
-remote notes in case there is a divergence.
+     printf '[a "b\rc"]\rkey=\rv\ralue' >/tmp/test.config
 
-(Realistically this would only check my own mistakes since no one else
-seems to use these Notes.)
+creates a valid config file. For example
 
-There=E2=80=99s even a comment there about negative refspecs. I think so=
-mething
-like that got mentioned here in this thread or some months ago? I didn=E2=
-=80=99t
-have the opportunity to engage then.
+     git config get -f /tmp/test.config "$(printf 'a.b\rc.key')" |
+         tr '\r' Q
 
->
-> The "usual" stuff to make my notes important, but still show amlog
-> notes when browsing history. (The origin remote section is in addition
-> to the normal remote section with it's url and heads->origin/
-> mapping.)
->
-> [remote]
->         pushDefault =3D benknoble
->
-> Push to my remote.
->
-> [remote "benknoble"]
->         fetch =3D refs/notes/*:refs/notes/benknoble/*
->         push =3D refs/heads/*:refs/heads/*
->         push =3D refs/notes/benknoble/*:refs/notes/*
->         push =3D ^refs/notes/origin/amlog
->
-> In addition to the usual config added by "git remote add", fetch
-> remote notes into a local hierarchy, and push them out, but ignore
-> amlog, and don't forget to also be able to push heads. Without the
-> heads map, "git push" will not push branches!
->
-> Now, maybe I'm holding something in a way it wasn't intended and
-> that's made my life harder, I dunno.
+prints "vQal" but this patch treats '\r' like '\n'
 
-I haven=E2=80=99t tried the above but it doesn=E2=80=99t look like you h=
-ave made it
-harder for yourself than you need to, considering your needs. ;)
+Thanks
 
->
-> =E2=80=A0: There isn't a great story for that, either :/ When "git fet=
-ch"
-> fails to fetch notes because of divergence with local, I end up saying
->
->     git fetch benknoble refs/notes/commits
->     git range-diff refs/notes/benknoble/commits...FETCH_HEAD
->     git notes merge FETCH_HEAD
->
-> or something.
->
-> It's *almost* like we need remote-tracking branches for notes, ahaha=E2=
-=80=A6
-> at that point, Scott's git-meta work becomes possibly more appealing
-> to me, even if a part of me wants to "fix" notes so everyone can use
-> them easily.
+Phillip
 
-I don=E2=80=99t know what git-meta is. But in any case, I haven=E2=80=99=
-t seen a
-forcing-use case for making Notes simpler to use. Right now they are
-okay-enough for the simple needs that I have seen, which is
-single-author (program or person) or automatic-merge (git-appraise(1)
-uses json-lines so that cat-sort-uniq merge strategy works).
+>> @@ -3434,7 +3525,7 @@ static int repo_config_copy_or_rename_section_in_file(
+>>   	const char *old_name,
+>>   	const char *new_name, int copy)
+>>   {
+>> -	int ret = 0, remove = 0;
+>> +	int ret = 0, remove = 0, continued = 0, in_quote = 0;
+>>   	char *filename_buf = NULL;
+>>   	struct lock_file lock = LOCK_INIT;
+>>   	int out_fd;
+>> @@ -3496,9 +3587,12 @@ static int repo_config_copy_or_rename_section_in_file(
+>>   			goto out;
+>>   		}
+>>   
+>> +		int was_continued = continued;
+>> +
+> 
+> This triggers -Wdeclaration-after-statement doesn't it?
+> 
+> (administrivia)
+> 
+> I do not consider myself an area expert for the configuration file
+> editing code.  Please do not directly Cc: random people unless you
+> know they are specifically familiar with the area or they are
+> positively interested in the topic and they will regret if they miss
+> your message if they fail to notice.
+> 
+> Thanks.
 
-But imagine some kind of collaborative Notes usage, like multiple people
-posting commentaries on commits. In that case one would need better
-tooling, for sure. But collaborative metadata on commits is a bit like
-the ideas like =E2=80=9Chistory of history=E2=80=9D.[1] It=E2=80=99s pro=
-bably not going to
-happen.
-
-[1] https://lwn.net/Articles/914041/
