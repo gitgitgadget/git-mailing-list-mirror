@@ -1,94 +1,111 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.177
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.147
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795184674;
-	b=M9eXuqUT8KXT34FQS++b8J0jcWCJ7e4T7Nl+WJjBiZ5mCXwW4q/yLcqcwEsL6NHZyZ5u
-	 /MIvxiZD4+L5lxsLbI3DU0DMQc0wgtIrgqUXIMHIlxoSqoCUjxtLe3RgDZJGmUubjoqaX
-	 xW/jA84Qf4XZzIzxG9Z8uW0bXWVwI9uB8OBQRscjdP+lSA8sSarnXmxLfqYRQUna8nMDu
-	 OJS09IgR7FZLqV31ZnXeXoDwk2zoIiM/KTdmnzXIHKWiDoha6/nSEiM2yiQS1lh6+FcoJ
-	 cMdNopwQ1YyYpL+XcllgEr4YSioNKL1zzbOb3vZzkeQK+6ZV7HYgoiZhJMe9KSDOL9Q==
+	t=1795184710;
+	b=KiTrFT3GutAhaVK0L6RzHEE4qw1EuyDP44wKT9JftVdZtpFTpd+iliYPgHBGoL423DOj
+	 MUSFsPSG74PBOy30/GAyPMzSVgZ+JjqOoP1rqFmT68gJcvLIevbly7KnAUULul4Bi6zYw
+	 ObpuAqNxydGQv1misj89hUyFUshEtL8bMk5tSx/7aLtrSGr1b/X2EfagyNdGM96RoVGvW
+	 tQQ5LY9iPcJ56JfMP3g712P4C1eERizJyC1z0trcQ8rhmxHx2KFz2sbCCkbX6vDLPBPyF
+	 ZlwfnLixcAs0Bg/ykUC2BRdg8/bPLdj0zJq8fy9o5nptgawcksOQvI6x0hRnP2J7Hvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795184674;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
-	 References:From:Date:Subject:Fcc:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=smUruof9Y3X4H/wrjfRAghmUMVMmHjcS0dAkfpZFr5s=;
-	b=bYubmkV4O3w9O6vshJ0PPEtDjAaqa1jfvRzrNTec1OltJeJPvi6mEfDDc/Wh4Pfycg4s
-	 wJwzORZCx5Sade0sJX/t2Qyhb8nH6jpxqTC68AfjV13Fbaz8CmDRFdCGwUlFz3Ei5A3hK
-	 ejW9NdHtI9DfD3QY3pzQciLHHj+YBHm1h0ufsdNyrj8BoiU905bn8jcJFqFkj1usAygRO
-	 9wG4xKD3uC103XetXUUEQ7exQmS43e2KiG7+pMtJ8YZezkuBNh/cMVdpmmpw1RcAmv+43
-	 MoBbf+NMOFPQQeVnByqGRLw0LIO61TrQkft3/e8iVxWJICWo0k1r4+xPRUUpEagzezg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795184710;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
+	 References:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=wn/vpoXwQ8SIUpZ+FySeJbl3rD5izd7q1WlM4dBokRM=;
+	b=m2xez90lhvUDv5a9CX5gCD6FydwA9gl1EQy/uBALUml+CG6gYzxSeKlhxcuqwebMcQm7
+	 PK6C+dYNhNl0QuCQ+SUAAzWvrFqvSAn2Yn/dKdUuA92+WLBX+U5ks5XTIq7LwTtQ07wtm
+	 46NZvyUSaWhxFSImW0MSzVOXh8J310kRQme0DEnosrJHpDPRWmAEDoZ1c6O/M2d0a+DF/
+	 6gNOTDWFHEYSc+48oxCvnw70aum7qN1lr+r6qLLR++3xRXaxkZdchKUOvktFCS0b8a9S/
+	 qsmLcgNvPKjUEM8RA8JHy8nce7DF4cpZQ0QkCbT8WAw52+ZdGh5SQSoh8imC2UwGoEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gDTmy2Kx;
-	arc=none smtp.remote-ip=74.125.82.177
-Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=fastmail.com;
+	spf=pass smtp.mailfrom=fastmail.com;
+	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm3 header.b=iZ20l2zC;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="f/yUNE5L";
+	arc=none smtp.remote-ip=103.168.172.147
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D6D3606A325
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 14:24:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3D6D3606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613E1606A33A
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 14:25:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 613E1606A33A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gDTmy2Kx
-Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-38587f3de36so1077285eec.0
-        for <git@vger.kernel.org>; Fri, 20 Nov 2026 06:24:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795184673; x=1795789473; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=smUruof9Y3X4H/wrjfRAghmUMVMmHjcS0dAkfpZFr5s=;
-        b=gDTmy2KxeDRzjU4WdXK0LknAYSBfvFnWrX6FTmUZV0rSPWxdLvTVDr0d/x9xJg/NhY
-         lrA92bWYMzkh4MaqjkmLJceJ3Z4pMTM71Pn8/NtO43etA4IFMYKUr+vdUZFzprbfWDsw
-         xCaRxlJ73yGNe1jSYdo1CGYcIf1AVTjWopr8KpfxSuKVlEHmPWoQZ5FuUjbD0a5oP7rd
-         Vml8E07KwU9sfyuMJLjzHy2oyr55PvFGQ/nf13hplMITyKiwc3FAHMCMIxDnl6yiH45h
-         cd8FFvymw3W8iJbNt6aEzUoOnDgk9+ULZcbmwgNlBCn/c4s3kbPT7nGeEwHG4F3bs2n1
-         szdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795184673; x=1795789473;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=smUruof9Y3X4H/wrjfRAghmUMVMmHjcS0dAkfpZFr5s=;
-        b=tMDvVQuR4XDVHDGio2R7l8NKfOgPdFpEMks8Z1rt/lNDjLCo5/3Ix9Cyrv6uvMwB9C
-         lt1PizvNrbujxTe2bqZeBfvbFIgXDUCZDsA4axQ4jFzkEPhELykolengIiXnlRCko4qS
-         drgt5PWWjDCKmn9amxGeaM0LVUu54wOlrPW+sIPSOhuI3LN80sz+NC2JieorgwQXwqGx
-         CpFidtMzlyDqsQgnPcGQU/B+gjRCZDvWC3hjJl+n32X4LK2JCcLvUc3rUIDLog7cdsdY
-         1xKOiScgXZ/HXrIE/jd4RinfHB+uydsQPODK5lz/qNeiqVj2j9nzA32X3ZibzSxzoDIe
-         78Qg==
-X-Gm-Message-State: APuU4Z+3LAWQkutkI3KgQXc2udrEiZTTeVQgGxBOhn9t/SOln0Q28s8H
-	6fyMxWQTjG/ekALpkguVqVPOADBFNhOc3JdxbFMuC28pQWl0DlFOm6C1n/uHL/Y2
-X-Gm-Gg: AZFdTZcTuAd8LhW3Neu8TI186OHjFJwflPcN18qPykA0rOb66e/VAH++R6rc2nUsukJ
-	6bWeYnFKOh7gUfF7OZBACHxF5ScG4wZIRNHSwXuCKfG61O88zz6UtpSee5j+kos7pwMtYbH6Vbe
-	tBDQC1y8s29r1YCrMRA9uhiU+QtGYzvnuCJitsY5xWxNShUqj7mgha/Fi+yKf06SUY732IRK+f4
-	MxTru4MBI5nuk27PGBgQHBFn66cXYU7U25kceN0s1pSvlOAYa9f1xRVB9OElKV1lYE6DL2Rko4q
-	vdyVrFAk7cIQ+8MjPYwrnA7bkQs/TVNrm0rVcKxo7SB4cOkRTG7Satt+H1/SyVivJqWCOzUaJio
-	hm11eLiulcvCPJN2ZybN6cO7zMOpromHQWOAVSl+hh7Sqpqwd2hGp5MGZ5/Zq9L80NtyLvWXnRa
-	7HQLhrd2pXnpEi9+dnY/uVrelKEfxD6PqcWhGUg/4+qzSguIbIc3ItRpuz+wv/jD4x2oOMEpPmt
-	gFpypn/P71X+PQ4gG5mm0K85EeuKTZVFyPIPyBaMPpncpCwA+FBfdqeN1HBHt4Bx0U+s1i5ETY/
-	oiwKrnwcv4TyQVNn75gpL5EpaQH7Vxxaww5IfAO09KkIBQGptwk=
-X-Received: by 2002:a05:7301:714:b0:36a:7b3c:4e0a with SMTP id 5a478bee46e88-3856fd5e4a4mr2938838eec.24.1795184672758;
-        Fri, 20 Nov 2026 06:24:32 -0800 (PST)
-Received: from [127.0.0.1] ([20.171.3.187])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-385672cf745sm8456502eec.18.2026.11.20.06.24.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2026 06:24:32 -0800 (PST)
-Message-Id: <ef6570030325b4fe18624c30ad1779552fe46b37.1795184664.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2425.v9.git.git.1795184664.gitgitgadget@gmail.com>
-References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
-	<pull.2425.v9.git.git.1795184664.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 20 Nov 2026 14:24:24 +0000
-Subject: [PATCH v9 4/4] branch: let --delete-integrated find branches merged
- onto changed files
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm3 header.b=iZ20l2zC;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=f/yUNE5L
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfout.phl.internal (Postfix) with ESMTP id 43B8BEC09E5
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 09:25:08 -0500 (EST)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Fri, 20 Nov 2026 09:25:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1795184705;
+	 x=1795271105; bh=wn/vpoXwQ8SIUpZ+FySeJbl3rD5izd7q1WlM4dBokRM=; b=
+	iZ20l2zCO7cTltdbVeeeneb5MzNPHW7tKVAEBTaQUZt92kWtbR2S6JLjZ67t3xVp
+	83xfcHSKf/sshF65kJ/s7L0LvWX+aIxFL2k4RHvn/xOqzRqt8k22AdgsFBUtCs8i
+	5hPEylsdXuPAp9kpRVl6ykDBp/MyJW6iI05yLKBYF4FqDOsIpROfprxm5J2CWUjx
+	SglYJ1BqMPuE1NnFWG6uv9yG9fb/TA8Xm4jgcn1gy7YnS1tOBtzNnnFfA4KZaHTr
+	FmPGr/V++L5eVkdm4DCshPPzI7AN03FSKo4WkO4z9rgpKis5B7FYXNytpt79BEm0
+	51tsd/esMFczX4DIoxBCNA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795184705; x=
+	1795271105; bh=wn/vpoXwQ8SIUpZ+FySeJbl3rD5izd7q1WlM4dBokRM=; b=f
+	/yUNE5L5EAhNgNrw/bEZ8w+Bv4wHdbeYP1Ln6xNincSgPGn4aDCDcqopNFmVrVgX
+	uZmEHmgqNJn43Yy9ukMuV678brsI59UPxkNmlY164ylNPiCeOVTMwa7p5wdHaOGl
+	EPXK4NX6Ga8mrHn/28gjojbk7qN/KRBva5A6OBjEsCCNlmSEwlpKRPZmU7qwfy4u
+	jdd/dWb3XaUS18g4MxvICzdgM/w9fTK/FTbhfWFd+3zfEXeImMRXnpdhhaiuAq/d
+	VjBga7z503zcaJ2SA3Yze5hHpHQwWsyccmIpusp64bJ2l1Jq5z7Aqrfv1foGlUGY
+	hFLNXmISxZNaC+mHENbnQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795184705; d=fastmail.com;
+	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:G8AGH/lbv1TxILVvBOaDpSpptERgE/32ChVNtbSEopK5zOl
+	cQoBttjlomfVlE6KcIB+f9cXIk42w+1G+cInRvM++APptcUt+/8RB0gVV7iZtP72
+	s02CFeurb39n2Tg1+968QoqzO/27OXT3Pp4h4qM6OyHVs4G5r2Kz5eG3QLZ3biuL
+	6UEcbnmNG5eUpEOn/vJbk9UmlRo7d8sidLYk2Oi17CQgPyAxp3edTJs9q+scAYIN
+	IDYCDoogDMk2JEt+rsuF934lxVBwtHWocURtIzILS6tzG0a5p3VFEod+LVYNbYQ3
+	/hGWMagvQSw3K7Rp44k9YEJhHC9HTTi+mDpHpyg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:xaeXrgoXwEH6UHQts/Y4p9KzttAWljdoYzC9k8v25vY=:0m8DvkStWhvfqIT+AsTqO9HCGqHu5ALea9J4G56QCWU=;
+X-ME-Sender: <xms:PlgAa2X3mXJNjaBZ4mH-bqH6aLI8_OHHtN4yYSnnC6wWDtAXSQVFsZ0>
+    <xme:PlgAa9bnfaJWyJMb-9OAC3WLvjEjWs9c_enFkaURNOeHUPdgGffyoLGDUyMELxW8t
+    F61Qu8urr5sjC7gn0q7D1P0hOxw1hky6LD2KZ_8HKdVyvKS5q_r7Ug>
+X-ME-Proxy-Cause: dmFkZTFWioBsIBpDOutJEWDZ0k3XKmYoVj4+GjxF2x20wiZ856wkgKeUrbPIlyOeAYT2Ck
+    h8mH/7ODGeZenPWipTmFTP2OFe/tKgWwDJEoN4AIvKsr6KFN9k7dP2NELDaZT0fu88j2SA
+    nHq5NdqDlD2lPP/4KqkGbs4eTC4fWRBJp197DzlKIdwvx0F7qFy+TyJ1OwNiUC1Fv6n+0g
+    hXWdPo1WmXd0vNigvMnCRRfrzr9pgSdBC0CSPZtf9EE3DHKrkaz9/V0rCjB6w7NrteMctp
+    f6Wb/0gXe+QFoR5o3Ziwg3Qsx3y+BJSuvz5V/NwcuhWBvPmwfeol9ThxZEyjptJk0uvgiK
+    4Ck6O6teLdRCpZOwcpmYGDbhoyothQ74W/UUKtQoKVyuVKvr9gjjSw0Op5DypCoAkou5DG
+    jlbivs966BYkTniLuDeVw1RG2IlDTaMHJfgN3nNQOlQiKN8KbZpJGkDOS8gP+VVVP/USd0
+    8NvUNjXuqlChYV+aX+mCNiM1yyDjDehnIFeOO3AKTMmUd1wOZQdyyQjw0PvublIbJXsn6b
+    2+LRgPOxfptXmFmmbjHPEAmCI/DhjQQH2y4g2o1gFiljFRBGARNs6TmaNb0llH9WwTnYtY
+    jcAjzYmcl7svrc3JjRMwHErNFIqHMGTzrpmc+q9X+19gr8WPdP1ZWDPp9F+Q
+X-ME-Proxy: <xmx:QFgAa-0ESBy4c2gHUGVWeCEaEgwaU0fam8ZUA3uDxkCSFCtTarUoxQ>
+    <xmx:QFgAa8Alw15OmyFYhQkrhkw0Cq0gTVQTArAaMlO4d-9gkIsddj9mSQ>
+    <xmx:QFgAa14JCgi2TG3cMCSSZXsC_Tndtxrv82ONm_90rZ3Oy0WWagsviw>
+    <xmx:QFgAa1J1JpYwrs9X1ZFKS5IDruUO_K-779jTcwgtfJelLs1TrUTmDA>
+    <xmx:QVgAaxAdZURy2K_M28r8iF8cDBj_7t4QzlS7M3Tn9bU3KsaKDkOwt8GU>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id CE95122C00A1; Fri, 20 Nov 2026 09:25:02 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -98,351 +115,152 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Jasper Mayone <me@jaspermayone.com>,
-    Tuomas Ahola <taahol@utu.fi>,
-    Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+X-ThreadId: AJccvP-DtkM7
+Date: Fri, 20 Nov 2026 15:24:42 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ "Junio C Hamano" <gitster@pobox.com>
+Cc: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
+ "Thomas Bachem" <gitgitgadget@gmail.com>, Git <git@vger.kernel.org>,
+ "Harald Nordgren" <haraldnordgren@gmail.com>
+Message-Id: <f0dd8e55-5165-4a28-a623-748bf6c86d76@app.fastmail.com>
+In-Reply-To: 
+ <CALnO6CB5uqHpeJm9QUC-J7n=RBVB+0pXRuMfaSQZt7mHoZbasg@mail.gmail.com>
+References: <e6af5d1e-4ca1-48a5-8a84-5e0cefbdbc2b@gmail.com>
+ <E50044F1-41F6-4FD8-9A22-A43FF36932F2@gmail.com> <xmqqmrrwywq8.fsf@gitster.g>
+ <CALnO6CB5uqHpeJm9QUC-J7n=RBVB+0pXRuMfaSQZt7mHoZbasg@mail.gmail.com>
+Subject: Re: Notes, refs, etc. (was: Re: [PATCH v10 1/5] fetch: add
+ remote.<name>.refmap)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+On Sat, Nov 7, 2026, at 21:20, D. Ben Knoble wrote:
+>[snip]
+>> Ben Knoble <ben.knoble@gmail.com> writes:
+>>
+>> > Yes, I would love to add pushRefmap atop later! It would
+>> > ease my working with notes, I think.
+>>
+>> > Yes, I would love to add pushRefmap atop later! It would
+>> > ease my working with notes, I think.
+>>
+>> Tell us more when you are off mobile ;-).
+>>
+>> I do not think I planned to add '--refmap' support on the push side,
+>> even from the command line, but I can imagine there would be
+>> reasonable workflows that benefit from having one.
+>
+> In my local copy of git.git, I want to have both Junio's amlog for
+> spelunking and my own notes for patches. I only want to push out my
+> notes + topics to my remote, though (I work on Git from different
+> machines and it's nice to have the notes sync'd on both). Here's the
+> hack I ended up with, and it has some downsides.
+>
+> In particular, "git push" in this configuration does too much, so I
+> usually have to think about whether that's ok. A pushRefmap would let
+> me separate what to push by default (push.default!) from how to map
+> pushing when I want to push, say, notes or other things. I have to be
+> especially careful with a "git pf" (push, force-with-lease,
+> force-if-includes), since I usually do *not* want to forcibly
+> overwrite the remote notes---instead I should pull those down and
+> merge them=E2=80=A0.
+>
+> So, here's the relevant config (I have a remote "benknoble" and a
+> remote "origin", among others):
+>
+> [core]
+>         notesRef =3D refs/notes/benknoble/commits
+> [notes]
+>         rewriteRef =3D refs/notes/benknoble/commits
+>         displayRef =3D refs/notes/origin/amlog
+> [remote "origin"]
+>         fetch =3D +refs/notes/amlog:refs/notes/origin/amlog
 
-A branch that upstream integrated with
+I don=E2=80=99t use multiple computers right now. But I do have both pri=
+vate and
+public Git notes. In the work repository I have this
 
-    git merge --squash topic
-    git commit
+    [remote "o"]
+            [...]
+            # NOTE =E2=80=9Ctracking=E2=80=9D idea came from the Git mai=
+ling list
+            # NOTE We cannot use a negative refspec to exclude branch th=
+ings here
+            #     (what I wanted) because neg. refspecs cannot have
+            #     the destination part
+            fetch =3D +refs/*:refs/tracking/o/refs/*
 
-after upstream had also changed the files the branch touches is still
-kept by "git branch --delete-integrated". The squash commit has neither
-the branch's version of those files nor the fork point's, so the
-previous check cannot see that the work landed. This happens all the
-time on hosting services such as GitHub, where the "Squash and merge"
-button lands pull requests this way, and other pull requests often
-touch the same files first. A rebase merge onto such changes looks the
-same.
+This is from some email thread(s) about using a namespace for tracking
+all remote refs instead of just branches. Now I have the state of the
+remote notes in case there is a divergence.
 
-For each such file, merge the branch's version into the upstream one
-and treat the change as landed when that leaves the upstream version
-unchanged. This has to read the files, so in a partial clone it may
-download blobs.
+(Realistically this would only check my own mistakes since no one else
+seems to use these Notes.)
 
-The merge uses the attributes of this repository, from the working tree
-and the index, the same as a merge run here would. A merge driver that
-only the upstream repository has is not seen. In a bare repository only
-info/attributes and the global file apply.
+There=E2=80=99s even a comment there about negative refspecs. I think so=
+mething
+like that got mentioned here in this thread or some months ago? I didn=E2=
+=80=99t
+have the opportunity to engage then.
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- Documentation/git-branch.adoc |  14 ++--
- builtin/branch.c              |  76 ++++++++++++++++---
- t/t3200-branch.sh             | 139 ++++++++++++++++++++++++++++++++++
- 3 files changed, 213 insertions(+), 16 deletions(-)
+>
+> The "usual" stuff to make my notes important, but still show amlog
+> notes when browsing history. (The origin remote section is in addition
+> to the normal remote section with it's url and heads->origin/
+> mapping.)
+>
+> [remote]
+>         pushDefault =3D benknoble
+>
+> Push to my remote.
+>
+> [remote "benknoble"]
+>         fetch =3D refs/notes/*:refs/notes/benknoble/*
+>         push =3D refs/heads/*:refs/heads/*
+>         push =3D refs/notes/benknoble/*:refs/notes/*
+>         push =3D ^refs/notes/origin/amlog
+>
+> In addition to the usual config added by "git remote add", fetch
+> remote notes into a local hierarchy, and push them out, but ignore
+> amlog, and don't forget to also be able to push heads. Without the
+> heads map, "git push" will not push branches!
+>
+> Now, maybe I'm holding something in a way it wasn't intended and
+> that's made my life harder, I dunno.
 
-diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
-index b6d9cd01a4..814395d223 100644
---- a/Documentation/git-branch.adoc
-+++ b/Documentation/git-branch.adoc
-@@ -240,11 +240,15 @@ remove it anyway.
- 	Like `--delete-merged`, but also delete a branch whose changes
- 	the upstream already has even though its commits are not there,
- 	as happens after a squash or rebase merge. Such a branch is
--	deleted when some upstream commit since the fork point has its
--	version of every file it changed, even if those changes were
--	later reverted, and the message names the first such commit.
--	It does not matter who made that commit. The same rules for
--	which branches are kept apply as for `--delete-merged`.
-+	deleted when some upstream commit since the fork point has all
-+	of its changes, even if they were later reverted, and the
-+	message names the first such commit. It does not matter who made
-+	that commit. A file counts when the commit has the branch's
-+	version of it. It also counts when merging the branch's version
-+	into the commit's version leaves the commit's version unchanged.
-+	That merge reads the file, and in a partial clone it may download
-+	blobs. The same rules for which branches are kept apply as for
-+	`--delete-merged`.
- 
- `--dry-run`::
- 	With `--delete-merged` or `--delete-integrated`, print which
-diff --git a/builtin/branch.c b/builtin/branch.c
-index ee92e71f51..262cd82272 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -33,8 +33,10 @@
- #include "diff.h"
- #include "diffcore.h"
- #include "hex.h"
-+#include "merge-ll.h"
- #include "revision.h"
- #include "tree-walk.h"
-+#include "xdiff-interface.h"
- 
- static const char * const builtin_branch_usage[] = {
- 	N_("git branch [<options>] [-r | -a] [--merged] [--no-merged] [(--forked <branch>)...]"),
-@@ -853,10 +855,17 @@ static int branch_pushes_to_upstream(struct branch *branch,
- 	return ret;
- }
- 
-+enum change_state {
-+	CHANGE_MISSING,
-+	CHANGE_LANDED,
-+	CHANGE_NEEDS_MERGE,
-+};
-+
- struct branch_change {
- 	char *path;
--	struct object_id branch_oid;
--	unsigned short branch_mode;
-+	struct object_id base_oid, branch_oid, upstream_oid;
-+	unsigned short base_mode, branch_mode;
-+	enum change_state state;
- };
- 
- struct landing_search {
-@@ -888,32 +897,76 @@ static void collect_branch_changes(struct landing_search *search,
- 			   search->changes_alloc);
- 		change = &search->changes[search->changes_nr++];
- 		change->path = xstrdup(p->two->path);
-+		oidcpy(&change->base_oid, DIFF_FILE_VALID(p->one) ?
-+		       &p->one->oid : null_oid(the_hash_algo));
- 		oidcpy(&change->branch_oid, DIFF_FILE_VALID(p->two) ?
- 		       &p->two->oid : null_oid(the_hash_algo));
-+		change->base_mode = p->one->mode;
- 		change->branch_mode = p->two->mode;
- 	}
- 	diff_flush(&diffopt);
- }
- 
--static int change_landed(const struct branch_change *change,
--			 struct commit *commit)
-+static int merge_keeps_upstream(const struct branch_change *change)
-+{
-+	mmfile_t base, upstream, branch;
-+	mmfile_t result = { 0 };
-+	int ret;
-+
-+	read_mmblob(&base, the_repository->objects, &change->base_oid);
-+	read_mmblob(&upstream, the_repository->objects, &change->upstream_oid);
-+	read_mmblob(&branch, the_repository->objects, &change->branch_oid);
-+	ret = ll_merge(&result, change->path, &base, "base",
-+		       &upstream, "upstream", &branch, "branch",
-+		       the_repository->index, NULL) == LL_MERGE_OK &&
-+	      result.size == upstream.size &&
-+	      !memcmp(result.ptr, upstream.ptr, upstream.size);
-+
-+	free(base.ptr);
-+	free(upstream.ptr);
-+	free(branch.ptr);
-+	free(result.ptr);
-+	return ret;
-+}
-+
-+static enum change_state change_state_at(struct branch_change *change,
-+					 struct commit *commit)
- {
--	struct object_id oid;
- 	unsigned short mode;
- 
- 	if (get_tree_entry(the_repository, get_commit_tree_oid(commit),
--			   change->path, &oid, &mode))
--		return is_null_oid(&change->branch_oid);
--	return oideq(&oid, &change->branch_oid) &&
--	       mode == change->branch_mode;
-+			   change->path, &change->upstream_oid, &mode))
-+		return is_null_oid(&change->branch_oid) ?
-+			CHANGE_LANDED : CHANGE_MISSING;
-+	if (oideq(&change->upstream_oid, &change->branch_oid))
-+		return mode == change->branch_mode ?
-+			CHANGE_LANDED : CHANGE_MISSING;
-+	if (is_null_oid(&change->base_oid) ||
-+	    is_null_oid(&change->branch_oid) ||
-+	    oideq(&change->upstream_oid, &change->base_oid) ||
-+	    mode != change->branch_mode || !S_ISREG(mode) ||
-+	    !S_ISREG(change->base_mode))
-+		return CHANGE_MISSING;
-+	return CHANGE_NEEDS_MERGE;
- }
- 
- static int changes_landed(struct landing_search *search,
- 			  struct commit *commit)
- {
--	for (size_t i = 0; i < search->changes_nr; i++)
--		if (!change_landed(&search->changes[i], commit))
-+	for (size_t i = 0; i < search->changes_nr; i++) {
-+		struct branch_change *change = &search->changes[i];
-+
-+		change->state = change_state_at(change, commit);
-+		if (change->state == CHANGE_MISSING)
- 			return 0;
-+	}
-+	for (size_t i = 0; i < search->changes_nr; i++) {
-+		struct branch_change *change = &search->changes[i];
-+
-+		if (change->state == CHANGE_NEEDS_MERGE &&
-+		    !merge_keeps_upstream(change))
-+			return 0;
-+	}
- 	return 1;
- }
- 
-@@ -1015,6 +1068,7 @@ static void find_landed_commits(struct landing_search *searches,
- 	diffopt.no_free = 1;
- 	diff_setup_done(&diffopt);
- 	init_changed_paths(&cache);
-+	repo_read_index(the_repository);
- 
- 	for (size_t i = 0; i < searches_nr; i++) {
- 		struct commit *landed;
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 54461e90b3..ed62164a95 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -2160,6 +2160,145 @@ test_expect_success '--delete-integrated deletes a squash merged branch that was
- 	)
- '
- 
-+test_expect_success '--delete-integrated deletes a squash merged branch after upstream changed the same file' '
-+	(
-+		cd upstream &&
-+		git checkout next &&
-+		test_write_lines 1 2 3 4 5 6 7 8 9 10 >shared &&
-+		git add shared &&
-+		git commit -m "add shared" &&
-+		git checkout main
-+	) &&
-+	setup_repo_for_delete_merged &&
-+	(
-+		cd repo &&
-+		git checkout -b edits-shared --track origin/next &&
-+		test_write_lines 1 two 3 4 5 6 7 8 9 10 >shared &&
-+		git commit -a -m "edit line 2" &&
-+		git push origin edits-shared &&
-+		git checkout --detach
-+	) &&
-+	(
-+		cd upstream &&
-+		git checkout next &&
-+		test_write_lines 1 2 3 4 five 6 7 8 9 10 >shared &&
-+		git commit -a -m "edit line 5" &&
-+		git checkout main
-+	) &&
-+	squash_merge_upstream edits-shared &&
-+	squash=$(git -C upstream rev-parse --short next) &&
-+	(
-+		cd repo &&
-+		git fetch origin &&
-+		sha=$(git rev-parse --short edits-shared) &&
-+
-+		git branch --delete-integrated origin/next >actual 2>&1 &&
-+		echo "Deleted branch edits-shared (was $sha, landed as $squash)." >expect &&
-+		test_cmp expect actual &&
-+
-+		check_branches <<-\EOF
-+		main
-+		EOF
-+	)
-+'
-+
-+test_expect_success '--delete-integrated keeps branches whose changes did not land' '
-+	(
-+		cd upstream &&
-+		git checkout next &&
-+		test_write_lines 1 2 3 4 5 6 7 8 9 10 >doc &&
-+		git add doc &&
-+		git commit -m "add doc" &&
-+		git checkout main
-+	) &&
-+	setup_repo_for_delete_merged &&
-+	(
-+		cd repo &&
-+		git checkout -b unmerged --track origin/next &&
-+		test_write_lines 1 2 3 4 5 6 7 eight 9 10 >doc &&
-+		git commit -a -m "edit line 8" &&
-+		git push origin unmerged &&
-+		git checkout -b half-landed --track origin/next &&
-+		test_write_lines one 2 3 4 5 6 7 8 9 ten >doc &&
-+		git commit -a -m "edit lines 1 and 10" &&
-+		git push origin half-landed &&
-+		git checkout -b conflicting --track origin/next &&
-+		test_write_lines 1 2 three 4 5 6 7 8 9 10 >doc &&
-+		git commit -a -m "edit line 3" &&
-+		git push origin conflicting &&
-+		git checkout --detach
-+	) &&
-+	(
-+		cd upstream &&
-+		git checkout next &&
-+		test_write_lines 1 2 3 4 five 6 7 8 9 10 >doc &&
-+		git commit -a -m "edit line 5" &&
-+		test_write_lines one 2 3 4 five 6 7 8 9 10 >doc &&
-+		git commit -a -m "take line 1 from half-landed" &&
-+		test_write_lines one 2 THREE 4 five 6 7 8 9 10 >doc &&
-+		git commit -a -m "edit line 3 differently" &&
-+		git checkout main
-+	) &&
-+	(
-+		cd repo &&
-+		git fetch origin &&
-+
-+		git branch --delete-integrated origin/next >actual 2>&1 &&
-+		test_must_be_empty actual &&
-+
-+		check_branches <<-\EOF
-+		conflicting
-+		half-landed
-+		main
-+		unmerged
-+		EOF
-+	)
-+'
-+
-+test_expect_success '--delete-integrated keeps a branch that replaced a submodule with a file' '
-+	(
-+		cd upstream &&
-+		git checkout next &&
-+		git init lib &&
-+		test_commit -C lib in-lib &&
-+		git add lib &&
-+		git commit -m "add lib as a submodule" &&
-+		git checkout main
-+	) &&
-+	setup_repo_for_delete_merged &&
-+	(
-+		cd repo &&
-+		git checkout -b replaces-lib --track origin/next &&
-+		rmdir lib &&
-+		echo "from the branch" >lib &&
-+		git add lib &&
-+		git commit -m "replace lib with a file" &&
-+		git push origin replaces-lib &&
-+		git checkout --detach
-+	) &&
-+	(
-+		cd upstream &&
-+		git checkout next &&
-+		rm -rf lib &&
-+		echo "from upstream" >lib &&
-+		git add lib &&
-+		git commit -m "replace lib with another file" &&
-+		git checkout main
-+	) &&
-+	(
-+		cd repo &&
-+		git fetch origin &&
-+
-+		git branch --delete-integrated origin/next >actual 2>&1 &&
-+		test_must_be_empty actual &&
-+
-+		check_branches <<-\EOF
-+		main
-+		replaces-lib
-+		EOF
-+	)
-+'
-+
- test_expect_success '--delete-integrated reports a merge plainly next to an unmerged branch' '
- 	setup_repo_for_delete_merged &&
- 	push_topic a-unmerged unmerged-work &&
--- 
-gitgitgadget
+I haven=E2=80=99t tried the above but it doesn=E2=80=99t look like you h=
+ave made it
+harder for yourself than you need to, considering your needs. ;)
+
+>
+> =E2=80=A0: There isn't a great story for that, either :/ When "git fet=
+ch"
+> fails to fetch notes because of divergence with local, I end up saying
+>
+>     git fetch benknoble refs/notes/commits
+>     git range-diff refs/notes/benknoble/commits...FETCH_HEAD
+>     git notes merge FETCH_HEAD
+>
+> or something.
+>
+> It's *almost* like we need remote-tracking branches for notes, ahaha=E2=
+=80=A6
+> at that point, Scott's git-meta work becomes possibly more appealing
+> to me, even if a part of me wants to "fix" notes so everyone can use
+> them easily.
+
+I don=E2=80=99t know what git-meta is. But in any case, I haven=E2=80=99=
+t seen a
+forcing-use case for making Notes simpler to use. Right now they are
+okay-enough for the simple needs that I have seen, which is
+single-author (program or person) or automatic-merge (git-appraise(1)
+uses json-lines so that cat-sort-uniq merge strategy works).
+
+But imagine some kind of collaborative Notes usage, like multiple people
+posting commentaries on commits. In that case one would need better
+tooling, for sure. But collaborative metadata on commits is a bit like
+the ideas like =E2=80=9Chistory of history=E2=80=9D.[1] It=E2=80=99s pro=
+bably not going to
+happen.
+
+[1] https://lwn.net/Articles/914041/
