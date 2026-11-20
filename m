@@ -1,119 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.224.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795196178;
-	b=3MyKczB9jsz1g7NUGxVReQ64pKrmx6L7V50ciLkiZi1mqy5tZU8UcXkEw7vXqDLXxNEi
-	 464P7KBEoP9NDWWBpEoCl6I7qfqFNtL/+3RCSdVfPZnSSVDFWFFF451flWWb/pdhiPrwz
-	 AZGET8+Ulg+/pmefHdmkvfQEiSMov66w4djxeDyUmdyhTxx0v+bK2TYjqCiX92fUYKSBq
-	 8E0y1hQN0rJnrDaA01k8E6uOgBYOzi0RyP7MS5Zrl160MM9FDnbu/pyGzg1zsyTimydjc
-	 HxSYtIX6vd4gRhrFng2LTbbX9LS+h/NOWuEOf2rjhX5uGRt0ly4s0x7qn4LHn99PX+g==
+	t=1795197280;
+	b=0m1tOdDKSN7zH2uWU0vVVv6kYL7mS7BeI/G2vam78goHt1Z7bYQPEnCEdeAzglqyHrTz
+	 GUnElZ4qxcCcgyYFEBEN7dF4LqJ7EDVO7KLM47zwoVkwOrTrY8wjgMXYkHRzSA/eZxB6E
+	 eaA9mbmpAcuP/pG1UP8CdM57+I7vCZ44IFxv/957O1Saq2jFbaaZ+a61CCtLKZkMivtDP
+	 0Sgekwf4rff4yCHnJKKHZvreHizqNo+nOljgVBdatxsiJbSCqTifoc93bGwytu23ND2Gp
+	 XMG8ThzaiPW7k5wWO1oJz689O1tffDZUnWnswNYmg8yvnZCZPRI/bBPBj8PIXxjp8sg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795196178;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=EtgMY0YtPW4NFv3gEt1UzqIUZI1kI3TNJ5xpD2eQBDI=;
-	b=cUS/P8lNCOgBYEAlWM2l8mVwOaVzqhCPBfdqmi5SXZpZpP66si4kIx7dY2C3M2DOUU8B
-	 VK2fpuFVsK+c132/vbuE/rqHiF7bizmGGVe5sFyg0rs3HaWRgxws8ATBoaK2t4ECyBTQ2
-	 denRBgrV5jh3rl62EWkv/Hy5M/WSLPqJBjq4K4tV2JskMuwhG9iPY4KbFbzKQTIzf65Zr
-	 uiOaIfmDzHTiAu3nGM78wXkRiaHJFE75bSUAtqvJV35xZ7wDMBp48fTXE65YafbONEEpI
-	 jdQGQzfzgdpQFC1W/UBMkkldsAOP9oV766IBWnXjiXvWqQQ7mG2PtoZsQzwFoZq92yw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795197280;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Content-Type:
+	 Content-Transfer-Encoding:From:Mime-Version:Subject:Date:Message-Id:
+	 References:Cc:In-Reply-To:To:X-Mailer;
+	bh=MzqCFUeulzPUE8XllfqL2qN677IXq9OdqBD7lLlt8gM=;
+	b=RGgGdwjroMSM6ysbeNjrpE/VtkLb5/eyghznHkkLn/xSjKDGRYJSwK2G/maWgekjsHEs
+	 3Wt6YrC0zeNX0wR0H0+gPE2vrD4YPshsWc4+RqXaBv280XxBxm5v5JzvXhd4N9Pxkmnx3
+	 ibrf1z3LFdJ9vvP6x3tBB3zncoUdr9xFovnUlhJj9fjvbWrXC/YUMxX4VXkOPIDdAlnc+
+	 FOjEqb8PyINgXJ2iQP2OfbnE9BiegA3trj5OBEo/1W3QKTvNnwDiSaYV6EkOPAl/U1m4D
+	 ApyDR4ncKJrybiQM9e0O6+Kq/nCRmqukm9ys2k/r4aVK0YHYfDdv4Eb0itULwP4jPBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=N9wNZGDX;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=3lfzKkq6;
-	arc=none smtp.remote-ip=103.168.172.154
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="ZJ/TZ0Dz";
+	arc=none smtp.remote-ip=74.125.224.45
+Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2420E60A2610
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 17:36:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2420E60A2610
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C42760A5BCE
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 17:54:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8C42760A5BCE
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=N9wNZGDX;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=3lfzKkq6
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2B1AC140026D
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 12:36:07 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Fri, 20 Nov 2026 12:36:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795196167; x=1795282567; bh=EtgMY0YtPW
-	4NFv3gEt1UzqIUZI1kI3TNJ5xpD2eQBDI=; b=N9wNZGDXHqDi9VwUSCau+0xO6s
-	PKW4X2LMptM/olJcylG7lv+YUUKylmvzJMgov/SAcZRbSmwYdP6m/BnbZFLEDzur
-	fMR//6Osg4OPFAkZmphYGew5LqQtnzjFkFyqI9MZMvzmZMxBgY41e2/cSclICM2D
-	ZnBL09dsdWiYls6VFSpraunyzWEbK/5Qvk+e7Y+YYsPp2/HlB5TebXDtw4D7LxHI
-	DWs6o9iAExIWEoXOxd2S/HqV2UTa7UIxdZy7eJdfXrBLvqvE3w03/awGpOiwsRZA
-	h7hDwns2cgPSpj1Iu61O4if7b/gi8NkFqDAaZ4/YcnIj+z2Yht6nD08uY2cg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795196167; x=1795282567; bh=EtgMY0YtPW4NFv3gEt1UzqIUZI1kI3TNJ5x
-	pD2eQBDI=; b=3lfzKkq6lez4OvDfn0aFGBPLrq1+9NfWnog2iCyVZ2M/b+FyAOv
-	OVbtdPIWxDCqNrdRC++epYzH8CGebuQhlLKAkZTHF0j5htqvLzulJj7M2WtU9AJ4
-	HGx0P98kiKB0kazzN145O3WtEikL5+NAcGT91BFHr1YLSgoDS2rMkRPdYBgbB1BA
-	KDGoXHQsmZwfIBal7SW+8yeEQ1s8TkZpgOe4hBcXjQJZXU1jdUdg9gkq4lN8mP/g
-	B3oYfG+rkMMe9eIr3RTumunXVnjp0GsZuFu3KTnEcAiWhxhhM7fZZiMpZIxICX3x
-	5GTLGDWnHSnbDXsUuEjjp9l0rdevvpGicmw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795196167; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:fbz5S0aq100qGVQ/s1Y4d2xTOlP6t2FKOkTP/kdkZxQuyeJ
-	EzGGaq4zq9A1eqRu9rdGrwzihrvArACYFaHHmi0L4sBLQcahJlbFwfdOnqNs19VH
-	Wu+LKavlbBXhm2TUqSBb33dwGgHOPx13HMia6zmTI+iohzK7XNcQafBiZOJdX4X8
-	bxYm1bix3RIzIQSDtK1PcHyGkJgzHNhV0Dh7wwFC7V6KxIt2+25TKIB8EfXJic6c
-	OYK7BREKKB/P7Fz7mJIPcCMwRTpH7mAa29cfzD5SYuOZAcUXjB9slJZQUf8gaV7n
-	3c3M9rSvE5YJ4Np91gFrBybVYgMYNmPydgKQ2aw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:0W01R/A8FJiYYe24dg6LnlniT0S9tU6vGXX1lvCt+3o=:9Ucgnm0hmKtzsL/0m4Y7lyThrUHqfLDMxBL83OEoPe0=;
-X-ME-Sender: <xms:B4UAa7PL4r1fg1pjJnSJtLVELKuTntiOO71cE0z6UNC1pbBM1ngr5w>
-    <xme:B4UAa9aEaVHDM59h8fQlJP_-k1zBxb0BC8OGcnCWAa-j0W7aVKIixQPyHhhBYK03l
-    36hpD0dHTEjowMCr-RfT9MOtn6yIoEsHOGmuHOgaX3TpQK2pzfz>
-X-ME-Received: <xmr:B4UAa3rbC7UoIuv0mxnX3avXLdzl4Lt9KPJ5t1iMEUlUyROyXHF9K3CMPFEorWtkQoj53hHzkhZBMqwYC7x9d-A4y91i6yFjxONr>
-X-ME-Proxy-Cause: dmFkZTEndoov6wyiPffawvXVj/wkT3LpjqUqxvryLGtT0dzhUVheqs+xZQh6UPU+sTAi9z
-    eKZ/pr4uWjAK6n46G5f3wMpKWEuX9hG+Ib1L3mkHUsSKRO9mPtVuI3FOw9AiyGQhNwY6aC
-    m0eXRT8yNOx5nSuyssbEH935vM131ipLAd5dg6uTg1Ug/ohcixQQwJkikcYEdXQinulH/q
-    Q3vGtwxgJNNeu6f59Am7n/XgI+8oEdCoZ2Lc76HV916v0HL6BOlQvvzIt8WK1X2BmzZ2pe
-    BB7zm0yR9WNNF7o1Pa6kUdZtorWJck6OT3MVdYEkAxdKKNFfVZcuiP8lq8j7dF5UDCBAeX
-    9Y8Z/YNn4BLk8NzjG0QuSO5rw9rOwUEZnVrWHmQK9MyEon/pyw6ASGnI/IIvjmkFNorfkO
-    VRnkb91XAS+Hp6DlX0Tt5nfTMOAANm7nMc2LdHhxRLb76LV0nO5TNV2o//TtSXcNLklXvs
-    cPxfA+dpKs/u2TCAli9mFBV06H0MQtewySMH4EXZITn8kCqoBZ1huGp+exJmMaeYP8uZe9
-    oHTiXcVsMV9pS/YsTW+byKObtuwwPtYLZRpzy/4HinbzRPynLbajPev+4scQnIrOUIkeYY
-    a/OLalkxgstnblHPnqH0VPSgqV81q+x+HO8LdDvVPtqgkmZmQZcAoUFLdYPw
-X-ME-Proxy: <xmx:B4UAa5aSfsa-1z3-lZ4aP8hXsDMrJrkZwV7OogxFVZ4AwZo2QzcxVg>
-    <xmx:B4UAa3SpQNzwrbmEW0avuVJJvQ6M-kqyiKTAmmYeWMLa8hJnFuNGPg>
-    <xmx:B4UAa47fR7kWXX5L2CMXzzF4Zk6Fj5ZaETlTm7UZzmcckWP4u49mfA>
-    <xmx:B4UAa0zNLh_0MJ93O2klsPB55R_WpnXKnj-I-1le5BnXlBYMFTLb7A>
-    <xmx:B4UAa5ZWR_6UfZIHKhJNTISA7xWj0bYQh9UmSHBNaxcnk7BAud3xKX-M>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Nov 2026 12:36:06 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "=?UTF-8?q?Andrei=20=C8=98ova?=" <andreisva2023@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] builtin/clone: fix --revision with SHA-256 commits
-In-Reply-To: <87mrr486sg.fsf@gmail.com> (UTF's message of "Thu, 19 Nov 2026
-	21:00:52 -0700")
-References: <87mrr486sg.fsf@gmail.com>
-Date: Fri, 20 Nov 2026 09:36:04 -0800
-Message-ID: <xmqqv75rqubf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ZJ/TZ0Dz
+Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-67921b515a7so1393834d50.2
+        for <git@vger.kernel.org>; Fri, 20 Nov 2026 09:54:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795197275; x=1795802075; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=MzqCFUeulzPUE8XllfqL2qN677IXq9OdqBD7lLlt8gM=;
+        b=ZJ/TZ0Dz9bfzniqLgTUxCV+tRCiNaVgktgy8tUjLsEH00Al1rdluS+9Q4j7zG1O3ng
+         9cJ+ctlVF/kwpwMf+gMqzLxW65akFw+8lWVKJnwIUHCm5tz/85Sgy5N7vWKHT5WghvJU
+         cihTNArc4DFTcEyUNKRgitiXYqBRsBEqgB3M3dQ1Szo6Udu8iK/p6YdZhJOygstgaw64
+         z/MnnIUbdsEbZsH8E9GFtZxJS5EiMBuo+HLgFFnZUABbzIPj25xTv9idnjqXXSS/1wfV
+         Er7kIKnuZv+Bot0h90wZxUa3a2dX/PJS58nofw6lwhn3rHzKkHFubMy29tq/77xgHXAZ
+         5hTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795197275; x=1795802075;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=MzqCFUeulzPUE8XllfqL2qN677IXq9OdqBD7lLlt8gM=;
+        b=Ep1XnNiWpP4KIlt99SjWBeM5+zmTDqHg5Dn2q5QrZBL429G7uVzuwnBf0zqVek0/rO
+         LLPH/Swry8ZVv61rVrKgnkoyX8WX72Vui4ruojWEAS1c3XB6an29RskKjYn+lMjUqrEJ
+         ZYWNHFYu5T7jdkPNDqQC7e8voaUsQf+mrHKKOb/24OmIVXYmOoJJp+fcZ0QIhToTkvXN
+         NR/BA3Xopo4JTNog5OQ6IAKia1zzSvQZRaUfP1qOOIA4QO2kWTD8F3PMS0AeHCscVsYz
+         /JAq17bcCvGPAMiuoMNbLNWjkoOOafPK00cKvVV/eJT6HdVMnyEM9qykxUxIEJXMcefd
+         QGbA==
+X-Gm-Message-State: APuU4Z8FeetRHV0BGzO3qModtOsrvnHfrVp8T653uVEBLUxKzHFDC6Dz
+	CClJAw5+UGZUtClWxGFH50Khi6kxAoOS/9KpvridY/UMLV+Nl9XSFpmg
+X-Gm-Gg: AZFdTZfFWEQdLVUhc1tu3/KZ5Flrh4gAAmRd8rY/ls/ScpLfF1OgsGuvoUTcmQWHF0I
+	XbPXxrpC2DfmoJCO3BwGf5TEjFdxgFpGFzqeD+1kKTXVnbdYHU3FJJz14+aktaiaqHPIDp8k1l7
+	T+heobfTaXu4QAcrzWcMUKUd4m46XwCx9YXHGd1I9uAe/1H0JgFOmXd6S1hebI8+qsW2UOBsLwv
+	m07yFWiGAlKNGV1qjxzZdx2nDbLEn4/foWpgM/Dv6r5cw9CAMDJZI03ba6kAj/vAhJHmdT6rxVS
+	AQQQCWxBfNWwAnOaOOlNtbU4jzxG6ywxmgk+S7IU7xD9Z7E6EwjFquKVKlIoZ3acL4ny8LbO2dA
+	s95F04bYLHcJQKKCIFCYSoXw6zaTABtvPXt4TSYoNAeedLy97H9S3RSmpuOH0xYbXPim5F6+RmW
+	D23nysVI4KNUAo27Eet+o5u5BGPOQt47HR54cY+0/8ayOMc/SrFgb7j4t5kxkD00/8Iyyqu5O6q
+	IP61K58MWUbaAKiyuc1etf26uhgAb94x03E0rNGUBIeJF2rH1xswC/2X9RcQS3ELZ2P1Cg7/Djx
+	x2xqsSKbglFCiXfpcFYmV+IGTkENm7J56ci+7Vp9mRDLa71bl1EEtJMSi/YdIHi5MSESYqbeiUa
+	aR3iz6RQVl2AxuqeUIVrc7Jn4x4bujiUNzuVtwk/Mis24dViwY12g7yU9AB5cTdcuvvZhT6PMym
+	KO0lE=
+X-Received: by 2002:a05:690e:484f:b0:67c:2396:325b with SMTP id 956f58d0204a3-67df441fbe2mr1185329d50.59.1795197275525;
+        Fri, 20 Nov 2026 09:54:35 -0800 (PST)
+Received: from smtpclient.apple ([2605:a601:9d46:600:41d1:dc7e:670b:ca07])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-67df3353258sm2002677d50.9.2026.11.20.09.54.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Nov 2026 09:54:35 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -122,106 +91,78 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH] doc: fix AsciiDoc syntax
+Date: Fri, 20 Nov 2026 12:54:24 -0500
+Message-Id: <93127462-BCFD-4086-B19D-4B640F515140@gmail.com>
+References: <pull.2496.git.git.1795194752259.gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Ophir Bleicher <ophirble@gmail.com>
+In-Reply-To: <pull.2496.git.git.1795194752259.gitgitgadget@gmail.com>
+To: Ophir Bleicher via GitGitGadget <gitgitgadget@gmail.com>
+X-Mailer: iPhone Mail (23D8133)
 
-"=?UTF-8?q?Andrei=20=C8=98ova?=" <andreisva2023@gmail.com> writes:
 
-> The refspec item is created before the destination repository's hash algorithm
-> is set up, so when cloning repositories using the SHA-256 object format
-> parse_refspec incorrectly parses the hash.
+> Le 20 nov. 2026 =C3=A0 12:31, Ophir Bleicher via GitGitGadget <gitgitgadge=
+t@gmail.com> a =C3=A9crit :
+>=20
+> =EF=BB=BFFrom: Ophir Bleicher <ophirble@gmail.com>
+>=20
+> The Documentation/MyFirstContribution.adoc file accidentally used
+> Markdown syntax for a link:
+>=20
+> [here](https://gitgitgadget.github.io/#...)
+>=20
+> Fixed it to use AsciiDoc:
+>=20
+> https://gitgitgadget.github.io/#...[here]
 
-A few improvements would make this much clearer for git log readers.
+Good catch.
 
- * Clearly state what fails for the user when cloning with
-   "--revision=<sha256-oid>" while defaulting to SHA-1.  Along the
-   lines of
+While we=E2=80=99re at it, =C2=AB here =C2=BB is generally discouraged as li=
+nk text.
+It=E2=80=99s not particularly accessible for screen-readers, for example.
 
-     "git clone" fails with such and such error message (when
-     talking to a server over protocol v2, it dies with this other
-     message with protocol v0/v1).
+> Signed-off-by: Ophir Bleicher <ophirble@gmail.com>
+> ---
+>    doc: fix AsciiDoc syntax
+>=20
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2496=
+%2FOphirBleicher%2Fpatch-3-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2496/Op=
+hirBleicher/patch-3-v1
+> Pull-Request: https://github.com/git/git/pull/2496
+>=20
+> Documentation/MyFirstContribution.adoc | 2 +-
+> 1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirs=
+tContribution.adoc
+> index c58253fd54..3b531b24fa 100644
+> --- a/Documentation/MyFirstContribution.adoc
+> +++ b/Documentation/MyFirstContribution.adoc
+> @@ -931,7 +931,7 @@ either with the "New pull request" button or the conve=
+nient "Compare & pull
+> request" button that may appear with the name of your newly pushed branch.=
 
- * The issue triggers in the opposite direction too.  I.e., when the
-   default hash algorithm differs from the remote repository's hash
-   algorithm discovered during the handshake, so the title can use
-   some polishing ("with SHA-256" -> "when cloning from repo with
-   different hash", or somesuch).  parse_refspec() fails when the
-   length does not exactly match (i.e., it won't be happy when it
-   sees a SHA-1 object name even though it is shorter than the
-   pre-handshake SHA-256 default, as it requires the exact length).
+>=20
+> The differences between using `gitgitgadget/git` and `git/git` as your bas=
+e can
+> -be found [here](https://gitgitgadget.github.io/#should-i-use-gitgitgadget=
+-on-gitgitgadgets-git-fork-or-on-gits-github-mirror)
+> +be found https://gitgitgadget.github.io/#should-i-use-gitgitgadget-on-git=
+gitgadgets-git-fork-or-on-gits-github-mirror[here]
 
- * Explain why if (refs) had to change.  The log message does not
-   mention the second hunk's guard change (if (refs || (option_rev
-   && ...))), which is needed because ...?
+So perhaps we could reword this to something like
 
-Structure & line wrapping: Wrap lines to ~72 columns and end with an
-imperative command to tell somebody to "make the code like so".
+    Further [differences between =E2=80=A6] are described online.
 
-Having said all that, if the problem is "the refspec item is created
-before we know what algorithm to use", wouldn't that suggest that
-the right conclusion from the observation should be more like "so,
-swap the sequence of initialization, keep the command line argument
-as an array of strings, do the handshake with the other side first
-and *then* finally create the refspec"?
+with the brackets marking the link text?
 
-Undoing what was done in an earlier step and recomputing may have
-been possible without losing information in this particular case,
-but that does not look like a good design, just sheer chance.
-
-> diff --git a/t/t5621-clone-revision.sh b/t/t5621-clone-revision.sh
-> index 54789423f8..1afac8abaa 100755
-> --- a/t/t5621-clone-revision.sh
-> +++ b/t/t5621-clone-revision.sh
-> @@ -78,6 +78,21 @@ test_expect_success 'clone with --revision being a raw commit hash' '
->  	test_must_fail git -C dst config remote.origin.fetch
->  '
->  
-> +test_expect_success 'clone with --revision being a raw SHA-256 commit hash' '
-> +	test_when_finished "rm -rf src256 dst256" &&
-
-Clean-up preparation.
-
-> +	git init --object-format=sha256 src256 &&
-> +	test_commit -C src256 --no-tag "initial commit" &&
-> +	oid=$(git -C src256 rev-parse HEAD) &&
-
-Test set-up.
-
-> +	GIT_DEFAULT_HASH=sha1 git clone --no-local --revision=$oid src256 dst256 &&
-
-The command to be tested.  You expect this not to fail.
-
-After a group of commands that makes one logical test, it would help
-readers to have a blank line here.  A truly tricky expectation may
-even want a comment in addition to such a paragraph break, but I
-think this one and the various expectations we see below may be
-reasonably easy to guess without comments.
-
-> +	echo $oid >expect &&
-> +	git -C dst256 rev-parse HEAD >actual &&
-> +	test_must_fail git -C dst256 symbolic-ref -q HEAD >/dev/null &&
-> +	test_cmp expect actual &&
-
-This is an additional follow-up test.  You want not just the clone
-to succeed, but HEAD to record the specified object name.  Remove
-the third command that makes sure the HEAD is detached, so that
-setting up the expect and the actual files and their use come as a
-three-tuple.  "The HEAD must be detached because we gave an exact
-object name" is a seprate fact that you want to verify.
-
-> +	git -C dst256 for-each-ref refs >actual &&
-> +	test_must_be_empty actual &&
-
-So is "there should be no branches copied from them".  For this test
-to be truly effective, wouldn't you want to have a few unrelted refs
-in the source repository (e.g., you can omit --no-tag when creating
-an initial commit)?
-
-> +	test_must_fail git -C dst256 config remote.origin.fetch
-> +'
-> +
->  test_expect_success 'clone with --revision and --bare' '
->  	test_when_finished "rm -rf dst" &&
->  	git clone --revision=refs/heads/main --bare . dst &&
-
-Thanks.
+> Review the PR's title and description, as they're used by GitGitGadget
+> respectively as the subject and body of the cover letter for your change. R=
+efer
+>=20
+> base-commit: f7de81456940dd6f3274e461149bba12965de609
+> --
+> gitgitgadget
+>=20
