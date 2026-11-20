@@ -1,120 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.159
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795156097;
-	b=jwzgp51DQRwtlVjlxGplk8YLq57vljQNNRkhwFSMytSz11XK0byZjziltAB+YzmBe9CH
-	 syTp0fyov5e1L1+vKcW9PMf0WFKHlZmot7OZ7kLzJZRmURVzYFJr+MvQfSsxZPu455Ig0
-	 ZBFNN/d/CVrHQxNo6AN6s2sUDCwjcrvzIpp+tKDtCA3lQEeAEcSSeNxeYlNCuf1YktRvJ
-	 vygec965Tg9NFSx3p26kbU3YSAqudMhsK7G8XpyfCIHDEiOvH/fvyGwUkLpKhARSbXjxU
-	 7kwET60Wsha5Vr/hrGqe8YxSx9tU0lKWGg3QXWHAdOroRrbFbEXrS9MlWtkYtopljyg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795156097;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=hRW/zW2RuDKZ/yPsd6DNGKcT2aECzI/n6DVwGzJCvG0=;
-	b=GjKZwn+ieetE0YWBeujJwf0SkcYjjDte42BQxcqSHWvrIYAE2SqDytEVkhE92xMp+Esx
-	 VSMxF1KD/o5MyFhGnw339qCdDMOBznR8E+de14EWo/UVXN6zbTEAyxJXo7t4nx0oatKUs
-	 bkXRGco5M/9VcefrxFTP9x9djWnBfJKJAbVg825GUOiTLh55Y3VACN7u6q4z2kCukbXB5
-	 27RzvdYBgnYJo2aBzZbE9wUxP2BRLFDMN/wjMaI9m8NeFdIuYWNbn/du0YvrptEsCCDgS
-	 hTRYu6QcrQkAS4067JXK594iDQIxI2mpY1RnRnTT10xIzLkVmh5diGKUTKwaXnzu22A==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=f4zot3DA;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=bUOsbpVZ;
-	arc=none smtp.remote-ip=103.168.172.159
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.48
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795163455;
+	b=rV/rFvKe+2DR3QxflT4jQGl+epn7Ohh1+hLqvc1W8CufwHptRCtbSl7oAAMnj/3b+Kci
+	 6UpGy26nAGDNAAWvKYn2wCW6mDBYkEyf6g/eeI6cdSX45FyZ3deoL+zMy3EHYsNeVJsdh
+	 5d/JSjO41VPVMUWjCT4PY6mHs/EQ++fvMJGfyYNdsvnTM6TorT7aan3C8MKdXGy+wBU1R
+	 70gkUwAdwhmfk7LbTsU8H/WeVRnhSWKw2731iMfscjtNqsUIHncWdq0YmWp9tk9UVkyti
+	 LgWCvOL/KpcPfVhcpS5iY413Bn/ir9P0Krztqb62zIQZdlmBo77ucLqx7+ADBAPva3Q==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795163455;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=276HR4GVjdlztaRpFIrRJ7ojiNuVXUd53QDJ+2g94zU=;
+	b=KFnBwpuJF7E6ivn5Z5AvRmOGHeqYnMvmV0Zwx4HNuSWpQe0G1SpnZjDglAY9Wo0ieHUJ
+	 5j1vm4uRGSzlQoE47RFlBKiJ7n+UyoybbfhABE5njVaP1iMtONCMmudwTnMOJbITTv7GI
+	 PLLWXbd8O5nEtoeazDX27nB5CZtdcH6lWLh2th1QbqFN7nfxLomU63c/bwZKEKQshjUP2
+	 JjwoWwm4GUXhHyYLR2bnKAfBWHjDZnUhmT1RQ9YDIU+LPi36dNGvFYVF7+6pUWeWDTsgf
+	 oxD2poeuw1ZwnzIkYjYVFCr3VWmWtLWcZZLDQRpECgkUtWISR2vCQn2d9fLQojRqD4Q==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xlPyC7jF;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.48
+Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190C5606A32A
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 06:28:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 190C5606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B30606A325
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 08:30:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A3B30606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=f4zot3DA;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=bUOsbpVZ
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 460FC14001A2
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 01:28:15 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Fri, 20 Nov 2026 01:28:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795156095; x=1795242495; bh=hRW/zW2RuD
-	KZ/yPsd6DNGKcT2aECzI/n6DVwGzJCvG0=; b=f4zot3DAkUhlIFvDYBwoZHLjEP
-	l9TqqRme/8mKBcpJZQxN5ZB2WWIz83D+mWzNlV0Xz+9aliR9X/C5ZOSFG36Yp54w
-	0MjFzQrceAB6VkFr3V5aFVyKd5peiuT5Jm3TL97k3gVCBvI4QO0kiXhD4xgRLGSY
-	4RlJwCJNSptbbROwgHY0vRSVcVKrO79pLATlVZaz/1fgncTFgsvPu+biF+Ur84jp
-	VeMklcaWgEulECA2qzkakXOZuM1++ikaA7pXCM5t4RSIqsUOA0KRcJh7h57U41wX
-	iofM6Skh7tZd0Vr4njSZ9mPs1t8S5aTK5fbxT71SCxtoKPCs5CEhukIBVUtQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795156095; x=1795242495; bh=hRW/zW2RuDKZ/yPsd6DNGKcT2aECzI/n6DV
-	wGzJCvG0=; b=bUOsbpVZnabX8725H20dljtDqbDFLIQar1gwLYOHl73nVS1zGMv
-	T0aT3coDpfFTPZihAHehCC8n7OWIBF6HDi0khyaV9W7/Gl8RIDodPnMrKnb4A48V
-	oDp9XtwqfYk4vPD1lptVJOnmaOxtw8XpI8RNNEmWg4bwqlrytMQuVdBFnmSj3zne
-	utKyzXRKZEv19xpd51EEwNVmBOomLKy54nx4pIouqS/4DuktZ7fho+kGHlsRxkf4
-	4Zfn5jpLUtgbGbRWSl9OcyW6cGCCMI/xkWr+q+zUX4janXfK7V1P5faIQwHPuobO
-	OIPGdXIcA20TDHod7GycNiVFLCbSguizLnQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795156095; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:dPg1qXdkfWckBnIfne4KK+acq+p6ZbKGnF6xnwXL+kK0nbV
-	DOrlOh+Ytu/x3bIMoe04K363eRvhb6c0EM2PwHQLBEi267Gs3kiC2G4N7Gup8Biy
-	bucqRRputxR3/hA+AFk7s2vD+BOqeBcDh8F015HB40AIVxDWm/TnncnyvzHYyLwU
-	Plf9Q+fGQ15sJQHOqANwIf4jWoj/Pa4a/thKvjBosRc+0e0Q//oY2lSDWrxwt9Wz
-	DbW7bIomalB2WsgPbp6xYCuHuQkSwxWm9G8KLkeNuGnr5GaUE/TLlfsSkrxOjClj
-	q+uieuJLngwYqtbAome7v7vWkTMMj/KbpNcqw2w==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:5JaWmxn8Y9hNkjeUZcjO5rTikftbdCF7VNSjl/CYEQk=:OH9mFWS/XXCkxuDJswM3z0QIblYD2y6yFmcpJNKEY00=;
-X-ME-Sender: <xms:f-j_akYoHcareJOGyehPIOoKhlcQ4w9lrHuI677VFIh83N6npTX-UA>
-    <xme:f-j_ambKT8QCVSd3_QxCzxO8YfkwXDpEYMiTV6dbret1lxvO0zvCzfX65MrLn0x70
-    YxXJmihz9OtXnjtKw2vMKvh311L1tOa0pgzP7HSSivqqlVRPA0KNQo>
-X-ME-Received: <xmr:f-j_aj_fwr3mczeAQ1hXSqTQG7h5m95p1X_bSDmRMtjHQUTbA77dKfNdyKgDzeUBQ9VRPlr3Y8iUUbXmtjSRHp5wr0bUWkABh4Lo>
-X-ME-Proxy-Cause: dmFkZTGsitkkMUQrMppZj9X9ZoPUlIBRjGPW7o7VLNpEoFoZ+dQuG4A23spImlkNCNBylM
-    VdKiuDJbGWr/HhzKU96FczrXNBFWdAVnycgfZ72+o+ffCY1Np7sP6CODop6k/HZeZWoGl6
-    35Z08OrkKokjg8URjNYr/FzlskYfXTxFXEpZJHXqsQpM+m5YcMmpdnrU4iqS7Op3XgvPby
-    iWH0gGNma4+VI2nAJQQ2b4qvsY92bPO4kkYsPB/iU4vLIff6lxzThgwJCHQuYCPAS+BJdh
-    DtvJT++YViaKUrS8bFz3RcsoJ/xArKgNYjFRuiG2T9WHBXBlYS6kNfzdc0qCkPE/DLr6mF
-    E6j9ya1X96Al4aOPjdgrfxgiQDvZ0mSDtTORG8XXbn0B3L5FBH24rBYHNZETd/w3wEueyI
-    9swwr7jj7v/YrJuN1JdvrIXnY69B068BvI4A9FDsktUefThy1HM/J5CdAvI/AwDGBjNfxQ
-    hymptrJdFgj9MntdURqlpaxwkZJyn00njowIyCXVLXK9ye50mjPNwImvinRQkjri4kSt6J
-    mId09hHYLBKyvHbkwCl3SHni81wzLhqgtR6+g1d5puClDFk1O9PBNQp4UMo+BMiktQAJky
-    ODkvE85nxJhZhrFZahl8Y+iIjvK3b1ZsAccbOmMIqtMxUP8SwcNYIYOyoG9g
-X-ME-Proxy: <xmx:f-j_ati1vyl3H7HY36Yv3_bA75tFX_vGhcrqg3YOhEa8_meyD9lW0Q>
-    <xmx:f-j_areyYaRyDUwtl1ZMcvCxDJLCF2DOD6CWPnP3jd8TfUuTVsHD8A>
-    <xmx:f-j_asrPc4UdaKO-yQYGj8KXzfYRoP_Nq4MIL0SiGWH5CPZ9GkSsdw>
-    <xmx:f-j_aoAIIiGbzbsU9gXLWua89Jv8v91rAh36vq8w6FXR2pLADsAndg>
-    <xmx:f-j_ajfqXlCCvKJ05TECVCCxY_HbVJP1K_mHqhZq1JT-ZU-FnFXQUcNf>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Nov 2026 01:28:14 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc: Git mailing list <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2] test-lib: run EXPENSIVE tests one at a time
-In-Reply-To: <20261119-ks-ci-long-test-hang-fix-v2-1-37011c08380d@gmail.com>
-	(Kaartic Sivaraam's message of "Thu, 19 Nov 2026 22:59:15 +0530")
-References: <20261119-ks-ci-long-test-hang-fix-v1-1-45c2fff6d9f0@gmail.com>
-	<20261119-ks-ci-long-test-hang-fix-v2-1-37011c08380d@gmail.com>
-Date: Thu, 19 Nov 2026 22:28:13 -0800
-Message-ID: <xmqqpkw0rp8i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xlPyC7jF
+Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-1b3b4944abeso562843c88.1
+        for <git@vger.kernel.org>; Fri, 20 Nov 2026 00:30:54 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795163454; cv=none;
+        d=google.com; s=arc-20260327;
+        b=lhZT8HR2xE0ZvRO2cU927bR5UpLsmXoRonInEXukeupJXv7hypvTwgzsUTbNTwN4dU
+         yBUdRtLaaXNrViTi2V8xG9s7VC/uu/g04wrF6SxdKz0U29ytWnaCZX1LfpH8GvvSmF3h
+         TiXSeFGZh5Q6LdRMdA1Cku+XUtdOdB91G1gDa2Li178i6HU7yipFv9UOt0h97cL8FKFp
+         FkvWqVToFS/OU5zlcqAyKyQrK9bqpWPtdF/Xpq1V0zn9cIj2Y+5W34z51HbmP1reBm3h
+         X7lbOwHWvVs+O7ddhNKK6yAfjsG4FEMlvt6dAiDeQRdf+wB9uQwVaa+zExp6gfwmX3zQ
+         yzFQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=276HR4GVjdlztaRpFIrRJ7ojiNuVXUd53QDJ+2g94zU=;
+        fh=Nnzl3L0QduZ/QeMzQdME8pcF3GeSkdtTfImvzCeTeHw=;
+        b=K/6aSA3OIhXyDJcjdiVHu8urEQKkSm7+tAP2/3GepfLEUb2u9F78eVZEMd6agJ5oM9
+         ttOFrHJiqePEs/ctwklGvWNCZW8qGLHxac1O54qpeysw4XhxCqOQDpJEXhldmEPYcHGw
+         nzf6KxaUeHiy5gTSi1cxMWD3Lus01UZckr0FMGGPkmJfRmBo5lClFVNRjfQ8xsBD+oD2
+         FL+x1xAvGpzAxY+aKxYV61icPKjRJH8L79wtz7KM2WmsBMMt+5xrW1mqGTRryA+j6of4
+         qp2rhPxhyiocPqYZg7v+TGMrHeASLOO258/elqf1gLmn7LwvyJjPUBqXPtjpr1UXpxS/
+         VPGA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795163454; x=1795768254; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=276HR4GVjdlztaRpFIrRJ7ojiNuVXUd53QDJ+2g94zU=;
+        b=xlPyC7jFJ3jZ8nARy5ju9kEy+bW/ZVv3tzcQRklxnf6Btf+HO9WaE+YZNmMX1cchJj
+         uFjD5ufNVDiHfsI4Ik18Vch2NA8GnOCcv10H4TmLfeGoyLDqbOxH8rKUEXQupmv4zoNd
+         aLSLJmrreMkvk99EPD94xsiXQ1CCJvHPo2Qi1h6fYDkKTr9gWC+uXuokdgR+cwT9Gr52
+         pW++3EmU3cw/hKniT4gI3Sh3zk1/wi8y0Czb9Cp0VMMSyn/p2WCFIR5YOV6YxhLbXoL7
+         KSZBmbNpi7+VSen3LBN3GBgwqWZPHzdNqs4ac+HW9IZPTW32yPj17hS7vEHfCDDPdC0H
+         2BJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795163454; x=1795768254;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=276HR4GVjdlztaRpFIrRJ7ojiNuVXUd53QDJ+2g94zU=;
+        b=GzuvyFeQ+UZGDCeOF6CbYjePO0b98Z/JGYVb6ewKuqsCmetFQbN2fU5vJmRhIHfVdF
+         9NQ30P+6P/6K4LU+J2ue/+BrwiZNYGaHeTbLi+GcUG77ph2BEEbsRltIL8HB//sMl6dd
+         ceW4JdRIgHM2nJzEUccGlk/Q+UUuV0X0CiOtnsDmKK/686G/ZTs0gSIZD1ZwYl6xBM8l
+         dUZ6krNbb9dCeCMaPuFEF4pg2cbtPICB9QCV5DDUEBbBrDCHSntt1M7zgsuv7VJIrNX2
+         cHgWoa2wAQEQWsSrybU/b1+9hJ7BPYCukkTIuYt/awe8Y+JgV9PWXgUsPdheodTscWoK
+         /9jg==
+X-Gm-Message-State: APuU4Z9PVqowbZRNl9vrqxtS7nHxD1rlz9QQtH7zaQjZs4oZ64wRomlS
+	D+LbaHldyWHIfD09GH6+wpYcfsld9uDLmAR+ierUnEdPstp7h6LT6dmzlWqWFLk3SqxazbOfB95
+	OnOcwssGrujScblm0YS7nsVAi5m09EGQ=
+X-Gm-Gg: AYBFou2qgqch+OWJl235dmxXhq4HXKWvpvOL8tTsQ2vUOXtybAdRUf3CwAByWUfrSMn
+	+plec65NSlOnWvxnl9UD8rDykhEjtQnpw5riapx/qQndYcq5gn+m6aAYwXfQDcqC0+TCnj0Oifg
+	OBFcIPglydDZj6u7lCj0MEPcOPYFDUKREQ6zbQKFU2yVlYwd99QcrgcD3Cssk0PDnJBgLqssDKa
+	GDDxhf7TQhgzqFkk0mJ0SShq96JradTAdkub0jUXwzdirEgu9dUSk1+FxTfiHtiuKOikDvaSrkX
+	KKSmcoIsxEHp18WtIObaHZT4UbCdKqDIBvezAOt9hRJrTf39IM2kTEGoRkuMdUWLIx4JO6pY2mb
+	RSmzi8cZTvVrnDmw5aX32CkWHfhxivgH4gSLFn13QNcpbjaqWUNzydMTY5BHBVtyWuBLO57MBJJ
+	/rERy7/suOtaOJLyiChUBpif6mpzChpYijFHWoPqDCOAuiHoWFoXxfLuN1KTaZgfLVBQj57pNPZ
+	ftlIMXYQXRbhSmdVJ1uW8Fj
+X-Received: by 2002:a05:7022:ea4f:b0:1a3:dfb6:e593 with SMTP id
+ a92af1059eb24-1b556900a0amr1794856c88.27.1795163453568; Fri, 20 Nov 2026
+ 00:30:53 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,102 +105,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20261117174353.1158905-5-christian.couder@gmail.com>
+ <20261117174353.1158905-8-christian.couder@gmail.com> <CAKrRMNqMRkkb9+n+11p04YDhn6p39uoc_Upc9voYhZZoLyPXBA@mail.gmail.com>
+In-Reply-To: <CAKrRMNqMRkkb9+n+11p04YDhn6p39uoc_Upc9voYhZZoLyPXBA@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 20 Nov 2026 09:30:41 +0100
+X-Gm-Features: AclHuK-tM_A_SCSgwDhU-9qToOuf5b-skhEcqtdApacUfKJHV36wOxNCODUVx7g
+Message-ID: <CAP8UFD3Yw0kshhQrz_5_PKCBpenSHc1qNTEh2bvz5HkSQ1NYPQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] xdiff: drop LONG_MAX check on merge result size
+To: Tanga Joris <tangajoris@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im, 
+	kaartic.sivaraam@gmail.com, peff@peff.net, Johannes.Schindelin@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+Hi Tanga,
 
-> Recently, we've acquired quite a few expensive tests in our test suite.
-> For instance, these commits add several tests that require
-> multi-gigabytes of memory:
+On Fri, Nov 20, 2026 at 12:51=E2=80=AFAM Tanga Joris <tangajoris@gmail.com>=
+ wrote:
+
+> On e1ec09b23c, the two big merge tests are skipped, because long is 32
+> bits there. "merge-tree dies when merge buffer size does not fit long"
+> passes. With the series on top, both big merge tests pass.
 >
->   - 9048b48fb (t1600-index: add expensive tests for over-long
->     tree paths, 2026-10-16) added tests to t1600
-
-No such commit X-<.  Perhaps 89048b48fb (t1600-index: add expensive
-tests for over-long tree paths, 2026-10-16).
-
->   - 288266c11d (xdiff: use size_t for merge buffer size computations,
->     2026-10-16) added tests to t4300
+> I also ran it natively on a Windows laptop with the Git SDK, and got simi=
+lar
+> results.
 >
->   - 55c54fd375 (apply: reject binary patches greater than MAX_APPLY_SIZE,
->     2026-03-25), added tests to t4141
+> I went through the other callers of ll_merge() and xdl_merge(), to see
+> if any of them still pass the result through an unsigned long. They
+> all end up in odb_write_object(), write_buf_to_worktree(),
+> strbuf_attach() or fwrite(), which all take a size_t with this series.
+> So I agree the check is not needed anymore.
+>
+> Looks good to me.
 
-Inconsistent use of "," after the (close parentheses).
-
-> +# EXPENSIVE tests may need many gigabytes of memory or disk, so two of
-> +# them running at the same time can exhaust the machine.
-> +#
-> +# Allow only one at a time across all test scripts that share
-> +# this TEST_OUTPUT_DIRECTORY.
-> +expensive_lock_="$TEST_RESULTS_DIR/expensive.lock"
-> +have_expensive_lock_=
-> +
-> +acquire_expensive_lock_ () {
-> +	local owner waited=
-> +	mkdir -p "$TEST_RESULTS_DIR" || return 1
-> +	while ! mkdir "$expensive_lock_" 2>/dev/null
-> +	do
-> +		owner=$(cat "$expensive_lock_/pid" 2>/dev/null)
-> +		if test -n "$owner" && ! kill -0 "$owner" 2>/dev/null
-> +		then
-> +			# The holder was killed without releasing the lock.
-> +			rm -rf "$expensive_lock_"
-> +			continue
-> +		fi
-> +		if test -z "$waited"
-> +		then
-> +			say >&3 "waiting for another EXPENSIVE test to finish"
-> +			waited=t
-> +		fi
-> +		sleep 1
-> +	done
-> +	echo $$ >"$expensive_lock_/pid"
-> +	have_expensive_lock_=t
-> +}
-
-Hmph, is the above safe when multiple processes are working with
-expensive tests during normal (i.e., not involving SIGKILL)
-operation, or does it still have TOCTOU race on the lock file?
-
- * T1 holds $expensive_lock_, finishes its last EXPENSIVE test,
-   calls release_expensive_lock_ (rm -rf "$expensive_lock_"), and
-   exits.
-
- * Waiter T2 read owner=$(cat "$expensive_lock_/pid" 2>/dev/null)
-   (obtaining T1's PID) just before T1 removed the directory.
-
- * Waiter T3 runs mkdir "$expensive_lock_", succeeds, writes T3's
-   PID to pid, and begins its EXPENSIVE test.
-
- * T2 now checks test -n "$owner" && ! kill -0 "$owner" 2>/dev/null
-   against T1's exited PID, finds that T1 is gone, runs rm -rf
-   "$expensive_lock_", which deletes T3's active lock.  It loops,
-   succeeds on mkdir "$expensive_lock_", and runs its EXPENSIVE test
-   concurrently with T3.
-
-Also, between the time you successfully mkdir the lock directory and
-the time you leave this function, you can be killed by a signal with
-INT, TERM, or HUP, for which t/test-lib.sh installs a hander to call
-exit, and there is a "trap die EXIT".
-
-You may manage to create $expensive_lock_ directory, open pid file
-for writing, and then get killed before you echo $$ to the pid file
-or assign 't' to have_expensive_lock_ variable.
-
-When your die handler calls release_expensive_lock_, you would leave
-with the directory behind and exit.  You may not have pid file, or
-the pid file may be empty.  The waiting processes will not run the
-kill -0 "$owner" part (because they do not know who you are that held
-the lock and left before writing $$ in pid), the waiters will wait
-for the mkdir to successfully create the directory that already
-exists and nobody will ever remove, no?
-
-Between the TOCTOU race allowing multiple processes entering the
-expensive region and deadlocking denying everybody from entering the
-expensive region, the latter is far worse, of course.
-
-> +release_expensive_lock_ () {
-> +	test -n "$have_expensive_lock_" || return 0
-> +	rm -rf "$expensive_lock_"
-> +	have_expensive_lock_=
-> +}
+Thanks a lot for the tests and the review!
