@@ -1,127 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.176
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795201061;
-	b=X/bTtroGYYJGcJYVIGnOYEC2taYzdNFjkL3eub8kIFoDsVHj6DLrh4oNWGlrQRw1wl5U
-	 8Y9tC69bpP0hR3Dk0/Z8eCqNrHIXmZo4ttfm0d0s7mQKR43PsFk3xCS6o5jHBRjKmjygw
-	 U++fOOF7fUhmXdePRTsOBMrX5IzQNex3aIKmPwvSISl8eY/kP0tnCEvH2PvtlF8Vr1gEc
-	 OENnDTSybIAE/QNSDx23gfG0B88kzVAd897Wb8Ozc67f+mqMd6S/6ZphLEyC84wAVxM54
-	 z3uzp+Y4LxWqsSTWcwGg8cbVltk0GFF/Z2ofQk3esXc5LzfuavOP2EzpKoBQA3T9S4g==
+	t=1795201221;
+	b=YcmQKKBL2AELbGfzfBXkpcoN1jathLiWkmBxyidpXiz0XzXNl7TZpfl5AZWw22wosSHU
+	 4gbI6YiQ2kD3oRkIqg6+o3FBVDsSsl9jf2ZmHHz4EqCY3o3Xpj5Nw/MVOsNi+wybjeZ+G
+	 Wyz3h+l11DW8w2/wEYVUkjlnOGlgP0OLb2WtNdpU5uJZmY+88WCVw7L5CaofDp0v8cGpo
+	 WM6X1pnCmVtuBg9oVhrbMj91jmo2WeJWpmRBd/0k/zy12kZfGiMRkhZp4vjPqGdyCW/Iu
+	 g6JZV8aPSQzK9nUzhbxAF6yOtGjb4ozuYrAHe9QeTyDvE2pjABacjpZawnwentEPIBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795201061;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=+/57p3kdpd+DOBeG99d9eHlUM7znyRZGoMRcGpK9fHY=;
-	b=lXIyLQhbKPAaDj3qDWKNdjJwbRzDPcdBvGI9q+DYDf5xTXpes/ZPA3jYWE47lQTzY3y0
-	 bZRFbRMx3h/7M/qR4l7asvZSNI3SvaPWsKwyTgI/Cwn67kVPEmHioemekD9sjtaQSD+G/
-	 TPPibyYRZ9NdwzQKo1Qp6UyiT8sVyr6LUWfiZul8wHYQu+kQuKpKlBUl3MZawuUhvE2ub
-	 4O+Z5RdxLYdQ46l7+bLSsIs8nOfPFi3cL7w7ahJnXF3m90Z8iOTuf35usRHe5AUbfqna4
-	 tgSZkJOQcjK3xcIhUjl12lIWiqBCrHKMxnSxQjN/oibs0BdZDpNvi0/dHr4C7VjwsTw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795201221;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=mLnfIm80TyxU/GPDi2I1GYN9H9afPuqt8Zn7QRRkJfM=;
+	b=usPDt8nYSQ121TZnBo4NoDaMzQjPiz3KdUsgGtiDwbpYUu2XbPdQuIyd2lehfbA1W+To
+	 P8au/4qY8gwot/l5tyeCrQTh/LxzodzKNfOQIENOs5hay2j/Ooue6ObDyfMBim5HF2tsS
+	 UvpqlYu0LF0+9Y8kkk8HOrcrXJ2p7oBLxP4Sw8OCcXUVvsk0RTIFDbSgwvQRT21sIhI5+
+	 B1hT9OjXz4b0aTUoE6OyyrV500ypjHYdj5n5ex+ZYz/y9beZFls3ZOOtG1txX36yKAm4R
+	 +2TjaYA8/1y2bic8Bw0wnpH7wEvAgYW8y9EdNlDrMNdEaGIgc9+IpavyHP0cJzTbcyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=IZd7D6H0;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=o+dAlmm4;
-	arc=none smtp.remote-ip=103.168.172.146
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ps5T3BzO;
+	arc=none smtp.remote-ip=74.125.82.176
+Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6CAD60A2613
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 18:57:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A6CAD60A2613
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702D560A2619
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 19:00:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 702D560A2619
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=IZd7D6H0;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=o+dAlmm4
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id C93BFEC08B9
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 13:57:29 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Fri, 20 Nov 2026 13:57:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795201049; x=1795287449; bh=+/57p3kdpd
-	+DOBeG99d9eHlUM7znyRZGoMRcGpK9fHY=; b=IZd7D6H0jvQWo0dcYTgk83jPKI
-	K5oGBysBlWoo0yyM7syfl1fO1n2FANlwDRDd2eRz7jkmV5GcwuhkL+nEuj2WDgS7
-	90qfZaZSQ5EsExGRO8GG1LnHcmQWI8TVjQH2+Dai97OT4ynSKJkl6wgKdTyg7Fv5
-	R0en7W8GDrGy38vRgSI9HY1TxF9FAArufHYzUy89b5R73TMaCMI2bCNyL1vYIKX7
-	oXTP7YBu67BUwBnhTMc0aXGc95qpohIs/ZjNbxF4dSX+GHZivlUF/z6ifEqAsgUW
-	7qSYjlXU8VuWqLDZI8le4ZNtN8Rap+jH/gBr+q8C8TSOby8Qfmnu2TEqndiQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795201049; x=1795287449; bh=+/57p3kdpd+DOBeG99d9eHlUM7znyRZGoMR
-	cGpK9fHY=; b=o+dAlmm4FqKLf6JDsMaom8rt/w9xoE29hV54I/VLdW9hRW6USWV
-	+dvT+7wyePbRHZ1TgLbBIJMdcrBrtOawTradceM/zlZ5KQID6clUFR+6mT9nJ6FJ
-	zapN49khbZy3RPZKZPYfYQluNsiX+Dtl+driDE7bBkFFd4zW7GrLu0TKvivUGuY+
-	jTuarMppL42e1bb65noDUUfrS1uy2TDyvhuCkifugUxwwKi1nn7FFrJtp0+Vpl/i
-	Vs3DjOru3TgAvn+GAR6d/grve3i3SxD+VOfrsb3Yn3OLr8m4mBLzW2xM78DftZsM
-	8ukGKtIEmFpHlS92v3lDlAogVErH5ibPBow==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795201049; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:ifNrqs+i4Ya1rfnH7q8csjU04zUIcuv+x1JOz89AUL6ok3h
-	g2wMOuwLyN1kGNfE5jwEpXM35szUtivCZUm+nmFO4A9orB0+dnilv7lxw4ur8n7v
-	jFMNlKxrGLAQmoslNUKefBUmFufgJnQtoo1Av19gvT1EZhAO1n4BJeY//SyxWnpJ
-	N2zogBeNU4hMDcWoCr/rJweQQ9cYeE0nFhl4PQZRc4QShpZcHGbfgACwRsKCqSuO
-	SaKNGmozJCKAmbBJrU7zeW4iqNAwG7BxosWvmOBpCCf3ZRNwr5RcKPfR2YAQ9S2r
-	0FzYyDKeOH9gEQItSSzBNL973WwrSOVsQcaZL6w==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:n6rFCo98JI/lSrz3Td93FlR4ISCCDhCQ+q1mzNoBKRk=:G5BusBMRUJ9qVX0DKJvMHLw7HsRBfRq0vy233Ufrg9I=;
-X-ME-Sender: <xms:GZgAayHlZRgiAmo_Bjl6WjlR77fgg5rpNHTL0sNHX8aM96IJssAioA>
-    <xme:GZgAa14VXvoejfAgwU1ZaK9HuxZE5DNzuQhN7IehHrSJxdPFvmXJaqiLQaYAyuSVp
-    uEkNnR5tYXV7pEZQKTQ7R2vhxCpRvVh_QaLjBCmRWgWcjjBjpbQeyY>
-X-ME-Received: <xmr:GZgAa_xhB9-OgQnEgu5lpgWJ6eJznvoRoKODQ0FGPh1i0f0yqGWpQmwEl1vfV1PSpJVgKe1UQOjApqeWnD1Wqz-OvWtlz2Uf24j5>
-X-ME-Proxy-Cause: dmFkZTF8N1JPw4w8l3aMDUpC6UC+r47orKtSLoQeYUtLAQGfTdBzJxWEwX71AUA8gt9mdS
-    N1Uu4+MVDSYQoSXjneZSD66QUcFxIwnHSB+v8iAuslMqntdhTHDpUM1XNnBeJNnqfJkYIw
-    ihrbMH1TZiBlHdaVT8JWRG8tr+9LRY9d/oKU8MzYyQhF1ruQeqC3oxbHPuHLqai9uHo7bS
-    wUpzxi6e6YJv4AufAswMQmTD9We5GhZl8ctwhAduOA6biFtLvA+Vgy9b+ncaBeBiyFoxAH
-    9QMN9MJvFElC03i3R6lSzRFoIl3d0ck1Q6bcIAPgbNOfOoUv9WRLflmuwf1ZjExk9RQUNo
-    MDUQKXCaptMo39ydJV0AvF3TG2e9YwFxq1E86AXza9yGtgxUHaMi2mq2yhdYu9GlEMOC87
-    k+cQ6FtMzu5GD1rdZM8wBJBaJLQTHBzZPQW9i/lKdQMA2sU+HeFURGCCh0gVBrWOID5rbY
-    9Fhn+EirZTEOAmNnTaRfloM0MtBrZUD5VzmM7YkOOhIVEe4IlHNMnuZG+siqluuTGC64/T
-    A4KRh/JIt2dyV7ZEE+4lJw7O1o/iBpxhxf7ujIkj9DQKbVMLSr/VDirIh7uOwvTe1RGdk5
-    jpNAH1DYmSphx8JQTwz/RRo7DsOBFLiv1LijBemLGc8ZVYS5NIv+GzoU2xSg
-X-ME-Proxy: <xmx:GZgAa8PVCYIq7rXs3cRZzQbkGupqTC7CqxP_xwyar3kYLlafhZlQSQ>
-    <xmx:GZgAa9llgd8kRIeQ340P67HcjRMHVEgU62pAYjeX-YS5FDvWAF87Mg>
-    <xmx:GZgAa5QJR4_ldLr0Iwzbb-EvHrkRsL1nMZxMCoDpHQvvZYZeShae4g>
-    <xmx:GZgAa0UIUcl57NcCLyocCA5HcVl2qCofqE8qbHPriuxK5ahQRyr7Yg>
-    <xmx:GZgAaxurPeOwzTiJqUAlEQALKJx-lcSU4uIsHRZ62o9CMB9ebXSBvA1c>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Nov 2026 13:57:29 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  "D. Ben Knoble"
- <ben.knoble@gmail.com>,  Phillip Wood <phillip.wood123@gmail.com>,  Jasper
- Mayone <me@jaspermayone.com>,  Tuomas Ahola <taahol@utu.fi>,  Harald
- Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v9 1/4] branch: move the deleteMerged opt-out check into
- a helper
-In-Reply-To: <37ef7636e069ce528728c43cd79f678293e0d035.1795184664.git.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Fri, 20 Nov 2026
-	14:24:21 +0000")
-References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
-	<pull.2425.v9.git.git.1795184664.gitgitgadget@gmail.com>
-	<37ef7636e069ce528728c43cd79f678293e0d035.1795184664.git.gitgitgadget@gmail.com>
-Date: Fri, 20 Nov 2026 10:57:28 -0800
-Message-ID: <xmqqy0anpbzb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ps5T3BzO
+Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-38190551625so2073007eec.1
+        for <git@vger.kernel.org>; Fri, 20 Nov 2026 11:00:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795201214; x=1795806014; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=mLnfIm80TyxU/GPDi2I1GYN9H9afPuqt8Zn7QRRkJfM=;
+        b=ps5T3BzOmhbhXsydvrQ+2pjzPG9JU7EBZj7skhV3reY/HAwapUsU/90MlTkSM7DrJ9
+         IZXX9x7WgKgHISC+Mny0VaGqAcJr0YlyBxl5kFayEm0KPYq29y4nsOjtX+ySpOlh031u
+         z3HG74J6fS1bDLX8VKBl7BPrFeOtNEG6EifHzlhIgsErRb5hLF2HKI/4vIUmzF52H29f
+         UAFdrDmwTHBe1B7rsoM8V0Uh2t11vOhH9Hzrd4PHgnC7a0sHvRI4LMu/7irP1Bb0jqCd
+         XE1so68NbrcVmuL6Ha0hj8wMAKNo89rt/zYx70/0hk0Yn3CMA+Ifdh5eNRrkrwVmNeCR
+         ThTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795201214; x=1795806014;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=mLnfIm80TyxU/GPDi2I1GYN9H9afPuqt8Zn7QRRkJfM=;
+        b=SPXvuiljkEOUYtt+riCrRnhxNh8KyhMFXPKR/13EpDgh593frTObHnn2pDwhE/ZpCL
+         2M7rwAnInTRbCNL634erev61qXZTZXGqYIgWFmqrW8ktLtIGao1fdVCi6F1gY9HZmmaV
+         oHVuZZvZOA80XwwV3nuQ15UVcTgm+8zaEESfEceXLfllwCwaLjIi1b5DZVT2KSMVulbV
+         QKfOQa+gfEv3oAwK2z0pUHtPDY2/WkcIaTRDiRypbYAi31MtJ9213AOlfUQY3cW27I6W
+         bi2XxmZ9EOmxQ0CgBkpWk24bV73K6ltQqr/niinxbwyK8tYHe3n2syn2TRoNLIp29gQt
+         I5YQ==
+X-Gm-Message-State: APuU4Z9wNtmZExLOnXLovAbKnXPApHT1c/RGLe08eJihYoySLwjSjEF3
+	66Xggxvb/XwJQVbTltDV7IJZN+CXnF1+RcqeuT0rDOaDHRFppUQ2hyrGxr0T+w==
+X-Gm-Gg: AZFdTZeJliNBQHKlOmnPch3jCK7Qa1OIV0FI6sBt3R1HnyYDiEeQk11AjiioAiCg8PT
+	NIhVP48lNgsG9E7ZTWdpWopwMkDfFV05yi9CQW4OP/ucGwuqkbgstC5z1kf2Avq8XaRF3fODDdR
+	VDuXmte3ePKK1i6ToghUFVJuNzeagxzsGuGkse15qpFgchhSjpbficc1KrM/FICzMNqAkbcErZ2
+	Fe3nH8vn5pke6yp+VGtkXMWKkANiBVu3l7OoheVrlZgdiG4JQTcE/0OyHuva38kFAQutWXslVGL
+	krzITE+P7H2/k/mzBXCXKv3mipdpQmpHM6gj6vnOJfbmQ68ECjJbf+8g1TIQ5sZM1YPR43NjJW7
+	LllvukzF0nq9NPcWquCD4Qwbd20Dgu1KL6gcvPhbEL1ekrID6+jzfX9aN1L6E62wINBhClqst6Z
+	qk5V18g6jGuVL9wq9j9c9sj2eRB2QsbZc4xZvNFhrw3yjRNcrXUqfBw4wvQYsfQbAUBBQAzwbtz
+	AwofIG/TkvIpM+f4YNWOPaYxfm2ZVVFQrz62PfeeETq3x3z/RYyQ+wHPDDzT7x0PcGebc5e2kQA
+	Vu48YV3pO3jU3MPtlgT0aPkkFQPwIEeO
+X-Received: by 2002:a05:693c:42da:b0:386:95e7:8497 with SMTP id 5a478bee46e88-38695e790e1mr838855eec.28.1795201213282;
+        Fri, 20 Nov 2026 11:00:13 -0800 (PST)
+Received: from [127.0.0.1] ([40.75.135.110])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-38567cafec4sm11652481eec.26.2026.11.20.11.00.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Nov 2026 11:00:12 -0800 (PST)
+Message-Id: <pull.2493.v2.git.git.1795201211980.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2493.git.git.1795177398801.gitgitgadget@gmail.com>
+References: <pull.2493.git.git.1795177398801.gitgitgadget@gmail.com>
+From: "Ophir Bleicher via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 20 Nov 2026 19:00:11 +0000
+Subject: [PATCH v2] doc: correct typo in 2.46.0.adoc
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -131,74 +96,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Ophir Bleicher <ophirble@gmail.com>,
+    Ophir Bleicher <ophirble@gmail.com>
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+From: Ophir Bleicher <ophirble@gmail.com>
 
-> From: Harald Nordgren <haraldnordgren@gmail.com>
->
-> A later commit adds "git branch --delete-integrated", which deletes
-> branches whose tips are not reachable from their upstream. Those must
-> honor branch.<name>.deleteMerged=false as well. Move the check into a
-> helper so it can be used in both places.
->
-> No change in behavior.
->
-> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
-> ---
->  builtin/branch.c | 32 +++++++++++++++++++-------------
->  1 file changed, 19 insertions(+), 13 deletions(-)
->
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index b536b619bb..2c1a8b8395 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -824,6 +824,23 @@ static int branch_pushes_to_upstream(struct branch *branch,
->  	return ret;
->  }
->  
-> +static bool branch_opted_out(struct strbuf *key, const char *branch_name,
-> +			     unsigned int flags)
+Fix typo in the 'git describe --dirty --broken' section of the
+release notes (chang -> change).
 
-I am afraid that this is a somewhat selfish choice of a name that we
-would regret later, as it assumes that "delete once it is merged
-elsewhere" will continue to be the only destructive operation that
-people may want to exempt some branches from.  The configuration key
-is named very specifically for that destructive operation (i.e.,
-setting branch.<name>.deleteMerged to false is a way to say "no,
-even if it is merged, do not delete it"), so there is an impedance
-mismatch.
+Signed-off-by: Ophir Bleicher <ophirble@gmail.com>
+---
+    doc: correct typo in 2.46.0.adoc
+    
+    Changes since v1:
+    
+    Correct commit message
 
-Either
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2493%2FOphirBleicher%2Fpatch-1-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2493/OphirBleicher/patch-1-v2
+Pull-Request: https://github.com/git/git/pull/2493
 
- (1) naming this function to make it clear that this is about
-     opting out of the deleteMerged operation, or
+Range-diff vs v1:
 
- (2) naming this function to make it clear that this is about opting
-     out of ANY destructive operation, and renaming the
-     configuration key to something less specific than deleteMerged
-     so that the user will be saved from any new destructive
-     operation we may add in the future, e.g., "force update to what
-     upstream says", by setting the same configuration variable to
-     opt out of it (e.g., branch.<name>.noClobber=true)
+ 1:  5cb57274aa ! 1:  c9356bf90e doc: correct typo in 2.46.0.adoc
+     @@ Metadata
+       ## Commit message ##
+          doc: correct typo in 2.46.0.adoc
+      
+     -    Fixed typo in the 'git describe --dirty --broken' section of the
+     +    Fix typo in the 'git describe --dirty --broken' section of the
+          release notes (chang -> change).
+      
+          Signed-off-by: Ophir Bleicher <ophirble@gmail.com>
 
-would work better, perhaps?
 
-> +{
-> +	int opt_out;
-> +
-> +	strbuf_reset(key);
-> +	strbuf_addf(key, "branch.%s.deletemerged", branch_name);
-> +	if (repo_config_get_bool(the_repository, key->buf, &opt_out) ||
-> +	    opt_out)
-> +		return false;
+ Documentation/RelNotes/2.46.0.adoc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The lack of a key, or the key explicitly set to true, will cause
-this function to say "no, this branch is not opted out", which
-smells like a risky default to me.
+diff --git a/Documentation/RelNotes/2.46.0.adoc b/Documentation/RelNotes/2.46.0.adoc
+index c06a04a91b..2d7b7a0bc5 100644
+--- a/Documentation/RelNotes/2.46.0.adoc
++++ b/Documentation/RelNotes/2.46.0.adoc
+@@ -406,7 +406,7 @@ Fixes since v2.45
+    (merge 4b837f821e rs/simplify-submodule-helper-super-prefix-invocation later to maint).
+ 
+  * "git describe --dirty --broken" forgot to refresh the index before
+-   seeing if there is any chang, ("git describe --dirty" correctly did
++   seeing if there is any change, ("git describe --dirty" correctly did
+    so), which has been corrected.
+    (merge b8ae42e292 as/describe-broken-refresh-index-fix later to maint).
+ 
 
-Putting the devil's advocate hat on (because I understand why the
-inventor of a feature wants it to apply as widely as possible),
-shouldn't this be the other way around?  If the user does not
-explicitly say "I am fine losing this once we are done", shouldn't
-we be treating it as precious?
+base-commit: f7de81456940dd6f3274e461149bba12965de609
+-- 
+gitgitgadget
