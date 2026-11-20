@@ -1,86 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.167.51
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795194258;
-	b=2DbbjlKnMQ77NbSeUem/JTFfK78gwtHbN5Ib3mWN2siUMnNet4BirxS8a4wguLJl38IO
-	 LgJhxpxHKYVUcgBvl3BBver1LOwG51D02nUV+Vnh8I5KGYPz3oE9bHPoxWktyRHRoS08/
-	 lMs+152CRlqPV5ti/bcGIlt0ITmnXOzY+3nQVcPUaBoLjm6sxrgBehY1YBEYF1x3l8q4Y
-	 GDxAQmAbp4FYyPFiRz/O7JNzgpGEzKqBSfIQLh130yT48z2o8hYTwdqPvNidrrGcyy4te
-	 ENVvZrdp006esjWgqYHG40UD3eFvh4bune16/0ibiC1nsLmDWfHyUgVyNKrX80SAoAw==
+	t=1795194756;
+	b=Ye8ziudFBTp4GUgxI+T/lBIpp7SiEA+ty1vcuppvaDSHFNxR1qogeSPJiu78sGviQ74D
+	 0ZNTvuvB0Ib4zUT9Nk6T15ImyY079TkrFmJlextFp5i/9Z3mrtxuk0uo49v2HdqsInw9L
+	 CxSaMRj9Bo2kc8QmY6hjK3knk0qPHPUSGfxbNqec60Ul6AKmRrloxgLAksBK2l6UQM2LL
+	 Sm3K/aw1RgqdX42hijqLe1oEiZ2txNXqyDoMMJFrvhPrzBdsmNoPxAO3/yM4/R4y/5AhQ
+	 rHCiEp2HtB7waIfLgrZjDbicmzX03OF4dmouk0hyI3i8DBaL/0iKTsAjB5v5bnhspdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795194258;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795194756;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
 	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
 	 Cc;
-	bh=mkkvTYQP9gKUbXSVTYDpfhqyBE/sm/jgDaN1NuzaTEg=;
-	b=tL0lakgkJpF8NXwjcB5CmQDQ0wK1et+0VhllqPHgKwBT0yIqdLXBtNDTAVc8iXRAZIK1
-	 DXo6mXnloJpNtuBrMDJq69PXODwjL6FchElEhXVSgb725C9LnrFYshRg0ZCSuEKN3Srpv
-	 DtW52Yj2iWI45Ipl7azX51ZJMz7YAZaj9LKkc4K6H7COghMmQu+FNJamHuV3nNr72nHUt
-	 IMAmyeMtZtTiSZD5TefCFwOF/qlxKCscvw04aK+OulN2s5mnr4IEntygnzMi7QkFP/oKU
-	 4e7Tr5Nu1xfWxiJ0SdRjOwfHWMTJ+jMzgSHUDzWgoJr1huOhaBwMvU4c87L3T5roJMA==
+	bh=FNP/r7Q21Bx+vYNS0rYe5vKPZNO248YuxTovS3f/YKk=;
+	b=w0EuopsKVhoYNtSMzHHtV2wkqn7LjHUBUBGOOKu6IP91Q0Vj1tKPXfHAEEcPGpbTEnx1
+	 erXczJIfl6FRWzOa4YDqIHpePp4dFtlaWExnoXGz2MRYn19GWWjRY+dEj3I37gsB0/NQR
+	 BHf5klbb38jk/LJvVjLqNrbY2sOO8Q8I6tQ8KjiQPWLbhyY5iPf/qW9IZirPyQE3MEKm2
+	 HS/ejWyUdzpio8clOdU+loDMdlU+58qzMwhZ4uX6Fy2YOhXHqmS7ZoS2IfYS0PJQLlhg/
+	 bZlwr5ypp/Hety7S0+zP/lW5ZbshhKW40fE64yWylhXJ20+JF2qa3NhrH2NRBmdLQDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=bwPCI1s4;
-	arc=none smtp.remote-ip=209.85.218.41
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Zsqxs9Ct;
+	arc=none smtp.remote-ip=209.85.167.51
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030EA606A331
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 17:04:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 030EA606A331
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB145606A320
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 17:12:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DB145606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=bwPCI1s4
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-c4d21051042so211857766b.0
-        for <git@vger.kernel.org>; Fri, 20 Nov 2026 09:04:17 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Zsqxs9Ct
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5c14a204305so792170e87.3
+        for <git@vger.kernel.org>; Fri, 20 Nov 2026 09:12:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795194256; x=1795799056; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795194754; x=1795799554; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:message-id:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=mkkvTYQP9gKUbXSVTYDpfhqyBE/sm/jgDaN1NuzaTEg=;
-        b=bwPCI1s4Re4vnWTTNeYWZqyPYQNeEy8rpIUI0u34wZZBUPdPEyKgcY18nfp57UCROB
-         WBxAFPHO6ftYoJ6gkk2kQm2q6OAqyoP77+Fg42hDl5hNuDEFQM58KiM+IwvYqn+w1LF+
-         7NYK4xilhisf62Pk1JEhfDF5pOLBJkN6M2UBJ1LjyR3ceyr4j/dRd3riTMnWPfVtRL1F
-         RmGuLnHLlpYuT6Fq7ev/a5RYf4RyacAUAR0kWWfg4wFhjJNQcQF3AHCk3PRP9mNF/p3R
-         SKPl3jx/rERfJB/mbrZZ3kgZWHZRbPE4QaT/w92QAU8GieOsLjggECOka4dzz9RUGAig
-         n+Lw==
+        bh=FNP/r7Q21Bx+vYNS0rYe5vKPZNO248YuxTovS3f/YKk=;
+        b=Zsqxs9CtUQQcrvuhxYqERbd8kGkPM2I0qEhpSFsT+GXNd7JGJKFOm8vM6L2FXA2JGl
+         ODWd4QLdcO7YCcIv4NApQZAutFHrLYQz8CijN5423mWABfum5JIViPDEAHAYtBDHtIc9
+         KnstZiBEHx6wOmX0ZiQWyAc5B1YRff9HYDy2NW3cik3FoME9S03kPAMjcqQ8VW2KGKJ8
+         Ig5gaczG8d+E5AeoxHmictq2IzUOvl2abeU1rw65ipzAbNb47VEK2XdvgpLPbNpQ+UT0
+         I5+bP3TXH/hLTSconHTfML2+xp4+uBiryBw+AR4TOwzNi6XT/hivKPEJ5Vjxz/2IfFXy
+         nwAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795194256; x=1795799056;
+        d=1e100.net; s=20260707; t=1795194754; x=1795799554;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=mkkvTYQP9gKUbXSVTYDpfhqyBE/sm/jgDaN1NuzaTEg=;
-        b=qRql1iqkhHfsGOjt0uBQeEDK3yCtSuvEfw+Th+xEHBMO6nGLEpukgbiO0704CEeCbo
-         Ju3XC5zHIGez/bfh2YtaDfUT4RdCFEhICYTAHaBWj2N+0ijxuHk661rzTAyrUhorytKI
-         pn+2AbtzVBmSAYksQmhXhbVJe7OKThprTc0LOuwT/aR6B9wpGZtex2Nb4Mc7xzT3D7ES
-         K6Ny9Dgd6Q6ABvM0opAaduMLXadayYILQvvE0F3ltJrRWFyz8VYh8GzFq1kSvEs75Lh4
-         iohFcHk/PEDeKgTJrNGrkqo61MKb8muSGBj1tlSYBo8ChPUsJmecJXVxFzJZ4Z8npq50
-         Kffg==
-X-Gm-Message-State: APuU4Z94xRHxIa2YAkHb9gfBpEJIUyBwekD9/6AZre2pv4ECf/+N/3/6
-	nW/seg94z68JFEJz0Q+W/XLhCUbM4JCN+mfOs3ZGcd6tYS87SZFHtjF2dvXtzSbO
-X-Gm-Gg: AZFdTZfjVe1OAL/tgY5muBuzTAa8mGlOT+EfVRPuuVGkyUOUy6YywCETmIY4eaxFPro
-	qdcgJpqt6wcGCYHEezkCfaU3H3w3Ifbkiz9Q85WRvGMW3a6irbnoxSq1BqBHkdbn3D+1NPx+Y6k
-	14NI465JkGmlQ+6QOsd7tvT3zBJfsi9IyP19QIuEBwzh/NGyuzUnoPIh4uSCxaEB4C1w7hErY//
-	HjvcNPz8sUPH+FOh3kv6gxCyDje0Nq4P4pDsZS2B/q4plq+f+dNJNZbDZaX7SQ+3uu/Fjhqe4ir
-	rvcegnBJBdXLkixMz8PYT3j7PMsB1yFpOHC1wlBu4ZLTCoVKlt4TJxYnPPEyxUKbT58BMdIZ1Mr
-	iGy/NPYT2s2Q1RAoTaRIyK0uk3oLbLjqKF/hZKuzCUDsMiooCy4iMpozXT5AiOZ8ukS6XEx0ywa
-	wzF4Eyl4I0B1tgoR7LNyppf2BiIaMRCg1auPjE8hfqsBIltdeW24LA0MaPNCfU9nS6IxCdag3Il
-	IWFrtgi+zLokHZtB2E+MMc31ByOMKhqGvh14vcY2xUsT1hwQ/bOmTPGOgydfP1VzOLDdH2tBQ+b
-	rhFTjKC5+PUMpEIZ9bbnQ0ngsS/n1sj0rpF73441GYaDiur8f3xxQ8o=
-X-Received: by 2002:a17:906:7d91:b0:c49:a539:aa45 with SMTP id a640c23a62f3a-c513aad1ab4mr328744266b.42.1795194256344;
-        Fri, 20 Nov 2026 09:04:16 -0800 (PST)
-Received: from [127.0.0.1] ([40.116.95.213])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c513ad01b0bsm118775766b.10.2026.11.20.09.04.15
+        bh=FNP/r7Q21Bx+vYNS0rYe5vKPZNO248YuxTovS3f/YKk=;
+        b=uThUQLTSQIPp8NKo+6HR991E2JNSQvfERrlquPjLTWgtZSTfghnC182zfADK6aIIjG
+         xmMMVx0C7BQiMWVAoMkj99v6ZILCmjpYfxChKUG1vRZV2l5QADaa/4p+rP8Vy+0G3srC
+         HLRusOyFYUFW3oo4qTwoaWl1h7dx3iY4IuLpYDGkLjirGUTXsPiQZUa/dnu2JyRfQtFS
+         DEyBFe1WNu1tDFQqGizNPKpivpRgudotLCKz4KdK8WPNBOkD4DUCBBc35i3NOM5zvnw5
+         Oh8HwJapQ3036sWUE34kD3ru+1klaI8b0Knx+J3i5c9JGi/4hXHYaBHozCTxqrlOmVgP
+         qAxQ==
+X-Gm-Message-State: APuU4Z9RWCHKhMqYwCz+p4ZNS/Rr6aDWwNv9zMiTkXSe9IBe8hzUvGxZ
+	qVh6j7ICuQsDpi4xRm+pPa/bt5GKK+byeTHc604coq8b15tvEbyUrdJ/ao7yr54F
+X-Gm-Gg: AZFdTZc4NzR6i+m/E9Dk10yXsKxqnSYx2R+903WzikkDoiDb0bPrutrWg063BOJeXah
+	AQmhZNXwT26s+fB2q2Fd+CUigQ1otdqX1uNoj8ExB/nx+fneIKZGqQfOdZT1LHgnngkjOCriwWC
+	feV84RNtfoxogkyHsweESKgTgaBtcmXe+HMzIwIaLo8bMgv+9r7T0IhtYSYd+LJ33IFrBlILOpB
+	WcysWK5osAd1cHA92FmAy66akOq9LZhIA+OW1Zut9MRIAf+fhoheSxrrNhRUei/6Unu4HRW+B9E
+	6gyjagJDmeim1rWfKK7/T8Igf7q4QxmFE3rrr5tSywKlbPmkmI309/h4ct8P2E9HKhCA+Z0bHBm
+	ggBZxW/opYRy+3C7tAIr5icWDLGvFqIUvG3EXzEGLdjr/4vdw+kLGnTWSlJw4rOUubb4H3LoWsY
+	0YJs4opO86IuGzOtje9sjC0TYoPaTgh+3bomhvnUH983DpfdvQ7xFdIlZzPajE42ljYkqd4lgrm
+	5VzULkS3SJADy9NZWIW9PtCqrysZcCYKwGHJKaNg708pTDK9ekcEYLMD/lmWTl8R+E+e8UI50yo
+	Uc2js534Meq+0k/InaQ2aiO/GwadAf5jX/oVEp8Ouh5yx4vxc+bVTw==
+X-Received: by 2002:a05:6512:1152:b0:5c1:4e2d:58ea with SMTP id 2adb3069b0e04-5c1bc81b0bemr1149853e87.53.1795194753820;
+        Fri, 20 Nov 2026 09:12:33 -0800 (PST)
+Received: from [127.0.0.1] ([68.220.157.62])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5c1bd0176fcsm724346e87.34.2026.11.20.09.12.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2026 09:04:16 -0800 (PST)
-Message-Id: <pull.2495.git.git.1795194253192.gitgitgadget@gmail.com>
+        Fri, 20 Nov 2026 09:12:33 -0800 (PST)
+Message-Id: <pull.2496.git.git.1795194752259.gitgitgadget@gmail.com>
 From: "Ophir Bleicher via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 20 Nov 2026 17:04:13 +0000
-Subject: [PATCH] doc: update README file name in my first contribution
+Date: Fri, 20 Nov 2026 17:12:32 +0000
+Subject: [PATCH] doc: fix AsciiDoc syntax
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -99,37 +99,39 @@ Cc: Ophir Bleicher <ophirble@gmail.com>,
 
 From: Ophir Bleicher <ophirble@gmail.com>
 
-The translation notice in MyFirstContribution.adoc referenced
-po/README, but the actual file name is po/README.md.
-Changed it to po/README.md.
+The Documentation/MyFirstContribution.adoc file accidentally used
+Markdown syntax for a link:
+
+[here](https://gitgitgadget.github.io/#...)
+
+Fixed it to use AsciiDoc:
+
+https://gitgitgadget.github.io/#...[here]
 
 Signed-off-by: Ophir Bleicher <ophirble@gmail.com>
 ---
-    doc: update README file name in my first contribution
-    
-    The translation notice in MyFirstContribution.adoc referenced po/README,
-    but the actual file name is po/README.md. Changed it to po/README.md.
+    doc: fix AsciiDoc syntax
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2495%2FOphirBleicher%2Fpatch-2-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2495/OphirBleicher/patch-2-v1
-Pull-Request: https://github.com/git/git/pull/2495
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2496%2FOphirBleicher%2Fpatch-3-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2496/OphirBleicher/patch-3-v1
+Pull-Request: https://github.com/git/git/pull/2496
 
  Documentation/MyFirstContribution.adoc | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-index c58253fd54..29dc402e5a 100644
+index c58253fd54..3b531b24fa 100644
 --- a/Documentation/MyFirstContribution.adoc
 +++ b/Documentation/MyFirstContribution.adoc
-@@ -186,7 +186,7 @@ decent starting point as we can now add build rules and register the command.
+@@ -931,7 +931,7 @@ either with the "New pull request" button or the convenient "Compare & pull
+ request" button that may appear with the name of your newly pushed branch.
  
- NOTE: Your throwaway text, as well as much of the text you will be adding over
- the course of this tutorial, is user-facing. That means it needs to be
--localizable. Take a look at `po/README` under "Marking strings for translation".
-+localizable. Take a look at `po/README.md` under "Marking strings for translation".
- Throughout the tutorial, we will mark strings for translation as necessary; you
- should also do so when writing your user-facing commands in the future.
+ The differences between using `gitgitgadget/git` and `git/git` as your base can
+-be found [here](https://gitgitgadget.github.io/#should-i-use-gitgitgadget-on-gitgitgadgets-git-fork-or-on-gits-github-mirror)
++be found https://gitgitgadget.github.io/#should-i-use-gitgitgadget-on-gitgitgadgets-git-fork-or-on-gits-github-mirror[here]
  
+ Review the PR's title and description, as they're used by GitGitGadget
+ respectively as the subject and body of the cover letter for your change. Refer
 
 base-commit: f7de81456940dd6f3274e461149bba12965de609
 -- 
