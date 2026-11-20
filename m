@@ -1,120 +1,126 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.146
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795201412;
-	b=2RkxW+QJUbjOGKeappcqbqtcM2nElE4LzEonXFIuUOYip/pJc76acbF3junmq8sy/8Du
-	 m/6DUhVa3QlzP6sMs8Vx8JcjlR1PusHEs+Ec09O7S2KegxOqWshkgXPc2XOQgyOsC3m8e
-	 /MOkU7XsXGrzNR5tbzV+Xgb8tK4lTjjnDb3+khtFA5c1ESBlYvWIGXDi06h9gPQZf5t8s
-	 WgP/+DX4rPTC/FIRSnS6v8Zrt6/R59X4BnDtEQ1P7JUd4fMAOwdRuzuPtft2EEZlEndOZ
-	 HcLBWbwGVtLRGHpuSSNawczU0kFa/bfqiPg4tYBl2GexdMfGN3cIOBpsaNuq5ig2F3Q==
+	t=1795201832;
+	b=440ej5Pb3wr0UkPZFlBcR+HDs7Exn+kAs+W9zVIU3hSIEHO9hKWmuRO5INER+6zS51rk
+	 LOKflUy4/MWsKh0XlbU+yOB4VC8XZKTFAbM4pHLVITnCmtPGFUhS8WSd665gxEmYk91TY
+	 InvKYlpwGte88XKHEjEWTI9+Ls5pjkpCuQoigsrztCuB0tNTmzMGnIRkkTrZXnhQeb1Al
+	 61bN/vb6UDvqoWft1bizWgeQ3Agt8cFMbsiKZci5hsUuqftEXN7Sz5yPg0JNrnz7f+IDZ
+	 bh4GKqtJe/frrYRWIHdPic0D5WHl3GYwcfyulDZ1Asb0d+MYAdkuMkd2dCcSN7d6e6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795201412;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795201832;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=+/K+qBNGhU8h9dl/eQvbNXBQzxuc8IQ4nCyZsRUgAkM=;
-	b=zmVdwImNnIZwOydvJ0ehE3gxeDYFKSA5S+9hX5V1x+PChSVNZ6tX0bZi+j3XDjDftu5f
-	 NXB4jBe6BEmO+q4YCLF+8NLk0FPx778Efghn4tk+hf++i3Z4d4M1gKpiZr9N469auzxPT
-	 m/cTbs84OlZiWf3YDthyt0LTAKbDniZ2PsKi95X1+YRq74RjxYeIDEr/vDAKEn7LCfRpX
-	 MYnysytRFO8L5Z4ScOFnp+PpDk9L14EKbSpGIQGkDnzOohmIJlpZ+BOiPQ4ddEsIkioyF
-	 +G4akBHafrnP3wJKwQl8QcpzbHqgJ/7cMu6iIQadh9HfU2J7pCt7p9hN6lnERceWmVw==
+	bh=5Tgs7PioL10LAPhh52A6tV5IPbsbB3jfUfpu4a+z5wE=;
+	b=DhBsbiZDWm3gGk/LXeuH6va9v1fm26q/dwh3FPYIngx91PCQ1Kljkae7dKJ0k9homOm/
+	 ExUqC1EKCJY4pTa9aakF9dnpC73930dpDbKCJfxE9d4M3fXNncgS55FMMm7gPwSRG3dNt
+	 RbobvEQggjeddp1l8lpJtR2rUO8SqTEWSqvbAHwyjVJ+RX+etukDkn9PIBYRWnW/+k/Hm
+	 MjB0mBH2u5NDWYG1d4NuYz7trvH1kKf9fsmGvag/eH/KfCUezvW5a+7wrOGOI4YXo7xQ0
+	 U7DgC9gAfDfCh2qCicaBfF6l06Dn8K2Msdb0vevAECQkx0rKEfAy97ENRbS1NOApYOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=Fwx9CUqB;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="DIGbL3/3";
-	arc=none smtp.remote-ip=103.168.172.159
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=XsGUBl3W;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=zt+6Nrn6;
+	arc=none smtp.remote-ip=103.168.172.146
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16347606A338
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 19:03:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 16347606A338
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF45606A335
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 19:10:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AEF45606A335
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=Fwx9CUqB;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=DIGbL3/3
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1A9F41400106
-	for <git@vger.kernel.org>; Fri, 20 Nov 2026 14:03:31 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Fri, 20 Nov 2026 14:03:31 -0500
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=XsGUBl3W;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=zt+6Nrn6
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id C0F1AEC0B2D
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 14:10:29 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-08.internal (MEProxy); Fri, 20 Nov 2026 14:10:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795201411; x=1795287811; bh=+/K+qBNGhU
-	8h9dl/eQvbNXBQzxuc8IQ4nCyZsRUgAkM=; b=Fwx9CUqBWnUBFlZqZ+0+/s8A+f
-	PDVCg4PVoscewvwairrUFirc2tKF9/gKiSbR8b1VTP8EMU7bgzgYsaTXuPpGY+gl
-	kOKKC+2HJ2m92hkQnrvZabPL7PkVfDLuoqUuaj5vnwLQQ51Mf5sQsRzlfn/j4SMn
-	Fjwc+t6brBIIUzJxnhWSEp61e1ZnbS4uQLDEJDMe/eUa51Bv0zy0xmBbKMk3wDlD
-	6KvvXGL8nbx2i1QLealnWbHc79X43QehL6y80VaY1ai5+aQxAJZLc1nkOuXKAHyg
-	fINjHRo2SF1t5wAU78ShFqTSTxT8n/ySdUOVsjw6ZEXNoNg+3NlsSw2IKO4g==
+	:subject:to:to; s=fm2; t=1795201829; x=1795288229; bh=5Tgs7PioL1
+	0LAPhh52A6tV5IPbsbB3jfUfpu4a+z5wE=; b=XsGUBl3WqzhVGfF07nKq20Fp6M
+	rT2bEOlISBpBua+EUydG3yLxmPYpdRFnNABazka1qe/omUe7y/fd46uk3biVkfXj
+	vGcbabZUXZb2ObwqhBHrn4FKH4ilxvPyYhnUvcYIwSsF9jDs5usgdQC4qStLCf1A
+	arZjAGLFIE4uGVuJfOV7Uq5M4Ha7gCma8kDVfiTf20jSyjstBVVUg4vAbmARblFi
+	OdI7SZ6MzqOzKxgoVGZ/NhNdWiN8B6d7wtjm5pVd0Efqbno8UsPnDZZaILmCvzLm
+	gDyUrd+3t5N4iFA/r30468HU8asTl77rDHX8zIGpLNMYDd0RhNRw7RUA1LQA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795201411; x=1795287811; bh=+/K+qBNGhU8h9dl/eQvbNXBQzxuc8IQ4nCy
-	ZsRUgAkM=; b=DIGbL3/3o+8aw1+QfGlwu05PQyY6AzfdDaVODbf/IfK3ho8BZQ2
-	Im5apW8I88snbDB23MeCn1O8gaVRDXYVpjdJjRyVcfLDEaITHSqW/s09myo8rU++
-	u1UiWCZfoGwL0tNfSwx4Pm2xBtUBIoYi1fJjmWYVm7ybJFv7n/mf2TyOQJSdBqcT
-	dWJ96gDaDb4L0UGVrG8bR4VNGmjNDsRUvTnSLdJG/pobbGRYy5p2MZyUEOJUdAc3
-	HgFJcyvLjsE9geMc5uXkzTcerak4AUeu8oBYcgtkiHL4fubifJdSUwTihMjEDg82
-	Hk5mxaGFj5Jfm4ez3C57dStN/5ME84aJfGg==
+	1795201829; x=1795288229; bh=5Tgs7PioL10LAPhh52A6tV5IPbsbB3jfUfp
+	u4a+z5wE=; b=zt+6Nrn6fZln/FTJ6XIWcBtamZbXleJsCyB7c2g6dBd012vSVr9
+	kOGcO5ERsBCF/QeEYUuoAaYOTYutEtK/5ug9ld8IgfqN5ZCf+KqT9pafXwMfMPPF
+	bbWSLfa2M8YgMZrnaSsZDLvAe4R6nR4RA8UCo3ynM3gCPOa5/P21YE9HPXdXyQXk
+	hULoz4k/l/00QOLI++Mc3abQaBu1jkcPBFP//OF7zdli0Cofzf4CaXF5f+g44+tY
+	MxPFLC8NnLFn+Sg0C4gs2YlbjgflCOsiTyBsrvK1oFNFgtQ8a/vf2GKNoGzDw7Ez
+	eYnXhw+ovFdaEPVxiIe1PZoAGRRdXx8mDcw==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795201411; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1795201829; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:cp9OgCX5vdh2jJGD9jrzPcoOVlU0tiXhjYWyA4/JwJE9Bto
-	Xd8u7/A6hiF0YnSc19BWiltwFj0jiQ6FaEhFss+3oV2cqlCmGjl/u5+47lXVnO3L
-	wEe+5CNxINBbXX+YBfHTxb2rPriMt32TxfnWbbbuCkqSfCfZwhJp7sHm9YTysNq+
-	Jl1FQUJIPCrb0FxbHb/Dj2VD3bMfaRyPl2gfaXVq8oImhEHpPBrZ6O7d/2bsRMsx
-	ykfLtjPPtleK7QhFJkS9Bkil55MwDxGBHwqjEVCv5LihXBcgGBzqqrQSFIn7rGkF
-	IRwbblarnifZ61ui9DnHqH5P5SsXiLLIHPhRbNQ==;
+	s=fm2:rsa-sha256:mcKD1w7vjgLX+nqXQIOPVgtO8EzizQcyDI44TK2zyj2ensI
+	xkh20sZseCLsNrp6MvF9kGD3gAnVDDklZa7Bl8xwLAnLjZKd7YPp9/PG836Szum7
+	sCS3QcVh8PZYamNOl5zIo1TmXGLOV9/gD6l/vFP876gZspky3MuBOObLTPZafgXt
+	FdZBkIRVe9CeZe75QbEVXGGiDMjOR2iWD0777bpPG/XOn8yC9Tdxjsrolaq0leJR
+	XRvS3EfCGqin+AYnDFqVkm8cfKFGTwAgyrP1Fe7MjrfbpADJ/4rTJIXMD16boSBL
+	FMFakVjtossobqbQSgjPZVjWfJ7ZHhX51hEGG+Q==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:jGDkKJEqWJ0vejTKVq485K8Ahuj+V3O0ISmS2NK+vGk=:cg6nFBHogp/t8xGgquv4nBxe2VYD9sNu4hdBm0+J0nA=;
-X-ME-Sender: <xms:gpkAa7LXwan_nGNbcW8tdXAqUXKm4dCzHGCSLEO4gpFycXrYc_VZMA>
-    <xme:gpkAa2KDmQYLJaMrQ5iuJgEwMeo4AG_VkP27QuGBCmVjlM1JckoW9fOvUwVJKwIVw
-    83I3x9_XWItzNVjcZWRNYGQUnAWEL5teLT2RTqqZJGDZfZvLrb4c-g>
-X-ME-Received: <xmr:gpkAa4sKqUNzSw5QR98yKN8uFt5ADS4-a5EOCDGyfiaZWReIzkKzJMRjMyIWt5YYySE1sH62H0XjIjpV5reeyE3T0jmV6kAsMRqO>
-X-ME-Proxy-Cause: dmFkZTGjVQHlsMfpDn18KIeM0XIeoAMj5JUU8KAukCBBtQ64Kd9ijo/fy2kOTqWKXInuhX
-    eXNmeHFmfbYM24AMEMU3T9FyGbLr5Cs6Bs/yCZMzNvaQoL+1YiYQfrz7dkhb9BUayfgqdg
-    eh3X845GTdPz3T4Fgnob++OBFgRTBfx1ZGSGVQlKRnPhnw4sjTesrDKpJ4CKVM2dQkvzg8
-    Jo48ocI4LbeRc+FE9fLUiqF0jHchw/vzhXNa3UbsqJHPEHxhG3B7mM8r7ViwvcMsN8B5td
-    Y18ZbcT/fidtM7sERmfqt3aHxecFlSxvc3S/t3jpJh3/OQKIuyHyKbd9Mk14YcWn0yf3LP
-    b9D5eyiorDtqEt1ItPYvwb37hMxk4GsJECMYRy+w4hrjEGP+YqfHHEIqaWMsFJItAxDFHZ
-    rzmURxNyXGUKB2m9ebAd1bqGR3pFKqxTgJ79oPhiBThgLABRk7Lj6TSufJ7sMlH75rOtcN
-    O49WQldZNNrJVu6YDb3weH94ax9QTq1POZmlm5t09++1kJpRrLZGQebRABXav4bOp9/JND
-    AGuXPpAEGOdXkq9izz9Bw1qGlXsbBs+fB+CB9r7XSmXy9O8t6byYaAUxYDMDoUIdS623xT
-    A4mnnzSsGIFOkyGbUSczT3Q82TC7KucqCZ6QyNa4YELlOXNX7jS23OtImX8Q
-X-ME-Proxy: <xmx:gpkAazRttskBTsglcbfs0hIhF2lY0w0V2OoaJeTG18om8I5BBRk57g>
-    <xmx:g5kAa-Ns-jkeSYoF01wzoWOLhYhqlceDs8jt2RdEupCp1F0iM0qNPg>
-    <xmx:g5kAa4acTjd5dQlDbiZE120JYdskWMyOfWzxfTIw_JLl9I1uzxjNRg>
-    <xmx:g5kAa4wcjDQV50UXqoOqf-KW9TR0HOaXiCC1DKlv2nk0klnnaCv_IQ>
-    <xmx:g5kAa4Oso5DW-9wOSIr9XECh1GiKIbr-mAWWc87KHmX38YVmr26-8G-W>
+Message-Instance: m=1; h=sha256:bzptdxd3tNjJaqESyQUKxY7NJ3G4cqkcCCt9Dj1FKKQ=:6DX3KkDjA+UbR0bRHdGM7CFwNvNXmrEgiHMSRIDa/AU=;
+X-ME-Sender: <xms:JZsAa7wZnKIhDjJggJao-BkHMeiN_UbkTzjcXneV1LD2tlOztP-X6A>
+    <xme:JZsAa129mW8uNdNqr57lS-0r4sd7FFGPg4InHpeeTrFBfL7IiPLO7y5HQIGEQx1ut
+    wM8RrLo5vzzZQg2EBEJEhuTRG5HTaWmFGl1C9ZFJOENVdUCo5jaCIQ>
+X-ME-Received: <xmr:JZsAa48DcWP4sGBjNtlzQfwxHW210wIGO06FHcFNguYJycVsfsZFkeFAMlMUt2MlyaLXTgemL-LcX7L9IuDQL_FURWVJocmoDy9c>
+X-ME-Proxy-Cause: dmFkZTFE3zHI7mJH7YWq/Hi7k1cpxUWv6FmMvuua/ShMVoLjUlkRdrfrdV3BaqT8Zsrfq8
+    tOmVRqfNfHfVaCVqnr9WhItv5Pus6TW0KoHuFM4ehgZu09Dpx6nZe7B+G0Q+W/Ge8XjmpI
+    DHJ7yNIvuGZwFdmLQxRZ4M6DNi28Jv0b15NYWfAegXyPafKlZ1mSEPMq/mYZVXDfM6Llrj
+    OfCfEbp0hE5PQjQXeUbXA+X/68t/2TvkucpsLs4+VOE+W7ceyDy5qbbsNGWa5x4cD7gOXR
+    VOMul4eiq5ncnTFyHxX0h9P1E9gl66EJcwe3v6Mke+lfy4lK17A2EYNWxwlBFKTmKHEpfS
+    62uOvM4p8lRWdYZ+SlO1ULbMhy0MoDjMXGC0ic+S82cHBlpHNfE93IsW9/2F4scY4ntoHk
+    C5ZyPUHQtJfuGYtjT/FWL54s3W/9M1eBAsmfdC4lk630L/p2vCOtI3bSLV9MKTpR1oV6HP
+    kZs166XBYakWhmWE1NYWFuVoXKJRbsDgJydaku0ixaJDjm7BKU1MedEgkOuCDlKZJaDmou
+    eIxlHObmUkTW4UZghXUte2uoZT3WJKlfxzh6B6wES5jSLlbb+VgsJgRjiZZPUQIGMcTeqN
+    eeQSYXREwd+decd46BMAb/xB4B6sBveazHrbpkGO/YZqGscmn3YXEHciN44g
+X-ME-Proxy: <xmx:JZsAa1qzsTdsi4_j1udK1oGSCX3ORCV-np4elMjIxECa67wWf5ArwA>
+    <xmx:JZsAayRpREKjlUZoMKEYVACAz2TJIp3DC5h59UsYiEldCSXJDoBVcw>
+    <xmx:JZsAa4PSaOTib4XOGvNHFTubKaHtCVome0NXVjCbAkKHSpFkPDoYXw>
+    <xmx:JZsAawhQjuFZoRMzEaLBIQAYyNuPt8ba1NzYbm_x61IbJ6x2AQmiFg>
+    <xmx:JZsAa-rQenVUFLeAopeMsx9FSX0szuSZFYMKM5Hj4KOWRtepnO5psz5M>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Nov 2026 14:03:30 -0500 (EST)
+ 20 Nov 2026 14:10:29 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Ophir Bleicher via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Ophir Bleicher <ophirble@gmail.com>
-Subject: Re: [PATCH v2] doc: fix AsciiDoc syntax
-In-Reply-To: <pull.2496.v2.git.git.1795199746309.gitgitgadget@gmail.com>
-	(Ophir Bleicher via GitGitGadget's message of "Fri, 20 Nov 2026
-	18:35:46 +0000")
-References: <pull.2496.git.git.1795194752259.gitgitgadget@gmail.com>
-	<pull.2496.v2.git.git.1795199746309.gitgitgadget@gmail.com>
-Date: Fri, 20 Nov 2026 11:03:29 -0800
-Message-ID: <xmqqtslbpbpa.fsf@gitster.g>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  "D. Ben Knoble"
+ <ben.knoble@gmail.com>,  Phillip Wood <phillip.wood123@gmail.com>,  Jasper
+ Mayone <me@jaspermayone.com>,  Tuomas Ahola <taahol@utu.fi>,  Harald
+ Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v9 1/4] branch: move the deleteMerged opt-out check into
+ a helper
+In-Reply-To: <xmqqy0anpbzb.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	20 Nov 2026 10:57:28 -0800")
+References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
+	<pull.2425.v9.git.git.1795184664.gitgitgadget@gmail.com>
+	<37ef7636e069ce528728c43cd79f678293e0d035.1795184664.git.gitgitgadget@gmail.com>
+	<xmqqy0anpbzb.fsf@gitster.g>
+Date: Fri, 20 Nov 2026 11:10:27 -0800
+Message-ID: <xmqqmrr3pbdo.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -127,65 +133,43 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Ophir Bleicher via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> From: Ophir Bleicher <ophirble@gmail.com>
+>> +static bool branch_opted_out(struct strbuf *key, const char *branch_name,
+>> +			     unsigned int flags)
 >
-> The Documentation/MyFirstContribution.adoc file accidentally used
-> Markdown syntax for a link:
+> I am afraid that this is a somewhat selfish choice of a name that we
+> would regret later, as it assumes that "delete once it is merged
+> elsewhere" will continue to be the only destructive operation that
+> people may want to exempt some branches from.  The configuration key
+> is named very specifically for that destructive operation (i.e.,
+> setting branch.<name>.deleteMerged to false is a way to say "no,
+> even if it is merged, do not delete it"), so there is an impedance
+> mismatch.
 >
-> [here](https://gitgitgadget.github.io/#...)
+> Either
 >
-> Fixed it to use AsciiDoc:
+>  (1) naming this function to make it clear that this is about
+>      opting out of the deleteMerged operation, or
 >
-> https://gitgitgadget.github.io/#...[here]
+>  (2) naming this function to make it clear that this is about opting
+>      out of ANY destructive operation, and renaming the
+>      configuration key to something less specific than deleteMerged
+>      so that the user will be saved from any new destructive
+>      operation we may add in the future, e.g., "force update to what
+>      upstream says", by setting the same configuration variable to
+>      opt out of it (e.g., branch.<name>.noClobber=true)
 >
-> Signed-off-by: Ophir Bleicher <ophirble@gmail.com>
-> ---
+> would work better, perhaps?
 
-The exact same tense and mood suggestion applies to this commit
-message, too.  "uses" and "Fix".  I can locally tweak them while
-queuing, so no need to resend if you are OK with it.
+I forgot that there is a third option.  
 
->     doc: fix AsciiDoc syntax
->     
->     Difference from v1:
->     
->      * Change link text
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2496%2FOphirBleicher%2Fpatch-3-v2
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2496/OphirBleicher/patch-3-v2
-> Pull-Request: https://github.com/git/git/pull/2496
->
-> Range-diff vs v1:
->
->  1:  748ac69283 ! 1:  cf26060e59 doc: fix AsciiDoc syntax
->      @@ Documentation/MyFirstContribution.adoc: either with the "New pull request" butto
->        
->        The differences between using `gitgitgadget/git` and `git/git` as your base can
->       -be found [here](https://gitgitgadget.github.io/#should-i-use-gitgitgadget-on-gitgitgadgets-git-fork-or-on-gits-github-mirror)
->      -+be found https://gitgitgadget.github.io/#should-i-use-gitgitgadget-on-gitgitgadgets-git-fork-or-on-gits-github-mirror[here]
->      ++be found https://gitgitgadget.github.io/#should-i-use-gitgitgadget-on-gitgitgadgets-git-fork-or-on-gits-github-mirror[on GitGitGadget's official documentation.]
->        
->        Review the PR's title and description, as they're used by GitGitGadget
->        respectively as the subject and body of the cover letter for your change. Refer
->
->
->  Documentation/MyFirstContribution.adoc | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-> index c58253fd54..73dab5f7c9 100644
-> --- a/Documentation/MyFirstContribution.adoc
-> +++ b/Documentation/MyFirstContribution.adoc
-> @@ -931,7 +931,7 @@ either with the "New pull request" button or the convenient "Compare & pull
->  request" button that may appear with the name of your newly pushed branch.
->  
->  The differences between using `gitgitgadget/git` and `git/git` as your base can
-> -be found [here](https://gitgitgadget.github.io/#should-i-use-gitgitgadget-on-gitgitgadgets-git-fork-or-on-gits-github-mirror)
-> +be found https://gitgitgadget.github.io/#should-i-use-gitgitgadget-on-gitgitgadgets-git-fork-or-on-gits-github-mirror[on GitGitGadget's official documentation.]
->  
->  Review the PR's title and description, as they're used by GitGitGadget
->  respectively as the subject and body of the cover letter for your change. Refer
->
-> base-commit: f7de81456940dd6f3274e461149bba12965de609
+branch_opted_out("main", "deleteMerged") can be a boolean function
+that asks if the user is OK with subjecting the "main" branch to the
+"deleteMerged" operation (and the implementation may be done by
+checking the "branch.<name>.deleteMerged" configuration variable).
+The function must continue to be purely about "is the branch opted
+out of operation X" without adding X-specific side effects, if we go
+that route.
+
+Thanks.
