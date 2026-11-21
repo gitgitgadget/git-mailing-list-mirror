@@ -1,92 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.180
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795225048;
-	b=UQxQ7XgPbKmq1EuCbSbJhCgCd0/z53qpG96isKAPDXth9x3QGm7mOktLqJmbHVyfhtgy
-	 ba8YRSE2pigQ9xBWyxpvcKwNmU/02ZYj3FTv6vodmhpdamEea0c4qxSjOfQ28KJTxgAGp
-	 PtJI8b3fYnkN4Br0icwTsMnKhh+HajkbC1Q5BxWvg5ve54olBJzsPBl1vhahviDPfOciF
-	 CdB/JpY+FME1w6Sp9KEz1cEZ5OfVylklnx0Y68nLymaEmK6+dMqvyvtuhPX5WaYv1Neco
-	 m9j7nVd5RazpRZImO8lM2PfNC6B+EjMBt8cd4uUmLO3zxGLWqdMmE3+Hr4wpBoIXvSA==
+	t=1795228747;
+	b=PzIq4G+Obo/5rRmmeZKWPpmUVXQBSGqxb0NoH7SyfvqPDhI+pL4Fu4saeC/gbSQvC0g7
+	 ZLzbvt6Qyn3PghaBDqiaHdC+HLkgB4j3nYtXRwXZt5zZuKZLkCdoHiv0VmokzkwieU+3w
+	 fIJmZB4Z+N3Nvc9FeHQ04hEgSMaOyWyA8xqBFBggULgcfsc8fpkkGG+ygiHJUMKrc4315
+	 bYJeX+u00exj+Vi9hwqKorMunTinIdElAP7nlq4THA/+94YxHWRh1/lawmuRvlOudwWN0
+	 gi+6kjkO1hByoeD0FdY4QEafj1ulSUVpvvqxa8k1E5yD0qEsRGPEi+7i0ZflbCGmO/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795225048;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795228747;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 In-Reply-To:Date:Message-ID:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=SFqzBLCmNI6B/4yJC9Gu894MqT114D7EhgBz8A59xA0=;
-	b=lRtJp9hGKYDLmnPQqe6+s3O0EuEs3kn4WmETvJC3TTn57XjvKEzhbWTjXKxUtLFn6EJp
-	 1EQnfesluvnZP3iY5DK+tlyVtIR1ngh6DU8wZ97sCSdDDtuwu+j6sC5lnrCEW0eZHBWZO
-	 cG51Fj3oT4CNuekGiTcbZolExJaum9w/bfPjVyE6b0XPZppLlgg2JXCOpDyUJmsp3t6rc
-	 8o6WrsQew+MvK4Sdlq1v2zAQdn7SNCEWg1nZXz1FR8pqnnefM8Edm9ZNWyINEX6LVdBhA
-	 6QlUlwXBtfUoAYk52VxzWoRcb4GDONscHwuUredAK19MUYTTYSkqWMKVPMbZFHHYHjg==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Content-Type:
+	 Content-Transfer-Encoding:From:Mime-Version:Subject:Date:Message-Id:
+	 References:Cc:In-Reply-To:To:X-Mailer;
+	bh=Xu7rdlj5Q7upiARZnmg17QOI7wEjZ5lVyCWe3shhz+k=;
+	b=wXBjtzU1dROvpdQ1gJMg92abj8ZITFiZ3+Qd4BCmAjFgqpzKC82ON+AzukJyGqmnnyuC
+	 iEqWJHiNY8B5hXvKHrvlHf9Ce9U6q1EfMTvaJad8Vq34yJFCZiTUyXyTW6Eu9+hxZbiPt
+	 rFJqV4YZpIrZEeCIv8Pp65W4ooJn4KxaQ0GKZC1JidoDEehZwQR1IXIgp+XeJ/k+KnIFV
+	 7GkJTT+gyY/mj8jsNIzwNcFksXXJ2RrKgWbDIpf3q/sVmF9JdsHqCWnTHSnE6KX0PETWL
+	 c/nDBPSRwWvR7InvOGO8kSf0joAg43qQOQ00kUFJLomWcBXtk+a8lcT2Cmt9dRIUvKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=UnvdOkhb;
-	arc=none smtp.remote-ip=209.85.210.170
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=R2zVmXPh;
+	arc=none smtp.remote-ip=209.85.128.180
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1579606A6BC
-	for <git@vger.kernel.org>; Sat, 21 Nov 2026 01:37:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F1579606A6BC
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD8C606A683
+	for <git@vger.kernel.org>; Sat, 21 Nov 2026 02:39:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1DD8C606A683
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=UnvdOkhb
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-8b5ae415f7fso118809b3a.0
-        for <git@vger.kernel.org>; Fri, 20 Nov 2026 17:37:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=R2zVmXPh
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-8b30cbfa628so11241647b3.0
+        for <git@vger.kernel.org>; Fri, 20 Nov 2026 18:39:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795225038; x=1795829838; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=SFqzBLCmNI6B/4yJC9Gu894MqT114D7EhgBz8A59xA0=;
-        b=UnvdOkhbSYXLSZVdw/1mJod9/YseNsZEtB0XpXaPeclL+GM13AM563I5BKziFerjaJ
-         tg9VkGaITW+ZE3UihHIfZ920Gv3r8WU85fb6KBs4dvk1BbAMcBXeFAmu2z4y9Fs1ygs5
-         SAVWRVLb4roM39HDGE0P/trZCWxXVt5caTWo4pFbntxbKMq3aNrzo45iLh4chRjYHEpe
-         ZQLQf1doS9Cx11zT0MaZ6/BcbfDSKAGxeGQs4QfxI/P9FFgJENicMcOIF1R+hlbekzV1
-         +EVTAwWDOOhNzOQFg3hqhEnzgE6Uc6eezyRDe8su9y4L/cQJujs2vpcRZHyXhnF9r+Zb
-         tE/g==
+        d=gmail.com; s=20260707; t=1795228746; x=1795833546; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Xu7rdlj5Q7upiARZnmg17QOI7wEjZ5lVyCWe3shhz+k=;
+        b=R2zVmXPh0dgOcsFm3GmVWjOkuMqrbOILjmg9/tc+xat4t+q1BS3zBuG0gR31DOcbeN
+         5NCcGFZYw+SSQS7E8bT8hVMLlYwViXYKNXeirJ6m3M5r/PTAVArp7gZ7JBT1knKdPBIv
+         x+l08klJLutU9o+XtNjtYLr2uR2sM0MAdB85ZRLGnV5GldSz6bLhsQihY0GvuGt1+97v
+         Nm9/rvYQba37IyQgJ4qTSXTIR+NRjHpy3TRXIte9UellGJsO5/eMR8IFsHNBItvqjQ8K
+         haC1Q+QD/SqjtwGppj/WTh3RjgY63ptcEUdQv5PqjPNyyGLOm6Xjai272ZAizE8yEwWe
+         wPJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795225038; x=1795829838;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :in-reply-to:subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=SFqzBLCmNI6B/4yJC9Gu894MqT114D7EhgBz8A59xA0=;
-        b=S6a6tOAWZNzpgMztmtOlPlVp2KpcCjQuXxP6V9Lpb/9f/vxVfM1eu5ZJpaMQzwBLfx
-         sR1xG0SK0H5Q0jul5RSyjgc/6Ru4TsVSDDMv8YHNlJdgG+QV6UaMgJKkC10WH7aqh+rs
-         XGSURpWvwf7GShXONz2EOAa8OKLQz6rIpzmE5xsuxBi95nIHrefkxJ/bJ/C5T7DoX6A7
-         E5jsYODxXc7bxWe1zZwG/Re4HM6eRKGfpzwNatylg5MCjN7riDeDXCuMZXxYEnNrg84J
-         zkn7buMRvCcjBTTgxaBNHMLmNs4yYgnlLuwgb+eMA4uaelGan8yrf4W1kEEeAj1/dV7M
-         NdYQ==
-X-Gm-Message-State: APuU4Z9jy3qmvuO4bH/n3caCuqGq0Tr2CynxSdyMSJ0aEJXXBqodN3Ub
-	WhCnuzneQHBVmaU/0lXoW+OWUEwRYAwluPp4ofpagmoQbyx3TvpYcq8mNCqydLz7
-X-Gm-Gg: AZFdTZdd3ZSaof+2k+U5tN4haoUc7MVvFASrd94gxlfd2MiDL/Z0jG/Jn3Lv3aqAdjW
-	wHjdFZHloAYzKq98a3JyL4otF6l+pObvewKObOSyycATD2PKv81buzA71S+0ef1h0G2WaZIDmMZ
-	v8BmGj4OveHZv3gdZRGikyiOAnNHTjgMWo/YjCyw6/p070iQF/obSOEdmtcRi59XYXdTEKf7+z8
-	3/maYkEHSTgzN7DE/MdIvh0BSld1zRzXoN2KHndmnceR0fcbDEwkS36gkYXTPXIKnY3wRAf7kj1
-	ZpCJaJ4Fs2n+VameW3y6cbHftYT6zpqYCeu8w+gyJWcEQp5mJXAyGQdFewEIwkavEhlm/ndwt5X
-	AHDTO5jnTBKXoD7kqYsnz7tvt+V3br493vbPtcuzxXy5owrtpdKAWmVWdQzkLEFFt6Zwman2krA
-	dEXeEUtrzycPiSd7zJ8L1lJCHeXf6YLQDyeaHk/ipm23VUFqV8d7Ep8A84D+K8w59y2f+pbyFCr
-	rXHDHQrj61NRzIOn2/EPGQmgGf1Ycpg0IMaOmG5fmBu30Rqg1/7TZKqCsQfvBr3m/6f2JEbfXEx
-	Rl7gtNysrlgWQtjnAS+au5FSjjM1cCpVZGj7DR622D8ZwGMYJKDy7wOC411t6OmnPeSwei97qFq
-	gL9v/UMjWwaRIPyX/IkXFChaX8fLu9Flqve9Vczymb1gAuJZi1gSMIW/WFmn79I0IhtPKa3Lao7
-	EAImieb7ke
-X-Received: by 2002:a05:6a00:1a0b:b0:8ba:fa01:4925 with SMTP id d2e1a72fcca58-8c8796aa4fbmr5789559b3a.1.1795225038037;
-        Fri, 20 Nov 2026 17:37:18 -0800 (PST)
-Received: from canneberge (dhcp-206-87-134-18.ubcsecure.wireless.ubc.ca. [206.87.134.18])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8c873b2434asm2127815b3a.45.2026.11.20.17.37.15
+        d=1e100.net; s=20260707; t=1795228746; x=1795833546;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Xu7rdlj5Q7upiARZnmg17QOI7wEjZ5lVyCWe3shhz+k=;
+        b=GHLnxeCub6q14oMbke8D6avSkWA3V+SE3QqriBkAtaeAHpQovJO/PaRCZbuLV41D4H
+         1cv/rj8VQyu5KRrfi6xRiPpgRAMtzFK9uEKxr9q0z+MQcf6HCDMfvOEyg27psoVS4URO
+         dcDJaPdEN+P2mA+NgW/Si4PelThxdDvIvXnfBIBVKRKkdB9y01eiINR+FyC4BSSG3509
+         TcFBsX6Lt5urVRzSH9QAsb9uKP7MgDPfFpgVvFX6Vqs7m08XSwPWXHcvwFA9ObImL9F4
+         qmcpFXKyJXG2q19DRVkZlJcJyaoXskfWB4ffsVKzF3nzlvtRgVhsD/AJLdptlAK8zKGh
+         wg6w==
+X-Gm-Message-State: APuU4Z9qi3ga1m7Ob6wdXFPGCGYCsMov4a4TD+wk1zFntFlxpE3xv1mg
+	xlo2MiFcBTKaYQfq7oZlZe70DRcTFXJu40Ku/sN+7oRHZDcKe4qfFcXa
+X-Gm-Gg: AZFdTZcBliNrI0vCoWsn8GBdYDYt8JnYqmBC1vZB2ryqpj3o3hvXXW6MCuHemWWa4bx
+	ElP4ZFveo4C76kLEna/LWNIh6fONIPrdsuMbQqtaXm3DoPeXgdJRUTyjObSszfoaCQRGNnmGNRn
+	IlwoM3uxzvkGkuLDKrA4/svwtvxee4g1/QLIdpU164p9qEI8FI3Az4AChfCGRfDp6Ynp2mFcKuy
+	YKHudXKcKp1s1BEKfdMr/Dav3WhtmZn4+SrxkHaFP6BERZc2sAujSNE4zEsQqbytxowegwKJrlA
+	8X0bnNDtajj3FmTJdVUs3y1+LVhSRA1jsl2zPZv0uZi7nYI2yY+jqn10rB68q3W4nL0pzHA6pyJ
+	tJrQEZaPNbndKVaeU53YKKJrlPbI1wMAydtjJWPlPnIvXOp1fuAEEACgOyia1ZmBAsLlc1YfW4t
+	S8LHsJ9ckhEuI+aC0IR2CcU7BbE5DNJtNVruoa5WyWj7RTlgnpjhH7QLLaWUCoRfb2uPYZa2qdr
+	r1vY9GDpEaEmF2hL4wlXwtOiUG22wAEqy3HGqYza8zU6x+RPrcUXArMOOm5Df+TJWyqjk5xepEm
+	2o1UUs7C/3elX/7JdWcpPBo4pnAF3MpVgiUNoXbbjJQgQWTAQNMzDEzJbo9t6i+9QnPvMJSOUmZ
+	IjSUky/Fx15ilfiyW8/J08pBq0xzP56qtgTgutqOmji08EKLqieKx6auH9WLDqlUKJryowk4Dwg
+	9mCQ==
+X-Received: by 2002:a05:690c:620b:b0:8b4:c2c4:c5f4 with SMTP id 00721157ae682-8b5205537camr20408367b3.67.1795228746010;
+        Fri, 20 Nov 2026 18:39:06 -0800 (PST)
+Received: from smtpclient.apple ([2605:a601:9d46:600:a062:d8cf:edad:b70c])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b520330e86sm21371687b3.38.2026.11.20.18.39.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2026 17:37:17 -0800 (PST)
-From: Andrei =?utf-8?Q?=C8=98ova?= <andreisva2023@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org
-Subject: [PATCH v2] builtin/clone: fix --revision when remote / local hash
- algos differ
-In-Reply-To: <87mrr486sg.fsf@gmail.com>
-Date: Thu, 19 Nov 2026 21:00:52 -0700
-Message-ID: <87a4n3ufqw.fsf@gmail.com>
+        Fri, 20 Nov 2026 18:39:05 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -95,166 +91,25 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (1.0)
+Subject: Re: Branch Awareness
+Date: Fri, 20 Nov 2026 21:38:55 -0500
+Message-Id: <71943758-1A3B-44F5-9BDA-233F16AC41C7@gmail.com>
+References: <CAA8YNQAsyUe275DLPRnB4dym5aq9ZyemA39u+HJciKzat5tNQA@mail.gmail.com>
+Cc: git@vger.kernel.org
+In-Reply-To: <CAA8YNQAsyUe275DLPRnB4dym5aq9ZyemA39u+HJciKzat5tNQA@mail.gmail.com>
+To: Jordan K <jordankadish93@gmail.com>
+X-Mailer: iPhone Mail (23D8133)
 
-Under protocol v2, "git clone --revision" fails with "fatal: Remote
-revision ... not found in upstream origin" when it is passed a valid
-commit hash with an algorithm that does not match the default
-algorithm (under protocol v1, this error message is: "fatal: couldn't
-find remote ref ..."). However, the hash points to a valid commit object
-on the remote.
 
-The refspec item is created before the destination repository's hash
-algorithm is set up, so when cloning repositories using a different
-object format parse_refspec incorrectly parses the hash.
+> Le 19 nov. 2026 =C3=A0 04:54, Jordan K <jordankadish93@gmail.com> a =C3=A9=
+crit :
+>=20
+> =EF=BB=BFI have a situation at my current workplace that led me to conside=
+r this feature:
+>=20
+> We crudely pass around a `settings.py` file that doesn't match the one
+> stored in our `main` branch, as many workplaces do.
 
-Delay the initialization of the refspec item until after we have
-gathered the remote repository's hash algorithm, so that it parses
-correctly under the expected algorithm. Consequently, leave the prefix
-list empty when --revision is used to get all the advertised refs.
-
-Signed-off-by: Andrei =C8=98ova <andreisva2023@gmail.com>
----
- builtin/clone.c           | 38 +++++++++++++++++++++++---------------
- t/t5621-clone-revision.sh | 19 +++++++++++++++++++
- 2 files changed, 42 insertions(+), 15 deletions(-)
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 4b9929b980..07a4c2db98 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -485,7 +485,8 @@ static struct ref *find_remote_branch(const struct ref =
-*refs, const char *branch
-=20
- static struct ref *wanted_peer_refs(struct clone_opts *opts,
- 				    const struct ref *refs,
--				    struct refspec *refspec)
-+				    struct refspec *refspec,
-+				    int rev_refspec_idx)
- {
- 	struct ref *local_refs =3D NULL;
- 	struct ref **tail =3D &local_refs;
-@@ -506,7 +507,7 @@ static struct ref *wanted_peer_refs(struct clone_opts *=
-opts,
- 	}
-=20
- 	for (size_t i =3D 0; i < refspec->nr; i++)
--		get_fetch_map(refs, &refspec->items[i], &tail, 0);
-+		get_fetch_map(refs, &refspec->items[i], &tail, i =3D=3D rev_refspec_idx);
-=20
- 	free_one_ref(to_free);
-=20
-@@ -963,6 +964,7 @@ int cmd_clone(int argc,
- 	struct string_list server_options =3D STRING_LIST_INIT_NODUP;
- 	const char *bundle_uri =3D NULL;
- 	char *option_rev =3D NULL;
-+	int rev_refspec_idx =3D -1;
-=20
- 	struct clone_opts opts =3D CLONE_OPTS_INIT;
-=20
-@@ -1478,24 +1480,24 @@ int cmd_clone(int argc,
- 	if (transport->smart_options && !deepen && !filter_options.choice)
- 		transport->smart_options->check_self_contained_and_connected =3D 1;
-=20
-+	if ((option_tags || option_branch) && !option_rev)
-+		/*
-+		 * Add tags refspec when user asked for tags (implicitly) or
-+		 * specified --branch, whose argument might be a tag.
-+		 */
-+		refspec_append(&remote->fetch, TAG_REFSPEC);
-+
-+	if (!option_rev)
-+		refspec_ref_prefixes(&remote->fetch,
-+				     &transport_ls_refs_options.ref_prefixes);
-+
- 	if (option_rev) {
- 		option_tags =3D 0;
- 		option_single_branch =3D 0;
- 		opts.wants_head =3D 0;
- 		opts.detach =3D 1;
--
--		refspec_append(&remote->fetch, option_rev);
- 	}
-=20
--	if (option_tags || option_branch)
--		/*
--		 * Add tags refspec when user asked for tags (implicitly) or
--		 * specified --branch, whose argument might be a tag.
--		 */
--		refspec_append(&remote->fetch, TAG_REFSPEC);
--
--	refspec_ref_prefixes(&remote->fetch,
--			     &transport_ls_refs_options.ref_prefixes);
- 	if (option_branch)
- 		expand_ref_prefix(&transport_ls_refs_options.ref_prefixes,
- 				  option_branch);
-@@ -1508,7 +1510,7 @@ int cmd_clone(int argc,
- 	 * ref_prefixes will be empty so we fall back to asking about HEAD to
- 	 * reduce traffic from the server.
- 	 */
--	if (opts.wants_head || transport_ls_refs_options.ref_prefixes.nr =3D=3D 0)
-+	if ((opts.wants_head || transport_ls_refs_options.ref_prefixes.nr =3D=3D =
-0) && !option_rev)
- 		strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
-=20
- 	refs =3D transport_get_remote_refs(transport, &transport_ls_refs_options);
-@@ -1525,6 +1527,12 @@ int cmd_clone(int argc,
- 	create_reference_database(the_repository, NULL, 1);
- 	startup_info->have_repository =3D 1;
-=20
-+	if (option_rev) {
-+		remote->fetch.hash_algo =3D the_repository->hash_algo;
-+		rev_refspec_idx =3D remote->fetch.nr;
-+		refspec_append(&remote->fetch, option_rev);
-+	}
-+
- 	/*
- 	 * Before fetching from the remote, download and install bundle
- 	 * data from the --bundle-uri option.
-@@ -1589,7 +1597,7 @@ int cmd_clone(int argc,
- 	}
-=20
- 	if (refs)
--		mapped_refs =3D wanted_peer_refs(&opts, refs, &remote->fetch);
-+		mapped_refs =3D wanted_peer_refs(&opts, refs, &remote->fetch, rev_refspe=
-c_idx);
-=20
- 	if (mapped_refs) {
- 		/*
-diff --git a/t/t5621-clone-revision.sh b/t/t5621-clone-revision.sh
-index 54789423f8..a52c0a1d0e 100755
---- a/t/t5621-clone-revision.sh
-+++ b/t/t5621-clone-revision.sh
-@@ -78,6 +78,25 @@ test_expect_success 'clone with --revision being a raw c=
-ommit hash' '
- 	test_must_fail git -C dst config remote.origin.fetch
- '
-=20
-+test_expect_success 'clone with --revision being a raw SHA-256 commit hash=
-' '
-+	test_when_finished "rm -rf src256 dst256" &&
-+
-+	git init --object-format=3Dsha256 src256 &&
-+	test_commit -C src256 "test" &&
-+	oid=3D$(git -C src256 rev-parse HEAD) &&
-+
-+	GIT_DEFAULT_HASH=3Dsha1 git clone --no-local --revision=3D$oid src256 dst=
-256 &&
-+
-+	echo $oid >expect &&
-+	git -C dst256 rev-parse HEAD >actual &&
-+	test_cmp expect actual &&
-+
-+	git -C dst256 for-each-ref refs >actual &&
-+	test_must_be_empty actual &&
-+
-+	test_must_fail git -C dst256 config remote.origin.fetch
-+'
-+
- test_expect_success 'clone with --revision and --bare' '
- 	test_when_finished "rm -rf dst" &&
- 	git clone --revision=3Drefs/heads/main --bare . dst &&
---=20
-2.55.0
+We sometimes carry =C2=AB .env.example =C2=BB that folks should modify
+into =C2=AB .env =C2=BB, which is ignored.=
