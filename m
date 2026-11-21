@@ -1,98 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.51
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795243357;
-	b=KtfGOvN4TZ3VVZhIBP0TRVJcXV5G8hfb26KEps/waA49u+OB3HhmAqcqKIL5kjc2lS4y
-	 y31B6L1j14AfIzOBntGvfxLPhosdqHFsFL8NtBkL4zPOclp7ORcQwpuVBEIqIilEOJDJ9
-	 aK+E8QEZEn8eW4ouavlHIW3DxSkq8IVq2hhN8vdxX7VXUpJqmnR2y8Y9DkGyQxnf2Y66e
-	 K8ows+t8uB8pqxQvB0+zmQHf3ZGgE6BHWT7hTqY8vEHm2iZjSo4iVWJn8E1wy8HWVWwEi
-	 s3AaPE2W4XNKCaKRiHIhI3p8DvghjZwtXIh6EwOoZrxbAMnuW+aLU7rMx6TO1hHGeJQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795243357;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.53
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795246848;
+	b=4KCWnHfZ7QymxUVlnOSzscX3COIK4CmhrlvQcPkIXjYKnsQEPfavyJb2fZHoIdKM2E5Y
+	 +D+BLH0h00SQk8ZcR1vPIVEhZMoxiyIyvfLb8ueKrU8gSfM5+GjNMF3Y/vSLiZeHzG1XD
+	 zfUCY0KezkBfz5+30Gjes9DYLWjnWJ5YhVhfQtDCWYarYaje4YhV1B4MYqPyTeOxC9+Zi
+	 9Zd2XkSPMdz6TADRAJG5Mtwvj61jZ+Eeahs3QNbMA3KDMc+siLjaNyzOI9LEqqnLX+8n0
+	 CzhkVgwJm3jejmrQu+KhqceGil1dyq1o7TsI7W2rOYhoOt/vwy59UaQlGnWDb1/gxGA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795246848;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=62q4QrPixlzE9TUY64BuW0J1EmgeOr6+dZnyPNNsqE8=;
-	b=EKdGj6/1SboANSpMLW53rT7EfgmDncKDN1zrBwd5RHPHSt+XkvCCqn4yu2+o1skNROkJ
-	 tXenBsi2hXrAsUJFXIj4Ni0SFBQlxbe4E8U2PpynUC5cd7+hTByH74oDHWQN0vNGLPM9M
-	 cODD16fVr9q+QfX8ER/3U6IwZt0pwaWQoxWu3HYonxofxAR9T+n/dDHWmjHVmO5zrRibi
-	 jG9jfsty0hNT9H3Ink5YNkEQrYlxFIrWAmZfKe0W4Hppo3/iw0V5jJUrD7gTCg1fZbDzk
-	 J8rA0MY52RzrUZoXYdUJ3owqxqzImHtj4F0fcAEw8SMhW+0ZEEn/FRS7dpxZcjjysOw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
+	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
+	 Cc;
+	bh=1Ht6I3AX3ntkzsnqI5YsH+E0lZKJqdgaU3SDz99bStM=;
+	b=rLUz07eWMrmGOM699h3gMz3/4ZwEO4u6/73VfdCJioxacqkBp7cF+gFRWqF4TuFz1UvS
+	 FcJImAK/clFHHCSrYy2mu3yLA+I/eT9UvlkBTH6cmBiidfpbnaLTI9Hiu9efdeO7cQVW/
+	 DPprh1AVSZEJX5vHKb9v+UGOM7DL0WTFF3h/R0MGk0mYxFb+4HTcROTfcyweuS3nKD1GQ
+	 nIz60i+bqCn9W26fwsQhx+4M38EnXGq/LF8tiZWvn8EqCtb1hjNBayqeyZ4yHqpEclzpZ
+	 3Gk2Jbbu6Vr583vh/TGt1uBwhl1U7PneRtoX3SLAKLyEaUbBjxCuj0v2ZQo7cF2Zj4w==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sYeNFlhF;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.51
-Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vASO899d;
+	arc=none smtp.remote-ip=209.85.216.53
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59E5606A339
-	for <git@vger.kernel.org>; Sat, 21 Nov 2026 06:42:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B59E5606A339
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F68606A320
+	for <git@vger.kernel.org>; Sat, 21 Nov 2026 07:40:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 06F68606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sYeNFlhF
-Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-6d290b10a35so676836eaf.2
-        for <git@vger.kernel.org>; Fri, 20 Nov 2026 22:42:36 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795243355; cv=none;
-        d=google.com; s=arc-20260327;
-        b=LoomkaWFZoN2yBRyHLPpcvOtuIJaUCUj6Dog3JLixSYAZdB+X6is419yb3L17tOY+4
-         3v68IrzAGBrA8unUlTZj0l2XN8Y9x5e0AgPvEydsH76+YyqOklej2Raw92H1isIYEdUM
-         8GKW2YI0/OrlaMwkUY315NAm/mA1uyp99/gcYMDf/nnUXUJIUTLvZGLp/JgPSkrixPnU
-         Gf8m2msYMN8WkYekhkDy2aFLGOcy8LXfP3khhFhPTcl5v+NimkXXOl41hW7YyFrhqgYw
-         Uk/kSOHBvkCAu5/G4M0uGznFGpyyz2cTV7LoFIzoSiKIOySXddF7XDopLu6d2uBXm3GG
-         7ZYA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=62q4QrPixlzE9TUY64BuW0J1EmgeOr6+dZnyPNNsqE8=;
-        fh=azt8TgWTl01NptQZMw9NPhZWceF2SXJbJqFTBR6uZLs=;
-        b=Ppkj307wuUyQjbp+q+5DwCqSajfaUlP5q96oFJe6psTzG/naNvuR/tyILQK5dpPml1
-         VGSP163EYYg419o41E6S7s4cEekO/Y8s+cZC4K5OnmhmTCmwLba/U4wwDsLWxvEkL+Al
-         ZbiLO7GjeJjOJEp52QE4skFuAH86b2M0zQJ0D7qnsOIqv6ON45ZaU8dOiOrKYVJHFiDa
-         gAzAfe4OI/ZwzlFCt000+rka0NjD/UgyxmRLZFzrurz8mxeeRK5/YV4UhxMv2+4iidU2
-         VkPZKdOsTKfPyxM0uO1Mil4nxH+HMw1qk5QVVSBp29IlSVyiiThuEiSvFuXG1Lww/NNf
-         FaVw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vASO899d
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-3b41e5a1719so643562a91.3
+        for <git@vger.kernel.org>; Fri, 20 Nov 2026 23:40:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795243355; x=1795848155; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=62q4QrPixlzE9TUY64BuW0J1EmgeOr6+dZnyPNNsqE8=;
-        b=sYeNFlhFWs8JhoR7+K+2BLC41khsT6tKYRHrneiipEpC9CShsdvHkNYGt/FuQZ0Mjv
-         UGY7ZIzsyle7noLTSzP1OiGKOkRXIGhC2l+xM/VsF1fywzK1Qmme1YQMZlH+7kcQ9Len
-         KK/4NWsFj+UxGvrPUNzW6LjfWtHK2Sqtc2qTHm4e8hzvNla51IIJ2AsRWEnqPNl0NhJx
-         ub8kAq4b3aB24tRZw4xvoOgwefw30fQ640N5kG23ZLtXna5iireMzIQJjb5TVA4Ex5EY
-         rnbpxwOgPIEHoP6jsVaS1RHi48uXaao6IgUX7gRvjdZAdRqpk54mACEktxGORxui12Bd
-         Rp3w==
+        d=gmail.com; s=20260707; t=1795246847; x=1795851647; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=1Ht6I3AX3ntkzsnqI5YsH+E0lZKJqdgaU3SDz99bStM=;
+        b=vASO899dkqStmnsk+qKgcqoKDjwQZYi5b6xMbkWYsSpQMu3cTv9xZonjpiw4wJlgvI
+         8JbYjOat9YUXjA2HYuWhLzp1Lq4GLggbDWXudPEjHjSkdXMLHH+AcHp+vlsEjj5dpqmZ
+         uyT2MnEjts5qMJq6BX8hBiKc/03GA8RqhzdV5YYxr+QbwqNbMDDeqe1ci30VSyobwoG1
+         zh7pA8DuByX3Y4U8ZK+8Fr9v5H/buRrfqa2k95SImQ56Ko/s1caQgGxN2DYx7eQ2sAsq
+         uUIzh2W+1PzRZY1yhSK6sndIR6F83jNuN6BFP4XnHY3DQPxhTiTfgx1fo4LMLY9h097a
+         ud/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795243355; x=1795848155;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20260707; t=1795246847; x=1795851647;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=62q4QrPixlzE9TUY64BuW0J1EmgeOr6+dZnyPNNsqE8=;
-        b=aN6tIWmYF2dYXMoDnNNam+0kfO4ZQp+4DBXnDvFUMmXxlKSafq90krn8eh0Gu5vB87
-         ormjEAZaYVzRVWtwPKsODSGnLOfmcCHFHdqkBapCGXfrPJFeiJGUoJLP1YY53XejVQ8d
-         XZ8wqLEUP3rMtn7X4pi2xYvPMB/ed9rpnh25muz2T8fvI2ErdG8+cSjEgmvHl8qxURGp
-         KdCTqkR/CoDVaRwbPL/M28NeXMFDyL0AwezWjRrZGziU5h71hJbXY5h64dChfBGa8lvU
-         O3jnDXQH4GEk73wzamL4bPGrJEglrkcskR3E0jK9G3Se9y8j7WMTjjq2IMb91kQGG67S
-         xOHg==
-X-Gm-Message-State: APuU4Z/0rTOiU+qsjk/JbsHUCtnGxQFtGJa8mUFBPlg4EWmD/Ky0R+rw
-	6W+ifdpjYvjppZjT9YnTOffEfkexjQSVwpV6lyt4KVKnXVwMtg5a2/Gz6mc8myNtajUX5DXCgrc
-	2Exs22BDYqYO9oNG+PZdKOw19fwS75cP8jaL1
-X-Gm-Gg: AZFdTZeSz+GbIAm5YvDyICwkMfvFlK1vvzR+dMGjVra90wpkqZeygN/p7cosvGE2tfR
-	Xxl6+0Pdd+HG3KYSmkK9uU0NyMXHo2IuGne2BpVZDKAYhVA6Plw7HsUAoamX0KNgJsvahk6Kxk3
-	wtnFTJUh/7cwD7YFPrwhRMYoxP0KdrZlsWcQrRDm3vSg9Y5FDJWpQEORLBswSshuj6GH1BAO4ED
-	CZ7o/8JmI2YX7HErkshP7kDEZLaYPSzU1fUq4mlvz1oGa8p5vzBD5uGv+9Ii5s3am6dBzGIZPoK
-	JB9Q5BdfmvjKg0InAr34WKICv1V0+eH5Jaq6cSZnWzEvvDVR5y/OCoVcEAB+eI8FYoo2BLpI89I
-	uMQsf6I2RQyxedny/uaNEpPly1kCE18jg8dE=
-X-Received: by 2002:a05:6820:8599:20b0:71a:d6ae:500a with SMTP id
- 006d021491bc7-71b394b822amr3243850eaf.46.1795243355591; Fri, 20 Nov 2026
- 22:42:35 -0800 (PST)
+        bh=1Ht6I3AX3ntkzsnqI5YsH+E0lZKJqdgaU3SDz99bStM=;
+        b=WN7nPQFJssHiBFFtgWW/fAgQqHHPwwiCQfJGKxuD6Dha8YPFvgwzf+qLIUneyaBtfw
+         OaIzWJnwlWPd2G946+YD5hAe8FlXfMihBPfoYOLgMNXwLsHwXQKHwticT4/kkTrK5RKJ
+         qwMwVvk2hOxbNIZ95rP9z/2rAki/ZV9j0homAuL6ZUa0d2nqFSbYcV6jxnVqjTxITug4
+         A0bLC9qqy7BhAsgJwhtLM7nCr/PHWzM32uXZ4Kt32/4RFGfFooYd5S+/TZKz5iOGfXbZ
+         /Py4DtCFWckmw7YWn//TQVEt5OVamAHzs8C7rwY4iZ+kQgcCnV1ISvEYEQbG4sRco7Sa
+         BENA==
+X-Gm-Message-State: APuU4Z8RcZrWU+YFczljKidk/celcvNPxQ7TqUPdbazjEnzhLzIKJSMD
+	6ARWscBuf11TeAlr+GvaBh4RwUzpqChg9K40MJUxRbLVeGObxAlTqU4X9lyi2Q==
+X-Gm-Gg: AZFdTZfCV3oMhcTrmccy1yE515KkCwZiDN/JuB2JegNfzbDMcmOuGY3KJloM48npgba
+	jxOod8DYsMb0a0XdiOq6UDnS+HZGS93fplhFbFejZYrBp+pzMbsKAKVFbpgXAAmtkx80fO8wqUY
+	Y3L1wl8UmbKZHA6OCIIs4v8GcHWS0C8flVDm9kLXFiWHRkTY9V1bqMdX0ShnVpAl6FyEoG481Kb
+	25T9i6cDWphFGGSJmQ+l2A9nAdYkGwLRtBUEtcuwj2Y/CVnP8Bh3HwdA8LXAiZcErrDmXv49y4I
+	XMwHN6sCpagBuKBvCJQTDeM1Wn5JuJFF3sfn8MAcL0iEXwBaNEdG42VkSZlBRDG/n7Hmm6XES2y
+	QxBmDWa2BhoQCOSxx54WNuTVbDgh2kZjN5t2d3snneex3g0sdWxnTSp08RPo4HLFgZpahe/XdVn
+	hiYb0Kj1f//aT5YJnw+MvGrwGv5qA6VWBk63E+ZEOGuiCfn7sG1qj8APE6YoTG+vGK2WI+3rjcK
+	8ZTl4uv1rAuUrFAE1VOfqMxmho52QgFzciFsctJMdGyhQOpN1i978qZCQW0cb/xlQ6w/i18N2Fg
+	2ixvBhEVHIUGi44SzrOCCNZ2MQbikGUQ/gY=
+X-Received: by 2002:a17:90b:3912:b0:3aa:6b5d:9fe4 with SMTP id 98e67ed59e1d1-3b41c8e171emr4975276a91.12.1795246847276;
+        Fri, 20 Nov 2026 23:40:47 -0800 (PST)
+Received: from [127.0.0.1] ([172.171.108.234])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b40578d771sm10490232a91.1.2026.11.20.23.40.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Nov 2026 23:40:46 -0800 (PST)
+Message-Id: <pull.2323.git.1795246845186.gitgitgadget@gmail.com>
+From: "Wonseok Oh via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 21 Nov 2026 07:40:45 +0000
+Subject: [PATCH] fast-import: catch missing data after inline M at EOF
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -102,30 +93,77 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261114201632.103400-1-dirk@gouders.net> <20261115070357.113875-1-dirk@gouders.net>
-In-Reply-To: <20261115070357.113875-1-dirk@gouders.net>
-From: Andy Koppe <andy.koppe@gmail.com>
-Date: Sat, 21 Nov 2026 06:42:21 +0000
-X-Gm-Features: Aa3M54ry7eQjYFsLEIblGhpDBP_mbSkDQmEmbGRZvZyldN-hKjE7pIIutqK6KTc
-Message-ID: <CAHWeT-ZvrBXJTJWuLNsw3S_Do-NCF_MxVf80mWbbuoKtxdF_7Q@mail.gmail.com>
-Subject: Re: [PATCH v3] doc/gitcli: minor fixes
-To: Dirk Gouders <dirk@gouders.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+To: git@vger.kernel.org
+Cc: Wonseok Oh <wonseok_oh@korea.ac.kr>,
+    Wonseok Oh <marinelay7@gmail.com>
 
-On 15 Nov 2026, Dirk Gouders wrote:
-> Fix three details in the gitcli documentation:
->
-> Use plural/singular where appropriate and imperative form when rules
-> are listed.
+From: Wonseok Oh <marinelay7@gmail.com>
 
-The introduction promises a list of three, but only as single point
-follows. The message should mention the change to the '--' rule.
+If `M <mode> inline <path>` appears at the end of input,
+file_change_m() exits its read loop on EOF without reading a `data`
+command. It then puts an uninitialized stack object ID into the tree
+and exits 0, leaving a tree entry for a missing blob that `git fsck`
+flags.
 
-> - * Splitting short options to separate words (prefer `git foo -a -b`
-> -   to `git foo -ab`, the latter may not even work).
-> + * Split short options to separate words: prefer `git foo -a -b`
-> +   to `git foo -ab` (the latter may not even work).
+note_change_n() avoids this by calling parse_and_store_blob() at EOF,
+which dies on the missing `data` command. Do the same in
+file_change_m(), and add a test.
 
-Nit: "into separate words" reads more naturally, although "to" was
-already there before.
+Signed-off-by: Wonseok Oh <marinelay7@gmail.com>
+---
+    fast-import: catch missing data after inline M at EOF
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2323%2Fmarinelay%2Ffast-import-inline-eof-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2323/marinelay/fast-import-inline-eof-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2323
+
+ builtin/fast-import.c  |  3 ++-
+ t/t9300-fast-import.sh | 16 ++++++++++++++++
+ 2 files changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index ab5d2a2344..2b271222e1 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -2456,8 +2456,9 @@ static void file_change_m(struct fast_import_state *state,
+ 		if (S_ISDIR(mode))
+ 			die(_("directories cannot be specified 'inline': %s"),
+ 				command_buf.buf);
+-		while (read_next_command(state) != EOF) {
++		for (;;) {
+ 			const char *v;
++			read_next_command(state);
+ 			if (skip_prefix(command_buf.buf, "cat-blob ", &v))
+ 				parse_cat_blob(state, v);
+ 			else {
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 15f511fb6b..c291b0cf70 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -745,6 +745,22 @@ test_expect_success 'D: verify file6' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'D: fail on inline data cut off at end of input' '
++	cat >input <<-INPUT_END &&
++	commit refs/heads/D-inline-eof
++	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++	data <<COMMIT
++	inline data cut off
++	COMMIT
++
++	M 644 inline file
++	INPUT_END
++
++	test_must_fail git fast-import <input 2>err &&
++	test_grep "expected ${SQ}data n${SQ} command" err &&
++	test_must_fail git rev-parse --verify -q refs/heads/D-inline-eof
++'
++
+ ###
+ ### series E
+ ###
+
+base-commit: f7de81456940dd6f3274e461149bba12965de609
+-- 
+gitgitgadget
