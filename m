@@ -1,64 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795300052;
-	b=wCXlzp9jDm5r9amXUbr2pOixRkPSJzVQXZ6BOAnoGp6tVGP7s4GEFBxY0sri/ESUfKV2
-	 PvxHzJOC/v5jEiNlpb3nxsYTszH65wwvMg/MZURdlRnEusVFXflso/gtyNM7jC0/RsqRR
-	 NY8JMsXxsTJZprfnMMVoqi0A3br+/8v6OkUx4zcxCJOJXkOgCGMHKBjX0kBie0KpwLped
-	 ilO9XRMOHAmJhyfXwHpnZvC9bpjzSJkj9Ax4gm4nkfx49lAF3ypMwqzgRowCnM8OkjQQ/
-	 cKvNcLE2egg3klv3eQuBYSXA0OkA3fVV8Wknt1uB9WIGtC1KMbVLCZUO+sLx8Q/o58Q==
+	t=1795300982;
+	b=HcKZsN7wA6IGYSCp+hLTpB53fPCMlTqYtc+Azhx2/EXRrwH3T6bVIxbH95JqgcaOHuUN
+	 lfg/CWHlmqmjj/T+cVezKFwIf9O8PpXaXHhJIGWaUlmKrCo1mSkrI8UJ+0CsayYU6DJEx
+	 bYybpzTR5wpYKJs7rx2Dwg5CSU6grgy8FhaRlZYqb5aQ9f8Z7vd5wUAam7SnOuA6vXgD6
+	 JT3mnzVYK7W+m5czKp5x6Alo2dql1sW3Ul78gIoH/i/sPvwmP5llsLbyRpQ+FnnLgvgxd
+	 +OQUNv5tTuSIWhi5bV8PvApMBPz5Kbv5Mdm6n1rI9bXdq+Ap25FpfeuXj4RrKKVRVXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795300052;
-	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=5V6P/THnuzSbzvf01N45mYVIuvLpBVRxaZMPnMRv0GA=;
-	b=lbcwTYHZSGW//6+006zvF5zo/GV4PkKZdnOsphG7uwZYabNvUEY1wMJ2tZyPm66ijZ0a
-	 IDswUSE5Ecdji1lxbAoRvMuG1EeQLDKjuUZ7Nkx6wmlksB4cc1kQuzjTsTpxNBaguJbow
-	 bpd+HYqYb3gVwwhq7I9FXc06THULeqYDettzL52HhoAPvaRJwy2nKiSLKoufvj/1jHMXG
-	 WPW/oIjIRwLeTEPheQkr1oIM7fMHYl5QjuDepgPRJ2B/h1YXpmrqZobLUTdSVL0AJTfzX
-	 yl4pTR8yge8VhtTjolefBSpVHJKSHmfTqf7ZaOetauVA4CzN7owB0NRSCFcsgb+YJbA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795300982;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=9nZV1OebWXQM31W0LsExrTwgPqftOxoG+dOjATJvFB8=;
+	b=dq2svIUERrP/fQ1CNwhLbl1ZUDIkPp8tkKq7oNTmyjUiHBrgdAdWPjzde4jGi2SyMvca
+	 yLokuAUpMHLaAezv3OtnLf9q1I2NuP0dS7A3kA4BxOxQoMAWz02tZjYfZQD0MLPna6IbK
+	 ak5ApZF3kxckTpR5mSDrgiFBOZDRN/lYRy9Jdv5D4ZQ9Oo8b7XSA6z++MRZc80YDxVFJb
+	 2JwxfwOjT8TVRNPuEKJ1HnggwLNEUuTHqDLvUCWfvMYNaUZMrw3bQY9NUeUte9hbeLJ7c
+	 QucbCQWLrUONFB2ScCzCGAFFQhahEvSYuKabEvg5rCZEPb/qb3ezTVAh9kr6XAgIgEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=crustytoothpaste.net;
-	spf=pass smtp.mailfrom=crustytoothpaste.net;
-	dkim=pass header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=cIpGPCa2;
-	arc=none smtp.remote-ip=172.105.7.114
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AgTGUbwv;
+	arc=none smtp.remote-ip=209.85.128.43
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53925606A32A
-	for <git@vger.kernel.org>; Sat, 21 Nov 2026 22:27:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 53925606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE379606A320
+	for <git@vger.kernel.org>; Sat, 21 Nov 2026 22:43:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DE379606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key, unprotected) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=cIpGPCa2
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1795300044;
-	bh=IbRshyIMa/Z/NP0oAne1isFJ8F/l6O/AqAtNUYIHpeg=;
-	h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=cIpGPCa2jHqE+08fe2vYmMaT0jjEm1bKlgNwGfE01kmLCSTo7+eByQlQOx5dwyRqD
-	 DEED/oakXx8qygQTyOJQ9MV8hSQocSltwxBWu+DF38XxzmMfZjzLTMLQGy+NOBF2G0
-	 szzFYujE+HVChVW8IUMb2IgASuPWwhMrQ6gDSfvGqKBw6+9QWZeE4oJDk6pq74pCKu
-	 NBYmhVHZpMwD6N0IuQNz9E25ZaT5S3MBO83d/niTTCgfV57lXG+v8x60r0qBuSCLxy
-	 aJJKDONGSIFmKWdOc68VKpl0YlhGYvJbSfac8bT7OqBRm525TokaKX4dpwFkrNFR10
-	 RYX1YiNwYv8TGbh9VYFlI3zI/CvkhM3EERkOKnHXu5zSZ/yPE6zXyPiMOfTb9b1dWH
-	 n/WnmBncY2GNLsE5N1wjF3/SjmrX+U7xRm1/PbA+J9c45EQor6bNtqNKksQYEZxO1u
-	 aG3djFFlMKkaMHNkuXbPLVc+HH3ZgR+qjNNc3BMvEHsvn7rzyPn
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:eb0d:bc2d:c7b5:8175])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id B64C3200AA;
-	Sat, 21 Nov 2026 22:27:24 +0000 (UTC)
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] docs: indicate clearly that http.extraheader is not for creds
-Date: Sat, 21 Nov 2026 22:27:23 +0000
-Message-ID: <20261121222723.23714-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.53.0.697.g625c4fb2daa
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AgTGUbwv
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4a3517554f7so20113105e9.2
+        for <git@vger.kernel.org>; Sat, 21 Nov 2026 14:43:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795300980; x=1795905780; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=9nZV1OebWXQM31W0LsExrTwgPqftOxoG+dOjATJvFB8=;
+        b=AgTGUbwvjUeOTbs6olkRnq8LrskuKkDMiTQhpRtCzzDN7NClGOxffk6Rz3XaudZrWJ
+         jFl+eS12gc+0l3XFUVJ++oO90NbizIpmnK11MQBKLnoS5RQbPUf9JkAZc/tBMHHZ8N/6
+         Vjy+GxRGUHJNQEqDRmgGeL03MlaUnbNRvIrs/gXhmfb5rterRUM7hTntZS+tgxqs7Zii
+         tsWjW9Onulk6JigLA3ozlTC5UBVFxAipu8CNOOHCz2xbC/HRhcP5GGVj/wFyl/gtIwPw
+         vpG64R57qkyvqngIVJcYhf7GER7tsCoDKSZQ3OVOX4cEYRBjiU+P3GwbvJ8JlUrrMAnB
+         VNog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795300980; x=1795905780;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=9nZV1OebWXQM31W0LsExrTwgPqftOxoG+dOjATJvFB8=;
+        b=MH/WfNhwpWNY7pxFKVusDQhWJQzlufd6WzrWU29fudJtyxe6iLMvnW5MeLjoVr+cBX
+         OM27mB8kJqYaSPdLaNdtg5BGjRjXPPBKZNfVfyXHipqC0Q3qwIEoisBeNaqM9g64Lgoh
+         iSYlBYdKGWdzW6NA+iQCecELwvJOW11FejCgjHaps0pT2xO/XcLxjGaOA7POw66hbLHq
+         WOjpBMGepuI2qsJagE+ef+eHXNjFWkYxi3MVJvElNYFoXUdghO+G4MWP2GCGdzaxtD/g
+         fCNo6BKE0qq5mHWiJOhEfkGAJaCqMyv2i8cliaWae2XAhA+HqfjJ1IDpKrXgMZ4RBSDY
+         Y7Ow==
+X-Gm-Message-State: APuU4Z8rozE/OobOoKQDVGcil4VonayapqzMRoWdupg6l84pnaYvxi9D
+	hVOxd0ZiOJHssRK8kJty455pKKl0ditI6cGPNraZXRtGNJRKDFmg1FSFzVe3BVGqy28=
+X-Gm-Gg: AZFdTZdhKIH2tmrz+WU24+vROuiJetMdlXQfWv2JkhYCNsJosW7iBwPsddH0eKa2+Cy
+	+iMOK+o4mhbPF1KOsaCU88i59x5Z2suSrnnOtnEzOrEdw8r1PE/galyLjq7uox/A3/T8jxjPwAP
+	ghRKIRS1cijSPJgs8FgcK/hpcFWgLjnXFXm8cFQlnPCMJuqVgDSn+ddW+mWyisWXK8512ahUZjn
+	lFjzVuEoITbU0I0XAg/Y4YvTMbnxKeDSAAknJlmtg/1d0puLlyN08i6s3413xJbRwtndXwvTGiO
+	NRz98vGMLz1dHWdQyco3twBNSJCW0US0Qxf1hwfqNmqgU/YJgRWNMNnJFB/cn+WQF0cw4GZaxOJ
+	fQumsSCWkAiIFN7usTUc/fNSnnDI7y1NUX9C+BslapKB+RQULY7mp+0e7Toe+d6S8kfD9ABe+aW
+	Ygki9op/YwWVRDfwBf0A+9LMHBdK6Rai8mX/8r572Gwj8S28lQNjy8EAm3qcgiRQxiat88yFxBb
+	gL91HjVG8C0ttF8PtCHxvFIMkBg7GeIp7AnkFSjzAcWfzIbDTUoNaFT9RfAHrscClmOouAflGqA
+	5ViS0UsFIHI4F3n3l+m/1qKQ58h64qXV0jMU2GcdV9MTdwf40Xf9J0E6kL2gvAzs85COIekje59
+	YPbwi8noqdWXHyv2rEafrQCBP/UQLoDokjCX2Bxt75IzGUXJ2Y+2ISrI=
+X-Received: by 2002:a05:600c:34c9:b0:4a3:5d64:df91 with SMTP id 5b1f17b1804b1-4bb88810d28mr166619125e9.18.1795300980083;
+        Sat, 21 Nov 2026 14:43:00 -0800 (PST)
+Received: from HP ([102.0.122.231])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab69bf685asm13029377f8f.20.2026.11.21.14.42.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 Nov 2026 14:42:59 -0800 (PST)
+From: Tanga Joris <tangajoris@gmail.com>
+To: andy.koppe@gmail.com
+Cc: git@vger.kernel.org,
+	l.s.r@web.de,
+	Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v2] pretty: fix lost indent after newline in %w()
+Date: Sun, 22 Nov 2026 01:42:39 +0300
+Message-ID: <20261121224239.161239-1-tangajoris@gmail.com>
+X-Mailer: git-send-email 2.56.0.388.g09a996e1ff
+In-Reply-To: <20261017081150.2295695-1-andy.koppe@gmail.com>
+References: <20261017081150.2295695-1-andy.koppe@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -70,81 +100,32 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-People frequently use http.extraheader for credentials, but it is not
-intended for that and is easy to misuse.  People using it for
-credentials often do not use the URL-qualified option, exposing their
-credentials to every server Git connects to, or they specify it on the
-command line or in the config file, potentially exposing it to other
-users or to anyone who accesses the repo, respectively.
+Hello Andy,
 
-It's also known that using http.extraheader for the Authorization header
-breaks some uses of Git LFS, where some parts of the protocol can
-include their own Authorization header.  This is because that tool does
-as Git does and always adds the header, leaving two Authorization
-headers which breaks authentication.  However, using a credential helper
-works fine, since Git LFS only calls the credential helper if it doesn't
-have credentials.
+Thanks for the patch. I tried it and "- foo" followed by an indented
+line now keeps both spaces.
 
-Indicate clearly that http.extraheader should not be used for
-credentials now that we have more robust credential helper support.
-Remove text that suggests it might have sensitive information in it,
-since it should not.
+> +						space++;
+>  						goto new_line;
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- Documentation/config/http.adoc | 8 ++++++++
- Documentation/git.adoc         | 7 +++----
- Documentation/gitfaq.adoc      | 3 ++-
- 3 files changed, 13 insertions(+), 5 deletions(-)
+When I took this space++ out, no test failed, but a paragraph after a
+blank line then starts with an extra space: "%w(20)aa%n%nbb" gives
+" bb" instead of "bb". Maybe a test like this would help:
 
-diff --git a/Documentation/config/http.adoc b/Documentation/config/http.adoc
-index 792a71b413..a8bd957585 100644
---- a/Documentation/config/http.adoc
-+++ b/Documentation/config/http.adoc
-@@ -111,6 +111,14 @@ http.extraHeader::
- 	more than one such entry exists, all of them are added as extra
- 	headers.  To allow overriding the settings inherited from the system
- 	config, an empty value will reset the extra headers to the empty list.
-++
-+Note that this option should not be to pass credentials and using it for that
-+purpose may cause security issues.  Using this option for the Authorization
-+header can also break some external tools.
-++
-+A credential helper is almost always more secure and does not impact external
-+tools negatively; note that modern credential helpers can implement any
-+reasonable method of authentication, including Bearer.
- 
- http.cookieFile::
- 	The pathname of a file containing previously stored cookie lines,
-diff --git a/Documentation/git.adoc b/Documentation/git.adoc
-index 1aa0608bae..d2f56e2f91 100644
---- a/Documentation/git.adoc
-+++ b/Documentation/git.adoc
-@@ -104,10 +104,9 @@ where other processes might be able to read your command line
- (e.g. `/proc/self/environ`). That behavior is the default on
- Linux, but may not be on your system.
- +
--Note that this might add security for variables such as
--`http.extraHeader` where the sensitive information is part of
--the value, but not e.g. `url.<base>.insteadOf` where the
--sensitive information can be part of the key.
-+Note that this might add security for variables where the sensitive
-+information is part of the value, but not e.g. `url.<base>.insteadOf`
-+where the sensitive information can be part of the key.
- 
- --exec-path[=<path>]::
- 	Path to wherever your core Git programs are installed.
-diff --git a/Documentation/gitfaq.adoc b/Documentation/gitfaq.adoc
-index b26e4e3a09..5bc33f7e26 100644
---- a/Documentation/gitfaq.adoc
-+++ b/Documentation/gitfaq.adoc
-@@ -120,7 +120,8 @@ them for a certain period of time.
- You can also just enter your password when prompted.  While it is possible to
- place the password (which must be percent-encoded) in the URL, this is not
- particularly secure and can lead to accidental exposure of credentials, so it is
--not recommended.
-+not recommended.  For similar reasons, we don't recommend using the
-+`http.extraheader` option for credentials, either.
- 
- [[http-credentials-environment]]
- How do I read a password or token from an environment variable?::
+	test_expect_success 'format %w keeps a paragraph break' '
+		printf "aa\n\nbb\n" >expect &&
+		git log -1 --format="%w(20)aa%n%nbb" >actual &&
+		test_cmp expect actual
+	'
+
+> +	    Newlines that are followed by an ASCII letter or digit are replaced
+> +	    by spaces to reflow paragraphs. Existing indentation is kept.
+
+This only happens when wrapping is on. With a width of 0, like
+%w(0,2,2), the newlines are kept as they are. Maybe "When wrapping,
+newlines that are followed by ..."?
+
+Otherwise it looks good to me.
+
+Thanks,
+Tanga
