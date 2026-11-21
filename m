@@ -1,88 +1,124 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.149
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795220330;
-	b=a9hp0i7WAxNVMatbtPBsba1+ETyo/BmMxtUSZfxSYCl67dh2fpHnp7Z0zEhaKf5Ny+br
-	 XcHxvQYQGGwVis83KA2qcvOkNp6GwQt9K1K0ICwi4UOYtPpYvGi0HX6h5vpIAq5+B0dXP
-	 Ycsouv+wD9wsElxO7DIsUanY5g35O8WQrNL0GfLQF0NCe4mlTRohJ0oAjUQNSFdbGuKBE
-	 5rROxMO5b5BWyyuGIxPjvabLPvXwZS3SdItPNhJDYu8s4LowxelFd6ptawIrGYNz/4fmj
-	 BBZ5pLwvPVb3dGO2PGEYxsGNB/DYdXS3sMS56u44W8QeM6l7EFQ2tr2oKyeUvd7/wDw==
+	t=1795221042;
+	b=gKYIou+unZke7XITFzvDgb2h6LKYdzj3Jk4LxdwjrD8IBqtd9gQ4/ZOEwjnAzzWqUUhC
+	 ETMHnkEq+aJvxRVF5wCelfG0mY7uQ7DqNGQqPIVq6jr7PcaqclCXnlUjT1owYtC0B+BZb
+	 2FBMU1/m/iWZDHaR+PxHuZzIcLNF1TIMa7Ib36pLgM/PhsEshHdBifA+Znr+qsk3sTg9D
+	 IRNFPN4BBcEXn8ihP4NxafWsvwbXGy58UbNYPlvBlh4FCzQSMDVTQF4Hfox3VRDv0wvc0
+	 ZISyOZswfaR+fcXxIqB3yrRzTktY+FOxy1Rt+ETzHyT4WyUlVcLfa+BNY0r3SPcO2rg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795220330;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Content-Type:
-	 Content-Transfer-Encoding:From:Mime-Version:Subject:Date:Message-Id:
-	 References:Cc:In-Reply-To:To:X-Mailer;
-	bh=hD8bC1fcvGIpoEhcGGXFWpQQFRCTc7y3bgAG4jXITZY=;
-	b=jnTqefwnoQxfVAEQL6vCVj3y9WnTc4NUQ8CBARESAiFlbK1O0nrHzngk7FIme/TlQnTj
-	 ckgxDeUwxLKu0XlOtIJPMS7Llaoi0YWDsp9J/Cryzc32Q3RD0usy4Do7uioNoE+6O4Duz
-	 W9t/5VBYN2k5aiiH8peHPdJGClj8s7E1aC9reLV2yQjYtHyJ99JUP0LKesH/D2qEhl57b
-	 37R0UEHq/fP5WLGIsFMJYK8bB9AFFzWk6ZcoaCAK+/FBc9/w408wsg2qDKznEbkYXS1SD
-	 1UnvNppuAuJ5tx4u7OKMq0tblYL0q0AWCfxt2AOSPP9X8UA2k4A4TPC3bOyOv8Z6jZQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795221042;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=5CfCitF8Z4/LaVh5QM4aJxDMpNASb19ne4Vwh2eMPew=;
+	b=gq1069VZAf+hbtKQGrRmkQfkQAhC6kbkHv/hZHxsCXjkP2giHuu1NLsnsNYwQMZqjq1M
+	 2GasW8y3lsg5WLZ7SEJTjXJlcn5od1RXt8KhjwPifY4zkfE20BnbiB2P8s54NCpmBWjT0
+	 85w/DheH4L4V2eor5KSZcRqzfNn6GcQCTUMnPiSh8BvYNt+uIvAMi0W9ugbYmBCKeFQ++
+	 a+7+HjgusUqD1EAAQv4QLaYzip1RjIa4iXVinZFyot5UeOA7iJSyOCBwGV6YAD5pUUXMh
+	 HfSYVzow4iXRXo8JX4AgvbCNYfwropaTElAugnf+/wBI7l/+/m1EMMh8hyBtGkh6Y2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="z47c/jbt";
-	arc=none smtp.remote-ip=209.85.128.169
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=LDTMjmjk;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ChD6qKSG;
+	arc=none smtp.remote-ip=103.168.172.149
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1415606A6A1
-	for <git@vger.kernel.org>; Sat, 21 Nov 2026 00:18:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F1415606A6A1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073EB606A6B0
+	for <git@vger.kernel.org>; Sat, 21 Nov 2026 00:30:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 073EB606A6B0
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=z47c/jbt
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-8b4dbdc9592so4016887b3.3
-        for <git@vger.kernel.org>; Fri, 20 Nov 2026 16:18:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795220329; x=1795825129; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=hD8bC1fcvGIpoEhcGGXFWpQQFRCTc7y3bgAG4jXITZY=;
-        b=z47c/jbtIEO0cAPJuLKzmwbKpgc/kpbXgP5263gVd9y1zhBfzk+7XzY/R7yvRO8uoT
-         a4lbJ+qzz60DXxORaNMIJQshCMZd0UQy29jlR8XEVMYuajKJQtrgRmmcYofiTof/yv1B
-         0v7zjjzNA4dSsvdhBv9/RgOf8nSZfZhFf8i5I+hja4wP3jfzYj0GReuT1jGrhhoVohCl
-         U0LGevwsnXNhlWSCBki98TQOipTZ5MuBNjqlVMtkv7fmL9SWyDynTmXC6+O0/Xon3XJ9
-         LrtwrnUeLVeLUYVggsRYsEymdoSq92L6z83Bs8/yS0wEsY/4ZM5udB/RmdY5P/r6yL1+
-         9B2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795220329; x=1795825129;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=hD8bC1fcvGIpoEhcGGXFWpQQFRCTc7y3bgAG4jXITZY=;
-        b=XQ76pWW50r4uMJsyTbfXiQaX/CDABMQFUsHp11FUM1ZU0pAXvVW7bn5BWUyKuQcPT1
-         pFyBYMLjtd7iVsYcBvHxLLDrDoPkyp1v3uXNZv9P9NwfCEp22K8ZKHeNImjBPpv0KUj+
-         //QgiA77Pk1Wt6li44WM3NMon6TE0fpfEonMXmD5knvJdwJq39z8/25ULJTxi7pUM6Qg
-         HvLmn/ETWExNwrRO+00S8kTaGsLjgS40BD8c300UWOaEZHyaFelhSKOr9MBKVHvDdwwt
-         P6p4maZd+wONJYZ9agmjcyE1f338RGkSROb2MIM0rrxAzw0c1N9RCyWeL/7Xrsb5cJob
-         cgjw==
-X-Gm-Message-State: APuU4Z85l2Ra9M+uv7zk/7paZ1Av74TgObgXX78cjsEF5e56ztijvjR+
-	4V1fkf1BmQlG2YWlsM0DC2FtGiLu1ZIQSGqU2TD1U36A8UC35gaDjkHM
-X-Gm-Gg: AZFdTZe6SqRODRH8wKLi7nhBTlvGkeH6jDGjkwR8PC9vM+uZNFQpvqSm/CBxl3uf3J5
-	CNtC5BnbcZ+LWCAuCTd4FKB+QEAvPX1P03nbxEhcJmYfzOVXjenUKmy+4tQHOJSsbW55QiCxSwc
-	pNa8RNA/XZYDXBxzNxe5m9ky2Ma9DMbDeIJ0j5n7ukmS8U6oRcxn0K3yx1r8aMh2orTJ0uPiXl4
-	wtf/371dnyxJR7gamAjQ0lIkdgvv9hHCiFg8pkDeYkkSZtmXtb1wc3vp7bpWyl9cuCol+zY+sHq
-	arqYksn5aqgKQ6NoCvLSF3Q9wW+hjkSQVnXIEzo7rRJ63nRdR3plA4zcbUdzRnr3l5nu201gr1m
-	IiOScrIPYL/VpPiQPDiaswtqi0nox9RvI/dun+lZGWYMcjJ79D/IS2hRugMuUUyqpg272tMzNTR
-	sgi1oJNiHpKhwf3Wee6bVECtOk/qyuCs0Exw+5inoSGC9eT8VoEzlV5sO8J28L57CAxxU9Np457
-	OjkNAMFpUCeORUigbquBhz9GI+/0TNo1jUp0/womgZtGEj0au6YOpSmfam+u4FwtIE4854CRYzu
-	1QpUFOKRDAc27fWtYwqKBx6Z+q6Ll52faA9stgP0he0miyE4ZNvY/pLsU3tq/r2VRc9FKB0/N49
-	BeOXB4srk9vaB9l2hoVCBxSDtVfutv+1+a8JS1xPue5/abwM4xK/QpMG4Mk3vMHm+ffpkJoYKns
-	aNNw==
-X-Received: by 2002:a05:690c:6e93:b0:8ac:46ff:d376 with SMTP id 00721157ae682-8b5204a183amr26620287b3.28.1795220328843;
-        Fri, 20 Nov 2026 16:18:48 -0800 (PST)
-Received: from smtpclient.apple ([2605:a601:9d46:600:a062:d8cf:edad:b70c])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b52033c2d4sm19695417b3.36.2026.11.20.16.18.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2026 16:18:48 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=LDTMjmjk;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ChD6qKSG
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 3DCBEEC08C3
+	for <git@vger.kernel.org>; Fri, 20 Nov 2026 19:30:29 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Fri, 20 Nov 2026 19:30:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1795221029; x=1795307429; bh=5CfCitF8Z4
+	/LaVh5QM4aJxDMpNASb19ne4Vwh2eMPew=; b=LDTMjmjkg4XSMalfuIFMhjyV7R
+	mfzIlPAkVK5eG2mbbchEthf+EMaJ90G9DU8iZnwfEciRBRx7q9G+I6EPQFP6ESG2
+	bLR3kEGBSeHnHOt1rZ4EFuleaQQMYxOZWstzI+gLRh8GIQAFAzDNlj2BHj/wDFMM
+	a+Z16IvgtnK4jVD9f8FBV2fx6P9eaQ6Ft0K0T+VdzttvWFdAgTp6zWydaU7nvM4s
+	mHAaS/7OjYK5fq7OKGvxL1GOdWTQiIr9O6L3/iyV1+NtDG9Vzhf7H9KCVLukrEjm
+	QNrFdZ09KazlTcSs1dpsfW/fgj/JSoPKrgG++wqOfYbfQ1q09C/9ixR2cc5A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795221029; x=1795307429; bh=5CfCitF8Z4/LaVh5QM4aJxDMpNASb19ne4V
+	wh2eMPew=; b=ChD6qKSGqj6T9Z2MMHmPS/atNG8bEjW+EWsDy6oWr4xhCiLwt0f
+	SaOGQiiXHtrdIhCiaTJ45OA9Dyj0c/vdBuklqM7Pnz6I7bZAZPe9+qZq8Atx5VwR
+	WML1dNpniaaabwcp309D4QGDT8Ff/hMwMvGtxZrvwBmudvR3cMe9wxFa8AKHKc0b
+	wDyp5UPPRv+pGDMMPEuu43RvGioiMA8TmtnlH4Ve1VBaVshUOniK6wveAqX7trRN
+	eBlLHJQ+68X5FqrDS9gsOVWVJI8UTPmkAVN+ErWYiltkpIvTir+gxmec3UW3bxzS
+	+twFdPH578kWpEV/b61a53fSmVZo88IDc2w==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795221029; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:envsJk9ntINmbgcMP793FajjsL9xIxmwcyrvSJntsYNKV+5
+	x5nPdB0ASahYYahv9PRMdiJBw+3MVQnNHzRMVtM/sgXeYjZp2r61O9ZWRqpwuBun
+	jtRr1vjtZH6Y54pgB6nkm/Rv6QsGEj9wEHbh8k27NoF6DzC1RmlVaOUcbxLEdnEA
+	XMsuun9B3w7V/Bk72tRizZQELIUpg7+JgKuhScTpaRCodVM/VyQA9t4WYQOIeuLJ
+	u7MTgs244O00s0zbe1rpWe/SN9BPKQxpsUKquA+cfo9U8B62NBbBW+INh5TgVp+L
+	9FbTTdypBko3A65pBPtrIEAGRpcRGE07YkGs7/g==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:9JoDuVlk5kjl2LyOIu4IpPc0eyuvarx9+dS8/j9Kz+o=:/4bEAyF3cBO1l62Y/yaRlr13fzpOXOi0yHqwFhqXKaQ=;
+X-ME-Sender: <xms:JOYAa7vqT3TLbnnRTIKWPaDVloRSEBZ_DcoSxFTmEM5D9Cu2Ke6T1A>
+    <xme:JOYAawI1wNjqDJqHbm1g76ug-C3dX_53nFimcvnSCgxs3QyWrb5uOuOwbdqw09896
+    QkRolIDoGukosDrkIbZOXnq-rkAWM_TOZ-h-rddLMR64OsYYyQJ6tY>
+X-ME-Received: <xmr:JOYAa4m4Edy9t5cWq9HHAZ00yDFyMH43L_B-Qk0DA1yQmY-QEMAV2b9ZjeFw0GAzfovuvssVUJyIHF1hdH6XSf3kM55WQFtxDwl9>
+X-ME-Proxy-Cause: dmFkZTEnXoeurzcPq9Mniwssz9ULipMkXoSTAE943AGIE3G9PmdshPEzqts0ddvJQEDLsl
+    cLbZ+OOYUaG1dxxsFvlYpQM35YhnvmXMh2GLZTvdcA1mrqRqtYSKrwSY8am8VgtCuwx3dk
+    OTa2UrrJsV8Rxqx/w3BYIRDOKX3Vze5DcAM+yQDy1IfYud5Fmyiz7zQMUuPrqGbOPHemyT
+    ria7ppvtWvxbRi9K7x57mm4x+oESVg8M5pQI0kriMKbr14ELXa8h4GVxXS0p/RIVdDYo9S
+    KdgtJPqVBUm830tYYQuL+fAECB6tyh7amz2FQ3SAH3iBwopEI8jrF/gnglp/3jmr1XzEMg
+    c8hEnoOSQFh9DNRBCDW4pPaWvAFI6AzGX/yhz5+0ged7ddne1P2KXrgiPgN8b2TM5iTh68
+    gJDlp6tbqLrB2QJyoC2l+H0wCHpQB5Ej0twFq72CkVSCVB7NnkmLhsmgVTWaveA4NzYIw/
+    ERvMZ5qIea5HH9s0dyLhnVErVNH+V/74Tu7T4HXzWSSzrpgOcvv9R6u8m3OAwd8GR2ETRW
+    ghs76yK7CCuj2X6Pe1RWGMUvsh0eIjbHVzQW/w8QaFFZXGOZGRtFl/FvQsWdmVFcuc0Ts9
+    yksXDjIqi4OV8tep3Oj60GTSJh69Eg+ndS1ZujCbSXp3e8MlH88C/w7i3U0g
+X-ME-Proxy: <xmx:JOYAaxIYkG-YKsDm3UmnxEwOoFo7vjrK2DJLRpu09jBMTJ4KbUYJig>
+    <xmx:JOYAa946CCmq1y-hpY_RDWNPmGt-dCvUjELHVgghzpnpM00hxk20Pw>
+    <xmx:JOYAa12jPDXuQcjN5aQDFaMWWX-2GNfgFPBzgVcOXPpmv-YiD8uarQ>
+    <xmx:JOYAazeTW3M08gp9HWc7otvln4ZfzpYrOW8V7nqtCWUhJ9dgFHgxLQ>
+    <xmx:JeYAa6mp_DcoxOfvtUH1ORlBzzvnQUc1qdkQ83-7iJoy3yditJ9FJ8V_>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 20 Nov 2026 19:30:28 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  "Eric W .
+ Biederman" <ebiederm@xmission.com>,  "brian m . carlson"
+ <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 3/3] object-file-convert: copy unknown commit headers
+ unchanged
+In-Reply-To: <26080a7a386bdd0ae14725d2e731d1be81774d49.1794932695.git.adrian.ratiu@collabora.com>
+	(Adrian Ratiu's message of "Thu, 19 Nov 2026 16:18:22 +0200")
+References: <20261112195740.2834341-1-adrian.ratiu@collabora.com>
+	<cover.1794932695.git.adrian.ratiu@collabora.com>
+	<26080a7a386bdd0ae14725d2e731d1be81774d49.1794932695.git.adrian.ratiu@collabora.com>
+Date: Fri, 20 Nov 2026 16:30:27 -0800
+Message-ID: <xmqqld6nm3fg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -91,95 +127,42 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v2] doc: fix AsciiDoc syntax
-Date: Fri, 20 Nov 2026 19:18:37 -0500
-Message-Id: <85D05F5D-111B-4A60-A923-B45FD514CADC@gmail.com>
-References: <pull.2496.v2.git.git.1795199746309.gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Ophir Bleicher <ophirble@gmail.com>
-In-Reply-To: <pull.2496.v2.git.git.1795199746309.gitgitgadget@gmail.com>
-To: Ophir Bleicher via GitGitGadget <gitgitgadget@gmail.com>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+Adrian Ratiu <adrian.ratiu@collabora.com> writes:
 
-> Le 20 nov. 2026 =C3=A0 13:37, Ophir Bleicher via GitGitGadget <gitgitgadge=
-t@gmail.com> a =C3=A9crit :
->=20
-> =EF=BB=BFFrom: Ophir Bleicher <ophirble@gmail.com>
->=20
-> The Documentation/MyFirstContribution.adoc file accidentally used
-> Markdown syntax for a link:
->=20
-> [here](https://gitgitgadget.github.io/#...)
->=20
-> Fixed it to use AsciiDoc:
->=20
-> https://gitgitgadget.github.io/#...[here]
->=20
-> Signed-off-by: Ophir Bleicher <ophirble@gmail.com>
-> ---
->    doc: fix AsciiDoc syntax
->=20
->    Difference from v1:
->=20
->     * Change link text
->=20
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2496=
-%2FOphirBleicher%2Fpatch-3-v2
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2496/Op=
-hirBleicher/patch-3-v2
-> Pull-Request: https://github.com/git/git/pull/2496
->=20
-> Range-diff vs v1:
->=20
-> 1:  748ac69283 ! 1:  cf26060e59 doc: fix AsciiDoc syntax
->     @@ Documentation/MyFirstContribution.adoc: either with the "New pull r=
-equest" butto
->=20
->       The differences between using `gitgitgadget/git` and `git/git` as yo=
-ur base can
->      -be found [here](https://gitgitgadget.github.io/#should-i-use-gitgitg=
-adget-on-gitgitgadgets-git-fork-or-on-gits-github-mirror)
->     -+be found https://gitgitgadget.github.io/#should-i-use-gitgitgadget-o=
-n-gitgitgadgets-git-fork-or-on-gits-github-mirror[here]
->     ++be found https://gitgitgadget.github.io/#should-i-use-gitgitgadget-o=
-n-gitgitgadgets-git-fork-or-on-gits-github-mirror[on GitGitGadget's official=
- documentation.]
+> diff --git a/t/t1016-compatObjectFormat.sh b/t/t1016-compatObjectFormat.sh
+> index 9cafcee509..fdb882c686 100755
+> --- a/t/t1016-compatObjectFormat.sh
+> +++ b/t/t1016-compatObjectFormat.sh
+> @@ -188,6 +188,38 @@ do
+>  		eval signedtag4_${hash}_oid=$(git hash-object -t tag -w ../${hash}_signedtag4)
+>  	'
+>  
+> +	test_expect_success "create a $hash commit with an unknown header" '
+> +		git cat-file commit $(commit2_oid $hash) >../${hash}_commit2 &&
+> +		awk "{ print } /^committer / { print \"x-unknown one\"; print \" two\" }" \
+> +			<../${hash}_commit2 >../${hash}_unknownheader &&
+> +		oid=$(git hash-object -t commit -w ../${hash}_unknownheader) &&
+> +		eval unknownheader_${hash}_oid=$oid &&
+> +		git branch unknownheader $oid
+> +	'
+> +
+> +	test_expect_success "amend a $hash commit with an unknown header" '
+> +		git checkout unknownheader &&
+> +		git commit --amend -m "Amend a commit with an unknown header" &&
+> +		git cat-file commit HEAD >actual &&
+> +		test_grep "^x-unknown one$" actual &&
+> +		oid=$(git rev-parse HEAD) &&
+> +		eval unknownheader2_${hash}_oid=$oid
+> +	'
+> +
+> +	test_expect_success "reject a $hash commit with an empty mergetag line" '
+> +		git cat-file tag committag >../${hash}_committag &&
+> +		{
+> +			sed -n "/^committer /q;p" ../${hash}_commit2 &&
+> +			grep "^committer " ../${hash}_commit2 &&
 
-I=E2=80=99m happy with this link text, thanks.
-
->       Review the PR's title and description, as they're used by GitGitGadg=
-et
->       respectively as the subject and body of the cover letter for your ch=
-ange. Refer
->=20
->=20
-> Documentation/MyFirstContribution.adoc | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirs=
-tContribution.adoc
-> index c58253fd54..73dab5f7c9 100644
-> --- a/Documentation/MyFirstContribution.adoc
-> +++ b/Documentation/MyFirstContribution.adoc
-> @@ -931,7 +931,7 @@ either with the "New pull request" button or the conve=
-nient "Compare & pull
-> request" button that may appear with the name of your newly pushed branch.=
-
->=20
-> The differences between using `gitgitgadget/git` and `git/git` as your bas=
-e can
-> -be found [here](https://gitgitgadget.github.io/#should-i-use-gitgitgadget=
--on-gitgitgadgets-git-fork-or-on-gits-github-mirror)
-> +be found https://gitgitgadget.github.io/#should-i-use-gitgitgadget-on-git=
-gitgadgets-git-fork-or-on-gits-github-mirror[on GitGitGadget's official docu=
-mentation.]
->=20
-> Review the PR's title and description, as they're used by GitGitGadget
-> respectively as the subject and body of the cover letter for your change. R=
-efer
->=20
-> base-commit: f7de81456940dd6f3274e461149bba12965de609
-> --
-> gitgitgadget
->=20
+This "grep" used for validation will be flagged by test-chainlint.
+Use test_grep just like the previous test perhaps?
