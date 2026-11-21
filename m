@@ -1,99 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.43
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795293305;
-	b=xWNwTQPFyFi+UMYoD/5bqNw07l6jIS9MIABee18iHkIighEn+TTzhhWn/aF/tNjjQmbo
-	 5R4o8Pa2KnPo/f0tR3/MhZzXYF4PrMLWP6BBe4HeEjGkg7ThsRrTc8aEgFIm+SR/piR+l
-	 inPRe7ArCoF0wbhu2bT8gg9KlU3Y/jsTzsqCnKLzm59jkAOIVPWzlQvEIO0H4QD3Ww71a
-	 1Wnikoh+9TehCaTnZjAJsv43fBN+6LVPTNEeGPp8DjUUCeTBccBHhKeOqiTfu12AdPKGl
-	 zNFLGoETijI702Lp6dy4+CZQH9D6m0CxMFscb6QtlHINT3s6yIGIH4uzqzPeFaPaPsQ==
+	t=1795293434;
+	b=WSf8UKbRzbjjzv4Be729QM7IG2H4xYwW5XQPjotX8DZNGc/gMlWxSQCgl/L3mWWYS5mi
+	 4pof5mwvRIIRaJPhDQ60BvDXN6UCmsapf+xkHbeN4CiWIGHPxA/FN1m9q29SB3ecugfo9
+	 vO3qnMurXeoYel5yNhrAGCDiXHR5/ez3bKvrkk0rsByUbtf8BIzgPYoFTBb0Hyk0NfPI3
+	 H7Y7S53DoXdL51+5Gban4UdQg4MBRLd/sxy2sGPd3ihtpmE4yj4lVWXiFfn5leg6YdQnr
+	 VRMFQp6jtOSlM0sY5xG1ED7BxU21jgkA6jWSzMZo1QmiXBFV8sDq6b1DLgne3V5LykA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795293305;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795293434;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
 	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
 	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=Yq/mu2HUJSMAQl+SVao+F+2AVjA0qzPN8FK7zxhw7N4=;
-	b=IOzaOUura13YgnjYZmhPG9546+7a5gJ4kj2m1dYk9e378trSfGeWzNWyiZPmiYNhtmfA
-	 +9rBoQnhejBtHAdtb3grJYAFkMk+mJUW+IqczYDcqbT2zGFUR+Ssbb7/VrOoriyhe4MRe
-	 6zHit/cRak9RIucfIx6kPK3GTaYK8pOJ1Pv0ENRi4nvJ5cITYEu1rIz9LjZHCu2zonPoh
-	 AwFOU/coQdPW/QyqgfVxCLYUz0b1xJtFeB56bIWEYOk11zs/SFSMsQiShpNCGGnx0d0ot
-	 810gOB8ZCLnHO1P2c02WStuu9zHEG1ztuGqa4uewape/PxRCcp/CtmZQSPPZpx5X61g==
+	bh=jMezZ3xwmkxlc9w8IXbimBosbsKo81k/sAwQFdOukjE=;
+	b=Hy1qmw1agvk0peialmE4GIrtY7u/qskL27r4Ur4DVyiPkWaPQ8BTUUKcCeBfXz1jkRdV
+	 tMAKlVf4bGQvEsA9awlH07hIBTLMbwyVqeiAJEH9415yLhDv5X65OqXnk2IZO303o8tMZ
+	 WGv03U3CvmGKso57IIi879FtLTDOiN53h5AjFqZebA5Hvl28zHp8WJh71nzrm8+GRujlX
+	 vfh2UxcJID/RQzchbogYvALPCBGnQn2tFLDTRxHWQdmx7AWDoef7s8heHw8jGFa0KrLpy
+	 JKml2APzsobzdBQDRrchSqpkIpljIkINvzLI2Vzp6Ndv8QD/cC8bDFPEoDu4lireJWA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=F1yyFtf5;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.41
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=U10onaE+;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.43
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B14606A320
-	for <git@vger.kernel.org>; Sat, 21 Nov 2026 20:35:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D8B14606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F16606A320
+	for <git@vger.kernel.org>; Sat, 21 Nov 2026 20:37:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 19F16606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=F1yyFtf5
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-6b8b20b2538so2363920a12.3
-        for <git@vger.kernel.org>; Sat, 21 Nov 2026 12:35:04 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795293303; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=U10onaE+
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-6b86fcbd647so3330208a12.1
+        for <git@vger.kernel.org>; Sat, 21 Nov 2026 12:37:13 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795293432; cv=none;
         d=google.com; s=arc-20260327;
-        b=UfTfpCoWu+goIqsyFZ+vJlnorDe5SZG6HMhGBtTXPNvfxEGy0vjqGTLfJs3Ts9uc/3
-         yDwGR85DATVPuUAfMciA5dj4lrdqlfu4ztPSgRDkP3nbgGNGYLNg79gnkxn+vC0+80xT
-         24INynbBQ7qQogawwBltAQFQVjadX6Wo9suu3jnAMKm4xS0HNHA/QJ92AIENFtHZXFC4
-         /8d5KQ8qxm9eRTKyj6A6yh8LiHGI1t0iZaaDCEan8ccPnbUXZDDZGPn/5nRK00S1aHvD
-         lm3+A06hWorBo9U0BrgAECPl4er3vDUyDZJj6BtaHIi2BiABC+/NFTHG1xfwDqVt76yX
-         pHzw==
+        b=dzVukRTD+VU5wXFaQCyZNQzsFf7lKgBupzAPW9TJFdQ9lVmrZyc+ToG7kUQjdNWY/U
+         TmWNoZwS/F/fJ3ETQLM9Cxan6ZldbhXB7R4qhHt9odyX/D8ug89KiwbPSEa+kvLk7Lp4
+         EKtofpXG8t/PyXX0XSMXjs+gc+j7XfjBMgbwU3v+gjN0NSpYGAlDTqoyTP36np4EbWqg
+         KCAoEg67uySW4ZaLl7w2Vk1XBqlnRFnaehshZALZYgOvKUgZh6JIY96nWFOFQyue6MS2
+         mbH3F/Bzm04JXsOZeP+woHg2y5911B555rhgR+RZxj70ahSLz6wGxyIzUIFc+nwE9JCF
+         EBYw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=Yq/mu2HUJSMAQl+SVao+F+2AVjA0qzPN8FK7zxhw7N4=;
-        fh=lbe2gf2Ce9lSPZixEYkH4bA9eC1g4nosWcndoVjwwi4=;
-        b=Vy24I7jE0N3SxbuGKJMQ1HBAX33LDYerfFq6BQT8YS4Gf6h5XO+/l1H0VGf/XURMk2
-         oyoJ/AKtcw1EPeH0DvOeAgaZlYJPUiIEl22phL3mDfzK7f1IiSMH2nRk+nU/sxlhfUXY
-         TSNeZIMvnDpRL1T9VksUdlQo/A0Gj/rhUcYPzXDNFR+bAUcXS6vfqa4ePKJ+6YS/IN6E
-         /qdDKqQAWAlGc9fhq2n3VW2bWXrAt7/yyow+3gNvNwojcXxN5qX9+CKoHBAq/828Dt6S
-         1jmhevxwYMrBm3O56wfyXz15qJlk+ef7VpzVUUNWaW5rZ8rMnqfX0sDDCEMV1GRIdOS3
-         6VEw==;
+        bh=jMezZ3xwmkxlc9w8IXbimBosbsKo81k/sAwQFdOukjE=;
+        fh=Ga3fZ/f/CL8prFPNonpbKk00fBdV318PaUcVHr63qfE=;
+        b=H6INWmFVjarty+VKhQHrVeRtRTpmwAQh9VQR4yCJpGzWus0FWyG2pd2AV8jWCBW3Lc
+         dyk8x4RgE3d1RpM3GggWW/gkqeljFaNYaPgR4pnm4BgyfUhi1LypL1o4Ty0dGREsaE1b
+         GRPCtSjQmvYxI77TjauANT95zP+jQghUCt1olvwCJ5hoNTrhheEvKbeXKVh3dHT+TQJa
+         TObjrfs8+YE0SxB4Z8x9SiBd7GAKkM/X7zVC5M+iYnGYotVjhSrSlSw2EPujwD/fHljr
+         OyHCPOPaqEn4BPw9WAgLCzxW9pHL0yIfCDjb2q4s/66R1pDKC+f4hcrWz1yo2T+q1s2X
+         jldg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795293303; x=1795898103; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795293432; x=1795898232; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Yq/mu2HUJSMAQl+SVao+F+2AVjA0qzPN8FK7zxhw7N4=;
-        b=F1yyFtf55rlKYudDusoHzFk38Voz56MW1BswabH/Nz6Sw23V21tpKuPTRelVH0i3nC
-         IHI3wBP/jI7ROof3Uh4RmZVEb+shP/htSPbooes1OfLe8ObWrbQEboYpEhlO37PSht4y
-         IjclqOpZPesvFHTg4/hX83JiKSYQi/iXM9Tpba/aaeP5cjho9AemcEvUA+gAflWTNYpB
-         kVHGYSo906S3/b8lNrjoM7Mu5EEqrOkUfPALUGfrkTqBtKLcc3Dh6ve4Vbo8qf1ml2j7
-         O8vcZpniCLnBIGdI2HfIRM/mVx1pwrMk5dpltx55dRCFOq9eTK/fxxTsPy/S1SNotloh
-         Kh4w==
+        bh=jMezZ3xwmkxlc9w8IXbimBosbsKo81k/sAwQFdOukjE=;
+        b=U10onaE+hkc0hs7ff4Z0hd6Fvn9A9WM6istM6sre+KlCX9v1sxOU1qYbYisQmPREWZ
+         jSFyT8gpFnTjy7Rg6c0aZJYjch/3E6NHk6KtnhWxcLl+1HnsWAagpgyzSkiXCZDIrLt8
+         k44RTqsZx/+zfNe2lEfgRzFSDnueozwOATCQxICb94yk/7GPcjiJQiahDUbqgTt4dai9
+         FK0HrOevKB+VfLET2G7zYOmH50+g5hozyDVg8HFjo5MpKQKYJw/rDh9/RAAz8mmWTRMW
+         xT5YhpX1d46WvQ2h+zBDKOyru0y0/vYV1Fa/A2nLnjtTr6e9cK7YfgEsx2ohk6e7tItp
+         0bxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795293303; x=1795898103;
+        d=1e100.net; s=20260707; t=1795293432; x=1795898232;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=Yq/mu2HUJSMAQl+SVao+F+2AVjA0qzPN8FK7zxhw7N4=;
-        b=2UlvbvwEgzKtWUX68VqXrAxsLsZd0byN5nDBGCbePDPCGvzllosyniKRaIkKdpNeq/
-         8nbgU5Tna31Rz6G89l5aKzlKMrwj5EHOejoPGq6jndqCjtA7Ei2EQtFQK/Ji7h26vzPm
-         4uG4rxLJTeu84i+b4ZXANT41MTZ+xo4KGcFvtdJm4pYzXIsE+sYAlcYF9KTfChKEozG0
-         kLlYZK9JAII4YRcv6SLdYuuq035bLMLqdBBU3ljJuVsazEbUTIXx/Hb7vlbuR4KYlPHw
-         xGrdyZiCtIqqheOdfRCnyidkjJGVZ0ZOQ/1VX3uHzJWZ7kKXsnwQWlSHL5bepdL8VkEH
-         rSmg==
-X-Forwarded-Encrypted: i=1; AL+hErHXIDXPHqv+zgbTEbSMpStRIx9mY22RlMxjwGBX22NeKn6n19I78AEz+gsvqa2gf8c6mtk=@vger.kernel.org
-X-Gm-Message-State: APuU4Z9Y1ZhFinGFruSzh85CqSfq6v3two+AHzxOC8ccO3DZ+3qKgQ4t
-	f2wxLX4dc6KOQRtjU8DT4CkVIZapLka5jsyYpGUBvFBXNNJhef0myH0hEXDkJG6lz/QrX0igk3X
-	pAxJzLIPZObwgg4vcKf+wfxxhG7Hs8v0=
-X-Gm-Gg: AZFdTZdRYdeUNSqg1zDq5gofkIl0Z6Gfrac+49dz3t5WmjSK0Kxiu3+J1TvrcQnBalX
-	zUyO7iqR54iKZx9HfZavZH9UmALiVh+EJ1gCOmrLJ+dGOYq6IggUeTtZ0KJTRm/f++F7ukFLkhv
-	A+dzaX/IJV7093AUYv4d4AZdFZqIpGc4tRHyVGIU8yfF5Tu6u1lyNMERAE1smp9gjXXFRqrllLj
-	Bs2pYzsqK69Kl9fl8UFGNy4P89Dg8fph+/ddMxAg+9Jbon5zNVPApnSzQOIJrxpSMWeJj781cvT
-	mqQRNHCQSfy8msc4p7ym5Ttm6lGjjZHvnH6dPqQUZD3kV/zaN4DuZoltL+kEZcSRbpySLYas9qv
-	3RP24Xz5vYFlZ6qpNTnppNSFRvQ99E/NOccj/
-X-Received: by 2002:aa7:d587:0:b0:6b7:a647:c28d with SMTP id
- 4fb4d7f45d1cf-6ba37eb44b0mr3466474a12.32.1795293302920; Sat, 21 Nov 2026
- 12:35:02 -0800 (PST)
+        bh=jMezZ3xwmkxlc9w8IXbimBosbsKo81k/sAwQFdOukjE=;
+        b=VgdYMtLwxPw81N1Y1FTb2bJAZ3P2mJbwcPNpacaolFZUqAvQH5HZSxsoHLfVJbUbGX
+         14ggw3HVbeSQBFBnNOV1R0AXEY4pkGBKEfZXGu/BSGPkUhciWEVUR4Xjx2HK9O905E+3
+         wYI3TGmUN4FsZUexh8NRAsbuzyHzNQet8JZZlMIVdeq3GHfZAJoEzvUxxINMJkdScSNO
+         OcYI7LbWz3x+3a8zUJ/QTTuogu8UDg0lYNqwU07fgGDQVCoIGEHRv7r4dGZTBTlOlr7g
+         BVRcGL9qICK0Buj30BfPyi51Vqo2kSfvQThNTfctQ94vXS1b0DbfU1C38Dn39FtjExHJ
+         yxGQ==
+X-Forwarded-Encrypted: i=1; AL+hErGfS/CqUMckR7g6CVNANrAUGQ/ibjh4ye2+gePQb2rtb4E/zdjIhCNZsDc3sAe6yc4rbU8=@vger.kernel.org
+X-Gm-Message-State: APuU4Z99FP+m20JHZnAzK1bmMNpjAlHOA8p0BxrF0L4XboIqTFu3YC9o
+	t3RV855ib0nfKF/EK5cGrTBHgBxLcm4jOnQjVcX4RXYC7GKe+nZtPJsgBzY21RCGxiCv1+jF2a+
+	bn4GvnflYu2Xw8KhElIK+5YEmqqwUlpY=
+X-Gm-Gg: AZFdTZcegZWDwkpUnMXsiy5OZQ5O/qv/3rYOgAKpgzBv21zxSBE1xQP545a3Vxkh6Fh
+	62oZgvl5u+Nft56g+NfSuanVJVLRKlCvli5cYIfO4RcGH9BJW02HL6yU5Z6VyuLD/MZm/hNSvdu
+	GXPkihDxi01N51NPbducbrrvoZ6heb2si705A5WM2Ntahtrk0wWSUGqkHi2+xzh0v6y0MXVgaNU
+	GqERzPuXhKNSHxnspPmDCGFH0EWoG26Ds5Z8VmBye9XdXGrRDcueg7qYgyzm7S9qQ1uzCmhu7Wh
+	4N8hdL4joQWgwlFBqstgVRxwNsIRd9WB80DUPIyabhAJ2RxVL/cAMfvyoVA1CjswWYl/FtbHYPf
+	sO9l2Buh0Twk6Z84JkCWb8pItCXd7tzRzg4cPf+5AyfBahxcKqjpxdWLnMA==
+X-Received: by 2002:aa7:c604:0:b0:6b7:b9ce:1de0 with SMTP id
+ 4fb4d7f45d1cf-6ba37e8a3f4mr3350914a12.11.1795293432246; Sat, 21 Nov 2026
+ 12:37:12 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,14 +104,14 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
- <pull.2425.v9.git.git.1795184664.gitgitgadget@gmail.com> <37ef7636e069ce528728c43cd79f678293e0d035.1795184664.git.gitgitgadget@gmail.com>
- <xmqqy0anpbzb.fsf@gitster.g> <xmqqmrr3pbdo.fsf@gitster.g>
-In-Reply-To: <xmqqmrr3pbdo.fsf@gitster.g>
+ <pull.2425.v9.git.git.1795184664.gitgitgadget@gmail.com> <c4513f9ec1315c34b7a75b95bf50bba59043c274.1795184664.git.gitgitgadget@gmail.com>
+ <xmqqeccfpacc.fsf@gitster.g>
+In-Reply-To: <xmqqeccfpacc.fsf@gitster.g>
 From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Sat, 21 Nov 2026 21:34:26 +0100
-X-Gm-Features: Aa3M54pL-nvyJoEcZwfgO55NEBohGC_U5Hifb_Q2oygoJvauqQlxmytVO_xKGM8
-Message-ID: <CAHwyqnVqv7XTeiWc2f1ApM1-TmVHJZtcqyPN7vQfe0RPXxGULQ@mail.gmail.com>
-Subject: Re: [PATCH v9 1/4] branch: move the deleteMerged opt-out check into a helper
+Date: Sat, 21 Nov 2026 21:36:35 +0100
+X-Gm-Features: Aa3M54pG6_xn-ghtL28Y9OQAJP3SpPFROzZEthaqDc_TOLIFnQvW-YISuqCgUrU
+Message-ID: <CAHwyqnV3Sh6DznVW++_BOjOKKLqTrDAwKXzfYtRdp-Rk75=OBg@mail.gmail.com>
+Subject: Re: [PATCH v9 2/4] branch: let delete_branches() name where a branch landed
 To: Junio C Hamano <gitster@pobox.com>
 Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, "D. Ben Knoble" <ben.knoble@gmail.com>, 
@@ -119,22 +119,41 @@ Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.o
 	Tuomas Ahola <taahol@utu.fi>
 Content-Type: text/plain; charset="UTF-8"
 
-> > I am afraid that this is a somewhat selfish choice of a name that we
-> > would regret later, as it assumes that "delete once it is merged
-> > elsewhere" will continue to be the only destructive operation that
-> > people may want to exempt some branches from.  The configuration key
-> > is named very specifically for that destructive operation (i.e.,
-> > setting branch.<name>.deleteMerged to false is a way to say "no,
-> > even if it is merged, do not delete it"), so there is an impedance
-> > mismatch.
+> I wonder if it makes the code structure cleaner to follow if we swap
+> the order of checks between "are we doing dry-run" (which is on the
+> outside in the current code structure) and "what is the reason we
+> remove this branch" (which is the inner if/elseif cascade) by having
+> these different message templates (currently a pair of three-message
+> sets) in an array and choosing which set to use based on
+> "--dry-run".  There are of course a few things that are done only in
+> the non-dry-run mode (like removing the branch configuration and the
+> branch itself).  In other words, a code structure like this
+>
+>         const char *msg_templates[2][3] = {
+>                 { "Would delete branch %s ...", ..., ..., },
+>                 { "Deleted branch %s ...", ..., ..., },
+>         };
+>         const char *use_msg[3] = msg_templates[!dry_run];
+>
+>         for-each-branch-to-be-deleted {
+>                 compute if branch has landed;
+>                 if (quiet)
+>                         ;
+>                 else if (landed)
+>                         printf(_(use_msg[0]), ...);
+>                 else if (remote_branch)
+>                         printf(_(use_msg[1]), ...);
+>                 else
+>                         printf(_(use_msg[2]), ...);
+>                 if (!dry_run)
+>                         remove branch and its configuration;
+>                 else
+>                         what is only done in dry-run mode (if exists)
+>         }
+>
+> may make it easier to follow for readers?
 
-Good point.
-
-> >  (1) naming this function to make it clear that this is about
-> >      opting out of the deleteMerged operation, or
-
-Went with (1), it is now opted_out_of_delete_merged().
-
+Good idea.
 
 
 Harald
