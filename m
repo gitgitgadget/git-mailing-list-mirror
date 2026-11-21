@@ -1,64 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.15
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795290856;
-	b=YKAMFYEkhSkMxEC+f1VXvp224P6NFf7sGUVjY+Xz37U2p8Txv9Sh0Pv+spkQsjHTT+aT
-	 eXaYl5cMjhw9LSAl0XpM6PeBXOZQoJ5198Gdv4LMmWjIaYO32WdF1eRB2U8BU7Y45s9gu
-	 3yxumagO34sXjjNNqlzhttdIDyWJwDcrpyPaP6sVfTEGruhX839ESdR2ClzYrtgGb9rBq
-	 zYknONJW2Kc4aL2KoM3tn4MM63o03yHccm/Vu/gzfK6JRHXfiVgNxSCKnHsKtlI0iOSkL
-	 b5ryu6WzVY5YP+drMjJCLRmcYMY++bGSpbd6fFIufNuaWC+mFtqRxM/3sQm3/cJ+wRw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795290856;
-	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-ZohoMailClient;
-	bh=Vb9bBYKz2LW556RY+lE6tMUM9UaGaXQyp8uYL5yLEag=;
-	b=4JAt9y5MHSvLGJj79SIPGEFo3se2aSEHOwoH/lIajOsT/f7LQWmX5MHTJc1v3yOvFWPb
-	 tyD/D/fyk4GCZhLTGp+VKjA5Km6x6U3wlDtPaBtZ1U3z651NA/ts/UKyPz8MQhzdfbUAj
-	 P5yauzbh0B/CC+YPrXqVGceSHrCfYltp63keG3CtVZh/yD5uvSQ9ETYgAswdi9R9Fh6q5
-	 nGReoOVRAKzTwFKhIrS1PGOF5MQen/Qr2hGWnkHmktdNZgix+nqWh/V01lcl2T0xlRKT9
-	 6FFmJ90O23cABVo0AUwdQ2l0IytVwVjU+0WVn4X83JbFVeVAPGzpertp2OuYhDoHItQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=none header.from=laveeshbansal.com;
-	spf=pass smtp.mailfrom=laveeshbansal.com;
-	dkim=pass header.d=laveeshbansal.com header.i=@laveeshbansal.com header.a=rsa-sha256 header.s=zoho header.b=N7dTSSyy;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.15
-Received: from sender5-op-o15.zoho.com (sender5-op-o15.zoho.com [165.173.182.15])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.159
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795291442;
+	b=5NR1KOLQQg5bfA6iS1Yd1KKQjnlVVNAWKGeGqEA8cdrSQ+QNkdfR+CkrdmNWNHJhvM6E
+	 lJ8CSbx2oQf8kMy5ZBxvKGh1duY11h8NIFEfDNjyds6Zqj490AdSWIQvMmtP2F56yjwKz
+	 wZ+9aAmm3x9Ec/1V0H0IyhYgUFRs2BYZu3+9xuLqz2r1FUmQn1d0qW3v61KKxZCz5bFFp
+	 mv2SLcJybhWT2RUVoXT85iE8bLQV0BaNmd+/KiT8Ei/KKsggTWdbGfp32XXYCYDxwUSb1
+	 atZfrxQLZCsdTGQCE63bm2zw9xKujljM2lkpo4nTx50lEWqwHNoS5/qmFW6kmqjmQzw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795291442;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=N8U2wjvSlgkFcD3Q2xxFrde5JLUy4jP3D/BZSZx0xtc=;
+	b=D9+CqOOd7WLJsBSc2cdcYeetwU+iVtD0mmAnWPup1ZJBIdopxgeVYS1Kxx8MSIas213w
+	 a8p0zXm+DX8e01LecLKGCPKDu5QhC8XGPDs2b+DNDgtwTG+4OUr1BQJpDiomNZHeOGRTi
+	 lySEqNfpESu0ZQevQeB5pvwKXFwRNYWDtgGzAinNMZx62QIlSM/bJ36FuR/9wJAJgof2i
+	 uQ6dupej5YX+e5tWbvg6cHPkovz3XB5lCL1HTPzomml8xd1ZPcffXtrdMUGFz3LQ1+Xzu
+	 X7vSmbVU47GzdWrwR+iZJ0BQK7E4AVRm+SzuXRS/bQY2JhQGRFF1va9oSNzZrdufYAA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=SddOAw7Z;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=iznhe6re;
+	arc=none smtp.remote-ip=103.168.172.159
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D8B2606A320
-	for <git@vger.kernel.org>; Sat, 21 Nov 2026 19:54:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1D8B2606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=laveeshbansal.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=laveeshbansal.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7FA3606A320
+	for <git@vger.kernel.org>; Sat, 21 Nov 2026 20:04:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D7FA3606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=laveeshbansal.com header.i=@laveeshbansal.com header.a=rsa-sha256 header.s=zoho header.b=N7dTSSyy
-ARC-Seal: i=1; a=rsa-sha256; t=1795290847; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=GlzD7EUHRTtLv50juVE6d43vuze62Hra/hLhAVg7tuNE8pr+QwhPZtYC1JgxHVRaErORVA2BFB7I1jJZeLTxKIgYsRt6y1ZMwk0L2D83rCHX/hU7w//FIqecfG/uBeVk3IwKD3C10wudHN/VJWACz9VccJsbr4SF8aSlWGfaJ90=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1795290847; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=Vb9bBYKz2LW556RY+lE6tMUM9UaGaXQyp8uYL5yLEag=; 
-	b=FNcWzW4WYZ5a3EVZI1GyRjb+RBYWb5FQ0DPDfebgCrsJftvJwX/woS9Bnp+DDiwXKKvE9Q5T3aCwDz/OHk5kvNrGPU9TakI4ek+tVgYzDRt90EybiIpyb4BdxBOpxTRPxnPvq9LBThZ1M2fX3n5DHdtjEI8yzwUhFhGPfihBTS4=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=laveeshbansal.com;
-	spf=pass  smtp.mailfrom=laveeshb@laveeshbansal.com;
-	dmarc=pass header.from=<laveeshb@laveeshbansal.com>
-DKIM-Signature: a=rsa-sha256; b=N7dTSSyyQnMAaLF4fNVWxwggBcfPz4F5VYYNVdIi+vzyuJFHjzdXlEKpmTs9blYaPx7Vw0s5imku1EIoVGUhPpObJKc0DHswgLJCYJAvu02tKCxxuMknnoHCjb1MHx7r9KxBPwT5t2kstWqBlgnEhq+wxcENGDjncGJrC4M1LS8=; c=relaxed/relaxed; s=zoho; d=laveeshbansal.com; v=1; bh=Vb9bBYKz2LW556RY+lE6tMUM9UaGaXQyp8uYL5yLEag=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
-Received: by smtp.zohomail.com with SMTPS id 1795290844298592.6070657387306;
-	Sat, 21 Nov 2026 11:54:04 -0800 (PST)
-From: Laveesh Bansal <laveeshb@laveeshbansal.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
-Subject: Re: [PATCH v2 2/2] builtin/reflog: expire each reflog only once
-Date: Sat, 21 Nov 2026 11:54:00 -0800
-Message-ID: <20261121195400.20517-1-laveeshb@laveeshbansal.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <avRiv5WpCZQCbRnZ@pks.im>
-References: <avRiv5WpCZQCbRnZ@pks.im>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=SddOAw7Z;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=iznhe6re
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 03B9414002DD
+	for <git@vger.kernel.org>; Sat, 21 Nov 2026 15:04:01 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Sat, 21 Nov 2026 15:04:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1795291440; x=1795377840; bh=N8U2wjvSlg
+	kFcD3Q2xxFrde5JLUy4jP3D/BZSZx0xtc=; b=SddOAw7ZSMR3N73f/DHFstoSvC
+	PHiCzZ8bS48/f3PJJ5RBaB2NjmgS6gsS8jOGp/geIDJsaEgjbsZDrX3i5F7fSIDC
+	CpY1JawI2gMySdyPwq6eAlJu52Ca08ES3LYxb/klJOGw1I51nMp/73Na3ORcclaV
+	DivQ65RqkvfxeM/s8a4PWAlCgTWogD6bxGjt8Suy/Ma7kH4WOaj8P7qMAjUxy8Mq
+	KozVm0ikn41n81l0CoBtdyFoZBLjsdN0m4ovOTXtZwFOeBgX2wbnYWG070C7ejy2
+	icraXJLWezrd6+QKgHwgPHeV0tsWoJaJ7bBECtooUra09eqhyMcs4iOv2Apw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795291440; x=1795377840; bh=N8U2wjvSlgkFcD3Q2xxFrde5JLUy4jP3D/B
+	ZSZx0xtc=; b=iznhe6reS5Ool4RTJYiICSisNCfV7sq30GX+PZ4GUPrwhCM2CwW
+	dEpbRFRWIsVmiGCGwzgHCSP8tqo9otI8PSUCJ1M/id7mcrq8l6Av4p0BTngUlpM+
+	WnXt/SQjsujMs6eNQUeWBrJAUJI/lWig61Vgc239IxQq87Na2YfaQ18aedBuQ5y8
+	lgwfoMlMQeWzzKnmVVhZ1YxsV+E57Vg7i18+dzTunGiDp8RzUesweW16DfNrES3L
+	HlK9+9bACZ9WgcZmzbsPNiRfvshCx0x9MLz7tkFUHyomd0CA23ZZTcpy/4dUlNMw
+	7v6g+uACubsUiKFD/BP8zr0Y7XHtzCk4DRA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795291440; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:NmxbZ2by0THGsINTD5Gwyv4/CzN6W/f2FOX+Hs8KkEv3m1V
+	M3qxWodG9lT5nbAH9LQelI3n6IyxPUf3iQCRTcUnLPprSx8I8Yrx1D++XJ+t7O6A
+	TpEEqU6uj0b+EvgtiEKFlALM2lCz9hOGmPJMN3fVmvt5EczMs3xogsRwfWI6WvCO
+	6SZ2Vr9SWsQwfb+T/9OORzwOLDH65QmATTmztDodS0yXyoFQ69NSkXQ0tgjqeLFt
+	mKR36tZ/pIsbY0BHN8y7sTbu9pA/1KPFHtF0zVFQ7PtOqjn1zcVypEWlhMFUgVrY
+	07zHzpZ1jTV1Xhk+OnmQvfEu35C37EmyZFuY0OQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:F36wmw54oBtkuEnNxdYsdje+p1jp9kZxXX6yoQi6XIg=:gHXgfLu9wSt0/BPZFOA+tQ7L6W/IuhejGgiHdLSvgBg=;
+X-ME-Sender: <xms:MPkBaxuYzoqmSxKoNUh8RJM968Cspo8sA3lv9QiCam5f5bb6CbXnCA>
+    <xme:MPkBa78vJN_jUNDZQMzNYHKPJM1H4ADL0Vi9pH1xCnmiBQd5URUEkj1nKkqSB3ioB
+    4tMkCllmnAZqvRLmahHVUKWjjzDNjau_Kn6VdCEPHXF0d1Px1RFFgc>
+X-ME-Received: <xmr:MPkBa02rd2DfVB2kA2Iybc-t96ajRhdS0Soj-hY5LTqcf4b5UYj0tF-8LCIvNc3eqRyOSbWvzr-QzyCt-7GZ4gjXIgkFlifwDe2i>
+X-ME-Proxy-Cause: dmFkZTFciVlM3t0iGANk4WcCYhargZg2jNQUEhwo22iPB32vgsuekmFevztc/JKQo/76Dh
+    yklBUtbXCw4Vd1A0fzrg1Mq5h9lqDbiftwrwryFyfY2EjkBYBqtuPr1D0grVBj5quOa7Ld
+    D3JhwQ9LiixWxVTtnBVrOJ5I65X7iQ5GHJv6UD77H6M7XQ/Hgjk1NEOj1p49tCM1qsBiz7
+    A3rDYXMwveISv3uxnJiH+RC67QTXCdOfIhqrxw0D6vqAlffFqn7alJ9DuMUJf2xeK7A9eZ
+    mWKdiNVhUolJ4lVZw2tXlLqtvh1i4qTEebtx3R8wL9zspOaMFJFCSIXGMdrqOPmIcjDfBD
+    hjsubJxsoPJLLPchobS2A33xJPAqS8u+ycqiZzscW0PFCg7+ciw1PpHFjpX0DrnEAeu4Xe
+    TLQ0uIG1PQoVxVOCpZe3SoFwvtpJM26BGmsLVdTa0B40zw8YP7QupA9YZhOeG1bZDGiwD6
+    Sc40S+nHXH52SSz3KO/Z9mAgwdAmVL5zLJ0OAglePN7sWfqF2piWzKM1qpg5ZenAldeUyX
+    deba3LXTsE83XWvHHGf/qz5L4rV0UPGl4C6MO2+c73KjfD6/c0ScgjcoHg94OYkq5QcA20
+    fKKmONNzxl5gZEBU3Wl2cy7D4rcoA4/pjCjijZ/eCC1oKCGSKZ4z/jUNY99A
+X-ME-Proxy: <xmx:MPkBa4B300u1LREBb2n2QCfGSh8Du-RY3bOxv_Ek_qTlq4CVfkNLWQ>
+    <xmx:MPkBa4cpoMYcr1s9zwFyasVcVY4QYax0LFSzTTMde3fuskWOWbQT1g>
+    <xmx:MPkBa945ZslPdlSFzxwX9k-naajy-2j36a24qq-ofN9I5hqwm6U67Q>
+    <xmx:MPkBazVy770ECQ5WWwhsG2FLiFuOtB8KjgMyMa_nyxSYDwa0N6hdhg>
+    <xmx:MPkBa6YAlx1GqmdZ8u8HuirR4zoU7xk6rm9gKp5QSbzbYRVcCOtZsj9Z>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 21 Nov 2026 15:03:59 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Wonseok Oh via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Wonseok Oh <wonseok_oh@korea.ac.kr>,  Wonseok Oh
+ <marinelay7@gmail.com>
+Subject: Re: [PATCH] fast-import: catch missing data after inline M at EOF
+In-Reply-To: <pull.2323.git.1795246845186.gitgitgadget@gmail.com> (Wonseok Oh
+	via GitGitGadget's message of "Sat, 21 Nov 2026 07:40:45 +0000")
+References: <pull.2323.git.1795246845186.gitgitgadget@gmail.com>
+Date: Sat, 21 Nov 2026 12:03:58 -0800
+Message-ID: <xmqqeccekl3l.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -68,27 +124,70 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+"Wonseok Oh via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Isn't this note here important information to point out in the commit
-> message? It sounds like a bug to me that we behave differently
-> depending on how many times a refname is passed.
+> If `M <mode> inline <path>` appears at the end of input,
+> file_change_m() exits its read loop on EOF without reading a `data`
+> command. It then puts an uninitialized stack object ID into the tree
+> and exits 0, leaving a tree entry for a missing blob that `git fsck`
+> flags.
+>
+> note_change_n() avoids this by calling parse_and_store_blob() at EOF,
+> which dies on the missing `data` command. Do the same in
+> file_change_m(), and add a test.
 
-Yes.  v3 moves it into the commit message.
+This reasoning seems wrong.  The reason note_change_n() can afford
+to call parse_and_store_blob() is because it does not loop.  This
+codepath needs a separate solution, I am afraid.
 
-> Hmm. This here retain the current ordering. But is there a reason why
-> we have to maintain it?
+> diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+> index ab5d2a2344..2b271222e1 100644
+> --- a/builtin/fast-import.c
+> +++ b/builtin/fast-import.c
+> @@ -2456,8 +2456,9 @@ static void file_change_m(struct fast_import_state *state,
+>  		if (S_ISDIR(mode))
+>  			die(_("directories cannot be specified 'inline': %s"),
+>  				command_buf.buf);
+> -		while (read_next_command(state) != EOF) {
+> +		for (;;) {
+>  			const char *v;
+> +			read_next_command(state);
+>  			if (skip_prefix(command_buf.buf, "cat-blob ", &v))
+>  				parse_cat_blob(state, v);
+>  			else {
 
-The order can matter.  With --updateref, expiring a branch can move it,
-and "HEAD" is checked against every ref tip, so expiring "HEAD" before
-or after that branch can give different results.  Sorting would change
-the order, so v3 keeps it and uses a strset, which is one lookup per
-name.
+Imagine that "cat-blob <object name>" appears on an incomplete line
+without a trailing LF at the end of the stream.  The updated code
+ignores the return value of read_next_command(), which would make us
+loop forever here, I suspect.
 
-> Arguably, if the above is a bug, we should also have a test for it
-> here.
+ * We are about to read the final line "cat-blob <object name>".
+   read_next_command() calls strbuf_getline_lf(), which returns 0
+   (which is assigned to stdin_eof), stuffs the incomplete line in
+   command_buf.buf and returns.  We have "cat-blob <object name>"
+   in the command_buf (without the terminating LF).
 
-v3 adds one for --updateref.
+ * We call skip_prefix() and call parse_cat_blob().  It does its
+   thing, but does not do anything to affect this loop.
+
+ * The loop calls read_next_command() again.  strbuf_getline_lf() is
+   called, because stdin_eof in read_next_command() is still 0.  It
+   notices that the underlying stdin stream has already given EOF,
+   and returns EOF.  read_next_command() reacts to this EOF, sets
+   stdin_eof = EOF, and returns EOF.
+
+ * You updated the code to ignore this EOF.  In the meantime, nobody
+   touched command_buf in the previous step.  We call skip_prefix()
+   and call parse_cat_blob() with the same "cat-blob <object name>"
+   that lacks the terminating newline.
+
+ * The loop calls read_next_command() again.  strbuf_getline_lf() is
+   not even called and we get EOF back.  Again you ignore it and we
+   do the parse_cat_blob() dance once again.  Nobody will get us out
+   of this loop.
+
+In short, you have to pay attention to what read_next_command()
+returns, even if that does not mean you have to leave the function
+immediately, I think.
