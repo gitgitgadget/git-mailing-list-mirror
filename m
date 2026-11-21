@@ -1,86 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795279155;
-	b=H/xeWxMKi7kO9qw2I7hWQtIWmbGC5RKHw9lJ2q59U1zssaVuC+v3EbYXsUFuXB5CsdS2
-	 YIHHAAJzdipeEzCRr6iCXyt181yhaUx4RoOkw4vhnTEIDjKhYLMyTcC6fnBH+6bAl24Up
-	 EfDFkfB/+Dz/YUrqGbPQD5qCtLv1FW6cxC8c6VeVvY3Brpp6w8lgLtwoVMtQXLZez/wLe
-	 PlYV4dXQyE8DZBYstvkaTsHJac5ZR1ytGkfPTqXD+60EcJvCbE2kLIzz90+/dpIibq2Yp
-	 sEdBXorzv7r7dJsvHUQrtsmJ2PrRo/Uf5VDxvzRkrEUbpivnh+Ccnu/HuU4Uy8Lhf3Q==
+	t=1795279744;
+	b=XL3QDpm0N4+K7ueFVAQSpUT1Co67LhNNmjvtesf/y4nfIKlvbaLUSTn84g7Wz1btXXTt
+	 G2oIP9dGKnpDClxMr9CRH9HUoCd03Mt0IF/ysyB4nQ2mzhAQmxzdIUEVtLqhPDryMURQU
+	 fj1WmyTtP3Sq9QRStlRg+YLN2/YspJjpqz8TwP2FVB5SUZ+jzloHTVh6HA/qnHlfDPpv1
+	 CaQ4uG4zWYGYwuv9RexBXljrRsoxBLKzgnoeE/4/6XC+hnG1SUBXLg/As49Zc4tFN/add
+	 jy2IHMsxD5SvBFvfTLmxgFtrTiGtcDKtH8A+dKG8SUIi+9vh85LVvpGElKBHjDmlKVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795279155;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795279744;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
 	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
 	 Cc;
-	bh=eOZLHT4i5d/bZtO5yc0tUnRi4iqdLRpDzwMhbf4KUt4=;
-	b=FyFq3BhzGtR1wv95twvbAUtw0pZY9dzdnXYTedGCzpF0ufgwIK/vnMmcehgOQbAMPPZn
-	 lNFF3zbjvJKobf9w35yulC8iLf+7qIxagpxnk7Le/W/WMMRsdxip0uergr4ER23PnSMpk
-	 OXQacEvE8oMUm/LmijGH6DQYKWUdX0BgGKbN8x7E4uTqC9MALo4oIbRWDF7yfYnmOnn9r
-	 grxnxciDGaUJJP7qe450ZwlIBv8XTS6BoHUdOKFOl2YVG99YFj/FkloA2bgUAmsoUSgBV
-	 hmApq/9BVyrUw/BBien87WDxMbmBND7FJKIQfHxb9lBdwtIYjFYL3bKvBLZ6YLNkNiQ==
+	bh=eQLrooIuvFD6mE4Xy3E+XMDRGU8ca5b2/4E6lkuqD9U=;
+	b=fnUuJPwAqrHGBv2i/yvAtq+kn1PCPlC+yNaJShlouS4iuaNEx1OwIh1C2UUAE27PcoI/
+	 PvjarWDt8P8ONUsBprisxZwVnv5nS7u/Kv9H79jO51Qky39tusCNakiqJq3auZA2/y65w
+	 5ub8bDMeHP3UcoP/RqU0jw+GY1v5zGP5uQc+za5sWuUo2F8qsJe0ZuSXQd5Wy+QWd1wFm
+	 xeD8v8xZZCaw1UjecfQx13MwDr8z3jiTu8QgqxrOwptnAxC6a1DondfNISckG/6ylwZAB
+	 tEeZVfgHscY7iUys9oWc6AMEiFKjNjAvTXhWfbE+0bZ8fpCXwC+HGjb6w7vP4mOE+hg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=G2+U7DYb;
-	arc=none smtp.remote-ip=209.85.210.45
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=C4eQGRyC;
+	arc=none smtp.remote-ip=209.85.222.172
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230FB606A320
-	for <git@vger.kernel.org>; Sat, 21 Nov 2026 16:39:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 230FB606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11058606A320
+	for <git@vger.kernel.org>; Sat, 21 Nov 2026 16:49:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 11058606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=G2+U7DYb
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-86298f9267fso1146739a34.0
-        for <git@vger.kernel.org>; Sat, 21 Nov 2026 08:39:14 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=C4eQGRyC
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-943e8d35f74so201710185a.0
+        for <git@vger.kernel.org>; Sat, 21 Nov 2026 08:49:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795279154; x=1795883954; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795279743; x=1795884543; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:message-id:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=eOZLHT4i5d/bZtO5yc0tUnRi4iqdLRpDzwMhbf4KUt4=;
-        b=G2+U7DYbWN8adkHNDoLtFs26LtMvM+z1TGsz7gF5ellL7+4EWOe4p0oxomgZPzoyyw
-         yKFNeMiU9pWXzvJZ14NaciyzBIkjLlscE6CIBnsA+XFfZRt3b2oli6Jq/jjuIh9zreDE
-         3Mf/oSA5LkTFUJmYnOmbGGbmutiX+tTs0EA2+/yAAJIi3wHg8HV3Tu4sq8jtZkM3SnuE
-         3MhFcOg17+ANvazMPoK8uk6gBtEb0dVJL17L6Tv2FpEEBUOo+OCNn2t0LGIN3zWkLmVT
-         OfkKgOFTgfyDK/CfucVMS8aG0HtlYh6Sb2IZxdPExL895LeU3fCv933T2oBPxQcPH1vE
-         t3gA==
+        bh=eQLrooIuvFD6mE4Xy3E+XMDRGU8ca5b2/4E6lkuqD9U=;
+        b=C4eQGRyCdhi/Y+ZiNHBWfEm+z4eBlybROVJ6UflppnBCxMlZdJQNaMN3BewOQc3GDi
+         dgrlfNWMs6OWT/89LvDzyHmlhtYv1qBLCYRaPo1AGQrmiZaaArBG5gYw5TkWSWgJGp7Y
+         UsF+k+o9cihzTUi9+2x5vOjiF7OEaEK5+BOyO6JlbOhxsCg2/Fe3eLzCq3lFi5YsfR8h
+         yPv9EsNGxZGfWjABXiprgQ/WET5cfJiF3XQo0j0CjTWoBDYTegAnzx/fz3tnMurLJ3Yu
+         lm0xp4d65NDrhU8NjsWFpRpZPWICY5AEkGcC8Z9gdgtKrs/Tpu4i72ALJFm0Ysn/Nwlh
+         qglg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795279154; x=1795883954;
+        d=1e100.net; s=20260707; t=1795279743; x=1795884543;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=eOZLHT4i5d/bZtO5yc0tUnRi4iqdLRpDzwMhbf4KUt4=;
-        b=P4zDzW02yKwL630gdDo4C3SgnUb89E9nQAemhA8NW6NgNDyGyPyr6dgCf+MhTwKteh
-         173Gis0VW/wv5Zp8ZhcatLCzl5FtJOzsgvcTLwmZHcYTFffteLdOpxiDywz6313KgnHf
-         Wyxet2nGI9sKQlW4Q3IOdoh4Bl6A1RlnFzo10JcO0RQmV3mxHEtXEyq+VjcXVOVLVqwA
-         uTtBMaEUr1Ga+SNUkLUcJxP/sf5aPJ7PSU6lKSM6S+8EYmrgn8wtCCbucGCamnXJshjc
-         lQgkLFVczGeK8yOEyVPwUfcJTvYhhzkEYZx7UZEA2HTlqN9W5hKyqxLSscfRH2B5KSCp
-         WSkQ==
-X-Gm-Message-State: APuU4Z+I/ClDrBibRUQ5DfvA4EBIWLu0brtFLgyTVje94heuY6c6IsE5
-	kvWUYGPQkBYBQTGMv8gF1RBsf8tchQDGdhuncSzA1JgHD/jwk8Je73Y/yr7CkEIs
-X-Gm-Gg: AZFdTZfnvsjJA8ZdFGALyUMBkLPk2aSdZ3GuUONCh7CfIuWyPApXtcTfxntBXoVreWj
-	ur8Lx6eXnRETZhLkTmTCI35k2G1Po524O/XQ+3+AE31kUpuaOKQumn4rZOqPi0LwKeUkILv8vkV
-	mPJRKi3FRJQouLnIPUNJ4s4ljhH5nq9CYIeGW8elx06r59ZQCmA6f57981s78q02CSO2EyYCAHc
-	8CrHQiWBVPd2HrAZEq6BvZQKLf9XfIfitKiB9wZ39abz6wZ+ux1cwXjtfVKaREdDs096ApmuK8S
-	lb3dT+rVXnfwLashMrdTsKMloO+87gApRm60cQfh5fDBUDebkrFLn1yB6R+trBFiyM8CttebWKH
-	wuJh3pV0R7lup6NhXC5C/AQ1tZTLvts19zwUN5omhJ9nnmZMsbu7/fMdxwM1UpkRcD67G3puQci
-	OS2VpMONO10eyGcpLfXAkleC+YneBqq+WnukYFPzls79Lskmw/HhTE7hJAtz/+SSyFBulnr48oo
-	nPbNR3X7Sza4Fcfd/14rrzS/dr1VmAQo1g2Payskl9APVQx3hYq6Xs05QfVWDi338ueZtdHnvdJ
-	FkkRioGJyPtXVxFkX8z1hZR4dhbYDmPAXxM=
-X-Received: by 2002:a05:6830:2b20:b0:822:27d6:c28a with SMTP id 46e09a7af769-863152cd69fmr7938376a34.4.1795279154053;
-        Sat, 21 Nov 2026 08:39:14 -0800 (PST)
-Received: from [127.0.0.1] ([130.131.110.171])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-8631670c44dsm4563106a34.0.2026.11.21.08.39.11
+        bh=eQLrooIuvFD6mE4Xy3E+XMDRGU8ca5b2/4E6lkuqD9U=;
+        b=Jy2VUUYAbcJ5MxjYQnYNSWkc3eH52igkWPEO7SzravTcfwo57jZr8F9/pT5+tCnrpr
+         qqPV4uEoeU0xjJmXJc/+caZeqxGNEmAF2hXjjdBxwqHHlyTNGwen/C7BdGURsOHzRBIf
+         f7HPVSTjLsB3RcjsAEeNM5qcsXft9LMshZGMglS4Nr+6USQani8wZvplXuL0UjbnNuBP
+         YBmpA/6G2VNG1iy4QPrGjbkNE2kUzg9UI+c4XA0OV8nbU7ANl6pgOInP97Q/AvfE8kKB
+         Dut8VSuw1XW8c5zj0+V8m39ftaNMtKoiTCFxQ/UtONyOwm0eXt61cgKjiR3agttkBlbt
+         lPjA==
+X-Gm-Message-State: APuU4Z/DismMIyy3BkeNKBrZ8z0gx12vuFvu0RwEYaHHYo5Yno377QT9
+	wl3LN2wa4uDRi27v9aSOOtC1ONuuW2QC42Cw4YxaPPZhsCAHel6yYQjZlpReHA==
+X-Gm-Gg: AZFdTZdoziTW795fyHA0KdkqeHdoyCS2z9pTSTfHtLzDvqITOJgt2tyaJhtf+il947d
+	6kp4qSS//b4QCfdvqQNcd6L/QyYTgMNRd7cE4MiaHRCcI0f9J/lbeRrzkPp++wjIZNi50VpvJvk
+	L+Y0/ogG/061j6453HMSDGflDbbMi6lTj/0jGgu6oZTf1ciKnuSWKf7YTGDCGYIaL78P3pfRVt8
+	rvntxuaZKGhg1DSWlmsC7Wprm4Lh8993qBsoYwpxkY0jbqN5/xK8rwyvBDRMW5JGNyqBfU2dFxN
+	gF/1yDIC4X6dJpcbfOXKLo29hMNtFmRA4NjSGn04hQZ5R7a6bixogadlr/qfJ+IE21fO55tuLEE
+	N3Qmy5r+jDjBV0XbbvcnZHy2F53lDrZfKEod2TGVtGe/1HTNAZbjkASZzETAdbeb4rdgSfMFZRF
+	bRs6wJN9I5JgLlaA9vc/pAwDdo1oim5uuNlaZ44zom1/7rwhbUfqP0idt1tvfxYxgvEpWGEcZMQ
+	1VJZTZAF+v9cwvcVWUdCs/XKd5vvWZ8/VHYY/HTGWL4fan3skH5hjBnWlnq0ZHyQcoS23VfVyYs
+	5ZPf1GYlSSszOC9auZsPXC+FGmuhyIDCHpTNm3YtMo4hnALodeP0rlmphj9N5DTJfMVl/sITFUs
+	Y1pUz
+X-Received: by 2002:a05:620a:19a5:b0:93c:8881:8df3 with SMTP id af79cd13be357-949ba9cbe9amr1075185585a.46.1795279742705;
+        Sat, 21 Nov 2026 08:49:02 -0800 (PST)
+Received: from [127.0.0.1] (ec2-54-211-170-155.compute-1.amazonaws.com. [54.211.170.155])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-949caf98d34sm239576485a.2.2026.11.21.08.49.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Nov 2026 08:39:12 -0800 (PST)
-Message-Id: <pull.2499.git.git.1795279151447.gitgitgadget@gmail.com>
+        Sat, 21 Nov 2026 08:49:02 -0800 (PST)
+Message-Id: <pull.2500.git.git.1795279741855.gitgitgadget@gmail.com>
 From: "Ophir Bleicher via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 21 Nov 2026 16:39:11 +0000
-Subject: [PATCH] github: fix typo in main workflow file
+Date: Sat, 21 Nov 2026 16:49:01 +0000
+Subject: [PATCH] setup: fix grammar in code comment
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -99,36 +100,36 @@ Cc: Ophir Bleicher <ophirble@gmail.com>,
 
 From: Ophir Bleicher <ophirble@gmail.com>
 
-Fix a typo in line 10 of .github/workflows/main.yml:
+Fix a grammar problem in line 271 of setup.c:
 
-Older runs are canceled when a new revision is pushed.
+will only complain about an inexisting file.
 
-The typo is 'canceled' instead of 'cancelled'.
+Change it to 'non-existing'.
 
 Signed-off-by: Ophir Bleicher <ophirble@gmail.com>
 ---
-    github: fix typo in main workflow file
+    setup: fix grammar in code comment
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2499%2FOphirBleicher%2Fgh-workflows-typo-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2499/OphirBleicher/gh-workflows-typo-v1
-Pull-Request: https://github.com/git/git/pull/2499
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2500%2FOphirBleicher%2Fsetup-code-typo-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2500/OphirBleicher/setup-code-typo-v1
+Pull-Request: https://github.com/git/git/pull/2500
 
- .github/workflows/main.yml | 2 +-
+ setup.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 2702ba982d..b2dd019b48 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -6,7 +6,7 @@ env:
-   DEVELOPER: 1
- 
- # For pull requests, only the latest workflow run is allowed to proceed.
--# Older runs are canceled when a new revision is pushed.
-+# Older runs are cancelled when a new revision is pushed.
- #
- # For pushes, if more than one workflow run is triggered for the very same
- # commit hash (which happens when multiple branches point to the same commit),
+diff --git a/setup.c b/setup.c
+index cedc031c54..140f1926c4 100644
+--- a/setup.c
++++ b/setup.c
+@@ -268,7 +268,7 @@ static int looks_like_pathspec(const char *arg)
+  * diagnosis when dying upon finding that "name" is not a pathname.
+  * If set to 1, the diagnosis will try to diagnose "name" as an
+  * invalid object name (e.g. HEAD:foo). If set to 0, the diagnosis
+- * will only complain about an inexisting file.
++ * will only complain about a non-existing file.
+  *
+  * This function is typically called to check that a "file or rev"
+  * argument is unambiguous. In this case, the caller will want
 
 base-commit: f7de81456940dd6f3274e461149bba12965de609
 -- 
