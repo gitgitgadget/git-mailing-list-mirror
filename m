@@ -1,98 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.180
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795269707;
-	b=qteMUPLvABAuKm4KcN3NBJ0tMwXWrWstKdJ4bbMXf3mrRi4+Bj7GnHxAgX5ILU2p+mzV
-	 E/nl42nFpmolVfw7UB+pmZkYszsxCLn5Nf2Facd/rpvUM573UPbqrZaSGD75lAANrjrgy
-	 P6RU5bmL58VufQwJejMXbuLkcNQs7zi0sr9LP4kHttZoqfNtouFdwTWIzImOFbSJfkFFn
-	 J4qfCyFTr9GxkbuEMFTd8gNXpQv2qQwAykxi05hqbMHDJScujZiKAhCYvV6p2Mlf7jK95
-	 RGkY1xyOfs02RhNi/L/phzIBEqM/Ipel0C/9vI2nM25O9Y+njyw4CSCNlw4roYoDxlQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795269707;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.46
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795273859;
+	b=V98jcAK3v+6y7XePVUIbrFWXOsrv+uSaIo27DRHGpe3qU6165CJaH+96rgmJFe+9/Z+m
+	 ggn0LDVE6prI8KwOudfEW8kE08nRKCLFXMnxrgPqXWpHGaWUWNN9VUEsEOZMdC3mGN5yF
+	 pgltmZm8Nd/DwS1iiPZowpaNUBAwRJGrZDW8K9XRGRuENHVCbrdbyh62AxH2/03/j7xAa
+	 qZaU5ktqh4KeBWg2QMEN9QcZAdlTR0WEHPbmxkThPvo8ObBsmdqFhybyO9z/ejq1lkI9m
+	 ojwOwlDz+9WvbSZ4K4xPgnPe7Gm7p5ovE6oa5ziPcs52NqxQ+CLIfPzE3Xe3X1//o2w==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795273859;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=aUpAALCORlS2PYCDj7tAyQaUCcWZuzb/AmbCOxjRoUI=;
-	b=qPf7ql3mugAN0y+Qd4xM6OHZZqp5rZVb9xDz+1jpInsM4rPU52XRjPY/mUj4AP/CMTS9
-	 t6QglfGi5iIEvzBxwPW7ClRtNHDdfIOp2Pc+bXYDvzAEyonZFZgSbOIohQpXJ9rDZ5vDN
-	 /afWCPiMHB/JKtbBLOqgpDooLnfKDw6fIiWkGvEdQGaRe+fxSaW7C18Np1I5sbCPLUtdS
-	 b+gTazsYw9iVAZfbW1WoewjAWMSyBM7VutbJIcVetDUNRDKH746u/ING1kQMim1cWgMzs
-	 ygycJmM3l1M/bfPC//Tq2PEe73Vw8MTqsVkOz+Szm/QTMku9Ny/7fTgZYaUxn2s9acw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=NQiSdHRd/X1AR+SA5XBBKpoP0KkPmUhOcLbgGBXN4iY=;
+	b=nOX1UXmWUtrxa4E8TV6Mv5KCE+2S3wW87KFPtRSltgB9s0btSp+mdJ+kusmjbP5kj6P1
+	 rZwnjryR9hwRf+0+kOeysvoYXkdJjt6AF9hHI2kHJnx93jF1vbIeCf+CvgCL9f2wKm1Bn
+	 IkGJ2gTTDGC23/HwiFZrh7jRyLk5HGHRpYg/PWIkgH/mpsjBMMlauBlUH8x0hghEm5W4h
+	 GVIgWa9VmnG9cfT/L4bajHqJ2HAMrPwZ+uojhix7DeB9rfzqGzfTPwZHE66MPzQ9UQaC6
+	 MI8gP+HZOXZEctgMD7O+oz4zRJRiibIZbewjlzdOQ4BX+ZIt3YzYcGVi2PIEbLNU9kA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YvurMDbr;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.180
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0X6uhd+v;
+	arc=none smtp.remote-ip=209.85.160.46
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79DEB606A330
-	for <git@vger.kernel.org>; Sat, 21 Nov 2026 14:01:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 79DEB606A330
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67ED6606A33A
+	for <git@vger.kernel.org>; Sat, 21 Nov 2026 15:10:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 67ED6606A33A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YvurMDbr
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2f048476ab9so11969675ad.0
-        for <git@vger.kernel.org>; Sat, 21 Nov 2026 06:01:46 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795269706; cv=none;
-        d=google.com; s=arc-20260327;
-        b=jjqAUZtqDMfnK1+RMo9DTuGlO9YnCfiOH8f4MQeDYKDnoHBxjA76E6toMV8T89ciIN
-         owlGGPIVFEXD7UFiuAf9T7FTg9hy3RrEO8eQPWmF/xC3DIdv9EqzLkFwg2LmuKeEFy96
-         IHRA6UWTf37L5U3JKHkpmMJjv1nOQtxP0fLi1Z52PPjPdOL6LQXRYkPFyZoyOW0/9JeT
-         WJXzxO4Lr1syhd0ygMa7TYy78B9cTq62S8GfriWC06aieu1sgaQQlrVw3Kr2xwH2Y+DS
-         pCH3xBoAG0Kn3UKaCuWMLOrGvo3lyjeBR3XV5bzcoqHtySs/TsJq+GMVvjLybKD4GGzD
-         GT9A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=aUpAALCORlS2PYCDj7tAyQaUCcWZuzb/AmbCOxjRoUI=;
-        fh=UWhsyynGaklnja/LJItJYSfbVKtcFOjUNSfReackNqc=;
-        b=BU9aAWWbRt5zlBpXGVxHpowwpz+plZgW8CM2NfPSWJzSdVcNKACPpIrQk6jkRTrCHZ
-         tcGfBqOPUuhoNtdLs+qkxXEGKlXPoOthT9yOvl2kiFX7FsLWcwFjFjBSx4QZ7B3hPMU8
-         7Kpcymvaz0A6BRSUInxJolGWLoxS/Z80YfczfJ/cgeoDzcayx5nM6DuQ7YDmDu6lLZo9
-         v+Xjr+7FVsuz2Q3dzuuBKS0GLjoIT5RTbDpHdM626/brCDR8SP7xUhntL4TEVg8jGzDy
-         5zBK6wOFEc/3BPFFDIVrhtMQrVZ/25Dopt1AmfA1zRcklEePEB5q3o5ABQGMefv/Xlnl
-         yIgQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0X6uhd+v
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-4a76f0cce5fso896734fac.2
+        for <git@vger.kernel.org>; Sat, 21 Nov 2026 07:10:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795269706; x=1795874506; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=aUpAALCORlS2PYCDj7tAyQaUCcWZuzb/AmbCOxjRoUI=;
-        b=YvurMDbruo3eXy6Agc4uAQ6Yiuj/XR2Y+U5M1N+iklCoL9luTLZ/s54ksTpIBM30kX
-         M+0NgFg09njIAdPDaxNXmdWUgJHWedbNRgoD4r8a5QemJYKw2SezePw/vJKrIf27DL6n
-         tmBDumbiYbmVE+gOLpFNYsO1YF8+4yVERgsLVcc5aNLhzD6SW8I4n06NimdWpmTv+hBe
-         D8cj5Zz6frPJti5YHCSrUzo+guwD42N8OskmhQoWe06ExT012Mo7t+DxthusRWZ+NK2K
-         WmbQS5Mq+gskzIP6HLec5poN2q3Gv7uFxFoW/BdaXIWqrKRw8T5quleagkGBGSLqC28C
-         Ts8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795269706; x=1795874506;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20260707; t=1795273856; x=1795878656; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=aUpAALCORlS2PYCDj7tAyQaUCcWZuzb/AmbCOxjRoUI=;
-        b=mmzzWqaTYW+nlCxvAQR/Jm/728Np9kf3tFP7vhugdrxzfc6KJFOyfi9ecsE60DkWLr
-         NkiBuprLOLnfdWKmXpQu4U3IFKC7ha6Sfvc2QRx3ney/y7hsTuWbjo5D3Osn7bsqpJa0
-         QIb6Zj3BlpzCs3DXAI2zpr22mKmtM7UelI+7nZYlfRag9a8AMoGoMEALBSPSVeHJgxBA
-         HxaoL/ovu5Xe2zBhSQ6WAJOmMBRXqppK+hXHYa4TnhQammIgCkkEO/zn8gtJT+fi6cuS
-         ZfpVa7T5P/6SmlnTpm5XAYtPXKyvUO9bq71bTHDbEsHI34KFc501hsmWaOSuEL9poYtM
-         goiQ==
-X-Gm-Message-State: APuU4Z8IlR7J/ilGh1A9WKse3UfMnD6eSQIozDIduKOdjCxmE02tgytM
-	i42QP1ZWwJYjp+HfAsax6Zp/Fwc4upPAUOWsfEqagu2tsREf1Gfc12QBD7npWNZiyDGxVVd3e1m
-	oU7e/U5pgRQQ3lXd0g+vdjol0DJ9PJzM=
-X-Gm-Gg: AZFdTZflhwSMJb06vHLlmmvDE28RPX/IWfnRrD7DP1de1j45B70tSqAjMVUpW50zzCm
-	kZPTqEDgfL2ycF0MIMxcmmZgZhS6L1goP3jsiO4OloAsXpox16p7oBQejPHOqt3D3Q1EjEKnlfC
-	TldaytVLT3MwqQpStvxOFePUqUnzP8ZH/hAK56K+zC5YOCact/3q60MuIBF66SeoQu0bD4JvdZ0
-	qicfupqqj0XTU4br6rabEDA0OW2C+sjVfVCyacysGn2mfgBfcyg8BZaRSRUgisa86ojRqAxYZWo
-	PNIjmV60/MkMmlzhLdfjZAQvaPXgM5TqDFtgQf0wMT4pHXZqCK6Ovs4tBf/pwiWZC/UIHBUyU7S
-	hRJ9k7NmyLyRQXAmbuOEFSi+mYXLuD1QM2w+KWJF2T/8o4evA3iBEJbTzZlcssOd7a7pJadM=
-X-Received: by 2002:a17:903:298c:b0:2ed:3f47:9699 with SMTP id
- d9443c01a7336-2f03f14a43emr66441815ad.38.1795269705358; Sat, 21 Nov 2026
- 06:01:45 -0800 (PST)
+        bh=NQiSdHRd/X1AR+SA5XBBKpoP0KkPmUhOcLbgGBXN4iY=;
+        b=0X6uhd+vZIi7rlpU8ZyDH9eNjZ7k3Wf1+x2AzkKFUPnZU6nldJ0kubSODvBzP2Jr8X
+         02LioBa7av3jnCKYLEvppuVZqxWEiBkfMg0Q4BGeX+LmNCFoCfdkIqiGVrKx/v+VPPsp
+         mQIygFfsSEIhdW+RK+XFCKx2zXkWbiXDezcusuGKFaHvahvxTbtppnz8YC9wNRhIwT3Z
+         oJxv3H7y3vCHWwtRtFpK1DUgOtvrWikLkXP4GqCa8iKRjzLB1/tHKVzqI63cPxbgTgBw
+         fxS2ZEOhT29uOWHuvn8PN7DwuoCELeLi3B0kKG9onBwi7kLsBE5uslPXSfYQ8D51whXj
+         roJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795273856; x=1795878656;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=NQiSdHRd/X1AR+SA5XBBKpoP0KkPmUhOcLbgGBXN4iY=;
+        b=a3FN6Qw36PGMjZ9SUMOvbaqlwTEJTBxpc99brWt1q9NXsx7tIR4NTk6FUvdOcc5Lt/
+         MNqKdhnO1afsAce85KFQ51OvupLjAU1fxIzts32H2aNGsa4VayfywFKD1JrsyMyz5Mjx
+         uEbwkGq/qsYgbGoPk0ddzoiz5nlvh+w45ifCMb0EEN8WblxCuI9zxFwLeLcTkEHy0Ikv
+         dVjkAqisU75/6t2gDrZXmM8n1IeYfThL4ngv2CZdbGPfbTMK/nxXFVplD5OtpUffaigZ
+         rdHW71Wi1fF9cEfFUPh946fkEe5IlSfAVbXufZbqrj1nl00Z99Pcagk8j48DWoHS11CA
+         OHzQ==
+X-Gm-Message-State: APuU4Z//+pWZ85zTy45TJXd05rndZQ2NJ2Q4BExRi03TUFRWkBS7EXrh
+	zlhGvESniyYs1yqvim6jRPoXlDHdTRtmgPV9pk4TMuILvcmqO16Q5W3dSXH0Dlfp
+X-Gm-Gg: AZFdTZcF75u3exTSqNuilgXK+yWkbakTN0twU1dTTz2R12lF/etqYAnfXpAmUjOf7wR
+	+AIwqa9Hfr0G1YL8Euj/BAFoWFwh0MkcShDIqGHQo2yDkqavnYWpLk80gqodSqLqmRs0ACQtkS0
+	J0ykWOBoNYZz2m76Re5sZnSTDuq4eoSIgRGE3E9NwP8fZCTzfp5t4mBx02R1Qdy/WWOh10jE3q4
+	L/WUFo2gloe7ovOTayeR6rkyb4KQd/BDjns+G6LmLnXvcdzpUWx/ighNfyVVl3o+dLQyA+CHPqu
+	oD+Y3uuFmkinRwQgJep7t51YghiiN0R5sRWmnZn4zscxIt9AtPG/LUd6R0zJIN3WTkyIIYWeHao
+	kAprzKbIuE6Y20q+X2mgnfrc1lAKHDs58MfAdw7BKoTpfwr+p2NJUTd0/gU+ElijlZzNJ1r7fcz
+	0Sa8JeKQZvmOwswNjDIDtyNbUdBx0zcPImCvgszIScPH7Xa4apmggqxHVWCV3jGnD7BnLjcP447
+	j2Wus75cRp86N1yZ/S/ACPEs4SOIIO0eP+VgYvlsLsZoN2bpO5dibxRlgvEWpW0ee9JWN0USyug
+	KQl/dvSB8B+vJxfrwoAVpkNIrANDJcY=
+X-Received: by 2002:a05:6870:2485:b0:4ad:514d:b19c with SMTP id 586e51a60fabf-4bc81aa23d1mr6143900fac.11.1795273856102;
+        Sat, 21 Nov 2026 07:10:56 -0800 (PST)
+Received: from [127.0.0.1] ([9.234.15.210])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4bc5edc52aasm6488244fac.4.2026.11.21.07.10.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 Nov 2026 07:10:55 -0800 (PST)
+Message-Id: <pull.2306.v2.git.1795273853.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2306.git.1794484985.gitgitgadget@gmail.com>
+References: <pull.2306.git.1794484985.gitgitgadget@gmail.com>
+From: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 21 Nov 2026 15:10:50 +0000
+Subject: [PATCH v2 0/3] submodule: support worktree-specific configuration
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -102,395 +96,261 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261109113515.198671-1-husainsitamuwala21@gmail.com>
- <a7ea1ac5-bb63-4bd1-b3b8-a6c36d675988@gmail.com> <CANRKfoASdPus9ODkdAqCY+zF7gOh7-paunZf1ze0TFGM1z9kfQ@mail.gmail.com>
-In-Reply-To: <CANRKfoASdPus9ODkdAqCY+zF7gOh7-paunZf1ze0TFGM1z9kfQ@mail.gmail.com>
-From: Hussain Sitamouwala <husainsitamuwala21@gmail.com>
-Date: Sat, 21 Nov 2026 19:31:33 +0530
-X-Gm-Features: Aa3M54ql1BJ-7Q5-m28p2ktEbXXd07jDNTQvD0Ev8hfY5rF0bQk83eG6Ne6Y12c
-Message-ID: <CANRKfoDjkYSiX4eM0Le1DenAP-=rfJ_QfQUgT=sB=phP6jT7eQ@mail.gmail.com>
-Subject: Re: [Outreachy] Proposal draft v1: Implement promisor remote fetch ordering
-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To: git@vger.kernel.org
+Cc: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>,
+    Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
 
-Hi team,
+When using multiple worktrees, submodule settings stored in the repository
+config are shared between all worktrees, even when they need to differ.
 
-This is the second draft of my proposal for "Implement promisor
-remote fetch ordering" for the December 2026 Outreachy round. Thank
-you, Kaartic, for the feedback on v1. I would appreciate more
-feedback, especially on the config shape (6.1), the precedence rule
-(6.4), the protocol field (7) and the timeline (12).
+For example, different branches may use different URLs for the same
+submodule. More importantly, sharing submodule.<name>.gitdir causes
+submodule worktrees to share the same HEAD and index, even when the
+corresponding superproject worktrees record different commits for the
+submodule.
 
-In short
---------
-When a partial clone has several promisor remotes, Git chooses which
-one to ask for a missing object by a fixed rule that neither the user
-nor the server can change. I will (1) lock today's order in tests,
-(2) add a local way to set it, and (3) let a server advertise a
-preferred order through the existing "promisor-remote" capability,
-with a stated precedence rule, defensive parsing of untrusted input
-and proof that nothing changes unless someone opts in. The design
-goes to the list in week 2 because it needs the longest review.
+This series makes submodule settings worktree-specific when
+extensions.worktreeConfig is enabled. It also keeps submodule.<name>.gitdir
+relative for linked worktrees, so it continues to work when the worktree is
+moved along with the main worktree.
 
-Summary of deliverables
------------------------
- D1. A way to observe the fetch order in tests, and tests that lock
-     in today's behaviour.
- D2. A local setting that orders promisor remotes.
- D3. A server-advertised priority with documented precedence.
- D4. Documentation updated; the "order cannot be set" limitation
-     removed.
- D5. A final report listing what remains.
+The changes include:
 
-1. About me and logistics
--------------------------
-Name:     Hussain Sitamouwala
-Email:    husainsitamuwala21@gmail.com
-GitHub:   https://github.com/CodeWithHusain
-Blog:     https://husain-git-blog.vercel.app/
-Location: Mumbai, India (IST, UTC+5:30)
+ * [1/3] Keep submodule.<name>.gitdir relative for linked worktrees.
+ * [2/3] Store submodule settings in the worktree config when
+   extensions.worktreeConfig is enabled.
+ * [3/3] Make git submodule init copy an existing gitdir setting to the
+   current worktree config only when it belongs to that worktree.
 
-I have read the Outreachy eligibility rules and I meet them.
 
-I learned C through CS50 and use it with C++ on Linux (WSL). I build
-Git from source, and I send and revise patches with git send-email,
-threading versions with --in-reply-to and answering every review
-comment before sending the next version. I also wrote a Python
-network vulnerability scanner on top of Nmap, where I learned to
-treat anything that arrives over a network as hostile until checked.
-That habit matters here, because a server-advertised fetch order is
-data the client does not control.
+Changes in v2
+=============
 
-2. My Git work
---------------
-Patch 1: doc: describe promisor remote fetch order (v1 to v3)
-  Thread: https://lore.kernel.org/git/20261108195518.943-1-husainsitamuwala21@gmail.com/t/#u
-  What it does: documents that remotes accepted from a server's
-  advertisement are tried before other promisor remotes. This is the
-  exact behaviour the project will make configurable, so I had to read
-  the fetch path before writing it.
-  Review: Junio reviewed v3 ("This iteration looks good. Will
-  queue.") and asked Christian for an Ack.
-  Status: merged to 'next' on 2026-11-12; Junio's note says it will
-  merge to 'master'.
+ * Update the cover letter to better explain the problems this series
+   addresses.
+ * [1/3] Copy the string returned by worktree_git_path() early.
+ * [2/3] Expand the explanation in the commit message for why the gitdir
+   config is excluded from worktree add.
+ * [3/3] Explain the case where the repository config contains a gitdir
+   setting for another worktree, and warn when the setting is not copied.
 
-Patch 2: check-ref-format: use parse-options API (v1, v2)
-  Cover letter:
-https://lore.kernel.org/git/pull.2470.git.git.1793298807397.gitgitgadget@gmail.com/
-  PR: https://github.com/git/git/pull/2470
-  What it does: replaces a hand-written option loop with
-  parse_options(). The commit message states the behaviour changes.
-  Status: under review (v2); waiting for feedback before v3.
+Yoichi NAKAYAMA (3):
+  submodule: make submodule.<name>.gitdir relative for worktrees
+  submodule: store settings in worktree config when enabled
+  submodule init: copy submodule.<name>.gitdir to config.worktree
 
-Experiments I ran:
-  - A partial clone with three local promisor remotes, reading the
-    order of the "git fetch <remote>" subprocesses from
-    GIT_TRACE2_EVENT
-  - Read t5710 and t0410 and ran them: 40 out of 40 tests pass
+ Documentation/config/submodule.adoc        |   3 +-
+ builtin/submodule--helper.c                | 213 ++++++++++++++++-----
+ builtin/worktree.c                         |  23 +++
+ t/t2405-worktree-submodule.sh              | 129 +++++++++++++
+ t/t7425-submodule-gitdir-path-extension.sh | 135 +++++++++++++
+ 5 files changed, 451 insertions(+), 52 deletions(-)
 
-How this relates to the project: patch 1 documents the behaviour I
-will change, and patch 2 shows I can take a change that alters
-behaviour through review: state the change openly, keep it small,
-rework after comments.
 
-3. How it works today (checked against master at 6200d284e9, 2026-11-08)
--------------------------------------------------------------------------
- - promisor_remote_get_direct() calls lazy_fetch_objects(), which
-   calls try_promisor_remotes() twice: first with accepted_only=true,
-   then with accepted_only=false.
- - Within each pass, remotes come in config-file order, and the
-   extensions.partialClone remote comes last.
- - Protocol: each advertised remote is a list of fields. "name" and
-   "url" come first and are mandatory; optional fields follow in any
-   order (today partialCloneFilter and token). Unknown fields are
-   ignored. The server sends what promisor.sendFields lists, the
-   client validates with promisor.checkFields and can save with
-   promisor.storeFields into remote.<name>.<field>.
- - The partial-clone technical documentation lists as a limitation
-   that the order cannot be set except by position in the config
-   file.
+base-commit: f7de81456940dd6f3274e461149bba12965de609
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2306%2Fyoichi%2Fsubmodule-with-worktree-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2306/yoichi/submodule-with-worktree-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2306
 
-Worked example of today's behaviour (config order A, B, C; C is
-extensions.partialClone; the server advertised B):
+Range-diff vs v1:
 
-   pass 1 (accepted only):   B
-   pass 2 (the rest):        A, then C
+ 1:  f9adc6c85c ! 1:  435ca42ec9 submodule: make submodule.<name>.gitdir relative for worktrees
+     @@ builtin/submodule--helper.c: static int validate_and_set_submodule_gitdir(struct
+      +	modules_dir = worktree_git_path(wt, "modules/");
+      +	if (is_absolute_path(modules_dir)) {
+      +		modules_dir = relative_path(modules_dir, wt->path, &tmp);
+     ++	} else {
+     ++		strbuf_addstr(&tmp, modules_dir);
+     ++		modules_dir = tmp.buf;
+       	}
+       
+      +	/* Case 1: try the plain module name */
+ 2:  14b156bc42 ! 2:  e816484923 submodule: store settings in worktree config when enabled
+     @@ Commit message
+          `submodule.<name>.active` to false in the worktree config to
+          unregister the submodule.
+      
+     -    Unlike other settings, `submodule.<name>.gitdir` should not be shared
+     -    between worktrees, so exclude it from the config copied by 'git
+     +    Unlike other settings, `submodule.<name>.gitdir` must not be shared
+     +    between worktrees. Different commits in the superproject may record
+     +    different commits for the same submodule. If the gitdir is shared, the
+     +    submodule worktrees end up sharing the same `HEAD` and index, causing
+     +    Git commands to behave incorrectly. Therefore, store this setting in
+     +    the worktree config and exclude it from the config copied by 'git
+          worktree add'.
+      
+          Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+ 3:  cdf089b635 ! 3:  b5d203d014 submodule init: copy submodule.<name>.gitdir to config.worktree
+     @@ Metadata
+       ## Commit message ##
+          submodule init: copy submodule.<name>.gitdir to config.worktree
+      
+     -    If a repository already has gitdir settings in its repository config
+     -    when extensions.worktreeConfig is enabled, those settings belong to a
+     -    particular worktree. Make 'git submodule init' copy an existing
+     -    setting to the worktree config if it belongs to the current worktree;
+     -    otherwise, generate a new setting.
+     +    When extensions.worktreeConfig is enabled, an existing
+     +    `submodule.<name>.gitdir` setting in the repository config may have
+     +    been written by 'git submodule init' in another worktree. Reusing
+     +    that setting would cause the current worktree to use the submodule
+     +    gitdir of the other worktree.
+     +
+     +    Make 'git submodule init' copy an existing setting to the worktree
+     +    config only if it belongs to the current worktree; otherwise, generate
+     +    a new setting.
+     +
+     +    Warn when an existing setting does not match the current worktree and
+     +    is not copied to the worktree config.
+      
+          Signed-off-by: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+      
+     @@ builtin/submodule--helper.c: struct init_cb {
+       };
+       #define INIT_CB_INIT { 0 }
+       
+     -+static int validate_submodule_git_dir_with_worktree(const char *gitdir)
+     ++static bool submodule_git_dir_matches_current_worktree(const char *gitdir)
+      +{
+      +	struct strbuf tmp = STRBUF_INIT;
+      +	struct strbuf submodule = STRBUF_INIT;
+      +	char *super;
+     -+	int ret = 1;
+     ++	bool matches;
+      +
+      +	if (is_absolute_path(gitdir))
+      +		strbuf_addstr(&submodule, gitdir);
+      +	else if (!repo_worktree_path_append(the_repository, &submodule,
+      +					    "%s", gitdir))
+     -+		return -1;
+     ++		return false;
+      +
+      +	if (strbuf_normalize_path(&submodule)) {
+      +		strbuf_release(&submodule);
+     -+		return -1;
+     ++		return false;
+      +	}
+      +
+      +	super = absolute_pathdup(repo_get_git_dir(the_repository));
+     -+
+     -+	if (starts_with(relative_path(submodule.buf, super, &tmp), "modules/"))
+     -+		ret = 0;
+     ++	matches = starts_with(relative_path(submodule.buf, super, &tmp),
+     ++			      "modules/");
+      +
+      +	strbuf_release(&submodule);
+      +	strbuf_release(&tmp);
+      +	free(super);
+     -+	return ret;
+     ++	return matches;
+      +}
+     ++
+     ++static const char submodule_mismatch_warning[] = N_(
+     ++"config '%s' exists but was not copied to the worktree config because "
+     ++"it does not point to a gitdir for the current worktree. If you want "
+     ++"to keep using this setting, copy it to the worktree config."
+     ++);
+      +
+       static int validate_and_set_submodule_gitdir(struct strbuf *gitdir_path,
+      -					     const char *submodule_name)
+     @@ builtin/submodule--helper.c: struct init_cb {
+      +					     struct worktree *wt)
+       {
+      -	const char *value;
+     -+	const char *value = gitdir_path->buf;
+     -+	char *value_to_free = NULL;
+     ++	char *value = NULL;
+       	char *key;
+       
+       	if (validate_submodule_git_dir(gitdir_path->buf, submodule_name))
+     @@ builtin/submodule--helper.c: static int validate_and_set_submodule_gitdir(struct
+      +		 * worktree.
+      +		 */
+      +		if (!repo_config_get_string(the_repository, key, &tmp)) {
+     -+			if (validate_submodule_git_dir_with_worktree(tmp) ||
+     -+			    validate_submodule_git_dir(tmp, submodule_name))
+     ++			bool matches =
+     ++			  submodule_git_dir_matches_current_worktree(tmp);
+     ++
+     ++			if (!matches ||
+     ++			    validate_submodule_git_dir(tmp, submodule_name)) {
+     ++				if (!matches)
+     ++					warning(submodule_mismatch_warning, key);
+      +				free(tmp);
+     -+			else
+     -+				value = value_to_free = tmp;
+     ++			} else {
+     ++				value = tmp;
+     ++			}
+      +		}
+      +	} else {
+     ++		const char *value_;
+     ++
+      +		/* Nothing to do if the config already exists. */
+     -+		if (!repo_config_get_string_tmp(the_repository, key, &value)) {
+     ++		if (!repo_config_get_string_tmp(the_repository, key, &value_)) {
+      +			free(key);
+      +			return 0;
+      +		}
+       	}
+       
+      -	if (repo_config_set_worktree_gently(the_repository, key, gitdir_path->buf)) {
+     -+	if (repo_config_set_worktree_gently(the_repository, key, value)) {
+     ++	if (repo_config_set_worktree_gently(the_repository, key,
+     ++					    value ? value : gitdir_path->buf)) {
+       		free(key);
+     -+		free(value_to_free);
+     ++		free(value);
+       		return -1;
+       	}
+       
+       	free(key);
+     -+	free(value_to_free);
+     ++	free(value);
+       	return 0;
+       }
+       
+     @@ t/t7425-submodule-gitdir-path-extension.sh: test_expect_success '`git clone --re
+      +		git config submodule.sub2.gitdir .git/modules/sub2_custom &&
+      +
+      +		git config extensions.worktreeConfig true &&
+     -+		git submodule init &&
+     ++		git submodule init 2>err &&
+     ++		test_must_be_empty err &&
+      +		git config --worktree submodule.sub1.gitdir >actual &&
+      +		echo ".git/modules/sub1_custom" >expect &&
+      +		test_cmp expect actual &&
+     @@ t/t7425-submodule-gitdir-path-extension.sh: test_expect_success '`git clone --re
+      +
+      +		git worktree add wt &&
+      +		cd wt &&
+     -+		git submodule init &&
+     ++		git submodule init 2>err &&
+     ++		test_grep "does not point to a gitdir for the current worktree" err &&
+      +		git config --worktree submodule.sub1.gitdir >actual &&
+      +		echo "../.git/worktrees/wt/modules/sub1" >expect &&
+      +		test_cmp expect actual &&
+     @@ t/t7425-submodule-gitdir-path-extension.sh: test_expect_success 'git submodule i
+      +		git config submodule.sub2.gitdir "$(cd .. && pwd -P)/.git/worktrees/wt/modules/sub2_custom" &&
+      +
+      +		git config extensions.worktreeConfig true &&
+     -+		git submodule init &&
+     ++		git submodule init 2>err &&
+     ++		test_must_be_empty err &&
+      +		git config --worktree submodule.sub1.gitdir >actual &&
+      +		echo "../.git/worktrees/wt/modules/sub1_custom" >expect &&
+      +		test_cmp expect actual &&
+     @@ t/t7425-submodule-gitdir-path-extension.sh: test_expect_success 'git submodule i
+      +		test_cmp expect actual &&
+      +
+      +		cd .. &&
+     -+		git submodule init &&
+     ++		git submodule init 2>err &&
+     ++		test_grep "does not point to a gitdir for the current worktree" err &&
+      +		git config --worktree submodule.sub1.gitdir >actual &&
+      +		echo ".git/modules/sub1" >expect &&
+      +		test_cmp expect actual &&
 
-I will confirm this with the trace experiment in section 2 before
-building on it.
-
-4. Problem
-----------
-A user cannot say "try the cheap mirror first and the expensive
-origin last", and a server operator who knows which remote is
-cheapest or nearest cannot tell clients. The existing rules are only
-partly documented and not fully covered by tests, so any change risks
-altering them silently.
-
-5. Goals and acceptance criteria
---------------------------------
-Each goal belongs to the deliverable of the same number above (G1 to
-D1, and so on). The goals describe outcomes only. How G2 and G3 are
-built (config shape, protocol field) is open; sections 6 and 7 are
-my current proposal for discussion.
-
- G1 (D1) Done when: a test can observe the order in which promisor
-    remotes are tried, and tests for accepted-first, partialClone-last
-    and fallback-on-failure pass on unmodified master.
- G2 (D2) Done when: a user can set the order locally, in the
-    documented way, and with nothing set every G1 test passes
-    unchanged.
- G3 (D3) Done when: a server can advertise an order, a client that
-    opts in uses it under the documented precedence, and every
-    malformed or hostile case in section 8 is tested.
- G4 (D4) Done when: the limitation is removed, the new settings and
-    protocol field are documented, and the docs build.
-
-6. Design
----------
-6.1 Local setting: three candidate shapes
-
- Shape A: remote.<name>.priority (integer, lower first)
-   + each remote is overridable per config file scope
-   + no dangling names
-   - order is spread over several keys; harder to read at a glance
-   - a value stored from the server would land in the same key as
-     the user's own value unless stored separately (see 6.4)
- Shape B: promisor.fetchOrder (one list of names)
-   + reads well and is easy to explain
-   - the last config file that sets it replaces it whole
-   - needs a rule for names that do not exist
-   - a server value cannot be stored into one key per remote
- Shape C: remote.<name>.fetchPosition or a named group
-   + explicit
-   - adds a new concept for little gain
-
-My proposal is A, with stable sorting so that equal or unset
-priorities keep today's relative order. Another contributor has a
-public patch for shape B. I do not want to duplicate
-it or compete with it. In week 2 I will send a short trade-off note
-and implement whichever shape the maintainers prefer. Section 9
-explains how the plan adapts.
-
-6.2 Semantics, with proposed defaults to settle on the list
- - Accepted remotes stay in the first pass, as documented. Priority
-   orders remotes within each pass. I will ask whether an explicit
-   local priority should be able to override accepted-first.
- - Remotes without a priority go after prioritized ones, in today's
-   order. The extensions.partialClone remote stays last among them.
- - A bad local value is a clear config error. A bad advertised value
-   is ignored.
-
-Worked example with the proposal (priorities: A=20, B unset, C unset,
-D=10; the server advertised B and D):
-
-   pass 1 (accepted only):   D(10), B(unset)
-   pass 2 (the rest):        A(20), C(partialClone, unset)
-
-6.3 Algorithm sketch (the refactor patch)
- 1. Collect the candidate remotes for the pass.
- 2. Sort with a stable comparison: prioritized remotes by ascending
-    value, then unprioritized remotes in today's order; the
-    partialClone remote last among the unprioritized.
- 3. Try them in that order, as today, falling back on failure.
- With no priorities set, step 2 must produce exactly today's order.
- That equivalence is what the G1 tests check.
-
-6.4 Precedence, and where a server-supplied value lives
- With Shape A there is a conflict to solve: storeFields writes a
- server value into remote.<name>.<field>, so a stored value could
- overwrite or be mistaken for the one the user set by hand. Open
- question for the RFC, with two candidates:
-   (a) store the server's value in a separate key from the user's
-       (name to be settled) and rank the two explicitly;
-   (b) do not persist it, and use an advertised value only for the
-       session in which it was received.
- Recommendation on precedence, whichever is chosen: the user's own
- value wins outright, and the server's value orders only remotes
- with no local setting. Operators who pay for bandwidth may prefer
- the opposite. I will put both arguments on the list. In every case
- storeFields must never overwrite a priority the user already set.
-
-7. Server advertisement (protocol)
-----------------------------------
-An optional field, tentatively "priority=<n>". I prefer it to
-"advertisement order is preference order" because it survives any
-reordering of the list and, since unknown fields are already ignored,
-old clients are unaffected. Because storeFields writes
-remote.<name>.<field>, the field's name decides the key it is stored
-under, so the RFC may choose a different name from the local
-setting. I will write the protocol wording first, as an RFC.
-
- Server: sends the field only if promisor.sendFields includes it,
-   taking the value from the local setting. An earlier review noted
-   that one global sendFields is inflexible for per-remote values.
-   I will check whether per-remote gating is needed.
- Client: parses defensively (malformed values ignored; the remote is
-   accepted or rejected on its other fields) and saves the value only
-   if promisor.storeFields includes it. A client that does nothing
-   never follows a server's order.
- Compatibility: old client with new server, new client with old
-   server, and a value outside the supported range all behave as
-   "no priority". I will cover this in the RFC too.
-
-8. Threat model
----------------
-An advertised priority comes from a server the client may not trust.
-
- Input                      Attack or failure       Expected result
- -------------------------  ----------------------  -----------------
- priority=abc               non-numeric             ignored
- priority= (empty)          empty value             ignored
- priority=99999999999999    integer overflow        ignored, no crash
- priority twice             duplicate field         field ignored
-                                                    (proposed)
- priority for a remote the  push an unaccepted      remote not tried;
- client rejected            remote                  no effect
- priority for a remote with local value set        local value kept
- server sends many remotes  resource use            existing limits
-                                                    apply
- client without storeFields no persistence          order unchanged
-
-Each row becomes a test. I will also avoid in-place string splitting
-on lists that own their strings; I saw such a crash reported on the
-competing patch.
-
-9. If the competing patch lands first
--------------------------------------
-Plan A (not merged by the start): I deliver G1, then G2 in the shape
-the maintainers choose.
-Plan B (in next or master): I skip G2's implementation, keep the G1
-tests and the docs, and spend the time on G3, building on its config.
-In both plans G1 and G3 are mine, and the G1 patches do not depend on
-any design decision. I will review that patch and tell its author
-what I find, because I will need to understand it well either way.
-
-10. Testing
------------
-Follow t5710 and t0410.
-
-Observation mechanism: first choice is a trace2 event naming each
-promisor remote as it is tried (a small patch of its own). If the
-maintainers prefer no new event, fall back to a test helper that
-wraps the fetch and logs remote names.
-
-Test matrix:
- Area         Cases
- -----------  ---------------------------------------------------
- Baseline     accepted before others; partialClone last; fallback
-              after a failing remote
- Local        priority respected; ties keep config order; unset
-              after set; bad value errors; per-scope override
- Server       value honoured when stored; ignored when not stored;
-              malformed values (section 8); duplicate field
- Precedence   local beats server; storeFields does not overwrite
- Compat       old client with new server; new client with old
-              server
-
-To check that the tests really exercise the new code, I will
-temporarily break each new branch on purpose and confirm that at
-least one test fails. The G1 tests must pass unchanged after the
-refactor.
-
-11. Series plan
----------------
-The patch numbers used in the timeline refer to this list. Patches 4
-and 5 follow the design discussion on the list; their shape is not
-decided here.
- 1. Trace2 event or test helper to observe the order. No behaviour
-    change.
- 2. Tests that lock today's order. No behaviour change.
- 3. Refactor so the remote list can be sorted. No behaviour change,
-    proven by patch 2.
- 4. Local setting for the order (shape decided after the trade-off
-    note and RFC), with tests and documentation.
- 5. Server field and client handling (after the protocol RFC), with
-    the section 8 tests.
- 6. Docs: remove the limitation, document the field.
-
-12. Timeline (patch numbers refer to section 11)
-------------------------------------------------
- Before:  Follow up on the docs patch; review the other patch; run
-          the experiments in section 2.
- Wk 1:    Baseline write-up of today's order with traces.
- Wk 2:    Trade-off note AND protocol RFC to the list, so design
-          review runs while I code.
- Wk 2-3:  Series patches 1 and 2 sent.
- Wk 4-5:  Patch 3 (refactor); patch 4 started.
- Wk 6:    Patch 4 finished; first review round. Milestone: G2 sent.
- Wk 7-9:  Patch 5: server field, defensive parsing, precedence.
- Wk 10:   Decide storeFields persistence; section 8 tests complete.
- Wk 11:   Final reviewable series; second review round.
-          Milestone: G3 sent.
- Wk 12:   Patch 6, release notes, final report (D5).
- Stretch: Remember failed remotes within a process; measure latency
-          or cost.
- Weekly:  Blog post and written update.
-
-Ranges overlap because each series waits days for review. If I fall
-behind I cut, in this order: the stretch, persistence of server
-values (section 7), then the section 8 cases beyond the core ones;
-local priority, the tests and the docs are protected.
-
-13. Risks
----------
- Risk                         Mitigation
- ---------------------------  ---------------------------------------
- Surrounding code moving      Rebase often; check master before
-                              writing tests; talk to the other
-                              author
- Design disagreement          Raise early; keep patches 1-3 and docs
-                              independent of the design
- Slow review                  Small patches; next piece in parallel
- Silent regressions           G1 lands before any change
- Scope too large              Cut order in section 12
-
-14. Communication
------------------
-Weekly blog post, published at https://husain-git-blog.vercel.app/
-and linked on the list, and a weekly written update to the mentors.
-Design questions go to the list before code. I answer every review
-comment before sending a new version, as Junio asked me to, and
-reply within 1-2 days.
-
-15. After the internship
-------------------------
-I will keep following review of anything still open and keep
-contributing to the partial-clone and promisor-remote code, starting
-with the stretch items.
-
-16. References
---------------
-My patches
-[1] doc: describe promisor remote fetch order, v1 to v3:
-    v1: https://lore.kernel.org/git/xmqq5wy89rq6.fsf@gitster.g/
-    v2: https://lore.kernel.org/git/20261108071933.6586-1-husainsitamuwala21@gmail.com/
-    v3: https://lore.kernel.org/git/20261108195518.943-1-husainsitamuwala21@gmail.com/
-[2] Junio's review of v3 ("Will queue.") and the request for an Ack:
-    https://lore.kernel.org/git/xmqqse1a1th8.fsf@gitster.g/
-[3] check-ref-format: use parse-options API, cover letter and PR:
-    https://lore.kernel.org/git/pull.2470.git.git.1793298807397.gitgitgadget@gmail.com/
-    https://github.com/git/git/pull/2470
-
-Code and documentation (checked at master 6200d284e9, 2026-11-08)
-[4] promisor-remote.c: try_promisor_remotes() (line 282),
-    lazy_fetch_objects() (line 321) with its two calls to it (lines
-    351 and 353), and promisor_remote_get_direct() (line 357); the
-    field lists for promisor.sendFields, checkFields and storeFields
-    (lines 465-481)
-[5] Documentation/config/promisor.adoc: promisor.sendFields (line
-    12), promisor.checkFields (line 166), promisor.storeFields
-    (line 207)
-[6] Documentation/technical/partial-clone.adoc: the limitation on
-    ordering (lines 229-234) and the future work item (lines
-    265-271)
-[7] Tests: t/t5710-promisor-remote-capability.sh and
-    t/t0410-partial-clone.sh
-
-My own material
-[8] Blog: https://husain-git-blog.vercel.app/
-
-Thanks,
-Hussain
+-- 
+gitgitgadget
