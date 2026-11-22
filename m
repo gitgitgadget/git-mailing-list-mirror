@@ -1,56 +1,62 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.61.206.94
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795381406;
-	b=bHnmlXbTDW45mjA3xbjOgJ/HPTM37FSF80erwjolQMm9le+Q5xS8QxGMK5HhKDM/AXWD
-	 50CB142srAP9QFKapVIB9rfjc28crKnxj+0Kt6E2QN2wwLcn0PGNOAhrZZ8AhC62FyFPP
-	 vmVWG1vSwMOLlrIIMjeKt3CIFIuIj05MWVQZPaIHErD4F1U/vXndZV5CXsnNyolUOAls9
-	 vN9SQwy229pRXjlAYhoLKTa3+IKepoHKGA+IieF66E4biHwxKNoUW8/m99X/TzdWgJgho
-	 BL//4W+Y3jARje51Fe9Pcsd5IEs+3TDOg9FqMKeiICfET7HZK0iDt6kbBzLxZ3tItkw==
+	t=1795385843;
+	b=mieT/aoCP+Hga4AXELd5iEtNMrnFQ1jpo0pQ0sIzlCZprLscvajqJtDsEZal8AuRrH+m
+	 ePbmDVBxRRW5vH4gHOWCl0u+a7yfIf6kxEIwj1K/N/8v7uLHYhfWmUZFx/TASN2NfYKmO
+	 WRUT1XIIwUnsqWr6SDhpQLn7CruOi+sxKCYjFaqvdYXuHyTaeCHEq7pW+uKY8VXnJq2ON
+	 I2SGshOJpUdVqk5PWjQwbJazTqGH4EAF9nhw+KJymsjAZckJPkW7Gzg0VPqrO+FCkJJJ7
+	 nLABA9kzUm5X8qLdYyMgtydFqTeui7cQyOYYo0Jwa1FhvSxf8SSt2iXSxGIVZbAXwGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795381406;
-	h=DMARC-Filter:Received:DKIM-Signature:From:To:Subject:In-Reply-To:
+	a=rsa-sha256; c=relaxed/relaxed; t=1795385843;
+	h=DMARC-Filter:Received:DKIM-Signature:From:To:Cc:Subject:In-Reply-To:
 	 References:User-Agent:Date:Message-ID:MIME-Version:Content-Type;
-	bh=+fgMbc2yqTimdtGLb8AD7uRVtQ0AsPfQITtQXZiy17k=;
-	b=5m356K4UBucPHCu8Lwiy1IMmPbeNhBQmzYKcf4SZbaEFZ7UfYja37tn2CVSsfOQ2hJ37
-	 QBX/7gscGuUgAQmB+9XCsO8SwSvgxyhVmE4zNl8Lrx/vJBxfbVKsw9YUgNqCrA55z9pUy
-	 qz2JyzY6u/dhsUn4lhgcp6wnY7A6NgQVe/hALpGSassBC56oVKMRxyMltB9ZlA7EpFUOL
-	 GJj0RV3w1Vwxz5/Icu5WqNC+r2ylXfV/yALorv3m0B9gbTQsaR1PvpE8yDy2rj3WdJEX9
-	 2mxCaB/Cz1+7rsyLjxTBPg1gTkcHct6Sd+Qgiq+bcpagehSsEAIrRmNZ+H7t49oGDrA==
+	bh=FgMN8iFHp/Llgzz4FyUlAF/40kPCsdASfgjJ9uf+VV0=;
+	b=QuRnoOar1U17s4czHv7mVbOCMIRMt19umvvlz/RxmPvSkUy5hJjbrZEE3/0SREknY13s
+	 Qek7zyQHbpvNDZ8+/p+rDM2TBbpvlpJQF0jUMgmojmq9YY3yAcnzgyYorcFzKiP9A6vaw
+	 hZIEvcfMrli/2NOCxCxeUVwYmTwaZUYfvtCP2npPAfzPP/IbxkJEqSq13t3lBfstCPHxZ
+	 OdkAJ31CkqqhtVE7Ksk0Cf3eX2VKbGrG5KXjEcxMr0u6JnnQ3BVi4wao5cCBwozhUv4qy
+	 4FTjZxIaeI1AnJsWG0Ybly6EkX1aLVA+WLyLu2yAgSXVOPp4hnpMtT5bQ/TUv0VImrQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gouders.net;
 	spf=pass smtp.mailfrom=gouders.net;
-	dkim=pass header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=EBQ6h5yR;
+	dkim=pass header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=pAfXYljK;
 	arc=none smtp.remote-ip=202.61.206.94
 Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60457606A31A
-	for <git@vger.kernel.org>; Sun, 22 Nov 2026 21:03:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 60457606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989D0606A31A
+	for <git@vger.kernel.org>; Sun, 22 Nov 2026 22:17:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 989D0606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gouders.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=EBQ6h5yR
+	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=pAfXYljK
 Received: from localhost (ip-109-41-49-183.web.vodafone.de [109.41.49.183])
 	(authenticated bits=0)
-	by mx10.gouders.net (8.18.2/8.17.1.9) with ESMTPSA id 6AML3Mvo2253570
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO)
-	for <git@vger.kernel.org>; Sun, 22 Nov 2026 22:03:23 +0100
+	by mx10.gouders.net (8.18.2/8.17.1.9) with ESMTPSA id 6AMMH4e12257134
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Sun, 22 Nov 2026 23:17:06 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gouders.net; s=gnet;
-	t=1795381403; bh=+fgMbc2yqTimdtGLb8AD7uRVtQ0AsPfQITtQXZiy17k=;
-	h=From:To:Subject:In-Reply-To:References:Date;
-	b=EBQ6h5yRrV8iZ+jPCjXM8Ow/1+HgIWLVuDzugdj8Oku9RF8m54Ybt2E2Hq1+rlHeq
-	 4O9HwxG6jwEM+OwWdN+wFPcczq25eETzvH1SZ0pBsTVaNzSvgopre5x/RTuvi2rJti
-	 BhwM89PcVgYteY4UXJtnEO8EXFrIAPupiTVNqaUs=
+	t=1795385827; bh=FgMN8iFHp/Llgzz4FyUlAF/40kPCsdASfgjJ9uf+VV0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=pAfXYljKl6FHi/8gR459Tdm1xrk/HW/CZs7EXUZehChbOWL4YlvRW0CFUXT40wRB7
+	 CxmExT3ETil777M21N3vQda0kMg923ksVs9fCavjg98VU64zJVEiEIArkJTUdLTH6G
+	 WB0xqG4ffOK/FzXfP1xFD8SvZ7fNS41Quf+iXlXU=
 From: Dirk Gouders <dirk@gouders.net>
 To: git@vger.kernel.org
+Cc: Eric DeCosta <edecosta@mathworks.com>,
+        Marziyeh Esipreh
+ <marziyeh.esipreh@gmail.com>,
+        Paul Tarjan <github@paulisageek.com>,
+        Junio
+ C Hamano <gitster@pobox.com>
 Subject: Re: [BUG] T7527 fails with 2/70 tests
-In-Reply-To: <gh1p8cmwxf.fsf@gouders.net>
-References: <gh1p8cmwxf.fsf@gouders.net>
+In-Reply-To: <ghwlq4lgth.fsf@gouders.net>
+References: <gh1p8cmwxf.fsf@gouders.net> <ghwlq4lgth.fsf@gouders.net>
 User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Sun, 22 Nov 2026 22:03:22 +0100
-Message-ID: <ghwlq4lgth.fsf@gouders.net>
+Date: Sun, 22 Nov 2026 23:17:03 +0100
+Message-ID: <ghse0sldeo.fsf@gouders.net>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -64,17 +70,25 @@ Content-Type: text/plain
 
 On Sun, Nov 22 2026, Dirk Gouders wrote:
 
-> Hello,
+> On Sun, Nov 22 2026, Dirk Gouders wrote:
 >
-> I noticed T7527 (on origin/master) is failing with 2 tests
-> and before I start digging I want to ask if this is a known problem.
+>> Hello,
+>>
+>> I noticed T7527 (on origin/master) is failing with 2 tests
+>> and before I start digging I want to ask if this is a known problem.
+>>
+>> What I already saw is a core.* in a temp directory which (among others)
+>> causes the test_cmp to fail...
 >
-> What I already saw is a core.* in a temp directory which (among others)
-> causes the test_cmp to fail...
+> To be more specific: the core file says, "git fsmonitor--daemon run
+> --detach -" is failing with "BUG("double remove of watch for '%s'",
+> w->dir);" at
+> compat/fsmonitor/fsm-listen-linux.c:144compat/fsmonitor/fsm-listen-linux.c:144
 
-To be more specific: the core file says, "git fsmonitor--daemon run
---detach -" is failing with "BUG("double remove of watch for '%s'",
-w->dir);" at
-compat/fsmonitor/fsm-listen-linux.c:144compat/fsmonitor/fsm-listen-linux.c:144
+I started digging anyway: a bisect lead me to the first bad commit:
+
+ce48de8b2c (fsmonitor: implement filesystem change listener for Linux, 2026-04-15)
+
+Adding the involved persons to Cc.
 
 Dirk
