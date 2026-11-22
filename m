@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.61.206.94
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1795359092;
-	b=XO5ynRm5rAa/CxKqIppUW59Jfy5rfyjoxt9NXbEigXvwXwQnetv8ze4936i+cP79Lkme
-	 wo2jOrPvpXefkg1paLHUiGbyAUhKhYYhNmR1itUMkoqbpLs3md58L/85ZIR+tU899UjcD
-	 A5SHFpF5lmrcGwVutdahVTYnNYFtzTjGUWTVcMwUTDVwjWXkuT+YeFfLxIHxT0G2jeWn9
-	 mtLGeSKEI6GZAxfBJX+/ZvEZ6dsu0ZF93L/e4egje7aoPaGzKKrxqki8uR1VWKK/g3vyB
-	 Zg8RWuPdfJZdzH5An+E1F/Es3v1H6S6R2/2rXriyFFJ6dwyV+ztC4ydX0u0fglnS5zQ==
+	b=wQLJKSDSp5ovUoQFUaLwH5QksR20q3C9OYTEiEcX1CIPtlJzb54jJXNdkyEgicvjwZt0
+	 IgAeehKWoU4aKVtlfphP1KxK6EUiAXu2fScBuWNQfRNVbOrB8YmY6z1jlg+/xH1XG7oKI
+	 VJg5xm2EzudiYxgHF/XlXSzeP6kV4stPLKdrwkitXywZGxBVlG9aLfrb9yCVhvGi+YjF7
+	 GM0gFtq8m/8T3Cytv5vKC7aFrfuG6Ta2bGZxWpdOyeIviG1WWn+FtMCLr4Y5tQw5FXxjj
+	 LQd/RmWvVq7J+4ZO0wyf5H9s9zrzzVqpkuKMtoZB2rEbQGOH2s63Q3Rj61ynJEj065A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1795359092;
 	h=DMARC-Filter:Received:DKIM-Signature:From:Date:Subject:MIME-Version:
 	 Content-Type:Content-Transfer-Encoding:Message-Id:References:
 	 In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key;
-	bh=sf6iS0ZvKkqSDcl9esuW1oe2LLZZB/q0/dDaMyUgNMk=;
-	b=gmtWvrT0LmGI8YGUWbRiH3zql04Q5acqw61VRMMl9qghmCcMl8/bE5T4Zib9pMyJF/ri
-	 G8oMgCPRRffBwZT1nVJWSAHyruDW4BwfU1RQTE+BSj66g9elGBH2nZ9CkmX7cWpAFaoad
-	 v6zsnfk3xFZsHd0M3lA4Zex8m0daRLnopMhA/13G3cwsofjwjfZJjc9GfJdYwBYmUyv9Y
-	 OcqTP07eGchAvAR9uq9e5LA+l8NIDgH7EJUyUMtexI0DkWTm8MAT4UOz3d36kdJeeYw6i
-	 /F0YnJ75o2J+lTZISCnzNReDY3HxsKeF11FYBH1CKB/SefOKTfPLMmWr+4yi05yWidQ==
+	bh=R2PUKJ8S+wkAVz6Xbe/k+bNEE35Ac4NsF/W1DrNnIb8=;
+	b=l8tV0jeqVvcKTvbAcnblivSYN/6vH8EVpLi41Za8VQNYVKCRmQ6RAc2cgpBTbqo7Ti/O
+	 M+MMB46NJTd5i3xgm80h+riC4BwHyqyivxbx9zc5amsM0T0RJMVe6svBjTWgmQC+jVApy
+	 yKx9SmrHcf30x7u/iqrvXGNZt0xqu6S2nvIKL8yUqjn31OHXZUgH1BB85ml1r3rr2xP9C
+	 ZuQr3vc9dad+M8EQmpsz8f/sjFvPbkd+caI21fs4Xwxxl+ba2Svanmw5aw5vHUKSIgXyU
+	 F2Z/gjVT207RQyHfYBZjTfuhnPyWzbs/2HTmbB822Q4x2Zk8gpY0slvlbaOeNaJZMJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gouders.net;
 	spf=pass smtp.mailfrom=gouders.net;
-	dkim=pass header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=Edv5d2ob;
+	dkim=pass header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=um7Zfsw1;
 	arc=none smtp.remote-ip=202.61.206.94
 Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA68606A330
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBAB3606A320
 	for <git@vger.kernel.org>; Sun, 22 Nov 2026 14:51:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ABA68606A330
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BBAB3606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gouders.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=Edv5d2ob
+	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=um7Zfsw1
 Received: from lena.gouders.net (ip-109-41-49-183.web.vodafone.de [109.41.49.183])
 	(authenticated bits=0)
-	by mx10.gouders.net (8.18.2/8.17.1.9) with ESMTPSA id 6AMEpQ7s2232929
+	by mx10.gouders.net (8.18.2/8.17.1.9) with ESMTPSA id 6AMEpQ7t2232929
 	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Sun, 22 Nov 2026 15:51:28 +0100
+	Sun, 22 Nov 2026 15:51:29 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gouders.net; s=gnet;
-	t=1795359089; bh=sf6iS0ZvKkqSDcl9esuW1oe2LLZZB/q0/dDaMyUgNMk=;
+	t=1795359089; bh=R2PUKJ8S+wkAVz6Xbe/k+bNEE35Ac4NsF/W1DrNnIb8=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=Edv5d2ob7btkmlJ6PyHD3nnwrUP4cVO1O4zaUcTUOSOBenec+calbICBoEh2WmGZ8
-	 JxUpYAOHFswvOXi9Za8rjVSzmXiQ8BPxVAJSA4Ww88iQzF3Ti3qiulY+lpBW1kI/yo
-	 T2ziJw2/Mix68WX7Rkot5zfPQ7xhtWy6ob6Ncg0o=
+	b=um7Zfsw1bUKcF62/yC4ExkdGzrukw5rpycmXwhZLPN8wlO8WNdbMNh8zsEhz4slDi
+	 8IBC1RAK1MYiW5I5lYyLpNlpmHMPWCxt5M/0IqXmtZGRO+bWSmS1yi+dStxefp7xPl
+	 gShEDvDyQtqbXKbKX2VkDBVCNCraj9FFZLVbN9Eo=
 From: Dirk Gouders <dirk@gouders.net>
-Date: Sun, 22 Nov 2026 15:51:25 +0100
-Subject: [PATCH v5 2/4] utf8: fix comment for utf8_strnwidth()
+Date: Sun, 22 Nov 2026 15:51:26 +0100
+Subject: [PATCH v5 3/4] utf8: respect string boundaries after skipping ANSI
+ escape sequences
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -58,56 +59,85 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261122-master-v5-2-313bd1bb3c45@gouders.net>
+Message-Id: <20261122-master-v5-3-313bd1bb3c45@gouders.net>
 References: <20261122-master-v5-0-313bd1bb3c45@gouders.net>
 In-Reply-To: <20261122-master-v5-0-313bd1bb3c45@gouders.net>
 To: git@vger.kernel.org
 Cc: "Junio C Hamano <gitster@pobox.com>, Andy Koppe" <andy.koppe@gmail.com>,
         Dirk Gouders <dirk@gouders.net>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1083; i=dirk@gouders.net;
- h=from:subject:message-id; bh=VzCGBbx+9jqQ4AYj0saWu1eDYnLQATQtozzWr0tYJOo=;
- b=owGbwMvMwMW4JPzVNXNTrzmMp9WSGLKZGfNDu1XP3LdTmdZa2cL55/e+Qydu3mJauOGzjH427
- 7b2z2mrOxknsDAwcjFUiSmyLJ1UZJemsuJF2TfVTJhBrEwgU6RFGhiAgIWBLzcxr9RIx0jPVNtQ
- zxDI0DFygMjxM2ikF6Q7pOeXpqQWFevlpZY4mloamRsZu5qZGZk4WrhamJu5mRmZmlk6mpiauzq
- 6mBmbG5uaOFo6M3BxCsCsm7yA/a+kpIFLmoVE+Knka3tPvbfhY1OJ2Fp1ab6xO8e6jj6f18WRLR
- 71/+MO6KrOW5HndpDxWalWcI/EOfM/zsLVc07O3RAms2XrbYe3E27FWi5NFr9ew3diss8Nsdt79
- /2YxNciGPNxg36ZUs6NcInLjzg3hNjFGodwHim9XPwr46VOz29Nq7Af7DdvHOLbpyOyqPzq3Yva
- X7P2pO4JmNujctp4/dqtfRffbznv6KquzztN690/hdT5/eyHXZZJzzMUZL780Oztp1ne109mZn2
- 5xTr9sPXL+UGv5e5Hd8/jU/kR+ZUx3rV8Tvzp4/ekZRnFNDx+mvw9+e1I/YJ0w8R/75frTux3e1
- yxkU3W/bOU1n8A
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1841; i=dirk@gouders.net;
+ h=from:subject:message-id; bh=LAxD8VbRJAqhbpg6t/Krb73LwVFOWYI/ZpE42v0mEco=;
+ b=owGbwMvMwMW4JPzVNXNTrzmMp9WSGLKZGfM3cbxedVJdldv0pHpb9sGFgkIfbr1p9/RT+hCRX
+ rUn4ZNSJ+MEFgZGLoYqMUWWpZOK7NJUVrwo+6aaCTOIlQlkirRIAwMQsDDw5SbmlRrpGOmZahvq
+ GQIZOkYOEDl+Bo30gnSH9PzSlNSiYr281BJHU0sjcyNjVzMzIxNHC1cLczM3MyNTM0tHE1NzV0c
+ XM2NzY1MTR0tnBi5OAZh1F23Y/+ltkzdkfBZ7zbP/iZGN7rRvYbKZDn7dpR4ezNO1D+YGl7f9ri
+ 3vWcH3t583Pmbd9x/1hk4zeaqZGGeW55k/SFX/ZvxhmsTOXXIsEjF992WnidUabo8yeHfEtPCBR
+ VVk+eHd+401ry9//yLJ6vNTk1vLtz/efkn8ffCVfYcu/538TP1DeNUzXU1Gi3qnrHclP2UXTa3n
+ aPG4+EWsOnL+ns+2Yc0ZZydOmPfCLbN94TvRew5/L8QoxBuqvf/6PnNZnAvDtnnbn7H5WnS/W/p
+ efqPp9u7fBz5LKcdZmdYvyfwvceRR697F27hbwlRCHufNexrOKMR0zsctwH51FV+zokBK785V29
+ 0dZp+Q7Wr7AwA=
 X-Developer-Key: i=dirk@gouders.net; a=openpgp;
  fpr=943B4FA3CAB8EBC55754E5EA0DA2395F431875F6
 
-The comment for utf8_strnwidth() states it works on a NUL-terminated
-string whereas the string is bounded by len.
-It also states it returns strlen() for cases when the given string
-doesn't look like valid utf8, but it returns its argument len in such
-cases.
+utf8_strnwidth() can skip ANSI escape sequences and it is possible
+that such sequences end the string within the given boundary.
 
-Fix the comment accordingly.
+Check for such situations before proceeding and calling utf8_width().
 
-Helped-by: Andy Koppe <andy.koppe@gmail.com>
+Add tests that test such corner cases.
+
 Signed-off-by: Dirk Gouders <dirk@gouders.net>
 ---
- utf8.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/unit-tests/u-utf8-width.c | 11 +++++++++++
+ utf8.c                      | 12 ++++++++----
+ 2 files changed, 19 insertions(+), 4 deletions(-)
 
+diff --git a/t/unit-tests/u-utf8-width.c b/t/unit-tests/u-utf8-width.c
+index 86e09c3574..5e2b636db9 100644
+--- a/t/unit-tests/u-utf8-width.c
++++ b/t/unit-tests/u-utf8-width.c
+@@ -2,6 +2,17 @@
+ #include "utf8.h"
+ #include "strbuf.h"
+ 
++/*
++ * Test utf8_strnwidth for strings with SGR sequences and corner case length
++ * arguments.
++ */
++void test_utf8_width__strnwidth_ansi(void)
++{
++	cl_assert_equal_i(3, utf8_strnwidth("\033[31mhello", 4, 1));
++	cl_assert_equal_i(0, utf8_strnwidth("\033[31mhello", 5, 1));
++	cl_assert_equal_i(1, utf8_strnwidth("\033[31mhello", 6, 1));
++}
++
+ /*
+  * Test utf8_strnwidth with various Chinese strings
+  * Chinese characters typically have a width of 2 columns when displayed
 diff --git a/utf8.c b/utf8.c
-index 503edb8edc..009e8fee39 100644
+index 009e8fee39..dfc5261619 100644
 --- a/utf8.c
 +++ b/utf8.c
-@@ -217,8 +217,8 @@ int utf8_width(const char **start, size_t *remainder_p)
- }
+@@ -230,10 +230,14 @@ int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
+ 		int glyph_width;
+ 		size_t skip;
  
- /*
-- * Returns the total number of columns required by a null-terminated
-- * string, assuming that the string is utf8.  Returns strlen() instead
-+ * Returns the total number of columns required by a string terminated by len,
-+ * assuming that the string is utf8.  Returns len instead
-  * if the string does not look like a valid utf8 string.
-  */
- int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
+-		while (skip_ansi &&
+-		       (skip = display_mode_esc_sequence_len_counted(string,
+-							orig + len - string)) != 0)
+-			string += skip;
++		if (skip_ansi) {
++			while ((skip = display_mode_esc_sequence_len_counted(string,
++									     orig + len - string)))
++				string += skip;
++
++			if (string >= orig + len)
++				break;
++		}
+ 
+ 		glyph_width = utf8_width(&string, NULL);
+ 		if (glyph_width > 0)
 
 -- 
 2.55.0
