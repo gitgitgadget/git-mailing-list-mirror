@@ -1,89 +1,115 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.42
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.155
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795354769;
-	b=e9+aaxlyDBoEsWbQ75WAxBXyvjK94uWW1Q464zbRgHqwlDgP1BXvAhdqNZSl3Xctiznv
-	 ywOjWI3Xj0Cc/YKQzawTLBVisWwtbu66im2RjiGsT894oOtm8ux3Gc+wbKQGA37T+g6YH
-	 8g5Gs7Mw9aPDht39+Mypcu5seLvRP7XMmFlsmcrUvqZdt5R36XLeZcfsXlXy+VAD51pL0
-	 EOdnGFVn9DyjU7d6CRL32d9c3+7NBczKTJQ/iN88YPcv6XUkja3OUXnxS1tnpUyNqAhdX
-	 mHsR9/64IqdQdQov++qdONWxL6vFL9KIx2PmZe4y/tUaL8OnJ8nOSMZtoIezj+5kShg==
+	t=1795356231;
+	b=Kxym8cQhisBDL/fuTwkfZqsgqH8m95BKPFJ2lDv3ns67v89g/31BtwGv4yzhbEoQ/kJc
+	 xr24c4JNkJKQ29/NxU+gvWQC6h+D9g48xW5NyTJgzKjH1E8VRTwPoWNNwUfhrrQxROaoZ
+	 C/rKN2ndcCBmJjF4UAt+RXBWkAFWk4n+DjS4/nEQnM0Xvr5DS8xjeHJM1B0n1rrxs5USC
+	 Z4Yq76BOuXiLf56vLil1wroKlvzSBFY3wV1DM6dahNuHOJRud9e8wSgzFJrIoSPTm4qqb
+	 DUchODOqYREqBsfU8x3i8y7qWK1uq67RSlwl2lp3zBA0bH3MvDPmFEDyucmAd8Fpjjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795354769;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
-	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
-	 Cc;
-	bh=J6wShsfZhZMOWOsNNjmjpzACPQPY0inv3LxL5lfHAfg=;
-	b=qKHF+UFWYQHOj45Kji7zvLyn25jj5Do+UHsuzXEr3AwFAnmRbT930wu9kIyVQofyZsPp
-	 i8MpPDDt+/y0jG4rxEfnGRtMJu6PYWxtybE+FFG6js+yT5hS9Sf0Icr5R0ZEZ/7pGkShK
-	 8jxK+KjnAj9ZBNp7nYvFS7TRvygNPYNecYDwprsPWwL2FE8kZ5e+oEMOMmiMUARAI01PX
-	 UkZ8dnCPEyVrKvqi3QwzAKy426V7nDVXHoTzoMpXAMGUWqXeM+/rsp1z58R/6EJi4UPT4
-	 76U7FOSEYGeMpVbnPdtIJVDRPYZ6ZHAdEYkfQduaiwWmQgB8sW3bKDfOwz4hvdSkDmQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795356231;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=arrrYtOakUIDUD5PQplM8OOBFcjyegn9kR+9IsdblTk=;
+	b=lzI5sGhnVzzsJL9DtGT/8ILAEguABHbffVb4HzXsuXczlTVkdeWFssu1gswKfNuAbfLh
+	 Xf7yfrOlX18+MrGEXyWLbPwz2IB2Ueb/DPxrM7l0ipOMuHZRVqlJ4ZF4CZH3hvMc6HhKI
+	 cwKRZAVicWuaql50ySAvjwqYAVZi8TQDSXi8hzw5cjY8c/YLjAUVnBfBnjhsgMTFYKBXA
+	 ZVL4+8tsPM7GE7k0KtbCfsT4FMh7ozIRZUvYs6qEkmEEbQ1qmOIqALiWYi9ZBCjvj5Fn3
+	 1e7yZpGFsUoqME5byxbVNzBQN0k5AthBgOne1vaMFQf3Idz1K7wnOIaURsLfpKNvm5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AK4iCtCL;
-	arc=none smtp.remote-ip=209.85.216.42
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=XoQfYbct;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=lUvGlTLK;
+	arc=none smtp.remote-ip=103.168.172.155
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78297606A320
-	for <git@vger.kernel.org>; Sun, 22 Nov 2026 13:39:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 78297606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAAB8606A32A
+	for <git@vger.kernel.org>; Sun, 22 Nov 2026 14:03:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AAAB8606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AK4iCtCL
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-3b3e85baf7cso1355619a91.0
-        for <git@vger.kernel.org>; Sun, 22 Nov 2026 05:39:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795354768; x=1795959568; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=J6wShsfZhZMOWOsNNjmjpzACPQPY0inv3LxL5lfHAfg=;
-        b=AK4iCtCLGgbf96ZD5gCne5sLUD0I63xph16Rb4lIjZ3vYIbWyFZPA68Gi7suQXeeMh
-         OcyJl39UCtH1xahThISPjDxcdpbiZHJ+W0QjMXseCmkRhyjwg2BL9nJu6ay4sjS5boUx
-         IzoerKSqrHJOI1Ftzk4S+nflEl3T2fnYUzX8CeZYS2jb1YnG9syJ90mx8ICvSbCzT6cz
-         sk6rrimFMqd5ryvBrP1qk50tOLAPMDeDjurN7sGdn/aNzfwvI4XZP2ceuRO5IA+5rOD5
-         mLARPsSAd8q29kSGK98Nov/tf6VqwmIC19pGkH09QJyhvIgMfkHjE5TSHGglco5bZo36
-         pHGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795354768; x=1795959568;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=J6wShsfZhZMOWOsNNjmjpzACPQPY0inv3LxL5lfHAfg=;
-        b=zbFcF9vayyvrFadgWJ4+8E5nQx3SF++Qp4Qkz8Pblynpg4puybZVBjEJjLaRNAMLvw
-         yAKGC8WMisyDKQQ/rkp3BZIMn0GLBGP+Xjfbz9O2YBXNjxPE1D9wu/dC9ok6Uk/II7dK
-         v7Ap/dOAjvJKvJD8j4b/oFXx5ZbgpLde0lnAAkcWsF2sNZqfwsvK2eoGyjr6FhQ9HHFe
-         Vjz0vYbcLcAClbP8feNJnNBkqPMKN6GDsFBGxd9uFP4nUGuwxBRRIFeEy/1awt4hGvIU
-         CI9xOslHUL3L2OKD7wHPSCSHM+BKyheeHPAVBzKOwTMR5VedIP6CpzCJa9BFExBWSThp
-         zE4w==
-X-Gm-Message-State: APuU4Z/vACeX6xta8dpzK3BXf7nah71gnvCMaZtLf7D68J6ZrobYigEt
-	UjBQQDQOKILImASOIimEZUwWThXZ2S0pOxty8ndWPBAHmhN0rW0ABOxpjseh2g==
-X-Gm-Gg: AZFdTZf9LgiMhKES72itt9uXivhOYr6UYJVxmmApJxsUkUzdl73ubFFHGsvX8K0LbCM
-	Ah6abGGy5g3q8doHlZ4FyHvZyW/mpCDBcfkVvyT+IEizL1s0LTRQ4F/M7yIYA7F9zYYdl6noJ48
-	oGLxIHpHvNAgl/9oH2RYewfCBChSXh8Bia7AJv3L4olLYpqMhiFNIx74B0ATgjwDWtuPLAGB7WN
-	svQOhz5u1jbxIG7ohTSmfeYEi9/5ClS3AbVgg/3/vrxpQ9/0u7K0yE0hhR9YP9o3rXDA1L9X7Ya
-	hPsD4b8XwglNogdCJHsjL008Yd3bL8NTzFUZBLWXTRXLFsB1MjJG2LzbM7lPQhUzWA8vvklpIeg
-	AAV0ihuiK8/Wstu1Yk6QVUcIIfJmovpw2bizImV+gcAwc/7rPJ1BMmIxHLfsRLaBGlRdG8gZgWM
-	ptlKJR0C9I5X4LQq0cBSPlzW8kHZjikHWnGahwf8/2J4284x+yNg6f/OE3Rc/mZY1PimFQu7YQO
-	r1rBnaKPrAw35Y5y6uYdEEXj53QmozlbMfvx2LVl89iBZxOyf+ICGc1Y+VgC4m/1lJvaKG6n6ps
-	b7njhhSp3zBC8l38/xS9++dgv++rJCIYhA==
-X-Received: by 2002:a17:90b:3f0f:b0:3a0:b312:1fbe with SMTP id 98e67ed59e1d1-3b41c9006d4mr11594048a91.23.1795354768300;
-        Sun, 22 Nov 2026 05:39:28 -0800 (PST)
-Received: from [127.0.0.1] ([20.230.181.200])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b405d96bd3sm16016077a91.12.2026.11.22.05.39.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Nov 2026 05:39:26 -0800 (PST)
-Message-Id: <pull.2503.git.git.1795354765127.gitgitgadget@gmail.com>
-From: "Ophir Bleicher via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 22 Nov 2026 13:39:25 +0000
-Subject: [PATCH] difftool: handle invalid paths without crashing
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=XoQfYbct;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=lUvGlTLK
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A04E31400247
+	for <git@vger.kernel.org>; Sun, 22 Nov 2026 09:03:49 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Sun, 22 Nov 2026 09:03:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=fm2; t=1795356229; x=1795442629; bh=arrrYtOakUIDUD5PQplM8
+	OOBFcjyegn9kR+9IsdblTk=; b=XoQfYbctKOnV5fKzXMSyRpW2OkASUDlyVPAsv
+	mbo919aFkatWuxvkjKwTgICsZPGIHJg5AJLlynGbhK1J8xyXcToT4I1QcWYJjBV+
+	WJ3rsbLWBYFCe/i173fwpU+jCiw9BiySSmRF5D5r5uW3OcloHUj/CF92v2i5cHw3
+	F6c8Nj6NDs+Q80jk3RA5mihvwT8hDNcUoPSo1w9egeT1jWKL89/UFwD+yGeMakB2
+	qP3QLPG+apy4k87AJna5knlYQcBWLbshJxOqFU+o3eEmxWq+KZxmSLPrXeS2PUPP
+	88Iv30KSyXD/XhjgR/4rg/LoCrAA1IRZZJbS6rXtCiiToV+Iw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:date:feedback-id:feedback-id:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795356229; x=1795442629; bh=arrrYtOakUIDUD5PQplM8OOBFcjyegn9kR+
+	9IsdblTk=; b=lUvGlTLKWbz1coc9ejXJP6TZcRJbJGU+XwqDxOlYRsy1/E8Zsw1
+	Zc4AMIcMTOYcCtwtNco3uD2I1hP9iOtsL/VUTnSu1ELf7Qntvl6t1M5dI7xvlY7p
+	4qkTfSSX7n3w5kTZsSXrZ6VzA/rwKk3ACWO0QYL23NFG12kXepO9PjsCmZH759TI
+	G86ACi7wiXuqwsEf8LvD3D7XVvER711lmp0fQudiS+qYZ/0q4ZJYPRt3KyvPNgDY
+	wjyrqNUkA0SRavfnbUWdezaJHt4Bc37CyxOoPxH/emVlMd17k3pwIFr4SkJyzYID
+	st1G+6YLKx/83QQ++/qlUdHm+9swVjbodPw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795356229; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:ju83m2DSWtJEIy5iSO72RLG/puS3ZGZW2Z1A+8Qt/FMwJFz
+	UlglVoAIbv6Yo4Ew/gZacTUXP2x9qozNkmE26Hr3HPIG+A94rXgwhaXlSJgsUArd
+	JyRiOIuG+EvBPtOdbD9YkcsSfm12ApmAKXuHSeyPB3xfLPrf5DLOdQ4PRbYrHyAd
+	dLMMn7dRv7+Qwkak4GF4LkmS7oZdRYK9BriecUx6Lj7JoAn44DzCq/fZ8wKhWXRr
+	PI294Og5IMLzbttMzSkfJCnfxoAcVuCzMsop8deABIXuAwz0NM7GEb8uPiS9fZMB
+	iGeae7a+d+1MEmJuG0kEF2c50v7GbEow9IOtAkQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=8;
+	hn=content-transfer-encoding,date,feedback-id,from,message-id,
+	mime-version,subject,to;
+Message-Instance: m=1; h=sha256:sH8oapzkHBNXa2YRKoK5kIWqacgN0Bei4otRiYfZI68=:y1K3xtN4Yq9t/s099wggyWRJ0gZ/vwxMNozpSL5A90g=;
+X-ME-Sender: <xms:RfYCa7lT1fz-K761aHVXsv0ylnR9Rwe1l6efvKt3cwjCnhg0FX01yw>
+    <xme:RfYCa017LMUwn6rNDkPDefKPbd7BLSPy-BlIZH5gud2T9u3xWixBsh8uDFJxcOHCY
+    xG77Q-ViWdySU_Gcwgo4io9H94BgNWjbu17G5neSywqlXQAToH_OIY>
+X-ME-Received: <xmr:RfYCa_Sj_I8NEW_Hm_QMHiOIR7id9Jo08p2tCVzToUYR4_a3L3XMIuTdV7CtQjpMgaih5dtjPxKIvmEiRoj4RHTJ9BiOxX1eXZN_VeE>
+X-ME-Proxy-Cause: dmFkZTEHVJkYiriZab3BDUKw6bldqP8x0RwUuAkq6HTvSqV6EJyqVJkCJkDB0xCrvZFVob
+    cWWOBhze+Nztl//XWAeVODL2B4tesUH2tNE6QlUhDJ1m+PPOwA40CCIBi+5DXtuMANxIGo
+    vdW73yl0MTrms1k/fYJf52GtsYiEXN1N5kIWpk+a8VqADYo06QbO6ybM8QXoLaqUn1jxZz
+    OJnszSR+7d+hWNQlkRsBCWuF/I70TeMXY1NBetUJcojCoTANeeY4831mSSvpk3qtC6sjxm
+    tYRsvi7wKCUhMgjg1kpS15BFFwVdzYGw3V6EIhyWQ4+Nn+ZSSLKNsXofMn7gFNeH0NuaRZ
+    wppdoZ8LYs2T740PeyMtczfofeX/robOvUK4/c1O0ozHE+mJcpiI2mzSsIgIjm+ngC+FCU
+    Nx+jdS3IUR3BIDQx1caeBk9hypTUfV9RJeuRvO5BI2ieaAcTsFb/LXAaNKVr+Q8IMPbLZv
+    J4Owr+P+rtC/KszJnhqm6JAF2/GTObdxKs604w/uwiIKI5tHa8LJJuwWp5vbZgeiLIFSt6
+    DEKTlrb/+Jd2mXe6S8HHpBbIzxxpEv6B6MRBLu5beqVOQhwyTPWjC8hwjjiUPfmSBP6Gak
+    A+SGUfM0SXSGxSQQPPn/9pFy7/A8T2JsNrAJ7o/BmcwBrB1ggTeL112grLyQ
+X-ME-Proxy: <xmx:RfYCa-tPqS4CpA_A0sUNWu7dsyA5P0eLXvGYEbiHseaT_2m5YoBZcQ>
+    <xmx:RfYCa8amTlyI-CSj4AzkIQ9CDoi-7VBtJBOc2g88dkJy4P3MaF2ggw>
+    <xmx:RfYCa7vRcgcFL-xFejnObnCUrZCNwimRPkOwtYF3FAY7T1OSWYg1xw>
+    <xmx:RfYCa2EBSrI3bYcrKVHXqt877NLUsnpBJJwBy1A-fuvJsmYZARGDnw>
+    <xmx:RfYCa2-yozTBEZi-SRj1m2PSOp9BD0zi9fDLjXiAQr3l2LBFFjFhYpjn>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 22 Nov 2026 09:03:49 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH 0/6] getwholeline should clear the buffer upon EOF
+Date: Sun, 22 Nov 2026 06:03:41 -0800
+Message-ID: <20261122140347.41990-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.56.1-766-g80003c9184
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,85 +119,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Ophir Bleicher <ophirble@gmail.com>,
-    Ophir Bleicher <ophirble@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-From: Ophir Bleicher <ophirble@gmail.com>
+This series, which is structured in a somewhat unusual way, addresses
+various issues that are caused by a long-standing API bug that the
+strbuf_getwholeline() family of functions shared for quite some time.
 
-Check the cache entry returned by make_transient_cache_entry() in
-builtin/difftool.c. An invalid path can cause the function to
-dereference a NULL pointer, resulting in a segmentation fault:
+When they see feof() on their input stream, they immediately return
+EOF without reading anything (which is good), but they do not clear
+the output buffer.  It is not strictly *wrong* per se, but it proved
+to be a rather error-prone API contract, as we see in the early part
+of this series.
 
-$ blob=$(printf '%s\n' DEADBLOB | git hash-object -w --stdin)
-$ tree=$(printf "100644 blob %s\t.git\n" "$blob" | git mktree)
-$ commit=$(git commit-tree -m BADCOMMIT "$tree")
-$ git difftool --dir-diff --no-symlinks --extcmd true "$commit" HEAD
-error: invalid path '.git'
-Segmentation fault (core dumped) git difftool ...
+Patches 2 (shortlog), 3 (clean -i), and 4 (fast-import) explain the
+existing bugs in various commands and add test(s) to trigger the bugs,
+but the fix is left for patch 5, and the fix happens in code far away
+from where these bugs exist.  The usual "describe the fix and
+demonstrate it with new test_expect_success" pattern is deliberately not
+followed.  This is because doing the usual thing would force reviewers
+to understand the details of three unrelated commands illustrated in
+patches 2, 3, and 4, as well as the solution in patch 5 at the same
+time.  Because the code that caused the existing bugs does not appear in
+any of these steps, the log messages of patches 2-4 instead give
+detailed walkthroughs and are rather long, which is another reason why
+the nature of this series discourages following the usual pattern and
+doing everything in one step.
 
-Add a regression test in t/t7800-difftool.sh for a tree containing
-an invalid .git path to ensure git difftool --dir-diff exits
-correctly.
+Then there is a bonus patch 6, which illustrates two additional
+issues in "clean" and "fast-import" that cannot have
+test_expect_failure tests that are safe to include before the problem
+is fixed, because these breakages are infinite loops.
 
-Signed-off-by: Ophir Bleicher <ophirble@gmail.com>
----
-    difftool: handle invalid paths without crashing
-    
-    Check the cache entry returned by make_transient_cache_entry() in
-    builtin/difftool.c. An invalid path can cause the function to
-    dereference a NULL pointer, resulting in a segmentation fault:
-    
-    $ blob=$(printf '%s\n' DEADBLOB | git hash-object -w --stdin) $
-    tree=$(printf "100644 blob %s\t.git\n" "$blob" | git mktree) $
-    commit=$(git commit-tree -m BADCOMMIT "$tree") $ git difftool --dir-diff
-    --no-symlinks --extcmd true "$commit" HEAD error: invalid path '.git'
-    Segmentation fault (core dumped) git difftool ...
-    
-    Add a regression test in t/t7800-difftool.sh for a tree containing an
-    invalid .git path to ensure git difftool --dir-diff exits correctly.
-    
-    Signed-off-by: Ophir Bleicher ophirble@gmail.com
+Patch 1, by the way, is what I posted elsewhere already.  This is a
+caller that implicitly relied on strbuf_getwholeline() not clearing
+the buffer upon feof(), and it is fixed in such a way that it does
+not matter if strbuf_getwholeline() clears or leaves the buffer upon
+feof() so "mailinfo" keeps working before or after patch 5 of this
+series.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2503%2FOphirBleicher%2Fbug-difftool-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2503/OphirBleicher/bug-difftool-v1
-Pull-Request: https://github.com/git/git/pull/2503
+ 1/6: mailinfo: do not call handle_body() when headers end at EOF
+ 2/6: t4201: demonstrate shortlog reusing stale buffer on EOF
+ 3/6: t7301: demonstrate "clean -i" ask mode deleting past EOF
+ 4/6: t9300: demonstrate fast-import re-parsing heredoc delimiter at EOF
+ 5/6: strbuf_getwholeline(): clear strbuf upon EOF
+ 6/6: t7301, t9300: test EOF loops fixed by clearing strbuf upon EOF
 
- builtin/difftool.c  | 2 ++
- t/t7800-difftool.sh | 8 ++++++++
- 2 files changed, 10 insertions(+)
+ mailinfo.c                   | 18 +++++++----
+ strbuf.c                     |  6 ++--
+ t/t4201-shortlog.sh          | 29 +++++++++++++++++
+ t/t5100-mailinfo.sh          | 18 +++++++++++
+ t/t7301-clean-interactive.sh | 31 +++++++++++++++++++
+ t/t9300-fast-import.sh       | 60 ++++++++++++++++++++++++++++++++++++
+ 6 files changed, 154 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index bc7b2ea443..8208ade472 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -336,6 +336,8 @@ static int checkout_path(unsigned mode, struct object_id *oid,
- 	int ret;
- 
- 	ce = make_transient_cache_entry(mode, oid, path, 0, NULL);
-+	if (!ce)
-+		return -1;
- 	ret = checkout_entry(ce, state, NULL, NULL);
- 
- 	discard_cache_entry(ce);
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index 0079aa9da4..9c79b2dec0 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -929,4 +929,12 @@ test_expect_success 'difftool --rotate/skip-to error condition' '
- 	test_must_fail git difftool --no-prompt --extcmd=cat --rotate-to="3" HEAD^ &&
- 	test_must_fail git difftool --no-prompt --extcmd=cat --skip-to="3" HEAD^
- '
-+
-+test_expect_success 'difftool handles invalid .git path' '
-+	blob=$(printf '%s\n' DEADBLOB | git hash-object -w --stdin) &&
-+	tree=$(printf "100644 blob %s\t.git\n" "$blob" | git mktree) &&
-+	commit=$(git commit-tree -m BADCOMMIT "$tree") &&
-+	test_expect_code 1 git difftool --dir-diff --no-symlinks --extcmd true "$commit" HEAD
-+'
-+
- test_done
-
-base-commit: f7de81456940dd6f3274e461149bba12965de609
 -- 
-gitgitgadget
+2.56.1-766-g80003c9184
+
