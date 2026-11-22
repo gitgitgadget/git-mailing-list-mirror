@@ -1,98 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.44
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.43
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795330173;
-	b=fXkPsjmd9487A/ZvX7eEIxCrFHSyIp9ILMHrR84UN2kBgdwhNH9ln9rLkZkNDVf+yXMt
-	 Vo7/nTonwmjqeqLexZPIDSje/3eyYnQT6KBRzVrP25v6PMoDR6VDZt9QMRg3PoMfYNifj
-	 jFpl3/jO7Si1LG5ZWvzSsvyl2f8n+k+6vRr8kcJTiIx8QBDqmFrkuX5MKDV+B/aIJkhPy
-	 j4vgW63xtPpGIka0Emc2c5zvvTRGwrSGlOaCsbc1xEO05WI6wv+JjaZbu75o6QA63cywg
-	 aCkDOw+0UDYO446V+wheIXMJ8z1/2GrlrNzfuleYez2mgTf9vNHWX1lMVWsLgzhsPkQ==
+	t=1795331217;
+	b=J5n/LB2lfYCp9cpTIgKfqjKsdBhXEnSQSur+COkxMi6cbCeXTcfM+NoA11cYx5j3cafb
+	 amv0ZEESSxwx/48nMgH3qaRjZSEIhWjB15Tnva8KM4jF5YQGvozLQm6Y0K5E7MkE41WOv
+	 nPnUP3BWUhKPsHDwK+9IiJ8YTm6m6iFdrBTBi09PfZOtzwTb89B1gHksF3M6de8ChlJ6T
+	 fsaBtgfrXZB/LZNlWHR5C4h7B9B9gODXt9nCv+5MK/tywWam9Sz/8R/3jjMpf1g0ppn22
+	 yVpSwjfZwe/zMYaWiVyA8az3wHsVQ7/J+Th2ioViMmlDR9ekp6NXXJAy0Mxex/v4LyQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795330173;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795331217;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
 	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type;
-	bh=OFBBYaEHOB+g9slngUeuuVMVw5SA1X0GRPwjPclwi0o=;
-	b=Q1B/72kVWvtYdF3kGPF0yL8Bn5N2yJHqzaX7Ryjre1wGmgK3881FNtQTIGomkuuagLZb
-	 alhZr3sfCIfmPE96QZdnU/hvJSKslxGdhQReInarK02IscTnBHy7E1dyWWYL/CVzpnGb2
-	 MKayoBWpcZVBd+Ep5FLhTQwR1d2RIeKy2jgwqibN3RUi+QnLQYOBiAaHM6Mw1q+wGTfyJ
-	 UOo3hH6nQ0Bo5WhcW4CnSDedpfxFCP5rL/Fg4+OZ2qDNc7H9GSwedQCsZ5x4MLFYpditD
-	 PB8020PSqivaOxxm1J7ze6+m8aO2oOvFGA6+geV+031ZEg1CPaRzpj8f6xrxGemZ/VA==
+	bh=ZNt6vCJRAocZhUCLlSH1FTZ0moN7UjOcOtyLSzDWcw0=;
+	b=r3w5YqFrQcp2w17hZPkNiW+oOetopCe3UMNEC8s4eoJNHB4RkQ8cPFi4md8KZvLCOLza
+	 kRbeIb7XpThrU9TpHtcy1DAifviHqURdoHr/FutbIdDz99MvzADdoff3yr0C9VoXrKF1W
+	 nO6pjNVChystXTsoXfZpw/Z8KhvyT0qAElIX6XPrhpKk0vBUp8eXtwILfQz4SxY2ZDZkz
+	 bBgN9oLBCBcdoGXmEmIiqlP044h/wm3d4EaClbPa2KcGnIgd2JB1aT93IlNlW49UV8b5Z
+	 6q8cMhzzNtPdHnRW3UBRcd5wJ1IcN3cXbwI+kgnZMoxpaHl+s8ISdWNSEGulu2C766g==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PNe3Etll;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.44
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sA8KU0uS;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.43
+Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE94606A320
-	for <git@vger.kernel.org>; Sun, 22 Nov 2026 06:49:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9DE94606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4F9606A320
+	for <git@vger.kernel.org>; Sun, 22 Nov 2026 07:06:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6B4F9606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PNe3Etll
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-843cf077f10so3269950a34.1
-        for <git@vger.kernel.org>; Sat, 21 Nov 2026 22:49:32 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795330171; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sA8KU0uS
+Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-4ad60ec5eaaso2118513fac.0
+        for <git@vger.kernel.org>; Sat, 21 Nov 2026 23:06:57 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795331216; cv=none;
         d=google.com; s=arc-20260327;
-        b=Iqb3hQooTxws8YmQrwtNPAGjTex+G30Wi7hOqecf8Wov41kmOdmVpyFNNYW3QjzVeV
-         Im+21GiqCF0kU0yflEX5m7M7WIRW0DiyGNTZEdlJNZvocF4E8eOnXEzB6yUK4z8ulhgE
-         qWrOMHIJE0jEF1KWhSg+bkKl5Q21SXyKIVCeQ7PoxelER6z+8A9nbkhBWCuGVBGvU3+L
-         NuyBvKoWbESA8t7ufvK1iHI1CB6K3ugQAQG4ubvcV9KQQCCCpjgcqLLuHC69LkdbY1Rd
-         Wb9M6JADYrH7jD8uqxKqFvPZRbUJxc6Ecy9XcnKHoPW+g6elBXXU+7N6etgc/G8niK3C
-         FLFg==
+        b=k3z34pMYcle+AhQEt4LxgoIgexZ4B+oOw33pwr5pzdeKV5y7At3qMvqsqN2pjadLDO
+         oons5xHfqxNuOhxSMU835w3TiYLJ7iVXKq7gfVsnJNELR4Rn8UgHIIKPQQgsPhp05yN4
+         5N3gAshyO3xeybWBFWHPagtTNbZSxotCSKtlCA+6yo6n0dUZkLubU9kA3/3DiFOrH3Ys
+         9gjNEQJsK4EZH38Q32GuR8g0ClUYwf0c3ZuHYh6XPLiZlrPO56DOJuET1lpHI+wCC7re
+         oobTWri6lb5Qqh0xzi3dxkJGWAM8bYpe5yLRwUAvUj2yrn/YZPg4QLV3B0IY+5ibTmbN
+         8yAw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=OFBBYaEHOB+g9slngUeuuVMVw5SA1X0GRPwjPclwi0o=;
+        bh=ZNt6vCJRAocZhUCLlSH1FTZ0moN7UjOcOtyLSzDWcw0=;
         fh=azt8TgWTl01NptQZMw9NPhZWceF2SXJbJqFTBR6uZLs=;
-        b=mHX1+n1p+xhdLW9uS4YF0GHVJjWwMQ7AvLLk9qxpoRPKtmjagBfnzZe7mNAqNmJwCA
-         OjuDu00I7gc/qWYB/ZK+hm68el5LnZcrxLY4TJNKxgaX8L38abDouPDV1YyY+HVRzrgw
-         ee0KwZ+Ljp1m3uFsqJHguL04fLQq90aMnWhcOp5Q4gTqm0ZztOaaIuNyZlBI5e9oAfMc
-         e4q6pk3MRBpqQDeJiJ8PMOxYIFTwJOwlM05Qm3Db1095OEqFOUZ7GV8FzCHOB6e3j7Rm
-         AvVcDzpvqcjOWzOUzXKLQATfJIWVcC1ce8FCod7ugdn/f6xcbrlXew8f56XQRDBQO/OG
-         /WmA==;
+        b=suZq2gxwq56LC0di4W66vGNZjnweMvoy8XAh7z+iboZcgcNseWdZw8gQXeN53iAqmN
+         q2GbvGJ1KU6MZnwmXXUU/BBlhl8M+lLNRrs+m2WS7AFR24wCr7b6R175hMUrqDlyf7Eh
+         gASTnfenKQyMZBOvy0d/G1DpZ7Lw7VTFiuVD66zLLW0oPQbOJp3ExrRWMfrt/zfVfwUh
+         fGnk3Ns2f6BA8LDcPgY7x3ZtGJa+xXt/jkNwNZmLVawyeg6Yz7xT4TffdI6OdqlhiZd5
+         k+M79aihYapl4wPjva8vvR99Dzi4eo24uLR06yRv2E5lxGuYyBfelKA2uyz1kFUcxbWu
+         YUJw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795330171; x=1795934971; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795331216; x=1795936016; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=OFBBYaEHOB+g9slngUeuuVMVw5SA1X0GRPwjPclwi0o=;
-        b=PNe3Etll9EX0BLu5zupV4m/1y/iOi7G0O0GJvFbGI5ArObJz/owtjNhF26rpLMdidD
-         We08XVy422SvBqzQFX4bM1+Iipg7bwKy63EU7FOQZInAwLeW0DRRfKyDy0fYgtBbMaeL
-         pa1j+fPFYIQ1rcaCXjtj2OQRAMG8lDRhFK8co4firVZeZnffj7BsqKQNfNrJMzEf+XPq
-         neD79QZbyVOvFA/hNHfdFUT585IYeJ93zhz3lbPYLkl2C6dzcIicMn21bJybpB8O1y0A
-         mkaIaea/5YU/+Fl1WzzWLpffPwAJaQ+6FmoLJBMpKMTAoq7vrDIUBxk0PUx/YP7xxMGW
-         I0uw==
+        bh=ZNt6vCJRAocZhUCLlSH1FTZ0moN7UjOcOtyLSzDWcw0=;
+        b=sA8KU0uS2/yumAI3Qs7pA1rG/6D4vGulqMyjT43xpWQ/UW145XnRNloGBjEqZKADmG
+         Mp+EqHrGBsf+K0l6dfqQHnuAaaqsX1dy3Kk8Tq5eSfwgY9BnFuLOynH6dC+HHWy9tsbk
+         SyBv+vi9dYfj0/UkTF68XxWB6xQm0KJALTOqi1Zt8vnE7A4oqHlK9VkfHWu0BAuMMtt9
+         YKmzyfJgul/om1nC+2sTxAuTMSXbUVZM0IRhA4n8ZNRrQ1CeaZrAVLWBaxL5S7nklIEd
+         W/qX6YNLgm2y3nI0f+wG7qH/PxVxJeKJrOcSnqivTf3KD6tA3YH5XKV90fGxVNHDwJkz
+         kA9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795330171; x=1795934971;
+        d=1e100.net; s=20260707; t=1795331216; x=1795936016;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=OFBBYaEHOB+g9slngUeuuVMVw5SA1X0GRPwjPclwi0o=;
-        b=Suz+IhFvo/yzUmSsDsN7/ililak7FRh/0P/L45fReBlVtSHGmq9Kc+RmCyqgSvmT67
-         QZ36fElfiOJP/huRsZXdiyAsnvWAKQOuydbdpdf+TbDUgFG5AjnbdvAu8oRmaZXd7Pru
-         BNQBwO78W8LRY5tng7sxWETm0CdPQKxPa0Jvawr+n8LulIojzAeFc0hTowao1cDE3IeH
-         CL0rS6os2BvnfKB4ZKOmX1qTm2epk2viZYvbhIoeEW3O4wQSssa5yHcMf7d37BBOUqXh
-         JgU57sORNPsNA2J0YLKznkNFIh+UsH8BiS+c6ZYsmeFdlbrjReghqigPJk+SQD9xuQKP
-         M4Rw==
-X-Gm-Message-State: APuU4Z+gCU6jKyfMQ3gTPp6SlkNfbshG2txDJT2MRRYiK+lndXgzq/dK
-	7k8bbS6t91DzbYRjUvOiysmKMB81bVZ50VQJLuuUar+y4SwxH69A3kDDYixwwiffTmGaxKuXOF/
-	qrxyVl6XzP7KPkyPQQDdq8eBmOeaef5c=
-X-Gm-Gg: AZFdTZe1CPgkTIRGMEeDbkVdx4eKZq0l2slZtcAcMdROjeg/LWulVsJJQRrFBQX/L2L
-	HRhkFomv54RJfDaQr9NLvyyolXkYmGVKdP0AG1gAaNiHALu5BBWqImLQigoiyJdRM/9XVWSA711
-	KXX9coyFZ4/U9m0Ul5etISL8X8l5I0aMrX2dF6/00tY+mCHj6w0aWFpno23RF9jGxT/4edQGo7P
-	bw85Cz0VnZhpXcQwGD6qyPvcqKwcODX1uePj6Hk4siWi4ufPeCuqPxjk4z2/irJNw1NBuy0nsZB
-	eWysUEBxVnkYLu0hUKXrI+zg67H/H0jVmQpSs+IC3s+NEuJb9NsFlXBe6nFIr5cbdwlzJQI9WbY
-	thegNxX7cOGKkw82ZcQzZOwIfWyqFb6Itslg=
-X-Received: by 2002:a05:6820:1344:b0:71a:d99b:e879 with SMTP id
- 006d021491bc7-71b39405588mr6446835eaf.29.1795330171443; Sat, 21 Nov 2026
- 22:49:31 -0800 (PST)
+        bh=ZNt6vCJRAocZhUCLlSH1FTZ0moN7UjOcOtyLSzDWcw0=;
+        b=p/yTNf7bjKUiYLl3M6fxs/D5US04a2Ns/deNSXgQqQX+MOilBKSzNtV07dACWvBuG4
+         Q01Pf6nOe+DcqoJqsozrQyNDk6kNvqBeAasggS/MOJ+I5RK9cYxY5JCSBgmxpondJuHG
+         qpTXI80riLoyUBzhBkVsHir7rCuyO2JNM7RSsPgvkx+P0FuhVPLDARdVINZxbDEavlxc
+         aRy33Yk8wpyVvloHtSmxkTpn/LjKEzfzfhzBBEkE3vZbQFNAj4LBpsNcVLNiuX2AqZuc
+         WqtsXeqerKWcCl0coFR+hrkb7IoHqWbp7qGL+r01+HmLIXPt+z/Zl+Pb9wYxhdSA9svJ
+         O67Q==
+X-Gm-Message-State: APuU4Z+zwNPFwdGy/1/UQHJbrgXpxqCVOYp3ga/7Pq8b2Ewa1lymHJT4
+	2qSCFN1APHCLzjmqFGO6jtzCYGjQsY+W1tjoGReubh5FfsiPGMtx1xVALe0DAURfjZ3bITojgzf
+	MqVDlmq/9+fku/fn3PParntCPAfr12Vc=
+X-Gm-Gg: AZFdTZec0phNC8lsipzaVdoFrl4XQKna9KCVgzAv426aY+zZHU6zmpizRDkzzwTfJh6
+	phUKBHCHsQsg2w1yPBm0GBYFu4SnLgJ+NCsIaU2tUdrHYvUmlI89yfEmbmP83onDhrBUrVgZeCQ
+	zavl71xeTQcxKdL69rsuD3PjQLxQ/oba5sCyPq55VkM7Cpaw4+1x36AeGhCKieO2FFXZMnxSZPd
+	p6tW/7xCMjc2F6wZfOFBn5gcuTrvFyTX/B5NjeJvh3saSNbkIkfqk0C/Oa0eZymGS04dMvtGk9i
+	/kQ9r7J1kEnaZBjF3gGgxqVukgb/zBAk27E/KycO0Bse0GW2asWbxBfcCasF0TOzUG+DF/uBKPk
+	OPM26A9dHDxdVaCo9Yq6hYQ4p9nq4h6BcnYc=
+X-Received: by 2002:a05:6870:2395:b0:4b6:dd3c:4569 with SMTP id
+ 586e51a60fabf-4bc85bebf83mr4719072fac.32.1795331216213; Sat, 21 Nov 2026
+ 23:06:56 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -102,44 +102,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261116-master-v1-0-dc2a50ce0aa0@gouders.net> <20261120-master-v4-0-5ff523db7285@gouders.net>
-In-Reply-To: <20261120-master-v4-0-5ff523db7285@gouders.net>
+References: <20261120-master-v4-0-5ff523db7285@gouders.net> <20261120-master-v4-1-5ff523db7285@gouders.net>
+In-Reply-To: <20261120-master-v4-1-5ff523db7285@gouders.net>
 From: Andy Koppe <andy.koppe@gmail.com>
-Date: Sun, 22 Nov 2026 06:49:20 +0000
-X-Gm-Features: Aa3M54pyxT3I_NiFbrJN04WKjAVdOe3bApL6u_7ofhzypDimq251onHiqYL3g28
-Message-ID: <CAHWeT-YEEXzx2Asczmd9tPY6gGO2FbY9KBpnGH1kJe2BgwxKBg@mail.gmail.com>
-Subject: Re: [PATCH v4 0/5] utf8: bounds-related fixes and a doc fix
+Date: Sun, 22 Nov 2026 07:06:44 +0000
+X-Gm-Features: Aa3M54oNzvEJLiz0TxkNJNoMDKxUF0_FgmjlLrGFSy58zDAcCdBek51n-OPq-_s
+Message-ID: <CAHWeT-aetC12pnVs=rEH0kYt-RAunfULxkk9JpvmoMi4puYFng@mail.gmail.com>
+Subject: Re: [PATCH v4 1/5] utf8: introduce bounds for display_mode_esc_sequence_len()
 To: Dirk Gouders <dirk@gouders.net>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 
 Dirk Gouders wrote:
->
-> A patch here on the list made me look at
-> display_mode_esc_sequence_len() in utf8.c and I found two details in
-> the file that are perhaps worth a fix:
->
-> 1) utf8_strnwidth() disregards the given len argument when fed
->    with proper string and len.
->
-> 2) The comment for utf8_strnwidth() is incorrect: it states the
->    function returns strlen() for cases when it actually returns its
->    len argument.
+> + * Return the length of the ANSI display mode escape sequence (e.g.,
+> + * "\033[1;31m") that appears at the beginning of the string starting at start,
+> + * or 0 if the string does not begin with a complete such sequence.
+> + * If end is NULL, assume a NUL terminated string, else never look at *end or
+> + * beyond.
+> + */
+> +size_t display_mode_esc_sequence_len(const char *start, const char *end)
+>  {
+> -       const char *p = s;
+> -       if (*p++ != '\033')
+> +       const char *p = start;
+> +
+> +       if ((end && end <= p) || *p++ != '\033')
+>                 return 0;
+> -       if (*p++ != '[')
+> +       if ((end && end <= p) || *p++ != '[')
+>                 return 0;
+> -       while (isdigit(*p) || *p == ';')
+> +       while (((end && p < end) || (!end && *p)) && (isdigit(*p) || *p == ';'))
+>                 p++;
+> -       if (*p++ != 'm')
+> +       if ((end && end <= p) || (!end && !*p) || *p++ != 'm')
+>                 return 0;
 
-This no longer describes the series, which I think has become a bit
-unfocused. I'd concentrate on these:
+Those checks can be simplified a bit:
 
-- The comment fix.
-- The optional end pointer for display_mode_esc_sequence_len(), and
-  changing the callers accordingly.
-- The end guard after the display_mode_esc_sequence_len() call and the
-  bounded utf8_width() call in utf8_strnwidth().
+          while (!(end && p >= end) && (isdigit(*p) || *p == ';'))
+                  p++;
+          if ((end && p >= end) || *p++ != 'm')
+                  return 0;
 
-display_mode_esc_sequence_len_all() isn't needed for the fixes, and
-I'm not sure it's worth adding.
+In case you want to go back to a length parameter instead of the
+optional end pointer: I looked it up and functions such as strncmp()
+and POSIX strnlen() that take a length bound actually support passing
+SIZE_MAX as the length.
 
-As the series stands, patch 4/5 doesn't build, because `skip` is
-undeclared.
+The key is not to compute `s + len`, because that can create a pointer
+more than one past the end of the object, which is undefined behaviour
+even without dereferencing the pointer. Instead, the bounds need to be
+checked with something like `p - s < len` before reading `*p`, which
+avoids creating an undefined pointer.
 
-Regards,
 Andy
