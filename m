@@ -1,86 +1,124 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.156
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795453011;
-	b=WmeBlMsjSjqn28OJgsEY/dcn7PIdgKoP+dgjI86+VLQEsggGgAjltw+UadwABPZjh2kR
-	 SM/r2YFZ1ZyjWPuSnKZp4Xl3QryWh2vx2aX0sv4Uvu4t/IawuO089n8Bwjatnt5L3/IVn
-	 PKrRCwfL6RAeTNO3ong64RR9uCkrBl43nH4fdkh3Cx87OYl7tV5yHDjUqw+0PjA2d1MFx
-	 uMpdKYJHfOvBiTWVMmvJXUWef8ofhRd2yBcx8//X7c7xQnvJZ5kaHQ2GeLeSSaLXRd+hQ
-	 GUdWFCLp93+RKGl6K9oVchyZAr/6RAW3x+r0f9T7gbV7krqPatJSjUyKp10upBTlv/Q==
+	t=1795453446;
+	b=hGv2sPvjV0ZV12eId9sCm0k7GHajBibAkFEuoypYglQrCLMAsWNxwsxMiowN1OimM/qh
+	 2Va2D59gB8CaRNTmrDPPm+4x19wZC4fKlQtI3aWlvSzhHnjsnCiyKwtTGKmZtn12eiMIT
+	 y65lyL0QC67VmqInV2u5rLwKQGqzrOncYGohfGQQITS6eWuCtax2BIKKehzQ1VO61OLZM
+	 3E+15Ckx1LfhdVLie9ef7IxNzPdwL7QFw+jzhszYpkXn1cFia2sXyjT5+iL3mmaln/s8d
+	 EkuOXOBgywuf8PaT6ZVINpKzBG0co8s9T7bqPIDMejn7RTKmhNTHq8g4JYVb5klIsnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795453011;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:References:Content-Language:From:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=CcKTN/ne/NrxBF9vR7p5bNsGZd2SV++BaPo2YcBUq+4=;
-	b=aFoyVK70ycvE+ChTuUYFmEeeyr0hapLDTjM3TAUgiy7aR7qqJSygESwq3saDfPphc77h
-	 qQpHPOtB8jqUbk5St7lCUVvCe4mrSCTWtEGFnAJJKkFb8cgDBFoxrd8Z+YV6sc0Amj2pp
-	 sV59ZP1GvjL0pzkfXWH/jpL20lZ6SyIO8P+UPmSk07P5cLrVJrDyPjm/KutayiCJiq0x3
-	 VARyPgiT4BRIX+GiAlApYOVfo9xB+v8RP/CO9xIzERRWEnziiynWz6PCv3L5QBX4Kje8z
-	 ZpaKOYAFBdr4Sgzc8fcA1E1jeKW0Ock6rXK/uw0HHcxUWVnMA2qT1ygrBbIkl8SYZHQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795453446;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=XmdsJeyE4rpRVHsdnDc9OVQ5GpFBlKpU18EbKn8kat4=;
+	b=r4182W7guE7ijse29Sk7jJUfkfoqUrqzfAd614s1DGhW7sd32nBqb2SlTcR6k7blIf70
+	 12NnJpxy80ZQBIEP5Tx3Fae65YBbBgUKPpVWGDq6xJs5Dxeq0qyvB71nE0ovQAV4qzzCr
+	 qiLAroQy8zvcN7+V8R2myQxCXADq0yectKnTgeWm6Dda8zIZwVQluhz3R2k6zwi1fIM+t
+	 euI83b7sm6EauYGgwCxFwfek/RkxfxHeFnFKCqdJnwAsnk2ApeblyUJlB0VgTG/klNh8b
+	 mE8El5vLUWNQUdmz1dqV+AOc+JjV2u9u6mjKflxh0SfVPgW2N+mPuuH4so1iHNYuVhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="G2z/rnth";
-	arc=none smtp.remote-ip=209.85.208.49
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ny28lU2f;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=qfoxLSPm;
+	arc=none smtp.remote-ip=103.168.172.156
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F44606A330
-	for <git@vger.kernel.org>; Mon, 23 Nov 2026 16:56:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 24F44606A330
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED30606A31A
+	for <git@vger.kernel.org>; Mon, 23 Nov 2026 17:04:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DED30606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=G2z/rnth
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-6b7ddb99db4so4601848a12.0
-        for <git@vger.kernel.org>; Mon, 23 Nov 2026 08:56:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795453007; x=1796057807; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=CcKTN/ne/NrxBF9vR7p5bNsGZd2SV++BaPo2YcBUq+4=;
-        b=G2z/rnthk0QOpZlaUZhdT7WgC1aaTwKePGon3GZhTqduZZ03AuFGeftDNJ151P7GbU
-         cfERbx/rq2aMe6SRcm+REcWQe0BiQ+9rPvAuo3yRH+AOlArLdeSBqL750s7AwpIBw+co
-         zB8FR1499YsOPbdoE/sAU9xXcoPTXHJkoTc9gfFLD9U67ARyjBieDi0wWbihcIN4H9LY
-         DWPuO0OZLtzBbsr0MEmp9O0zfzzr2v6DgEaTJUsgvjJKIdNmBe3gDjnxO3ozrBl1yRc3
-         8E3szqq7Q+VxVRa6+B5H1nwMB8J1l1kwvRM9thI690sEiWAZzje6GcC8k/jvK6wKOMfW
-         RaNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795453007; x=1796057807;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=CcKTN/ne/NrxBF9vR7p5bNsGZd2SV++BaPo2YcBUq+4=;
-        b=fmIWjd2edxvZcVqhHuggARp8OEWFugCiZCY19VSfBaQFKu73vYL5R1+1AXtCRkUEvv
-         tw0w79mW2ZHPOIFg1UBAfCAU/XUJ6IXRS1tS4S+Vlnvx8RiRC6UZC2BJcMHiHzOIwT1R
-         /ETqVUmjFk9dEtk5eOpdTwXrqetGBUnDpKnDgYk4Fl/jo5GgVv+tOdZEIlEj5ZnKJiRb
-         kAAes46RTilCCGaBrWPIaig94km0+3+aXP+FT5UNgEacrNmjpuP/26G6sD4jPwlxqZM9
-         Elg2XiJa4ENwAObNM8IhAQqPVXJ6sYoJwwhzi48plIAGDFgULFKYS11c0/nGqWaqoHMR
-         f6GA==
-X-Gm-Message-State: APuU4Z9uA9BvZeYaK5cRSUBIh9KTSpFPDEbAUb1uWAhIQQmNqzRaLZmj
-	3KQzgddi7ECUx1P2dgNyXzXeVtXwbNcEIeWvVFzN7ncO8KLzBNckLHRHAJgqoA==
-X-Gm-Gg: AZFdTZdtYu+yexZ3mw9Y5TNdXr543Qsn1KserLQHsy3Cg7KBYpT/Ox3PZ92ksOzDAbj
-	83PH/3wr5i6YrGwRUUN/M7OGPzRICCmj2CSe42JW30aCVSlDtgRGrESn1ST1buG7LdMHeA+ZXC9
-	voSA2rgbjCSOFpVXnFQwb/0gFFPhT7svFXgUyBtjmh6lnqyEzkoUWoSBvSkyRAQJi4D8hqdFKH7
-	bb6UK4ZrKdAam5vK7XIVWxmOfxbbRy/FkcGAodOOsLFB0Rz7KP/3AD9/SaSfrDpnZ0tKMxeo+iV
-	1NUIVMBd9rXKWyBqag+6rmMLqcBY3FODIa1ruiPpuNwB0UbS6hIowKmKmuzonvpP5fBfitORBlw
-	LagBr48ZhI5/YGT9O2mFgjW/ZpSi0WHr7VTdhj518gB6HHZoAtpewr/Lmr38XRHAoyrUODhmRxe
-	eVGwNlAdRAfpH0yea8uvNdWnxrvkP+xcuTHakXOfJDyxmtOr3XEwhAB7AId5h7E37pT/X705y3g
-	zWepnlcvBwLGKdVOXOM2gLDfLWuOFUadwe33LScf1Zs980U0EK+TLZ/PPsLyn3n8c2VFesIp/WN
-	e/SbTOGS8sr2d9l4wlGxRW9wfCX1n+nIEg9gD/rcE77y6dAWWViMiW0=
-X-Received: by 2002:a05:6402:13d6:b0:6ba:9025:53c2 with SMTP id 4fb4d7f45d1cf-6ba90255abfmr4131519a12.20.1795453007350;
-        Mon, 23 Nov 2026 08:56:47 -0800 (PST)
-Received: from [192.168.0.172] ([217.71.1.73])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6ba370cbeecsm5712478a12.6.2026.11.23.08.56.45
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Nov 2026 08:56:46 -0800 (PST)
-Message-ID: <371bd5df-960f-427c-8631-e1af4535d1bc@gmail.com>
-Date: Mon, 23 Nov 2026 17:56:44 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ny28lU2f;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=qfoxLSPm
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0E0F71400389
+	for <git@vger.kernel.org>; Mon, 23 Nov 2026 12:04:05 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Mon, 23 Nov 2026 12:04:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1795453445;
+	 x=1795539845; bh=XmdsJeyE4rpRVHsdnDc9OVQ5GpFBlKpU18EbKn8kat4=; b=
+	ny28lU2fZjWUb6SQdfJspL03vK3xMh7muJuVAwLPas0WIpAb96GFY6OFwAUr0a5u
+	8zmsesDecrGNbBiBARzYdaUztdhrUOQAM7izhO0cjrcjZ9qQHXt7A0w+sxp5PZEs
+	8KCLv0lsc1lmCxius5D/uks5BALwfKvFR2EH1KlftWaKAseJ3nXSnz1GubldoJsk
+	wqCPPklzSiFbXNqlmTiVf3r1AELa9OTpbK3vKxQJGjKOmnjUH66OUHFBXns1aV+L
+	po/vhxCoxVfjhj51cvZ5vxQ4rkuYwo1MIeA2cgnpQcmsvw+eBAVxidB0Igo3CAD+
+	QbOKVZRVP74vZQvDuOb8sA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795453445; x=
+	1795539845; bh=XmdsJeyE4rpRVHsdnDc9OVQ5GpFBlKpU18EbKn8kat4=; b=q
+	foxLSPmh/hn3x4aoVaVrp6Og0h9QWUXCkjtFYEIyjSX6QU1b1nwslaaCB2M4w/UG
+	VImP6iFND5i+Ncds8oJiwZEeE2vqaPM3ew7Kp2aA+uaFNnXSHHzhHucLTvqf2GGU
+	DlfC3Mu/gXWHGe2XWW6Y12TBtt/L5Mhuu/EPS0BCV+qGnjZQBcEK9m+iKVOZKLwV
+	L1Rnl2J1MbfXoJNUX+TSMHnLkmfwfa618+3HzyGpQXAbW6s+9qnlPiUvXsl1k0jQ
+	kIfC2IkaGnegTUJL4wAS9QJu43vbx6bfARemGsiWizxtRHG1M7mDFIuT01ufiRau
+	jw78z1gZVsFglr7VjJuqw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795453445; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:l6706rNRwMtNf0D8BhY47fT7u1yIbiTUvXoV7Ny6oQit4KP
+	ykx2HnYhwKKyUVG8I06QOU1BW/G5bnW/ah45/BUj0r4OCspDn5mkVXtsERYyWrhC
+	ALpjdspHvE1zCzg5Nsa3WsC4V+rK/eJXN3+2d/lVtSu1qfOpyfbdDGP6t2rQO01W
+	PT7O9zjZDP19mN55mmIc3QkliLYMstqW9TSBt+TSINkc6TinLtY/apZUvnkteVTS
+	PqwAnDmSVNdv4VRQW29FgwE1BYuSnWTvvQtApY6/D86GvFDac2yZOUox8/3gyyUA
+	FFOkSGiydEC5/jiT6B/rVFBLSgO9/XPMqoVQtwg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=13;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to,
+	user-agent;
+Message-Instance: m=1; h=sha256:RlQy6AMYSYHeCPZdDhkSXdtWgxRVhvYrPv2ZsSzEwJE=:uVQcpFTlo1FErLLrW8lmCgccTaJRE5l72TrdmL12dJ8=;
+X-ME-Sender: <xms:BHIEaxcAkXeH8PsQ1PvQEMqM3-NEkp5g7cNy5LM_8kxbZtO1y7QGSg>
+    <xme:BHIEa2N0NJngOZQWEfUvta4BivZ22XDTfBmSGo2ter40ug8YOOruvoUr2kwKK84CR
+    IipeNt4bAudpmp7za0PdNFaYbp1A7lZw2BjHSQ46yMCS7vcL2loZyog>
+X-ME-Received: <xmr:BHIEa_iNFO9opAVJITNTvaV66vAUzksoBgQfPtKahL5hd2frHD1kBgp3k5EEBznsnPoXVr8INErtMJ1HwlWOwpr9AXf4OK6wzYVmpf4>
+X-ME-Proxy-Cause: dmFkZTGHIqCZpJw5xZZDL+7/Ps1gn65eD7YriaM0xCBRh3tzRjmPbuNF3cjaW494+JVwgM
+    vxlsf4ubSwFK6+BTLY6Nsqkx/Y9uGkLTfybqxlO5WjjHT/rcY3jwyeA6vbMYXSl+hw6Kuz
+    0fSiLdkfBQO74hxOEzIfUshp/vXFFKKekbbF1cyxc/TwkTfYgTUbswCj9JbKcLZuUIw4Zv
+    7ylDuUZWhmuRcdOEnwpi+s6Wtwc3by3sPk24f2qN42tNT2WI5bqs7dBdvfRvJHKdmjsXq5
+    5APz7ZRulsmULwzJXtpXqLuGzczNB0Q0+BmlRKXAlJ2xvyFPUPI1VLgMhnzX4p56yTwxrv
+    3XT7FgXNm5YAVetlFDYLm4s3VbibfoBvhwgJl5xDI8qiyToyhS0R7ms2ZSZo8C4OW2zhHX
+    F5btHnifgpnsO9sMmRr6U+LQMQ1Ka0On1a1sD1v1/q635RX2tzZHFfCaXm20JtFB1sB4uI
+    rbT+WvpwEXo9jc13jhhT1pzlnlpVH31eciTZ1uJy7FhxsW1zQJ8TCaEUlEP0y+g3/Y5AOD
+    b6JPbO0X6EkW/UPqMuZk85xMtbiyqsj0ynD3Ql9BI4IqnrTpdlTuOAFWlFqvRUBoKVrJp+
+    gNiQoa7FtDajmaGZQJSrsVEcbT8Qnygz/cKasg9VPLwnrqbUQXuFwSB9ISmA
+X-ME-Proxy: <xmx:BHIEa51QDQ3vtSIVvnt-GZtJild2lYP3nkkZ8aRcQ6dNhi3HZ9AGxw>
+    <xmx:BHIEa5iWFak_d2-3EF_3fH_LaBFHqVFHUGDeGF1pPb1gJpRnGcANUQ>
+    <xmx:BHIEa5f8M1acOdv0lFSdX3XUZ5MUGh3wVbP5N2oo6GKAoixf8z_qNw>
+    <xmx:BHIEa8lJMb5cB0J-O9iv9PAb1wDy3nORWagvTiyRZtbfhsKyF1D4hA>
+    <xmx:BXIEaziZz-qPRYTjKg1I0IrQMfbNJOhLTRCPJIOHFe-4xyM8NqGX_P7N>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 23 Nov 2026 12:04:04 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Dirk Gouders <dirk@gouders.net>
+Cc: git@vger.kernel.org,  "Junio C Hamano <gitster@pobox.com>, Andy Koppe"
+ <andy.koppe@gmail.com>
+Subject: Re: [PATCH v5 1/4] utf8: add display_mode_esc_sequence_len_counted()
+In-Reply-To: <20261122-master-v5-1-313bd1bb3c45@gouders.net> (Dirk Gouders's
+	message of "Sun, 22 Nov 2026 15:51:24 +0100")
+References: <20261122-master-v5-0-313bd1bb3c45@gouders.net>
+	<20261122-master-v5-1-313bd1bb3c45@gouders.net>
+Date: Mon, 23 Nov 2026 09:04:02 -0800
+Message-ID: <xmqqa4mza399.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -90,132 +128,188 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] doc: update-index: Format options correctly
-To: git@vger.kernel.org
-References: <20261122152538.107580-1-omri.sarig13@gmail.com>
- <xmqqfqwsk4a6.fsf@gitster.g> <6954cd53-43c8-48ca-82da-35c673dee260@gmail.com>
- <AS4PR02MB8336DCFEB4C0076DCE45F950EB452@AS4PR02MB8336.eurprd02.prod.outlook.com>
-Content-Language: en-US
-From: Omri Sarig <omri.sarig13@gmail.com>
-In-Reply-To: <AS4PR02MB8336DCFEB4C0076DCE45F950EB452@AS4PR02MB8336.eurprd02.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-DQoNCk9uIDIzLzExLzIwMjYgMTYuNTYsIFJpY2hhcmQgS2Vycnkgd3JvdGU6DQo+IEhtbW1t
-Li4uLg0KPg0KPiBXZSd2ZSBqdXN0IGhhZCBzb21lIGRpc2N1c3Npb24gb24gdGhpcy4NCj4g
-U3BvdCB0aGUgbGluZSB0aGF0IGlzbid0IHBhcnQgb2YgdGhlIHJlcGx5Pw0KPiBBbmQgdGhh
-dCBpcyBub3Qgc3Vycm91bmRlZCBieSBibGFua3MuDQo+IFNvIGlzIG5vdCB2aXNpYmxlLg0K
-DQpTb3JyeSEgSSdsbCBtYWtlIHN1cmUgdG8gZm9ybWF0IG15IG1haWxzIGNvcnJlY3RseSBn
-b2luZyBmb3J3YXJkLg0KDQo+DQo+PiBObywgSSBhbSBub3Qgc3VnZ2VzdGluZyAidGFsa2Vk
-IGFib3V0IiBpcyBiZXR0ZXIuICAiaGFzIHJlZmVyZW5jZXMgdG8iDQo+PiAob3IgInJlZmVy
-cyB0byIpIGlzIHBlcmZlY3RseSBmaW5lIG9uY2UgaXQgaXMgd3JpdHRlbiBpbiB0aGUgcHJl
-c2VudA0KPj4gdGVuc2UsIGFzIHRoZSBlYXJseSBwYXJ0IG9mIGEgcHJvcG9zZWQgbG9nIG1l
-c3NhZ2UgaXMgc3VwcG9zZWQgdG8gZ2l2ZQ0KPj4gYW4gb2JzZXJ2YXRpb24gb2YgdGhlIGN1
-cnJlbnQgc3RhdGUuDQo+IFVuZGVyc3Rvb2QsIEknbGwgdXBkYXRlLg0KPj4+IG1pc3Npbmcg
-dGhlIHJlbGV2YW50IG1hcmtlcnMsIGNhdXNpbmcgdGhlbSB0byBiZSBmb3JtYXR0ZWQgYXMg
-dGV4dA0KPj4+IGluc3RlYWQgb2YgYXMgcmVmZXJlbmNlcy4NCj4+IEJ1dCB0aGVuICJhcyB0
-ZXh0IGluc3RlYWQgb2YgYXMgcmVmZXJlbmNlcyIgc29tZXdoYXQgbWlzc2VzIHRoZSBtYXJr
-Lg0KPiBLaW5kIHJlZ2FyZHMsDQo+DQo+IFJpY2hhcmQgS2VycnkNCj4gQk5DUyBFbmdpbmVl
-ciDigJMgTWVkaWEgQ29tcGV0ZW5jeSBDZW50cmUNCj4gTWlkQ2l0eSBQbGFjZSwgNzEgSGln
-aCBIb2xib3JuIOKAkyBMb25kb24gV0MxViA2RUEg4oCTIFVLDQo+IGF0b3MuYWkNCj4NCj4N
-Cj4NCj4NCj4NCj4+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+PiBGcm9tOiBPbXJp
-IFNhcmlnIDxvbXJpLnNhcmlnMTNAZ21haWwuY29tPg0KPj4gU2VudDogMjMgTm92ZW1iZXIg
-MjAyNiAxNTozMg0KPj4gVG86IEp1bmlvIEMgSGFtYW5vIDxnaXRzdGVyQHBvYm94LmNvbT4N
-Cj4+IENjOiBnaXRAdmdlci5rZXJuZWwub3JnDQo+PiBTdWJqZWN0OiBSZTogW1BBVENIXSBk
-b2M6IHVwZGF0ZS1pbmRleDogRm9ybWF0IG9wdGlvbnMgY29ycmVjdGx5DQo+Pg0KPj4gQ2F1
-dGlvbjogRXh0ZXJuYWwgZW1haWwuIERvIG5vdCBvcGVuIGF0dGFjaG1lbnRzIG9yIGNsaWNr
-IGxpbmtzLCB1bmxlc3MgdGhpcyBlbWFpbA0KPj4gY29tZXMgZnJvbSBhIGtub3duIHNlbmRl
-ciBhbmQgeW91IGtub3cgdGhlIGNvbnRlbnQgaXMgc2FmZS4NCj4+DQo+Pg0KPj4gT24gMjIv
-MTEvMjAyNiAyMS4xOSwgSnVuaW8gQyBIYW1hbm8gd3JvdGU6DQo+Pj4gT21yaSBTYXJpZyA8
-b21yaS5zYXJpZzEzQGdtYWlsLmNvbT4gd3JpdGVzOg0KPj4+DQo+Pj4+IFN1YmplY3Q6IFJl
-OiBbUEFUQ0hdIGRvYzogdXBkYXRlLWluZGV4OiBGb3JtYXQgb3B0aW9ucyBjb3JyZWN0bHkN
-Cj4+PiBJJ2QgZG93bmNhc2UgIkZvcm1hdCIgLT4gImZvcm1hdCIuDQo+PiBTb3JyeSwgc3dp
-dGNoaW5nIGJldHdlZW4gZGlmZmVyZW50IGNvbnZlbnRpb25zIGJvdW5kIHRvIGdldCBtZSBj
-b25mdXNlZA0KPj4gc29tZXRpbWVzLg0KPj4gSSd2ZSBhbHJlYWR5IHVwZGF0ZWQgaW4gVjIs
-IGFuZCBJJ2xsIG1ha2Ugc3VyZSBhbGwgZnV0dXJlIHBhdGNoc2V0cyBoYXZlIHRoZSBjb3Jy
-ZWN0DQo+PiBjYXNpbmcuDQo+Pj4+IFRoZSB1cGRhdGUtaW5kZXggbWFuIHBhZ2UgaGFkIHJl
-ZmVyZW5jZXMgdG8gc2V2ZXJhbCBvcHRpb25zLCB3aGljaA0KPj4+PiB3ZXJlDQo+Pj4gSSB0
-YWtlICJoYWQgcmVmZXJlbmNlIHRvIiB0byBtZWFuICJ0YWxrZWQgYWJvdXQiIGhlcmUuDQo+
-Pj4NCj4+PiBObywgSSBhbSBub3Qgc3VnZ2VzdGluZyAidGFsa2VkIGFib3V0IiBpcyBiZXR0
-ZXIuICAiaGFzIHJlZmVyZW5jZXMgdG8iDQo+Pj4gKG9yICJyZWZlcnMgdG8iKSBpcyBwZXJm
-ZWN0bHkgZmluZSBvbmNlIGl0IGlzIHdyaXR0ZW4gaW4gdGhlIHByZXNlbnQNCj4+PiB0ZW5z
-ZSwgYXMgdGhlIGVhcmx5IHBhcnQgb2YgYSBwcm9wb3NlZCBsb2cgbWVzc2FnZSBpcyBzdXBw
-b3NlZCB0byBnaXZlDQo+Pj4gYW4gb2JzZXJ2YXRpb24gb2YgdGhlIGN1cnJlbnQgc3RhdGUu
-DQo+PiBVbmRlcnN0b29kLCBJJ2xsIHVwZGF0ZS4NCj4+Pj4gbWlzc2luZyB0aGUgcmVsZXZh
-bnQgbWFya2VycywgY2F1c2luZyB0aGVtIHRvIGJlIGZvcm1hdHRlZCBhcyB0ZXh0DQo+Pj4+
-IGluc3RlYWQgb2YgYXMgcmVmZXJlbmNlcy4NCj4+PiBCdXQgdGhlbiAiYXMgdGV4dCBpbnN0
-ZWFkIG9mIGFzIHJlZmVyZW5jZXMiIHNvbWV3aGF0IG1pc3NlcyB0aGUgbWFyay4NCj4+PiBU
-aGVzZSBwYXJ0cyBvZiB0ZXh0IHN0aWxsIHJlZmVyIHRvIG9wdGlvbiBuYW1lcy4NCj4+Pg0K
-Pj4+IFRoZXkgc2hvdWxkIGJlIHR5cGVzZXQgaW4gYG1vbm9zcGFjZWRgLCB3aGljaCBpcyB0
-aGUgY29udmVudGlvbiBpbiBvdXINCj4+PiBtYW51YWwgcGFnZXMuICBBbmQgdGhhdCBpcyB0
-aGUgaXNzdWUgeW91IGFyZSBhZGRyZXNzaW5nLg0KPj4+DQo+Pj4gVGhlc2UgY2hhbmdlcyBk
-byBub3QgbWFrZSB0aGluZ3Mgd29yc2UsIGJ1dCBJJ2QgcHJlZmVyIG5vdCB0byBzZWUgdG9v
-DQo+Pj4gbWFueSBsb3ctcmlzayAmIGxvdy12YWx1ZSBwYXRjaGVzIHRoYXQgYWRkcmVzcyBv
-dmVybHkgbmFycm93IGlzc3Vlcy4NCj4+PiBJZiB3ZSBjb21wYXJlIHRoZSByZXN1bHRpbmcg
-dGV4dCBhZnRlciB0aGlzIHBhdGNoLCBlLmcuLA0KPj4gVW5kZXJzdG9vZC4gTXkgdGhvdWdo
-dCBwcm9jZXNzIGlzIHRoYXQgYnkgaW50cm9kdWNpbmcgdGhlc2Ugc21hbGwgY2hhbmdlcywg
-d2UncmUNCj4+IGFibGUgdG8gbWFrZSBzbWFsbCBpbXByb3ZlbWVudHMsIHdpdGhvdXQgcHV0
-dGluZyB0b28gYmlnIG9mIGEgYnVyZGVuIG9uIHRoZQ0KPj4gcmV2aWV3IHRpbWUuDQo+Pg0K
-Pj4gSSdtIGluIHRoZSBwcm9jZXNzIG9mIHJlYWRpbmcgdGhyb3VnaCBtdWNoIG9mIHRoZSBk
-b2N1bWVudGF0aW9uLCBhbmQgYWxvbmcgdGhlDQo+PiB3YXksIEkgdHJ5IHRvIG5vdGUgdGhl
-c2Ugc21hbGwgaXNzdWVzIHRoYXQgY2FuIGJlIGZpeGVkIGVhc2lseS4NCj4+IFdvdWxkIHlv
-dSByYXRoZXIgdGhhdCBpbiB0aGUgZnV0dXJlIEkgMSkgbWFrZSBiaWdnZXIgcmUtd29ya3Mg
-YXMgcGFydCBvZiBwYXRjaGVzLA0KPj4gb3IgMikgbm90IHNlbmQgdGhlc2UgcGF0Y2hlcyBh
-bHRvZ2V0aGVyPw0KPj4NCj4+IElmIGl0J3MgZWFzaWVyLCBJJ20gYWxzbyBjb21wbGV0ZWx5
-IGZpbmUgd2l0aCBkcm9wcGluZyB0aGlzIHBhdGNoc2V0Lg0KPj4gQXMgeW91IHdyb3RlLCBp
-dCBpcyBhIGxvdy12YWx1ZSBwYXRjaC4NCj4+Pj4gZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRp
-b24vZ2l0LXVwZGF0ZS1pbmRleC5hZG9jDQo+Pj4+IGIvRG9jdW1lbnRhdGlvbi9naXQtdXBk
-YXRlLWluZGV4LmFkb2MNCj4+Pj4gaW5kZXggOWJlYTlmYWI5YS4uOWI5NTYyMTZkMiAxMDA2
-NDQNCj4+Pj4gLS0tIGEvRG9jdW1lbnRhdGlvbi9naXQtdXBkYXRlLWluZGV4LmFkb2MNCj4+
-Pj4gKysrIGIvRG9jdW1lbnRhdGlvbi9naXQtdXBkYXRlLWluZGV4LmFkb2MNCj4+Pj4gQEAg
-LTU3LDIxICs1NywyMSBAQCBPUFRJT05TDQo+Pj4+ICAgICAgIHVwZGF0ZXMgYXJlIG5lZWRl
-ZCBieSBjaGVja2luZyBzdGF0KCkgaW5mb3JtYXRpb24uDQo+Pj4+DQo+Pj4+ICAgIC1xOjoN
-Cj4+Pj4gLSAgICAgICAgUXVpZXQuICBJZiAtLXJlZnJlc2ggZmluZHMgdGhhdCB0aGUgaW5k
-ZXggbmVlZHMgYW4gdXBkYXRlLCB0aGUNCj4+Pj4gKyAgICAgICAgUXVpZXQuICBJZiBgLS1y
-ZWZyZXNoYCBmaW5kcyB0aGF0IHRoZSBpbmRleCBuZWVkcyBhbiB1cGRhdGUsDQo+Pj4+ICsg
-dGhlDQo+Pj4+ICAgICAgICAgICAgZGVmYXVsdCBiZWhhdmlvciBpcyB0byBlcnJvciBvdXQu
-ICBUaGlzIG9wdGlvbiBtYWtlcw0KPj4+PiAgICAgICAnZ2l0IHVwZGF0ZS1pbmRleCcgY29u
-dGludWUgYW55d2F5Lg0KPj4+IHdpdGggYW5vdGhlciBtYW51YWwgcGFnZSB0aGF0IGhhcyB0
-aGVzZSBtYXJrLXVwIGNvcnJlY3RlZCBpbiBKZWFuLU5vw6tsDQo+Pj4gQXZpbGEncyBzZXJp
-ZXMgZnJvbSBlYXJseSB0aGlzIHllYXIsIGUuZy4sIHdoYXQgZTlhOTllZjJkYQ0KPj4+IChk
-b2M6IGNvbnZlcnQgZ2l0LWZvcm1hdC1wYXRjaCBzeW5vcHNpcyBhbmQgb3B0aW9ucyB0byBu
-ZXcgc3R5bGUsDQo+Pj4gMjAyNi0wNy0yMykgZGlkOg0KPj4+DQo+Pj4gICAgUHJlcGFyZSBl
-YWNoIG5vbi1tZXJnZSBjb21taXQgd2l0aCBpdHMgInBhdGNoIiBpbg0KPj4+ICAgIG9uZSAi
-bWVzc2FnZSIgcGVyIGNvbW1pdCwgZm9ybWF0dGVkIHRvIHJlc2VtYmxlIGEgVU5JWCBtYWls
-Ym94Lg0KPj4+ICAgIFRoZSBvdXRwdXQgb2YgdGhpcyBjb21tYW5kIGlzIGNvbnZlbmllbnQg
-Zm9yIGUtbWFpbCBzdWJtaXNzaW9uIG9yDQo+Pj4gLWZvciB1c2Ugd2l0aCAnZ2l0IGFtJy4N
-Cj4+PiArZm9yIHVzZSB3aXRoIGBnaXQgYW1gLg0KPj4+ICAgIC4uLg0KPj4+IC0tPG4+OjoN
-Cj4+PiAtICAgICAgIFByZXBhcmUgcGF0Y2hlcyBmcm9tIHRoZSB0b3Btb3N0IDxuPiBjb21t
-aXRzLg0KPj4+ICtgLTxuPmA6Og0KPj4+ICsgICAgICAgUHJlcGFyZSBwYXRjaGVzIGZyb20g
-dGhlIHRvcG1vc3QgXzxuPl8gY29tbWl0cy4NCj4+Pg0KPj4+IHlvdSB3b3VsZCBub3RpY2Ug
-dGhhdCB3aGlsZSB3ZSB0eXBlc2V0IGAtLXJlZnJlc2hgIGluIG1vbm9zcGFjZSBub3cNCj4+
-PiAod2hpY2ggaXMgYSBnb29kIHRoaW5nIHRvIGRvKSwgd2Ugc2hvdWxkIGFsc28gdXBkYXRl
-IHRoZSBlbnVtZXJhdGlvbg0KPj4+IGhlYWRlciAiLXE6OiIgdG8gImAtcWA6OiIsIGFuZCBh
-bHNvICInZ2l0IHVwZGF0ZS1pbmRleCciIGluIHNpbmdsZQ0KPj4+IHF1b3RlcyB0byB1c2Ug
-dGhlIHNhbWUgYGJhY2txdW90ZWAuDQo+Pj4NCj4+PiBBbHNvIHRoZSB3YXkgdGhlc2UgY2hh
-bmdlcyBhcmUgZGVzY3JpYmVkIGluIEplYW4tTm/Dq2wncyBsb2cgbWVzc2FnZXMNCj4+PiBp
-cyBxdWl0ZSBnb29kLiAgWW91IHdvdWxkIHdhbnQgdG8gaW1pdGF0ZSB0aGVzZSBtZXNzYWdl
-cy4NCj4+IFRoYW5rIHlvdSBmb3IgdGhlIHJlZmVyZW5jZS4gSWYgeW91IHN0aWxsIHdhbnQg
-bWUgdG8gdXBkYXRlIHRoZSBjdXJyZW50IHBhdGNoc2V0LA0KPj4gSSdsbCB1cGRhdGUgdGhl
-IGZvcm1hdCBhcyB3YXMgZG9uZSB0aGVyZS4NCj4+PiBUaGFua3MuDQo+PiBUaGFuayB5b3Ug
-Zm9yIHRoZSByZXZpZXchDQo+Pg0KPiBBdG9zIGlzIGEgdHJhZGluZyBuYW1lIHVzZWQgYnkg
-dGhlIEF0b3MgZ3JvdXAuIFRoZSB0cmFkaW5nIGVudGl0eSBpcyByZWdpc3RlcmVkIGluIEVu
-Z2xhbmQgYW5kIFdhbGVzOiBBdG9zIElUIFNlcnZpY2VzIFVLIExpbWl0ZWQgKHJlZ2lzdGVy
-ZWQgbnVtYmVyIDAxMjQ1NTM0KS4gVGhlIHJlZ2lzdGVyZWQgb2ZmaWNlIGlzIGxvY2F0ZWQg
-YXQ6IFNlY29uZCBGbG9vciwgTWlkQ2l0eSBQbGFjZSwgNzEgSGlnaCBIb2xib3JuLCBMb25k
-b24sIFdDMVYgNkVBLiBUaGUgVkFUIE5vLiBpczogR0IyMzIzMjc5ODMuIFRoaXMgZS1tYWls
-IGFuZCB0aGUgZG9jdW1lbnRzIGF0dGFjaGVkIGFyZSBjb25maWRlbnRpYWwgYW5kIGludGVu
-ZGVkIHNvbGVseSBmb3IgdGhlIGFkZHJlc3NlZSBhbmQgbWF5IGNvbnRhaW4gY29uZmlkZW50
-aWFsIG9yIHByaXZpbGVnZWQgaW5mb3JtYXRpb24uIElmIHlvdSByZWNlaXZlIHRoaXMgZS1t
-YWlsIGluIGVycm9yLCB5b3UgYXJlIG5vdCBhdXRob3Jpc2VkIHRvIGNvcHksIGRpc2Nsb3Nl
-LCB1c2UsIG9yIHJldGFpbiBpdC4gUGxlYXNlIG5vdGlmeSB0aGUgc2VuZGVyIGltbWVkaWF0
-ZWx5IGFuZCBkZWxldGUgdGhpcyBlbWFpbCBmcm9tIHlvdXIgc3lzdGVtcy4gQXMgZW1haWxz
-IG1heSBiZSBpbnRlcmNlcHRlZCwgYW1lbmRlZCwgb3IgbG9zdCwgdGhleSBhcmUgbm90IHNl
-Y3VyZS4gQXRvcyB0aGVyZWZvcmUgY2FuIGFjY2VwdCBubyBsaWFiaWxpdHkgZm9yIGFueSBl
-cnJvcnMgb3IgdGhlaXIgY29udGVudC4gQWx0aG91Z2ggQXRvcyBlbmRlYXZvdXJzIHRvIG1h
-aW50YWluIGEgdmlydXMtZnJlZSBuZXR3b3JrLCB3ZSBkbyBub3Qgd2FycmFudCB0aGF0IHRo
-aXMgdHJhbnNtaXNzaW9uIGlzIHZpcnVzLWZyZWUgYW5kIGNhbiBhY2NlcHQgbm8gbGlhYmls
-aXR5IGZvciBhbnkgZGFtYWdlcyByZXN1bHRpbmcgZnJvbSBhbnkgdmlydXMgdHJhbnNtaXR0
-ZWQuIFRoZSByaXNrcyBhcmUgZGVlbWVkIHRvIGJlIGFjY2VwdGVkIGJ5IGV2ZXJ5b25lIHdo
-byBjb21tdW5pY2F0ZXMgd2l0aCBBdG9zIGJ5IGVtYWlsLg0KDQo=
+Dirk Gouders <dirk@gouders.net> writes:
+
+> From: Junio C Hamano <gitster@pobox.com>
+>
+> display_mode_esc_sequence_len() scans for an ANSI display mode
+> escape sequence (e.g. "ESC [ 1 ; 31 m") at the start of a string,
+> relying on NUL termination to stop.  Some callers, however, work on
+> a counted buffer: utf8_strnwidth() takes <string, len> and must not
+> scan past it, while strbuf_utf8_replace() and
+> strbuf_add_wrapped_text() know (or can cheaply learn) the end.
+>
+> Add display_mode_esc_sequence_len_counted() taking <ptr, len>,
+> which never reads at or beyond ptr[len], and make
+> display_mode_esc_sequence_len() a thin wrapper for NUL-terminated
+> strings.
+
+Good.
+
+> Use the counted variant in utf8_strnwidth() for correctness, and in
+> strbuf_utf8_replace() and strbuf_add_wrapped_text() (computing the
+> end once upfront in the latter) to avoid measuring the remaining
+> text in each iteration.
+
+OK, but the latter needs a slight fix (see below).
+
+> [Dirk Gouders: allow SIZE_MAX to be passed for NUL-terminated strings
+>  to avoid O(n²) degradation as suggested by Andy Koppe.  Also add
+>  tests for these functions.]
+>
+> Helped-by: Andy Koppe <andy.koppe@gmail.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Dirk Gouders <dirk@gouders.net>
+
+Minor nit.  These ought to be a chronological record of custodial chain.
+The original author's sign-off comes first, then Helped-by and [note on
+the help in square brackets], and finally the sign-off of person who is
+relaying the final package.
+
+> diff --git a/t/unit-tests/u-utf8-ansi.c b/t/unit-tests/u-utf8-ansi.c
+> new file mode 100644
+> index 0000000000..d969737000
+> --- /dev/null
+> +++ b/t/unit-tests/u-utf8-ansi.c
+> @@ -0,0 +1,86 @@
+> +#include "unit-test.h"
+> +#include "utf8.h"
+> +#include "strbuf.h"
+
+Do we use <strbuf.h> at this stage?  I do not think so (and
+<unit-test.h> includes it anyway).
+
+> +
+> +/*
+> + * Test display_mode_esc_sequence_len_counted() for NUL-terminated strings.
+> + */
+> +void test_utf8_ansi__sgr_len_counted(void)
+> +{
+> +	cl_assert_equal_i(0, display_mode_esc_sequence_len_counted("", SIZE_MAX));
+> +
+> +	cl_assert_equal_i(0, display_mode_esc_sequence_len_counted("\033", SIZE_MAX));
+> +...
+> +	cl_assert_equal_i(7, display_mode_esc_sequence_len_counted("\033[31;0ma", SIZE_MAX));
+
+It is sad that these lines have to become this long.
+
+As the values returned from display_mode_esc_sequence_len_counted() and
+friends are all size_t, not signed, cl_assert_equal_u() would be a much
+more appropriate assertion here.
+
+See how t/unit-tests/u-odb-inmemory.c:cl_assert_object_info() nearby
+uses it to check values of type size_t.
+
+> +/*
+> + * Test display_mode_esc_sequence_len_counted() with end pointers.
+
+Probably with "length limits" instead of "end pointers" in this
+iteration.
+
+> diff --git a/utf8.c b/utf8.c
+> index 96460cc414..503edb8edc 100644
+> --- a/utf8.c
+> +++ b/utf8.c
+> @@ -16,18 +16,31 @@ struct interval {
+>  	ucs_char_t last;
+>  };
+>  
+> -size_t display_mode_esc_sequence_len(const char *s)
+> +/*
+> + * Return the length of the ANSI display mode escape sequence (e.g.,
+> + * "\033[1;31m") that appears at the beginning of the "len" bytes
+> + * of string "s", or 0 if the bytes do not begin with a complete
+> + * such sequence.  Never looks at s[len] or beyond.
+> + */
+> +size_t display_mode_esc_sequence_len_counted(const char *s, size_t len)
+>  {
+> -	const char *p = s;
+> -	if (*p++ != '\033')
+> +	size_t i = 0;
+> +
+> +	if (i >= len || s[i++] != '\033')
+>  		return 0;
+> -	if (*p++ != '[')
+> +	if (i >= len || s[i++] != '[')
+>  		return 0;
+> -	while (isdigit(*p) || *p == ';')
+> -		p++;
+> -	if (*p++ != 'm')
+> +	while (i < len && (isdigit(s[i]) || s[i] == ';'))
+> +		i++;
+> +	if (i >= len || s[i++] != 'm')
+>  		return 0;
+
+Among 4 comparisons between i and len, only one of them follow the
+"textual order reflects actual order" principle.  Can we revert it back
+to the version I gave you to compare (len <= i) instead, if we allow the
+commit to claim to be from me, as I wouldn't write (i >= len) in these
+places if I were writing this patch myself.
+
+> +	return i;
+> +}
+
+>  /* auxiliary function for binary search in interval table */
+> @@ -218,7 +231,8 @@ int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
+>  		size_t skip;
+>  
+>  		while (skip_ansi &&
+> -		       (skip = display_mode_esc_sequence_len(string)) != 0)
+> +		       (skip = display_mode_esc_sequence_len_counted(string,
+> +							orig + len - string)) != 0)
+>  			string += skip;
+>  
+>  		glyph_width = utf8_width(&string, NULL);
+> @@ -279,6 +293,7 @@ void strbuf_add_wrapped_text(struct strbuf *buf,
+>  {
+>  	int indent, w, assume_utf8 = 1;
+>  	const char *bol, *space, *start = text;
+> +	const char *end = text + strlen(text);
+
+This strlen() call is unconditionally made, even before the check to see
+if we divert to strbuf_add_indented_text() with "if (width <= 0)";
+measuring the length of text in that code path is wasted.
+
+>  	size_t orig_len = buf->len;
+>  
+>  	if (width <= 0) {
+> @@ -299,7 +314,8 @@ void strbuf_add_wrapped_text(struct strbuf *buf,
+>  		char c;
+>  		size_t skip;
+>  
+> -		while ((skip = display_mode_esc_sequence_len(text)))
+> +		while ((skip = display_mode_esc_sequence_len_counted(text,
+> +								end - text)))
+>  			text += skip;
+
+OK, I guess.
+
+It is a bit sad that we cannot use the trick similar to passing SIZE_MAX
+to avoid having to prescan to find "end", though.
+
+>  		c = *text;
+> @@ -378,7 +394,8 @@ void strbuf_utf8_replace(struct strbuf *sb_src, int pos, int width,
+>  		int glyph_width;
+>  		size_t n;
+>  
+> -		while ((n = display_mode_esc_sequence_len(src))) {
+> +		while ((n = display_mode_esc_sequence_len_counted(src,
+> +								  end - src))) {
+>  			strbuf_add(&dst, src, n);
+>  			src += n;
+>  		}
+> diff --git a/utf8.h b/utf8.h
+> index cf8ecb0f21..57ca2ab270 100644
+> --- a/utf8.h
+> +++ b/utf8.h
+> @@ -6,6 +6,7 @@ struct strbuf;
+>  typedef unsigned int ucs_char_t;  /* assuming 32bit int */
+>  
+>  size_t display_mode_esc_sequence_len(const char *s);
+> +size_t display_mode_esc_sequence_len_counted(const char *s, size_t len);
+>  int utf8_width(const char **start, size_t *remainder_p);
+>  int utf8_strnwidth(const char *string, size_t len, int skip_ansi);
+>  int utf8_strwidth(const char *string);
