@@ -1,64 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.15
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795454086;
-	b=vAKGRmej8L4XtA/7n4KevKcL1PEWwfihFaSTw4INUGjW9eVCkkfhP4kSb8OHj7heE+ra
-	 Etdq6jw+52AzpvEDhaQ6Jcy35WCbSasIZtmOZYf6RnMQZjAfddwLzJBLbi1QuxVeu6LJ+
-	 kAuGZ5k9xF93dSuvLdLqidvwyHeXrKUH0TsQcgetwy8qQ+CU3aEdg5DuXOd1duWrL0bWf
-	 Ml0fbjQXKzNyAj6dANMGmg/WEXmkq3WfZnczEz7HEGWFzt2tkRQ4T8OZtXby3bqbLTMj1
-	 I3NehPCKpIu0IbeDT2fGN6p18YdEIo1dCKrm4SyIh9d7HvbrZSganBkinSio+eZ4DLg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795454086;
-	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-ZohoMailClient;
-	bh=a7PHr1g0kcu4zq2IUQ0m5U+8yyi0nD6nbmgpt59mW/g=;
-	b=3VWHcJM8MWQ/umo438YMDYy/zFoqfjAGjE1+a4T2g5AKRhk+lbC8R5kOT1w/SVaXpBZs
-	 qxc6flvxUxPppeq5tqo4De0FtzAPcSG8g/JosoJkOBc8H2DS4FLTgjGFUuhWS1t2Xirqh
-	 GyhXhY3pCaMqR3Y5vD3QSbOxaTnBw1ICZ2GJFXq3SMc04zFf/luA6ofirnlPpK8KEpsG+
-	 Nk2D8mRVLjp3FXgIKMff80f0OZ8+zSM4eXeMYz+POU1PGcElLib8UQyz83V5ivbJiyPxg
-	 YvdHMGA3rwQgQ0I5vm7eA0VwCE2cDPaesoZl6XfDf7TI3D3GRB1yAihMcCT11veHz7g==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=none header.from=laveeshbansal.com;
-	spf=pass smtp.mailfrom=laveeshbansal.com;
-	dkim=pass header.d=laveeshbansal.com header.i=@laveeshbansal.com header.a=rsa-sha256 header.s=zoho header.b=QDL6a1pF;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.15
-Received: from sender6-op-o15.zoho.com (sender6-op-o15.zoho.com [165.173.180.15])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.156
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795454646;
+	b=k6eiQ0nx0eaHTS7sdwnoGgAD08xcyWLQnKIi/S+exC2TJhaLFh40IsMKucpbN8XI0Msl
+	 XPkPNjy4Edp4WcOWx1xadjMdy924RcDJ8EIN7448f4el6EEoQ08Mwxzgm07hL7iHXCw2L
+	 6LcwQZ79NaZ5Fw4RnWdCe10zWfFAlkyhBHT9lA1G4sDzdc4KiR52fwl2QrE5r0kTI6r+9
+	 FqEK2XDg4XFkej7SnmiGxq/xHUCJhyEruR/KEtvJpey6quRuWCKe9Hs4qLNnI59tZSNet
+	 nGCEXvq2NTdHAUa9yHgOLkpl+LtBPBaVI2Zm/tS/XIHU5bU9OutXgLHv9+PJbwqFsNg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795454646;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=SAn4R4VQWf90FuiLi4lH+RsMgaIYeUpEk1QdmP0EVN0=;
+	b=Yqex9Mp+TcW4kw2DwnJa4+kAOJdV1WZR3HJfA/taZouWr2+Fm6OLlwFTdEjowW9IOgLu
+	 XaWdj/PVO7PFF95p+f+E5H00Qw01yQGPGHIV3XuHnDr8BOnXOD4pfUQ2gALTYY0Py7dAo
+	 M+zKxV3nL7XWyqMwBc9FX0KfbMfRo4BgvXYqtYWWUnw/qnd1Z7FCDcVSNOvQmtXakR714
+	 TpZfnPhCZx6PuexjFnBlZj7ctTKtrfN8qeoZaHu9a7lya65lHvmqf/7I9g0nC4EfKOmE4
+	 onVwOu9tCeJ/H2HUiX100Nyqdb5zo62f71TBC/0KJBhjtmhtHp68AVkSGQItAVBCEbQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=CxOhEJP5;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=GIRgETy2;
+	arc=none smtp.remote-ip=103.168.172.156
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92601606A31F
-	for <git@vger.kernel.org>; Mon, 23 Nov 2026 17:14:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 92601606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=laveeshbansal.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=laveeshbansal.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8991B606A31A
+	for <git@vger.kernel.org>; Mon, 23 Nov 2026 17:24:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8991B606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=laveeshbansal.com header.i=@laveeshbansal.com header.a=rsa-sha256 header.s=zoho header.b=QDL6a1pF
-ARC-Seal: i=1; a=rsa-sha256; t=1795453152; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=SxQibDRLQF0k6JQZ8NN58YT69x0dKi7JZq3Wd9tbiO7wYIqB9HWzZu4dfvD0zHtAY5pI3fsMgb5kafry7sSUS96kec3lp29WNVZReyN2NhfskobqrfQra2zLty9lrlYx05t/gtd3mI2Uso3y/OHt9SuhwveBhmgN4tdReksOUMM=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1795453152; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=a7PHr1g0kcu4zq2IUQ0m5U+8yyi0nD6nbmgpt59mW/g=; 
-	b=NTypmr9zJQffIKneBGDjveHqjkbRFly37GhlUU2B7ScfpZ0KfqLrq5EQPHBnnMjwAWZjOFJsKH9aWv1r2MNhI85hrBmHOg51u4lAZIyxxQbPDrka9633gKjdZ7KK0o2ecLe2/iMF0B1JwRJ1GBSav19c6Q2bR18rtDSLCjZmvaM=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=laveeshbansal.com;
-	spf=pass  smtp.mailfrom=laveeshb@laveeshbansal.com;
-	dmarc=pass header.from=<laveeshb@laveeshbansal.com>
-DKIM-Signature: a=rsa-sha256; b=QDL6a1pFVljeZH5ypu2IBM2EvdB/FflcY+xseGoJCqEzY0uUpXcJ0T10Y87/vfYBd1QBOJXesfzGHkxLQiOuoOI8iy11pW1jo6jcpg5r8fh+aBd8wAe/RAMJhEDSDmO63RiBZv1euO28BeNXFEN5TxkLjmDTE5YvuIPERw9yhO0=; c=relaxed/relaxed; s=zoho; d=laveeshbansal.com; v=1; bh=a7PHr1g0kcu4zq2IUQ0m5U+8yyi0nD6nbmgpt59mW/g=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
-Received: by smtp.zohomail.com with SMTPS id 1795453150593882.9888702137875;
-	Mon, 23 Nov 2026 08:59:10 -0800 (PST)
-From: Laveesh Bansal <laveeshb@laveeshbansal.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Patrick Steinhardt <ps@pks.im>,
-	Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] rev-parse, shortlog: accept --glob with a separate pattern
-Date: Mon, 23 Nov 2026 08:59:03 -0800
-Message-ID: <20261123165903.58880-1-laveeshb@laveeshbansal.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20261109052402.33604-1-laveeshb@laveeshbansal.com>
-References: <20261109052402.33604-1-laveeshb@laveeshbansal.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=CxOhEJP5;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=GIRgETy2
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A4D3F14003A3
+	for <git@vger.kernel.org>; Mon, 23 Nov 2026 12:24:04 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Mon, 23 Nov 2026 12:24:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1795454644; x=1795541044; bh=SAn4R4VQWf
+	90FuiLi4lH+RsMgaIYeUpEk1QdmP0EVN0=; b=CxOhEJP56oOszkMj9HaLxYxXBw
+	mN0+PXofkYUbsQgiKZbMeVpCmpZvJW3VmPdxqfxLOSF4zwHGuThLdAFeRLSiR0bp
+	bLVsOWH3Jd+UGHGRuf+15fZvEMbtp+ZP9Z7KSlh7j8gV8HmK9vdUDg1tmvVzVQbF
+	OjV1ufugBG5bVWi/++R55a7a7kMTfEBq4ambOvMZ0Ao3RCwlSmf96ecYzBRryNxc
+	YHx3l7JL2YPTOH3ec5Re1fX0WJlMskh/5M5a3GIIbReEo19nxhPjv0zhMS0jut/w
+	YE/hNpeNUJlUzR1XSHCYaLm2ZwE8c+CRnNeK2eO4Yj6nyOCclc6xlPZC2cNQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795454644; x=1795541044; bh=SAn4R4VQWf90FuiLi4lH+RsMgaIYeUpEk1Q
+	dmP0EVN0=; b=GIRgETy23z5MchaIa3SkloZJfUBYq2uE7AJ7jXnK9WpkoYs3Key
+	9zOegQ/C5G6xGMxY2vQTaYB9I1JoUC6Y1AAxrDVFeyqRDzl1ACVw4ZT41dV0eyJz
+	GqRMGahBrX/qpUlMlMADQlYFPev6va8FrZUbMO0gsFZ4bQm87HojmwkjVb9OT8s/
+	tFNWqwwDRyRvAs6eo33V+E9EN3td746zy9oNa2I5cmClHdvmmkRHXAwZLcShaamc
+	s/ioPdvLhHW7wrJzx55e06a1lzYjZJ55Q77LnvnQAxieeF0qwKA8yH58UakuOkyc
+	36SE0YNWbfQRQZETGoX+u5vPGUc18n+9GIw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795454644; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:n9IYXDu/Lxz7ODmG7EcNDuvVD0nE5F8t+2QqpUVONiyzeeD
+	N2+RoYLTfrM1U5fgH39XaYYK+HK/FiAP3m/8xzytpPTVpsVrKT1gqmrXGKls/HHS
+	2wOBY2cMEEFAlZsqngcfW3h4e5bDyScx463RqBNWcjsNchL7m11DQwEa3sXhvVkL
+	Ff9Uw+IxvBTht8TRYIOXb6xm0HQ4eWMnnmZzZqwVjbhW+uQXQmy8Ybl4ebgRbmgd
+	0Y2SPyHPDzniID6/1M7FlzhedIa9zvCP5z9MvvMf08NhwLtQrIhFn/zvqREMYvSn
+	WNBlW2gGqaLfdnRa8DPJ0cxLZLFzLkG1OGzstyg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:YDBoyCIo7KZACszY1BWxVAPkYcSEIFUNKqgslOVjEpQ=:Y8uabyW1tSZ/GSJhuH1JVg4QLb7fV4lGd4/gxBEuZQo=;
+X-ME-Sender: <xms:tHYEa4SPW91D91JnXAt5V0K0CCI-4nBUthD6oxv0RQlJhqovxoDG5A>
+    <xme:tHYEa8xzy6u9eVdqwMZs_hX-Apok2aLzSuS8Y5_7EVJM6xPWrrmrVLMlOGuijSQk_
+    pNtEwqR3HRG37gvnYVxNa4v2u9NGJJfBHeUOxy8oPMGAvjbAWxklLg>
+X-ME-Received: <xmr:tHYEa62jowUeCCApDQpMDES8gTbnm4VIqLal6O3ttlBERBVWTJsmEsyq0y2CCKbgHv48FGWoKN9B9kl5vXgd8ogyox-cr1jfGlGykdA>
+X-ME-Proxy-Cause: dmFkZTGI9DSdlIc639BdukxvtRh1+/wRh3B7+0Y9DjpMV1L2jL2Rs/E3MzuuS4ap1Ahmfw
+    7uhWlqFvbTTAIh9os0qkqL1ydtQFbMufbqecXoBZygEqtINwTdORUfwsjdOyZkp9WTA/E8
+    cYMa76ZTDU9Hrre/w5Xtdj01D3LOOnaD9Ufuy8BqkGKr3/MWAkplWVYl2F6fJYAjFlCp2a
+    a0XXZj2NA2QerP4JlpRLkmVtMiHceB5qo2o+ls5mVCXTFO7PtHmJVfpqeGolXdh+gJAaQM
+    lU0J6NO7Zm7wi/wyQCpKx8g2YEQnyeHDVoTfAiNQ1GwkCAGI9yv8Tm0WjWPJRgV4VY4Kks
+    xvzR7GF09w7Fj8Lkkbj+0gYfg7WGLItXRPTACK55zM6rkm0XI9UUBWeXVknlRdF2IcCl2w
+    QA7bQNBp7xc7FvVO4nOT+7sAiWAY6wSg+tjo/RmEGW8vXGextWOb9/smJsEWESyoAN5LoH
+    ncuB+fo3LpUpLDocofNvJXyk377XS9+ZHxn2xgnvysbLC/xnc2evOmYTdPQfz6vKWKoaaJ
+    JN14FbBRjGII7Zu2o1/PHuRkF4Bb+uF9bzu7AZN7WrYJdGMJMJEOinJY7jmK/EgzNPi9+f
+    DVJpy3QW4hkGniS2+bLA2hMPMHfyGHqqoAC1xvHuSaQDcHWMyQslI51z2Kjg
+X-ME-Proxy: <xmx:tHYEa64sVi5Mdeml6d_bbj8toqDeouSEde7Q5jH-NQ7UgivEXGnB2A>
+    <xmx:tHYEa9WPfuhiPBv23Kvaa4in9XfcZFQ_PomtUlxS8Lxif8AEVMVS1Q>
+    <xmx:tHYEa5DpDlBlFshcCwZQ2S9PHq7yxOmD-3SpiREna5IQELUyYo8gUA>
+    <xmx:tHYEa87l2zQ1AGRNbf6HAWPcRWwBz7U9gK5J1mOHI3cM17R_TrZe_Q>
+    <xmx:tHYEax3xvMto4LbrMv69qiIQ2iXHpnldFNPVVxcXzcl-smY0vnA00UkD>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 23 Nov 2026 12:24:04 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Dirk Gouders <dirk@gouders.net>
+Cc: git@vger.kernel.org,  "Junio C Hamano <gitster@pobox.com>, Andy Koppe"
+ <andy.koppe@gmail.com>
+Subject: Re: [PATCH v5 0/4] utf8: bounds-related fixes and a doc fix
+In-Reply-To: <20261122-master-v5-0-313bd1bb3c45@gouders.net> (Dirk Gouders's
+	message of "Sun, 22 Nov 2026 15:51:23 +0100")
+References: <20261116-master-v1-0-dc2a50ce0aa0@gouders.net>
+	<20261122-master-v5-0-313bd1bb3c45@gouders.net>
+Date: Mon, 23 Nov 2026 09:24:02 -0800
+Message-ID: <xmqq5wxn8nrh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -68,23 +125,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+Content-Type: text/plain
 
-Hi,
+Dirk Gouders <dirk@gouders.net> writes:
 
-A gentle ping on this patch. It has been about two weeks since I sent
-it, and I wanted to check that it had not slipped through. It still
-applies to current master (f7de814569) without conflicts, and t6018
-passes with it.
+> A patch here on the list made me look at
+> display_mode_esc_sequence_len() in utf8.c and I found two details in
+> the file that are perhaps worth a fix:
+>
+> 1) utf8_strnwidth() disregards the given len argument when fed
+>    with proper string and len.
+>
+> 2) The comment for utf8_strnwidth() is incorrect: it states the
+>    function returns strlen() for cases when it actually returns its
+>    len argument.
+>
+> Signed-off-by: Dirk Gouders <dirk@gouders.net>
 
-In short: "git log" accepts "--glob <pattern>" as two words, but "git
-rev-parse" and "git shortlog" only understand "--glob=<pattern>". The
-patch makes them accept both forms, which turns the four known-breakage
-tests in t6018 into regular ones.
+I had pointed out a few issues, but other than them the series looks in
+a very good shape.  I can see we are getting closer to the finish line.
 
-If this looks reasonable, I will send --exclude and --exclude-hidden as
-a follow-up.
-
-Thanks,
-Laveesh
+Thanks for working on this.
