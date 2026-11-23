@@ -1,89 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.49
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795439458;
-	b=KhEVBvWlJ788OtJvm8UjZeWPtpTgt7YeOgi+2lJpZEinjmO61mGnJNy3IPk+5gIu1k42
-	 76s9IOBgj4IJdq7CHmB2eEWnSw6Ti3UMkugqYyPPXovzdQWanNSR/d5S1xX0EF9JV9m0B
-	 f1Hr0lD6dixH0JtXoO/LG2qPRzooFiYLe98witl/jD7Mjk8rhShLjT9ofJRDP5hCQMAgB
-	 5zGNcBkXFmGRG72IFsFQF5bvzJnk+owdvmqntsX6vyhNC3BfZycw8yRGAf7vcsbuwQ6Kk
-	 hvOqSe0VBWHVilNyQLwHWigG2n7AwLE2aMYGQyGpZY7EX8NU8mGG0ym8sU+zgskHIBA==
+	t=1795444366;
+	b=HXo7AbuCMjDf30zhyjhEtnBuJe+hq+a2OgGW2mMg0QS23aCYqw2uAyOzp1Z2SAUTm3gD
+	 2uinjgl0csSH4LwgyTVf5Y0vJYw8AJDizhs/5gS5BgbdiVhepT5yobBkFvg2sYd8zkT1p
+	 44ZTWfSzG1gh1LzV7eLpojJ+r+iXlZ/UAb5OdxmkEDBCcSeJZig/aRMk8e2gxsbUKiUTm
+	 jNH/B0K03jAIK4enpc9h+pfpR2g4gvn65BQFeud5AL97HJGx1diDJwabWsgUsVzeOJAs7
+	 A/vOONocSW970LPEKztIcv0xNxGMv6eVa8S/v4kOoJzwENGgMM4ORbSCRnEYC+2Wrrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795439458;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795444366;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:Cc:
 	 References:Content-Language:From:In-Reply-To:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=+27CmHF0CrYoGdKtbSBEbFHI6grpiC2bwT9Szuj3XFM=;
-	b=IBm3r1maIlettNClQ/1WEMn4rHtOwSIK4dl5S6aup0axc3s5log1epm9lnxT6yKubaYK
-	 2nCve5JF/HwU69Hq90vI1+lm5hmKebtBEXFBRt5s82l3RTKRcfs4/wcEiA4/an/SB0ti+
-	 nd8J6saZS87XkbknEC/wLwKqwoVT2dGk90VL+mXzo8DAKOdh8ZJSLo2o+3bfBRRYYz1RU
-	 aNMbS0tVWsm6fwRNWu+Q/m36nZJKqBs+speN9eRcQnKMaTAGDfQIiZD4aEuwLWauc+TO0
-	 1VAswkl9ljrXb0eOg+Ms63CCbRbpklFf795OmEFluqQkiFpiW0kV5JDOEM2Xng70a2w==
+	bh=ntHfGL+MKGCwJPNG+oFmBqKgw5RmOiZG4fck/Uf1wbw=;
+	b=2ceBJ4FPDDtkNo28CiXnHRmfhwGXmjLR+RTIfpvmu5yC6lO/fY//O4ZBmAagB34T3MWv
+	 8kh7rwPN2JK6//W7ML0SzvE8+k36uEdkBiBFZvt8+LUpLOl35iV6ky3Hethc3iLRIlccA
+	 O9VOgN342rkjGq0AL/PGlQuRI6HpxVbym/uKLbUFqFvw2yUi1KtoFNjh0HB71HjZd4Ohh
+	 iYSA/pGeEjWPmnC1aMx8f50si5F8cLo3xscCp4qMFe7eQhVnFSuMBtihpctsyjkmhKzIS
+	 JXSO5SbstXGkPB8YK3o5RZjiszYS1FywdyDkvOUxYL4s6Yfk3Hlh8148wHkQoAcRjpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hCC3ysp3;
-	arc=none smtp.remote-ip=209.85.128.46
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=NzTiFJjy;
+	arc=none smtp.remote-ip=209.85.218.49
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF7D606A33A
-	for <git@vger.kernel.org>; Mon, 23 Nov 2026 13:10:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4CF7D606A33A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC42606A31A
+	for <git@vger.kernel.org>; Mon, 23 Nov 2026 14:32:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8BC42606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hCC3ysp3
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4bb55cda775so20665915e9.0
-        for <git@vger.kernel.org>; Mon, 23 Nov 2026 05:10:58 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=NzTiFJjy
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c4cdc606b47so569875866b.0
+        for <git@vger.kernel.org>; Mon, 23 Nov 2026 06:32:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795439457; x=1796044257; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795444364; x=1796049164; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:reply-to:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=+27CmHF0CrYoGdKtbSBEbFHI6grpiC2bwT9Szuj3XFM=;
-        b=hCC3ysp34jshTWRynd7riOUEuWqLs3/wDOwnUJNk2PoqsdAKL2glUqfpN86qlNbQnV
-         WKrrj/MqfZ042Al3kgp20wAG4l+OAEid+ITPmlK80dCVuwqbf64r6N376RieLbo6P+f/
-         6b5EY72omKxmSvE3kGQzAI9NhNgC9Cx6YOLA76a4bRhNOD0hJiqYxLcNtAekzwoDjrQw
-         gVnyK5VrPh5ngm8L1JrrxETSRYlerNcZyBzTBpLQYpaE6k+qnM5YhH5H9Bei+jN72hDc
-         /vfOYcquMutMPY0rnaiO3UEdQmY4O+ExgCFbsFBPqUfFRzDcULK27J65S3LJ44yI5zBJ
-         9QcA==
+        bh=ntHfGL+MKGCwJPNG+oFmBqKgw5RmOiZG4fck/Uf1wbw=;
+        b=NzTiFJjygnptZfDY5jyeUfeOB1L5Ps+32NsReljKf19vGEevFnpy3uuYPsboLQxxa/
+         JZjeIZ8AVpyB++sxf1k28yKrGm46w5a81gRnWbbriFv3quCCn7SSmQZ9LVKl2hXsuK17
+         n8AvfWTuDowdfq4gfG6T5WihT3mlTK2ATzTltljG7dzKgwvHkH0rmJdEbQA+W8OmgKQo
+         EUlLCVxJAvNL6O0EKEyDkoyemFrPFfr8EECBci3SCmjSkyGcLMuFCDUk3iqRWTAtxQ39
+         5nEeqPOJ/vr1l8zvJd2DDYSVPk50GrfdgCH2qmdHcZv5LI4s1FPZlkKLWX2rkBS2syZl
+         IZSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795439457; x=1796044257;
+        d=1e100.net; s=20260707; t=1795444364; x=1796049164;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:reply-to:user-agent
          :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=+27CmHF0CrYoGdKtbSBEbFHI6grpiC2bwT9Szuj3XFM=;
-        b=XYgCsBj1L1Q3dyqSabbw98uzvCkZK9p7i3RuCWH9hSGTW/Ccb9ypmgR04JcTv39BAN
-         lolSlNCUd4eKWIEBwuoqki9f/doft8oB3Do+npK9bgREZAX1B1/x+p5oSNGt/+1G5zGB
-         O5XC22smWP5yhBkAhjG0849fFsIh0HZ3W6oaDY+7HbxB//h/VbQlqDPsXMere61v9CjD
-         f03q0hrX/EphqngjPELhaFf5vrL8vZ0fCc/0fUhB8VIdypqdkzGVwWriDLXE1pKdMvjI
-         TkF3QYuLdwqENl43bV/ohi81LYksMA9j9efXUdGUnhVuQ0504UOS1gWmgUw6WivPL4jc
-         RYCA==
-X-Forwarded-Encrypted: i=1; AL+hErF9pwIa553276M89wgzyzQBQEGoUyj24BLwYudfSd7cP9Ui7divT1RnKzfDb6UyykPRYo8=@vger.kernel.org
-X-Gm-Message-State: APuU4Z9l8LXClzybOZDTgzUjH95EWiMj8W9dL+kYQ9J0ntqtMnVHwPr6
-	i+PVbM4NXXigp7eEbsPLmYEkycDYtfSIGEcL+KyE86dhZMJ6W6QE1Z2Q
-X-Gm-Gg: AZFdTZernoWr1k58yGD60AlkejMhPfuT1AkuxwTm+RDPqHc8J5mvMsziKD3fRdhHvnQ
-	8Mt82y3O2HsSv6qR3/qj4bLP9YFRM6rt1g96V/RanN8KBlnwHajRv4m33/Y3bFGclrlvVo9gKW+
-	DfRhu21Dkznv2cFdHnQYuBqVFQMnoqFK8SYdl8of3c6vvk+X2Y+BjnDMuzvGpIq4nyggrMykXwP
-	nokwYtHJLKmdJEVm/p8t+ICgAFM+Vu/uxJ5WypuHtbJz6L1qlpPf4J3mVyeQskc6L3GjSp7q8bO
-	ukT/20O5uXyOQk6LOaauTsCAnxb14PBvBKnsab9+v3p4s/a/ZxhZIgF/jBEATJmW+p4sZ6jTnJP
-	gLrrGdLDVaxSayIPFmnNxxa5+Og2nh11j4dHOWPtUhIZPFYkFF06HoJAP8uEMw4c8F9JyV6avWQ
-	3HEHC5FNPbB+Nk9SBy3aa3Tl6ZPe47o8YZvWDn7dNJTDJZF/6e9w1edWEr9JcXMyClbehri5k1g
-	4aidLSKok1Kskd8M2eTHxrBOwcyCriaUSBpwtZQvpi4VbutL9bm9h0rNrCQQgoA7++Fqse9/s+D
-	lAYvAuNPRE0JDK/CxNlMCvLuVlPY2trMVHs9FKyrJseCZBhtHUTcLr808D0e8E8E2n793V7gv+P
-	HBjI8qyY=
-X-Received: by 2002:a05:600c:b8a:b0:4a0:20b4:ba93 with SMTP id 5b1f17b1804b1-4bb88818156mr233091615e9.16.1795439456394;
-        Mon, 23 Nov 2026 05:10:56 -0800 (PST)
+        bh=ntHfGL+MKGCwJPNG+oFmBqKgw5RmOiZG4fck/Uf1wbw=;
+        b=0FlhDcA/tHfxJryTmDaLzHRRH6BTFabxzSZzzQLVPI4icUtE3TZFDtjH+WR0LXrlh9
+         6s2FPoZWRp5HGko9aqnXrdhuBdz0vQwKe9SLKQ6AXjp5cQaBcNfbWYOIFcDV+lp4Qkc4
+         OWgB5sSsE1d1VX8LYg8jm+4pGB3zD624vTkt+x/yuZyYSNKvhv8Zt6WF+DR7N/dq2ubq
+         52PwpySMqVHdGx8Nhi2N0PlbR+W6QMaqMz8w/VXbwX6ya4Mg4yDf9KSdvgCfABbyXx3n
+         XU6OcVywoz+lQByPFYnTzi34i7Lft8jQB1t8hjeCCAtsJYzGSqoE3nFK7BbrIlFLzTr9
+         CgAQ==
+X-Forwarded-Encrypted: i=1; AL+hErFWWZDW3wT+ilaYqI9OwZSbjomz51gZExaBmqJfJvBNVjqWp120SEPGyY/pTrs1Ut4ZPrQ=@vger.kernel.org
+X-Gm-Message-State: APuU4Z8NlOuyoJAk15GIsqOBww2nq57O4e8M9kQkQSwJ5gZLxaFOyC/Y
+	je2JKgecvRfSwcjf/YicjumDSQ77w6u+lD9gQaN2+Bu4xN2fn6kyn1Dp
+X-Gm-Gg: AZFdTZciOSXZE9dU40CMOeKiMVqgGrb76GI8UY3tkJGnxbULNcY5NSOcb1Bz/kMdMsK
+	m8PcZifqhIunqX4boPg9Nt0PCDnuUOzZp8FB7DZtf/s6FSKjYhHyAzHcqpjCABDfNFumUI5WYNX
+	uHnJQz2EWDtqRaSfzrEbfxsyKErcli9mEU1JdFogqMjJE86mBUJKCbPPQCMTVwy8oRCa0i9ovlQ
+	q6+tyJ5cKH3tx2osgW0DFAXC6aB5TNfM0tmUH3iLCcsBeAxdo5JR9wBagUoA803gzU6MSAgwJut
+	oAUufclmu26a1/+wWhyOYykdZQ4kzSAhRkakMO36mYhZbic4g/eHGY+cWFxdDxPZa+R218khNJw
+	MA9RQayNU0ZYVZRVNxhziulV7MQ8VIduSnDtjM30B+Pz2CLEZDO6AgVQRbe+B3fpTjDyfA2LOh6
+	Nfr5ew9LO9jEQww5jPlLC6bF9/aeYb2+6dzn4AYN/JM2wxkQO8raM7FGfAUSRrB30pTWarwk/Kj
+	epfLmopTfkZgKY/ooiOXHDbRWP06hpyCwl4KC+hJIxJxYvYTx1W0iGBxhaTi90iv2iJ7r41e36D
+	wOwUnr5Wpm3R9yYGLCgvu6es/ln11b30nCY+D3rNAJtS61Aae4vAPWBzw+M9/Nd4WIYhfIpxJlr
+	iGJB/Wradtl1RyiieXpsyMyLY84wE
+X-Received: by 2002:a17:907:3e15:b0:c51:249f:7331 with SMTP id a640c23a62f3a-c513a3aacc8mr990461766b.1.1795444363685;
+        Mon, 23 Nov 2026 06:32:43 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb8849247asm348597665e9.7.2026.11.23.05.10.54
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c513afe01a0sm421909966b.68.2026.11.23.06.32.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Nov 2026 05:10:55 -0800 (PST)
-Message-ID: <a0ebd98f-669e-4ff2-bca2-cfd5da5a7316@gmail.com>
-Date: Mon, 23 Nov 2026 13:10:50 +0000
+        Mon, 23 Nov 2026 06:32:43 -0800 (PST)
+Message-ID: <27abe897-cba1-4561-816a-875c064ab8c0@gmail.com>
+Date: Mon, 23 Nov 2026 14:32:38 +0000
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -95,343 +95,133 @@ Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] history: refuse to rewrite branches used by other
- worktrees
-To: Aniket Gupta <aniketgupta3001@gmail.com>, git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Toon Claes <toon@iotcl.com>,
- Junio C Hamano <gitster@pobox.com>, Phillip Wood
- <phillip.wood@dunelm.org.uk>, Nikita Bobko <nikita@nbobko.com>
-References: <20261123103911.98860-1-aniketgupta3001@gmail.com>
+Subject: Re: [PATCH] sequencer: reset saved HEAD OID when picking onto an
+ unborn branch
+To: Wonseok Oh via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: Wonseok Oh <wonseok_oh@korea.ac.kr>, Wonseok Oh <marinelay7@gmail.com>
+References: <pull.2317.git.1795242633923.gitgitgadget@gmail.com>
 Content-Language: en-US
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20261123103911.98860-1-aniketgupta3001@gmail.com>
+In-Reply-To: <pull.2317.git.1795242633923.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Aniket
+Hi Wonseok
 
-Thanks for working on this, it is a useful improvement.
+Thanks for working on this. I think that as an immediate fix for the use 
+of an uninitialized variable the patch looks good, but I'm not sure the 
+behavior of cherry-pick and revert onto an unborn branch makes much sense.
 
-On 23/11/2026 10:39, Aniket Gupta wrote:
-> By default "git history" also rewrites every local branch that descends
-
-"also" is unnecessary here
-
-> from the commit it changes. If another worktree has such a branch
-> checked out, the branch moves but the index and working tree of that
-> worktree stay behind. So it shows staged changes that nobody made.
-
-The staged changes it shows were made by "git history" - they did not 
-appear from nowhere. An alternative to refusing to run would be to 
-update those worktrees if they are clean, but failing is the simpler 
-option to implement.
-
-> If
-> the current worktree is in the middle of rebasing the branch, "git
-> rebase --continue" later fails because the branch is not where the
-> rebase expects it.
+On 21/11/2026 06:30, Wonseok Oh via GitGitGadget wrote:
+> From: Wonseok Oh <marinelay7@gmail.com>
 > 
-> "git branch -f" refuses to move such branches and "git rebase
-> --update-refs" skips them. Do the same here: before replaying anything
-> look for local branches that contain the commit and are used by a
-> worktree and refuse to go on if there is one. Use branch_checked_out()
-> so that a branch that is being rebased or bisected counts as used.
+> When picking multiple commits, "git cherry-pick" stores the current HEAD
+> in .git/sequencer/head for "--abort" to return to. If the branch is
+> unborn, repo_get_oid() fails and leaves the object ID uninitialized,
+> but sequencer_pick_revisions() saves it anyway instead of clearing it
+> to the null OID that sequencer_rollback() checks for to report
+> "cannot abort from a branch yet to be born".
 
-Good. One thing to note is that I was recently looking at 
-branch_checked_out() and it only stores a single worktree per ref, so I 
-think if there are multiple checkouts of the same branch and we happen 
-to record the current worktree as the one where it is checked out we'll 
-fail to notice it is checked out elsewhere. That's not a problem that 
-needs solving here though.
+I had a hard time parsing the second half of that sentence. 
+sequencer_rollback() expects us to have saved the null OID when HEAD 
+points to an unborn branch, but instead we save some random junk because 
+we haven't initialized the 'head' variable. The use of an uninitialized 
+variable comes from 0f974e2124 (cherry-pick: allow to pick to unborn 
+branches, 2016-06-06). Before that commit we refused to cherry-pick onto 
+an unborn branch and so did not use 'head' unless it was initialized.
 
-> Skip
-> the branch that the current worktree has checked out, since the command
-> already takes care of the index and working tree of that worktree.
+It is rather strange that when sequencer_rollback() rejects an unborn 
+branch it refuses to remove the sequencer state so that it is impossible 
+to abort a multi-pick cherry-pick started on an unborn branch. It is 
+also strange that we will try and revert a single commit onto an unborn 
+branch but not multiple commits. 7acaaac275 (revert: allow single-pick 
+in the middle of cherry-pick sequence, 2011-12-10) inserted a separate 
+code path for single picks before the check for an unborn branch, so 
+prior that commit we refused to cherry-pick and revert onto an unborn 
+branch regardless of the number of commits. Going further back in 
+history, the check for an unborn branch was introduced by 04d3d3cfc4 
+(revert: Save data for continuing after conflict resolution, 
+2011-08-04). The commit message does not mention a reason for 
+introducing that check and therefore changing the behavior but I assume 
+it was to avoid having to support aborting to an unborn branch.
 
-What happens if a rebase is running in the same worktree as the user 
-tries to run "git history"?
+It would be nice to either remove the check for an unborn branch when 
+reverting multiple commits, or move the check so that it covers single 
+picks as well. It would also be good to allow the user to abort when 
+cherry-picking onto a unborn branch. Those changes don't need to be part 
+of this series though, they can always come later.
 
-> Refuse with --dry-run as well because it will show what a real run will
-> do.
-
-Good
-
-> Mention --update-refs=head, which leaves the other branches alone, with
-> the existing advice.historyUpdateRefs hint.
-
-Does --update-refs=head try to update the current branch? If so we 
-should check that is not being written somewhere else.
-
-> 
-> diff --git a/Documentation/config/advice.adoc b/Documentation/config/advice.adoc
-> index 3d91c90eda..bb0e24b745 100644
-> --- a/Documentation/config/advice.adoc
-> +++ b/Documentation/config/advice.adoc
-> @@ -60,9 +60,10 @@ all advice messages.
->   		Shown when the user tries to delete a not fully merged
->   		branch without the force option set.
->   	historyUpdateRefs::
-> -		Shown when `git history squash` refuses because a local branch
-> -		cannot be rewritten as a descendant of the squashed commit, to
-> -		tell the user about `--update-refs=head`.
-> +		Shown when `git history` refuses because a local branch is used
-
-This is copied from the existing wording, so it is not a new problem but 
-we should say what "git history" refuses to do. e.g.
-
-	Shown when 'git history' refuses to run because ...
-
-> +		by another worktree, or, for `squash`, because it cannot be
-> +		rewritten as a descendant of the squashed commit, to tell the
-> +		user about `--update-refs=head`.
->   	ignoredHook::
->   		Shown when a hook is ignored because the hook is not
->   		set as executable.
-> diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
-> index 1fcc30150a..ce7c0a88c8 100644
-> --- a/Documentation/git-history.adoc
-> +++ b/Documentation/git-history.adoc
-> @@ -215,6 +215,12 @@ empty.
->   	`branches`, all local branches that point to commits which are
->   	descendants of the original commit will be rewritten. With `head`, only
->   	the current `HEAD` reference will be rewritten. Defaults to `branches`.
-> ++
-> +A branch that is used by another worktree, or that the current worktree is
-> +in the middle of rebasing or bisecting, cannot be rewritten, as the index and
-> +working tree of that worktree would not match the rewritten branch. With> +`branches` the command refuses in that case, so use `head` to 
-rewrite only
-> +the current branch.
-
-We should also prevent rebase from rewriting a branch that is being 
-rewritten by "git history" but that can come later.
-
-> +/*
-> + * Rewriting a branch that is used by another worktree moves the branch
-> + * without updating the index and working tree of that worktree. The same
-> + * goes for the branch that the current worktree is rebasing. Refuse to
-> + * rewrite such branches, but not the branch that the current worktree has
-> + * checked out, as we update that one ourselves.
-> + */
-> +static int reject_checked_out_branches(struct repository *repo,
-> +				       struct commit *original)
-> +{
-> +	struct ref_filter filter = REF_FILTER_INIT;
-> +	struct ref_array refs = { 0 };
-> +	char *head_target;
-> +	int ret = 0;
-> +
-> +	head_target = refs_resolve_refdup(get_main_ref_store(repo), "HEAD",
-> +					  RESOLVE_REF_NO_RECURSE, NULL, NULL);
-> +
-> +	commit_list_insert(original, &filter.with_commit);
-> +	filter.kind = FILTER_REFS_BRANCHES;
-> +	if (filter_refs(&refs, &filter, filter.kind)) {
-
-This is correct, but it duplicates the revision walk we're already doing 
-when looking for merge commits. It would be more efficient to
-
-(1) modify setup_revwalk() to load decorations (we already load them
-     when replaying the commits so there is no extra work, we're just
-     loading them earlier)
-(2) modify and rename revwalk_contains_merges() to
-   (a) drop"--min-parents" and check for merges by looking at
-       commit->parents->next.
-   (b) check DECORATION_REF_LOCAL decorations are not checked out
-       elsewhere.
-
-For an existing example of using decorations, look at 
-replay.c:replay_revisions().
+I see that rollback_is_safe() expects to see a null OID when picking 
+onto an unborn branch, but update_abort_safety_file() writes an empty 
+file in that case. We should be consistent about the way we represent an 
+unborn branch in the state files. Arguably an empty file is a better way 
+of representing an unborn branch because there is no OID.
 
 Thanks
 
 Phillip
 
-> +		ret = error(_("could not filter refs"));
-> +		goto out;
-> +	}
-> +
-> +	for (int i = 0; i < refs.nr; i++) {
-> +		const char *refname = refs.items[i]->refname;
-> +		const char *branch, *path;
-> +
-> +		if (head_target && !strcmp(refname, head_target))
-> +			continue;
-> +
-> +		path = branch_checked_out(refname);
-> +		if (!path)
-> +			continue;
-> +
-> +		if (!skip_prefix(refname, "refs/heads/", &branch))
-> +			BUG("branch filter returned '%s'", refname);
-> +		error(_("cannot rewrite branch '%s' used by worktree at '%s'"),
-> +		      branch, path);
-> +		ret = -1;
-> +	}
-> +
-> +	if (ret)
-> +		advise_if_enabled(ADVICE_HISTORY_UPDATE_REFS,
-> +				  _("Use --update-refs=head to rewrite only "
-> +				    "the current branch and leave such branches "
-> +				    "untouched."));
-> +
-> +out:
-> +	free(head_target);
-> +	ref_filter_clear(&filter);
-> +	ref_array_clear(&refs);
-> +	return ret;
-> +}
-> +
->   static int setup_revwalk(struct repository *repo,
->   			 enum ref_action action,
->   			 struct commit *original,
-> @@ -350,6 +407,10 @@ static int setup_revwalk(struct repository *repo,
->   
->   		strvec_push(&args, "HEAD");
->   	} else {
-> +		ret = reject_checked_out_branches(repo, original);
-> +		if (ret < 0)
-> +			goto out;
-> +
->   		strvec_push(&args, "--branches");
->   		strvec_push(&args, "HEAD");
+> As a result, "--abort" errors out with "Could not parse object" in my
+> master build, while in Debian's 2.47.3 build the uninitialized memory
+> happened to hold the last picked commit's OID and moved the new branch
+> there.
+> 
+> Clear the object ID to the null OID when HEAD cannot be resolved, and
+> add a test.
+> 
+> Signed-off-by: Wonseok Oh <marinelay7@gmail.com>
+> ---
+>      sequencer: reset saved HEAD OID when picking onto an unborn branch
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2317%2Fmarinelay%2Fcherry-pick-unborn-abort-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2317/marinelay/cherry-pick-unborn-abort-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/2317
+> 
+>   sequencer.c                     |  9 ++++++---
+>   t/t3510-cherry-pick-sequence.sh | 10 ++++++++++
+>   2 files changed, 16 insertions(+), 3 deletions(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index 4a1c0e70b8..20bfe00ba3 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -5788,9 +5788,12 @@ int sequencer_pick_revisions(struct repository *r,
+>   		goto out;
 >   	}
-> diff --git a/t/t3450-history.sh b/t/t3450-history.sh
-> index f513463b92..f7ca66edc6 100755
-> --- a/t/t3450-history.sh
-> +++ b/t/t3450-history.sh
-> @@ -14,4 +14,132 @@ test_expect_success 'raises an error with unknown argument' '
->   	test_grep "unknown subcommand: .garbage." err
+>   
+> -	if (repo_get_oid(r, "HEAD", &oid) && (opts->action == REPLAY_REVERT)) {
+> -		res = error(_("can't revert as initial commit"));
+> -		goto out;
+> +	if (repo_get_oid(r, "HEAD", &oid)) {
+> +		if (opts->action == REPLAY_REVERT) {
+> +			res = error(_("can't revert as initial commit"));
+> +			goto out;
+> +		}
+> +		oidclr(&oid, r->hash_algo);
+>   	}
+>   
+>   	if (save_head(oid_to_hex(&oid))) {
+> diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
+> index 9400ddfc45..75004bba0c 100755
+> --- a/t/t3510-cherry-pick-sequence.sh
+> +++ b/t/t3510-cherry-pick-sequence.sh
+> @@ -269,6 +269,16 @@ test_expect_success 'allow skipping commit but not abort for a new history' '
+>   	test_cmp expect advice
 >   '
 >   
-> +test_expect_success 'refuses to rewrite a branch checked out in another worktree' '
-> +	test_when_finished "rm -rf repo wt" &&
-> +	git init repo --initial-branch=main &&
-> +	(
-> +		cd repo &&
-> +		test_commit first &&
-> +		test_commit second &&
-> +		test_commit third &&
-> +		git worktree add ../wt -b other &&
-> +
-> +		git refs list >refs-expect &&
-> +		test_must_fail git history drop second 2>err &&
-> +		test_grep "^error: cannot rewrite branch .other. used by worktree at .*wt" err &&
-> +		test_grep "^hint: .* --update-refs=head" err &&
-> +		test_grep ! "branch .main." err &&
-> +		git refs list >refs-actual &&
-> +		test_cmp refs-expect refs-actual
-> +	)
+> +test_expect_success 'cannot abort a cherry-pick sequence on a new history' '
+> +	pristine_detach initial &&
+> +	git checkout --orphan new_disconnected_seq &&
+> +	git reset --hard &&
+> +	test_must_fail git cherry-pick base..anotherpick &&
+> +	test_must_fail git cherry-pick --abort 2>advice &&
+> +	test_grep "cannot abort from a branch yet to be born" advice &&
+> +	test_must_fail git rev-parse --verify HEAD
 > +'
 > +
-> +test_expect_success 'refusing to rewrite checked out branches honors --dry-run' '
-> +	test_when_finished "rm -rf repo wt" &&
-> +	git init repo --initial-branch=main &&
-> +	(
-> +		cd repo &&
-> +		test_commit first &&
-> +		test_commit second &&
-> +		test_commit third &&
-> +		git worktree add ../wt -b other &&
-> +
-> +		test_must_fail git history drop --dry-run second >out 2>err &&
-> +		test_grep "^error: cannot rewrite branch .other. used by worktree at" err &&
-> +		test_must_be_empty out
-> +	)
-> +'
-> +
-> +test_expect_success 'advice.historyUpdateRefs silences the hint for checked out branches' '
-> +	test_when_finished "rm -rf repo wt" &&
-> +	git init repo --initial-branch=main &&
-> +	(
-> +		cd repo &&
-> +		test_commit first &&
-> +		test_commit second &&
-> +		test_commit third &&
-> +		git worktree add ../wt -b other &&
-> +
-> +		test_must_fail git -c advice.historyUpdateRefs=false \
-> +			history drop second 2>err &&
-> +		test_grep "^error: cannot rewrite branch .other. used by worktree at" err &&
-> +		test_grep ! "hint:" err
-> +	)
-> +'
-> +
-> +test_expect_success '--update-refs=head leaves branches of other worktrees alone' '
-> +	test_when_finished "rm -rf repo wt" &&
-> +	git init repo --initial-branch=main &&
-> +	(
-> +		cd repo &&
-> +		test_commit first &&
-> +		test_commit second &&
-> +		test_commit third &&
-> +		git worktree add ../wt -b other &&
-> +		git rev-parse other >other-expect &&
-> +
-> +		git history drop --update-refs=head second &&
-> +
-> +		git rev-parse other >other-actual &&
-> +		test_cmp other-expect other-actual &&
-> +		git log --format=%s main >actual &&
-> +		test_write_lines third first >expect &&
-> +		test_cmp expect actual
-> +	)
-> +'
-> +
-> +test_expect_success 'rewrites the branch of the current worktree' '
-> +	test_when_finished "rm -rf repo wt" &&
-> +	git init repo --initial-branch=main &&
-> +	(
-> +		cd repo &&
-> +		test_commit first &&
-> +		git worktree add ../wt -b other &&
-> +		test_commit -C ../wt second &&
-> +		test_commit -C ../wt third &&
-> +
-> +		git -C ../wt history drop second &&
-> +
-> +		git log --format=%s other >actual &&
-> +		test_write_lines third first >expect &&
-> +		test_cmp expect actual
-> +	)
-> +'
-> +
-> +test_expect_success 'refuses to rewrite a branch that is being rebased' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo --initial-branch=main &&
-> +	(
-> +		cd repo &&
-> +		test_commit first &&
-> +		test_commit second &&
-> +		test_commit third &&
-> +		test_must_fail git rebase -x false first &&
-> +
-> +		git refs list >refs-expect &&
-> +		test_must_fail git history drop second 2>err &&
-> +		test_grep "^error: cannot rewrite branch .main. used by worktree at" err &&
-> +		git refs list >refs-actual &&
-> +		test_cmp refs-expect refs-actual &&
-> +
-> +		git rebase --abort
-> +	)
-> +'
-> +
-> +test_expect_success 'refuses to rewrite a branch that is being bisected' '
-> +	test_when_finished "rm -rf repo wt" &&
-> +	git init repo --initial-branch=main &&
-> +	(
-> +		cd repo &&
-> +		test_commit first &&
-> +		test_commit second &&
-> +		test_commit third &&
-> +		git worktree add ../wt -b other &&
-> +		git -C ../wt bisect start HEAD first &&
-> +
-> +		test_must_fail git history drop second 2>err &&
-> +		test_grep "^error: cannot rewrite branch .other. used by worktree at" err
-> +	)
-> +'
-> +
->   test_done
+>   test_expect_success 'allow skipping stopped cherry-pick because of untracked file modifications' '
+>   	test_when_finished "rm unrelated" &&
+>   	pristine_detach initial &&
 > 
-> base-commit: f7de81456940dd6f3274e461149bba12965de609
+> base-commit: e1ec09b23c8e0deb21a0b95ac5996422277395d4
 
