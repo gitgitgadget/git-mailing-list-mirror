@@ -1,124 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=216.40.44.12
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795466046;
-	b=5DaMPVeeFMenicNP3hkFbaZgouu6MwwFkt7aNLpd7idzjiQlPjIu+2JWPLifHRQBwrbr
-	 xxvvPdQ0sc/LXJnCm6+31FfjrqO9VVp2IrwKSnIlaC9T1xr28eeQJ/+JW1ZfCc9UdrIo1
-	 Pq2Un2AJf2CCqNLWHpimNcURlDS9K6MLC6fkQTMvEMqSliAh2CwEcE06aS6N/fbwCEOJ3
-	 eCDWrkUJUjaXeHN6i8TNe4NT/0DRbP1wcI8Cp8Ub6k4SnSxor1peobecSXZpMraNQfKy0
-	 ULv+Oc+ktlDLBct1BTDNj9capxdoqhdQ7ELmFXRGbRh6i+uiXYg/Bbw8iJAp9pCLqlA==
+	t=1795467619;
+	b=kVh8RQKc87pN5y69QDDX1C6BGObsaElrfQkgWyNhfFzS4A4EEwD0+s3k5qUplZaaM0ar
+	 C7XzQeFPHUIKprJpkcVd11R4d9QDD0aUOwGR2qqedmB+8jj5zqneyAY1LM/+vBM6Icsz8
+	 uiBAWBqC19gyr+/mgfluh/blLz9KBMpEET5VTQhv1+vXvSK+keTqJgGdqdQQ6RyNa29t9
+	 2s3Jw2nS5SFfI344Wl4GD6AUjKf3HjiMjvPpZpx2FboLWa55SKA8R+qOQ7KgDhD2ksEtQ
+	 f0ZETU8imJhbj/ddXLeFrbC60BIoaNlrE1s/gPx+PV+CtXTvaGtelPf+I07ZH+kPkXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795466046;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=3qmnQZhfzAI3dhfR003S0jLIa36vM1izr66IkgaWNi4=;
-	b=od7cqkDBBHOSwDMs4XL0Vaw6hoWDkfssLsWsUN767QRugLG2sCWPQiZ4rr/Opqki8Dru
-	 Film6Ya4zpHfjHnAIJwuNXVZ5wMlxy8vLW8niGFyQRGxcH6eACunLirS2Wnsr+JbPadhn
-	 IRckz8HF/bweniHNeYIR/M5mvwtEnVC3hh7JszGS7a/cas8vymZ4iJfqkpKQN5rBc2lNn
-	 OxnNSAF/XDQv/RRpbGn4QfRPkPXyTaVQHFfLnXJufxGiJOQmRkiMEjKWovpMxQ8Cz8zwo
-	 9fqcC7fcIWPXmG7EEVuotAjr0UgiImUHYCvOURoE4nlJ5UyTGNQ4sHbTjGsFo3pesRQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795467619;
+	h=DMARC-Filter:Received:Received:Date:From:To:Cc:Subject:Message-ID:
+	 In-Reply-To:References:X-Mailer:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:X-Stat-Signature:X-Spam-Status:
+	 X-Rspamd-Server:X-Rspamd-Queue-Id:X-Session-Marker:X-Session-ID:
+	 DKIM-Signature:X-HE-Tag:X-HE-Meta;
+	bh=2tHliz5Rig7qfi3Mz3w1K+MI+niTRniRVsvK1o2Pd3c=;
+	b=Puli6zmuzJGHGWN1857t6G9iB8rdLd5/pKv2KS0iz6+hspXebClb2DXQ0bt7l1h+s7eW
+	 eqFyYMpjJ2im1EwnOdiANP070dgGHUK9d+k2SOwhqt2o1uqk8DSN+QKzJIQlWFCkifS27
+	 BX2BCNHp2AaIK5xyUUe0jeSO7mA2Fm3/wW9/WkYo1OZ6yXqVWa9CRbJ4EkqlgYAxx6HZT
+	 RWaWWLBtvuQoUm8CBStFI8vr/oG5dMy9pYOZc33Fs78IpqMBCC+KGnxsvuN9cp+xZIqBJ
+	 skG8V7WPn+JcgF2HtWvKCxc1mOOW0l4m5WIBm2J/15211BCtxe5i3ZwVGrTLR6cjZ/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ny95x7Yv;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=OBfxJjfd;
-	arc=none smtp.remote-ip=202.12.124.145
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	dmarc=pass header.from=goodmis.org;
+	spf=pass smtp.mailfrom=goodmis.org;
+	dkim=pass header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=JZx7kkwv;
+	arc=none smtp.remote-ip=216.40.44.12
+Received: from relay.hostedemail.com (smtprelay0012.hostedemail.com [216.40.44.12])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9978B606A31E
-	for <git@vger.kernel.org>; Mon, 23 Nov 2026 20:34:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9978B606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF231606A326
+	for <git@vger.kernel.org>; Mon, 23 Nov 2026 21:00:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DF231606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ny95x7Yv;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=OBfxJjfd
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id DC8901D00671
-	for <git@vger.kernel.org>; Mon, 23 Nov 2026 15:34:04 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 23 Nov 2026 15:34:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1795466044;
-	 x=1795552444; bh=3qmnQZhfzAI3dhfR003S0jLIa36vM1izr66IkgaWNi4=; b=
-	ny95x7Yv1n7WsB21aeon27FZp0f4C7MtYasZTa6hElJboQQQ09gAVXFAEmCkMdSE
-	RNQNlnqXpRdxAlBugWrkPmmQdlIKPX5RqxnuDJTKFqV8650MLBbDUFIe9cqZ3fqp
-	DD+xm7/qOsEMxeEnSOEY6dGqHUXW6DUt+LH877Mo8lx/N23idK8melCvMJ2nvpST
-	Fa7cZxq+ZoOmEQ9sWNPgD7v2bVkG+VaDyI9NeQJXzDTKx/OVVuX1TqO5Y8qGwotk
-	0eBNS++jiojZCJ8If+Gdhv+E6FAKthila/U7+nQhaEtZ4ngwlK9xk8A3uFfeludx
-	ujtbhXaiuCwrCLc2yVO0Yg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795466044; x=
-	1795552444; bh=3qmnQZhfzAI3dhfR003S0jLIa36vM1izr66IkgaWNi4=; b=O
-	BfxJjfdWnlsojYz25DzQE6tbOtsJqS9YddWmGr0nJ1BZ7pvw/ooz9z+ynDPG0sE3
-	76n671QKfBLoCtcPoryjlmliSrfsQLf87OMW8nu6E0wZPFKVYaFB+Xij72q9oVmc
-	IIiejJnskq0iI4ub01fbpvoGY0uI68yDf4/zu+Nh9E5I08aCRzBNECgy2+4/FC/q
-	QNNWTOCqcTQwC2WhTDI11oBru4fxpf+Bm/7NvEq5TFnN7S0sf61pg+QYv/TvSUGW
-	QyvRAS0C/uUGay9SFHdn5kSJTfKNf9xIAMi9sBQ/hpIRSKOUheQyFzC9UJlS9qiw
-	ambOACwGiz2tIpU+sRe6g==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795466044; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:m4HnyqFd+/EGoB/SKwrLLfPnFlslHvbVFpj2Gm74vkudoi2
-	DGD4Cb1J2gvicm+K8RuzWNe96/26IO1bBYHJ1NWwrFsVvKbUjTN91rIuFz5tRsnr
-	PF3zCcFKQmc3c0DhaEqjuQI1Q9SCYrO4UH4rmg4H/cyfCf9/u1ZpDh6LA6GNmbgb
-	eOn3jUbiJ6reJVZcTp5OiBRM6Qyu9+oHWAbaBa1WQn6KZ/MOaM4WHAIOmNkVYtzR
-	puzrylINniyyKtLLZM/YDLMT/QpVV+GyL9nVeMCP+UpTfhAOTPt3N82oP+mMSCEP
-	KCqGXkrxNNnEPPRkmkJZ/KMnI6LWWBX/lHYi8Dw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=13;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to,
-	user-agent;
-Message-Instance: m=1; h=sha256:DZbZI4oRoq7cVW7neVdq2UpxhzvQsNb97Ho5ggO3OV4=:2atIH6w/IqZFII6TGsO04+Nuu/4BA/MlAxBxKmOvuvs=;
-X-ME-Sender: <xms:PKMEa53PpnpVub2FP_2lh0ZNbjXJOAzZ6D5SB9ySyyWlfpD__jHd4w>
-    <xme:PKMEa3hrG1RdZn1IaZE6kfYF5DLvCZQ2EW6gtR5rKUKQIERluIc_RNndFjMtPFubb
-    W81prWc3k7XW2lkxSsvy-G9dmU84NDvYqCrOv498DD2jzBHZDWoFyw>
-X-ME-Received: <xmr:PKMEa3SaWMnqzQl0mmmc62Sp89caON_agwu_z1LAMauAXqUeJQeCrfvIC9-3NlHX3kxDo1hnC2wdYgGG0IzD2wA5XgWtWxfowaiUKZ8>
-X-ME-Proxy-Cause: dmFkZTEAxJBYjuIHI/WflVLxIEZtcZ1TkP2QysFF2b++L2o6pGXeuOQ8KcrpagE4R2+W8Z
-    9ciujUjKPCYyE4vir+nyvdmktfnRredE7DzgaVOn64wwuf1/Saha3eWibtH3NOOkwuYKRg
-    u+CwHxTpfB1A2FbfUSwgCQexBpx8F/7VFs+pNYheLNfTkLrBS0BOzNkU0IN9jdtdjvbPyU
-    DSHJUxWu4HBBPy0p31L3naRsxBmHRWq+53+OjyrMewPIJDOmOiaJf+Ar3z0T2p2iDWfu7F
-    nFfDP4XzkxAlBCdAUAPnXQyXjE56vLeEc+DvIDJ9MiaZX+HC9ZcUxQniKRaWiQTSQNUMfd
-    6pKyP4pAmGbV7zfTrVEaetdGy93C13b/Pshpm+XZJKmfYAoIkxd8qjUJvD7KCKIdEGfrz7
-    zLtQ3ZNQCmGSIOCrJWKYELcgyUKFtvW9frKWsL5sLSpzOQkIEJO80gYcOYTpgAL1nVlJbi
-    bta67y+VYgNtuVg9DFGCPYLCLmPrmr43BWxBsDHZTBuJIIftFdOIn0UnhyChRmVt9998dq
-    OhU6gX5/VRk7jhJcXlDHDaYy2mm1tj8Q0p5VpDHgkepoNTMT1CVc3NRGLswyUriN6jn211
-    rIuAWhG2WOIpL04R9ir25RSq+gSyJggKR8hU0CDrKirYLM4wT8lFguLkdoPw
-X-ME-Proxy: <xmx:PKMEawh_ODkSU-aEFl6FoZz5TZFX6aIhhQj5JuDK0cni4tnyhfr2MA>
-    <xmx:PKMEa_7B8JQfRnrniRVHpeYL1RTY1XShIP3KgWaSyCFLr2cKTKIllA>
-    <xmx:PKMEa1BOht3mRS-JSwrpl0ONaLmqbtGUbkoTwzBjGsebl1wuJmn0dA>
-    <xmx:PKMEa-ZBHvxpbEc95YMI_97oD_h6ld1LMKwK2eWLKFHAS4eY4ItUog>
-    <xmx:PKMEa7gb_YsdT-ib9JmD9h3Ku7mBldhxc5jGozGLkzconGOTPy8ChO9j>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Nov 2026 15:34:04 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Omri Sarig <omri.sarig13@gmail.com>
+	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=JZx7kkwv
+Received: from omf16.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay03.hostedemail.com (Postfix) with ESMTP id 7CB86A0A2D;
+	Mon, 23 Nov 2026 21:00:12 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf16.hostedemail.com (Postfix) with ESMTPA id B39432000E;
+	Mon, 23 Nov 2026 21:00:10 +0000 (UTC)
+Date: Mon, 23 Nov 2026 16:00:09 -0500
+From: Steven Rostedt <rostedt@goodmis.org>
+To: Mirko Faina <mroik@delayed.space>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH] doc: update-index: Format options correctly
-In-Reply-To: <6954cd53-43c8-48ca-82da-35c673dee260@gmail.com> (Omri Sarig's
-	message of "Mon, 23 Nov 2026 16:32:20 +0100")
-References: <20261122152538.107580-1-omri.sarig13@gmail.com>
-	<xmqqfqwsk4a6.fsf@gitster.g>
-	<6954cd53-43c8-48ca-82da-35c673dee260@gmail.com>
-Date: Mon, 23 Nov 2026 12:34:03 -0800
-Message-ID: <xmqq5wxn5ltw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Subject: Re: Prevent git reset --hard from losing data
+Message-ID: <20261123160009.61bf0bce@gandalf.local.home>
+In-Reply-To: <awC0MJDYS88yEtgm@exploit>
+References: <20261120145444.13061eb7@gandalf.local.home>
+	<awC0MJDYS88yEtgm@exploit>
+X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -128,24 +59,72 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Stat-Signature: 41bwoppnr34axabzxnkshztm8u8zainb
+X-Rspamd-Server: rspamout03
+X-Rspamd-Queue-Id: B39432000E
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX19DmwE2ptjZuxR7ygOnxx/Z1SLikXpRE0o=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=2tHliz5Rig7qfi3Mz3w1K+MI+niTRniRVsvK1o2Pd3c=; b=JZx7kkwvOU45bJ6VZ3hD6s3QJspfWa2/MBtkAt6vFVttM3uahHEf9EPS69vcuaZFsuRyRisnYbxa8WSB7hGauEM1xY4RrjjFVFFeb1Rdv+8BcFUTmgYsXh6TLkw23UXj/xwelOM5nzn8liwEwPtbilt1gOZx7sATNaX1MKKiISE=
+X-HE-Tag: 1795467610-89398
+X-HE-Meta: U2FsdGVkX19D0jqAzw9atYvo14owqqI+MKqYjXYbU7nvzReRDwSfIx3nhjqVmEXIGcsY+WkTP9YPggYwSD4P2y4vaHu0VgC9vL6M3Rc1uAXRlcOR7KHAJ9gpvCOOxdIugrA/JHAazUSVLesMfaEjrvAC2cDgzaeR3HnKni8vQ3cuYpCS5UWgH4jYvP5JtsekdtaRXY6yt0XFOQEJwNSDGcQvwtx7pADKpEka/vC8wDeCNkLj9FED+uB8QlBzIaQRik6b/kMq/yWQ/ViqQ/ssos2Rm2g0GbGiWI3rD9mZIgE/v01+TCwQQ2vOZcB0TzWJ
 
-Omri Sarig <omri.sarig13@gmail.com> writes:
+On Fri, 20 Nov 2026 22:09:32 +0100
+Mirko Faina <mroik@delayed.space> wrote:
 
->> you would notice that while we typeset `--refresh` in monospace now
->> (which is a good thing to do), we should also update the enumeration
->> header "-q::" to "`-q`::", and also "'git update-index'" in single
->> quotes to use the same `backquote`.
->>
->> Also the way these changes are described in Jean-Noël's log messages
->> is quite good.  You would want to imitate these messages.
-> Thank you for the reference. If you still want me to update the
-> current patchset, I'll update the format as was done there.
+> You could just reset without the --hard option and restore what you
+> don't want to keep. Otherwise there's the --keep option that aborts the
+> reset if there's local changes, but you'd have to remember to type it
+> out every time.
 
-Yeah, that is very much appreciated.  The update-index command is one of
-the oldest part of the system (it was present in Linus's very initial
-version given to the public, committed on Apr 7th 2005, under a slightly
-different "update-cache" name), and documentation update may be long
-overdue.
+I just tried it without the --hard and it reminded me why I never use that.
 
+I just wanted to update one of my branches to one of my devel branches and
+did a git reset without the hard and at the end it gives me:
+
+ $ git diff | diffstat
+ .clippy.toml                                                                                                   |   21 
+ .editorconfig                                                                                                  |   27 
+ .pylintrc                                                                                                      |    2 
+ /dev/null                                                                                                      |binary
+ AGENTS.md                                                                                                      |    1 
+ Documentation/.renames.txt                                                                                     | 1185 
+ Documentation/ABI/obsolete/automount-tracefs-debugfs                                                           |   20 
+ Documentation/ABI/obsolete/sysfs-driver-ivpu                                                                   |   30 
+ Documentation/ABI/obsolete/sysfs-driver-samsung-laptop                                                         |   10 
+ Documentation/ABI/obsolete/sysfs-kernel-kexec-kdump                                                            |   71 
+ Documentation/ABI/obsolete/sysfs-platform-ideapad-laptop                                                       |    8 
+ Documentation/ABI/removed/sysfs-class-cxl                                                                      |  272 
+ Documentation/ABI/removed/sysfs-driver-uniwill-laptop                                                          |   10 
+ Documentation/ABI/removed/sysfs-firmware-efi-vars                                                              |   12 
+ Documentation/ABI/removed/sysfs-selinux-user                                                                   |   12 
+ Documentation/ABI/stable/configfs-nvmet                                                                        |  352 
+ Documentation/ABI/stable/sysfs-class-bluetooth                                                                 |    9 
+[...]
+ tools/virtio/linux/mod_devicetable.h                                                                           |   14 
+ tools/virtio/linux/ucopysize.h                                                                                 |   21 
+ tools/virtio/linux/virtio_features.h                                                                           |   79 
+ tools/virtio/oot-stubs.h                                                                                       |   10 
+ tools/virtio/ringtest/.gitignore                                                                               |    7 
+ tools/virtio/vhost_net_test.c                                                                                  |  527 
+ tools/workqueue/wq_dump.py                                                                                     |  255 
+ tools/workqueue/wq_monitor.py                                                                                  |  168 
+ tools/writeback/wb_monitor.py                                                                                  |  172 
+ usr/dummy-include/limits.h                                                                                     |    8 
+ usr/dummy-include/stddef.h                                                                                     |   13 
+ usr/dummy-include/stdint.h                                                                                     |   17 
+ usr/dummy-include/string.h                                                                                     |   12 
+ usr/dummy-include/sys/socket.h                                                                                 |   12 
+ usr/dummy-include/sys/time.h                                                                                   |    3 
+ virt/kvm/guest_memfd.c                                                                                         | 1446 
+ virt/kvm/guest_memfd.h                                                                                         |   43 
+ 72642 files changed, 2141941 insertions(+), 13317958 deletions(-)
+
+This is why I always use --hard with git reset.
+
+I'll use a script to get what I want.
+
+Thanks,
+
+-- Steve
