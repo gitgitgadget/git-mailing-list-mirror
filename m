@@ -1,86 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795428612;
-	b=V5F0qMjmsJ3yoZoie1XTdL8xhxdpxzrfAZJHPOvC80ksHi6cDX1GdXudwoyz7n9GM4MC
-	 HI7BfsJrKW+ik98Y9/DCJuMkuPBZNvKes298mmofwbbWyfp85a2mq6UfThTIzfyoIJqWP
-	 suR5KHJmf3CBeSqNKKE6haJZsSWb42vmyj79QLIZyRTW5XJp3W31iDiN2gM8Lsagbiy63
-	 aMecFqsXSP36S/nTwrMa0arjzsExHibD/EM8vTqC1dslJLLyb4uSQ2zanJ70Nhu9CWhvt
-	 pXqn5JlhtJ8OiCEtOGo0hcmFyxVzAhmnTFDcaiIzfJISeEBzmyJJveWGh8R4xNBEZVA==
+	t=1795429840;
+	b=QfHbEg0LTFUqD7KnTGzFc3AUI9nCwHit4LcK0dD+k/JWxADKKgBiS7R5RX7ldwE6N/FS
+	 k5Y+fMExFIl1OWLuaw3IqbO79V6bqpBF6NAywYm7N/oEqxFRy+wBDqGvBu7ZCxSqJyTkV
+	 8eoQV5r7PLmmT358XRj8Yook6Wv77T+2RnWo/0iEyN5Pnl4d8Rh3AJftXXhcWuK9r4IG5
+	 5vJtJoVtxxbiMFLwlTwbSNkf0regUZf8IWvnTKfrbZdfZf6Tl/I0Un9k0vvk+WLr04huG
+	 LHszbPy8bSvvuMDGjRdjd8jWY8tHhShkTSb4oafvQWyR/Pn2KQBK4YUG45qaRfSyZ5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795428612;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795429840;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
-	 Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Fcc:To:
+	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
 	 Cc;
-	bh=WdH/DK+uxOQfdZp0un3Oy6UBAoa+HneuUm/CAV3l5pk=;
-	b=1Li/R2lH9k6tGeBv8mEVfHOb8/djJ4IuxHsgOWga/IwvCKDDFlloIaQoG6mzE1qgz2E0
-	 qDUrfUHnSYTM1xqCxdxla4e+xAoFxDNfVO7hhY3ztnqx7e0BiMZj37cq8a/GRW7KF3Zrd
-	 Q6Vch2lU+HLWkJxnDBc7mbftUcJPGLaMCVuNVEN24d5RVdY9hc5R5xMbv9Rj1RMCaWaO2
-	 l8wtH2xiBk+dH3Df1hj0+JdTOoD1AVPjd2u+8qkoCTbCZOyBl8D2nUlg30uf7+gWVxc/o
-	 6LXEffnCKiMt4lvkjairrb1/qMyYdVGmDQT/8T8y9Z2752oEQF7JZV6uwnO2D71DMrg==
+	bh=HNwrce7VIP6kGiMHs0lEuVPdj7P79QME4rAtfP+r0W4=;
+	b=ep5x+j+ok5roFDxL79bKEZ3Cf2M7pKirdu6Upm+29jyWnOZnYL0aYx9qgA8pIdrminoA
+	 U2j8d9efsu2ASKxeYRnw3nhyqds/Zl8ovNLp1XfcrSqjxwgSPK96g4++7gSaGBZv6IXNK
+	 jItQxNoJc8c0pRPaRvn6o4cxQytzH0/Ai8E523+yxpdxzLbk9UdtF4oJ1lyFTm/CoODj/
+	 7d6ZhuZ0RfAgpBNtDhVvgDeVvsl15VzW9H07IkFSqWg1KX9TRYfJv5tPhFLISj7/FURia
+	 spvbiewSaw8JMs4qErg+8nQCysXltbW3scPtkwPGdqHC90rI6SC37s8F3iaaC0nSw9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sfaqsXur;
-	arc=none smtp.remote-ip=209.85.219.51
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ES86AWoK;
+	arc=none smtp.remote-ip=209.85.160.172
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22854606A31F
-	for <git@vger.kernel.org>; Mon, 23 Nov 2026 10:10:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 22854606A31F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25286606A31A
+	for <git@vger.kernel.org>; Mon, 23 Nov 2026 10:30:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 25286606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sfaqsXur
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-9211bbce3abso26180496d6.3
-        for <git@vger.kernel.org>; Mon, 23 Nov 2026 02:10:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ES86AWoK
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-55d2dcbb905so6729001cf.3
+        for <git@vger.kernel.org>; Mon, 23 Nov 2026 02:30:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795428611; x=1796033411; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:content-type:mime-version
+        d=gmail.com; s=20260707; t=1795429839; x=1796034639; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:message-id:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=WdH/DK+uxOQfdZp0un3Oy6UBAoa+HneuUm/CAV3l5pk=;
-        b=sfaqsXurKrrK5E2c7j4MojjKqM7v19DHmttKonAc5ALE7b7l4f9AKf5R/Ec9s8Bxvn
-         MP2K3O/lPjhfmS64OihVMw9cTajPB6Ag1QCXjwRiZaOkmOOGTYsEyPhZGk8ZW5VSuAZt
-         kYtzI3QRBfqNV4GrpZCKPvb5Q7b8PsEoNLdqaGD3rCc14ivXJXmjnapoV/BIj7MeoGgF
-         ObTYIBoJRJZ0MPliAjz1n6sNZyVPH3hItoB4HDwawOJNlAH/+cKEo60Vg9KedBPPWQck
-         xUIjS0QpzTnVVDRIlIfgJSEa//5DJEqqZh5jraHwRtbGc4bcDnlp1V7d0lITiPOsQqHz
-         WtcA==
+        bh=HNwrce7VIP6kGiMHs0lEuVPdj7P79QME4rAtfP+r0W4=;
+        b=ES86AWoKPVUGzMvqOCwTAkxHbJ5meuQjRZwVt9fIOqj823ablRBVvNiBinM+749ObQ
+         G6Tl26964+qZvJOD6nDoY10OlzMA17Wntf23dHt82mVma7e59kHneDfceIOaO0b9l+N4
+         zTbwKj1hhfw8K2iP10pQmdgJz2eMqzWUYBwSje4LRLzqRzD4Gs6ZlgoYj/UHaOOVk+46
+         OBJKQaapytydlGjJ/mslAqVr1GcwGnerO6Xch9q/EY1ZEG0B75p9DVqDur8eCnXQnyRj
+         hquZFlP9CfwO+isp4OP8IZHmmtQazT8NlXcSGayNOI9hyHRt3ZUO36daU/yFe9WRV1Tt
+         9E/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795428611; x=1796033411;
-        h=cc:to:fcc:content-transfer-encoding:content-type:mime-version
+        d=1e100.net; s=20260707; t=1795429839; x=1796034639;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=WdH/DK+uxOQfdZp0un3Oy6UBAoa+HneuUm/CAV3l5pk=;
-        b=Du6GHUo2rfBXi3JNXhzXyBei/TGKEayfF+dxXrD6dbKrOncqEhwaf6XWCXiU+OMcTu
-         DlCy0YiswMIZWmZeZInWogNGlAdC+yw4S2gOID6QVM8tcvTddO6SvWF9lVudRe657Gmn
-         N3WBDIcGKmYqF8B6cTJSOUbAZ/Wuiv2NOBLsH29OywNwOi9GxAE1JsHmScfxW3CN34TM
-         4O5lyOpOloljvwXpB990JM9T//Xwlj7vdNvveexI+BcpSPN57VYWWOzk3JkXqS28CTGc
-         EDSPnIgdyvr9sOM0ydhNwVikKl7aZzLfxowbzuooDxZZyvZvxF8EbNtxhDMxnO6fPyyj
-         D/4Q==
-X-Gm-Message-State: APuU4Z/6FT0sjQN27Xfmt6PVqsS/EuQhRoj8YIMixchfvn4dL4cD/4kf
-	ZMqqhpeTAb8yW6VzUvHk76E9NBHJdRUDOBVN3SLnSKQ3FJe58wIE+vNcZHW1yg==
-X-Gm-Gg: AZFdTZdCmNwAYXCUv6swItbHUxJeGCEONpa+WIXLZ0L6a28Us9w7d7TgjeGmFsrZIpj
-	56jdKZNrHiXdQYRepVnV3JqZ1U5JXr3qohDAtYZxBEY+ibSaloPE0t3iyyeDmESRRkW4NkrCRDb
-	sxzIPCbN5ZLJiUNm8AydvVj2i5JVAWp+TAztNQXMFbKNxVR6CQ88Or9GVQCuJr/5U7jznCrHeVh
-	ZGVGoc4tJOyXQqsY5sIeSptlDgDnhB++LpcMAXKM51yZjg5K+ccSsfcAPDiYzW4KH1aZNEjYL+J
-	udw2UhnyAPyNPqNO7KAFCBgjQlTcFSvYxSyQH5DKiGxmZKCcuIWF9keeBwmOWQWx0zc95eIgTGE
-	ymwAUyOJ+KMk8blGVSem+lJyVsAU9jon5yW9auAU/ICY+vHG+649QXk6oVsHT9XYEmOJEzybwrw
-	lfVltEcbXQQN6KClFuAryemOiaqSUXF9tEOdLjcKMDUueHCLTg7lQVusX9pShy/12O8mkF3lLyr
-	8z/kpNgBZ/zygZBvjBkQJcbeYPuDG8MM5m5IEdvNfX53jG92jG54/82D/DJztXsXlwBoahXHN8h
-	HOpG1ykrWIfo1gDAlv9weQXZdhvdcg3k
-X-Received: by 2002:a05:6214:268f:b0:921:427f:5a56 with SMTP id 6a1803df08f44-921427f5b5emr134276096d6.39.1795428610942;
-        Mon, 23 Nov 2026 02:10:10 -0800 (PST)
-Received: from [127.0.0.1] ([20.55.126.152])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-921349b253csm102695296d6.15.2026.11.23.02.10.10
+        bh=HNwrce7VIP6kGiMHs0lEuVPdj7P79QME4rAtfP+r0W4=;
+        b=YaewUr15OsfpadUIG0VXQ/MvB1dF6krLPi6PumHKovkmliAz90Q6hTy35OM53YtBs0
+         7YnT/qXqVlgUWArVNDbUCQNBZbpiq5ckA/mlfjZsaQePkHX1oBue3e1yYhtCNtpeFTmA
+         aGfzOMV145DXTd02x1cKiQSustLra6NI03wp83zry35lBTB4aNKiNmVlCSSstcwVBdI9
+         kkum41AWnrRnGIeGFIKznr2XWMkD5BRU5RjYgLw7ogO1shxe+jRs0HmKCwc+hCCwc4iX
+         IkPbO2NK//yJWtuiYrofVrnmv6cJxpCxcB7NXlrl/2dVudPkh1Drr6ngQT0PEG3K6kFe
+         i+Cg==
+X-Gm-Message-State: APuU4Z8EPWxsYRUeS1o24coh7lsbLr78qeEko+9YHKkBr6OBiW0kOZ03
+	LOCytr+zmoYWCO0oLT7V9UYCGsgz2rXU2/2MWK9WmSkrqpTvqIOrCep3eyhh6Keu
+X-Gm-Gg: AZFdTZffH8izbWhfF+XU1F5UaskmyL1q6+Ayy+4OTE0K5kRXZQe0vTNzqQkj9qnQwpm
+	tLw6MSgC3ZMAW0uyHSMzLvDIQjifN+7BL4O50s7l7R2dhezSjHan90oxmWLO0MsOCI0+6WWqiWH
+	btdSKwHqIUpAVb5otl1nuewOjVODHbwtbF94HYCDaqoFQg8lE9tpJkbNAMEpuGV09mwsRkdzSuE
+	nf1ccmfpPDfjKwudLjoeJ2ghMmBEiu5ZoGm96mqaTz7fP67U5HELYdvwEiU+UOtbEmqJ2zv+r3e
+	r2lphjiQ8dFskUfWZX8THSj6w95ybv3PuC/LP4ofTJjC0V34w6WBbfkAR2HOLbMFN/ymvEkNFQC
+	A+zHnXYtOzZxLGw1PXU/QYHd4raXF0mpFz8X7VtN+LvFRqo1gQdoB0iteOUdvtZN/Z82D4oWNEd
+	eh5i6y6X7cnw1Y9vg4cY2+tMzFQgOuliTwCv4RaRJp2Z5qHQqrcC56Swf6Js5UbDBZSAOkBKy/M
+	5rIVkL82uUOVLHjOat2VXghoVELqi01VLaT8YeEcxHblDk/qDsqiJlr1R/dl6jgg2NDLx8p5cRz
+	0/7N5/395Ps7XZu1D15qxjEWtk5Dku8TqyuILUDVqRYDCjulM1Nf
+X-Received: by 2002:a05:622a:580f:b0:55d:3682:d238 with SMTP id d75a77b69052e-55d76a1e8e2mr217321861cf.16.1795429838710;
+        Mon, 23 Nov 2026 02:30:38 -0800 (PST)
+Received: from [127.0.0.1] ([68.154.4.244])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-55d7c654585sm88291721cf.5.2026.11.23.02.30.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2026 02:10:10 -0800 (PST)
-Message-Id: <pull.2325.git.1795428610006.gitgitgadget@gmail.com>
-From: "Kasper Lind =?UTF-8?Q?S=C3=B8rensen?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 23 Nov 2026 10:10:09 +0000
-Subject: [PATCH] doc: fix typo in git-clone --no-tags description
+        Mon, 23 Nov 2026 02:30:38 -0800 (PST)
+Message-Id: <pull.2504.git.git.1795429837730.gitgitgadget@gmail.com>
+From: "Gontu Sujith Reddy via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 23 Nov 2026 10:30:37 +0000
+Subject: [PATCH] doc: fix extra backtick in git-push
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -90,45 +93,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
 To: git@vger.kernel.org
-Cc: Toon Claes <toon@iotcl.com>,
-    Junio C Hamano <gitster@pobox.com>,
-    =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-    Kasper Lind =?UTF-8?Q?S=C3=B8rensen?= <kasper@portchain.com>,
-    =?UTF-8?q?Kasper=20Lind=20S=C3=B8rensen?= <kasper@portchain.com>
+Cc: Gontu Sujith Reddy <gontusujith2009@gmail.com>,
+    GontuSujithReddy <gontusujith2009@gmail.com>
 
-From: =?UTF-8?q?Kasper=20Lind=20S=C3=B8rensen?= <kasper@portchain.com>
+From: GontuSujithReddy <gontusujith2009@gmail.com>
 
-The description of --no-tags says "the option will be become
-permanent". Drop the stray "be".
-
-Signed-off-by: Kasper Lind Sørensen <kasper@portchain.com>
+Signed-off-by: GontuSujithReddy <gontusujith2009@gmail.com>
 ---
-    doc: fix typo in git-clone --no-tags description
+    doc: fix extra backtick in git-push
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2325%2Fgoibon%2Fdocs-fix-type-in-git-clone-man-page-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2325/goibon/docs-fix-type-in-git-clone-man-page-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2325
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2504%2FGontuSujithReddy%2Fdocs-review-git-push-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2504/GontuSujithReddy/docs-review-git-push-v1
+Pull-Request: https://github.com/git/git/pull/2504
 
- Documentation/git-clone.adoc | 2 +-
+ Documentation/git-push.adoc | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/git-clone.adoc b/Documentation/git-clone.adoc
-index dd3b44817a..0a68872576 100644
---- a/Documentation/git-clone.adoc
-+++ b/Documentation/git-clone.adoc
-@@ -301,7 +301,7 @@ corresponding `--mirror` and `--no-tags` options instead.
- `--tags`::
- `--no-tags`::
- 	Control whether or not tags will be cloned. When `--no-tags` is
--	given, the option will be become permanent by setting the
-+	given, the option will become permanent by setting the
- 	`remote.<remote>.tagOpt=--no-tags` configuration. This ensures that
- 	future `git pull` and `git fetch` won't follow any tags. Subsequent
- 	explicit tag fetches will still work (see linkgit:git-fetch[1]).
+diff --git a/Documentation/git-push.adoc b/Documentation/git-push.adoc
+index e5b1023855..7d30e586a1 100644
+--- a/Documentation/git-push.adoc
++++ b/Documentation/git-push.adoc
+@@ -490,7 +490,7 @@ the remaining remotes in the group.  The overall exit code is non-zero if
+ any member push fails.
+ 
+ This means the user is responsible for ensuring that the sequence of
+-individual pushes makes sense. If `git push r1`` would fail for a given
++individual pushes makes sense. If `git push r1` would fail for a given
+ set of options and arguments, then `git push all-remotes` will fail in
+ the same way when it reaches r1. The group push does not do anything
+ special to make a failing individual push succeed.
 
 base-commit: f7de81456940dd6f3274e461149bba12965de609
 -- 
