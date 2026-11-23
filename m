@@ -1,90 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.48
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.181
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795472033;
-	b=Eyxs8pftDhe3oUNvVnfUZoLR2Z96gbgM1a24xQIUef8hbNmdQ16e35bL1yl1vZiwjZZ2
-	 xoEz0eaJVyPUIgqEdqbu5y5E+K56RzIuWFLs3hIB73Pt0wp5UlbfCPQBLlWQhjAG3hL1s
-	 5/csKukL62RkHN9k6N9HtpX0Yrm0+9OIbBMxbPuumMrPD/LXhYFSwAvxslrC1y83vkQbY
-	 W6DpK+OM5vZLmavQDzG6vieisA0QJpEjNShPmu9+yCAbfBQNFEDsHDCUHqcFfBmCV71hC
-	 iA3KJN66VwzVqIOVUzeE84pCmfAvgb5C8N5fuLHp9jL/5UZOBkn+HPCetBFDnqjuuuA==
+	t=1795472034;
+	b=LeLE8DSuAJkesCdvmV4m8Ax9Q/bUXFBwifEIVIFGR+83dYQmqxKudNn3o6XVjVPUsbbD
+	 8u3qgbpCghzhRIRFAYFjOfiPms6dmxeL4bjIMtvYWKOwupeTB5+r2BvCDhJFcffjHgYD3
+	 DTK8+Jqd5Y+I/jTGaRugxwOlDY6Nd22MGY85v5YKQKBDZFGpBS2frKb+mMR3BSchiIrQO
+	 4tl/LryiF9yUhm3EkH+deP3ch2svlZhEw2Rm6C8+Z5yRXs5ucwsVWLBgVW1Ps1LxRsFPj
+	 p8hHMMl7o1V+RxdQ4jq1bOQJUJIerSxmL/BIA67nLgPD2vErawfAJCzJP63St9/50Rw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795472033;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795472034;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=NfeOIejW0KZGbxCJtJBpEHpQ+VBLcGnHNf00I2uV+E4=;
-	b=OIbpnULo1kN132b3TFQBeyZERcgBFfI/oWv1XIikLezMO9yxr3DJL3iuXp6EPu4sPdyC
-	 rix7HOpVIGMeU+ykSk6F0MENjXJ1lkZgBL1MOFGvVez+WyrjYphuxejsTQhYMrdSA8/bc
-	 ajlehsxvqb08zQ/iWVZNIsZUYvN4fHDUZLM/DXVU2ILt1sYzwZoOPdo2NMjJLln5L0WEQ
-	 4PLEIR1jH4kfuMchJZVLOhDEr8yP2TybMk0WX8mBlKU+6I8uVSwFDVbdNZrUKDLrdCl30
-	 ws+oq/CF+BLEINLpCdO5rKgQ3lcXhwNqMdNNTRJmVE7zvbrO+LDphUHAfJtb+3Lk4bQ==
+	bh=XrFgrLnR8R7lYBR/GGSKEkkiR0lMp4RhnuLScMkz3qA=;
+	b=rcK+XxO5m5IqoOCmJthFc6p9RftlUJvb5IXebznZN7YXqp8lWaU1HzaUSkiFl+PpqpFQ
+	 CYw7fupbfdq8Haq+peuovGYL187WL1OLGcLxpDGTweMaG7qYJd1zkaRiGKn0bqGwzsC2s
+	 fzaAoTOMYirfQ09HL2g0n7gKtMRL/bm361nok+n01vSbbp+3JbR2LSdDuQ7ybFZJpOmL0
+	 lHsmSyi54GU6RKcMb8l70uSGffXpVxR90iV56rmQ5YNHCndkOdvW1wE/3B8hIroehiR0n
+	 rRezXrI0iBA8DvSzTydd4zbqXeF5Fu+kA3EvPkVKteuX1pWDQj2wTgo03NcbBR2JhUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=yfd5LWEI;
-	arc=none smtp.remote-ip=74.125.82.48
-Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PslpZ7zR;
+	arc=none smtp.remote-ip=74.125.82.181
+Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE085606A685
-	for <git@vger.kernel.org>; Mon, 23 Nov 2026 22:13:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BE085606A685
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5BD8606A684
+	for <git@vger.kernel.org>; Mon, 23 Nov 2026 22:13:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D5BD8606A684
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=yfd5LWEI
-Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-15dd124bbe7so3116222c88.1
-        for <git@vger.kernel.org>; Mon, 23 Nov 2026 14:13:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PslpZ7zR
+Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-38644aedba1so5826586eec.0
+        for <git@vger.kernel.org>; Mon, 23 Nov 2026 14:13:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795472032; x=1796076832; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795472033; x=1796076833; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=NfeOIejW0KZGbxCJtJBpEHpQ+VBLcGnHNf00I2uV+E4=;
-        b=yfd5LWEI9NFiHrGy2zk8dFUKV+vI+Mtsu0S1pyxCVgvLcEknRAHHf2Y4TFWOllX/7u
-         fYEbNpG/MQN/tgXbiWuES4euQVFvhdDYVisbg4ePF0kTt5pzdDPmz6VjCuIgUaQIQxH/
-         MPDfmiolLE24H/wPsEZyqMF1AM5t4yxuapAFdiQFQ8MhPYx3j1kZOsTxsLTnEWNJDu/s
-         MwvQAkLK4yKqksJsO5XAQ/TA7ebV83Ou4UUsktiOKo3CdphfEz1hy8JX4OeJ76D02jv0
-         liusxdPKqjCLudwLPYwboc7nt9ZtES4N+cVvFgqQ8O3p1bSi6e+kSHsW5x9ZeHz5tAgV
-         tDrg==
+        bh=XrFgrLnR8R7lYBR/GGSKEkkiR0lMp4RhnuLScMkz3qA=;
+        b=PslpZ7zRzHS6ejkjMBJqEDPQ7OoMEGsb/dql5jY5QVLNN8SbCjOyf8Q9DgIAm+M1ij
+         x/xzco8VohoHPlN1PBWlfYlYJP3XiL+/cjma659BVvfXt9log8f0SYrfJTz+iW2qJlS/
+         qwDoR6fF5fdSgXC7PnQcC5O8JjWmw3/R2KZ26mDYs1Ec8Bej33PhsvvUiMSB+YcdemeL
+         vD0oDuPaK3lluczBE0jDuzWtJA+HAroYWZNxrquuwpMwwMFPMDjMXWgyBCB6KwtQnyjN
+         YaS7Ig/AP6mPndFzmrZuwuMON/U833y1O4ecH90zxsWWHnZzNKrj+RBR6seofZHom0TC
+         eIlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795472032; x=1796076832;
+        d=1e100.net; s=20260707; t=1795472033; x=1796076833;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=NfeOIejW0KZGbxCJtJBpEHpQ+VBLcGnHNf00I2uV+E4=;
-        b=ZZwO3DfinnZJtHQkx9p9PFG1iyd3ZAoWypMxXIvO4jxABtX4PzEE4Nw10a/murqTEc
-         yWo7UK2oYL68w0rstHZgMoCiIbkzkDyugJHSpN01GmUxD9V+p3dlqyUL2BA3JEwiAd+q
-         zGJBZ+I2IRC6ldiR3cR0+js98L/feNxW6yCQrmzDoS8Ynjt6WO537MfbY4yMvHjQ0Syt
-         NXFyt+s0sE/ZZ9AsyahVC6mcO/k+Tj9AVgSp8SmhILSVBbgY4gMe8mdJWoYSJzzdB8NC
-         yBPX2/pSZLJhZLCDVSdBdjV7Zktfh9rsqSMQ9ZfhIEyLtdPgxQin4/PvywXBn4z5A6Z3
-         1k6Q==
-X-Gm-Message-State: APuU4Z/0gx6YgGtPBr1owrzIDTkw8ytIaUQH5rUeYUl2Ms6+v+H1XAW1
-	G1AlIa4rIJmOTOYvqu1U7pQ6kUOy6a3aghBL+G6+h8ost4Tt0pG1TSDoayybyUwu
-X-Gm-Gg: AZFdTZc3OZUIufsulorG9ugWGH9hPwfEt+MI+6ejcyAYh4QeZRIPzpJzatIiG8TSbzZ
-	JV3jYvHJxaYhpcLFJp7CEGxYiKPKHKxSWpsEJEDxLc387na4UM6qr0xvs6ipuCe5aMf2+dT8tOL
-	F+oEfpYwGSkgpPPzqgsS2mPlEDJSvzxxTrmOYvMx+ZlAvalzSc7Yu96txPjL3/OqqlyHF6HgFBq
-	fDVV7U+7RBAxEaeJBW+6JBxd90iQGv740Y2NoUEcjLgKhNTvyEnqmoXzZnTr0q4j33uPIifo4Gf
-	E/hmZfXVT/v2eQPYIcAl2lrtisN0YAurz5/jLQ4x68XMwKFpjYxy6lV3BRgAjovSkoGD5LcXnzA
-	jQVpcvYXPOfu80dzFkVkKuyGd7xx9fSe3rwcqFaubJfBDJqrfwewIS4oTO4K+8b3yEZL9MeQp+F
-	OH3iF+B7G7tJjs0s+ZPjdno//toMhgdUu/HD8Btm+2Pve2VylUmRg9EclarIBddVBI/xGOq/jGo
-	nTlek7oHXkZcMSHL9kxN0iSxYD7JwwgePIlxO153xhDReVOU1W6HsAu4o1X9GcTppZfrAPx4xR2
-	LGjG2UYR6OkvxDvODcMykNqz7wVLAg==
-X-Received: by 2002:a05:701b:2814:b0:1b5:1a5a:1dc with SMTP id a92af1059eb24-1b5568bcbb3mr15148377c88.12.1795472031763;
-        Mon, 23 Nov 2026 14:13:51 -0800 (PST)
+        bh=XrFgrLnR8R7lYBR/GGSKEkkiR0lMp4RhnuLScMkz3qA=;
+        b=WrAvBhPKpGpTt/Ni+sj1zuYPEQbVGGARcJXCOGk87tn7jP7rVlPuBgjEk9VfgJsVpC
+         W0hVW49KfJdPzt5teS+e7lxPvK7LSCxCuoZurI5dj1JIpb5TjX8gZdzG+JRU79inhpiz
+         g560YGr14ErrFVigo1p4M7H9BsMjSRQQ6MPVyoanUuUwG9uIEJDms7G7JSB6DyozGt4M
+         Zj+mXffn+my6EXeUdx8fpnaRtJUl+lpiH2BwFDlmlJ0EnSUTSdnRPOc7GrdzzqfuMQny
+         BJieGBrI57mfgvmsc2gBeOfO3lfpu+OvFFtQoYzvbIYh+H7y5WRbX/X+434Z5nrTDpcG
+         cqHw==
+X-Gm-Message-State: APuU4Z9eqZNOZqWYnrXet/Dy5N1OXkid5JB+0Owg9CSPPe7CSR0l4mOn
+	tbd1MZlzr6KCUtK+kthNYcIgKwd3TBuNoUsMGKSvvHehZo4ebGRdYxAeRkIHaD9H
+X-Gm-Gg: AZFdTZfyrJ6qSDF+s4oNMwRml1FevGSJOEETJjstjQsAwjB29y4JIriaWI/qmVoONbX
+	2Ta9n5RWjNrnyb+a66l0lSmzqPoZ6tEHWZv5KFf3/yNyqwykR5s52KOZqjjMD5IptWdiVRd7wcL
+	tQVDbNeX50FUVczIpuwlGHKjKyzgvOGEbVTwrKM/T9Zd716G1LGhMDnVf5CGbGdoKpa3I0wpcKt
+	iUfnynzD5uxRw0bsknd+OPTe3MxNmIQaACewld5u8HRCYGhtspoZhdYmvzwss3GdbGf9tsKbEFr
+	SQusnFKNuapLSdcekWwt0usrjuVGwxe2RXJtPQeAP2JeSnUOR2OfaJT6QnyIqsycOh1KTNFGIcF
+	wHwzqtrWkiiu5tmx0xDB52j3aM5OrUAET1g2deKpPRypQL6hTbgfoN+hiySlIeZjlnYnIBA4oRp
+	3JW1CwwyEi3dPs42gSWAE0h6LYC8Lv3BU/CTjilu6iM4duveTgDc5cVPV0uM6x7cw+cUItevB0i
+	WKXqWgoW9TkgU/20lwnbEFW1v2G11FzTdZOI/hJGv+49YN47/JNa5Ws+TpS5vXS1OdpbGvFdZKZ
+	IkqbMuWqofWXzg1oHlb/7rLyqnT2qA==
+X-Received: by 2002:a05:693c:8843:b0:386:b429:fe0 with SMTP id 5a478bee46e88-386b429175cmr3255766eec.16.1795472032873;
+        Mon, 23 Nov 2026 14:13:52 -0800 (PST)
 Received: from [127.0.0.1] ([51.57.82.225])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b56ef9fd16sm17798659c88.4.2026.11.23.14.13.51
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-38567cafec4sm44590776eec.26.2026.11.23.14.13.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2026 14:13:51 -0800 (PST)
-Message-Id: <b24520c50dc1ccc079ce6194b9ff9028e38e1b2b.1795472027.git.gitgitgadget@gmail.com>
+        Mon, 23 Nov 2026 14:13:52 -0800 (PST)
+Message-Id: <ca30ed613d94ab11348e46ea60bc4f970e2f506c.1795472027.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2253.v2.git.1795472027.gitgitgadget@gmail.com>
 References: <pull.2253.git.1791958171.gitgitgadget@gmail.com>
 	<pull.2253.v2.git.1795472027.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 23 Nov 2026 22:13:44 +0000
-Subject: [PATCH v2 3/5] wrapper: avoid byte-count overflow in write_in_full()
+Date: Mon, 23 Nov 2026 22:13:45 +0000
+Subject: [PATCH v2 4/5] wrapper: add read_in_full_or_error()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -107,14 +107,18 @@ Cc: Phillip Wood <phillip.wood123@gmail.com>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Accumulating the output count in `write_in_full()` can overflow because
-it counts via a `ssize_t` variable which can overflow for valid `size_t`
-sizes passed as input.
+Callers of the `read_in_full()` function want to read all requested
+bytes, or get an error. However, limiting the return value type to
+`ssize_t` is insufficient, as file sizes can easily exceed that type's
+range.
 
-Since this function either completes the requested count or fails,
-callers already know how many bytes were written on success. Let's just
-return status instead, so the total transfer size need not fit in
-`ssize_t`.
+For those callers that do not require the return value to report the
+number of read bytes, add a new function, `read_in_full_or_error()`,
+that returns a Boolean to indicate success or faiure.
+
+Callers that do need to know that byte count can still call
+`read_in_full()`, but will now error out early if the requested byte
+count exceeds what `ssize_t` can represent.
 
 Pointed out by Coverity.
 
@@ -122,192 +126,284 @@ Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 Assisted-by: GPT-6.1
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Makefile                        |  1 +
- imap-send.c                     |  2 +-
- notes-merge.c                   | 13 ++--------
- t/meson.build                   |  1 +
- t/unit-tests/u-reftable-stack.c |  2 +-
- t/unit-tests/u-wrapper.c        | 42 +++++++++++++++++++++++++++++++++
- wrapper.c                       |  6 ++---
- wrapper.h                       |  7 ++++--
- 8 files changed, 55 insertions(+), 19 deletions(-)
- create mode 100644 t/unit-tests/u-wrapper.c
+ builtin/blame.c          |  2 +-
+ combine-diff.c           |  6 +----
+ dir.c                    |  2 +-
+ grep.c                   |  2 +-
+ refs/packed-backend.c    |  4 +--
+ strbuf.c                 | 10 ++++---
+ t/unit-tests/u-wrapper.c | 57 ++++++++++++++++++++++++++++++++++++++++
+ wrapper.c                | 50 ++++++++++++++++++++++++++++-------
+ wrapper.h                |  7 +++++
+ 9 files changed, 116 insertions(+), 24 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 4c84eea6e2..0687eb82d3 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1564,6 +1564,7 @@ CLAR_TEST_SUITES += u-strvec
- CLAR_TEST_SUITES += u-trailer
- CLAR_TEST_SUITES += u-urlmatch-normalization
- CLAR_TEST_SUITES += u-utf8-width
-+CLAR_TEST_SUITES += u-wrapper
- CLAR_TEST_PROG = $(UNIT_TEST_BIN)/unit-tests$(X)
- CLAR_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(CLAR_TEST_SUITES))
- CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/clar/clar.o
-diff --git a/imap-send.c b/imap-send.c
-index bf1d2cf74d..dccc2264de 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -392,7 +392,7 @@ static int socket_write(struct imap_socket *sock, const char *buf, int len)
- 		n = SSL_write(sock->ssl, buf, len);
- 	else
- #endif
--		n = write_in_full(sock->fd[1], buf, len);
-+		n = write_in_full(sock->fd[1], buf, len) < 0 ? -1 : len;
- 	if (n != len) {
- 		socket_perror("write", sock, n);
- 		close(sock->fd[0]);
-diff --git a/notes-merge.c b/notes-merge.c
-index d361e70a48..991490a187 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -319,17 +319,8 @@ static void write_buf_to_worktree(const struct object_id *obj,
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 1e753a0b60..ddc49d8d30 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -1006,7 +1006,7 @@ static void parse_default_ignore_revs_file(struct blame_scoreboard *sb,
+ 	}
+ 	size = xsize_t(st.st_size);
+ 	buf = xmalloc(size);
+-	if (read_in_full(fd, buf, size) == (ssize_t)size)
++	if (!read_in_full_or_error(fd, buf, size))
+ 		oidset_parse_buffer_carefully(&sb->ignore_list, buf, size,
+ 					      sb->repo->hash_algo,
+ 					      peel_to_commit_oid, sb);
+diff --git a/combine-diff.c b/combine-diff.c
+index 717d537688..49202c6581 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -1073,7 +1073,6 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 			free_filespec(df);
+ 		} else if (0 <= (fd = open(elem->path, O_RDONLY))) {
+ 			size_t len = xsize_t(st.st_size);
+-			ssize_t done;
+ 			int is_file, i;
  
- 	fd = xopen(path, O_WRONLY | O_EXCL | O_CREAT, 0666);
+ 			elem->mode = canon_mode(st.st_mode);
+@@ -1089,11 +1088,8 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 			result_size = len;
+ 			result = xmallocz(len);
  
--	while (size > 0) {
--		ssize_t ret = write_in_full(fd, buf, size);
--		if (ret < 0) {
--			/* Ignore epipe */
--			if (errno == EPIPE)
--				break;
--			die_errno("notes-merge");
--		}
--		size -= ret;
--		buf += ret;
--	}
-+	if (write_in_full(fd, buf, size) < 0 && errno != EPIPE)
-+		die_errno("notes-merge");
+-			done = read_in_full(fd, result, len);
+-			if (done < 0)
++			if (read_in_full_or_error(fd, result, len) < 0)
+ 				die_errno("read error '%s'", elem->path);
+-			else if (done < len)
+-				die("early EOF '%s'", elem->path);
  
- 	close(fd);
- 	free(path);
-diff --git a/t/meson.build b/t/meson.build
-index 1cf1d95f70..8938d4eb47 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -27,6 +27,7 @@ clar_test_suites = [
-   'unit-tests/u-trailer.c',
-   'unit-tests/u-urlmatch-normalization.c',
-   'unit-tests/u-utf8-width.c',
-+  'unit-tests/u-wrapper.c',
- ]
+ 			/* If not a fake symlink, apply filters, e.g. autocrlf */
+ 			if (is_file) {
+diff --git a/dir.c b/dir.c
+index ac246ced1d..1c9599c2bb 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1190,7 +1190,7 @@ static int add_patterns(const char *fname, const char *base, int baselen,
+ 			return 0;
+ 		}
+ 		buf = xmallocz(size);
+-		if (read_in_full(fd, buf, size) != size) {
++		if (read_in_full_or_error(fd, buf, size) < 0) {
+ 			free(buf);
+ 			close(fd);
+ 			return -1;
+diff --git a/grep.c b/grep.c
+index 1d75d31421..c1c33fc140 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1964,7 +1964,7 @@ static int grep_source_load_file(struct grep_source *gs)
+ 	if (i < 0)
+ 		goto err_ret;
+ 	data = xmallocz(size);
+-	if (st.st_size != read_in_full(i, data, size)) {
++	if (read_in_full_or_error(i, data, size) < 0) {
+ 		error_errno(_("'%s': short read"), filename);
+ 		close(i);
+ 		free(data);
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 53511f2d91..ff7ef84109 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -543,7 +543,6 @@ static int refname_contains_nul(struct strbuf *refname)
  
- clar_sources = [
-diff --git a/t/unit-tests/u-reftable-stack.c b/t/unit-tests/u-reftable-stack.c
-index b6f1c6cc52..3e19f0466a 100644
---- a/t/unit-tests/u-reftable-stack.c
-+++ b/t/unit-tests/u-reftable-stack.c
-@@ -86,7 +86,7 @@ void test_reftable_stack__read_file(void)
+ static int allocate_snapshot_buffer(struct snapshot *snapshot, int fd, struct stat *st)
+ {
+-	ssize_t bytes_read;
+ 	size_t size;
  
- 	cl_assert(fd > 0);
- 	n = write_in_full(fd, out, strlen(out));
--	cl_assert_equal_i(n, strlen(out));
-+	cl_assert_equal_i(n, 0);
- 	err = close(fd);
- 	cl_assert(err >= 0);
+ 	size = xsize_t(st->st_size);
+@@ -552,8 +551,7 @@ static int allocate_snapshot_buffer(struct snapshot *snapshot, int fd, struct st
  
+ 	if (mmap_strategy == MMAP_NONE || size <= SMALL_FILE_SIZE) {
+ 		snapshot->buf = xmalloc(size);
+-		bytes_read = read_in_full(fd, snapshot->buf, size);
+-		if (bytes_read < 0 || bytes_read != size)
++		if (read_in_full_or_error(fd, snapshot->buf, size) < 0)
+ 			die_errno("couldn't read %s", snapshot->refs->path);
+ 		snapshot->mmapped = 0;
+ 	} else {
+diff --git a/strbuf.c b/strbuf.c
+index c3baa47b3f..55825d20e8 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -537,8 +537,12 @@ ssize_t strbuf_read(struct strbuf *sb, int fd, size_t hint)
+ 
+ 	strbuf_grow(sb, hint ? hint : 8192);
+ 	for (;;) {
+-		ssize_t want = sb->alloc - sb->len - 1;
+-		ssize_t got = read_in_full(fd, sb->buf + sb->len, want);
++		size_t want = sb->alloc - sb->len - 1;
++		ssize_t got;
++
++		if ((uintmax_t)want > maximum_signed_value_of_type(ssize_t))
++			want = maximum_signed_value_of_type(ssize_t);
++		got = read_in_full(fd, sb->buf + sb->len, want);
+ 
+ 		if (got < 0) {
+ 			if (oldalloc == 0)
+@@ -548,7 +552,7 @@ ssize_t strbuf_read(struct strbuf *sb, int fd, size_t hint)
+ 			return -1;
+ 		}
+ 		sb->len += got;
+-		if (got < want)
++		if ((size_t)got < want)
+ 			break;
+ 		strbuf_grow(sb, 8192);
+ 	}
 diff --git a/t/unit-tests/u-wrapper.c b/t/unit-tests/u-wrapper.c
-new file mode 100644
-index 0000000000..713ac0df92
---- /dev/null
+index 713ac0df92..28adfbdf8e 100644
+--- a/t/unit-tests/u-wrapper.c
 +++ b/t/unit-tests/u-wrapper.c
-@@ -0,0 +1,42 @@
-+#include "unit-test.h"
-+#include "tempfile.h"
+@@ -40,3 +40,60 @@ void test_wrapper__write_in_full_error(void)
+ 	cl_assert_equal_i(write_in_full(-1, data, 1), -1);
+ 	cl_assert_equal_i(errno, EBADF);
+ }
 +
-+static struct tempfile *file;
-+static char data[128 * 1024], actual[sizeof(data)];
-+
-+void test_wrapper__initialize(void)
-+{
-+	file = mks_tempfile("wrapper-test-XXXXXX");
-+	cl_assert(file != NULL);
-+	for (size_t i = 0; i < sizeof(data); i++)
-+		data[i] = i % 127;
-+	memset(actual, 0, sizeof(actual));
-+}
-+
-+void test_wrapper__cleanup(void)
-+{
-+	delete_tempfile(&file);
-+}
-+
-+void test_wrapper__write_in_full(void)
++void test_wrapper__read_in_full_or_error(void)
 +{
 +	int fd = get_tempfile_fd(file);
 +
 +	cl_assert_equal_i(write_in_full(fd, data, sizeof(data)), 0);
 +	cl_assert(lseek(fd, 0, SEEK_SET) == 0);
-+	cl_assert(read_in_full(fd, actual, sizeof(actual)) ==
-+		  (ssize_t)sizeof(actual));
++	cl_assert_equal_i(read_in_full_or_error(fd, actual, sizeof(actual)), 0);
 +	cl_assert(!memcmp(data, actual, sizeof(data)));
 +}
 +
-+void test_wrapper__write_in_full_empty(void)
++void test_wrapper__read_in_full_or_error_empty(void)
 +{
-+	cl_assert_equal_i(write_in_full(-1, NULL, 0), 0);
++	cl_assert_equal_i(read_in_full_or_error(-1, NULL, 0), 0);
 +}
 +
-+void test_wrapper__write_in_full_error(void)
++void test_wrapper__read_in_full_or_error_short(void)
++{
++	int fd = get_tempfile_fd(file);
++
++	cl_assert_equal_i(write_in_full(fd, "abc", 3), 0);
++	cl_assert(lseek(fd, 0, SEEK_SET) == 0);
++	errno = 0;
++	cl_assert_equal_i(read_in_full_or_error(fd, actual, sizeof(actual)),
++			  -1);
++	cl_assert_equal_i(errno, EIO);
++	cl_assert(!memcmp(actual, "abc", 3));
++}
++
++void test_wrapper__read_in_full_or_error_bad_fd(void)
 +{
 +	errno = 0;
-+	cl_assert_equal_i(write_in_full(-1, data, 1), -1);
++	cl_assert_equal_i(read_in_full_or_error(-1, actual, 1), -1);
++	cl_assert_equal_i(errno, EBADF);
++}
++
++void test_wrapper__read_in_full_short(void)
++{
++	int fd = get_tempfile_fd(file);
++
++	cl_assert_equal_i(write_in_full(fd, "abc", 3), 0);
++	cl_assert(lseek(fd, 0, SEEK_SET) == 0);
++	cl_assert_equal_i(read_in_full(fd, actual, sizeof(actual)), 3);
++	cl_assert(!memcmp(actual, "abc", 3));
++}
++
++void test_wrapper__read_in_full_empty(void)
++{
++	cl_assert_equal_i(read_in_full(-1, NULL, 0), 0);
++}
++
++void test_wrapper__read_in_full_error(void)
++{
++	errno = 0;
++	cl_assert_equal_i(read_in_full(-1, actual, 1), -1);
 +	cl_assert_equal_i(errno, EBADF);
 +}
 diff --git a/wrapper.c b/wrapper.c
-index 05a9cd369c..87e1b4bfd2 100644
+index 87e1b4bfd2..dba8b90dcc 100644
 --- a/wrapper.c
 +++ b/wrapper.c
-@@ -302,10 +302,9 @@ ssize_t read_in_full(int fd, void *buf, size_t count)
- 	return total;
+@@ -283,23 +283,53 @@ ssize_t xpread(int fd, void *buf, size_t len, off_t offset)
+ 	}
  }
  
--ssize_t write_in_full(int fd, const void *buf, size_t count)
-+int write_in_full(int fd, const void *buf, size_t count)
+-ssize_t read_in_full(int fd, void *buf, size_t count)
++/*
++ * Read until count bytes have been read or EOF. On success, store the number
++ * read in out if non-NULL. Return false on an I/O error, with errno set.
++ */
++static bool read_in_full_1(int fd, void *buf, size_t count, size_t *out)
  {
- 	const char *p = buf;
+ 	char *p = buf;
 -	ssize_t total = 0;
++	size_t remaining = count;
  
- 	while (count > 0) {
- 		ssize_t written = xwrite(fd, p, count);
-@@ -317,10 +316,9 @@ ssize_t write_in_full(int fd, const void *buf, size_t count)
- 		}
- 		count -= written;
- 		p += written;
--		total += written;
+-	while (count > 0) {
+-		ssize_t loaded = xread(fd, p, count);
++	while (remaining) {
++		ssize_t loaded = xread(fd, p, remaining);
+ 		if (loaded < 0)
+-			return -1;
+-		if (loaded == 0)
+-			return total;
+-		count -= loaded;
++			return false;
++		if (!loaded)
++			break;
++		remaining -= loaded;
+ 		p += loaded;
+-		total += loaded;
  	}
  
 -	return total;
++	if (out)
++		*out = count - remaining;
++	return true;
++}
++
++int read_in_full_or_error(int fd, void *buf, size_t count)
++{
++	size_t total;
++
++	if (!read_in_full_1(fd, buf, count, &total))
++		return -1;
++	if (total != count) {
++		errno = EIO;
++		return -1;
++	}
 +	return 0;
++}
++
++ssize_t read_in_full(int fd, void *buf, size_t count)
++{
++	size_t total;
++
++	if ((uintmax_t)count > maximum_signed_value_of_type(ssize_t))
++		BUG("read_in_full() cannot return %"PRIuMAX" bytes",
++		    (uintmax_t)count);
++	if (!read_in_full_1(fd, buf, count, &total))
++		return -1;
++	return (ssize_t)total;
  }
  
- ssize_t xwritev(int fd, struct iovec *iov, int iovcnt)
+ int write_in_full(int fd, const void *buf, size_t count)
 diff --git a/wrapper.h b/wrapper.h
-index a6287d7f4d..726c5c2f6b 100644
+index 726c5c2f6b..47d441e6c9 100644
 --- a/wrapper.h
 +++ b/wrapper.h
-@@ -45,7 +45,10 @@ int git_mkstemps_mode(char *pattern, int suffix_len, int mode);
+@@ -44,8 +44,15 @@ char *git_mkdtemp(char *pattern);
+ int git_mkstemps_mode(char *pattern, int suffix_len, int mode);
  int git_mkstemp_mode(char *pattern, int mode);
  
++/*
++ * Return the number of bytes read, possibly short at EOF, or -1 on error.
++ * The requested count must be representable in ssize_t.
++ */
  ssize_t read_in_full(int fd, void *buf, size_t count);
--ssize_t write_in_full(int fd, const void *buf, size_t count);
-+
-+/* Return 0 on a complete write, or -1 with errno set on failure. */
-+int write_in_full(int fd, const void *buf, size_t count);
-+
- ssize_t pread_in_full(int fd, void *buf, size_t count, off_t offset);
  
- /*
-@@ -57,7 +60,7 @@ ssize_t pread_in_full(int fd, void *buf, size_t count, off_t offset);
-  */
- ssize_t writev_in_full(int fd, struct iovec *iov, int iovcnt);
++/* Return 0 on a complete read, or -1 with errno set (EIO on premature EOF). */
++int read_in_full_or_error(int fd, void *buf, size_t count);
++
+ /* Return 0 on a complete write, or -1 with errno set on failure. */
+ int write_in_full(int fd, const void *buf, size_t count);
  
--static inline ssize_t write_str_in_full(int fd, const char *str)
-+static inline int write_str_in_full(int fd, const char *str)
- {
- 	return write_in_full(fd, str, strlen(str));
- }
 -- 
 gitgitgadget
 
