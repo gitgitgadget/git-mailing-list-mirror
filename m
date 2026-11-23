@@ -1,96 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795470872;
-	b=UNx30LDOlXsmrP206MUXhgXFyZSHezBzq47996M4EMTAUpFzhZfvRlFKYKVIBwtQJyth
-	 Ac7dp8kkTnhRuE5gcvu1kt2UR4I3Qw8h+wtNCPqgPzy1axPn+rjMLpnhp/BG6uV1EWVZd
-	 icsbnhYKbWVYf1LcxBMYs4l9WwANUfu3YY1qa+CEl0qNqryTj5DuMxM8rKIMmGEmrT0Bt
-	 a+eKu0zdsr3nokrP1bjTOxc0ebYlnchfPleNcmgr8NvI4fZXleEQqOx+oJKpywKMTaJbA
-	 xAwdSxN4YwguuCgA40/uUkzkwrvmNRsyDmuQhGTNvWWJi505ZWPCAAxt1nNa/bEEfbw==
+	t=1795470878;
+	b=oOKdD+eeWhz3YRhUiTN0Wlhs50pThJLlCzmbdeXvHp4DZHyfsu4D0/v//Y4FtN2DBBWd
+	 woD09MiUWZRwEXBB4u4BYCtvf6Kfb1PCd+QUDCWM6EMTkauqHdgAiN8H7YA79ZDrSWTMz
+	 JJFeFl7GrEAkggfSxuMCeXb+abbwZt4d9TJLfBmYmu4ScVB7JfbI1aRvbLEhW/0nk5sXJ
+	 gxysDu1AovfW+juG6ISdo4QZLp3PfFbiVRP9iZl/NKHM18yvDS8Hql+wAXFG/XuI8Uz5L
+	 3ljY6yoX5ad3vMB0YwgW1C2wis8DnlD5VnDPlENNyHwDgnAFHTDXXma1jqg+kfBZXOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795470872;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795470878;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=Df6LzVHjtICkQOYg0CyO4fBKg0KYwubLeqHz3IyJzzQ=;
-	b=hdy9kEwHYR8mNRG5DRmh93sPolNB1xOo5khF2COMJIp6XUMhBXt3ExP7QFSZTV1DhRij
-	 BNf0rcZxxQoT/6BP+EhksI7IQBmO4nxdUKIAu5a113ZMhJx7qBLMAGGWEka7qxUR9Zjhx
-	 1qi9/0fT3k7bOprtVHr7fYedytX1yP9beyyCmlZ8q/NX1lUoTlYuEhg5cV6WRHxICscKt
-	 QVbZVuDRaAcKSy63M9yEnbf/YHhdUDa/9fndLXziUqIkrSGbB0YHkUGDkBVtZtSxJHxzZ
-	 xnsu/64eaNQUTv9XQgp9aA3cSDzQMkh1BTKRZ7WA5zdfnBPjovrCxMGs93Qu/k3KHmQ==
+	bh=llCLJn91qFAsJGGGP/RNG9XDaxoAJptgIvqqWVsot3g=;
+	b=nNMmMSyUUnXpLum3EUa7ufrpUOj53CQgqFLPRHi4J2AuHZ3sfDO3LBWQb2J/7WLo5voG
+	 NfOT/oaBTR4SiSziYY+WFC+nfTmMZPFfK9nzSkT7PMk1YEYoCiUalz9tMCwCswZFlIDDq
+	 dIR05slvFztEYqGfwKDVFew3/oj5nc+k1lxUun6UdB4e4Xe+vmLXJ3AfKcYjLnoUpCfb4
+	 dezWWu10IAhHzKeMiKhT9f8x5Jy/5Kvw2NUoCtrrvipXly87+f74+VN/Sbp/0lmR2NbIh
+	 FFIgHqttzWJ2WjUINm7lWLj/vglqWzKSiZooCRNtQqSslMbzvoKEBx5jE0fLhV5tKZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=HKxj0OTG;
-	arc=none smtp.remote-ip=209.85.216.44
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=TPVLE1s0;
+	arc=none smtp.remote-ip=209.85.216.46
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF69F606A31E
-	for <git@vger.kernel.org>; Mon, 23 Nov 2026 21:54:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CF69F606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F71F606A31E
+	for <git@vger.kernel.org>; Mon, 23 Nov 2026 21:54:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2F71F606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=HKxj0OTG
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-3b40470fdd8so1819506a91.1
-        for <git@vger.kernel.org>; Mon, 23 Nov 2026 13:54:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=TPVLE1s0
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-3ae691283ecso1823051a91.0
+        for <git@vger.kernel.org>; Mon, 23 Nov 2026 13:54:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795470871; x=1796075671; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795470877; x=1796075677; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Df6LzVHjtICkQOYg0CyO4fBKg0KYwubLeqHz3IyJzzQ=;
-        b=HKxj0OTGkbvbrtHl51tGzQkH3jWeoYM6gC1qLIpZidRV+nswy2yPpzZBjHeQpoNI8R
-         7jwHCjWB6FJoKszfTZOgHqqhztlNw6aMrQlgjF10WHBKafwzQeXlW2ns+GO7WPC1s48B
-         ziGMPn1zs4uV1ZHWDyIB6YR44en3JDdisS8gUDA7JsTM0MwggOSfIoOgFOPU4x9SCsD4
-         dkxGme24Zr/G/QMBtfbPuR+J/qnVlZighXuCL9kqSGVzNkG/DVd63RVsCaK4RhEBztuh
-         j1/rLWgWNFz9R5//q9yF3cRKK+fcgvFVg+9qhshJdfGkA4O906L/2kOxRPLNI4Rdk0F5
-         +6ng==
+        bh=llCLJn91qFAsJGGGP/RNG9XDaxoAJptgIvqqWVsot3g=;
+        b=TPVLE1s0Gc1pG9HTOELfPHRD2RF1lp30nizaIRcgqfFlSVHXUJRwvCkE/YPlAvr9Iw
+         uQAuSrX+fC5EYWnij+g5RZYrR+x31c7BYkX0EfyRAH0+nDVW7wFdP40KVerkCLB+suhF
+         xK/TnaxEsSTbrZb67cXlvSneXU10V10EM9SfeUpqBqeYmATrg2jj1W/TMjDKM51GOFIh
+         99Ee8JjSR5YFKSie+RC2yOTJmirCTBFddCmU1z3x0pUBr9k1rZMAbBeOW/LMC2nxsp4f
+         0tknxurMkldjVVObYrRAfwjCVBxqF4mGnK2F8Y8D40MnpB/gci4SdNF5EIXTJPTaZsLT
+         i16w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795470871; x=1796075671;
+        d=1e100.net; s=20260707; t=1795470877; x=1796075677;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Df6LzVHjtICkQOYg0CyO4fBKg0KYwubLeqHz3IyJzzQ=;
-        b=fraWFvLQ3RXlIbJERfmf2Syd4meNppNT4UUX/tYn2Wct7yd51q5zNIWh8/xwIcYwju
-         MjAIhX+8rJboMjN71W7ZvFvJGiS4Pq4tNd4uCLPb4OFEOnWUI7jHFtmc8czQrIpCOwYF
-         Vn1gIQTG1JLcrWOThcfrfVPEkJ5eaVVRt/Itf4zQVvaXlJRXw8k7yV7Rd/d+Hj8mzoRS
-         MeK5FvybCuh9aGrENJFKw1k0Dt0YkxOp5PC4VxXjRMoRZhwFFSAanp6HzDugID4iGCCA
-         FzPTGCt8wEFZmsfYkliXmJ35Ma2K6iBwvhIsby3M/7P3tw7uevk6AuNgDMMlAtChABro
-         P85A==
-X-Gm-Message-State: APuU4Z/aNDOprgxqWGtCubs0wqatiTmka9Cnc/MpY+xfOhvpIayIlpFG
-	z36e06FJ+hs8bw0B4F/R8l6eT6Ks5e29NNxQnISzMWTmJJHNfiNXTNFpgCz+V/xN
-X-Gm-Gg: AZFdTZcLKM8LaUIcMiaWbUU/FqqkE5zxjn8igQdTtWWVPGTAW2eFZJWbOn0HwG/C7Hj
-	bg6/zhJsbK2wQ6//wFjyd7iRVczwL90AnFLN5kxl9hvegw2AZh/4L4qyhQVCiwus6AHNNNXmyyF
-	CcV1cctxWFpldEeYpVjE+2c0Ys5nPCrYB/tUVBYQ5mmpYfhPOaYyhEws0j6C7s9oza6aDKitWmE
-	EjAjOzdMCIpkodKuGU0byDeVNuQwoi3adJd6jqkKIQ/LPkKKoN25RCWnwMndHd4CH+tPj4OY51b
-	jnz/4XexXtlcpSMckGvPCByIFZetBm3X6tNvwfnCtaH2JFkXhtAYnKp92sqhnkqr9hDPTPh3L80
-	i/o+DURzS25KBXn68nuqxUM5AQvXTUqHVrdNyDA69IaSyixFziwSHsqIkzVAzaRAmMAPWngp4Ny
-	61na93Y6rRAZ8OuLSxDSia8/aycoIIk3K6dZuwW7etg+gvEO10dTIkqSWsfryuEk2gV7K6cqCOs
-	CF9RzBRwCnybmxec2U3dAhqYCIt/wIRc4wBQGUQE7N3DWIem2tqxNbXN4vVQr3KVdVlyJfeFeUg
-	Xsyet4F9efWFgbqMI8u3qGxj0WT06zdeZQditIJhw8GRddJFldBBM3CIafWfJWAajlw2adG8Tkd
-	dxqDuwPDzNm5FnsoK+ynOfcfHXBu2pCW14Zo3sFOBTr4=
-X-Received: by 2002:a17:90b:224e:b0:3a0:d265:3647 with SMTP id 98e67ed59e1d1-3b41c7d6084mr10881246a91.8.1795470871078;
-        Mon, 23 Nov 2026 13:54:31 -0800 (PST)
+        bh=llCLJn91qFAsJGGGP/RNG9XDaxoAJptgIvqqWVsot3g=;
+        b=D7TW4g3xfGpuk+yZ2/rQDleJ03jYagDayKOaIDRqyYkNPszv7zJk8lND1R8pQOOp1L
+         efFqu8+TknoOTdBBVFQzVV6Kgl8PljFNnP/Wn42IPtk0nlk0yzg9iZ7QGFsCMcvf/8G0
+         FbLdt6UdPIMgdMO7/7sz2s4XTG/hsLIFA9jA9TgWaNYW52T5ijuWqkEkJyvdzk3kUtRP
+         dvwciUfVIwm0RMz0/NNFizBPeuInYyvnObvtt6Wf6qG56+DtoWUR7V54tos8oHYoyL1X
+         8MVLIPdijNqdN1wlXb9DKcAB1L4BIeG6awdimmVJdhgU2SF9SqftnvMrE/OsZyFkLeeT
+         iklQ==
+X-Gm-Message-State: APuU4Z95GlK1EyHJSpPs/sxCbbwP/M9mEJdvP1BfMEiMJOnl/bdHip8B
+	2zTmNa+BK8BvlSTSfx6P47K7wSCQH7zbRKE/vEVl8P9cq5EZhJCQhb7l
+X-Gm-Gg: AZFdTZduOW2zqQRToOI9CcWITljFz3Httm4JNHfCdbzsqAQCh+aBX1oMqO10ecKtLbE
+	t/wsRfU6slqAGnahcs6+4+JLvR/Rx5/0oJb10HQqnFKh/2qb2EvNxq45tCUJBSmFDtUWYxAZUZ3
+	TmerNwqGo6EkOUj6fZqQB2fZzv9aNeY+gnqxNrlOc08NXvC+i6dLFCmV8CcDtIGR7lnA3Ujq0BM
+	vOJvp+OrTNC2weLYtQ4CWnvwo/6TWeRA+bfhIchc479qkDcfswwNHMkFyelu1Tp9v7YVFoQdI/o
+	Dp8/j9kW0IhKRHVi14qm543RDU3+HuEJFrV0HgvnqNUz6oaLQvR8FgF7Znb7d8KtdwRDfBdOyDH
+	/CweFI5My6Gul06QhHTfNkCBal3LCTC+jxcTYHv2KOpOrr3CKtJ0jL3DnWRO65SrMqYnnuoaRSS
+	Bju9GryFZP5Kl7R6GuBF9QF1/FkRu9iIbfEmJR5taHh+3i+W4pbjx9z9n0FtcQRCT1cq7kzFYW4
+	hXukgIud7yLwNE06IRh64o4hQ3bmr5x5PAyY55Y0MM3xWyIm42CbgDZNDYEj08oNhIO3yH3lPpn
+	sohjXYWEiB1rwKxvWUGX+cDy3omRIveIwnTQJc5OyzGVlm5ThiOYfkE9KZvjFy+Y1bftX4PFo1G
+	FuwOXJEWPCg0QDgAZl1UNCQ==
+X-Received: by 2002:a17:90b:5887:b0:3ae:3e9b:5265 with SMTP id 98e67ed59e1d1-3b41c93c24emr7764529a91.26.1795470877412;
+        Mon, 23 Nov 2026 13:54:37 -0800 (PST)
 Received: from localhost.localdomain ([103.25.231.125])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b44b8c2fcesm6720472a91.4.2026.11.23.13.54.27
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b44b7f4899sm8151911a91.4.2026.11.23.13.54.34
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 23 Nov 2026 13:54:30 -0800 (PST)
+        Mon, 23 Nov 2026 13:54:37 -0800 (PST)
 From: Aniket Gupta <aniketgupta3001@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
 Cc: git@vger.kernel.org,
 	Patrick Steinhardt <ps@pks.im>,
 	Toon Claes <toon@iotcl.com>,
+	Junio C Hamano <gitster@pobox.com>,
 	Phillip Wood <phillip.wood@dunelm.org.uk>,
 	Nikita Bobko <nikita@nbobko.com>
 Subject: Re: [PATCH] history: refuse to rewrite branches used by other worktrees
-Date: Tue, 24 Nov 2026 03:24:24 +0530
-Message-ID: <20261123215424.27553-1-aniketgupta3001@gmail.com>
+Date: Tue, 24 Nov 2026 03:24:31 +0530
+Message-ID: <20261123215431.27574-1-aniketgupta3001@gmail.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <xmqqa4mz5mr8.fsf@gitster.g>
-References: <20261123103911.98860-1-aniketgupta3001@gmail.com> <xmqqa4mz5mr8.fsf@gitster.g>
+In-Reply-To: <a0ebd98f-669e-4ff2-bca2-cfd5da5a7316@gmail.com>
+References: <20261123103911.98860-1-aniketgupta3001@gmail.com> <a0ebd98f-669e-4ff2-bca2-cfd5da5a7316@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,34 +105,58 @@ Content-Transfer-Encoding: 8bit
 
 Thanks for taking a look!
 
-> And is_bare_repository() is true.  We skip update_worktree() and
-> update the 'main' branch via its HEAD, making the index and the
-> worktree of the worktree at ../wt out of sync, no?
+> "also" is unnecessary here
 
-True. I am able to repro this. In a bare repo nobody has the branch that
-HEAD points to checked out, but the check skips it as if the current
-worktree did. So "git history drop" moves "main" and ../wt shows the
-changes of the dropped commit as staged.
+Will drop this.
 
-> Perhaps head_target should be initialized to NULL and assigned the
-> resolution result of HEAD only in a non-bare repository, or something?
+> The staged changes it shows were made by "git history" - they did not
+> appear from nowhere. An alternative to refusing to run would be to
+> update those worktrees if they are clean, but failing is the simpler
+> option to implement.
 
-I think that would fix it. In v2 I'd like to go a bit further though:
-ask the other worktrees if they use the current branch instead of
-skipping it by name. That also covers a bare repo and a branch that two
-worktrees have checked out with "git worktree add --force". Will add
-tests for both.
+Fair point, will reword. I stayed with refusing as it is simpler.
+Updating clean worktrees could come later if people want it.
 
-> I didn't trace all other callers, so there may be other glitches I
-> did not notice.
+> fail to notice it is checked out elsewhere. That's not a problem that
+> needs solving here though.
 
-Went through them. fixup, reword, split, squash, drop all call
-setup_revwalk() before they open an editor, create a commit or update a
-ref so they refuse early. Will add a test that runs each of them.
+Noted. For the current branch v2 asks each worktree, so it does not
+depend on branch_checked_out() there. The other branches still go
+through it.
 
-> It probably is also worth noting in
-> the log message that 'drop' updates the worktree while 'reword',
-> 'split', and 'squash' preserve the tip tree and 'fixup' incorporates
-> staged changes from the index.
+> What happens if a rebase is running in the same worktree as the user
+> tries to run "git history"?
 
-Point taken. Will fix the log message and add that.
+It is refused. HEAD is detached then, so the branch being rebased is not
+the one this worktree has checked out, and it gets treated like any
+other branch in use. There is a test for it, but the commit message does
+not contain this. Will fix.
+
+In that case --update-refs=head is not refused: it only rewrites the
+detached HEAD, same as before. I tried fixup, reword, drop and squash
+that way, and "git rebase --continue" finished fine each time.
+
+> Does --update-refs=head try to update the current branch? If so we
+> should check that is not being written somewhere else.
+
+Yes, it updates the branch HEAD points to and nothing checks it today.
+I could repro it with "git worktree add --force" on the same
+branch: after a fixup in one of them, the other shows a staged change.
+Good catch, will add the check.
+
+> we should say what "git history" refuses to do.
+
+Will fix.
+
+> We should also prevent rebase from rewriting a branch that is being
+> rewritten by "git history" but that can come later.
+
+Agreed, that can come later.
+
+> This is correct, but it duplicates the revision walk we're already
+> doing when looking for merge commits.
+
+Makes sense. I gave it a try and it works. One point: the branch
+pointing at the rewritten commit itself is not part of the walk, so I
+look at its decorations too. Rewriting a commit that another worktree's
+branch points at goes through without it. Will do it like this in v2.
