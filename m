@@ -1,62 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.15
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795398275;
-	b=v3HAqVA9wpr73OFNjcpDyn5EsCBQ4Dl+nDlhLfefM48VJb5uDh/wv5BeVnU7b8cpPiT3
-	 yBOmUS0cVCnmluKqCr/ngfMok8rAL+sH2gSovDRmUwZUqVRAg+f+9iJNwXiFiQtF6Clwa
-	 DIAw0Cg0BmbSfh4HcjRFtV4wq59+DGelV4ihjj3/Sqy0VDQAbfhe4i9GQStea6k37cGNt
-	 lWCnCNJlL/C2TeIYUVkKTK6Yr1+37oKBaNmPHQHmBVwZp5WJgYyoGEA0X6sP/vgMIWQu4
-	 iEC5zi2pOrxXCAw4FGveitAw4rnD6nS6w+Of8tmp1XneMskJv8GwuvGg7XFYVNCRqqw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795398275;
-	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-ZohoMailClient;
-	bh=URSNkFTmFpqTl9SkBjlNAcWWLgC4nnAjknt+pbZ1qMM=;
-	b=eVbio8lJ3sDIVBYhnvIapZNjA8U01Fvr3/KRUWeU+zfWl/iyyJ7UdCUX1mngJbW2SYeF
-	 xtzEGCsu4vCvTEkcU0jj6+Sf0tvSfZoYTtcjkVpQ4gQIXPlsTGDJRcUGepDJDN5q4aIRk
-	 WVvSrPUPxqKZzvG8OFYNyHS0JZE4C6YW1QXoca5Vk+C0rO1CZKmXtOIYkdxz8V6YL36wm
-	 tKTeqjJPr/46JXRiJ99lfQUxHzNeoOm90DZtg2xMelpkoHxhyerM1ZityvsvnIoEs1Kbt
-	 qbxoUf1faroOW9xRKcsFCCmd7TWOc4NDd7kZ2XC+53zJb3zFhLI5H9al8f9fyIfxgCg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=none header.from=laveeshbansal.com;
-	spf=pass smtp.mailfrom=laveeshbansal.com;
-	dkim=pass header.d=laveeshbansal.com header.i=@laveeshbansal.com header.a=rsa-sha256 header.s=zoho header.b=lnXdW7S4;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.15
-Received: from sender6-op-o15.zoho.com (sender6-op-o15.zoho.com [165.173.180.15])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.155
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795400945;
+	b=nRWg7bpCkA7Sr0PqZRdJYPtyzy9G2voUUa04uKTnIO1HxD18enK5acEwLP9aXr8zCuHv
+	 wzevk1NST1RCARMIL2w9Rb80JN4vI5pPBlc4JbdkMuFguBWaneyi0Lmqu4XAOaX4InvoD
+	 m2Cb97CKE2SfVcTFgVq+vsZu0oY2m+1QCYa6OwV1mp+/uIA8pvM59T8I3q7xFMtVwgBbk
+	 ruqeWaxgydLUXRu2CgjQ7piU6NrK7T47IkLI2kSm3xJ3Hzqpjec41iQlCVH9v9+eCuPk6
+	 uub8U8aMaeZmoqAcwcVerydbhUsIet9miX4Ay+tTAOy+qN9VDCkE8/aAiy9+g3TncUQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795400945;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=Nh2APwO3MhACKtmLjr+hei/KRlqtawyq0Z7jvtvMZdg=;
+	b=zcUUpqXzc/+Q4QOin/r9sN7nMI+95XF9xOGKfWbyRm9PaYgfy4oQgbdZtufnNR477Hcc
+	 msEHth8wsJTIbuhRCJRCivINH20GF+VGUgz1VRUjnJem+Icc1FT8b1/5Tf1xSgRLKJ3lA
+	 iJ1gasKmBQt6Ibi6BrEsqYioLCfAKOnxNgbqiPxvlJLjAFrXjZbUJEd3lT7TqC9XUgcvc
+	 975QzZBKizA/z9ptciGtyD3l9VWy6uD/gRphj2nN2BdNIQYCb8HVAPMTcSJqOCiyiofUo
+	 3Dvrptsp9ENYGX08LhyhD/2xud83kes/nH0J9liLEtWeHongT6mphaYJy+9JMWSPVjw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=mFwXW9OF;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="cC3/f0r9";
+	arc=none smtp.remote-ip=103.168.172.155
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008EA606A31A
-	for <git@vger.kernel.org>; Mon, 23 Nov 2026 01:44:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 008EA606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=laveeshbansal.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=laveeshbansal.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2735606A31A
+	for <git@vger.kernel.org>; Mon, 23 Nov 2026 02:29:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A2735606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=laveeshbansal.com header.i=@laveeshbansal.com header.a=rsa-sha256 header.s=zoho header.b=lnXdW7S4
-ARC-Seal: i=1; a=rsa-sha256; t=1795398271; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=BCuZk7mTq5V1HER4tozrCZXZbVu/uS3yqx+gglTt58VvM8+MT7eOpIc5IVylswgZudc9WITTtGInRKRn4bc77bK1yMJnGGOs0Ty2bgVs/1MDXaoAL/yt7NfSgrbq41o1RxRHZG4iLzvkpdevlrGOyNsQBcwinkS22quLXV5Uyhw=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1795398271; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=URSNkFTmFpqTl9SkBjlNAcWWLgC4nnAjknt+pbZ1qMM=; 
-	b=jg6Dk8YEsOrSt/z+Jxlfd6G0Yt60Tr4ZEUT9V1fJ4QKqTC4lVHhDGmb5C7nnTRE3fIjPiwkKplM9J7KxmkYQ3UHRKZ7L/aezsBXs5jk9URmLD+JZek3stZIV4Htg9OkhoZT2i5v6KjJww1jQQld/kyo9N9EtzDjhr1xgdmnNmEA=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=laveeshbansal.com;
-	spf=pass  smtp.mailfrom=laveeshb@laveeshbansal.com;
-	dmarc=pass header.from=<laveeshb@laveeshbansal.com>
-DKIM-Signature: a=rsa-sha256; b=lnXdW7S4R0itoXqaaf1VeGPvWYq3RJeSho9/7xnWzYbPbxWs5yzGstq0FIYn+43D8XInaFGlO5y8vvqR3PAaeJGpGJzPBJeA6nwYALdqG0l8bGk8cc6LGky7soTJN2fdNm684EoatBkeSWqtQdjuoe44iI3e0KFvYCD+zD0HybI=; c=relaxed/relaxed; s=zoho; d=laveeshbansal.com; v=1; bh=URSNkFTmFpqTl9SkBjlNAcWWLgC4nnAjknt+pbZ1qMM=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
-Received: by smtp.zohomail.com with SMTPS id 17953982694811007.6201473243045;
-	Sun, 22 Nov 2026 17:44:29 -0800 (PST)
-From: Laveesh Bansal <laveeshb@laveeshbansal.com>
-To: Wasswa Edson <edsonwasswa54@gmail.com>
-Cc: git@vger.kernel.org,
-	Tanga Joris <tangajoris@gmail.com>
-Subject: Re: [PATCH v2 0/3] credential: parse subcommands with OPT_SUBCOMMAND
-Date: Sun, 22 Nov 2026 17:44:12 -0800
-Message-ID: <20261123014412.35076-1-laveeshb@laveeshbansal.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20261114184752.1417-1-edsonwasswa54@gmail.com>
-References: <20261114184752.1417-1-edsonwasswa54@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=mFwXW9OF;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=cC3/f0r9
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9527514002DD
+	for <git@vger.kernel.org>; Sun, 22 Nov 2026 21:29:03 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Sun, 22 Nov 2026 21:29:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1795400943; x=1795487343; bh=Nh2APwO3Mh
+	ACKtmLjr+hei/KRlqtawyq0Z7jvtvMZdg=; b=mFwXW9OFL7bK6yFkkdLRJVyVMa
+	VkxaPxHKWDKtWcI/51QVutEcY+BgYFpdVw375dtBBTY4aqhcwKwR6a5/Jn/NTHvK
+	M6+Gj7oJ55T8CPdiWNFvkcJxhcXYCAi7TVuebIp5Z2uZ/D1iobafpzT9Rdl5ETtd
+	tGDIr4Xm0W+qrDzddshr1c8DIdX2DE7CoxvaTOcTj1rq/I/D39KDZ5nH7YUa12mR
+	rOQFwx333lnQpqOJL4qTbmG+im+adpcnWnKEi6Woo08NVOmFy9qmubbgngu6kMSg
+	CkepB2VsVNhM5EpScHZGj0E38oqyV5Pvx+v2zCfq1o1kp5ui+QUv66Hk76qg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795400943; x=1795487343; bh=Nh2APwO3MhACKtmLjr+hei/KRlqtawyq0Z7
+	jvtvMZdg=; b=cC3/f0r9Q/lsEpC61QY59juti8vl1kOJsJnlAnSiA+/v4x1pPcg
+	GTLZjBH66wgQ7x1AihTz6pn/4c+NC1X7VGoKALbfoi50Ng0joumUGw8tHy9xiVaL
+	XRWdNi87dO8QiC+ZbIafFQ8cPuIbbl+xMg5CDC7LHzPy2+njFtnCcvyjoQR1VGiH
+	JVHqU2pve/+JIAhc+YIno4+PW7Y7YrNaEJVw9XAHGHknzNWqPVcn36fMLmEo1auG
+	gsESWQbUTdxtKYgMe4ROUiST8CKBQYTqC2jTRQD4OUCXZ+SWsetaKu80zsepUOyL
+	pSGQ9J18VvP02srOR28Nvx2W2h96HeJrWsw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795400943; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:bQFXDLkANhJgfKVYyGvtEFzsh9VhS9EvzwmEoWkz3Mj9uVq
+	CS/PiwEdKCzb2qMvdJoGh+ZeamTxlYWo/qjWORpWuV/UShrsv1lGfgu8girnQgym
+	iK6OTHgQKxjp7dl1DD1Zj6287TI80fT/rK95P6Om+pLoghM8GUtk3erO/SfuPej5
+	MDxroYPJ4EZN08P6bLP7+xuMMHDj7JaDaGqESkFGvNWHNh6yqAv/DfeMFBEUA6ky
+	t6OQ6/gZzrPB2uT4ZdDBmocxxcaVYFqC5gaPNyofUWW40e8gGk5CS8TAczOhfvaB
+	7NsJ0Qs7FhiCnzXjqz1rCVus18rR5N3JA23wpsA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:9H5Tmn3gc5I2tmf75wasab8wmAlIFBDz8fFQ/v84nlc=:wuVrtYzn6b44beu6zsVbY6+c2Wd8UffD+adloICmxIw=;
+X-ME-Sender: <xms:76QDa_mYnD88Qcvb59v3Tw7N2eQ3wKc9ZDc1QIXx5PpJKj3Qi5RM6g>
+    <xme:76QDa5u-1dUTLlUqDMxzOYG6D0-Ijz1uiKQPlMkkDRy5QaPxw9GplOfOq2bFkvdYP
+    4Vfu2XGwR-pKy9lRAwnClT71KKCuAKARHZO8kvRTuzn58oc5qP-S7A>
+X-ME-Received: <xmr:76QDa9_8N9kCDSKCeaOROf4SdrFCbwwtkuRc-LMP0iwK2_3rTpbfPSTL4kfTsQgNwA7aTWEyTebRyRudJPn00wUrkqFKNR1tmuiq_Ew>
+X-ME-Proxy-Cause: dmFkZTEXQj5j/WuIcYbjeqf6tMUUQQdcLBzgseWyj2YsnrvU4Jd75mrWmVvBuRRRbqoFd4
+    AzGgpAQzD+DuJKmczZA3lJFmi7Op/qHx6TN9bvdrgUEyNbzZ887aM7EC26BttYWpVz9oio
+    jlyWOCpkqOZIvtefA56iizEaz95R+1MoP76LXMh6NRpYLylNuP050jMdmrNB7kSHlTAe4r
+    lD+1/b4oODgb72gEJyOqBoSTUY1rqqPHwyvMP25AsmaNElpQLp/DAtV6SgYzqopzQ9LkTi
+    JjtYFgamth6Pk346ZXBoDTlda+0tyZVj3YjMAiIVq5krwIuA0dZI0/f2eV4oLU/g0mb6H/
+    AErCq+OL8i3PcGNg7Todwg/IYtp5Ad4EPiQX7IoA/Xup7EbfluDJappol0GiJRMRNIGlVN
+    hQtr3AHwpdqf3hASWNd/Zj4XJsM4SuXwZXSUUT4pndVjoU6Yml40qJuNOCVwfzoUCe5wPC
+    1aQSbxLIlpZ2eDKWbqhv/OVMfxIW8ePXvKSw0BAio3PLXAtALmlJzKoHzBjxnlcf/jNBXp
+    fIWtZ5WFueu49xEwB5BAG9xYVx7ACAE2ctcTGv5k1oPhe7sQtptJZM0dlDk6otrM1wOR6f
+    xLD3faN0WU1u+nogvnvX3W9CJYWcQo9d2Uxo3Uum2D4oD6B4hEsXiWanDXYA
+X-ME-Proxy: <xmx:76QDazMvPM8BUnR4uXBjAeyj4fOUkeJq82hP33MMUaiwHyRKrrs4qg>
+    <xmx:76QDa7GnIUG_gNeng3WfJR82D07xD--h7YBqttkT6Teo-fEgKeE_zA>
+    <xmx:76QDaxTGJREDO9Scp7dH8Nky7VzljpdC9bJh1I3aH1xeYpo_79OzBA>
+    <xmx:76QDa4uWtIVu30ssLidvsyelnh9vWQiK46HWmMC5DMt8bDpHWkh_Qw>
+    <xmx:76QDa-_EeX2OobjFUyinwbRpY7p7ruRtP7VxlRndSmH9HRgmrn_CC-g->
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 22 Nov 2026 21:29:02 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>,  Adam Dinwoodie
+ <adam@dinwoodie.org>
+Subject: Re: [PATCH v4] setup: fix hash algorithm detection
+In-Reply-To: <20261123011403.720209-1-sandals@crustytoothpaste.net> (brian
+	m. carlson's message of "Mon, 23 Nov 2026 01:14:03 +0000")
+References: <20261108011633.1772000-1-sandals@crustytoothpaste.net>
+	<20261123011403.720209-1-sandals@crustytoothpaste.net>
+Date: Sun, 22 Nov 2026 18:29:01 -0800
+Message-ID: <xmqqmrr0gu1e.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -66,10 +125,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+Content-Type: text/plain
 
-Looks good to me, for all three patches. t0300, t0450 and t9902 pass
-for me.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Reviewed-by: Laveesh Bansal <laveeshb@laveeshbansal.com>
+> Our current hash algorithm selection code has a few different problems.
+> First, we do not actually default to GIT_HASH_DEFAULT because, due to a
+> bug, our code has never considered GIT_HASH_DEFAULT as a default for git
+> init and if an algorithm is not specified in the config file, we assume
+> that the repository is SHA-1.
+>
+> Second, if we have an algorithm chosen by init.defaultObjectFormat and
+> we re-init a repository, we will change the hash algorithm, which is
+> very much not desired.
+>
+> To fix this, let's restructure this code slightly.  First, if an
+> algorithm was selected on the command line, assume that's what the user
+> wanted. Otherwise, the other options should only be chosen if our
+> repository doesn't exist (that is, repo_fmt->version is -1) or it's
+> specifically detected as having no hash algorithm.  This latter case
+> should not occur, but we preserve it just in case.  In those cases,
+> first use the environment, then the config, and finally, the default
+> algorithm.
+>
+> Then, if the algorithm does not match the repository, complain loudly
+> and refuse to reinitialize the repository with a different hash
+> algorithm.
+>
+> With this change, we will choose SHA-256 in breaking changes mode and in
+> Git 3.0, which is what we want.  Add several tests to cover this case
+> and several others discovered along the way.  Update the comment to
+> better describe the situation.
+
+;-)
+
+> * Update comment.
+> * Place `sane_unset` in subshells.
+
+Changes relative to the previous round all look good to me, and I've
+read the previous round fairly thoroughly, so everything looks good.
+
