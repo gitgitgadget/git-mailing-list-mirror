@@ -1,122 +1,120 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.145
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795467846;
-	b=asQyo5cqG15HBn/YODA3j2wu7pQRWXkc9gQH5R4sKcc7KhdutiswOEnV9MymbjqAJ3Yn
-	 8p756Wxa9AMCz3/OsCkMW04bhHgqSOrXXqRzFFo5ktCnNX4xpuXCBcol8JOlC+80tLAbr
-	 t0K3Y2pwtvlRFJYYw+yr1jUDgjD7h444ghanfVw/GXCp6ywDwGqnspsS2uspI3c+EOMgh
-	 Ch3vkUvhBAGEB0l51Q9/fcruFo6rq9nZKCvyFATdgjKnmtmMi01n8mMFLjVtJKflTEAoC
-	 PfLZhoeThv/z4HjMluy83unb/QnmllmatanDmaDzRZlWxXdJOulRL0OBSmBPjzGegeg==
+	t=1795469046;
+	b=PSXBpbi6YkJD2eh74zJCy1MhqYviwUI/eI3KTtCwwbaQ7CjrCmMexlHjWdnbKzmcgjtV
+	 U3R95i1nRykoo2NcQ/G8uokKnCTePWamM44tOWOBwNXfyqzPbzkmgJjhAeSdAv6EyDvoi
+	 hdCOAxZpYWn1jDBKRf/aIuwg4nEyuHafWW+4+SZQdcxTgpkdb6polX0YLO/u3zAIcRz0R
+	 8eZrOxZ+EnoKGGF4D3LT1KKVL+i1taGfzUQc4rnqM0UcnCdrXYpS9qk24m0QQx7LqomQc
+	 LWvVFRiYX1fqPgAmTNRSmkVOK3ztnvGSRtO2ItFvV6TRpKoMvgWrqCjLFRXN3MYT7dw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795467846;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795469046;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=PwLeHjBNhdHt7xfaDEFVGmz46LzSvWaw0HG7ogTKAzk=;
-	b=ybNGJoS7a24oHrL/Lz6002xC5hY9u3xRHAqTMh8dmTtJ1G1znzf7emGZp6yjdPfClQMe
-	 9PgvvANmII6e++hiFmoEusNJeffLMco5aVnhvJFqCrA++7vz3/8lShreNcEt8sZjnwOVj
-	 tD//Yv525nq3rrIGLNSyBRqrhzhXGKXvtTa9aMiTMCkm4HfwbDBvk3t8DpO+J2WmEUwOx
-	 QSMUur7cYZ9Ubb/6hEUKqCKbvhL+30o8ryz1pcFA7gsLYb/HGXqpL3cSkOB1+jGkE3vM7
-	 ZswE8GXk1O+I8ZdZcgSQtbBrF55nVfa8ca5rFkdcKeWRLEFh5rJd7+bjDd2Gq+cTWTQ==
+	bh=5gI4VwRJDq+2DGilmKg55ZUR0Ad1yFuZ0wEZEZVH4lM=;
+	b=KYiKABUzpWIT6W4cAqJnJX81Iznh4xOQcZS94qV7kfx4juM5gl3PelaNKoSbP52cwxj+
+	 idDZV8e7Ue7guwzYJqw3hoVB7KHl+ehxY/qzqs24Hq9hrEoD64arbJ6/Pza+RKano+XoD
+	 8BU02ypMlLOgoZYbjdFZsdbgpvURAxpIjlWdTsHHTEzAxChF3DnPi8+tD2rHTy4GywCDn
+	 LuC+sJskMoH8ieHRtD9tUoUh6hQK/2Hgo+Llqo04UbD/X1vZuEwf3lqB1knb760i/MEzl
+	 9lX5mFoxalZ8q/HTf1TtwBVpmAzTVzXwvEi5ciDPdIZlU4DrKlieOeNaUkPuuT8GGrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=jZhQhAlo;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=DiefP9G9;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=GXbOjVyE;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=U2eSeJrW;
 	arc=none smtp.remote-ip=202.12.124.145
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E92606A31E
-	for <git@vger.kernel.org>; Mon, 23 Nov 2026 21:04:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 31E92606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24201606A31E
+	for <git@vger.kernel.org>; Mon, 23 Nov 2026 21:24:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 24201606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=jZhQhAlo;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=DiefP9G9
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4FD3E1D00669
-	for <git@vger.kernel.org>; Mon, 23 Nov 2026 16:04:05 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=GXbOjVyE;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=U2eSeJrW
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 279601D00659
+	for <git@vger.kernel.org>; Mon, 23 Nov 2026 16:24:05 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 23 Nov 2026 16:04:05 -0500
+  by phl-compute-02.internal (MEProxy); Mon, 23 Nov 2026 16:24:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795467845; x=1795554245; bh=PwLeHjBNhd
-	Ht7xfaDEFVGmz46LzSvWaw0HG7ogTKAzk=; b=jZhQhAlo6UH5NtTB7X/jiR/uAY
-	3m4B0a+giAGTX1gy6BGKXoPA/OQ23cQxlNSISAu+j9duaf7CHfkm3d4FakGkqus5
-	+QLOmQxtpSdTGkvTnHxoy9lmrBftu0b7e90DOEGG60Doig8xy58Vpme9rD23fWQ0
-	LwrmleBtrdi9OL2l5qtWMkO1p7pJJxhDZKTFDVhHDlA3oBWUKqrdamXA3hxNk41u
-	aL1I3m+LrDWXA9kLg8V3PZ8qLRq3kwui8KsQWIZTQKLhm3SPT93+2w4lQHIpTwZC
-	20YIG5C+Vj0qMNnEmFbl6ij7ie0hW0ZJz2Iv4UKW8GyY0QAnPdY7OLRIJZVg==
+	:subject:to:to; s=fm2; t=1795469044; x=1795555444; bh=5gI4VwRJDq
+	+2DGilmKg55ZUR0Ad1yFuZ0wEZEZVH4lM=; b=GXbOjVyEwVPIA0nsgfXt3lrvXW
+	idxY2TcszUdznU9QuEVIAXTc6G7UunimHl5yWpJJ90tbMXC6EL7ri9M9qxte63DC
+	Sly2zIUcmwqYE4R/fzs7liJzcZVlW0rTahvpAtiie4Gh1l1mtxRHju4Uskx4VzJb
+	Vx4p3juGHdUDbLHGJt/knISS6fV1qBqrpoeRh2G4zMgYZ5WhQicwpr+8ulb4LHil
+	uAyfTLrj47QQhGIbuSFwC1m/tPp3vO/Fq9sJt4OHGQFJ00DEy/BG2DP7JcbyIhC7
+	ieZqu807K5gvmrfpiJUqI9EGeK5V2D8tScCULcXmwH6W8x/WR0aX+VTWaJpg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795467845; x=1795554245; bh=PwLeHjBNhdHt7xfaDEFVGmz46LzSvWaw0HG
-	7ogTKAzk=; b=DiefP9G9WIGVFhC4JZDvgX/rRQxcdFSKt0h7Quf5kWSRzgbegBr
-	XZ2MXZVgDu4JFjnWHyCAaOFcOOnvloeEh/2j9sA92TJJ/gZexEU8qqxEuXktnFcj
-	5tzYxfeWEWB+Omgp2SsAmrHreDRExH5iSoMQTUrZ7bV/hcOM1v2ZXLE9xWN332Af
-	u5g90jmpa3qfHz6IY4aFHydloLIB/PSYG18F9gOVXk8RPjMUdxzoLYXxzB9hoUkL
-	JT+k66F4MZ5AyAvuBBZLytK1Flzxgde7bKLfPfO1bEs7A0QoreouUOX7UDsBxvJL
-	htXpHwn9bfUDeKM21xjj/94+XhVlm/WDYsw==
+	1795469044; x=1795555444; bh=5gI4VwRJDq+2DGilmKg55ZUR0Ad1yFuZ0wE
+	ZEZVH4lM=; b=U2eSeJrWr3HFsxyFtyYrT5XBs0vlRl1CySkq8qtjJGJ7cBVAbgT
+	/75gkwWxm7OOIFVEW21GJmtzsl3LO07K0zdLM7OXgSQnXRBt6NZglSnnT3v/8gnG
+	V1JaLzXQU9+t+FjxTAfJfBzLo0pAPyYgdb8pqooWMYxcPapnjwZDTHiZ0Oh5CpCa
+	SCWh7a4A2AM8SBYVcSe/npviBwiv/fxjBp/pfTNGK0V1y9NALk+wrEqLdOBjZxU0
+	7T0dCB12iWCT6K5tK/dV2fLRvXX2BImSGTlm+oFFwxk9Vg5ckqYiXZGFyLaXcq9S
+	1zcKMFol/yiLEgGzTh+NYHbkSYDpyhpREJQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795467845; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1795469044; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:cSe3NGZh7ylwfQzkEjVWE21ahjKeisCXrSNQP85HJuB5Jyq
-	YkVMmrtNAt8cDnFluMvKUvZN7svLlKHRl56RiLs+fBzsGuWHU8zILkLDSQ6HZnWA
-	ejhfEUlAz2IYkVU7jT+LGfs7HMr7/+8RgOo8N3/1TxLQb32Hi/LgF5PvCTCDp79k
-	+ECdwkQIhFrl7qf5Y1zwqGi495lS+K5s7IVjybzzH2X5JkLD+gPBeT2fValnuDrO
-	3ZEizIcjkrp74mEik9tynTJa/3hk9+jZIPis/U8RXKmaKKbBO7TWBa6I1EGVZYyU
-	1FMD75J+ayTTy6O4ktuGHF87S6tCrnkTBnmq2iQ==;
+	s=fm2:rsa-sha256:GGpgZ5dOeqTM7xB6Bi7a2CN8UfFqu5RP5bYrH5KqVJ8NXzd
+	OFKJw9Gtw/4PgtcwxtWb0Te9tG7j8H6hPWryfwuTxVpgL+cUMb5ddNN/pVYpLUdg
+	o3kvxB74EfRvlHmqyJOecruGPenIzCOTPmotaoHCxjYCn1K4OVY7ujqP6X4qgRBt
+	RmSDoC0UenalAj84nG7YegMB7g89HvvwFsaJJgpk1QDWxSkFYPaNaUX+Fyp0cju9
+	zJT3RqTHfx3gBBVZA0BSSZozrlGtbYzUx6kX/uJJENgfctKZpSS6dpZZbPelFi6x
+	ElcAuwZ7myom22HWnxiqQwxUdaF5EHGBPdt5VIA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:C84H2vgnogsRjBWvbpVB9c0nnAeBOhE3etNkgPbn2GI=:zrpP8PK0P7r9lqUFrAhuIL4VEhKC0Ackg/hsVyAbyPg=;
-X-ME-Sender: <xms:RKoEawCMxcyfriSw6k_We8yzCvVUskLvF71LeayHW85Ib9omN7FgSQ>
-    <xme:RKoEa5aCEdfhlHsU_It8wBOZ9P0Kdg36st7ltHwEsI911NDmANUHftyxOalk9HLki
-    1bCgb7UYRohqVUZzgsmUESO6XLFAseApOCgHExl5S71lU3GhkBJqxw>
-X-ME-Received: <xmr:RKoEa77wIWenO-hf3e3-FeFCPeywDr4IxXdhDvMhansu4K5eLNjxv1ibbrqshR4wnymIZsfrTFNrS-mrktll1wONcGz-TXeIG34333E>
-X-ME-Proxy-Cause: dmFkZTFlJPbSbi9iZpICv3pWxHjmIwSoLptXoBTlaUrmLZhSJCIPENu992ZPxXSi4/48ST
-    eOs9umqw1+15hGDit6rsTX0/nqt1udw8mrs3mzuLGDMF+pT0eS3dErxOh42+2/ZUNSU/fq
-    qAVkbrXCQBsQs3GLgTeD9rJxIuQkyQiCnPLW8iDgBE3h8LQi1xtvdH5cwkgP4DsvLP5JZ6
-    nqYphG5TVbC9p82zg0GgJiGyBEQSxtiExdtoXUE5Fa05Ca/YbAwS8aypx+/bceR87xaM1x
-    KXLWgkvECbWJ/T+IxExBFMFZWNGuWKwae9ECUOcasGs5GuhIlXWTtWLjkBlpGNzmW87MMX
-    e/cjkAM6SM+E2O2oTBu93f0FDfBLFAeuAU/tn8PNQTI1esB47hE5btjJ1FbLZ4UX54DVUa
-    Ct0c1ZvvrogqMyr2cfzUsrDGkIPlUEjD5ncT8fGo+S7N4zs5b+ULz0dLAQMRXf9MMuL/BC
-    KNdH8RgsY4k+BOgJ1/8VsE/XYkLgOzPBuU63PCRz+sL2+IO2s9y5Y7KA1kieXcagizx8Dn
-    XO274qc+GhCUtOHzPtPqPxwQE4FksZXp7wYaKDCV4ILk55YpYPPPVyvbp6oyU34y5/9lN8
-    72k8Cs+CO3Zuq3vKbxNkp8pcsVn38lKdjrCAmsj5uHwp9x8oyVQy/PSsA+CQ
-X-ME-Proxy: <xmx:RKoEayZfh6B6BBJGulXoh8hXQVU2TRP4jGzbUSNRecqq4k1ClJd1nA>
-    <xmx:RKoEayhkPdlxb574v2xjgE8nckDG4EsM3pEQpBwR_8EKGHceN89qxA>
-    <xmx:RKoEa7_u-68SxE4x_oewV702B5hLfCa9Dv9enxvLjWq1ae0q7DufvQ>
-    <xmx:RKoEa1qJEVd6cY7DjwT_8i3PccY13-NNgVXzCctRTzUJHC5OXwIBLQ>
-    <xmx:RaoEa55ne2ijgiVZ2hRNhme4E6pfxDNhlX5iTVFW-yQl-9jkMQZyCU_m>
+Message-Instance: m=1; h=sha256:MN2biNMXISle4Ll9mGO/zRmi5qvsO6n2PF0c05558aY=:zdvjUA9s3UZH9v/UL6qjivMytePt02EoECTd5C+Dn/4=;
+X-ME-Sender: <xms:9K4Ea5fYURc6rNIh6f-py5dZl0gtHVAwMtGJBM1it0b0_ldAHECP-A>
+    <xme:9K4Ea-HI0S6GH-RRGKgpBp_g24M2__lTj3LeUTYtvQJcMb0u-KEuaqnzmRnqacwUL
+    G9Z8Eibfru4XZJrQB2nHsuqSlx4VWj4_suK5SGcmytiQjRlHUH9c6U>
+X-ME-Received: <xmr:9K4Ea61AS1pmeaMpZYFvC_GbOgDbbSQj99fA9bE6KWQuWZomnoerBJkUBNipgl4fmaXUDsSNp5y_bhpmkyLd4zK6h1TeYmfydWXbSqY>
+X-ME-Proxy-Cause: dmFkZTEykD5oPGTXJVvl0oPHN8NrTD+WPoSOvDr1d57RHDgH6Paf8/YCy4JfLr6wKXAGfm
+    h6lFTkJmAUMpHq8yg1qlb6yJ+x4y83t4A0dQTVoV6aLAkbUu5BmzvO6Cpy84D/h727bF8v
+    NjplgH3PNG17yrz7Vf5bIcjtzRLTvOa3UnQ+FrmwuCMZwvqRUI6RHj1XOaUXRIBD1dHNM3
+    bNWSykOs/md6gyGLZ4VvG64oiN4ZhHnVRHSgtc/gen/wigRA/FD/orSeFzdZolGNXKG4at
+    zUCl7Y6SX9YOSiJkVEyG+2Lo8/H8o8rctgEO0IR6mTkwtenlGi2JM9YSJWRn3uTUhFHTlf
+    XNGiAQ7a5EbzsZRzls5bfxlNPP50dWfEYBDpTTdl7PkueySTpI2miEtD2pTjVbKnM/PWg4
+    diKsEDQ7qlLUoRzbVNJgR9NOX4bTRej/H/yfoXweJGvRvpBYCQFsxE5QQ7TeAljfGtWymU
+    8xJRCOlUs/fHoJtc0ICIT4XVGYhQzVJOfEgtkJUjmW+immHbuoI0OTNs28aiLSMr6a4UXl
+    LC2gvX8YpnPI3wimQSZnBdOMIJg+rbesGLDgleq+nZdH18PDkfzeysWOzV0qC1fLv87f0r
+    EZy02XiHEmJ0gFqGw1Mh/u9GKUKvg+4uvOcdt+LBfTRLiMxQApfTk51BG/lA
+X-ME-Proxy: <xmx:9K4Ea-khQzlHYUIz8K_jvc59r5vfAYyKeXG28dJ0Z59fuV1-zUgmIg>
+    <xmx:9K4Eay-D7jeD8VXmkKQFHlTnZrjPeluvHyGKxdoJPTFzzZaFA8bnRw>
+    <xmx:9K4Ea7puus9T-UgLdsPzfI9Y8iEhB_hclYuO0EmqFYkOSQ0zmg1pfQ>
+    <xmx:9K4EazmJjadK8zM3lrM6fN7opdeR2tVChTGO-IsBnssn8krghxsg5Q>
+    <xmx:9K4Ea8fG3mus3UVb3ZAFfQggkLLv3d-rU-2wkHI5Fw8ZralkBue2kGzZ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Nov 2026 16:04:04 -0500 (EST)
+ 23 Nov 2026 16:24:04 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Aniket Gupta <aniketgupta3001@gmail.com>
-Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 3/3] bundle-uri: do not die on unresolvable relative
- URIs
-In-Reply-To: <ce37d9588d833d306df3cc9d0e656e09c32e6b44.1795415793.git.aniketgupta3001@gmail.com>
-	(Aniket Gupta's message of "Mon, 23 Nov 2026 12:14:22 +0530")
-References: <20261105152842.566318-1-aniketgupta3001@gmail.com>
-	<cover.1795415793.git.aniketgupta3001@gmail.com>
-	<ce37d9588d833d306df3cc9d0e656e09c32e6b44.1795415793.git.aniketgupta3001@gmail.com>
-Date: Mon, 23 Nov 2026 13:04:03 -0800
-Message-ID: <xmqq1p8b5kfw.fsf@gitster.g>
+To: Laveesh Bansal <laveeshb@laveeshbansal.com>
+Cc: Wasswa Edson <edsonwasswa54@gmail.com>,  git@vger.kernel.org,  Tanga
+ Joris <tangajoris@gmail.com>
+Subject: Re: [PATCH v2 0/3] credential: parse subcommands with OPT_SUBCOMMAND
+In-Reply-To: <20261123165231.58660-1-laveeshb@laveeshbansal.com> (Laveesh
+	Bansal's message of "Mon, 23 Nov 2026 08:52:31 -0800")
+References: <xmqq5wxnd0k5.fsf@gitster.g>
+	<20261123165231.58660-1-laveeshb@laveeshbansal.com>
+Date: Mon, 23 Nov 2026 13:24:03 -0800
+Message-ID: <xmqqwlq344y4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -129,63 +127,29 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Aniket Gupta <aniketgupta3001@gmail.com> writes:
+Laveesh Bansal <laveeshb@laveeshbansal.com> writes:
 
-> A bundle list, either advertised by a server or given to "git clone
-> --bundle-uri", may contain relative URIs. They are resolved with
-> relative_url(), which calls die() when there are more "../" components
-> than the base can absorb, so one bad entry aborts the whole clone.
+> I applied the three patches on the base named in the cover letter
+> (37b3475fb5) and built each commit on its own. t0300 and t0450 pass at
+> each step (t0300: 56, 56 and 60 tests). On the final commit I ran t03*
+> and t04*, t9902, and t0300 with GIT_TEST_DEFAULT_HASH=sha256. All
+> pass.
+
+That is not a review.  It is only proving what the test coverage
+touches.  Testing is not pointless, especially if you are running it on
+minority platforms to catch portability issues, but the CI runs these
+tests on popular/common platforms once it hits 'seen' anyway, so it will
+not serve as a replacement of a proper review.
+
+> Why I think the approach is right:
+> ...
+> I also searched the list archive for a competing series and found
+> none.
 >
-> Resolve them with relative_url_gently() instead. When that fails,
-> bundle_list_update() reports the problem as an error and stops
-> parsing the list, leaving the bundle without a URI.
->
-> What happens then depends on where the list came from. For a list
-> advertised by a server, the bundles before the bad entry are still
-> used and the ones after it are not. A list given to "--bundle-uri" is
-> read from a file and rejected as a whole. In both cases the clone
-> carries on and fetches what is missing from the remote.
+> As for how I review and respond: I usually keep my replies short when
+> a patch looks right to me and works as expected, which is why my first
+> reply was brief. You are right that a one-liner does not show what I
+> checked. I am still new to this area, so I will explain my thinking in
+> future reviews.
 
-This tells us the story much better than the previous rounds.
-
-> This resolves the TODO in t5750, so update the test to match.
->
-> Signed-off-by: Aniket Gupta <aniketgupta3001@gmail.com>
-> ---
->  bundle-uri.c                | 10 +++++++++-
->  t/t5750-bundle-uri-parse.sh | 15 +++++++--------
->  2 files changed, 16 insertions(+), 9 deletions(-)
->
-> diff --git a/bundle-uri.c b/bundle-uri.c
-> index 9797eaed9a..d2a33b930f 100644
-> --- a/bundle-uri.c
-> +++ b/bundle-uri.c
-> @@ -209,9 +209,17 @@ static int bundle_list_update(const char *key, const char *value,
->  	strbuf_release(&id);
->  
->  	if (!strcmp(subkey, "uri")) {
-> +		struct strbuf err = STRBUF_INIT;
-> +
->  		if (bundle->uri)
->  			return -1;
-> -		bundle->uri = relative_url(list->baseURI, value, NULL);
-> +		bundle->uri = relative_url_gently(list->baseURI, value, NULL,
-> +						  &err);
-> +		if (!bundle->uri) {
-> +			error("%s", err.buf);
-> +			strbuf_release(&err);
-> +			return -1;
-> +		}
->  		return 0;
->  	}
-
-This is minor, but because bundle_list_update() places the bundle in the
-'.bundles' hashmap of 'list' before we come here, a failing entry will
-stay in the hashmap with '.uri' of 'bundle' set to NULL.  If valid
-bundles precede a bad entry, fetch_bundle_uri_internal() may emit a
-"error: bundle '<id>' has no uri" while iterating over '.bundles' of
-'list' before the clone proceeds with the remote fetch, which may or may
-not be what we want.  After all, we have already issued an error
-message, so...?
-
-Thanks.
+Thanks!  Your write-up above was really helpful.
