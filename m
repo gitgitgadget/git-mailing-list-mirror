@@ -1,63 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.15
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795452777;
-	b=rWsPtVtIdWtLw++ftDa1IKPi3iuuA8S7iak4AtzmjxSMMel9/iDOOU9YsT+RwuefSLRK
-	 XNjTMalVoON97eiJOrYWjkwFZa1u01wSyRq1feJmh/CcnYdJZD9CIlaaoXm09FFKack9C
-	 ldyQyRCQ0X5SQ44OIUPRusXbYNZuk9lFdMo1wo9wqenjEMC5SgYP7XM02D+ZSGhs9kvsb
-	 6lQq6XOKlofreORI1Vvww9rD/Q/yQ/28Ttje4MgllQIu1AugdtuGNtVJCxwSt4v1zWXVN
-	 6NgPohE6uyp3eLIU/D7H5Ij/aVYnQ/aQmYgvuSxUCtA9wSX7vdrRhHc1atcsC4PjqjA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795452777;
-	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-ZohoMailClient;
-	bh=TbaCFiX8gTvoas+XRk1YZeNP1KahaaO1o/J6naar1Jg=;
-	b=jc/ok9w+BJy1I06CpDZ8+LjCoDGzDkQjyQu7zg+CNQc7MnYzqH75He0orpfStMZSAVoQ
-	 UKD1j6kq6dEi5RS/HVgzTtwJwvD7ntKnpjj1nn/e97SWa5g5WclNL6UrLQX4p8k0pr9K9
-	 oXm+1mRyeQRHDM5rHhFHLEZgGkwUpB+SzjwMWsfUdIWVKNONfFFCJkzL/o3JDWPkcv4+F
-	 5yUHqRMPqFjEJfo/09Jv/wnlYvjMnay+HI/WQVRRhebOfc3Db9Qlh70syZG+BvZKnZhUi
-	 8k0DxulHswn88CPmB7xNAYO+NHcFGO0zslQTKZjnARrcyNB2B7NABqdwM2Y1TyZirxw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=none header.from=laveeshbansal.com;
-	spf=pass smtp.mailfrom=laveeshbansal.com;
-	dkim=pass header.d=laveeshbansal.com header.i=@laveeshbansal.com header.a=rsa-sha256 header.s=zoho header.b=OJa+RTJJ;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.15
-Received: from sender5-op-o15.zoho.com (sender5-op-o15.zoho.com [165.173.182.15])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.49
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795453011;
+	b=WmeBlMsjSjqn28OJgsEY/dcn7PIdgKoP+dgjI86+VLQEsggGgAjltw+UadwABPZjh2kR
+	 SM/r2YFZ1ZyjWPuSnKZp4Xl3QryWh2vx2aX0sv4Uvu4t/IawuO089n8Bwjatnt5L3/IVn
+	 PKrRCwfL6RAeTNO3ong64RR9uCkrBl43nH4fdkh3Cx87OYl7tV5yHDjUqw+0PjA2d1MFx
+	 uMpdKYJHfOvBiTWVMmvJXUWef8ofhRd2yBcx8//X7c7xQnvJZ5kaHQ2GeLeSSaLXRd+hQ
+	 GUdWFCLp93+RKGl6K9oVchyZAr/6RAW3x+r0f9T7gbV7krqPatJSjUyKp10upBTlv/Q==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795453011;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:References:Content-Language:From:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=CcKTN/ne/NrxBF9vR7p5bNsGZd2SV++BaPo2YcBUq+4=;
+	b=aFoyVK70ycvE+ChTuUYFmEeeyr0hapLDTjM3TAUgiy7aR7qqJSygESwq3saDfPphc77h
+	 qQpHPOtB8jqUbk5St7lCUVvCe4mrSCTWtEGFnAJJKkFb8cgDBFoxrd8Z+YV6sc0Amj2pp
+	 sV59ZP1GvjL0pzkfXWH/jpL20lZ6SyIO8P+UPmSk07P5cLrVJrDyPjm/KutayiCJiq0x3
+	 VARyPgiT4BRIX+GiAlApYOVfo9xB+v8RP/CO9xIzERRWEnziiynWz6PCv3L5QBX4Kje8z
+	 ZpaKOYAFBdr4Sgzc8fcA1E1jeKW0Ock6rXK/uw0HHcxUWVnMA2qT1ygrBbIkl8SYZHQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="G2z/rnth";
+	arc=none smtp.remote-ip=209.85.208.49
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04417606A31A
-	for <git@vger.kernel.org>; Mon, 23 Nov 2026 16:52:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 04417606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=laveeshbansal.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=laveeshbansal.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F44606A330
+	for <git@vger.kernel.org>; Mon, 23 Nov 2026 16:56:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 24F44606A330
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=laveeshbansal.com header.i=@laveeshbansal.com header.a=rsa-sha256 header.s=zoho header.b=OJa+RTJJ
-ARC-Seal: i=1; a=rsa-sha256; t=1795452760; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=G0zSTmNSAoE67L6/6EpCjN9aSxoPQTpSZ1qc1g3WOeBXJO6KdhhWENnVVPUkAp8XQlQTNcXHXhmvjEDPT5UbDNcLoj+igxKfZ5amO2kLTdJBBqYPfgccnX+Ke0n+NlXuxmOZI64oRzxa+G/Zp+QYGmVyFKU2VcYxn1lVkEL8Plk=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1795452760; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=TbaCFiX8gTvoas+XRk1YZeNP1KahaaO1o/J6naar1Jg=; 
-	b=G+RIyV6np2jtFI51s5yd42VGsbl/+ribRu7oFJqBcb94rBrWbci+IO2IhJ6DsPAz/262lhpV05YHk1ewQ7xIYtCYRo0P1czHf/0VVUxFxCpjZXHNRtV97DENIX6V4t12CDcg0aD78JrqIKrjN/vAZVRzvSxqz2uhe/LPsYCNkv8=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=laveeshbansal.com;
-	spf=pass  smtp.mailfrom=laveeshb@laveeshbansal.com;
-	dmarc=pass header.from=<laveeshb@laveeshbansal.com>
-DKIM-Signature: a=rsa-sha256; b=OJa+RTJJidNMuuC6fJB+tr+kCKiMgrbbxTemWGgRbmgQLQ9v0vEx/K+jiLmvCbZP0OcuQDzdOPrm4aPGpSn+xNVKLSNIExQH02rrYWqj3E92Mm+6XxO3nKW1604gZrDdO0CyVLM+8JYzk52BkdLrcAxuPtbOLabjzCrBI1PSi3s=; c=relaxed/relaxed; s=zoho; d=laveeshbansal.com; v=1; bh=TbaCFiX8gTvoas+XRk1YZeNP1KahaaO1o/J6naar1Jg=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
-Received: by smtp.zohomail.com with SMTPS id 1795452757963860.3816173133582;
-	Mon, 23 Nov 2026 08:52:37 -0800 (PST)
-From: Laveesh Bansal <laveeshb@laveeshbansal.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Wasswa Edson <edsonwasswa54@gmail.com>,
-	git@vger.kernel.org,
-	Tanga Joris <tangajoris@gmail.com>
-Subject: Re: [PATCH v2 0/3] credential: parse subcommands with OPT_SUBCOMMAND
-Date: Mon, 23 Nov 2026 08:52:31 -0800
-Message-ID: <20261123165231.58660-1-laveeshb@laveeshbansal.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <xmqq5wxnd0k5.fsf@gitster.g>
-References: <xmqq5wxnd0k5.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=G2z/rnth
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-6b7ddb99db4so4601848a12.0
+        for <git@vger.kernel.org>; Mon, 23 Nov 2026 08:56:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795453007; x=1796057807; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=CcKTN/ne/NrxBF9vR7p5bNsGZd2SV++BaPo2YcBUq+4=;
+        b=G2z/rnthk0QOpZlaUZhdT7WgC1aaTwKePGon3GZhTqduZZ03AuFGeftDNJ151P7GbU
+         cfERbx/rq2aMe6SRcm+REcWQe0BiQ+9rPvAuo3yRH+AOlArLdeSBqL750s7AwpIBw+co
+         zB8FR1499YsOPbdoE/sAU9xXcoPTXHJkoTc9gfFLD9U67ARyjBieDi0wWbihcIN4H9LY
+         DWPuO0OZLtzBbsr0MEmp9O0zfzzr2v6DgEaTJUsgvjJKIdNmBe3gDjnxO3ozrBl1yRc3
+         8E3szqq7Q+VxVRa6+B5H1nwMB8J1l1kwvRM9thI690sEiWAZzje6GcC8k/jvK6wKOMfW
+         RaNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795453007; x=1796057807;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=CcKTN/ne/NrxBF9vR7p5bNsGZd2SV++BaPo2YcBUq+4=;
+        b=fmIWjd2edxvZcVqhHuggARp8OEWFugCiZCY19VSfBaQFKu73vYL5R1+1AXtCRkUEvv
+         tw0w79mW2ZHPOIFg1UBAfCAU/XUJ6IXRS1tS4S+Vlnvx8RiRC6UZC2BJcMHiHzOIwT1R
+         /ETqVUmjFk9dEtk5eOpdTwXrqetGBUnDpKnDgYk4Fl/jo5GgVv+tOdZEIlEj5ZnKJiRb
+         kAAes46RTilCCGaBrWPIaig94km0+3+aXP+FT5UNgEacrNmjpuP/26G6sD4jPwlxqZM9
+         Elg2XiJa4ENwAObNM8IhAQqPVXJ6sYoJwwhzi48plIAGDFgULFKYS11c0/nGqWaqoHMR
+         f6GA==
+X-Gm-Message-State: APuU4Z9uA9BvZeYaK5cRSUBIh9KTSpFPDEbAUb1uWAhIQQmNqzRaLZmj
+	3KQzgddi7ECUx1P2dgNyXzXeVtXwbNcEIeWvVFzN7ncO8KLzBNckLHRHAJgqoA==
+X-Gm-Gg: AZFdTZdtYu+yexZ3mw9Y5TNdXr543Qsn1KserLQHsy3Cg7KBYpT/Ox3PZ92ksOzDAbj
+	83PH/3wr5i6YrGwRUUN/M7OGPzRICCmj2CSe42JW30aCVSlDtgRGrESn1ST1buG7LdMHeA+ZXC9
+	voSA2rgbjCSOFpVXnFQwb/0gFFPhT7svFXgUyBtjmh6lnqyEzkoUWoSBvSkyRAQJi4D8hqdFKH7
+	bb6UK4ZrKdAam5vK7XIVWxmOfxbbRy/FkcGAodOOsLFB0Rz7KP/3AD9/SaSfrDpnZ0tKMxeo+iV
+	1NUIVMBd9rXKWyBqag+6rmMLqcBY3FODIa1ruiPpuNwB0UbS6hIowKmKmuzonvpP5fBfitORBlw
+	LagBr48ZhI5/YGT9O2mFgjW/ZpSi0WHr7VTdhj518gB6HHZoAtpewr/Lmr38XRHAoyrUODhmRxe
+	eVGwNlAdRAfpH0yea8uvNdWnxrvkP+xcuTHakXOfJDyxmtOr3XEwhAB7AId5h7E37pT/X705y3g
+	zWepnlcvBwLGKdVOXOM2gLDfLWuOFUadwe33LScf1Zs980U0EK+TLZ/PPsLyn3n8c2VFesIp/WN
+	e/SbTOGS8sr2d9l4wlGxRW9wfCX1n+nIEg9gD/rcE77y6dAWWViMiW0=
+X-Received: by 2002:a05:6402:13d6:b0:6ba:9025:53c2 with SMTP id 4fb4d7f45d1cf-6ba90255abfmr4131519a12.20.1795453007350;
+        Mon, 23 Nov 2026 08:56:47 -0800 (PST)
+Received: from [192.168.0.172] ([217.71.1.73])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6ba370cbeecsm5712478a12.6.2026.11.23.08.56.45
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Nov 2026 08:56:46 -0800 (PST)
+Message-ID: <371bd5df-960f-427c-8631-e1af4535d1bc@gmail.com>
+Date: Mon, 23 Nov 2026 17:56:44 +0100
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -67,99 +90,132 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] doc: update-index: Format options correctly
+To: git@vger.kernel.org
+References: <20261122152538.107580-1-omri.sarig13@gmail.com>
+ <xmqqfqwsk4a6.fsf@gitster.g> <6954cd53-43c8-48ca-82da-35c673dee260@gmail.com>
+ <AS4PR02MB8336DCFEB4C0076DCE45F950EB452@AS4PR02MB8336.eurprd02.prod.outlook.com>
+Content-Language: en-US
+From: Omri Sarig <omri.sarig13@gmail.com>
+In-Reply-To: <AS4PR02MB8336DCFEB4C0076DCE45F950EB452@AS4PR02MB8336.eurprd02.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Outside of a trivially obvious fix or a quick nod from a known area
-> expert (e.g., Dscho or J6t on a Windows-specific patch) or the original
-> author of the code being touched, it is hard for bystanders to tell from
-> a one-line "Looks good to me" how deeply the reviewer thought through
-> the changes.
-
-Thanks Junio, that is a fair point and a helpful suggestion.
-
-> One trick I sometimes use when giving a positive review is to walk
-> through the patch aloud, explaining in my own words what the old and new
-> code do and why the tricky parts are handled correctly.  That way,
-> others can see that a second pair of eyes really understood and agreed
-> with the approach (or the author can correct me if I misread something).
-
-Here is what I did, so it is visible.
-
-I applied the three patches on the base named in the cover letter
-(37b3475fb5) and built each commit on its own. t0300 and t0450 pass at
-each step (t0300: 56, 56 and 60 tests). On the final commit I ran t03*
-and t04*, t9902, and t0300 with GIT_TEST_DEFAULT_HASH=sha256. All
-pass.
-
-To check that the tests catch the change, I ran the new t0300 tests
-against a build without the series (4 fail), and removed the "too many
-arguments" check (test 60 fails). Keeping "credential" in
-adoc-help-mismatches makes t0450 fail, so dropping that line is
-needed.
-
-I compared an unpatched build with the patched one on about 50 command
-lines, including real input on stdin for fill, approve and reject.
-For valid input, output and exit codes match. The differences are in
--h, "--", --git-completion-helper, and the error messages for a
-missing, unknown or extra argument. The two small points I found are
-in my reply to 3/3 [1]. One good result: "git credential bogus" blocks
-on stdin on the old build, and exits 129 right away now.
-
-Why I think the approach is right:
-
-1/3: "capability" was documented and implemented but missing from the
-usage string. Adding it, and marking the SYNOPSIS [verse] so that
-t0450 can extract it, makes -h and the man page agree. The "credential"
-line in adoc-help-mismatches then has to go, or t0450 reports the
-breakage as fixed.
-
-2/3: each subcommand keeps the same steps as before: approve and
-reject read the credential and set the helper capabilities, fill reads
-and fills, and capability reads nothing. Only the order changes, so an
-unknown name is rejected before stdin is read. The old code read stdin
-first, which is why "git credential bogus" blocked. The functions
-keep using the_repository and leave the repo argument unused, which is
-right because "git credential" runs with RUN_SETUP_GENTLY and repo is
-NULL outside a repository.
-
-3/3: OPT_SUBCOMMAND is used without the "optional subcommand" flag, so
-a missing subcommand is reported and the function pointer cannot be
-NULL. Each subcommand re-parses its own arguments with an empty option
-table, so -h, an unknown option and a leftover argument are each
-handled where the subcommand lives. The usage arrays are static, and
-the option table is only used before it goes out of scope. Calling
-parse_options() is what makes --git-completion-helper work, and
-dropping NO_PARSEOPT lists the command in --list-cmds=parseopt, which
-the completion script consults.
-
-The remaining differences are that "--" and "--end-of-options" are
-consumed by the parser, so the subcommand then runs, as it does for
-"git refs verify --" and "git reflog list --". Reading the old and new
-code side by side, I did not find a case where input that was
-accepted before behaves differently.
-
-I also thought about smaller versions. One shared usage string would
-be shorter, but "git credential fill -h" would then show the usage of
-the whole command, and the per-subcommand usage is how "git refs" and
-"git reflog" do it. Stopping after 2/3 would already fix the usage
-string and the stdin hang, but "git credential" would still have no
-per-subcommand -h, no "need a subcommand" or "unknown subcommand"
-errors, and no --git-completion-helper. I think the series as sent is
-the better balance.
-
-I also searched the list archive for a competing series and found
-none.
-
-As for how I review and respond: I usually keep my replies short when
-a patch looks right to me and works as expected, which is why my first
-reply was brief. You are right that a one-liner does not show what I
-checked. I am still new to this area, so I will explain my thinking in
-future reviews.
-
-Thanks,
-Laveesh
-
-[1] https://lore.kernel.org/git/20261123023542.88325-1-laveeshb@laveeshbansal.com/
+DQoNCk9uIDIzLzExLzIwMjYgMTYuNTYsIFJpY2hhcmQgS2Vycnkgd3JvdGU6DQo+IEhtbW1t
+Li4uLg0KPg0KPiBXZSd2ZSBqdXN0IGhhZCBzb21lIGRpc2N1c3Npb24gb24gdGhpcy4NCj4g
+U3BvdCB0aGUgbGluZSB0aGF0IGlzbid0IHBhcnQgb2YgdGhlIHJlcGx5Pw0KPiBBbmQgdGhh
+dCBpcyBub3Qgc3Vycm91bmRlZCBieSBibGFua3MuDQo+IFNvIGlzIG5vdCB2aXNpYmxlLg0K
+DQpTb3JyeSEgSSdsbCBtYWtlIHN1cmUgdG8gZm9ybWF0IG15IG1haWxzIGNvcnJlY3RseSBn
+b2luZyBmb3J3YXJkLg0KDQo+DQo+PiBObywgSSBhbSBub3Qgc3VnZ2VzdGluZyAidGFsa2Vk
+IGFib3V0IiBpcyBiZXR0ZXIuICAiaGFzIHJlZmVyZW5jZXMgdG8iDQo+PiAob3IgInJlZmVy
+cyB0byIpIGlzIHBlcmZlY3RseSBmaW5lIG9uY2UgaXQgaXMgd3JpdHRlbiBpbiB0aGUgcHJl
+c2VudA0KPj4gdGVuc2UsIGFzIHRoZSBlYXJseSBwYXJ0IG9mIGEgcHJvcG9zZWQgbG9nIG1l
+c3NhZ2UgaXMgc3VwcG9zZWQgdG8gZ2l2ZQ0KPj4gYW4gb2JzZXJ2YXRpb24gb2YgdGhlIGN1
+cnJlbnQgc3RhdGUuDQo+IFVuZGVyc3Rvb2QsIEknbGwgdXBkYXRlLg0KPj4+IG1pc3Npbmcg
+dGhlIHJlbGV2YW50IG1hcmtlcnMsIGNhdXNpbmcgdGhlbSB0byBiZSBmb3JtYXR0ZWQgYXMg
+dGV4dA0KPj4+IGluc3RlYWQgb2YgYXMgcmVmZXJlbmNlcy4NCj4+IEJ1dCB0aGVuICJhcyB0
+ZXh0IGluc3RlYWQgb2YgYXMgcmVmZXJlbmNlcyIgc29tZXdoYXQgbWlzc2VzIHRoZSBtYXJr
+Lg0KPiBLaW5kIHJlZ2FyZHMsDQo+DQo+IFJpY2hhcmQgS2VycnkNCj4gQk5DUyBFbmdpbmVl
+ciDigJMgTWVkaWEgQ29tcGV0ZW5jeSBDZW50cmUNCj4gTWlkQ2l0eSBQbGFjZSwgNzEgSGln
+aCBIb2xib3JuIOKAkyBMb25kb24gV0MxViA2RUEg4oCTIFVLDQo+IGF0b3MuYWkNCj4NCj4N
+Cj4NCj4NCj4NCj4+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+PiBGcm9tOiBPbXJp
+IFNhcmlnIDxvbXJpLnNhcmlnMTNAZ21haWwuY29tPg0KPj4gU2VudDogMjMgTm92ZW1iZXIg
+MjAyNiAxNTozMg0KPj4gVG86IEp1bmlvIEMgSGFtYW5vIDxnaXRzdGVyQHBvYm94LmNvbT4N
+Cj4+IENjOiBnaXRAdmdlci5rZXJuZWwub3JnDQo+PiBTdWJqZWN0OiBSZTogW1BBVENIXSBk
+b2M6IHVwZGF0ZS1pbmRleDogRm9ybWF0IG9wdGlvbnMgY29ycmVjdGx5DQo+Pg0KPj4gQ2F1
+dGlvbjogRXh0ZXJuYWwgZW1haWwuIERvIG5vdCBvcGVuIGF0dGFjaG1lbnRzIG9yIGNsaWNr
+IGxpbmtzLCB1bmxlc3MgdGhpcyBlbWFpbA0KPj4gY29tZXMgZnJvbSBhIGtub3duIHNlbmRl
+ciBhbmQgeW91IGtub3cgdGhlIGNvbnRlbnQgaXMgc2FmZS4NCj4+DQo+Pg0KPj4gT24gMjIv
+MTEvMjAyNiAyMS4xOSwgSnVuaW8gQyBIYW1hbm8gd3JvdGU6DQo+Pj4gT21yaSBTYXJpZyA8
+b21yaS5zYXJpZzEzQGdtYWlsLmNvbT4gd3JpdGVzOg0KPj4+DQo+Pj4+IFN1YmplY3Q6IFJl
+OiBbUEFUQ0hdIGRvYzogdXBkYXRlLWluZGV4OiBGb3JtYXQgb3B0aW9ucyBjb3JyZWN0bHkN
+Cj4+PiBJJ2QgZG93bmNhc2UgIkZvcm1hdCIgLT4gImZvcm1hdCIuDQo+PiBTb3JyeSwgc3dp
+dGNoaW5nIGJldHdlZW4gZGlmZmVyZW50IGNvbnZlbnRpb25zIGJvdW5kIHRvIGdldCBtZSBj
+b25mdXNlZA0KPj4gc29tZXRpbWVzLg0KPj4gSSd2ZSBhbHJlYWR5IHVwZGF0ZWQgaW4gVjIs
+IGFuZCBJJ2xsIG1ha2Ugc3VyZSBhbGwgZnV0dXJlIHBhdGNoc2V0cyBoYXZlIHRoZSBjb3Jy
+ZWN0DQo+PiBjYXNpbmcuDQo+Pj4+IFRoZSB1cGRhdGUtaW5kZXggbWFuIHBhZ2UgaGFkIHJl
+ZmVyZW5jZXMgdG8gc2V2ZXJhbCBvcHRpb25zLCB3aGljaA0KPj4+PiB3ZXJlDQo+Pj4gSSB0
+YWtlICJoYWQgcmVmZXJlbmNlIHRvIiB0byBtZWFuICJ0YWxrZWQgYWJvdXQiIGhlcmUuDQo+
+Pj4NCj4+PiBObywgSSBhbSBub3Qgc3VnZ2VzdGluZyAidGFsa2VkIGFib3V0IiBpcyBiZXR0
+ZXIuICAiaGFzIHJlZmVyZW5jZXMgdG8iDQo+Pj4gKG9yICJyZWZlcnMgdG8iKSBpcyBwZXJm
+ZWN0bHkgZmluZSBvbmNlIGl0IGlzIHdyaXR0ZW4gaW4gdGhlIHByZXNlbnQNCj4+PiB0ZW5z
+ZSwgYXMgdGhlIGVhcmx5IHBhcnQgb2YgYSBwcm9wb3NlZCBsb2cgbWVzc2FnZSBpcyBzdXBw
+b3NlZCB0byBnaXZlDQo+Pj4gYW4gb2JzZXJ2YXRpb24gb2YgdGhlIGN1cnJlbnQgc3RhdGUu
+DQo+PiBVbmRlcnN0b29kLCBJJ2xsIHVwZGF0ZS4NCj4+Pj4gbWlzc2luZyB0aGUgcmVsZXZh
+bnQgbWFya2VycywgY2F1c2luZyB0aGVtIHRvIGJlIGZvcm1hdHRlZCBhcyB0ZXh0DQo+Pj4+
+IGluc3RlYWQgb2YgYXMgcmVmZXJlbmNlcy4NCj4+PiBCdXQgdGhlbiAiYXMgdGV4dCBpbnN0
+ZWFkIG9mIGFzIHJlZmVyZW5jZXMiIHNvbWV3aGF0IG1pc3NlcyB0aGUgbWFyay4NCj4+PiBU
+aGVzZSBwYXJ0cyBvZiB0ZXh0IHN0aWxsIHJlZmVyIHRvIG9wdGlvbiBuYW1lcy4NCj4+Pg0K
+Pj4+IFRoZXkgc2hvdWxkIGJlIHR5cGVzZXQgaW4gYG1vbm9zcGFjZWRgLCB3aGljaCBpcyB0
+aGUgY29udmVudGlvbiBpbiBvdXINCj4+PiBtYW51YWwgcGFnZXMuICBBbmQgdGhhdCBpcyB0
+aGUgaXNzdWUgeW91IGFyZSBhZGRyZXNzaW5nLg0KPj4+DQo+Pj4gVGhlc2UgY2hhbmdlcyBk
+byBub3QgbWFrZSB0aGluZ3Mgd29yc2UsIGJ1dCBJJ2QgcHJlZmVyIG5vdCB0byBzZWUgdG9v
+DQo+Pj4gbWFueSBsb3ctcmlzayAmIGxvdy12YWx1ZSBwYXRjaGVzIHRoYXQgYWRkcmVzcyBv
+dmVybHkgbmFycm93IGlzc3Vlcy4NCj4+PiBJZiB3ZSBjb21wYXJlIHRoZSByZXN1bHRpbmcg
+dGV4dCBhZnRlciB0aGlzIHBhdGNoLCBlLmcuLA0KPj4gVW5kZXJzdG9vZC4gTXkgdGhvdWdo
+dCBwcm9jZXNzIGlzIHRoYXQgYnkgaW50cm9kdWNpbmcgdGhlc2Ugc21hbGwgY2hhbmdlcywg
+d2UncmUNCj4+IGFibGUgdG8gbWFrZSBzbWFsbCBpbXByb3ZlbWVudHMsIHdpdGhvdXQgcHV0
+dGluZyB0b28gYmlnIG9mIGEgYnVyZGVuIG9uIHRoZQ0KPj4gcmV2aWV3IHRpbWUuDQo+Pg0K
+Pj4gSSdtIGluIHRoZSBwcm9jZXNzIG9mIHJlYWRpbmcgdGhyb3VnaCBtdWNoIG9mIHRoZSBk
+b2N1bWVudGF0aW9uLCBhbmQgYWxvbmcgdGhlDQo+PiB3YXksIEkgdHJ5IHRvIG5vdGUgdGhl
+c2Ugc21hbGwgaXNzdWVzIHRoYXQgY2FuIGJlIGZpeGVkIGVhc2lseS4NCj4+IFdvdWxkIHlv
+dSByYXRoZXIgdGhhdCBpbiB0aGUgZnV0dXJlIEkgMSkgbWFrZSBiaWdnZXIgcmUtd29ya3Mg
+YXMgcGFydCBvZiBwYXRjaGVzLA0KPj4gb3IgMikgbm90IHNlbmQgdGhlc2UgcGF0Y2hlcyBh
+bHRvZ2V0aGVyPw0KPj4NCj4+IElmIGl0J3MgZWFzaWVyLCBJJ20gYWxzbyBjb21wbGV0ZWx5
+IGZpbmUgd2l0aCBkcm9wcGluZyB0aGlzIHBhdGNoc2V0Lg0KPj4gQXMgeW91IHdyb3RlLCBp
+dCBpcyBhIGxvdy12YWx1ZSBwYXRjaC4NCj4+Pj4gZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRp
+b24vZ2l0LXVwZGF0ZS1pbmRleC5hZG9jDQo+Pj4+IGIvRG9jdW1lbnRhdGlvbi9naXQtdXBk
+YXRlLWluZGV4LmFkb2MNCj4+Pj4gaW5kZXggOWJlYTlmYWI5YS4uOWI5NTYyMTZkMiAxMDA2
+NDQNCj4+Pj4gLS0tIGEvRG9jdW1lbnRhdGlvbi9naXQtdXBkYXRlLWluZGV4LmFkb2MNCj4+
+Pj4gKysrIGIvRG9jdW1lbnRhdGlvbi9naXQtdXBkYXRlLWluZGV4LmFkb2MNCj4+Pj4gQEAg
+LTU3LDIxICs1NywyMSBAQCBPUFRJT05TDQo+Pj4+ICAgICAgIHVwZGF0ZXMgYXJlIG5lZWRl
+ZCBieSBjaGVja2luZyBzdGF0KCkgaW5mb3JtYXRpb24uDQo+Pj4+DQo+Pj4+ICAgIC1xOjoN
+Cj4+Pj4gLSAgICAgICAgUXVpZXQuICBJZiAtLXJlZnJlc2ggZmluZHMgdGhhdCB0aGUgaW5k
+ZXggbmVlZHMgYW4gdXBkYXRlLCB0aGUNCj4+Pj4gKyAgICAgICAgUXVpZXQuICBJZiBgLS1y
+ZWZyZXNoYCBmaW5kcyB0aGF0IHRoZSBpbmRleCBuZWVkcyBhbiB1cGRhdGUsDQo+Pj4+ICsg
+dGhlDQo+Pj4+ICAgICAgICAgICAgZGVmYXVsdCBiZWhhdmlvciBpcyB0byBlcnJvciBvdXQu
+ICBUaGlzIG9wdGlvbiBtYWtlcw0KPj4+PiAgICAgICAnZ2l0IHVwZGF0ZS1pbmRleCcgY29u
+dGludWUgYW55d2F5Lg0KPj4+IHdpdGggYW5vdGhlciBtYW51YWwgcGFnZSB0aGF0IGhhcyB0
+aGVzZSBtYXJrLXVwIGNvcnJlY3RlZCBpbiBKZWFuLU5vw6tsDQo+Pj4gQXZpbGEncyBzZXJp
+ZXMgZnJvbSBlYXJseSB0aGlzIHllYXIsIGUuZy4sIHdoYXQgZTlhOTllZjJkYQ0KPj4+IChk
+b2M6IGNvbnZlcnQgZ2l0LWZvcm1hdC1wYXRjaCBzeW5vcHNpcyBhbmQgb3B0aW9ucyB0byBu
+ZXcgc3R5bGUsDQo+Pj4gMjAyNi0wNy0yMykgZGlkOg0KPj4+DQo+Pj4gICAgUHJlcGFyZSBl
+YWNoIG5vbi1tZXJnZSBjb21taXQgd2l0aCBpdHMgInBhdGNoIiBpbg0KPj4+ICAgIG9uZSAi
+bWVzc2FnZSIgcGVyIGNvbW1pdCwgZm9ybWF0dGVkIHRvIHJlc2VtYmxlIGEgVU5JWCBtYWls
+Ym94Lg0KPj4+ICAgIFRoZSBvdXRwdXQgb2YgdGhpcyBjb21tYW5kIGlzIGNvbnZlbmllbnQg
+Zm9yIGUtbWFpbCBzdWJtaXNzaW9uIG9yDQo+Pj4gLWZvciB1c2Ugd2l0aCAnZ2l0IGFtJy4N
+Cj4+PiArZm9yIHVzZSB3aXRoIGBnaXQgYW1gLg0KPj4+ICAgIC4uLg0KPj4+IC0tPG4+OjoN
+Cj4+PiAtICAgICAgIFByZXBhcmUgcGF0Y2hlcyBmcm9tIHRoZSB0b3Btb3N0IDxuPiBjb21t
+aXRzLg0KPj4+ICtgLTxuPmA6Og0KPj4+ICsgICAgICAgUHJlcGFyZSBwYXRjaGVzIGZyb20g
+dGhlIHRvcG1vc3QgXzxuPl8gY29tbWl0cy4NCj4+Pg0KPj4+IHlvdSB3b3VsZCBub3RpY2Ug
+dGhhdCB3aGlsZSB3ZSB0eXBlc2V0IGAtLXJlZnJlc2hgIGluIG1vbm9zcGFjZSBub3cNCj4+
+PiAod2hpY2ggaXMgYSBnb29kIHRoaW5nIHRvIGRvKSwgd2Ugc2hvdWxkIGFsc28gdXBkYXRl
+IHRoZSBlbnVtZXJhdGlvbg0KPj4+IGhlYWRlciAiLXE6OiIgdG8gImAtcWA6OiIsIGFuZCBh
+bHNvICInZ2l0IHVwZGF0ZS1pbmRleCciIGluIHNpbmdsZQ0KPj4+IHF1b3RlcyB0byB1c2Ug
+dGhlIHNhbWUgYGJhY2txdW90ZWAuDQo+Pj4NCj4+PiBBbHNvIHRoZSB3YXkgdGhlc2UgY2hh
+bmdlcyBhcmUgZGVzY3JpYmVkIGluIEplYW4tTm/Dq2wncyBsb2cgbWVzc2FnZXMNCj4+PiBp
+cyBxdWl0ZSBnb29kLiAgWW91IHdvdWxkIHdhbnQgdG8gaW1pdGF0ZSB0aGVzZSBtZXNzYWdl
+cy4NCj4+IFRoYW5rIHlvdSBmb3IgdGhlIHJlZmVyZW5jZS4gSWYgeW91IHN0aWxsIHdhbnQg
+bWUgdG8gdXBkYXRlIHRoZSBjdXJyZW50IHBhdGNoc2V0LA0KPj4gSSdsbCB1cGRhdGUgdGhl
+IGZvcm1hdCBhcyB3YXMgZG9uZSB0aGVyZS4NCj4+PiBUaGFua3MuDQo+PiBUaGFuayB5b3Ug
+Zm9yIHRoZSByZXZpZXchDQo+Pg0KPiBBdG9zIGlzIGEgdHJhZGluZyBuYW1lIHVzZWQgYnkg
+dGhlIEF0b3MgZ3JvdXAuIFRoZSB0cmFkaW5nIGVudGl0eSBpcyByZWdpc3RlcmVkIGluIEVu
+Z2xhbmQgYW5kIFdhbGVzOiBBdG9zIElUIFNlcnZpY2VzIFVLIExpbWl0ZWQgKHJlZ2lzdGVy
+ZWQgbnVtYmVyIDAxMjQ1NTM0KS4gVGhlIHJlZ2lzdGVyZWQgb2ZmaWNlIGlzIGxvY2F0ZWQg
+YXQ6IFNlY29uZCBGbG9vciwgTWlkQ2l0eSBQbGFjZSwgNzEgSGlnaCBIb2xib3JuLCBMb25k
+b24sIFdDMVYgNkVBLiBUaGUgVkFUIE5vLiBpczogR0IyMzIzMjc5ODMuIFRoaXMgZS1tYWls
+IGFuZCB0aGUgZG9jdW1lbnRzIGF0dGFjaGVkIGFyZSBjb25maWRlbnRpYWwgYW5kIGludGVu
+ZGVkIHNvbGVseSBmb3IgdGhlIGFkZHJlc3NlZSBhbmQgbWF5IGNvbnRhaW4gY29uZmlkZW50
+aWFsIG9yIHByaXZpbGVnZWQgaW5mb3JtYXRpb24uIElmIHlvdSByZWNlaXZlIHRoaXMgZS1t
+YWlsIGluIGVycm9yLCB5b3UgYXJlIG5vdCBhdXRob3Jpc2VkIHRvIGNvcHksIGRpc2Nsb3Nl
+LCB1c2UsIG9yIHJldGFpbiBpdC4gUGxlYXNlIG5vdGlmeSB0aGUgc2VuZGVyIGltbWVkaWF0
+ZWx5IGFuZCBkZWxldGUgdGhpcyBlbWFpbCBmcm9tIHlvdXIgc3lzdGVtcy4gQXMgZW1haWxz
+IG1heSBiZSBpbnRlcmNlcHRlZCwgYW1lbmRlZCwgb3IgbG9zdCwgdGhleSBhcmUgbm90IHNl
+Y3VyZS4gQXRvcyB0aGVyZWZvcmUgY2FuIGFjY2VwdCBubyBsaWFiaWxpdHkgZm9yIGFueSBl
+cnJvcnMgb3IgdGhlaXIgY29udGVudC4gQWx0aG91Z2ggQXRvcyBlbmRlYXZvdXJzIHRvIG1h
+aW50YWluIGEgdmlydXMtZnJlZSBuZXR3b3JrLCB3ZSBkbyBub3Qgd2FycmFudCB0aGF0IHRo
+aXMgdHJhbnNtaXNzaW9uIGlzIHZpcnVzLWZyZWUgYW5kIGNhbiBhY2NlcHQgbm8gbGlhYmls
+aXR5IGZvciBhbnkgZGFtYWdlcyByZXN1bHRpbmcgZnJvbSBhbnkgdmlydXMgdHJhbnNtaXR0
+ZWQuIFRoZSByaXNrcyBhcmUgZGVlbWVkIHRvIGJlIGFjY2VwdGVkIGJ5IGV2ZXJ5b25lIHdo
+byBjb21tdW5pY2F0ZXMgd2l0aCBBdG9zIGJ5IGVtYWlsLg0KDQo=
