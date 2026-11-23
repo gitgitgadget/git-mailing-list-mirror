@@ -1,120 +1,117 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.155
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795448047;
-	b=Va3UlVfY5NKy+9Krd6XQc935SHFa/p8aV4hACKWmL9h0wYd2Ory9tSbuA3yuNarveQdQ
-	 wMATLoBcRYNV+HgyMIs1Zql7qyo7HkkZapiK51+huWa4ybMV4G6TDftcdL5cWSGyPNzPS
-	 eeEL2jt4xLGLuJ/Sz6TfUKWLqVjZwGHHL563+Adu3cQZtpFXDYMAdsobu2JstKynk8xLR
-	 mBNRER6h4mOEZFOT9kwlsPU19hdCSvEwBD6CAcsj8o3d/52Mt7yO599iPNlgoQJKQjqKr
-	 VyzeFAklHxAJWweFVZu0EnU8XasC1gX2Vs/u+mR1p1Vp0eC6eWgcMFueRWaj0txuETA==
+	t=1795448241;
+	b=Z/pw0G7EyT0dugYyLE4+dTba/hZYDdQEq8raj1arOSYfGR+bc3CfCPywlx90h64UsPvj
+	 Xpt/WO3G5CTFkcVW2i7Z8s8grfFug1rJVjaBCIMaB6QMb3q8Kcv/2NDas4mUXtsfAmmdZ
+	 vntz3W54kkDoSwlHi7mD6qwjBeEN6QAXcqbStui3d4dztDUqD2VrhAu0RWGJRsgE9UNJJ
+	 0GoVymoxzCJh/+W2AuKaVpKxXvQ0YQujZ7TRvujuvtW7czU1F8SiSn78tqs+BWBDxlibJ
+	 WaJtliiH/AVhKlRSAJi06z4cqBvORffXsniM+D6bvmHEZcDPQM4CX6j/ylu0cScvCWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795448047;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795448241;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 Received:From:To:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=7AwPxLVJwGB7FlGlyWXvAD2XJrI7nGrq10Os8RT6JD8=;
-	b=fDVj1F9UvbjSQ64Z7mZfope+DC/DUJ2fhDLC4JCjXc9utDZSytYZYeU/+rRi41+zFseT
-	 BMbfRT485KmAoDCWLpUaKc+saQDVHOR3Us01ntbPSw6NEcjeD7KZ7xdJ1WPeuGAPyEzXe
-	 HdXICJDQVKrsbYmdrYNtAfvLzPUXeYCUNGOXb4SZKqa/JRMIr7dJtIJon+RtmfZNw+Ll5
-	 bXU3Bsi4DMWrmDLFB87QxMkCXT/h+K1gJWYC76L3R9wMcsaqJERm/SIibDR35kD9L8qZO
-	 ydxZPBhLDpTeSOLAiv4EKl6ft24+wC0vRdNmkdOFqrsD6cUSLG6xHMZBA+8K9bRxHhg==
+	bh=N/RYFpTzdVRz2CFfqUe/NLjJjEWqqMxYk+SQgpyBJx8=;
+	b=ejhVBDTiaCWANBMLnuHLZghxs4GevhNeKaikLBzime8i3jUZ1b6Ne2jfEQyBc5yi7r8X
+	 nXoqWFmYCnm15MlxPfpM2KgvN0TpPuE2kXMvlSdvM9Zn02tIIzQEU1gC+peVJe9K1PjBx
+	 dN4Ya0EeKTRcqJyAgeQ3J54Kiyj1b+ZjDOBuJuUECx5BvDIyBAhi4yvG6vqIrGTGYJxq+
+	 d7+YJUf2niz7q8Mvogd2DDUwgRTSdKQ4p2L3TAJVYnIr/moyU/oqfI0vt+YY9BJQJLBfe
+	 xzj2rdh5amBWHaIdS9LPtuPClT+beP+6XSc+thvvTtPUv3mHOgyMq+rd7dunxQ2tgCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=BKbi65E9;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=zq7bOTWq;
-	arc=none smtp.remote-ip=103.168.172.150
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=MsVKmgTh;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ZP9Z9ydZ;
+	arc=none smtp.remote-ip=103.168.172.155
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E96D606A31A
-	for <git@vger.kernel.org>; Mon, 23 Nov 2026 15:34:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7E96D606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE157606A31E
+	for <git@vger.kernel.org>; Mon, 23 Nov 2026 15:37:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EE157606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=BKbi65E9;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=zq7bOTWq
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9A04EEC0ABB
-	for <git@vger.kernel.org>; Mon, 23 Nov 2026 10:34:05 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=MsVKmgTh;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ZP9Z9ydZ
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1636E140038D
+	for <git@vger.kernel.org>; Mon, 23 Nov 2026 10:37:20 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Mon, 23 Nov 2026 10:34:05 -0500
+  by phl-compute-12.internal (MEProxy); Mon, 23 Nov 2026 10:37:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795448045; x=1795534445; bh=7AwPxLVJwG
-	B7FlGlyWXvAD2XJrI7nGrq10Os8RT6JD8=; b=BKbi65E9/IqFfeQvFr42xjx9VW
-	+y9JcarRZ8d25E7CslHFNOD44FEfFyg90gxQNe3INrMpRLihgqJHwQhLjTHZ03Qv
-	xhNQDxl19JXA91yZz8y9r1vqiUrjtkmz5bBkuiyTwXwOYWAUOJet3nh0C/jMmxkv
-	yNH/U1uRKOvO7vXZqQoedad0tqmnJEEAzo08mHt3A7DeBLn6UCXbkOgoCfY8/bUz
-	2vdwVeUsyTeT9j+qSFtO7dih1GIJYMPZRJOi/sZdpKXXsW8qUtXFg6I7Uz8Kx53e
-	044gD7+DSuZ4yXffothiEtivBeuWfkdZ1Ivxroerl8wW9tdFZ+cLBVKnWfGA==
+	:subject:to:to; s=fm2; t=1795448240; x=1795534640; bh=N/RYFpTzdV
+	Rz2CFfqUe/NLjJjEWqqMxYk+SQgpyBJx8=; b=MsVKmgThD0IpjSnkv8T28dqEnW
+	AgG8c6cF7rOCvv9+6OC8NZVlA7Oer/3eVGgTtX1fxIRGUBAoUMzeHG/xl6DUoWT0
+	0BdkiWpi162dhtw0xVVMBtUUc7qb/fTC8KOkxeA/YuWyFYQYfqQaduPe3v+arCT+
+	x9XOp+qrBAd+JvLQmz9BLOxnHYL2i9wgv/9DneFGtG08QkW3chdzKlldSAkv0hl3
+	t481zrUhIv+blHT2xz9FfnfpNRKTcX6T2dA/sm/Yt2lXkcYyMUjaPN7asDArAKqy
+	8m0N4kDV2HrR30HjfH8jyjVCfnfCrJ8OeNhp5iorYLsANhod+Fzt7ISyylTw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795448045; x=1795534445; bh=7AwPxLVJwGB7FlGlyWXvAD2XJrI7nGrq10O
-	s8RT6JD8=; b=zq7bOTWqSWIF6u1GCmCB/G1DGHeTF500CW8XeA9BKA4biHF7nqs
-	2y6KPWwHdlBq7KlTVBDpMSN8NgO4pSnb0AMixyZ+7vjqHMW2QKacO5KDznKnTdda
-	Xy/578yfA8X/eEnldyVDh8AICtvSUqLunLCKve3rLNR9JsreZo1APTZG8tBza+eb
-	9ZAZv/zPGg8pYA4znIFlJLoQFbQDMe1S27+7owoApWKghT6a9P6f77djyo6W+fQ3
-	fCse6zlGEt896jTGOA/IccPJGgIlGWC1tTf8v2bskTLGREu+NCc9hHF8Gfu7jWOx
-	Ys8HtTvFYtv8UQbk5kPNTqQPOyMRwEvYjVg==
+	1795448240; x=1795534640; bh=N/RYFpTzdVRz2CFfqUe/NLjJjEWqqMxYk+S
+	QgpyBJx8=; b=ZP9Z9ydZStMTTDmyokAX4lxUoKc1ilJlYAxz7jkj1X+kr7QfIQd
+	wgxcQMQLYzO6E7mzSYgTHhaq+dv6OHVjFtsJWzSLopbu+lUBrh7ugF1bc2wz6G/+
+	o8QZHLAjmR12OxDa3XFSiXzyq6AEVTV3liYEYkXTBmZxC0ku39UJxSxFmSUBVbvv
+	gFGV/VKzut08zI2E7C1c5JqxB8YCyRuOkIvnAYtQTMcMb94qrcFjd++INqGzpyeD
+	3cs3zyNomKgNAdjVyEmmX4X7LDjiX+YpXt9XU3gn+HKmTtnZpGRUnzi7VR0XtEqT
+	n9uikv2azYw/Yctn5OFhV5j+Y1voKF31F2Q==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795448045; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1795448240; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:CDp01teUWy/KxAtkS9A+H99F1R6cjpa/s+X+I8HB5+y5r6P
-	vIzd5bya2GSIsfz3oJKXSryiBqjZmNiJt9DlvXd1RHoxqyUwYal6e7o75TNUKb8a
-	+YFeGEySnTCte/FntpYrlqjl6chuyWFV7hPmQ2pp1g3RITu6fvUFKwYc44NPOoDw
-	hPz53X+HXw5q7Rk+eZrVQC5mgufxElTlUcdS+blgWUGCJN/OOcRPd0+tcryqDBK3
-	OYMpxqBw9+q3s9fNtC7quOTHAGBdMEHy/fZAqAthbf9Plzu2WuNSa1Rj+aMvVtVm
-	3wwLOP44PBO9U3E0wYpXDMlP96pNHcVTjHSF99Q==;
+	s=fm2:rsa-sha256:S4WdP4raV4RujGXmkFR4WyHZZ1nsGYfH302qYF8IP+mBJUa
+	teY/8nNZbkEGKm+Lu4uG3rCq3gL971kiR05fFCKpl6fah09x0hY8tCd5C/7cdZE9
+	VVQMtcvp9vNVO4cX/cBmlwzwBxISC79PCGgbcurlOPuwEOeIEoW2/N0gCfqTDaqG
+	qoo1jqt0kxztchYmLiwo5095puB0jqo/8YDF6ab3XAyaY0ZaQjirf/GqbzVpjOfF
+	oibpGAhMgvP7UG9KTo6esRFThe9NDJD0uRiFyFVrhhZ/i4bYZwwpO2yX9XXgOwgk
+	F/bR7vVJgqwsQmPEEBL4qec9LGV69z06sK6UtGw==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	action=mi-m=1; hc=11;
+	hn=content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:wH+QaTKxvUIAV4EjXzgfXDOoWG1ojxb51lQ2Ke3Oxoc=:3kRhvSUkQlwv/IBA1JvcNwGFXR5ATqhMjUYSY7apgjI=;
-X-ME-Sender: <xms:7VwEawL2LQYwGOgbSHR43aAVmxMaCP_Zpxu6P4wD-sWuf6EGXx69NA>
-    <xme:7VwEa3BxnI0Y3AwdI9KoOEAOYMJPgvfT3Z1xabnksUdRC0AtbQKuj0oi-55mbDwob
-    RVv4UW2QtXO__yZkp--INK2kQKO8XK8IuOJXX1d4sM8No4KQreqadU>
-X-ME-Received: <xmr:7VwEa5B_2S95r2xugxKKbvG0wSInSXNz63TAS1FGcKN5axnkPXyHTbMkIOt62asK2g9MNl_Wm6WtM4UkYiet08ShzqTFzkBzGPSM6G8>
-X-ME-Proxy-Cause: dmFkZTEw7RxEPRfcYiw3fQKrlKlZF3eD1SanuehaeWIbZQ56jeuXcp/+spwF14qyns6qiw
-    3aAx6JaYAbHF2WBFFyknWX0cpIChhM9HpMV/ONKwu0qAYabS3ja9ynFspsdDNAXiOOdwwM
-    W0/xs+h3m8Od0yGhuE/3kj5HHW6UX+VAGCqggd9MXdEX3g/X6GWF1acCzt1d6+aubGdj4g
-    IU1JkYZPS+sPBAEkUYBG93fQbvDrkkFWnfhD+iFxkbzGTf1zXLcyxKSnqxZSnvYyI7LrcF
-    q6/2sYTNJnsd9b1ema6DPjeUbsEZYFGJsoHARt+cGbbMEjp4934EmgwhsB7Jud4IfeQAbq
-    JbngfmjPma/N4wf2gx/q5mUw7j6V1d5vVNVMC0i9Po3jkyYxlVVrqVsW4jy0Wx5qq4qqle
-    CNXTzuKiKUM9l2dQJyX5EGgcH5UmS8lM8lS8Tlta/42YUfhCZahaF9qKT5R+LXcGVTAJbV
-    79KQJT8KE9BbePN0k4hLzvJqdvJKle+Smj2xU8AUx615Wa8vbiLjHoGMtSPEEP7CGI6Rmm
-    f4AOKb+UdMSg0T2YwC/tH9784cJNE1n1X3CCYowyCjeMyxzVFaUdSw2EK1yf40jMe/fmon
-    7CNraSw37hBdy/631ufbhoXLtgbdrWWU2AWGyHMk2hQNjey6XLq/Sg1hxpOg
-X-ME-Proxy: <xmx:7VwEa5Dal8boHGWhURudzzdYuKu23gKRnCdsMHX7wxgwFc5g2bCnvA>
-    <xmx:7VwEa0os244dwEz8Cm-Qy7s12V056G5fxtdt6KY_UMqrVO-Unnqhkg>
-    <xmx:7VwEazmxUMEb8O2gOzxGHEBV74OimCstRoUxiXyUJ1E04OIdEwJNDQ>
-    <xmx:7VwEa0zzWfNBUGEiXvbSv0z8cSs3fQqAU8_7Kvy0-gRDk3JGWPir_A>
-    <xmx:7VwEa8bL-ktKkfwTdp-uQAgw7LO4sc5mKnYc-5tz-bVBYbFZGEuBV3df>
+Message-Instance: m=1; h=sha256:pEX/QgUC3fTT5eKKOLz0fgdN+X0vvT8iE2BryC++QAw=:owuQ6s4wctYOkuPYTQu0dFRUd0Vod31MwiONLiAvLbw=;
+X-ME-Sender: <xms:sF0Ea3ggUIWXRpdzrVAesfCkBxBzNVdmP0evPj2PTDzJwEOthjRndA>
+    <xme:sF0Ea6BCfZcOerqAnucV4ir3S7o5uZaRjwgWyJu9D6-4xG6yJR_CSeL4f2llBZakW
+    YBsx_DnStsEF5KiK_utu7Xb2NfcK8ZtfUHGtFAwBGb27jZNO7jE14o>
+X-ME-Received: <xmr:sF0Ea0sU-mmLSe6Tp_ObrSXk-4wSBdySg1pnX-y4h9NA5GvyeWsz5FPnsK7QgPcD0DPFzC8rxs5Epmi9v_g93btxnGCSofg1Os4hnDc>
+X-ME-Proxy-Cause: dmFkZTEmQx2+NLI77uOhspeTEwalhA9pK2DUfQPVt/jBqp86Iaywlq4t1WUye0t0gmLkW7
+    wdAAF0LVEzcA0IV66Sg7Jgr/FKsrTrP/OfbO+jNyLXc6y7mW/wCGfMQnZqzIAZNgp4i89x
+    nBpD9fmwjKzfXWUzMOiZ+sHSggPl7nZZjwhyO5kAOfCZiN6HHb2+Lgcp0/YHKLy0/caUY9
+    XOV/bKD90Ptn9MIfsYE0iGAx498MOfiZ0lDr7kex8XZk66rnmkVZlrSzqhlrN/ecX/CrZK
+    zX+oRiXQga1p5Q7ObCGo956S7GA52CGpsqeAHUVvr5HTwexa2zb1t+2o8N0L+OPW/pidKM
+    DrMRM8d1YuTwzp12KlW71n7DyP6UOeH7l3BO8gUJfvwhJguxzE/yReRRwVleUgURs8j+oL
+    lMm0QSLoy7VMvMtVP8gNnRsLH9jrmoWDUzefqIAhyW4T8skQ+no/ERee2MPWDRxkRxsYpM
+    qFly6vsd9sNOzYNM9+E6NlApIXQo371G6fCbJgobOeUJ7SP9TDIs1Vvqbg0IcrIbitQnkF
+    z8iszcqJpcIzvNo9mwSnB6nvz9ppa9eZ6G9z5vod26QSdXE+2BNpKbJJevesl6flVqBYP9
+    YoINxbSROF2RZh8751OLo/UovOyCRkumo+05WmPqg3MdOOB70aSOWxSLBuYg
+X-ME-Proxy: <xmx:sF0Ea_ZOtLQgHzwjshpuBjiHU5Fzu3yfoG3Bee5pmNGY0dNqtJsFwg>
+    <xmx:sF0Ea3UgRfixdDuVv0o3IpFxcObC13Xr0PxFyB3OrU6IbFssnJ-DkA>
+    <xmx:sF0Eaz7bC9A5F3WdwaYW2_I5QLZ3SZLD4Dh7cbMsYVwGKrLQg6zDTQ>
+    <xmx:sF0EayjAwviyVQAUuxGJqyk1yGVxl-JhvYf_2wntqm5PCRC3yP8cZw>
+    <xmx:sF0Ea67KVtWVVutUwbYnowqFR49s5xJtvM9y1u6kseb2k8uPrOLAF3hF>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Nov 2026 10:34:05 -0500 (EST)
+ 23 Nov 2026 10:37:19 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Laveesh Bansal <laveeshb@laveeshbansal.com>
-Cc: Wasswa Edson <edsonwasswa54@gmail.com>,  git@vger.kernel.org,  Tanga
- Joris <tangajoris@gmail.com>
-Subject: Re: [PATCH v2 0/3] credential: parse subcommands with OPT_SUBCOMMAND
-In-Reply-To: <20261123014412.35076-1-laveeshb@laveeshbansal.com> (Laveesh
-	Bansal's message of "Sun, 22 Nov 2026 17:44:12 -0800")
-References: <20261114184752.1417-1-edsonwasswa54@gmail.com>
-	<20261123014412.35076-1-laveeshb@laveeshbansal.com>
-Date: Mon, 23 Nov 2026 07:34:02 -0800
-Message-ID: <xmqq5wxnd0k5.fsf@gitster.g>
+To: git@vger.kernel.org
+Subject: Re: [PATCH 0/6] getwholeline should clear the buffer upon EOF
+In-Reply-To: <20261122140347.41990-1-gitster@pobox.com> (Junio C. Hamano's
+	message of "Sun, 22 Nov 2026 06:03:41 -0800")
+References: <20261122140347.41990-1-gitster@pobox.com>
+Date: Mon, 23 Nov 2026 07:37:18 -0800
+Message-ID: <xmqq4id7d0ep.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -127,25 +124,25 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Laveesh Bansal <laveeshb@laveeshbansal.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Looks good to me, for all three patches. t0300, t0450 and t9902 pass
-> for me.
+> time.  Because the code that caused the existing bugs does not appear in
+> any of these steps, the log messages of patches 2-4 instead give
+> detailed walkthroughs and are rather long, which is another reason why
+> the nature of this series discourages following the usual pattern and
+> doing everything in one step.
 
-Thanks for taking the time to review and test the series.  It is much
-harder to write a positive review than to point out bugs, but
-encouraging the authors is always appreciated.
+By the way, I _could_ have instead called strbuf_reset() at strategic
+places in patches 2-4 to "fix" the bug without touching the root cause,
+i.e., strbuf_getwholeline(), and added test_expect_success tests.  That
+way, the commit log messages for these steps did not have to be such a
+detailed walkthrough of how the bugs happen, simply because the code
+that make problematic decisions based on a wrong assumption can be read
+in the context of these changes.  Which requires patch 5 that fixes the
+root cause to revert these tentative "fixes" to call strbuf_reset()
+which becomes unnecessary when strbuf_getwholeline() stops leaving the
+stale contents in the buffer upon feof().
 
-Outside of a trivially obvious fix or a quick nod from a known area
-expert (e.g., Dscho or J6t on a Windows-specific patch) or the original
-author of the code being touched, it is hard for bystanders to tell from
-a one-line "Looks good to me" how deeply the reviewer thought through
-the changes.
-
-One trick I sometimes use when giving a positive review is to walk
-through the patch aloud, explaining in my own words what the old and new
-code do and why the tricky parts are handled correctly.  That way,
-others can see that a second pair of eyes really understood and agreed
-with the approach (or the author can correct me if I misread something).
-
-Thanks.
+I chose not to do so, as a series that adds some code in an early step
+and immediately removes the same code in a later step is awkward and
+wasteful.
