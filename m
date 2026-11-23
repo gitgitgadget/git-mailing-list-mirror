@@ -1,62 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.15
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795401359;
-	b=lhWZ34+0K4j7BPsrecx+1w/wbxxDFi1OW5tWNQPTHs7wSPkNEZGF3Tcq2XjQ/pNNQqwJ
-	 w8jUtD+6c4DFrfsOGVWBpou6T93uBju3wNMC7fcDUM+b2SjYwslHWejIO6AWr5sgqkfiC
-	 VprUecX21asJvdcCY7Mu5NThAjLmApQXqj2ay8b9ULGAzAZIaIF710kG2rvY30Eqe+Aer
-	 Mj/+SU9KG8b1H+4ohC0OERAbKBvxrRI4jhXjJzGGe9H3bs4fp3TjiIwLTjJwXnfO4y21D
-	 3v/ylwP6iD6asBSLJpy2Uh+tUJPLVVr+zLhzL68EuSjfVyn71ac2rtPB9NCep01DpuQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795401359;
-	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-ZohoMailClient;
-	bh=awME3iYt8MUhIdimfBXNKsYSfxe8yCNPooDbq0WLWrM=;
-	b=niTsoBK9k/9WU0y78wf1XULoB5KhHaYgOf+FG8U85hhRsu109hVWUMb4OePuDFAxr0fN
-	 DhK1wusczmFcvwRjYarutOTLM8S8HISd0t4Y9cER0XzCMb5JrBPvHk5r5OhauGBrr83Y9
-	 kcvM24RDJpO9YQrbc+x9igurMV3Erh2krzRE8ET+JeO1vO3DcYvCJrd2mTJ6dF6tWZVZB
-	 OprCmdCMWieOITlqAQVPmGfzpZElFJLs1Qb7LRPCtRAT+YyGydReEQEeoHLkL/jd1WKl9
-	 4Z2zCywPZaek9z1nc1GGryRAa6narIQ3pXOaTp6ccr1de49jP+PKcZUrDJBrJVNnaRA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=none header.from=laveeshbansal.com;
-	spf=pass smtp.mailfrom=laveeshbansal.com;
-	dkim=pass header.d=laveeshbansal.com header.i=@laveeshbansal.com header.a=rsa-sha256 header.s=zoho header.b=EAjsbO+y;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.15
-Received: from sender5-op-o15.zoho.com (sender5-op-o15.zoho.com [165.173.182.15])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.171
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795416270;
+	b=TJMh/BizdBFUlfkJgy/Xa9UHV5oq47LWs5QeLsBEi2T+DPhlZwARLwg3lhSdDSmw4ko4
+	 1/gTbWie6c588Dq+jlZFxM9zPgMVzpFgfL9apiA3r3FGqP1DH/jndiPq89sYJ9/wDUMq5
+	 b1Sn5o7rRkFSYzGX6wLspmhxB6TV+1A6iUrLQOKUirIL0pzE4ZWvfbJ/lnl2ex20WDZtI
+	 7r9q3O1jgIHHdwafYrIgkktgD5qO/xOXE/lhLwAeCVXnZgBv+Xa7cbOq7tQ4qyyUiE+Pe
+	 zE/I9UZwQwI+JOXuesy1Is/VO7nRRLLeZZ3gye831H9pX+GhtDO0WwObpqYqYxLKndw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795416270;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=XbGKXLC2NMPU/w93QkZU0bXkptOmYDxf6TnTRBu1uk0=;
+	b=3RXIE4VgyE1T5EHhXGw5bCDXKQNtY0iWjrpYFBhOHcCQEgI9ZkHeSZXiIIYUhmbZYq5R
+	 9QDjo3/cnW/Vvaw2G5AwLNRHmcGT/9D3xDWXeMpmSQsNxKx9F8FpTIM/dhbYkak4jA55S
+	 IsZHvdVG+0s0JrUnbjYHNAQto85SpECqkKQT4pDEiMjeETSnYt3oPvgAI0Y0Mf2HwlHvP
+	 8LxQj2XiXUSxGUkZtwvGWylyVEZ7csDefyqS+asCpvQ+tgR+cNDUE/LRAGjskOKETcYAi
+	 YR/qZ6Er0bkPaLmz0Z3Nc7xbtHHbs4hVJjt8IB9/I8D6w6ztixFD6P+NXCg08OUl49w==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=bRNhU6QR;
+	arc=none smtp.remote-ip=209.85.210.171
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D8A606A339
-	for <git@vger.kernel.org>; Mon, 23 Nov 2026 02:35:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C1D8A606A339
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=laveeshbansal.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=laveeshbansal.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA604606A31A
+	for <git@vger.kernel.org>; Mon, 23 Nov 2026 06:44:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CA604606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=laveeshbansal.com header.i=@laveeshbansal.com header.a=rsa-sha256 header.s=zoho header.b=EAjsbO+y
-ARC-Seal: i=1; a=rsa-sha256; t=1795401354; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=BPxOs8X1X6AL7sZG1aOir/Lq/JbI2LdkVlzwE+R13q5WNnhehcTLZB5ZJAU6UhvRXUgUt8T77X4aRGXmei0SLQpkdLkmcFhc2qqYFYs/zn3XCnyPoUqblC78Md0WLH3nsGmnze+oh47fat0DaQw9ljNR8AS58jYza14IvtROek8=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1795401354; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=awME3iYt8MUhIdimfBXNKsYSfxe8yCNPooDbq0WLWrM=; 
-	b=YvjxrT0aaziKB18a3piKqpSMj+qLDja6eMuOAQ3GTSIp3ykF41eSL6fMIemQKWS7s5yJP/PXezIsSxPBZT6LQB3GcCGFZOlGnxxoUFljNpWgp5H0HHHBt8QwyVKX1M8pt2/drgqDArvJadtCQZ9ZoO0sHmh8Yt8IurA3TV9PMEA=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=laveeshbansal.com;
-	spf=pass  smtp.mailfrom=laveeshb@laveeshbansal.com;
-	dmarc=pass header.from=<laveeshb@laveeshbansal.com>
-DKIM-Signature: a=rsa-sha256; b=EAjsbO+yeAmQk6uF2amMpzNbeQ9rFmrT4Sq96bIpTrUzDOsRjQDIReIbxzpmMOdEL892tydMI1gVstW6ulrOUY/ICtjCeWbbvPQaKMb4qMBo2MraqH5SDdOwVMb95KLoOWoRK24l5FWKtuyHaeVFa2eoZenDzkntzYikpLlp968=; c=relaxed/relaxed; s=zoho; d=laveeshbansal.com; v=1; bh=awME3iYt8MUhIdimfBXNKsYSfxe8yCNPooDbq0WLWrM=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
-Received: by smtp.zohomail.com with SMTPS id 179540135308225.929488927976536;
-	Sun, 22 Nov 2026 18:35:53 -0800 (PST)
-From: Laveesh Bansal <laveeshb@laveeshbansal.com>
-To: Wasswa Edson <edsonwasswa54@gmail.com>
-Cc: git@vger.kernel.org,
-	Tanga Joris <tangajoris@gmail.com>
-Subject: Re: [PATCH v2 3/3] credential: parse subcommands with OPT_SUBCOMMAND
-Date: Sun, 22 Nov 2026 18:35:42 -0800
-Message-ID: <20261123023542.88325-1-laveeshb@laveeshbansal.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=bRNhU6QR
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-8b67f25e6e1so1352935b3a.0
+        for <git@vger.kernel.org>; Sun, 22 Nov 2026 22:44:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795416269; x=1796021069; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=XbGKXLC2NMPU/w93QkZU0bXkptOmYDxf6TnTRBu1uk0=;
+        b=bRNhU6QRjrYMnmboAJPEzjgMfm29c+c+2vOIbGwgewrwT5y0j5jaZ0iGYhYixCVhFZ
+         Si/toXtQ+zYfFfWrmPC8BQuEE4SyuME4b4rz+/nALQi0ZtHXyCLZJqTkx79tXRxv/hIb
+         LgUGQ8r0D4fHNk2eyp2p+lHK9IwmKhQqHeMoJHDJceFcLqLeeDzYwRVyFs/V0PxQEVY4
+         EGKfwjYt/ZkIUP4IM1pGk2/QelFS3NVmS52LAlIs2jl9YTDiaRtYkzE9xVlHehcP58cT
+         Q567IHl6TI+Z5j+aNBETHZl8+yEmZ1FwB05Bp52S4qQdtK06Mp4rFUDaJd+wr/2XFCwW
+         hiAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795416269; x=1796021069;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=XbGKXLC2NMPU/w93QkZU0bXkptOmYDxf6TnTRBu1uk0=;
+        b=CY3xQDYWlTVwWDSxcbbemPKUbb5v+tERrl6CFQ8Em0Ax191/vwGR3Iia4Ys9cRmjAi
+         X3R5k8GvOkHDrBTHh/q7xfzgsZ9OXqmzXC+dhDm3QQK19km3YLXQrxSFHGpesvJh4Jx/
+         6hIMb8UVL68FlhBHWQo9kB3WON8eI/AKlWcfkmkr9CRr82H9h8MVf2BRYV55JDzeTVdl
+         dNhT0MaElWMIk7mU2qOOcF+vUY3QdYPcnF8grXd3T3mLW07B8IkB+1I765UM75gnAwBn
+         d1lzI/+C17zZgihEKYbrz3yiXdYX2wJUg9fdIm1JMavqPwC7U8O5a4bs80s2p8RfMABk
+         ekPw==
+X-Gm-Message-State: APuU4Z/jB5tx3zNon3xERb8R8Qf4Cg/l49/CjfrunwfsM6Ycp9IIf5VX
+	Ms2AxIzIaiRhUzBZClQDOr/W1DzPo+QJRTygCL/xdCYyMFPteo7bEDUGwvd5VEbL
+X-Gm-Gg: AZFdTZew8jigdUg7sMKyICUFZbYWPCNYgKHi51QqVWj8828eHT1zecBoRSXVrro884Y
+	BElCShkRKkEBGWhFxCvaKYLWGWwwqT3i//da4Axet+lTYAOSFxnpgYxRGk0TJ1r75ZaYHjYqUl2
+	u1J/iAyOCdvnov02oYCj9lpW/UAlkVVW+p/po2h22YWXyBRVx3y/7GMNjoIndrPHvIPKxfkLlMP
+	jeDSBAfjSa+zxVeBVwE63ZDJH4unFIuuAnmAMxddBNckDADWP+9XdQGv0dWjWOmcaUeeArIwT89
+	71OK26fsiYRFbfaGsjFncI2ekFJY31Q6CbMBzQEfTECWVij2+Z8MS6iDIGhGGmjrW6JyxVChunM
+	pZA0sAquqEzz7uCpm2lpWJuwZmOMtZZvWCbuAzANHQKP5RqbCrFBYfQGDRBo+Q2nGOy8xzrd3xV
+	rfjdXSXj7cla/+m0Op0YEZK9VeIujSsZ19IcN3a2LMpIrT/KEMtSTX8gMCsJ3lSeJbthD8FENLR
+	D6iEeoi4qwvcQ4PgAr2chN1OsfGpCbGi9xQPA0A9H5RST5gGXqmnzwbWx9rCIL2C8oeob6nWZUp
+	YXN92LUsz6FVgAw7Pe2ziah9VwpSl4PWq1bFN7+Cmx0VtivOmumnzJBO66MCKUP0irmmYZCIxLm
+	j0XScmR/2XkkD3slrWuyP2Q==
+X-Received: by 2002:a05:6a00:4b03:b0:89e:3ff1:920d with SMTP id d2e1a72fcca58-8c87d01fba2mr8920300b3a.45.1795416268924;
+        Sun, 22 Nov 2026 22:44:28 -0800 (PST)
+Received: from localhost.localdomain ([223.190.83.65])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8c873c1e2f3sm4798671b3a.54.2026.11.22.22.44.26
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sun, 22 Nov 2026 22:44:28 -0800 (PST)
+From: Aniket Gupta <aniketgupta3001@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Derrick Stolee <stolee@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v4 0/3] bundle-uri: do not die on unresolvable relative URIs
+Date: Mon, 23 Nov 2026 12:14:19 +0530
+Message-ID: <cover.1795415793.git.aniketgupta3001@gmail.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20261114184752.1417-4-edsonwasswa54@gmail.com>
-References: <20261114184752.1417-4-edsonwasswa54@gmail.com>
+In-Reply-To: <20261105152842.566318-1-aniketgupta3001@gmail.com>
+References: <20261105152842.566318-1-aniketgupta3001@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -67,25 +99,48 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
 
-Wasswa Edson <edsonwasswa54@gmail.com> writes:
+A bundle list can contain a relative URI that cannot be resolved and
+one such entry can result in the entire clone dying. This series lets
+the bundle code report it and the clone carry on.
 
-> This changes the behavior only on error paths:
+Changes since v3:
 
-Not blocking, I gave my Reviewed-by on the cover letter. If you
-reroll: "--end-of-options" does what "--" does now, the case Tanga
-mentioned:
+ * Patch 2: dropped the part that hides credentials as Stolee was not
+   convinced it is needed. The part that names the URL that was passed
+   in stays, as Patrick wanted. The patch has a new title and its test
+   no longer uses a password.
 
-    $ git credential capability --end-of-options
-    version 0
-    capability authtype
-    capability state
+ * Patch 3: fixed the commit message. Previously it said that the
+   clone carries on with the other bundles. That is true only for a
+   list that a server advertises only for the bundles before the bad
+   entry. A list given to --bundle-uri is rejected as a whole. In both
+   cases, the clone fetches the rest from the remote. No code change.
 
-> -h" shows help for that subcommand, and makes the subcommand names
-> available to the completion via --git-completion-helper.
+ * Rebased onto current master, no conflicts.
 
-Also not blocking: "git credential --git-completion-helper" lists them
-now, but bash completion still offers nothing for "git credential
-<TAB>", same as "git hook" today. Is a _git_credential meant as a
-follow-up?
+Stolee's idea of having a toggle to bring back the die() is not part
+of this series. Happy to take that as a follow-up :)
+
+This conflicts a bit with tb/config-null-values in next, which adds a
+"!value" check in bundle_list_update() right above the line that patch
+3 changes. Keeping both is enough, "!value" check first. I tested that
+merge (t0060, t5558, t5750).
+
+Aniket Gupta (3):
+  remote: add relative_url_gently()
+  remote: name the original URL when relative_url() fails
+  bundle-uri: do not die on unresolvable relative URIs
+
+ bundle-uri.c                | 10 +++++++++-
+ remote.c                    | 34 ++++++++++++++++++++++++++++------
+ remote.h                    |  8 ++++++++
+ t/t0060-path-utils.sh       |  9 +++++++++
+ t/t5750-bundle-uri-parse.sh | 15 +++++++--------
+ 5 files changed, 61 insertions(+), 15 deletions(-)
+
+
+base-commit: f7de81456940dd6f3274e461149bba12965de609
+-- 
+2.54.0 (Apple Git-157)
+
