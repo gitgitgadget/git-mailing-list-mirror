@@ -1,90 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.180
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.41
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795445691;
-	b=syEXHvTtuCbriFzjHBLOfh8hYfLuJVqlv4rQXvKskrFAxYNWSPAJxWm0U0W1g3Lzb9q6
-	 QRUx6fk9xDWPmHrSP7Upm7R+Q9tRKckha3zi8pZd1y3wXuTohkB/kaQUlDR0AqYwf+29/
-	 o2ZwlFTt/YEe64Mctaa7G84V8TSHnoo3El1AMVBazFxCqxX3wbu4J6cUn1WaxBkDHOSfa
-	 ijlpxaJDzwHHK9sN9LPXANYSiTdIAzvnmy1zjeSi3Rq3JCkLaGn8AucwQGNTgUcPUydmC
-	 TDSkadT1m3YDSV3Br/6VfEZ5OEKhbizZWmweQuSAjUKhEqvWNJXZqUdKGWT06K0FDLQ==
+	t=1795447945;
+	b=FIW2yqRUgq9wavuiydt/i9D2ZgCvFYF4wCN/3sxHyeUNhiB6vwPXWzSAaRhZaKxv+nBe
+	 vmiAZU7bTzGa8MolpCMkEXSr3tB0g21L6oAeo40QIWf3F0v2K9gWZums9STwERTa6UcpS
+	 Zx932BAro+dbMnnkOUbPqrHSaWBWJxuH3bWpW58/FPd5NB7n79ZvFCyPAN709qUB2c+3T
+	 ab8DW2jI/XRCgw3fNl6PaSTL3OqDF0EHmsHgGn4QJXfPPC2/tiiBmiNgfAy88nRJnM6Ib
+	 mcpw8apwB649xLTQ/PXPaQgErAnRyLBOlm+ZcK7HjStUZxmvQyecaMi2y1vH8doLG3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795445691;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795447945;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=1ZGQeiGotUDrjOiRTj3DL8RDMOKUDh0qOFQkyB7eqfk=;
-	b=uaaz7DpD9whMGjyWmb13wtNt3iZ4l9cSTJcBXPLSktSGxC/zRpIzybW6RpOmgFkvK9SU
-	 dHNgkWIgIu/+UZYjTmXTTduknNbHbx34u4wgiHRkrAZ2oiMmyhU1iJ02m3h0m80DjmOGd
-	 lX8lixWaqQLNJOmXvYFDdg1mO+0onZuDKpep/fm6pfm4+cJQRgIOAlPsj01eRP3350Wex
-	 tiPgQl9ysehGIJHSIHdSUVBitl6Fz9koredAolFdIt0WQzZJ/9ls6aNh3DTqFLb4XwNUF
-	 j1VcN88SPcekhEGm/hh4w29ldwG7Zm79gzxF/yHeTmhGPJ01cwAYwTdWtrMBVbOFqVA==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=9VvRj+7NPeE25uyO7TVjUhmYB5LT649+yug3U4hSdcM=;
+	b=kQXzeayeXPE+rGALNFue7ymGrgJFaC8dSuVPNs5TMxtngNVMFCnzJgSUUd+gNts05f5I
+	 2eYy5thT3l8My4SLsnubaf8zPz7u4v6AutcM7mvkodTlNUdLQ/7+2YjCQraOJK8BkyprQ
+	 PnCigDjeIxzaRQH6W53w5MY02Y8qykXHp7GAuraDWzAvSv1DIRLq9iAqIVKxvaCmw7tYn
+	 l/MuqJzBgMme47IhKa9BLn1ZqcYZ99AqIJZoF+eFptw3W1ZYL1iUzvvzD1DVnzKv+wwjC
+	 lKiAgEhuylQd4Nq405ET3NI6Cn+mPbsMWmP15YejI6NzGS1ZOp5cJNj73qu2wXJ4bvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=v0PilYTo;
-	arc=none smtp.remote-ip=209.85.222.180
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=e9UFwtg2;
+	arc=none smtp.remote-ip=209.85.208.41
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D813606B43A
-	for <git@vger.kernel.org>; Mon, 23 Nov 2026 14:54:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0D813606B43A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D758F606A31F
+	for <git@vger.kernel.org>; Mon, 23 Nov 2026 15:32:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D758F606A31F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=v0PilYTo
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-93f269e335eso427603885a.3
-        for <git@vger.kernel.org>; Mon, 23 Nov 2026 06:54:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=e9UFwtg2
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-6b8a1f59d5eso4304837a12.3
+        for <git@vger.kernel.org>; Mon, 23 Nov 2026 07:32:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795445690; x=1796050490; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795447943; x=1796052743; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=1ZGQeiGotUDrjOiRTj3DL8RDMOKUDh0qOFQkyB7eqfk=;
-        b=v0PilYTonExjfk7S+VIAvTa+k1jLfrUMm3DxpWyEuVltVyjFT1Tj/Dc+M7RNOyIwAF
-         DhUIi2A0hBqnM3bd2SptsoT7MKMtoGWt4GNXZtWyCrihEsGYYExC7zTMmrIQL0F4lIZh
-         joxm3lkgH9P2BbgiUHyLPdOvHMN/6yoZig8wO+cYv0j2YpAkYtUkDpINLz7KIH/DqUFM
-         b1hkBGM6yvr/iUyS52jjCeId86uf3liGMFfPPijuUP7nNj6KG3ZJT1v0iRr+tJmLhWex
-         t/BdBLEP+qKRLjun5rXk30Ea5x3s0nfVrSHKgo/a6WeVAoslNoMPPpZPVSzQy7m1M7/+
-         zu1Q==
+        bh=9VvRj+7NPeE25uyO7TVjUhmYB5LT649+yug3U4hSdcM=;
+        b=e9UFwtg226ERKFS2wu9ujPtSR3UwJf27WzpWJkk4Fm9Cvf/NRe8lu5/4NVPKy+UQG8
+         tSe4QRyg4+7zbV/b406CNIPmOIqNgFGmcQLnhPuM4bLlHQ3iZjbu1SaHwH1mqvoI88dj
+         gTkjaYsCjgG0L/5dn5wakmGkFf2ye4vinUH+Yj+PZJcljoP+nZ/uPGjp4dByOQErGY1f
+         RgxU6ZniQVUxYqu5TDa7/pyEXUyOr4th3w3IjoOzjF6u9J9eUcuIFFkeAK5d7acIRlw6
+         3tFRlsb7wo7UZCzJi5r4x5CMOS14w96aRlBfsD7TI1sjFUPP13NJzXIyoommKCw4F5EC
+         bu0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795445690; x=1796050490;
+        d=1e100.net; s=20260707; t=1795447943; x=1796052743;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=1ZGQeiGotUDrjOiRTj3DL8RDMOKUDh0qOFQkyB7eqfk=;
-        b=Hk3fWgyIzBo4bb4eO2eMOsNkaTVnkz3n2gQ/6hrsunnQlBnaGNJ7WBqNOJug6iqPNh
-         oHLwytCyKLgB0BcCvGCS4NV8S+zqBPk1hYBGf5omT6PFcEaGfKW6mAvbrfzUXlUWCk6n
-         DqRu3f1/MUzNeBL4aB2NEEE7HbMaQHz5xrXaIocWK101O5agpUlsNwD4NSdK+eMdqKA1
-         RmuCx56i1NBMNIqcb52STVOTuR1GHcvHpLHTHBNXMgwi5I2eYDPDj16Sfuao0DgXsAVO
-         cIoVaiTypol9Q71kHpijV6+qaBFrCPHfVqDkQAi6Mj3Xw6HGE4eT1DlGVGMevEcUSf+z
-         dgrQ==
-X-Forwarded-Encrypted: i=1; AL+hErEi3EFef2JF0SbPu6WuWiV39yzg/kNLD+715RklZ08mu0tLFmcB0EP8wece8LT3tGExvs4=@vger.kernel.org
-X-Gm-Message-State: APuU4Z9wjGOGF3PGQwgcIq90Xa/SC7BRzwNf3ERgPzjWxFkWzoCRGjWk
-	WxBhaswl6pB8pXJuAEivCJ/t1jPBvXSNp3PHxOrnlXkc+bzRKghZBwvb
-X-Gm-Gg: AZFdTZcMmFNpBUKa4dhAgcXiiE2FA6dqlhL2Ep9yK+cJyuKPU90/x5ZPxAJUUpmKrck
-	XoH0xfwyanlYjFUtDueod7yLHUMoJR9LEiZupVc7X3NJ9Q65biQGFHbnXMHXv0t2qDHbABmHX3w
-	7mgPFpW+aXPNVRkPyCOIwpUt7nf3w2l3JnSSZnG7lGGo7s6fyp1VI82OHscJCSx8+v1SClfmTSc
-	dHgO0ya75zy6LjqrLw3YSG4cVxDuyVQoHN6ch7BAyNip1sbTqQxRDTvy2tepg7wS3X1wcQ1UChR
-	RjNyI9E5ijOD+S4B9cb+bOGRmIKUYyKIdoGO8g4eN9JEpthZfcw4GUk/bgjZ11Vwq9TewieWoLN
-	HIMOFPJ+HS3u06eVop0Nq1oc5/4ihCS1iSBVgx/w7acg09oKQq8D07ZenGZoa4u7CeiUdAS5z8F
-	tbcAD8N8LjDXwo7AMZbYVoKOIqGZsQ56YHnzx12mVx0I9wML09hLaCCbqKxFaCWpiReHahfIoi2
-	+Iyy4AGG033SgwLQ68p9Ggsic4js9v1gg+xyxAbiiuARIfY9cWEmYkmW4y73Xbr0nyj2VKvXSt2
-	Q+kLDLd+t1iw79yu0JGutSiTDdfEOnZ0NajrOSKiUYL5xZY2xc1zzBaCbioF5WcE2qzv1rJ3y8f
-	8sOycfSWd//VFgpd4SxcXUd7S/OX8fptYvzdrHunOtGkXc2qTs5B0topwwDH7gbNt7jkf0d8ay8
-	oOn+FA0LGks8Iimux7/NNBO+KSm8JAM+c21EuxqQITWtj8md+TsyhuFE8=
-X-Received: by 2002:a05:620a:2548:b0:93f:35a7:cd4 with SMTP id af79cd13be357-949bab3c74bmr1908832085a.67.1795445689862;
-        Mon, 23 Nov 2026 06:54:49 -0800 (PST)
-Received: from [192.168.1.109] ([136.61.86.144])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-949bb3ba04bsm834047185a.24.2026.11.23.06.54.49
+        bh=9VvRj+7NPeE25uyO7TVjUhmYB5LT649+yug3U4hSdcM=;
+        b=wU0j6TgV9jp3Xc9naH5Rk7YxWuOij55mSdCc80ELHOVqJFI3+G/hBrzb5yEW5GpdJl
+         zhj7kXFS+fU7cVQSaD+ZmatgkVW1MDAeo5DGV+/GlIe9/UH79wm9CVIhOQCCvM1BlayF
+         2Yq455mn3+8zN9h9PGrCGK7LJHaL8Xog9l9p4TZk5hYGdkygaiAsfo6tPUcyuL7OOfp2
+         GAAoufQbE39XbgJ9NVrMENUTxAL1zEiQzx7UZTyB9qd0RnP/jFbZNCKtctYbEcHVpd3x
+         gnEbqWAQqNNiFN7xjlktJ65xJC5BaFp+oTXpOl3CUVdrKSrr21gH3ImlkofFVhM8Ltmc
+         pdBA==
+X-Gm-Message-State: APuU4Z8FKQz5dgj8oDF+4j7SFOEHEgzsHCzXEFzNDjeUP0KLOpvbT9y0
+	ayBSECoF6ETfM/PE6fryvKUuJG9YRYBLt8QZ5tCJXWX2bQ7kscJqrdxw
+X-Gm-Gg: AZFdTZexCK3ksbCS6nCymcotCbpjL3nJx1/h4TaKJN56ayxpYFfLH7p1UI0ZqWz2SAl
+	/UemOzUPFFAusTcyxFnlkRl9yMDl862udeTVBvbMh7L3zfSrimYiOYusNjFjEBYzKKmGA0dR0MF
+	Ew3xFjRf4h7rlEk7j9xESwOf8SPnIB4Mgl737hKtdo9dpVfXNcpawTETKkxVDv8l6qZKtrDjdVv
+	nxiF0EfoLGB4EWRBe+MOZr1UV2TcrgyLkXtGFJijOexmi/fI/YUnUwH2x0sgHJTZbrfBAThIcHj
+	VzQ/qYUIi0enaJijKZ/C/Q2nnp2FxPryLUHk9j21n/1F1eSpNnCFOU1ggF2YzvDtLIosCpopOJY
+	CWbfkIl4M3bK71ABgKzGBTfO+CWOiMDI86M7xyo4GiyGr6fqTCLL/Be3uqTBywOw8ogNJ2Jhv6D
+	x594/MR7mf0GZWZQBMwpdv3rl9gV66vMC/ZNiuZMfMie9/dzSQh11UiRQdXZ9ksO3MxaH0vvu91
+	JxXbT85EQFZNueWrHcEE2tLCWjX3Y3QC+ZVxxoRjjQROiqsUnl5MCwj1U5fFkdrx8CI0TOL8a3h
+	XjaWxTZz4TzCPnLF33S/Oh6iznWugOflyw==
+X-Received: by 2002:a05:6402:1941:b0:6ba:7be9:ad85 with SMTP id 4fb4d7f45d1cf-6ba7be9aff6mr4520559a12.29.1795447942200;
+        Mon, 23 Nov 2026 07:32:22 -0800 (PST)
+Received: from [192.168.0.172] ([217.71.1.73])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6ba37109c58sm5386915a12.33.2026.11.23.07.32.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Nov 2026 06:54:49 -0800 (PST)
-Message-ID: <41ffffc0-9d77-40aa-a15d-edf7925936b2@gmail.com>
-Date: Mon, 23 Nov 2026 09:54:48 -0500
+        Mon, 23 Nov 2026 07:32:20 -0800 (PST)
+Message-ID: <6954cd53-43c8-48ca-82da-35c673dee260@gmail.com>
+Date: Mon, 23 Nov 2026 16:32:20 +0100
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -95,45 +91,95 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/3] bundle-uri: do not die on unresolvable relative
- URIs
-To: Aniket Gupta <aniketgupta3001@gmail.com>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-References: <20261105152842.566318-1-aniketgupta3001@gmail.com>
- <cover.1795415793.git.aniketgupta3001@gmail.com>
+Subject: Re: [PATCH] doc: update-index: Format options correctly
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <20261122152538.107580-1-omri.sarig13@gmail.com>
+ <xmqqfqwsk4a6.fsf@gitster.g>
 Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <cover.1795415793.git.aniketgupta3001@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Omri Sarig <omri.sarig13@gmail.com>
+In-Reply-To: <xmqqfqwsk4a6.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 11/23/2026 1:44 AM, Aniket Gupta wrote:
-> A bundle list can contain a relative URI that cannot be resolved and
-> one such entry can result in the entire clone dying. This series lets
-> the bundle code report it and the clone carry on.
-> 
-> Changes since v3:
-> 
->  * Patch 2: dropped the part that hides credentials as Stolee was not
->    convinced it is needed. The part that names the URL that was passed
->    in stays, as Patrick wanted. The patch has a new title and its test
->    no longer uses a password.
-> 
->  * Patch 3: fixed the commit message. Previously it said that the
->    clone carries on with the other bundles. That is true only for a
->    list that a server advertises only for the bundles before the bad
->    entry. A list given to --bundle-uri is rejected as a whole. In both
->    cases, the clone fetches the rest from the remote. No code change.
-> 
->  * Rebased onto current master, no conflicts.
 
-Thanks. This version LGTM.
+On 22/11/2026 21.19, Junio C Hamano wrote:
+> Omri Sarig <omri.sarig13@gmail.com> writes:
+>
+>> Subject: Re: [PATCH] doc: update-index: Format options correctly
+> I'd downcase "Format" -> "format".
+Sorry, switching between different conventions bound to get me
+confused sometimes.
+I've already updated in V2, and I'll make sure all future patchsets
+have the correct casing.
+>> The update-index man page had references to several options, which were
+> I take "had reference to" to mean "talked about" here.
+>
+> No, I am not suggesting "talked about" is better.  "has references
+> to" (or "refers to") is perfectly fine once it is written in the
+> present tense, as the early part of a proposed log message is
+> supposed to give an observation of the current state.
+Understood, I'll update.
+>> missing the relevant markers, causing them to be formatted as text
+>> instead of as references.
+> But then "as text instead of as references" somewhat misses the
+> mark.  These parts of text still refer to option names.
+>
+> They should be typeset in `monospaced`, which is the convention in
+> our manual pages.  And that is the issue you are addressing.
+>
+> These changes do not make things worse, but I'd prefer not to see
+> too many low-risk & low-value patches that address overly narrow
+> issues.  If we compare the resulting text after this patch, e.g.,
+Understood. My thought process is that by introducing these small
+changes, we're able to make small improvements, without putting too
+big of a burden on the review time.
 
-> Stolee's idea of having a toggle to bring back the die() is not part
-> of this series. Happy to take that as a follow-up :)
+I'm in the process of reading through much of the documentation, and
+along the way, I try to note these small issues that can be fixed
+easily.
+Would you rather that in the future I 1) make bigger re-works as part
+of patches, or 2) not send these patches altogether?
 
-I agree it doesn't need to be added here.
-
-Thanks,
--Stolee
+If it's easier, I'm also completely fine with dropping this patchset.
+As you wrote, it is a low-value patch.
+>> diff --git a/Documentation/git-update-index.adoc b/Documentation/git-update-index.adoc
+>> index 9bea9fab9a..9b956216d2 100644
+>> --- a/Documentation/git-update-index.adoc
+>> +++ b/Documentation/git-update-index.adoc
+>> @@ -57,21 +57,21 @@ OPTIONS
+>>   	updates are needed by checking stat() information.
+>>   
+>>   -q::
+>> -        Quiet.  If --refresh finds that the index needs an update, the
+>> +        Quiet.  If `--refresh` finds that the index needs an update, the
+>>           default behavior is to error out.  This option makes
+>>   	'git update-index' continue anyway.
+> with another manual page that has these mark-up corrected in
+> Jean-Noël Avila's series from early this year, e.g., what e9a99ef2da
+> (doc: convert git-format-patch synopsis and options to new style,
+> 2026-07-23) did:
+>
+>   Prepare each non-merge commit with its "patch" in
+>   one "message" per commit, formatted to resemble a UNIX mailbox.
+>   The output of this command is convenient for e-mail submission or
+> -for use with 'git am'.
+> +for use with `git am`.
+>   ...
+> --<n>::
+> -       Prepare patches from the topmost <n> commits.
+> +`-<n>`::
+> +       Prepare patches from the topmost _<n>_ commits.
+>   
+> you would notice that while we typeset `--refresh` in monospace now
+> (which is a good thing to do), we should also update the enumeration
+> header "-q::" to "`-q`::", and also "'git update-index'" in single
+> quotes to use the same `backquote`.
+>
+> Also the way these changes are described in Jean-Noël's log messages
+> is quite good.  You would want to imitate these messages.
+Thank you for the reference. If you still want me to update the
+current patchset, I'll update the format as was done there.
+> Thanks.
+Thank you for the review!
 
