@@ -1,73 +1,75 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.72
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.72
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1795543558;
-	b=LH6iqGlThwL+KRTtlYJrAYyO7cgzKkQdXp2EHUv379zbgd3mCA7f6fDuA0M4Ac3h7Res
-	 jMXCclxzx5DM30X31+/nkdToHMCWTUvkZ5G3ZdUMY7BuWwhoOzoJVzC8GiNgSPGz/NNHl
-	 G/fr3joSVuXco3kbM6L8je0htsyO/C7ojHv/yGjtRW9+gvwer1C5bH7xSEhXONeMwY47B
-	 y44t/Caads/hIIc81Qw/H7A6N7VWKLJbFAIVPzmPZcDKuv2G5Vqysof2s/npc13L6pGvd
-	 zYC2fjS+Ne55QhSx49dHO6KrE8TScCEbaBb5YDjKeX/+DYo0DYpXYIMKrZ4JQoPQZQg==
+	b=nAxvI0R0Bfwudbe1BLwhUktK5I/y8qqYomdY5RyUcG8Sz3yeCFGEmRDtdd94xAPfJwPR
+	 tpSTyE4ZOAR0MGPTKMc5CkxUNYJUNqaJHHsrUjAFoXbt2uQC7B8F9RlbbXq7SZg0afusV
+	 CPzVc6adnESKUtEq+0X7qBDf7uX777zPS6PjTXYtqn1nTgqx2b4auIcC5TCzR10yvXFpe
+	 VTpfn8QbXr5DTVKV7dRqD6f3JFy15S3HcJN0n0HN3K2MV9d0zLh0ovw/18Rg4BHCID3pB
+	 sXs5xXlkVXvdMWYHa4pmSn+FAgsKeBkmN4tXVIxh+ITswXYuc5ByavVkwWgkCKpsoIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1795543558;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:
-	 References:X-Mailer:Message-ID:Subject:From:To:Cc:Content-Type;
-	bh=fvYl3MLfjv/gDr9vUPZXIoC3DjMyB2H4BYVV2GF8/Rg=;
-	b=o5bIHNwYYyDC7/1u94dcEOucGuH2qQ/OsGf3bPyBO9iXwI49Lu2LVU+U+LoHn5/XpEan
-	 oiZO0mfQYmTUnuo8IS4vr+zQCr0huNnyF3mpPAN77slAiEtmtHYq7X6BQGmn1h4AeA8/W
-	 keC7ckxRXkI4hHyWQ9gsb5P54rVHPBnbKLkDJ4uKgfcgCy8JHYkDESoHjP3oq7wKFbO7B
-	 Xi03JFMFybNBz3VWRGWAM9r2McOxpXS3nYfxFUvekXvKFxdDW7aNaQ2gKHCXQ+v/+DCEB
-	 7wIM0W3BLx1IeNV1q9AganY2rSXuoZC0O5EOEKQnh7MFFlLZzVBgI1lijs3sSFxxKSQ==
+	 References:X-Mailer:Message-ID:Subject:From:To:Cc:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=ClZJGLb2XsHzJdRmgdKodgo0zX+nfrEblKmNTxC29BA=;
+	b=Sl72zaBsrl8AnhRVVNS273xHl1Aw1PZ3GctqZ2Mns/1jxZqmzdJKvRTSba9q1D4cv6lX
+	 MxEEVOyy8fZyW9qfqrKD34kwWknHe1vKtumv0P8I3pruc5rozqUVq1VoaHikht7YIj1mw
+	 viCaxub3KH/az2bIUt/DraSogs18YriyzvrB7OkNBVqB70dMjW0OyVdbzm72Vf15fOHpk
+	 3fVRVt0qiGYsaxTFaZMvFMS+VaTyyl2IZ12G5PRp9KbSdDMLVdypy+5HZsaGUtbiGlMsj
+	 O6JQwmQrDZbmy3jfHWiRl7P9sv6YwsL74qB1OVa6NzWk0AUbmRM9/YKA/+f3YMRoGzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=google.com;
 	spf=pass smtp.mailfrom=flex--dmnk.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=Ge7Jbqqf;
-	arc=none smtp.remote-ip=209.85.128.72
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com [209.85.128.72])
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=i9vN+lRr;
+	arc=none smtp.remote-ip=209.85.221.72
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com [209.85.221.72])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C4C606A33E
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 18:05:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 74C4C606A33E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD42606A337
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 18:05:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AAD42606A337
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--dmnk.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=Ge7Jbqqf
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-4a1f03f2e8aso41605695e9.1
-        for <git@vger.kernel.org>; Tue, 24 Nov 2026 10:05:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=i9vN+lRr
+Received: by mail-wr1-f72.google.com with SMTP id ffacd0b85a97d-4923b9fdd43so2993242f8f.3
+        for <git@vger.kernel.org>; Tue, 24 Nov 2026 10:05:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795543555; x=1796148355; darn=vger.kernel.org;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=fvYl3MLfjv/gDr9vUPZXIoC3DjMyB2H4BYVV2GF8/Rg=;
-        b=Ge7JbqqfVbs1bkJLdaV0jsuUbxlEJ1j/YG18cvPykP/jutDhmzTN/EVOv1LipEL2z1
-         RAJ64P6V2+g7sL/7xYjTSIAPWdNhyGJ5SHUhT2ySsiS3Z82X8t0lDCfbgYey1acUdLI0
-         /N82VUG7v3cqxtMtnCBgYzMMkoV/92zz7gUgIzr66AYTWDsLeTJ+hdvFrIYirYyGjwEZ
-         nrpuEL1IOahrXxQ3Ou4g7dVZeSn97ct31eE9mOOjBFEcFtu9Nwvq7F0rusbVH3IR8+TL
-         xkuworW+UVlOpoSs3iAImfpFBC4fAav4jdln1wPPp5PViVCXgH0TS55Be62vL/PtelZJ
-         0ouw==
+        d=google.com; s=20260707; t=1795543556; x=1796148356; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=ClZJGLb2XsHzJdRmgdKodgo0zX+nfrEblKmNTxC29BA=;
+        b=i9vN+lRrAlsR4xS63NhtuP1i7xZb549Tm5MJaP/I8i5L6Vllr18nlC1UZeiqqjTXmH
+         aXEeQfTYGbBsPItAKR5u/3owkttsfvu4tRiEz1fhInODgL1f5twiPdvty+wsh2zG+mjL
+         FzQQ3GDjO1aO26aJrV5shil63iWzjo+mdV+KvVjk1a1qUIs7E1bZfzxOlw0i0ZxGHOb9
+         Hw7zscgCv34ujTdVzPejShdJK3ziXdX6Fd3LwcBIAMVrBh3+C1G+rE4veGrU82vSYWyh
+         BLokjR66x1o7Vw0z5DG8gzo6eofrA3I05xSF1H10+F6Lepm6BHq3AZJjN43HduReMuNU
+         Es1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795543555; x=1796148355;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=fvYl3MLfjv/gDr9vUPZXIoC3DjMyB2H4BYVV2GF8/Rg=;
-        b=nhCE9zzZHU2lgjtS/Y9VRHbR47U49TW5TCgHHvDe6uTQ9YWktD69z6263BvoVcvIxl
-         rL3HVM7dFrs2VymfrMKFkqsT2t5HZvMRz/7YrhylUjRd3vB/C759n0EJ+AE2TNcGKbGt
-         IifHqVz5OCmn+2NG+WsEntAHKHRR5MwFWyG+sAILryQds3UeAbauQR8py3c9NSHVazKp
-         oIx/3FfbsZlP2aC9VvwqnE7bWsgZR2QhXolZG5GwM3RxXaC+EaezMt2vFbyctmoplkV/
-         0gpdlKEZGMoq4kG4PPhJ4CYF+A7JMj+Fs+5BZ9qK+jKquF3fUJLu/b5x5C3zPSsvoEb1
-         ieFw==
-X-Gm-Message-State: APuU4Z/7JBV6AXeFTZBE2Jt95vnJMSfhcq2mq21LzP4C6h0iI1hGBvtp
-	6ZT1ZGexnH+R9t5k+U4zZCwXfGy6/H4eXzlnMFr1bOvf3uQkY2X2PHCyV8QDN174sUqcsBiY0cn
-	WGn7f43dko/uoheEsp4NZK0OfWaKHGySlKB1QLIxgi/5zftET/U6xcoad6aw/vjaRt25bLywvoN
-	02a2Qlqw9mtTlCuglkwUdmQA==
-X-Received: from wmbfl25.prod.google.com ([2002:a05:600c:b99:b0:4b2:2ec5:89f8])
- (user=dmnk job=prod-delivery.src-stubby-dispatcher) by 2002:a05:600c:8b11:b0:4a1:df52:3e36
- with SMTP id 5b1f17b1804b1-4bb8881d194mr324775455e9.27.1795543554474; Tue, 24
- Nov 2026 10:05:54 -0800 (PST)
-Date: Tue, 24 Nov 2026 18:05:49 +0000
+        d=1e100.net; s=20260707; t=1795543556; x=1796148356;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ClZJGLb2XsHzJdRmgdKodgo0zX+nfrEblKmNTxC29BA=;
+        b=ZwfO4jE/wwacx3n1MWkD8t1VhKsfxeZJRxT/YnOG30CYa+gWiZFr2HNaP0DFIXBa7j
+         2dWQbPxRjlLCEHS12ickRnXmqYuh4AzZzxl1TF22XrREiHbXB06HmN/SrtkaijPM0oYC
+         KboQNsXvbZoKyb2zVbBv8uzcrpLtdQpyOobMAfAYoGsm0X6GvAJv6/pr99qJm5Yc519b
+         8OB+IWsG6G9nkYddtMa9b1qwnQFShZoJzvCDBJ0EVZKwu8JaFLuwrpIZt0x4ufYk1hVn
+         tQ0rIgKvgCpI8mUuQVVqrulv4hmF6Qwjzi4VfnxYT24kVbMvzE0srnp2O0YiJVP++Sql
+         aHDQ==
+X-Gm-Message-State: APuU4Z9+cPT5o2YSxkXnWJn2ziQnRm4OMyYxJ+Ou5FK/1hUYYBAY1MyC
+	9Y9gkU7RPb6hl/zwGWwrboAjE7KXF+sZzD2wuPGLZmI3X1WL2val+98UHK6KzL37zoU8W7UpQMl
+	YnqKLUSUZ7WFRXWKrfbkBod09AOVwDIvC50UfkHYuXCsN1aysfCHhiN8eUg35/oYZ6LBqgYle0Y
+	wpHYUy4fIzRX36Fl1sh1o8Wg==
+X-Received: from wrnl16.prod.google.com ([2002:adf:e9d0:0:b0:4ac:c680:bccb])
+ (user=dmnk job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6000:402b:b0:4a4:f86e:d97
+ with SMTP id ffacd0b85a97d-4abaa976a91mr30536444f8f.1.1795543555687; Tue, 24
+ Nov 2026 10:05:55 -0800 (PST)
+Date: Tue, 24 Nov 2026 18:05:50 +0000
 In-Reply-To: <cover.1795543448.git.dmnk@google.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,99 +82,127 @@ Precedence: list
 Mime-Version: 1.0
 References: <20261119192311.2685319-1-dmnk@google.com> <cover.1795543448.git.dmnk@google.com>
 X-Mailer: git-send-email 2.56.1.663.g77904e546d
-Message-ID: <72c0d0c0a43cadcc61f0187c86b9bd9361079a42.1795543448.git.dmnk@google.com>
-Subject: [PATCH v2 1/2] archive-zip: fix prefix stripping for extra and
- virtual files
+Message-ID: <543109b7483191cd26b4f02d8b95a62a940b1dd9.1795543448.git.dmnk@google.com>
+Subject: [PATCH v2 2/2] archive: defer --add-file stat() until after option parsing
 From: Dominik Maier <dmnk@google.com>
 To: git@vger.kernel.org
 Cc: "=?utf-8?q?Ren=C3=A9_Scharfe?=" <l.s.r@web.de>, Junio C Hamano <gitster@pobox.com>, dmnk+artist@google.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-write_zip_entry() unconditionally computes path + args->baselen before
-passing path_without_prefix to entry_is_binary(). That matches tracked
-tree entries, which always begin with the final --prefix stored in
-args->base.
+add_file_cb() calls stat() on each --add-file argument while
+parse_options() is still running, before parse_archive_args() checks
+is_remote. When git-upload-archive parses client arguments, it probes
+the requested path on the server filesystem and reports "File not found"
+or "Not a regular file" instead of rejecting --add-file with --remote.
 
-Extra files added via --add-file use the per-entry prefix recorded when
-the option was parsed (info->base), and entries from --add-virtual-file
-do not carry --prefix at all. When a later --prefix is longer than the
-extra or virtual file's archive path, path + args->baselen steps past
-the end of path (and for --add-virtual-file, looks up worktree
-gitattributes along an arbitrary virtual path).
+Move the stat() and regular-file checks into parse_archive_args() after
+parse_options() finishes, refusing entries with a NULL content pointer
+when is_remote is set. This rejects remote --add-file before touching
+the filesystem, allows a later --no-add-file to cancel an earlier
+--add-file, and lets --add-virtual-file work with --remote since its
+content is supplied inline.
 
-Update args->base and args->baselen to each --add-file entry's recorded
-prefix before calling write_entry(), and clear args->base to NULL for
---add-virtual-file entries so entry_is_binary() falls back to content
-inspection instead of path attribute lookup.
-
+Suggested-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 Signed-off-by: Dominik Maier <dmnk@google.com>
 ---
- archive-zip.c          | 5 +++--
- archive.c              | 4 ++++
- t/t5003-archive-zip.sh | 5 +++++
- 3 files changed, 12 insertions(+), 2 deletions(-)
+ archive.c           | 24 +++++++++++++++++-------
+ t/t5000-tar-tree.sh | 24 ++++++++++++++++++++++++
+ 2 files changed, 41 insertions(+), 7 deletions(-)
 
-diff --git a/archive-zip.c b/archive-zip.c
-index 279c3a2d72..db4a96553b 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -271,7 +271,8 @@ static int has_only_ascii(const char *s)
- static int entry_is_binary(struct index_state *istate, const char *path,
- 			   const void *buffer, size_t size)
- {
--	struct userdiff_driver *driver = userdiff_find_by_path(istate, path);
-+	struct userdiff_driver *driver = path ?
-+		userdiff_find_by_path(istate, path) : NULL;
- 	if (!driver)
- 		driver = userdiff_find_by_name("default");
- 	if (driver->binary != -1)
-@@ -301,7 +302,7 @@ static int write_zip_entry(struct archiver_args *args,
- 	struct odb_stream *stream = NULL;
- 	unsigned long flags = 0;
- 	int is_binary = -1;
--	const char *path_without_prefix = path + args->baselen;
-+	const char *path_without_prefix = args->base ? path + args->baselen : NULL;
- 	unsigned int creator_version = 0;
- 	unsigned int version_needed = 10;
- 	size_t zip_dir_extra_size = zip_extra_mtime.len;
 diff --git a/archive.c b/archive.c
-index 59790be986..2348ab12ed 100644
+index 2348ab12ed..413fc1cd11 100644
 --- a/archive.c
 +++ b/archive.c
-@@ -351,6 +351,8 @@ int write_archive_entries(struct archiver_args *args,
- 		put_be64(fake_oid.hash, i + 1);
- 
- 		if (!info->content) {
-+			args->base = info->base ? info->base : "";
-+			args->baselen = strlen(args->base);
- 			strbuf_reset(&path_in_archive);
- 			if (info->base)
- 				strbuf_addstr(&path_in_archive, info->base);
-@@ -365,6 +367,8 @@ int write_archive_entries(struct archiver_args *args,
- 						  canon_mode(info->stat.st_mode),
- 						  content.buf, content.len);
- 		} else {
-+			args->base = NULL;
-+			args->baselen = 0;
- 			err = write_entry(args, &fake_oid,
- 					  path, strlen(path),
- 					  canon_mode(info->stat.st_mode),
-diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh
-index c8c1c5c06b..75e3b331af 100755
---- a/t/t5003-archive-zip.sh
-+++ b/t/t5003-archive-zip.sh
-@@ -229,6 +229,11 @@ test_expect_success UNZIP 'git archive --format=zip --add-virtual-file' '
- 	)
+@@ -586,11 +586,8 @@ static int add_file_cb(const struct option *opt, const=
+ char *arg, int unset)
+=20
+ 	if (!strcmp(opt->long_name, "add-file")) {
+ 		path =3D prefix_filename(args->prefix, arg);
+-		if (stat(path, &info->stat))
+-			die(_("File not found: %s"), path);
+-		if (!S_ISREG(info->stat.st_mode))
+-			die(_("Not a regular file: %s"), path);
+-		info->content =3D NULL; /* read the file later */
++		memset(&info->stat, 0, sizeof(info->stat));
++		info->content =3D NULL; /* stat and read the file later */
+ 	} else if (!strcmp(opt->long_name, "add-virtual-file")) {
+ 		struct strbuf buf =3D STRBUF_INIT;
+ 		const char *p =3D arg;
+@@ -646,6 +643,7 @@ static int parse_archive_args(int argc, const char **ar=
+gv,
+ 	const char *mtime_option =3D NULL;
+ 	int compression_level =3D -1;
+ 	int verbose =3D 0;
++	struct string_list_item *item;
+ 	int i;
+ 	int list =3D 0;
+ 	int worktree_attributes =3D 0;
+@@ -706,8 +704,20 @@ static int parse_archive_args(int argc, const char **a=
+rgv,
+ 		die(_("the option '%s' requires '%s'"), "--exec", "--remote");
+ 	if (output)
+ 		die(_("Unexpected option --output"));
+-	if (is_remote && args->extra_files.nr)
+-		die(_("options '%s' and '%s' cannot be used together"), "--add-file", "-=
+-remote");
++	for_each_string_list_item(item, &args->extra_files) {
++		const char *path =3D item->string;
++		struct extra_file_info *info =3D item->util;
++
++		if (info->content)
++			continue;
++		if (is_remote)
++			die(_("options '%s' and '%s' cannot be used together"),
++			    "--add-file", "--remote");
++		if (stat(path, &info->stat))
++			die(_("File not found: %s"), path);
++		if (!S_ISREG(info->stat.st_mode))
++			die(_("Not a regular file: %s"), path);
++	}
+=20
+ 	if (!base)
+ 		base =3D "";
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 3ad600c793..c2bead12e9 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -237,6 +237,30 @@ check_tar with_untracked2
+ check_added with_untracked2 untracked one/untracked
+ check_added with_untracked2 untracked two/untracked
+=20
++test_expect_success 'git archive --remote rejects --add-file without stat'=
  '
- 
-+test_expect_success 'git archive --format=zip --prefix longer than --add-virtual-file path' '
-+	git archive --format=zip --prefix=very-long-archive-prefix/ \
-+		--add-virtual-file=a:hello $EMPTY_TREE >short_virtual.zip
++	test_must_fail git archive --remote=3D. --add-file=3Dno-such-file HEAD 2>=
+err &&
++	test_grep "cannot be used together" err &&
++	test_grep ! "File not found" err &&
++	test_must_fail git archive --remote=3D. --add-file=3D. HEAD 2>err &&
++	test_grep "cannot be used together" err &&
++	test_grep ! "Not a regular file" err
 +'
 +
- test_expect_success 'git archive --format=zip --add-file twice' '
- 	echo untracked >untracked &&
- 	git archive --format=zip --prefix=one/ --add-file=untracked \
--- 
++test_expect_success 'git archive allows --no-add-file after missing --add-=
+file' '
++	git archive --add-file=3Dno-such-file --no-add-file HEAD >canceled.tar &&
++	test_cmp_bin b.tar canceled.tar &&
++	git archive --remote=3D. --add-file=3Dno-such-file --no-add-file HEAD >re=
+mote-canceled.tar &&
++	test_cmp_bin b.tar remote-canceled.tar
++'
++
++test_expect_success 'git archive --remote with --add-virtual-file' '
++	printf virtual >expected-virtual &&
++	git archive --remote=3D. --add-virtual-file=3Dvirtual:virtual HEAD >remot=
+e_virtual.tar
++'
++
++check_tar remote_virtual
++check_added remote_virtual expected-virtual virtual
++
+ test_expect_success 'git archive on large files' '
+ 	test_config core.bigfilethreshold 1 &&
+ 	git archive HEAD >b3.tar &&
+--=20
 2.56.1.831.g720f3f5937-goog
 
