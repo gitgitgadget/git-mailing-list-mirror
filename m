@@ -1,122 +1,119 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.154
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795561447;
-	b=RBG19mJTXGL17jRufOax0qYFyYJEb3M4EDfPy7Q8vduLShZ8T2G9mASe9yvSrDWfs7Ei
-	 WkgcXzPgAVF9L/Sd/4qcdHJ6+jfTUWYDitIbiN6PDzFcpaEcOP/vAHpgDVLTwe45fqOky
-	 mKW2fqCnNGNPK3CGtj7NFE2cQWK2EHuoibzX0VNpZOfK5R56fjP7foF9FCOqS1ihrxaxN
-	 KC2UDcu6C4kmls7nM7EErPTqbBs8TbpzBRsxDqQUVIRLOF4HT8WGTuEcvBKfPzj2cqXTk
-	 aDGGby7JRuqBeMeQl87uvTXuzCyHzsXrV6bAx7hydvPHewASDcdCMGjGY91S0NPsGgw==
+	t=1795562647;
+	b=UeODAsI/jg2B+EenJ0R39bilIpJfKkwRZOG4RZDmIWgcrUZEsWdqDdEmSPYQ8/PzIG6g
+	 Jp4H58g7w1oRrkFk6I05TN5qKyUTE/0Ku5kJev0Xu2eqyQrvxb+GkIspamEULSUFYBc07
+	 aJrc3YQDKeHPuAdc0E6RmNanclmKJeRv+d5so+QifKeoS9BgqgtndEkWPTrjWPfWXOhXO
+	 iVPvohIn6WEjgTwdq6S3O0eq9BPSxzN/+vAZlb5H6WTwwqnyChzyzlctsFUdskr/AG90/
+	 aruGYfqR/6ECxLyDox4U496H9Gr6q/MNmRYUm/yiU+A6PWmp1vRgIgziOVEmbk/nP7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795561447;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795562647;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=FWELDs+IKEcqjMxoqPJDaN4ZVXyzMO0+qWpQK6hgN90=;
-	b=uacfV0hWiM2KN84iheeHoEuM//J1aoW7Izd3Hg2fVUQK3VNI6vr74Kmn9nlj+3ogJhPK
-	 3g58k0uk0HwUatRqz/quWJu+uzuuB8yeY52Xxr2Wvc846+Y9lljsHkSErf6uGJmsJgv4Y
-	 QHQdv9J6LUi0/J4GgIe0c96EB4VweDMIO7RNBD6qQbcKEkINTj6NGUlSYmx962X7Jzv6H
-	 gxVT9irZwgxZv2ccgieYnc0SzdT95mNhos28DU4Y9g6Uw1YaN3Al6YWWRxqhkA62XdDK7
-	 Rp2dAC+4BRb3TfsZACdccW/xegtBfJCMXrP4fz++bafWxQCuWrgiM+bFs5xjfGSZypQ==
+	bh=UiGpe3zNaLguQNbAs9r0cvE65mwzLFee36+8dUs3mog=;
+	b=2ecrp9Jro21Wd5HcbcVFq2dPOpiS576+NJauIRHFxsNDgBk4gsSL8ErMY8asGxdWxD+z
+	 kLlNm9uGFVHTLoLmR72H26d4y5gzqcvN/HNaxHsviikPDcurMuR2itxBbe+kcf7STi9SH
+	 U13JUVlo42c4c3Nj6OpkN2GoOAeqFGAw1uN3qRmGcGsSo1Dz1dulNq54CTF352plOgM7h
+	 g34je7IThSl6exwFJbzJo7igjLyOT4ifx0OXXPFmViLvcj9x+Ff9b4HxFA6eMKLE/2LwS
+	 QojzFylGybLggkhuz6nzwBddgO0rEZ1xuX31UHaFG6DSmAfIhxJTURZVu7SsC6mom5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=B1Z0eDpu;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=jma9nLgb;
-	arc=none smtp.remote-ip=103.168.172.145
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=k3Y5HE03;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=46NE1adM;
+	arc=none smtp.remote-ip=103.168.172.154
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A00C606A32E
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 23:04:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4A00C606A32E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62ED606A69E
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 23:24:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B62ED606A69E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=B1Z0eDpu;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=jma9nLgb
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 59EC2EC0ACD
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 18:04:06 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=k3Y5HE03;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=46NE1adM
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BB0081400327
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 18:24:04 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 24 Nov 2026 18:04:06 -0500
+  by phl-compute-06.internal (MEProxy); Tue, 24 Nov 2026 18:24:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795561446; x=1795647846; bh=FWELDs+IKE
-	cqjMxoqPJDaN4ZVXyzMO0+qWpQK6hgN90=; b=B1Z0eDpuFejj1dCmOhSe/Xsacx
-	23xZcjNcvt6EmGjrHO7lzuEOAGiWj1RqIKotR5j1usYuFxzn69IpbNl3eeei2IKP
-	5h6Ys+1lqguJRZsu/3xVttNQGCr8YQa3BfB4Ae2RzzttsZpa1mSvj1Wi7i3WR4At
-	d3jkSqepUGUoBQOUSXNWZn8Oqwt0PBMFIltQ905GOMa82JlITebtH4QBtzIg7i9T
-	YEUisVzN6pOFJNZA9/c5p38Zl8IzKNQHaUWuznU4eiSt9hSRDpjxwPrPA12Hl+rw
-	hCgpGwv0vv+bNyJjJVsuC3WjrleLGITX1s4HFHBYd4YpI0cMuVV4jFHMw56g==
+	:subject:to:to; s=fm2; t=1795562644; x=1795649044; bh=UiGpe3zNaL
+	guQNbAs9r0cvE65mwzLFee36+8dUs3mog=; b=k3Y5HE03AOZcHGrkRHIbqFg8p+
+	K7oxyvuKvwLsOQaEaTJOb9sOJ8/Ns8x71xoaMRikpJeBdH0rljYNspd9vytuqfq4
+	nda03UPfzyQtOKqBDlpcHqjz2RRzY494jGX1Q6buQNQt/nVMyaK9i1z/H1t5nCGG
+	+pYysitOpdJxZOPkoBUJmxoZclwSofZcC9ECB+sCrco/CL6srsSQFkZValPRmAOm
+	D4muSzWKD9pbqV6A07AFaDA3TaqWSuzLW3f6vFrF6PqLcUXrJ5R8JwqYyWHBg6/H
+	KJXysOA0iOVTPo1IdfhE5mAht1DpRW5PA8pWaDfsHat01sFgLi2KmZhvCUcQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795561446; x=1795647846; bh=FWELDs+IKEcqjMxoqPJDaN4ZVXyzMO0+qWp
-	QK6hgN90=; b=jma9nLgbfHoPTthIaGXdcq/WhtXL47lI6s1P3QuNR6nnpcdk7D0
-	Dj6yofJyTxB3ZOtwuQgkTazff2hg7ltSFxmZ8gMBTtTgL3yvZ1tlbMp02quRybqP
-	ibHHixCyg+QtOvNrK2iv3OQi8/m3kuQL+sUHHUkaLvcYpxF9Rixoaf3xggBKXg/v
-	s0rVGUUF70d4qMxQOobHoUqM+GDEJZOlA9+y7GyUmRERku1GanYmd7Bcv1opEouh
-	aTzU6dbmDwHn+Wkj1gHqLFQv7GSJH46o+539lqcfvsCi0LfEOp1hP56yCIbp1+4K
-	Frc4h9/ppgNDci8IHkkt0rr2XbiQ8V46Vgw==
+	1795562644; x=1795649044; bh=UiGpe3zNaLguQNbAs9r0cvE65mwzLFee36+
+	8dUs3mog=; b=46NE1adM1AKGpvJ/dKjTdGsiykxODprV/a5iUAaDdIvV2OlIEQ2
+	YZ4CfRb0nYwHazhfLqpJdhlURzRLIlICmJzzgxA1vdL43MfVZyKnYDs5aK+kyrcV
+	jG8Q6rCk4b89NhqTkS1e9lWCtdaAiV6Y1psH53cX4Z/OaDDTD23HAqzHswbpxTHS
+	JMdJjAWeDH5v5DTLyxRoxhlnAvavdY1vQ9SMUD4CHWAaueIC6AllLHppDx/W50OZ
+	K0dK0fkOV51Kq1isYmERv1WZCcxsneADG/oK5aZjVU4EC6Kuqp446AZLtNRNR69m
+	DIpK0ARfhKlg0oDLdB3i9jf2qdnachYaCoQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795561446; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1795562644; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:Wa57RvAGz95qQiDyAdTS0mYFTzLx0+edmtuQWziQCRqKsGS
-	V++dpsSgHGayzHBP6SfXVWaPwPciJEJyaCZPC8/3XKGP5ZVE+JMovSrE9/1OWSYm
-	0bB2AeLntJSN6IQSBqrZEkpsDtuPMH3Vtigf6BgUOVxt0BZ2V/nkN74lpC46p04N
-	fMXK5wg9ltJW6m4VH1Iup+aLMZITVgdGm97kfx4dwav075iEOvxZ+erctw+8zK3/
-	VzU4GOJpURjXkBm5VyVhipx1Jfpe4v0CEVN2iDdwT7KYtU63PA/LNOX5vySpcNE6
-	oOpEKmoekXk6+IZwlNKZgMZnMMmDkZFOUGGKhLQ==;
+	s=fm2:rsa-sha256:CmoL9NZd+exAUWDpmgZnkVHOIyuhQaC3wqriNkYwkXv0dmD
+	WF3peJUrwYJ/dgWSHKxUcu2pm0Qn3NJAeu4vu9camFMiKVA8I80zN5Io9l/tq9++
+	zimjjH1WkR5byia/Ul0cfmFZtOYaa0QMOHaU8EOAe9b5SoLh8277CCrqoA3sFFey
+	Pstc+BZ7byUbNYVtiep7f1W/q41U323DTT21W3rUGI872pbIU5lh6qL5NUxm0zdQ
+	SL086JB7oUEqiAD7/tfv7YaofN6WUEHMJa8ZckY9gpXO+t8bkuDd2ieTYA/+AjHU
+	ijdBtLkWK1+Ne1POdZ0RQ7zpO5lctZ3C+8L9A9w==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:EDEImPRj88eptQGFevdG098KxME2N/wtQ2W1hisCnpc=:PEYqpFnxFwg6Vbg2ZyEVHUBKlf2gvx6C1yVhGWXnmGk=;
-X-ME-Sender: <xms:5hcGa7gFPcrGpqcRlHsffawo9EwXCgAK2TGWK5vZTVDVLmrdDWBAGQ>
-    <xme:5hcGa6TDjMP52GYcxUIn4I05hfJ_zsGaj6XW5zk1b-aNFEq-MZPRZDOZjzjQBGiVx
-    75a8kITFgStTyjmJI4snSkHfwjzSujY9lXVKCCoSMn5gbIA0Jw2qDA>
-X-ME-Received: <xmr:5hcGa9WAKDkpOlYQ8-M6tki0QvhkmKn5zP9nDAPVeFkAN_zKEJYS83ksDlRMAxtZAJUL2PVFkJ7FNgiDQvcX5e-q__VymgoC-yri87w>
-X-ME-Proxy-Cause: dmFkZTFw7v/Llc/+xKqkboWMxBOXHrUv1Kt4NK92j/+87Zx+XBsRrs4lW5a6Bp5CNbjxS4
-    iugo8avUY0YJaWMUqfQoeXV1jJ1uv+MdB/XdmQvsV5c/YI5QThl897oZITX0SuyDu/k0hc
-    Ds7oPrWlbMQKZ7mdEuIn3H3ibuUpiEbizovzoH0KXi9cv50SN50XCWHw5rSEiH2ANLFgxP
-    haqTk79JrT8TjN0sAWoMTeFnkaTrMF5tKj87UhosjYMYePQUY2THz2mee1VLBZ3QXe5xj0
-    SWY4tv4shasoKxV43vJpipu51iFkp/lWhCaUfY/J8cRBSvYLL0ePS64/P58lfU2CJQiWTJ
-    2cnflR6xuH4IPMf1wNKpB83ImtNTQzN2+GgCivQ7QxqEHQ8ho76R+DY+bsy6ydA/dLNwrz
-    z8rG63r8qK6IgYYILt+YKTY/ZPFfNrp15sMrAA+UwBQ5tTpJj6B9VRP1fn9biatc2qZL1/
-    L+atZ81tmbRiAC5XswXv23ZM9xwHDqXrjAbN4b4GTlp8KyiqrsnygC/lwr92bxh2rdgt3W
-    fqtTp7w0nN0hmAR4s4+yfvVN+/3EygC+uBmJK9cRDYcCy/nNG4TGSW5nQ83IQ0zZBS0NjW
-    81kg42M6h2/Bm50FPXhOg/7FB0GiRaCg8v31rJy+56ywkPYH+SnfqpSNSwPQ
-X-ME-Proxy: <xmx:5hcGa-SmCcM3W5ED9NBvDepmgmazUA1_TpPFoXZJS6vOqQrAst1I1g>
-    <xmx:5hcGa3m78ZALVO6HgWl3hVRxF19p1OXrrtCv4ef-SpZnY0mlbSbfYg>
-    <xmx:5hcGa07oNPk8zYkG7gGwncGxaKWLzAx1AnXv-qj4SGKSBgrYvV4zuA>
-    <xmx:5hcGa9hY_-PJvz_UyxwEjvF7XgjpIoGq52GmkwpDcjgqm3mr_hTkWw>
-    <xmx:5hcGa5Tlr0sBTJZ5Paiy04lUZ0l26fT4bTgOhLoSUXSlQA2Hde_hdNbS>
+Message-Instance: m=1; h=sha256:HDJoULeJW4DK7m29t3+cegZf4YFOpnOvOS4/N0cfdpg=:zGnMSnvaIX/EsE6lkipCic8sOdb3LfRC36BpVmGq704=;
+X-ME-Sender: <xms:lBwGa4Eir7Iq3bZi8H9dOwn4SWaYiCd8Nm52kHW6bhqyljjSCYwwbA>
+    <xme:lBwGa4yOT8y6K2sqh_vckqwmu2zmr6SwdtcIfvbAwdU7OOe_OxifJ1XFLMOS1k6V0
+    WrLEHxz9MnKLzkYhX8SR6HyA2gfkG8g7UXMQX90_d94or-1J0ZGYco>
+X-ME-Received: <xmr:lBwGa_iBf30mtOfz8EvuKIzOq8GhPn0FrUrpRq6QQbB51TjbVWeUSwILH8n-bRLmjnjDSSRdkUlHaY7x-cfQureb2BF0H887TbFDaxo>
+X-ME-Proxy-Cause: dmFkZTGK005lPYiw+OT5OMhdia0TGEOwagd5nIl0/u4QzBX3ORUKAX4KLIRZtMPhWrzvxG
+    lWY0/L6sXS8lBNeXjgMYgT6mLrfrartZ+mBfZrnWBjr5Nox8zMCZF2qsoeQw06oC4ye6AG
+    CXj2NmPwAxfR4RyXiiJWobwNYXp7cRW81TstKIpU+N5icMnzqnUO74NyKS/fFUEcNpGmYH
+    hDottL31HpYlmiHNi+7mk6fddI8lDRGblNqx9VpgKgkPsgFMuE3UA3LRVEtPUVI7rz0UtK
+    qv0Cq6WxeaFqilKJYcARopyCWefyAOxpjpq233UPbfIFIjo/xy76I8iVNYhSEGlVFuAuBm
+    l6kuAhtURbex5OlUCx2vh+CHBOBKKJOewuS/Uoenl9ULu6T97YIp/dWhP8eDxFP+fw8sWY
+    PhrZD1Mu3QlzTsTaLdxF9dyo2LyH8PD69VKO9L747mR+FHc03+iY3rDhVzqUT8ANSFPAyG
+    Cn8vULpDxPSBGUXBDC/jxsyiS/xXrVtSiCeJm0+1W0iB1LNwo4KAad/X+bP/hThhCuTCiH
+    r7DGJdTtLyRTnc3resttSC10vlzOeFSgVTBLSFytmEZa+UG6j1VZoUzgjLbOt5ngjereo3
+    l1mos7R8snq4usoGzaGgca17ey4bVj8xmfUgn1G1doZknyRC2Yy6sGLCjoZg
+X-ME-Proxy: <xmx:lBwGazyqecf8wqsrnKgdneZBgymyoi1I1L21gbyMSLx7O2t16sOw0Q>
+    <xmx:lBwGayLfcJ_B9h7hsDEn0liYspghnW_OsLKeZ-z2jtfheviSGBWBog>
+    <xmx:lBwGa6QOcYXUE8upchApdzQ5S5X7mGxvxh-FwXs6jTp8I1cplRtIzw>
+    <xmx:lBwGa6qdTYm5GNBeC4CcQmXXVKwlWkQqMexI5dBjWnxKQbbPXtRDug>
+    <xmx:lBwGa44yET_Dr8oc2ubLAKUoxeLW948Yr9E8NkTsawMfeSscbTwPxrZ->
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Nov 2026 18:04:05 -0500 (EST)
+ 24 Nov 2026 18:24:04 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Ravi Mistry via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>,
-  Patrick Steinhardt <ps@pks.im>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  Ravi Mistry <rmistry@google.com>
-Subject: Re: [PATCH v4 0/5] http: exponential backoff, configurable status
- codes, and post_rpc() retries
-In-Reply-To: <pull.2287.v4.git.1795103883.gitgitgadget@gmail.com> (Ravi Mistry
-	via GitGitGadget's message of "Thu, 19 Nov 2026 15:57:58 +0000")
-References: <pull.2287.git.1793462224.gitgitgadget@gmail.com>
-	<pull.2287.v4.git.1795103883.gitgitgadget@gmail.com>
-Date: Tue, 24 Nov 2026 15:04:04 -0800
-Message-ID: <xmqqzeuxj0gr.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 5/6] packfile: maintain process-wide limits globally
+In-Reply-To: <20261120-pks-packfile-global-statistics-v1-5-19beb83b145f@pks.im>
+	(Patrick Steinhardt's message of "Fri, 20 Nov 2026 13:02:32 +0100")
+References: <20261120-pks-packfile-global-statistics-v1-0-19beb83b145f@pks.im>
+	<20261120-pks-packfile-global-statistics-v1-5-19beb83b145f@pks.im>
+Date: Tue, 24 Nov 2026 15:24:02 -0800
+Message-ID: <xmqqmrqxizjh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -129,55 +126,83 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Ravi Mistry via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Commit 640657ffd0 (http: add support for HTTP 429 rate limit retries,
-> 2026-03-17) added HTTP 429 retry support using http.maxRetries,
-> http.retryAfter, and http.maxRetryTime.
-> ...
-> This 5-patch series addresses all four gaps:
+> Our packfile subsystem has two limits that are supposed to apply
+> globally across all open packfiles:
 >
->  * Patch 1/5 fixes the off-by-one retry count bug and extracts Retry-After
->    in finish_active_slot() before Trace2 logging runs.
->  * Patch 2/5 doubles http.retryAfter on each subsequent retry attempt
->    (capped at http.maxRetryTime) when Retry-After is absent.
->  * Patch 3/5 adds http.retryStatusCodes (and GIT_HTTP_RETRY_STATUS_CODES),
->    defaulting to "429", so environments can opt into retrying codes like
->    "429,502,503,504".
->  * Patch 4/5 extracts a shared http_retry_wait() helper and extends retry
->    support in post_rpc() to read-only services ("git-upload-pack" and
->    "git-upload-archive") without retrying "git-receive-pack" (git push),
->    while fixing a missing Content-Encoding: gzip header on retry.
->  * Patch 5/5 changes the default of http.retryAfter from 0 to 10 seconds so
->    Git does not immediately hammer a rate-limiting server when no
->    Retry-After header is provided.
+>   - `pack_max_fds` is the maximum number of open file descriptors for
+>     packfiles. When we exceed that limit, we close least-recently-used
+>     packs until we're below it again.
 >
-> Prior discussions:
->
->  * https://lore.kernel.org/git/20201012184806.166251-3-smcallis@google.com/
->  * https://lore.kernel.org/git/pull.2008.v6.git.1773752435.gitgitgadget@gmail.com/
->
-> Changes since v3 (thanks to Patrick Steinhardt for the review):
->
->  * Patches 1/5, 3/5, 4/5: Un-indented shell case arms in
->    t/lib-httpd/http-429.sh to match CodingGuidelines.
->  * Patches 2/5, 4/5: Changed the retry attempt counter from int to size_t.
->  * Patch 3/5: Documented in http.retryStatusCodes that providers are
->    expected to return 429 when rate-limiting or overloaded, and that
->    configuring additional status codes is a temporary workaround while
->    underlying provider or proxy infrastructure is fixed.
->  * Patch 4/5: Restricted retries in post_rpc() to read-only services
->    ("git-upload-pack" and "git-upload-archive") so "git-receive-pack" (git
->    push) is not retried, documented the retried request types in
->    http.maxRetries, and added a test covering push.
->  * Patch 5/5: Inspected the Retry-After header via curl_easy_header() when
->    CURLINFO_RETRY_AFTER <= 0 so an explicit "Retry-After: 0" or past
->    HTTP-date retries immediately instead of falling back to the 10-second
->    default, restored the past HTTP-date test in t5584, and added a test for
->    "Retry-After: 0".
+>   - "core.packedGitLimit" is the maximum number of packfile data that
+>     may be mapped into memory. When we exceed that limit, we close the
+>     least-recently-used windows into our packfiles.
 
-Thanks.  Even though I admit that http transport code is one of the
-areas I am less comfortable working with, I tried to see if I can find
-anything questionable.  Thanks to your effort with Patrick's previous
-reviews, I didn't spot much, which is good ;-)
+I somehow find "maximum number of packfile data" a bit awkward, as
+"data" is not something I would count "1 datum, 2 data, ...".  Are we
+talking about the number of packfiles?  No.  Perhaps "maximum amount
+of" (or "maximum number of bytes of", but that is a mouthful)?
+
+> Introduce a global list of all packfiles. This list is completely
+> independent of the owning repository or object database, and it is
+> agnostic of the actual object database backend that's in use. Use it to
+> maintain the above two limits.
+
+Hmph.  On one hand we are talking about flexible object store that may
+not even have the concept of "packfile", yet here we assume no matter
+what kind of pluggable object store is in use, there is some concept of
+"packfile" that occupies a large portion of the address space and may
+need to be evicted to reduce address space pressure.
+
+I smell some impedance mismatch but I cannot think of a way to rectify
+it.
+
+> diff --git a/packfile.c b/packfile.c
+> index 077b0395a79..0d5647c74c8 100644
+> --- a/packfile.c
+> +++ b/packfile.c
+> @@ -35,6 +35,7 @@ char *odb_pack_name(struct repository *r, struct strbuf *buf,
+>  	return buf->buf;
+>  }
+>  
+> +static struct packfile_list all_packfiles;
+>  static unsigned int pack_used_ctr;
+>  static unsigned int pack_open_fds;
+>  static unsigned int pack_max_fds;
+> @@ -195,6 +196,7 @@ static struct packed_git *packfile_new(struct repository *r, int extra)
+>  	memset(p, 0, sizeof(*p));
+>  	p->pack_fd = -1;
+>  	p->repo = r;
+> +	packfile_list_append(&all_packfiles, p, 1);
+>  	return p;
+>  }
+>  
+
+Tracking all packs allocated via packfile_new() in a global list and
+removing them in packfile_free() cleanly solves both the cross-repo
+limit problem and the unconditional odb_source_files_downcast() calls in
+unuse_one_window() and close_one_pack().
+
+> -static int close_one_pack(struct repository *r)
+> +static int close_one_pack(void)
+
+Yay.  With this signature alone, it is crystal clear that we pick a pack
+regardless of which repository it is being used in ;-).
+
+> @@ -754,6 +750,7 @@ struct packed_git *packfile_from_idx(struct repository *r, const char *path,
+>  
+>  void packfile_free(struct packed_git *p)
+>  {
+> +	packfile_list_remove(&all_packfiles, p);
+>  	packfile_close(p);
+>  	free(p);
+>  }
+
+
+Every pack allocated via packfile_new() (through packfile_from_idx() or
+parse_pack_index()) is now freed through packfile_free(), so
+all_packfiles should not retain dangling pointers.
+
+Nicely done.
 
