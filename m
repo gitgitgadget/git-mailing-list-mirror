@@ -1,120 +1,70 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=172.105.7.114
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795557846;
-	b=f2bw0faPJKMEu18rZtc5onOl6A5E9RSA9N0nYcyyPsGJhXVrCsGnZjj+K2z7qliV+qVT
-	 4RcwwBuKxThIfDlTJnTdsDuhxOD6gfhycaRjnXZ7YSHpFWrBhnheJQjHw2ovvLiCcKFSw
-	 zmUgxodVm54fivDw1W/fnrOjVLFNbdAXmdXiD7cp7yqM/gs5x1EOGJcPQAYC948xfLAnY
-	 EaLTKudGScwgRY5TYVdvFYMS+DNQibWFixEhCOpFclrQI4eJbTD6T/3t2NFI9g42UcpW6
-	 MeWluVzq6j2ymjCvpoF/IpuOyvoKBp7g8eiTUUqvCTtLQalU3acfQnbbpc3Xj2j5CCA==
+	t=1795558765;
+	b=Q+KVRBU5GzKI4ZNgzIDJ5lSIOnS2tbB6eWnmdp/1rWIo9zPpSfOkMei+F25kDcLCZRTu
+	 TDTFPtXlu029/uXNz5HC4IdLEGNJLutTGs7rydFAtgvpzzYPMhX3YwX+otTkPSJPHPrW1
+	 hrCS4ti4js1WWfYG4YeFVDkv3EvcXm/lgEmhwcCz1ouXjOrmlF/xBYoaeu9AXId3CnCV2
+	 Jk53DOH37Mg5oa5uNRs/28pNGMEtM0fRDuE9zOzu+IkqK02j2C5zQ+yRyB+yuNMNhXw3u
+	 zxuZ3TYfxVgz1nlBpO2aGMK5iOHeVJNtf+XN80JhMsV/IScy/xKVZvWZorcyIJAxUQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795557846;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=1SvZGikDustzm3IOWmoIgEMPTqa+OBTEcwEpTCcbawM=;
-	b=R0b0Xvcdo+GpBlJyT3b4eoZTaYvhJ1g8X+BIbicjUQuW54Vcj63DUZ6v+X/dDDbd/605
-	 c2d2pLWyt4/ZyJCiWQjlP+wntgOGRQfME4vOB4MQI6RvekTkp7yijbwlv8isunAoSdBfh
-	 /0XuFdYPbBvLAytBMB2hu1E4/3Q2cfpNXRwhoDCwRF5qE2yG4BFC5ZcYQkmQj6NnAHDCv
-	 v7dDtprrZx3sihvlvL0P1UZmWkwo9IXjz/h+oCMfYWNTlyIfn8dnTPBUnRbUSr8xfatGb
-	 4e0hbEnT4LRRVlOPo71wC1dNaeLkU1PoHic5qFavspXHWxrbjgiCg97XkarCJYejL6g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795558765;
+	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
+	 Message-ID:Mail-Followup-To:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To:User-Agent;
+	bh=+a1JxxdkjEjjJnnjTCCyxiBrh/LJP4una4Mvbs8QF2s=;
+	b=yA3oysKQcOtDV9Rz5ul9l1BJ9QJemDKg3WReOmREO9HKmEyVnwCphIgmyIRWqO1IYHRT
+	 YhES+5BVmcGUvxXMIpMu2xVCIEJAvJOn3dytHymXei/PrY4MVXAlSfXsqQpO3YfuIF8zv
+	 bA+GBCPIfdshkUBUyiBO9MmQ7iJ4aaTMOJiZYqgJZdGlN37Q6v4ohQzQREohesNI1Q1Rr
+	 APBR22gv6RCddFbkjmkC5sQ/JHnL4/TCe0IytAgX6VnUm9faftmQvCsezZoLpeGMJab9e
+	 dJ7tlToqXPD+aQwI/YDVawTbwSgx2FuTc1CauIT6WJ0OKvcpAH23lUBg03pqzpMEchw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ZpNG8J4O;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=cQ90xFNg;
-	arc=none smtp.remote-ip=103.168.172.145
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	dmarc=pass header.from=crustytoothpaste.net;
+	spf=pass smtp.mailfrom=crustytoothpaste.net;
+	dkim=pass header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=bFxSfiD3;
+	arc=none smtp.remote-ip=172.105.7.114
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F7D606A321
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 22:04:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E3F7D606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A54C9606BA30
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 22:19:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A54C9606BA30
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ZpNG8J4O;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=cQ90xFNg
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id E266EEC097E
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 17:04:04 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 24 Nov 2026 17:04:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795557844; x=1795644244; bh=1SvZGikDus
-	tzm3IOWmoIgEMPTqa+OBTEcwEpTCcbawM=; b=ZpNG8J4O28BiPeovzo7Lnp8zMn
-	JjPAxPg3BhRZl02l0WEAPXYzm9wwO+RTnhT7Xrr2Gl7FfnZoVbBShVd874b4VSBK
-	JslreGH5mBhGKU0gadFiCKeptcVYetDBIjsc7onYe39JrxloL/0Rs+kLVyf+dTJC
-	Ba+d0b+GVJYEXMWCQBcuskENIDHrO50IO8+4mpEnBbpPkF/uhZZfbCJreD8ZTFmz
-	0gWjCvncopTKducmXDCsVtEYFIycFKi+XvRxaLUAnOaXXuwYL3+MxuZAoco+YV+6
-	MvMPnUiqzao6O054A2+ArjJAeuv156+D6wZu+69g5GDKKY1Pbnyk8AGiMbcg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795557844; x=1795644244; bh=1SvZGikDustzm3IOWmoIgEMPTqa+OBTEcwE
-	pTCcbawM=; b=cQ90xFNgmypCRKOIPvd1ntm1ssH74q40HwvmX2FXNOnIf5mjS+o
-	Ao+sop1ISh5O1U+HjJWAXQS1SygJdXX0ZQCfrv7kNlQSvr4ZqErdYOwesKHRpyfp
-	YiHlSovsP+a6wfaoO2IoCEPv6lIeZ2qhlIoHO6uXcgIUttEjQzznZVg0UzkD9O/L
-	EUQJvTFYE46ECx1rA7r+Q018hDHVGPMfSSTCfjV4Isb8FQXzxuMInNNu4qMVsITs
-	9exPtw6bngKl8j6UkjquVvqzKOX+bpIAlP2paDea30qgI0c7L8PVvERD8osFqHR6
-	2PHLQtS0IYItJDlUnc/X0RJAjJ7jAHKi0pA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795557844; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:Z4HpA5wSuSr7R244HPE6HyNZktPUll9IQ69utBVUvw9nRmM
-	E6Out92mmCjT2f/gIWiQXcCFD0aKTAgy+uHws670BZUFNi9wGMHSiiwV9CxjGLWf
-	77f5bQxXfhdf7ep0YBGVS1AnFdas6WP9+VgvmzfDbuSWwx1HSr/SfSPxukQHP2QC
-	TLqF/FXFtCus5DnvBX051AjHzLTIIXo4RX0ze+LfgIyq1LwnAhq9sP6l7KM0DuSN
-	fIjzMzMyAHPWkv2NmZwH4aifiWQBI6tXaUAIEqzJE0qG5fk87hICieo+DEMqOkkW
-	YMkX5jtIq6rZ1jkNBZTrhZCLD54V1s+y33YJX+A==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:K527JlC82xxKEXrPVbHHg18erV4wBGXCEHZIsos5qK0=:iTiL9SQERH8G9qhQFFCrUNmBKc24iB7vEPPY3AbrO/Y=;
-X-ME-Sender: <xms:1AkGa0o3zBwkdGg2X3ZGVhp-cGZ1wQd48v9RlJw1kAN8FQwPLmcncQ>
-    <xme:1AkGayH-qZLDOp5f9WkWrPdxxFc2OjjYis125Lo_ddqtbYIm3lioSHK2Mcjwx9XjD
-    BwTAoPL4b2iMbTfv3yATJcb0GCUbHmHEYH0N_vH0QtNhMHqWgvrVg>
-X-ME-Received: <xmr:1AkGa2ninEVcpr3LeBIAKwyUznQPqkoEM06yxTZogonxc6iLA1ukoLVVKJ23GVFOXWR9nnPbDNOCFOw6LodoySgi0dMpRQ9-kiba7rk>
-X-ME-Proxy-Cause: dmFkZTEOBEVs4R8T36UFVna1dlMCv464YPNbweHSSW3LqmGsBR+kC3fFhYA0of031HipyX
-    9DtYFBzpEYh69Hn7i4dQzhXiLcSv95lGeoFDYy9VLpc8N3gSg5/Fz5zs3Sjy9C2U+O2KxM
-    MuFgEkemKkrY11KrLPYNo0zvL1vBg92ek2Ff7+GDEIdfgAx+eu1ZuhliFKIHoEZ459lpmf
-    p7q1l2u/smpuOBYz5NdTkK1EKnbEBWG9PxmxZ9kNZUACVNWoOEw2stumFkouFOnQRQ+6DY
-    8/OPLjRI3l1K79hIJvbr3vuoyFBPdBDYqvk7LqFgz9tOQUZc8HE11xengzhBcQRbQv28Cg
-    O5fhJNz8r90wXq9Ec614yfrWwTuj31QKWVx+srUTMGjnLPNmDU60zgcn17lSg56OK0Yv/d
-    eiSG52AhbURkr9O0UfWXIxukHek2UV5Qw++E2ih8rRni+35Rf3MdTM/22jeTK6xIhVEJM7
-    i5yIBxG5RXVAXbjNkw6/xxu8Xsda17c4DVsSDZZT2k7K3VlNF7WgmwsyJhmUz1mCnP9pXS
-    ZRKLmnpzj43YINyuPNXDq70/o3zLmyFP9n66NoBD/9GgU86yjBB+ViHZy0oM439OIL0UEK
-    3LsTvKzSMD6PJbi6/7h/ya61t39SS7J/q+FwF5U+fUxfsMhN5iP4N9PBvu5A
-X-ME-Proxy: <xmx:1AkGa1lAzUZAPiwMfYqWKJPODKhiciXIJo6-cPYgQCsISy_Do_nmHw>
-    <xmx:1AkGa3vXoXdo-b60inqq1xuf-hnsmuPRqTyYNypaibcU90F_fVUs5Q>
-    <xmx:1AkGa4nCdrEiiNR86i5BKXqJSK5GEBjy-hATP6eAtQLuRRkOLAS7AQ>
-    <xmx:1AkGayv0dtSDN4HKy5c-LHajIXNHlinGQvQD2mgOZTSSRi7xosrMCg>
-    <xmx:1AkGa6MQTCIJUYJt2S-Y3_j_YR3tUeZq_YmfsL1MvnN01d1Ff2Qr7tHl>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Nov 2026 17:04:04 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (3072-bit key, unprotected) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=bFxSfiD3
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1795558758;
+	bh=Eoh0bjpalicnfpWHQ2O0+/RhbeNTD1/N842O7oj3u9Y=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=bFxSfiD3JPKuF9j3bt4facQNvM44DSpsIOiP4GQfbCH2ycTjc434Gkbs/bYJjrVSF
+	 5d5EdS1kpqi8Ea5b76Unw+nfnsjSol3xdTvbYa6ByW1tyMm+fWEr8PhHD0+i2AASQb
+	 fnTlBWpZq4wipdhgYqyoLTuOU1SeojwT8TlRLBoqUt/JE5soXwR0acsv0RmgAuzwlB
+	 4dxnYyjE9vyoLb8t14W0OQB32cge8o0+eIbVHnFEF3cs/l9UUk+NPfxLM+jKCp2sCK
+	 zBpdyvH+GTo15RpW603asttBVv7GomC+ztMjaT67sXLVjU81K4fbf2Z/y2cBlisH89
+	 Cug5mNP8PvbQEAFUjO/aqtn+GVWzW8rKPn0LLhmk51cnwJsgHqB5I/QRPU4dFtHi6s
+	 7JyHz+6r1Oc2C481L/Lto1SUM7xQTnyeaDbOy1iXy5HVE/Fi9xod4kycZGMsnRdyNL
+	 jrK3QQVjlGSYarrtKPWR9nyiwloF5vkTbwABkxESjlyUYF6C52y
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:52b3:5d58:319:ece6])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 1889E200B1;
+	Tue, 24 Nov 2026 22:19:18 +0000 (UTC)
+Date: Tue, 24 Nov 2026 22:19:16 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/6] packfile: inline `open_packed_git_1()`
-In-Reply-To: <20261120-pks-packfile-global-statistics-v1-3-19beb83b145f@pks.im>
-	(Patrick Steinhardt's message of "Fri, 20 Nov 2026 13:02:30 +0100")
+Subject: Re: [PATCH 1/6] builtin/fast-import: stop reporting packfile
+ statistics
+Message-ID: <awYNZF7ORvwI00-4@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 References: <20261120-pks-packfile-global-statistics-v1-0-19beb83b145f@pks.im>
-	<20261120-pks-packfile-global-statistics-v1-3-19beb83b145f@pks.im>
-Date: Tue, 24 Nov 2026 14:04:02 -0800
-Message-ID: <xmqqwlq1lwdp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20261120-pks-packfile-global-statistics-v1-1-19beb83b145f@pks.im>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,57 +74,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="FqBvoPFqicEBwBsy"
+Content-Disposition: inline
+In-Reply-To: <20261120-pks-packfile-global-statistics-v1-1-19beb83b145f@pks.im>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-Patrick Steinhardt <ps@pks.im> writes:
+--FqBvoPFqicEBwBsy
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> The function `open_packed_git()` is responsible for opening a packfile.
-> The majority of work is not performed by it though, but instead by its
-> `_1()` sibling. But this sibling really only exists because we thought
-> it too hard to handle errors properly and close the packfile's file
-> descriptor on an error path. So `_1()` doesn't handle those, and instead
-> defers to its only caller to close the file descriptor in the error path
-> again.
->
-> Fix this design smell by introducing a common exit path that knows to
-> close the file descriptor on error. This allows us to inline the call to
-> `open_packed_git_1()`.
+On 2026-11-20 at 12:02:28, Patrick Steinhardt wrote:
+> By default, git-fast-import(1) prints a bunch of statistics about all
+> kinds of internal details of Git. This includes for example how many
+> objects have been allocated, the number of refs processed, or the amount
+> of memory that was allocated.
+>=20
+> Reporting this kind information is highly questionable, doubly so as it
+> is done by default, as a user really shoudln't have to worry about such
+> internal implementation details. For some of the above metrics it could
+> be argued though that it's indeed interesting to learn about the number
+> of objects processed to get a rough sense of what git-fast-import(1) has
+> done. But for other kind of information that's not the case, as it is
+> without a doubt purely internal implementation details.
+>=20
+> One of these reported implementation details is our packfile statistics.
+> These include information on the system's page size, the number of packs
+> that were opened, the number of calls to mmap(3) and how many pack
+> windows were created. Reporting that kind of information, and that even
+> by default, is just completely uncalled for. This information may be
+> useful to a developer, but a user really shouldn't have to care about
+> any of this.
+>=20
+> More importantly though, with pluggable object databases we shouldn't
+> assume that we're using packfiles in the first place anymore. The
+> current implementation of git-fast-import(1) still does, but we will
+> convert it to use transactions sooner rather than later.
+>=20
+> Let's just unceremoniously drop reporting packfile information to the
+> user. If anyone complains (which I highly doubt), then we may consider
+> reintroducing this as trace2 data. The same is arguably true for many of
+> the other reported statistics. But for now I care about the packfile
+> subsystem, only, and hence those are left as-is.
 
-I agree that this makes the descriptor ownership much easier to follow.
-It is not just the call but the entire function got inlined, but I
-shouldn't split hairs ;-)
+I would definitely say that in a future series, I'd like to see this
+disabled by default altogether.  My particular use case is that I have
+some tests which convert repositories from SHA-1 to SHA-256 and I care
+about errors if any should happen, so I do care about standard error.
+However, I don't care about the stats, so I need to be careful to pass
+`--quiet` or my testsuite output will just be one giant stream of
+fast-import junk.
 
-> @@ -510,55 +509,81 @@ static int open_packed_git_1(struct packed_git *p)
->  		; /* nothing */
->  
->  	p->pack_fd = git_open(p->pack_name);
-> -	if (p->pack_fd < 0 || fstat(p->pack_fd, &st))
-> -		return -1;
-> +	if (p->pack_fd < 0 || fstat(p->pack_fd, &st)) {
-> +		ret = -1;
-> +		goto out;
-> +	}
->  	pack_open_fds++;
+I think this would be more in line with the Unix philosophy of saying
+nothing on success, and `--stats` exists for those who do want those
+details.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+Speaking for myself only
 
-There may be a mismatch in pack_open_fds accounting.  If git_open()
-succeeds (so p->pack_fd >= 0) and fstat() fails, we jump to 'out:'
-before incrementing pack_open_fds.
+--FqBvoPFqicEBwBsy
+Content-Type: application/pgp-signature; name=signature.asc
 
-> +out:
-> +	if (ret < 0)
-> +		packfile_close_fd(p);
-> +	return ret;
->  }
+-----BEGIN PGP SIGNATURE-----
 
-close_pack_fd() (now called packfile_close_fd()) closes p->pack_fd
-whenever p->pack_fd >= 0 and decrements pack_open_fds, which may
-underflow to UINT_MAX if the ftat() failed because of this?
+wr0EABYKAG8FgmsGDWQJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ0pnCxnSh+ddNmcaO1X7BqpobdoGxQIdcqUWSPBDahCs
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAB7TAQCU0Wfcz3FZigwufO5UNh+HYoLC
+jUpB6pCb6sJBGLtNUAD/ZwgWqRX8VIxh2tjJh4Hc3/5tOG9SiU1ZBGAdZWg/+wE=
+=K7Zk
+-----END PGP SIGNATURE-----
 
-May not be a new bug (we used to leave the p->pack_fd open without
-nobody closing instead, so we may not have underflown but leaked file
-descriptor instead), but since you are touching around the area, we may
-want to fix it as well.
-
-Other than that, looking good.
-
-Thanks.
+--FqBvoPFqicEBwBsy--
