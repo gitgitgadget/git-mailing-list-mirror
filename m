@@ -1,70 +1,124 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.158
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795558765;
-	b=Q+KVRBU5GzKI4ZNgzIDJ5lSIOnS2tbB6eWnmdp/1rWIo9zPpSfOkMei+F25kDcLCZRTu
-	 TDTFPtXlu029/uXNz5HC4IdLEGNJLutTGs7rydFAtgvpzzYPMhX3YwX+otTkPSJPHPrW1
-	 hrCS4ti4js1WWfYG4YeFVDkv3EvcXm/lgEmhwcCz1ouXjOrmlF/xBYoaeu9AXId3CnCV2
-	 Jk53DOH37Mg5oa5uNRs/28pNGMEtM0fRDuE9zOzu+IkqK02j2C5zQ+yRyB+yuNMNhXw3u
-	 zxuZ3TYfxVgz1nlBpO2aGMK5iOHeVJNtf+XN80JhMsV/IScy/xKVZvWZorcyIJAxUQw==
+	t=1795558986;
+	b=i12XuQX94FM8yztKt+dGxuJpaZYSdsKCpD8mXE8zm25CHH7MXabDWouxXcN0iJOqfhI9
+	 dI7yMyYiyDuqNfljdN+u+CcVUtWMrmjVC6sbgRbeIgncqJKuW4jTxeCh5axLslsB/pWa8
+	 rMObDTAVtDBdt/a4keEvnqIF/pgLiYZX5l04P4yLL0N04HEZfqFEskfj6vf2m9r0+oy+M
+	 s72+n6RokZcCrfglEV7iQDtPIPsmwRUDTvbXZC1t4Cl6ZQzPEzyZYGShUoy3urjCbwlRL
+	 H8Bf2d+Fkju3/317wJG1Yr/de3dfT0r3gKeFKLSENyMO67ocgpjTgu2q/neuHc1mGbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795558765;
-	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
-	 Message-ID:Mail-Followup-To:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To:User-Agent;
-	bh=+a1JxxdkjEjjJnnjTCCyxiBrh/LJP4una4Mvbs8QF2s=;
-	b=yA3oysKQcOtDV9Rz5ul9l1BJ9QJemDKg3WReOmREO9HKmEyVnwCphIgmyIRWqO1IYHRT
-	 YhES+5BVmcGUvxXMIpMu2xVCIEJAvJOn3dytHymXei/PrY4MVXAlSfXsqQpO3YfuIF8zv
-	 bA+GBCPIfdshkUBUyiBO9MmQ7iJ4aaTMOJiZYqgJZdGlN37Q6v4ohQzQREohesNI1Q1Rr
-	 APBR22gv6RCddFbkjmkC5sQ/JHnL4/TCe0IytAgX6VnUm9faftmQvCsezZoLpeGMJab9e
-	 dJ7tlToqXPD+aQwI/YDVawTbwSgx2FuTc1CauIT6WJ0OKvcpAH23lUBg03pqzpMEchw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795558986;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=lAo20onub3CLPQP/GXxFWJQu5bVo68hcbcVNSec3E3w=;
+	b=PCA9Yxkuo59Jq2AhJnvPSNRxg6mP3NMhrBxlMI6HDtjkTYLt4QHYz6wb5HIMCbmj3drN
+	 f0OsuYhGRrNDcCEC5X+hTtNGMoH5+26oa1Eud2+UBty0u23zgMEvGqke+G8l17FQ2f1uu
+	 Dg0RNrqd3zATpPShG6Hp0G+fem6qj1LlPXIxbRd9cK3w4MAyaeI9TIZ+WFirs54EPY7DJ
+	 6zy7b+cqemvZveSNOWdaYbhqtY0axGmU3eywnZmATZtHGJPJvRyKc1mGKZOMIl04wf4hc
+	 KsoEyfjyhygSAyQ6NpocFqYLOBncwYxeBArjbwN5/7Ymt4JLSZIBuCGklAec17x8vhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=crustytoothpaste.net;
-	spf=pass smtp.mailfrom=crustytoothpaste.net;
-	dkim=pass header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=bFxSfiD3;
-	arc=none smtp.remote-ip=172.105.7.114
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=YIIPKO+C;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=5ZcrXb4A;
+	arc=none smtp.remote-ip=103.168.172.158
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A54C9606BA30
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 22:19:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A54C9606BA30
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A61A606A31E
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 22:23:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5A61A606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key, unprotected) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=bFxSfiD3
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1795558758;
-	bh=Eoh0bjpalicnfpWHQ2O0+/RhbeNTD1/N842O7oj3u9Y=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=bFxSfiD3JPKuF9j3bt4facQNvM44DSpsIOiP4GQfbCH2ycTjc434Gkbs/bYJjrVSF
-	 5d5EdS1kpqi8Ea5b76Unw+nfnsjSol3xdTvbYa6ByW1tyMm+fWEr8PhHD0+i2AASQb
-	 fnTlBWpZq4wipdhgYqyoLTuOU1SeojwT8TlRLBoqUt/JE5soXwR0acsv0RmgAuzwlB
-	 4dxnYyjE9vyoLb8t14W0OQB32cge8o0+eIbVHnFEF3cs/l9UUk+NPfxLM+jKCp2sCK
-	 zBpdyvH+GTo15RpW603asttBVv7GomC+ztMjaT67sXLVjU81K4fbf2Z/y2cBlisH89
-	 Cug5mNP8PvbQEAFUjO/aqtn+GVWzW8rKPn0LLhmk51cnwJsgHqB5I/QRPU4dFtHi6s
-	 7JyHz+6r1Oc2C481L/Lto1SUM7xQTnyeaDbOy1iXy5HVE/Fi9xod4kycZGMsnRdyNL
-	 jrK3QQVjlGSYarrtKPWR9nyiwloF5vkTbwABkxESjlyUYF6C52y
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:52b3:5d58:319:ece6])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 1889E200B1;
-	Tue, 24 Nov 2026 22:19:18 +0000 (UTC)
-Date: Tue, 24 Nov 2026 22:19:16 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/6] builtin/fast-import: stop reporting packfile
- statistics
-Message-ID: <awYNZF7ORvwI00-4@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-References: <20261120-pks-packfile-global-statistics-v1-0-19beb83b145f@pks.im>
- <20261120-pks-packfile-global-statistics-v1-1-19beb83b145f@pks.im>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=YIIPKO+C;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=5ZcrXb4A
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 71A501400306
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 17:23:04 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 24 Nov 2026 17:23:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1795558984; x=1795645384; bh=lAo20onub3
+	CLPQP/GXxFWJQu5bVo68hcbcVNSec3E3w=; b=YIIPKO+CuhRXhhkOzI8XTe2rnv
+	KqHFLhR6Q7lSzOhjdbLHAkipkx/fTrANc5pz38nK5Dj415MAsLEBH/+LcabJRtTo
+	E4waHIxEtpMgLbYsFej7veO33jkUq3BM2TElpm6UI47DssxQAbxY/PMBTR+Z26DG
+	9YHIDMmx7GemvJKvk454kGwX7h3MRAxhtCHcsSip5fRe7/q00E59Gm+fMkl0qZy8
+	aQPPi11fLrF48PCXz8zh8hT7bnwHohyTSPK4BFQAQUTVof90iAVbMUhF5sOe+qE9
+	mKH/0Bz2ggOmIhhNVwdBkf/jmlI9zg8/pAcyhjK78vt1JTOnGQ7wn1XaqOyg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795558984; x=1795645384; bh=lAo20onub3CLPQP/GXxFWJQu5bVo68hcbcV
+	NSec3E3w=; b=5ZcrXb4A1ihLyWoLYWlJ4fJAvh3//GFLZ30EmP6WrC/vDZBM4xw
+	0pK+wEbsweEWtu8BFvPVJqpsrI5A5k5VL/vPenZ3zLLe8/khfmc7Gssh4PzMWprP
+	tJ8VJFXTUHVFbnTYnDUyjC2wiEo/ur1nnhnN4w4KyIp6A/rO2SMQZzVcgWdKrh4O
+	0zbEuBzPBSZ470slRcsBWbrTZbGneySeLa/var8luUbA3Oj4a96YlZ7F30Xp+bV3
+	UIOPNFlvSKQ8m4NUZPCZcGG8TQaR00EaTDbiYhFgWNmcgNwvF7juoqHkE544xkQl
+	t+LerNhrT44g3bzOp+roroLc7qtbP7F6aTg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795558984; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:hgsHMifkojUFDYUfOW6jUbNldGiF36O2zqH3zjB8kQGA0bm
+	tqEuBHaV1rGWnts+pAWHwpmFDap3+2jJlZV/0w1pvIzg1/hUnrq7S/QAyv3yHHDu
+	2mzYo8LsKxu4KXZEamDLGfj05tiLwbuJjBM6G9P6Cyd0WDNVZmYQm1EOm2jexprc
+	cd1g//dVpnboRHy2GF9AAPR2KKtDY+MQl+zwfoKAmBHXUUIWREXq28mw7ckfNoVV
+	pHGjtLAyz1uVjNyD1hAnXc5GrtS04jcvJzrKEWgz3sb1oo5dX/G68omqx+s2PDbg
+	Qd9jNHyzb3LJx9pZn3xbOTdBPcKJ/hZ0qy+fMqQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:GuP3yuRTF6JxsLHqOjV6latGDhvnNy6wzEaWKXtcc9w=:QqpUsHrurB+NsOKANDwZ2OpDnU9MZWrkWjIa4vo4thQ=;
+X-ME-Sender: <xms:SA4Ga18ndIYtXZoyImjsX7baZjWkmbsl22BoqEc7sf_GNQXc-J3iuQ>
+    <xme:SA4Ga78hNkca9YP0NRD4M9FvmJiIrswtoQklc90vJL6DY3gNMt4Ws5Nc7ZShXNjgj
+    3Lzivt4k_hKHoUOEcIvRlXr8X6CJ9nEECj-mKpI4BwYsleD6suHFbw>
+X-ME-Received: <xmr:SA4Ga1TUtZ0iDMIRX9ZI1XeKlNtKcKg7LpA3140RSHLvHCGFPIrexxevbh-iBcn3ygNTQczfa8EWGgj8po3y-7d33eqMFvDfmgutGRY>
+X-ME-Proxy-Cause: dmFkZTGsTXWbyLHNHWvTmT1GZhVF1mJ5ZkaPAhM3lhG+a2X+DQ0CdO+ontzDubjDadMXqs
+    LcDZvge6Hf20sPKj1TGy7F2mjrAJtLTV6K8/5CzV7e04Wk5E4X3wld6Y17l8Hn73UBzOBz
+    cmgfgDVXgEnYy6xDx3OK3uCXDDMFddv4RH3C8h3lmKNxrbg5JailMX6CQa/YeMQGdbpkLo
+    J+0j+X5hrVz6/Iq3jBdGVuZqWyXLpuQz5iQUVfgBCSt+k37lPbP+TQEN07Wo9wTFA5vEWE
+    4dcXt3GelQY5Siy96PLtwuermJ6sf+dWdFINkbnTrD34K8acrQVBa82KrN/6ADQ+o4Mjrg
+    ihiy51kLJF87VYExXaF7DI6np33He+mZv8VYD4aZGlb1n8ED0ReKHNhgzRszbsetjhFx/m
+    wlQ0ApmABf/bOHfLfwdn/3mUIU4OMjjF6TvHv7RbG32MRtEjhcD2NqSCKXR7mmQqf67qJc
+    wvs97+3J0kQIEXTS032EAMoyuJwhQEwhUc0V0IDHNzyjannfxSEUDqMYfdoGypCYYunYsJ
+    PfbQGmQySRyDNnouFTlipK1qu8o0iP+M83Eo3YXQpoc9XtLsSgxkLbQGpPuM7hPM/gUXdc
+    HO0vPmgEBsZQTrzfxBOHWB0+n+bQ1TxCMwsqALOPAZfDm7gOi9X0E6S53Pyw
+X-ME-Proxy: <xmx:SA4Ga_dNTqfpGSuA81ziSM1eH-mImZ26eCzzNNoMM56Z74CczBjEgg>
+    <xmx:SA4Ga5Dwy-9xsoOqB2eqwPrq3-e73rEFwsW5MTsMaKYfnOYLeFxnxA>
+    <xmx:SA4GaxktBEvLyHEv4cf2uWV14LKzSoyc54XE8Lwdf4PUrM5tIE3-uQ>
+    <xmx:SA4Ga0cFMmYe-96cl-IfLJOPeifhXY9YcN1c4pbX0lWkQFMwfbhGbQ>
+    <xmx:SA4Ga2-mz2UQHK1ijYXkfk1MO1IlA65MvuliuRj6bPtNb6r0DS6XwXCq>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Nov 2026 17:23:03 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Ravi Mistry via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>,
+  Patrick Steinhardt <ps@pks.im>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  Ravi Mistry <rmistry@google.com>
+Subject: Re: [PATCH v4 1/5] http: fix retry count and Retry-After timing
+In-Reply-To: <d4d34077283370cfa22e9d8f57edfb35de9c692a.1795103883.git.gitgitgadget@gmail.com>
+	(Ravi Mistry via GitGitGadget's message of "Thu, 19 Nov 2026 15:57:59
+	+0000")
+References: <pull.2287.git.1793462224.gitgitgadget@gmail.com>
+	<pull.2287.v4.git.1795103883.gitgitgadget@gmail.com>
+	<d4d34077283370cfa22e9d8f57edfb35de9c692a.1795103883.git.gitgitgadget@gmail.com>
+Date: Tue, 24 Nov 2026 14:23:02 -0800
+Message-ID: <xmqq4id5lvi1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -74,76 +128,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="FqBvoPFqicEBwBsy"
-Content-Disposition: inline
-In-Reply-To: <20261120-pks-packfile-global-statistics-v1-1-19beb83b145f@pks.im>
-User-Agent: Mutt/2.4.1 (2026-07-04)
+Content-Type: text/plain
 
---FqBvoPFqicEBwBsy
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+"Ravi Mistry via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On 2026-11-20 at 12:02:28, Patrick Steinhardt wrote:
-> By default, git-fast-import(1) prints a bunch of statistics about all
-> kinds of internal details of Git. This includes for example how many
-> objects have been allocated, the number of refs processed, or the amount
-> of memory that was allocated.
->=20
-> Reporting this kind information is highly questionable, doubly so as it
-> is done by default, as a user really shoudln't have to worry about such
-> internal implementation details. For some of the above metrics it could
-> be argued though that it's indeed interesting to learn about the number
-> of objects processed to get a rough sense of what git-fast-import(1) has
-> done. But for other kind of information that's not the case, as it is
-> without a doubt purely internal implementation details.
->=20
-> One of these reported implementation details is our packfile statistics.
-> These include information on the system's page size, the number of packs
-> that were opened, the number of calls to mmap(3) and how many pack
-> windows were created. Reporting that kind of information, and that even
-> by default, is just completely uncalled for. This information may be
-> useful to a developer, but a user really shouldn't have to care about
-> any of this.
->=20
-> More importantly though, with pluggable object databases we shouldn't
-> assume that we're using packfiles in the first place anymore. The
-> current implementation of git-fast-import(1) still does, but we will
-> convert it to use transactions sooner rather than later.
->=20
-> Let's just unceremoniously drop reporting packfile information to the
-> user. If anyone complains (which I highly doubt), then we may consider
-> reintroducing this as trace2 data. The same is arguably true for many of
-> the other reported statistics. But for now I care about the packfile
-> subsystem, only, and hence those are left as-is.
+> From: Ravi Mistry <rmistry@google.com>
+>
+> Commit 640657ffd0 (http: add support for HTTP 429 rate limit retries,
+> 2026-03-17) introduced two small bugs in HTTP 429 retry handling:
+>
+> 1. In http_request_recoverable(), rate_limit_retries is initialized to
+>    http_max_retries (the number of retries to perform after the initial
+>    failed request) and decremented with pre-decrement
+>    (--rate_limit_retries) in the while condition. Because of the
+>    pre-decrement, setting http.maxRetries=1 performs 0 retries, and
+>    more generally N configured retries only retries N-1 times. In
+>    addition, if the first request returns 401 (HTTP_REAUTH) and the
+>    re-authenticated request returns 429 when http.maxRetries is 0,
+>    --rate_limit_retries wraps from 0 to -1 (truthy in C).
 
-I would definitely say that in a future series, I'd like to see this
-disabled by default altogether.  My particular use case is that I have
-some tests which convert repositories from SHA-1 to SHA-256 and I care
-about errors if any should happen, so I do care about standard error.
-However, I don't care about the stats, so I need to be careful to pass
-`--quiet` or my testsuite output will just be one giant stream of
-fast-import junk.
+This describes what the existing code does very well.  Moving the
+http_max_retries <= 0 guard to after the loop also keeps a 401 followed
+by a 429 from wrapping or emitting a misleading "retries-exhausted"
+Trace2 event when retries are disabled.
 
-I think this would be more in line with the Unix philosophy of saying
-nothing on success, and `--stats` exists for those who do want those
-details.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-Speaking for myself only
+>  	while ((ret == HTTP_REAUTH && --i) ||
+> -	       (ret == HTTP_RATE_LIMITED && --rate_limit_retries)) {
+> +	       (ret == HTTP_RATE_LIMITED && http_max_retries > 0 &&
+> +		rate_limit_retries-- > 0)) {
+>  		long retry_delay = -1;
 
---FqBvoPFqicEBwBsy
-Content-Type: application/pgp-signature; name=signature.asc
+Switching to post-decrement with an explicit http_max_retries > 0 guard
+allows the full N retries, and avoids looping if http.maxRetries is
+negative.
 
------BEGIN PGP SIGNATURE-----
-
-wr0EABYKAG8FgmsGDWQJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ0pnCxnSh+ddNmcaO1X7BqpobdoGxQIdcqUWSPBDahCs
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAB7TAQCU0Wfcz3FZigwufO5UNh+HYoLC
-jUpB6pCb6sJBGLtNUAD/ZwgWqRX8VIxh2tjJh4Hc3/5tOG9SiU1ZBGAdZWg/+wE=
-=K7Zk
------END PGP SIGNATURE-----
-
---FqBvoPFqicEBwBsy--
+Looking good.
