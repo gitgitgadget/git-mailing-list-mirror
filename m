@@ -1,53 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.61.206.94
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795509130;
-	b=oxzRFRc1YbYukNXfaNVWi3+yGSmsMnNu/5hqOgYEy4BzrQ82FZcLbQR3+0qAArKThoNk
-	 pAfzRjhBUlI1PR8+7xUG6ZwTxaA/06kGwBvJc5hfShaE6lORpIYl1jNgBHZGLrSBB95ov
-	 Z11tCOZijkxNmw8elbgnrfAt31oPLVO526QRP8yj97qbt6J7KFPHazjDzUUV6AySpMQLO
-	 UJxHIN4E9hTBzYCBVUiDDWVnMTlZznDEYSoZq5Lh+9mxOEN1G1sAFOwtbzGCXIYfG36EB
-	 IBKPgWTtIgyIinbJaGUpzUof7VjkZunaRYtOq6SQ2PmpSDHkoWiESTgx/Ejh7XGLHZA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795509130;
-	h=DMARC-Filter:Received:DKIM-Signature:From:Date:Subject:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:Message-Id:X-B4-Tracking:
-	 X-Change-ID:In-Reply-To:References:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key;
-	bh=MrzQKXNZN8rmTsb9SrewUcQlkg7valqOva9I2N3175M=;
-	b=QJy1C0JRCS4Uqyu2p+BDJMH4M3Fr+oHRdGpEqnKJGirMlm52LgFuxOPVWHLK3Pra4HYC
-	 YKiZcfihaAHSa1dxqEv3sjYrm5DGR0Hb58DCNvgopvMPPCFh2CEaSA5BstITKIw0FM79Z
-	 M0Y/Kmkuuu2apmmZHZDSMG2HxJjR0SR3qXp1dYznEbS8XTh9V1AVGMYKJAt7NBM7clbwL
-	 BtAGVY0mQM/kUhw/kj5nEPjYCx5tJ7mR1PGjLVEpohGfCbMwnxy+677Z062y7/K1tTYvE
-	 WWFzWRufVcBAbjZ1/PAr9l42jyzRrpGlKWRCUhquB+tkdn8NHXDCmuBNSKZyIQfV13A==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gouders.net;
-	spf=pass smtp.mailfrom=gouders.net;
-	dkim=pass header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=nCUytJEW;
-	arc=none smtp.remote-ip=202.61.206.94
-Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.43
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795509714;
+	b=OfzDq1gDF05l8qTVZEAnVWjsvcf5RMByf0MhhU5Z58Tva2YfQxJrwp1T7obmN6kQBJ9V
+	 6ssN0Kr4j5xBKnfMm/TzrymkaGSZTDc2Vj9/BC92P8ch7QdfSo4WBiW759EoxhbOwP8t2
+	 3asS9UDOwrjeUl966GcJsIIvgt6+JbQ4cud7ulKWy1vTF0eOjP/viArzy9Q4+Kw9qBrNC
+	 vzmKDUdCOfLNmSlg3me1qqdp0toucm95//CmpvWYFMihldMweoFw68KKzOkDTcRsOBQZ0
+	 2JNXC5daCX3jHEW2gtSW9jCvEES8495V2mt2LcTs+BiQfOFjOgQ0xAP3ElhKP/r2yBw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795509714;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=qRMKABpOR2apgoAm/DsMMJQZ0CDehkJMK1ItbVxJBeo=;
+	b=rgjhR+Qx3/fktgyywekaJoUJj7cyX4T7yLZQtchNIZmcTa94rwBqz/clRtSV8/DULYCy
+	 7IjKOvwgbR8P6tdnvf80IINViJmL2n1f8OxSs5qXk8C1+WSXb4W/+PIkSIyg+u2Ha8ozt
+	 jHvf2BGGclrw93ZtcsFS++SsDy+Iw5TRtZgvQQsbfHnghYM853OSa6ni/RQoXh991y4HL
+	 fxmkDYuurd0XJOVmpg0zd5aHmkfi5AS2ztoXme2UX+ytg5OF2s/eGEbgR3rg2JlTstVu8
+	 VoQnbflPM/HToNJQtkT+jUqZIq3tYSem8bztcDFBrYHcghe1V4++LD7WhanBfl5rpWg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=D7yBaHeq;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.43
+Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E51C606A336
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 08:32:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5E51C606A336
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gouders.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61ED606A32C
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 08:41:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B61ED606A32C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=nCUytJEW
-Received: from lena.gouders.net ([193.175.198.193])
-	(authenticated bits=0)
-	by mx10.gouders.net (8.18.2/8.17.1.9) with ESMTPSA id 6AO8W1lu2369260
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Tue, 24 Nov 2026 09:32:06 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gouders.net; s=gnet;
-	t=1795509126; bh=MrzQKXNZN8rmTsb9SrewUcQlkg7valqOva9I2N3175M=;
-	h=From:Date:Subject:In-Reply-To:References:To:Cc;
-	b=nCUytJEW68XcwaqqHFD7vF6HTQvMj33Jpos1WcC9c8XZTC5JDiUEuPUcIqDOqlcKp
-	 YEXMN+UurSMW7CpnOe/5zCFlIdX9nTxkoEcwY+WpuDEZL/YIeHI9hGdoz4dWhjO+YJ
-	 ijHnrEa4d+KYCDPM5g6ZvHd9PjZojwt/XQ5G1J90=
-From: Dirk Gouders <dirk@gouders.net>
-Date: Tue, 24 Nov 2026 09:31:55 +0100
-Subject: [PATCH v5] doc/gitcli: minor fixes
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=D7yBaHeq
+Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-1b563e32936so722978c88.1
+        for <git@vger.kernel.org>; Tue, 24 Nov 2026 00:41:53 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795509713; cv=none;
+        d=google.com; s=arc-20260327;
+        b=REUzcdzs7QAt3HnDOK9QT43AiaSoYYLWOUBe8XTUoP7qm7sKRza/EnUiBwCiTRwJJ+
+         MhO1/8EdhuldxW3CqaVIAV8Hb7hvk0m0XCLeqduHvH3lIwR1FMeDwt6jEo9i207dDHj+
+         RfKE+vmgPbDx0CSpnofGIjs13fnRuYBcPQUhMxF9G9BoSRyF5GP/PjgCVaMWfWv2Se/U
+         GmTneKO/lVfCbciHvaK5OeFmaAUwlSJXON5MvL0iXcH60kYZ4oVUbMegIj42UnSykCPT
+         VvkHgiTi+7LuQlglr3HcpOU5rLc1jkD0u2xvH5eJJ0yWQi/oQjuxvb7Ll0q+8jiT+/ah
+         adIg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=qRMKABpOR2apgoAm/DsMMJQZ0CDehkJMK1ItbVxJBeo=;
+        fh=M0bpdXiSTXdD+3QsRqpLy8Sf9mfMfWjg6PwNpY05g9c=;
+        b=Ph46IPt9YR3yptR9MEQDo1P7kWGFPQwraZ7zxQE0c3BRyPV8siefsYmATlFu3DP/BB
+         4neYYHL3ck5U/NS6OP4OZnWBlk/LU/i/QcRBim74qsC+aLtO1MhIXi8YzV06QO24casr
+         U7sSUhfFhfwuAMH8BZxhKOQO6kEh7BUcV50RooET9ijIuQRoFvOGvdjgoSK5UDzfNg/5
+         2GzmgQkOLWOhBMsW4FWo3JcNjuUFh7dOpQdu1Arf4M4OinCART0BOJjaQKjNL2qMyTsR
+         0TV4GAB5ZQIHyfzi2xxL42dWir7UP4PFsWnAmfnZu8FtRmguNg7dqRrai1V7WoVPTe+j
+         5HBQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795509713; x=1796114513; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=qRMKABpOR2apgoAm/DsMMJQZ0CDehkJMK1ItbVxJBeo=;
+        b=D7yBaHeqJkxaz5yVfVwX6It+qiwakpa4dKvOU/N4h8gsdVkK3DXMrRTVwpe0WHm9vV
+         heOPswU1OZnxrx3EhxEQgMVYWUzuxzYoDQ0g3JvvI+tgVG7Kq7wJOmFAtlV8HmIUJnuv
+         K4pw3BpEirmRcWFo+zii755I4lT2MwEPradNI1BMWNACib31FprmFtBq3qPs7wVNTN0+
+         cHempJpSXVksI5gVhBD/JOgo+/Hh9YvNO8PVHoZ4GjLhFknK7gtu3NWPjV55NW77oK5j
+         bzpluk+QQ/fwiR5xl0Cr6tDmhaLkhRDTyjbraqEHvQuSWQkV1eDgr5hauIw077IAK+MJ
+         V3pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795509713; x=1796114513;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=qRMKABpOR2apgoAm/DsMMJQZ0CDehkJMK1ItbVxJBeo=;
+        b=GqCU5YxIcPF2x3oZ3ceL/zgQJIUW8n54qssgZMQVp7R7QkuHxozdCQ/DMrveMu7fuu
+         Odczd+5mkiWntAjp5Ynp94n6syInPw0MY/K85W/aFFy5NT4rqmiSeyKFqzh4xktNFrIC
+         caq0HEeunzF/A/C4Ew82YI7nwmI1Q7xrn9kvoc/Qr41m3zTPWyCJoWwJ4EcTmsc00F1s
+         sLgKhKRTuvwIzFAFnPSEDi99dpKOgITBkMEGZF3dbgNw233pLuaddWzzn+3bMEVtYfUG
+         nJQUhF/9fSbpMzN2OjPIwy2jedAR2xMoCNNlvp7yZgxPhiMEwRvPO79qWOedBxty1JE5
+         xDHw==
+X-Gm-Message-State: APuU4Z++dido34meHqTeGPD/sNjtXQ3iQfVsxy9og5/Ip19XDc5XbSTt
+	ICbYMH46k409vEff/BeqtBXdL3qcSERjo76HdkABW5dudWZH+zGMF4MQ/Cxl9dLgbnxltdNxuY7
+	W5AJCW4/9VKGdYcoH5sc2t94m62win54=
+X-Gm-Gg: AZFdTZe3LpHGVL5CIenGUEsQC+pvGlO3r5Smx2xYUMRccwwbIgjzHbi7WeBIpKkzCwA
+	L1WwJ9aD54a4aoV3GilmiLOOnGyAEBQf8fECx7cqki/pBQ6kwPbQ+BrljKjpdMhs6XDl/JrEqhb
+	bwFfKnV0M/cBcGfRk6eNPnzpCyVyjdk7rjEIhqUGVyy5pv4/Jk3yz0aXm+rXBEQjIePUjIpvtLW
+	CHPZNjoEtlokn/vF66nsaTjoliYySciTcJQS/mn2B3HH2ly4fmknKp4p0SbmoKHhhzah8opxJ9e
+	eXCxQA9vbACYX26CySQTAe93yyyQd3e7blh/H32ThNzUpxJd14DuAKhMmloAsTbqQkwqk0ZRFFB
+	jdGUjf6yToOjwlQb53gn8M4UQ4VAU85Z14WVlfHkbUmbB1/+9/76YNEY6m0Re6DyA37m5J+wbA8
+	hL+AIlrasIYZGVcJOzoZaMbLoNKa1NPJOySqS+J+WCm+nzyP+snSZRuzM35Ooqr6mHYMrL+RqIB
+	wFLEl6Hf8RJw/gzXrawnwSn
+X-Received: by 2002:a05:7022:f8c:b0:1b3:a89c:c456 with SMTP id
+ a92af1059eb24-1b55689eab5mr17606671c88.6.1795509712911; Tue, 24 Nov 2026
+ 00:41:52 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -57,118 +105,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261124-b4-gitcli-v5-1-450d50655781@gouders.net>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3XPQQ6CMBAF0KuYri2ZmbZUXXkP40JgxFEDpgWiM
- dxdqi5k4fIn//3JPFXkIBzVZvFUgQeJ0jZTcMuFKk+HpmYt1ZQVAeWIZHRhdS1deRV99OaARe7
- WpV+pqX8LfJT7e2u3/+TYF2cuuzSQGieJXRse72MDpt53Fy0B5oYyBGMBNOpKwmVbt33FIWYNd
- yotDjQ3RBZxMs6t6a8xv8aBB+N8hmhW3v019sfMfh5sMowGKmDwnM/tOI4vaOVZplIBAAA=
-X-Change-ID: 20261123-b4-gitcli-f73a1b659c78
-In-Reply-To: <20261123-b4-gitcli-v4-1-de130d0e07e6@gouders.net>
-References: <20261123-b4-gitcli-v4-1-de130d0e07e6@gouders.net>
-To: git@vger.kernel.org
-Cc: "Junio C Hamano <gitster@pobox.com>, Andy Koppe" <andy.koppe@gmail.com>,
-        Dirk Gouders <dirk@gouders.net>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3878; i=dirk@gouders.net;
- h=from:subject:message-id; bh=07/D+s2rnNajVK+bnRStvNVkcR5wpgu0D/IG+rYzPL0=;
- b=owGbwMvMwMW4JPzVNXNTrzmMp9WSGLJZvRvfTvi6peFXDE/L9+bVUSvnlseuVdvzyGJz9aOVR
- 2zldmgadjJOYGFg5GKoElNkWTqpyC5NZcWLsm+qmTCDWJlApkiLNDAAAQsDX25iXqmRjpGeqbah
- niGQoWPkAJHjZ9BIL0h3SM8vTUktKtbLSy1xNLU0MjcydjUzMzJxtHC1MDdzMzMyNbN0NDE1d3V
- 0MTM2NzY1cbR0ZuDiFIBZVxTN/lf29lyv84symKY217q/95gxN13Gfu3rGTcLSsxeztbrTsif82
- Bna4XKX743Rm/q82d8ffjh5auSyvl3E+e+2iCylIl/l2X98lORGqxs5tIxS57GmqULJZvdP7sv/
- c3Noxb3ZTP/djTsZFGTWDir800325enDwMm9L76tPNQ7rJPjOWvPPep8M9ytIt28Nu7iesU74vS
- PAufE8/2HFF2k/gaYeIT+I6DK5khzyejubPOdIPMEzv/Wo/gaV+3Lc8+GzVX4r2Rv+qv3W/v5f8
- o3TKFJfOmdor1r7qeJN1GydlH5+ZPbaq6cv6j6RKRGJei8pdVE432Rtt8Va+494bDr/zuqYivCm
- qf/72r3/NjXS8A
-X-Developer-Key: i=dirk@gouders.net; a=openpgp;
- fpr=943B4FA3CAB8EBC55754E5EA0DA2395F431875F6
+References: <20261027153429.14131-1-okhuomonajayi54@gmail.com> <20261103155038.87456-1-okhuomonajayi54@gmail.com>
+In-Reply-To: <20261103155038.87456-1-okhuomonajayi54@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 24 Nov 2026 09:41:41 +0100
+X-Gm-Features: Aa3M54pNa-FYCMOOgl_ryj0HWmSWLqs_Pr96dS68q6WgWTFWgtDf2kPiuy7PJSU
+Message-ID: <CAP8UFD31EuSF10wkSAqZxswKVvTG_m-VesbHSXZT_Df-FrqV5w@mail.gmail.com>
+Subject: Re: [Outreachy PATCH v2] negotiator/default: stop using the_repository
+To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Cc: git@vger.kernel.org, usmanakinyemi202@gmail.com, 
+	siddharthasthana31@gmail.com, kaartic.sivaraam@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Fix some grammar issues in the gitcli documentation:
+On Tue, Nov 3, 2026 at 4:50=E2=80=AFPM Okhuomon Ajayi <okhuomonajayi54@gmai=
+l.com> wrote:
+>
+> The default negotiator uses the_repository to parse commits,
+> clear marks, and walk refs. fetch_negotiator_init() already
+> has the repository but does not pass it down.
+>
+> Give default_negotiator_init() a repository parameter, store
+> it on the negotiation state, and use it for those calls.
+> clear_marks() receives the repository through its callback
+> data. Drop USE_THE_REPOSITORY_VARIABLE.
+>
+> Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+> ---
+> Changes since v1:
+> - Put the repository first in default_negotiator_init(), as
+>   Christian suggested.
+> - Pass ns to mark_common() in have_sent().
 
-- use plural/singular where appropriate
-- use imperative form when rules are listed
-- fix a typo in the first rule regarding flags
+Sorry for the delay in the review.
 
-Signed-off-by: Dirk Gouders <dirk@gouders.net>
----
-Changes in v5:
-- Restore a lost change caused by wrong tooling.
-- Link to v4: https://patch.msgid.link/20261123-b4-gitcli-v4-1-de130d0e07e6@gouders.net
+This version 2 looks good to me.
 
-Changes in v4:
-- Reword the commit message and clearly list the changes
-- Fix a typo in the first rule regarding flags as suggested by Andy Koppe
-- Link to v3: https://patch.msgid.link/20261115070357.113875-1-dirk@gouders.net
-
-Changes in v3:
-- Resent with proper Cc and range-diff against v1.
-
-Changes in v2:
-- Addressed feedback on the second part of the change.
-
-Range-diff versus v4:
-
-1:  19c1ee5260 ! 1:  147ae7818c doc/gitcli: minor fixes
-    @@ Documentation/gitcli.adoc: gitcli - Git command-line interface and conventions
-      Many commands take revisions (most often "commits", but sometimes
-      "tree-ish", depending on the context and command) and paths as their
-     @@ Documentation/gitcli.adoc: arguments.  Here are the rules:
-    -    `v1.0` and `v2.0` are revisions and `arch/x86` and `include/asm-x86`
-         are paths.
-      
-    -- * When an argument can be misunderstood as either a revision or a path,
-    -+ * When arguments can be misunderstood as either a revision or a path,
-    -    they can be disambiguated by placing `--` between them.
-    +  * When an argument can be misunderstood as either a revision or a path,
-    +-   they can be disambiguated by placing `--` between them.
-    ++   it can be disambiguated by placing `--` before or after it.
-         E.g. `git diff -- HEAD` is, "I have a file called HEAD in my work
-         tree.  Please show changes between the version I staged in the index
-    +    and what I have in the work tree for that file", not "show the difference
-     @@ Documentation/gitcli.adoc: you will.
-      Here are the rules regarding the "flags" that you should follow when you are
-      scripting Git:
----
- Documentation/gitcli.adoc | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/gitcli.adoc b/Documentation/gitcli.adoc
-index 9c4598e29c..775dd8ee09 100644
---- a/Documentation/gitcli.adoc
-+++ b/Documentation/gitcli.adoc
-@@ -8,7 +8,7 @@ gitcli - Git command-line interface and conventions
- DESCRIPTION
- -----------
- 
--This manual describes the convention used throughout Git CLI.
-+This manual describes the conventions used throughout Git CLI.
- 
- Many commands take revisions (most often "commits", but sometimes
- "tree-ish", depending on the context and command) and paths as their
-@@ -29,7 +29,7 @@ arguments.  Here are the rules:
-    are paths.
- 
-  * When an argument can be misunderstood as either a revision or a path,
--   they can be disambiguated by placing `--` between them.
-+   it can be disambiguated by placing `--` before or after it.
-    E.g. `git diff -- HEAD` is, "I have a file called HEAD in my work
-    tree.  Please show changes between the version I staged in the index
-    and what I have in the work tree for that file", not "show the difference
-@@ -76,8 +76,8 @@ you will.
- Here are the rules regarding the "flags" that you should follow when you are
- scripting Git:
- 
-- * Splitting short options to separate words (prefer `git foo -a -b`
--   to `git foo -ab`, the latter may not even work).
-+ * Split short options into separate words: prefer `git foo -a -b`
-+   to `git foo -ab` (the latter may not even work).
- 
-  * When a command-line option takes an argument, use the 'stuck' form.  In
-    other words, write `git foo -oArg` instead of `git foo -o Arg` for short
-
----
-base-commit: 7fb6055e678f800320d8ab8cd8f201d9493d1ba0
-change-id: 20261123-b4-gitcli-f73a1b659c78
-
+Thanks!
