@@ -1,90 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.171
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795500774;
-	b=MTgEJ3dCy9hVGSMViLXnN2p1E3sFLt2o18k+XL/cs27ysIvRgeIyuzxQsgx6z1jhVWBA
-	 AE1nNgqmUp3Qg24guPJa2C4wE1jAZPa6qAXJw/lBr3JKSa4Pb9wJ2GYr7SXcqxWMMRZY5
-	 7qZ9094MmwTlTudVY0j7sHj5lCrROEL+Fm5LCyhXytB4N3oao5zBYA/HBxbvQwCwRmMj4
-	 ia8V7gY7lsNnrx4zL8+u62QPRqmgvcBjqT54RxWRO+x7Usg4FmPs9HU2xztDbMARe9Ert
-	 83Cw5AEa0qxOAW2BHighmUEhOn6rSr17RKCZOUj05P8fwRCm+ncwf1bnCrDFqKOewGA==
+	t=1795500775;
+	b=aSHOUI8TK7Lo6h/YTQTJnxszzQDcV5B/kevyXz0xIbr8j1Tz/dzzMTggjsMvzc/bEB6g
+	 FP/Mb7CNxX0a3fVp7vJUe5rKIATQS63422p4gU62MZZuPYQOsFl9x9HBheoiZWxgVzf+q
+	 S3fstudHrHR02KY+SsSkVNY5nQde8BO2I1nf2+5VtGByO3LWNv8akisi8HsgICudYeAel
+	 g/xxlJMfihyRHZgdKE29LJ/L0aGRorIK1c3jVSNBI+geg9P7iJTuFMuclGlkW2pyS/JZY
+	 p9Lrbh9LMwIOdvaiIiKv+nSSNpQo01qecHiLNY4QyhCE5qbS+/1RB3kHIw7P53UU/0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795500774;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795500775;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=h+S9rx/m84p9Fu9s0S9jz2uKEdWp8frdgM7v2LqS02Y=;
-	b=su7NDqXbHLuqJGDZfpdYZ8FIbYawd0Jp6PYtZhuDDfO9i6cDl/g3bxFjsjXVtnPP+b+r
-	 W++bWN1nlMiG6aKNmzrR3K5KeFydq6qZhBOnfEhywjeXlCoOROY3eOEJL/KWSZEEtwvLG
-	 vQRCi49PGuHfXw1OL6Tx3VRPl26x9jbL4gGWNm2jgWQIyNrzOHrl6qWUFvDhFz0Om0TAg
-	 yIg1zNi4PAUy749bEocudUuIrvgGe08OrolM/6kBc91n9RxZ+Bb/S0a22a55Bgw5LqV/p
-	 CGQnUViU6iDSyJssXvQd79mQqwmman3ajwrG1jc+vvEslfCpXYINnhS7yCbKYmtJ6dg==
+	bh=Wil9SFzUUYXCBxEQUTtM3b/bQlxsaUZTQFnygARQLdM=;
+	b=pcGS8aJihJL0aEmtuIyghrEhQtmnpVt8GXhm/cNETT7qqE2gg+D3oWXmPzAP7pgnvcdx
+	 aRivzqjQCOfMuOgo3NVXkORRTKX5tvIJnavw2AMD+y+2dwku0HRrsGn8FRjGnwi2WhfNg
+	 qEYVjTYaBYEk2woka1w37VmkA2KQT9reKSsQnhnrMjN5U/8X2EzoDWVdCNTKTkQRpQ06W
+	 EksnSZlKSRPSMqg8mo69+4/bG8Btnu/b5in/cNn2W9NH3yYiEWcVuustuq01B1yDYH7Az
+	 fCE+cMKeZ2pk9iv3vL6zDHSknMiC69TbUNK5KTCjcnb2+xMuix/10UnSGaXCrjk1DDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=w8P8F5Dh;
-	arc=none smtp.remote-ip=209.85.215.172
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zYjQj8pn;
+	arc=none smtp.remote-ip=74.125.82.171
+Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84755606A332
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 06:12:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 84755606A332
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980C3606A687
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 06:12:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 980C3606A687
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=w8P8F5Dh
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-cd61cef87f1so1727476a12.0
-        for <git@vger.kernel.org>; Mon, 23 Nov 2026 22:12:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zYjQj8pn
+Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-3282db206d3so1684382eec.0
+        for <git@vger.kernel.org>; Mon, 23 Nov 2026 22:12:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795500773; x=1796105573; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795500769; x=1796105569; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=h+S9rx/m84p9Fu9s0S9jz2uKEdWp8frdgM7v2LqS02Y=;
-        b=w8P8F5DhtW281FykTv49VUkWMfhjMs4B5BMnn8Um1BDm8q4zLSFoIjf4zwlVa+nGRE
-         M/pIzpaCbzrkGZ/RnC2QVn8v8YbJCJgcveoXYQs4cSt4n1yROL3dQqxGm+4jum2eS8CK
-         Z4396lQs3djxs4XePXgAxQcfOo68IpFJuZgIsBRCtQ50DrMxOtl0/j+KzBlXccKf2kHl
-         ir5cNfGhjQ23+HKLQOHQqNHnryFRerQM8+4eLrFkZdt6BvSYX3xYVisT+m8R0o3yzwBq
-         +OYfbdLpR6EzrHoPxFYFwLndX4IVWz/a9nWU6llU0vpS90Cdlq+0t3BebS7RN6XG6bhh
-         1KvA==
+        bh=Wil9SFzUUYXCBxEQUTtM3b/bQlxsaUZTQFnygARQLdM=;
+        b=zYjQj8pnzpLB0b4YpB06fSNnAEDqNYAw16a7hesnqOH9clx4MWVg4a53ZqTPOXr/fm
+         Nwj5gyRQvd9FuXRMHBpciSHI/j1tPe/+bQHW+qn/L9X/53hBu46bVTrrhnFWGwMGREF/
+         wEsyYadX7QHXrRmO7fAuyVLpF0L6Z0fsACZdYmCRbKNWnc52zbHMEUd+i95aYRmFEp1L
+         aniDjM+vXnNNlRMhWw4EzzCKNkdb2i04outF/zvMRGHW4rPhhEhDlAiV8C3H4cekVNrb
+         kOZTptaSha2soKdRIdOSiYN7VXxUjEGJ8sbH/+Dt/+sOaB+evDLv17r4c1RXHGF4wMza
+         Uv7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795500773; x=1796105573;
+        d=1e100.net; s=20260707; t=1795500769; x=1796105569;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=h+S9rx/m84p9Fu9s0S9jz2uKEdWp8frdgM7v2LqS02Y=;
-        b=EVldSD0UNwnRVYhUUCrXKguwhtO9AwE/fk2XoBo63BY1EuzQKi68TVCNhMEh+mr3CW
-         bmTgJci+7WcLdHVDLPfNcoL5PpKN5wWLxGI0taW2cgVZoDkoeVjXxVoYGyWp0lvBGJkP
-         qZiN9uIwX6KvxfP0V4RT55j8NxlQ9YIQwfAAPhFMdqzUJVi7kx/MHJ0pQArixgXO/mec
-         S7OJjIF4Z1ZPqftTmeK0v8laj6dBPb5h1iIYBxq3JlJdMzWKwUjSjyVAH1jmBBfxvOCI
-         8xU7bYaRR6kQ54LFurz4F7uzvTTCsO7KL3tonTcFOXo3pFDdVGFZEmrb8bB/IsfamDjc
-         Oqcg==
-X-Gm-Message-State: APuU4Z9pRjaQcTFQzzKQxkTlc5sgSufgdxCR3dXKi9asONVyubdPIer7
-	HgYZoI79Y4Rq42dc4L6xQwHPqQLOZ+uMiHj14Kn4sP1u+UT4s+qMc2F5lSKhXw==
-X-Gm-Gg: AZFdTZfYrKvU4HcRo0ntze/9X6bTt6Jjo3j70ENGA+CEmbrIC9npvaz8CH7b9p5kOfV
-	eOazJJgXaQNcOyXue2eh7k4MwgfaEhNHqwCwERkH97PpHoQP/tNMZUPl+bMlqdDUmOYX+M096c6
-	jDI4hHRRsR39seo82kuN/fSbkA4csUf43tf5blAZ4+03zUVHwv3IvnTc2fXpGa4FzqMZ82h7ycF
-	YUniHwaejjnxLPdZUkwj9oMlUNFcFo+ZkSlh0qtCjILwtz/60tQeXb3KT+zpYYTYNJCLaH5l4zR
-	d3CeykYno+6zdAuJzxXbA/nt/8cxGo8bjfRtBE5sm6ONuhBaiIqYZsv2sqiJum3LHXrRRhxr73Q
-	aYwCWX3iT61idJvyeaZacFep2PBqBw7HRF8mlGIA93HL8A+tCkFYN4+86W4lkLHCmE++4QZyIya
-	MZEG25rKAKZhUn7Azcfhl1Sn3r9Z7S0/ZdNYz3/fARgi4+5vtVgrK1UWHoaLZscYfgWCF3wzpC7
-	H7/bP7w0YWBkw6D0FMk/Dl/VqZWXVGWFfWG1KWn/t6zehnP6K+xgLXtmJ/XwB/2enqz8YRTzBNJ
-	vSfbIeJ+qItoKHG/QEF/M7lz9VrhIQ==
-X-Received: by 2002:a17:90b:388d:b0:3ac:fe93:a731 with SMTP id 98e67ed59e1d1-3b41cb235d6mr12494631a91.56.1795500772727;
-        Mon, 23 Nov 2026 22:12:52 -0800 (PST)
+        bh=Wil9SFzUUYXCBxEQUTtM3b/bQlxsaUZTQFnygARQLdM=;
+        b=KqPk3uY1uywY5OCheDw5M8JEOQIPNvOzHxsj279kXhhAWokq8PqdSZuLHyRdPGbnXw
+         xOA2Hg8BFA/peKijrjm1YJCRAeYUIna81R0v3NoyjHLBWuaPwfIuR96gnhGJv0WQfwKV
+         VEzzr9Zuc+A6IUuUV53aEBy/dv38OyE2+aBZtMyqSKYrcFEjCLv9YpSUG9ASD2jAxhs9
+         4gotigIyFNjJBYK4CiPI5OCsw5Jf8TBIL7JAQ8JJAEdl0A2XNng+PBwwwCZUO9011hb4
+         PNGRu/uZ+njgD41/mx+u4cy28ZPTiqaW0rkLrtFon4xCEaCXj4J7z3MH5kZHtBSI6KXJ
+         80LQ==
+X-Gm-Message-State: APuU4Z9d7w3LZuxYpGshQa984HjmELQ6nm5z+hUQSsQHjkzE1o+PO7cu
+	L85wwzrveZ+Dv6cIW4xSUUsZZ8B/W6qgOkkonPPUF1uogTOLfUx1Gvo+dJKGLA==
+X-Gm-Gg: AZFdTZdKL7HwYt6QRHNtHi6sM0dr7dsZYkiDsMP/mfWhjtWQ3OQDeElSItj+zMUwUkH
+	Ev5qhtHvTs08FdX7PexD/MMKUL0fqz236tWeig9f9c2tF4SAn9yAoUkGtGg3eguUdY9cby5TK67
+	bgY7oX8aXLDndre/+I3Rb5sTODlEZSCfRISg0+HlR1JNTApQ+tV9KE6fRI+62p8UXKvm2br+rx2
+	SXu9vLo5W1mujjWrIn15ttHTSPnoaWz2kjnQaxbJ1OuuWJuI1BnnXGOVnKdD+miR3NUET7Szz+y
+	AICY1wiHm/VYyXdaP38X/Y00Jql/THxgohnz2zwrjx6Lfa9VP61p0UR/17O6SaOC1to8vVbAo4V
+	i6s0GcgWAcc7P77XrGDTq6sC/Lk5WF78LmhjzjIkHMdVzHeO7bWerT4rzNZfCm3Si+s0AyUr+Y7
+	qbCwLGohxwPnJodaC20VJxFCeOV5ph1ozFgrCBNctR7HxQUFi6ezTJCg+07OdjfBviy67JMsWU5
+	Qabolzjtf+72ynMzl0pG6wazLWEFYwoBM8DWUzhZ7sNZKgYyLjNtgIyyu0TVUcwTuZZ1S+sBLrT
+	6q9dFoJcDY9o85MnYzpI3vvV45ycEMXu1kI+InN/Rd4sy2J/6i4=
+X-Received: by 2002:a05:7301:6582:b0:374:e25e:a533 with SMTP id 5a478bee46e88-38570154017mr26382408eec.35.1795500769120;
+        Mon, 23 Nov 2026 22:12:49 -0800 (PST)
 Received: from [127.0.0.1] ([57.154.4.118])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b44b7c6513sm9500115a91.4.2026.11.23.22.12.51
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-386aa203267sm16590880eec.0.2026.11.23.22.12.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2026 22:12:51 -0800 (PST)
-Message-Id: <95c7bcab92fce595df48e85c1f2b645e714eeff2.1795500766.git.gitgitgadget@gmail.com>
+        Mon, 23 Nov 2026 22:12:48 -0800 (PST)
+Message-Id: <228b7a690fa99ab2ad33bf16fc62435435160a96.1795500766.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2219.v5.git.1795500766.gitgitgadget@gmail.com>
 References: <pull.2219.git.1789385483.gitgitgadget@gmail.com>
 	<pull.2219.v5.git.1795500766.gitgitgadget@gmail.com>
 From: "Qin ShiCheng via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 24 Nov 2026 06:12:46 +0000
-Subject: [PATCH v5 3/3] repack: tell pack-objects which packs it may delete
+Date: Tue, 24 Nov 2026 06:12:44 +0000
+Subject: [PATCH v5 1/3] pack-objects: reset kept-pack cache for cruft walk
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -107,297 +107,281 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Qin ShiCheng <qeesung@live.com>
 
-repack works out which packs are redundant by looking for ".keep"
-files when it starts, then runs pack-objects, which looks for them all
-over again when it opens the packs. Two scans of the same directory,
-seconds apart, with nothing holding them together.
+When writing a cruft pack with an expiration, pack-objects first
+collects the recent objects and then walks from them to rescue
+whatever they reach, expired or not. A pack the caller did not list is
+marked kept while collecting, so that its objects are not copied into
+the cruft pack, and unmarked before the walk, so that the walk can go
+through it.
 
-A ".keep" that turns up in between loses objects. The parent did not
-see it, so the pack is on its list to delete. The child does see it,
-so it leaves that pack to itself: its objects are not copied into the
-new pack, not loosened for "-A", not kept for "-k" or "--cruft". The
-parent deletes the pack regardless, as repack_remove_redundant_pack()
-passes force_delete, which skips the ".keep" check in
-unlink_pack_path(). The objects are gone and repack exits successfully.
+The walk does not see the unmarking. Whether an object sits in a kept
+pack is answered from a cache that is built on first use and only
+dropped when asked about a different kind of kept pack. Collecting
+builds it while the unlisted pack is still marked, the walk asks the
+same kind of question, and so the unlisted pack stays in it: the walk
+stops there, and whatever lies beyond it in an expired pack is left
+out of the cruft pack, to go when that pack is deleted. Whether that
+happens depends on whether the question changes along the way, which
+"--honor-pack-keep" does whenever there is a ".keep" file around.
 
-The gap is easy to land in. index-pack names a pack after its contents
-and writes its ".keep" before it renames the packfile into place, so a
-"git fetch", or a push being migrated out of its quarantine, that
-brings in a pack identical to one we already have puts a ".keep" next
-to that pack. Checking for the ".keep" once more right before deleting
-would not help: a push holds it for a fraction of a second, and it may
-well be gone again by the time pack-objects has finished.
+Drop the cache after unmarking. Only packfile.c is to touch it, so
+add repo_invalidate_kept_pack_caches() there, which drops it for every
+object directory.
 
-When we may delete packs, that is with "-d" and either "-a", "-A",
-"--cruft" or "--geometric", write the names of the packs we may
-delete, the non-kept and cruft packs, to a file next to the refs
-snapshot we already write for "git multi-pack-index write", and pass it
-to every pack-objects we spawn with "--ignore-pack-keep-from".
-pack-objects then never treats those packs as kept, whatever appears
-on the disk. Every other pack, whether kept when we started or showing
-up later, still goes by its ".keep" file, so "--honor-pack-keep"
-stays. Otherwise nothing gets deleted and nothing is passed.
+With the cache gone, the walk goes through every pack but the listed
+fresh ones, as was intended, including packs borrowed from an
+alternate. It has to: an object there may refer to a local one, for
+example when two repositories borrow from each other, or when "git
+repack --filter-to" has moved some objects to an alternate and left
+the ones they refer to behind. Without "--local", whatever the walk
+finds there is copied into the cruft pack, as it already is for loose
+objects of an alternate; with "--local", nothing is. Either way, the
+walk may now go through a history far bigger than the repository's
+own, as it already did whenever there was a ".keep" file around.
 
-The file has one name per line. A name with a newline in it gets split
-there, which at worst makes some other pack not count as kept: its
-objects may be copied, but none are lost.
+It also includes packs given with "--keep-pack", whose objects are to
+be left out. Turn those into "open" kept packs, as
+"--stdin-packs=follow" does for its "!" packs: the walk goes through
+them, and their objects are still left out. This is how an unlisted
+pack with a ".keep" file is treated under "--honor-pack-keep".
 
-Unreachable objects of such a pack are still dropped by "-a -d", or by
-"--cruft-expiration" and "--unpack-unreachable" once they are old
-enough, as these drop unreachable objects by design, and a pack written
-again under the same name does not make them any younger; what changes
-is that the objects that are to be kept no longer go with them.
+With "--keep-pack", the walk and the check that leaves the objects of
+such a pack out ask about different kinds of kept packs, so the cache
+is rebuilt each time they take turns, as already happens under
+"--honor-pack-keep" whenever there is a ".keep" file around. repack
+never gets here with "--keep-pack": it lists the packs it keeps as
+fresh ones instead.
 
-The tests have a ".keep" appear on the pack about to be deleted as
-pack-objects starts, through a "git" wrapper found via "--exec-path",
-for "-a", "-A", "-k", "--cruft" with and without an expiration,
-"--pack-kept-objects", "--filter" and "--geometric".
+The tests walk from a recent commit to an expired one through a pack
+pack-objects is not told about, through one given with "--keep-pack",
+and through one of an alternate holding trees whose blobs "git repack
+--filter-to" left behind, with and without "--local".
 
 Signed-off-by: Qin ShiCheng <qeesung@live.com>
 ---
- builtin/repack.c            | 23 +++++++++++++++++
- repack.c                    | 26 ++++++++++++++++++++
- repack.h                    | 14 +++++++++--
- t/t7700-repack.sh           | 49 +++++++++++++++++++++++++++++++++++++
- t/t7703-repack-geometric.sh | 39 +++++++++++++++++++++++++++++
- 5 files changed, 149 insertions(+), 2 deletions(-)
+ builtin/pack-objects.c        | 18 ++++++-
+ odb/source-packed.h           |  3 +-
+ packfile.c                    | 18 ++++++-
+ packfile.h                    |  7 +++
+ t/t5329-pack-objects-cruft.sh | 98 +++++++++++++++++++++++++++++++++++
+ 5 files changed, 140 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 71b3e9f56d..7e866b99b5 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -466,6 +466,28 @@ int cmd_repack(int argc,
- 	string_list_sort(&keep_pack_list);
- 	existing_packs_collect(&existing, &keep_pack_list);
- 
-+	/*
-+	 * Tell pack-objects which packs we may delete. pack-objects looks
-+	 * for ".keep" files on its own, and one that appears on such a
-+	 * pack from now on must not make it leave out objects that would
-+	 * then be deleted with the pack.
-+	 */
-+	if (delete_redundant &&
-+	    ((pack_everything & ALL_INTO_ONE) || geometry.split_factor) &&
-+	    existing_packs_has_non_kept(&existing)) {
-+		struct strbuf path = STRBUF_INIT;
-+		struct tempfile *non_kept_packs;
-+
-+		strbuf_addf(&path, "%s/tmp_non_kept_packs_XXXXXX",
-+			    repo_get_object_directory(repo));
-+
-+		non_kept_packs = xmks_tempfile(path.buf);
-+		existing_packs_write_non_kept(&existing, non_kept_packs);
-+		po_args.ignore_pack_keep_from = get_tempfile_path(non_kept_packs);
-+
-+		strbuf_release(&path);
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 87c3102e62..c198cd18ab 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -4339,10 +4339,18 @@ static void enumerate_and_traverse_cruft_objects(struct string_list *fresh_packs
+ 	/*
+ 	 * Re-mark only the fresh packs as kept so that objects in
+ 	 * unknown packs do not halt the reachability traversal early.
++	 * A pack given with --keep-pack must not halt it either, but as an
++	 * "open" kept pack its objects are still left out. The kept-pack
++	 * cache was built while the packs were still marked, so drop it
++	 * too.
+ 	 */
+-	repo_for_each_pack(the_repository, p)
++	repo_for_each_pack(the_repository, p) {
+ 		p->pack_keep_in_core = 0;
++		if (p->pack_keep_in_core_open)
++			ignore_packed_keep_in_core_open = 1;
 +	}
-+
- 	if (geometry.split_factor) {
- 		if (pack_everything)
- 			die(_("options '%s' and '%s' cannot be used together"), "--geometric", "-A/-a");
-@@ -684,6 +706,7 @@ int cmd_repack(int argc,
- 		cruft_po_args.quiet = po_args.quiet;
- 		cruft_po_args.delta_base_offset = po_args.delta_base_offset;
- 		cruft_po_args.pack_kept_objects = 0;
-+		cruft_po_args.ignore_pack_keep_from = po_args.ignore_pack_keep_from;
+ 	mark_pack_kept_in_core(fresh_packs, 1);
++	repo_invalidate_kept_pack_caches(the_repository);
  
- 		ret = write_cruft_pack(&opts, cruft_expiration,
- 				       combine_cruft_below_size, &names,
-diff --git a/repack.c b/repack.c
-index eecc9ce8bf..c94b3b234d 100644
---- a/repack.c
-+++ b/repack.c
-@@ -39,6 +39,9 @@ void prepare_pack_objects(struct child_process *cmd,
- 		strvec_push(&cmd->args,  "--delta-base-offset");
- 	if (!args->pack_kept_objects)
- 		strvec_push(&cmd->args,  "--honor-pack-keep");
-+	if (args->ignore_pack_keep_from)
-+		strvec_pushf(&cmd->args, "--ignore-pack-keep-from=%s",
-+			     args->ignore_pack_keep_from);
- 	strvec_push(&cmd->args, out);
- 	cmd->git_cmd = 1;
- 	cmd->out = -1;
-@@ -166,6 +169,29 @@ int existing_packs_has_non_kept(const struct existing_packs *existing)
- 	return existing->non_kept_packs.nr || existing->cruft_packs.nr;
+ 	if (prepare_revision_walk(&revs))
+ 		die(_("revision walk setup failed"));
+@@ -4388,6 +4396,14 @@ static void read_cruft_objects(void)
+ 
+ 		if (item) {
+ 			item->util = p;
++		} else if (p->pack_keep_in_core) {
++			/*
++			 * Only --keep-pack marks a pack as kept this early.
++			 * Make it an "open" kept pack as well, so that its
++			 * objects are still left out once it is unmarked
++			 * before the traversal; until then this has no effect.
++			 */
++			p->pack_keep_in_core_open = 1;
+ 		} else {
+ 			/*
+ 			 * This pack wasn't mentioned in either the "fresh" or
+diff --git a/odb/source-packed.h b/odb/source-packed.h
+index e8a7b08fbb..1f216712ce 100644
+--- a/odb/source-packed.h
++++ b/odb/source-packed.h
+@@ -25,7 +25,8 @@ struct odb_source_packed {
+ 	 * Should not be accessed directly, but via
+ 	 * `packfile_store_get_kept_pack_cache()`. The list of packs gets
+ 	 * invalidated when the stored flags and the flags passed to
+-	 * `packfile_store_get_kept_pack_cache()` mismatch.
++	 * `packfile_store_get_kept_pack_cache()` mismatch, or explicitly via
++	 * `repo_invalidate_kept_pack_caches()`.
+ 	 */
+ 	struct {
+ 		struct packed_git **packs;
+diff --git a/packfile.c b/packfile.c
+index b32b4cd75d..213f930edb 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1881,6 +1881,21 @@ int packfile_fill_entry(struct packed_git *p,
+ 	return 1;
  }
  
-+void existing_packs_write_non_kept(const struct existing_packs *existing,
-+				   struct tempfile *f)
++static void invalidate_kept_pack_cache(struct odb_source_packed *store)
 +{
-+	struct string_list_item *item;
-+	FILE *out = fdopen_tempfile(f, "w");
-+
-+	if (!out)
-+		die(_("could not open tempfile %s for writing"),
-+		    get_tempfile_path(f));
-+
-+	for_each_string_list_item(item, &existing->non_kept_packs)
-+		fprintf(out, "%s.pack\n", item->string);
-+	for_each_string_list_item(item, &existing->cruft_packs)
-+		fprintf(out, "%s.pack\n", item->string);
-+
-+	if (close_tempfile_gently(f)) {
-+		int save_errno = errno;
-+		delete_tempfile(&f);
-+		errno = save_errno;
-+		die_errno(_("could not close non-kept packs tempfile"));
-+	}
++	FREE_AND_NULL(store->kept_cache.packs);
++	store->kept_cache.flags = 0;
 +}
 +
- static void existing_pack_mark_for_deletion(struct string_list_item *item)
++void repo_invalidate_kept_pack_caches(struct repository *r)
++{
++	struct odb_source_files *files =
++		odb_source_files_downcast(r->objects->source);
++
++	for (struct odb_files_dir *dir = files->dirs; dir; dir = dir->next)
++		invalidate_kept_pack_cache(dir->packed);
++}
++
+ static void maybe_invalidate_kept_pack_cache(struct odb_source_packed *store,
+ 					     unsigned flags)
  {
- 	item->util = (void*)((uintptr_t)item->util | DELETE_PACK);
-diff --git a/repack.h b/repack.h
-index 9f95e3a26f..6b9b0ab8fb 100644
---- a/repack.h
-+++ b/repack.h
-@@ -19,6 +19,11 @@ struct pack_objects_args {
- 	int path_walk;
- 	int delta_base_offset;
- 	int pack_kept_objects;
-+	/*
-+	 * A file naming the packs this repack may delete, for
-+	 * pack-objects' "--ignore-pack-keep-from"; the path is borrowed.
-+	 */
-+	const char *ignore_pack_keep_from;
- 	struct list_objects_filter_options filter_options;
- };
- 
-@@ -28,6 +33,7 @@ struct pack_objects_args {
+@@ -1888,8 +1903,7 @@ static void maybe_invalidate_kept_pack_cache(struct odb_source_packed *store,
+ 		return;
+ 	if (store->kept_cache.flags == flags)
+ 		return;
+-	FREE_AND_NULL(store->kept_cache.packs);
+-	store->kept_cache.flags = 0;
++	invalidate_kept_pack_cache(store);
  }
  
- struct child_process;
-+struct tempfile;
+ struct packed_git **packfile_store_get_kept_pack_cache(struct odb_source_packed *store,
+diff --git a/packfile.h b/packfile.h
+index ed3378c457..0ead9e2821 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -143,6 +143,13 @@ enum kept_pack_type {
+ struct packed_git **packfile_store_get_kept_pack_cache(struct odb_source_packed *store,
+ 						       unsigned flags);
  
- void prepare_pack_objects(struct child_process *cmd,
- 			  const struct pack_objects_args *args,
-@@ -84,6 +90,12 @@ struct existing_packs {
- void existing_packs_collect(struct existing_packs *existing,
- 			    const struct string_list *extra_keep);
- int existing_packs_has_non_kept(const struct existing_packs *existing);
 +/*
-+ * Write the names of the non-kept and cruft packs, the ones a repack may
-+ * delete, to "f", one per line, for pack-objects' "--ignore-pack-keep-from".
++ * Drop every packfile store's cache of kept packs, so that the next call
++ * to `packfile_store_get_kept_pack_cache()` rebuilds it, e.g. after
++ * changing which packs are kept in core.
 + */
-+void existing_packs_write_non_kept(const struct existing_packs *existing,
-+				   struct tempfile *f);
- int existing_pack_is_marked_for_deletion(struct string_list_item *item);
- void existing_packs_retain_cruft(struct existing_packs *existing,
- 				 struct packed_git *cruft);
-@@ -142,8 +154,6 @@ void pack_geometry_remove_redundant(struct pack_geometry *geometry,
- 				    bool wrote_incremental_midx);
- void pack_geometry_release(struct pack_geometry *geometry);
- 
--struct tempfile;
--
- enum repack_write_midx_mode {
- 	REPACK_WRITE_MIDX_NONE,
- 	REPACK_WRITE_MIDX_DEFAULT,
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index 8a6b014c30..1fb7fb7c4c 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -964,4 +964,53 @@ test_expect_success '--path-walk keeps blobs from tagged trees at already visite
++void repo_invalidate_kept_pack_caches(struct repository *r);
++
+ struct pack_window {
+ 	struct pack_window *next;
+ 	unsigned char *base;
+diff --git a/t/t5329-pack-objects-cruft.sh b/t/t5329-pack-objects-cruft.sh
+index 12cda06373..4a1056e494 100755
+--- a/t/t5329-pack-objects-cruft.sh
++++ b/t/t5329-pack-objects-cruft.sh
+@@ -332,6 +332,104 @@ test_expect_success 'cruft trees rescue sub-trees, blobs' '
  	)
  '
  
-+# Put a reachable commit and an unreachable one into a single pack X in a
-+# new repository "keep-race", run "git repack" with the given options and
-+# have a ".keep" appear on X as pack-objects starts, i.e. after the repack
-+# has decided to delete X. The unreachable commit is saved in the file
-+# "keep-race/unreachable".
-+keep_race_repack () {
-+	git init keep-race &&
-+	(
-+		cd keep-race &&
-+		test_commit base &&
-+		git commit-tree -m unreachable HEAD^{tree} >unreachable &&
++# Build the history "packed", "old", "mid", "new" in the current repository:
++# "packed" is in the pack named in "in", "old" has expired, "mid" is in the
++# pack whose hash is in $mid and "new" is recent. The objects of packed..new
++# end up in "all.objects".
++cruft_chain () {
++	test_commit packed &&
++	git repack -Ad &&
++	basename "$(ls $packdir/pack-*.pack)" >in &&
 +
-+		git rev-list --objects --all $(cat unreachable) >objects &&
-+		X=$(git pack-objects .git/objects/pack/pack <objects) &&
-+		git prune-packed &&
++	test_commit old &&
++	test_commit mid &&
++	test_commit new &&
 +
-+		mkdir shim &&
-+		write_script shim/git <<-EOF &&
-+		test "\$1" = "pack-objects" &&
-+		>"$(pwd)/.git/objects/pack/pack-$X.keep" &&
-+		>"$(pwd)/keep-created"
-+		GIT_EXEC_PATH="$GIT_EXEC_PATH" exec "$GIT_EXEC_PATH/git" "\$@"
-+		EOF
-+
-+		git --exec-path="$(pwd)/shim" repack "$@" &&
-+		test_path_is_file keep-created &&
-+		test_path_is_missing .git/objects/pack/pack-$X.pack &&
-+		git fsck
-+	)
++	git rev-list --objects --no-object-names packed..old >old &&
++	while read object
++	do
++		test-tool chmtime -1000 \
++			"$objdir/$(test_oid_to_path $object)" || return 1
++	done <old &&
++	git rev-list --objects --no-object-names old..mid >mid.objects &&
++	mid=$(git pack-objects $packdir/pack <mid.objects) &&
++	git prune-packed &&
++	git rev-list --objects --no-object-names packed..new >all.objects
 +}
 +
-+for args in "-a -d" "-a -d --filter=blob:none"
-+do
-+	test_expect_success "a .keep that shows up mid-repack loses nothing: $args" '
-+		test_when_finished "rm -fr keep-race" &&
-+		keep_race_repack $args
-+	'
-+done
-+
-+for args in "-A -d" "-A -d --pack-kept-objects" "-a -k -d" "--cruft -d" \
-+	    "--cruft --cruft-expiration=1.week.ago -d"
-+do
-+	test_expect_success "a .keep that shows up mid-repack loses nothing: $args" '
-+		test_when_finished "rm -fr keep-race" &&
-+		keep_race_repack $args &&
-+		git -C keep-race cat-file -e $(cat keep-race/unreachable)
-+	'
-+done
-+
- test_done
-diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
-index f3a0650cfe..7a5e3b9ada 100755
---- a/t/t7703-repack-geometric.sh
-+++ b/t/t7703-repack-geometric.sh
-@@ -541,4 +541,43 @@ test_expect_success 'geometric repack works with promisor packs' '
- 	)
- '
- 
-+test_expect_success 'a ".keep" that shows up mid-repack does not lose objects' '
-+	test_when_finished "rm -fr race" &&
-+	git init race &&
++test_expect_success 'cruft traversal goes through a pack it was not told about' '
++	git init repo &&
++	test_when_finished "rm -fr repo" &&
 +	(
-+		cd race &&
++		cd repo &&
++		cruft_chain &&
 +
-+		test_commit kept &&
-+		test_commit pack &&
-+
-+		KEPT=$(git pack-objects --revs $packdir/pack <<-EOF
-+		refs/tags/kept
-+		EOF
-+		) &&
-+		git pack-objects --revs $packdir/pack <<-EOF &&
-+		refs/tags/pack
-+		^refs/tags/kept
-+		EOF
-+		git prune-packed &&
-+
-+		# Neither pack is twice the size of the other, so both are
-+		# rolled up and deleted. Have a ".keep" appear on one of them
-+		# as pack-objects starts, after the repack has decided to
-+		# delete it; its objects must still end up in the new pack.
-+		mkdir shim &&
-+		write_script shim/git <<-EOF &&
-+		test "\$1" = "pack-objects" &&
-+		>"$(pwd)/$packdir/pack-$KEPT.keep" &&
-+		>"$(pwd)/keep-created"
-+		GIT_EXEC_PATH="$GIT_EXEC_PATH" exec "$GIT_EXEC_PATH/git" "\$@"
-+		EOF
-+
-+		git --exec-path="$(pwd)/shim" repack --geometric 2 -d &&
-+		test_path_is_file keep-created &&
-+		test_path_is_missing $packdir/pack-$KEPT.pack &&
-+
-+		git fsck
++		# "old" can only be rescued from "new" by walking through
++		# the "mid" pack.
++		cruft=$(git pack-objects --cruft \
++			--cruft-expiration=750.seconds.ago $packdir/pack <in) &&
++		test-tool pack-mtimes "pack-$cruft.mtimes" >actual.raw &&
++		cut -d" " -f1 <actual.raw | sort >actual &&
++		sort <all.objects >expect &&
++		test_cmp expect actual
 +	)
 +'
 +
- test_done
++test_expect_success 'cruft traversal goes through a --keep-pack pack' '
++	git init repo &&
++	test_when_finished "rm -fr repo" &&
++	(
++		cd repo &&
++		cruft_chain &&
++
++		# The same, but with "mid" in a pack given with --keep-pack:
++		# "old" is still rescued, and none of the objects of that
++		# pack are copied.
++		cruft=$(git pack-objects --cruft \
++			--cruft-expiration=750.seconds.ago \
++			--keep-pack=pack-$mid.pack $packdir/pack <in) &&
++		test-tool pack-mtimes "pack-$cruft.mtimes" >actual.raw &&
++		cut -d" " -f1 <actual.raw | sort >actual &&
++		sort <all.objects >all.sorted &&
++		sort <mid.objects >mid.sorted &&
++		comm -23 all.sorted mid.sorted >expect &&
++		test_cmp expect actual
++	)
++'
++
++for opt in "" --local
++do
++	test_expect_success "cruft traversal goes through an alternate${opt:+ ($opt)}" '
++		test_when_finished "rm -fr repo alt.git" &&
++		git init repo &&
++		git init --bare alt.git &&
++		echo "$(pwd)/alt.git/objects" >repo/.git/objects/info/alternates &&
++		test_commit -C repo base &&
++		test_commit -C repo old &&
++		tree=$(git -C repo rev-parse old^{tree}) &&
++		blob=$(git -C repo rev-parse old:old.t) &&
++
++		# Move everything but the blobs to the alternate, then let
++		# "old" expire: its tree is in the alternate, but its blob
++		# is in an old local pack.
++		git -C repo repack -a -d &&
++		git -C repo repack -a -d --filter=object:type=blob \
++			--filter-to="$(pwd)/alt.git/objects/pack/pack" &&
++		git -C repo tag -d old &&
++		git -C repo reset --hard base &&
++		git -C repo reflog expire --all --expire=all &&
++		test-tool chmtime -10000 repo/$packdir/pack-*.pack &&
++
++		# A recent unreachable commit in "repo" keeps the blob, but only
++		# if the traversal goes through the tree in the alternate, which
++		# it has to do even with --local.
++		outer=$(printf "040000 tree %s\tdir\n" $tree | git -C repo mktree) &&
++		git -C repo commit-tree -m recent $outer >/dev/null &&
++		git -C repo repack --cruft --cruft-expiration=1.hour.ago -d $opt &&
++		git -C repo cat-file -e $blob
++	'
++done
++
+ test_expect_success 'expired objects are pruned' '
+ 	git init repo &&
+ 	test_when_finished "rm -fr repo" &&
 -- 
 gitgitgadget
+
