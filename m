@@ -1,89 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.224.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.149
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795547086;
-	b=nSi94/g3KO1zNr1RRUYmBB1TxWoKWtwMBU0qEjcR5ybMSo03Ae1YTo06Sp5/sMg3EkRB
-	 AFaS0nUtgZqKy6NmJsNLIizLjcNhG+pHLBQ34IT6wwIvm2zZwNMkRPzXXbYkpsTYJ3bIa
-	 VsaUFT0GYCKK1smIhHcUFLv5EfXPRtoNaUNqG6zsKNNSBbp5GYzsG1aP/CQENnidMncrN
-	 Rz73yuZ39heB9GbwRtIdRVrhiuXmcR4tGSWB9yVPPzEGBpGE2SQT5KTzgq8ICZTzs8+oq
-	 z6460wDvXGcBD/ReLSqYDom4FKI2+FIeZPbf9omnIEwruB343Iw4MR2CULYLc2PODAw==
+	t=1795547944;
+	b=yMBrLLo5EB7EWJl2ejy3NsIlYjkrdCGRZYLqovGSkFkKLsu9+pOz2IKBhzwkb2w2zyab
+	 G1vTdgr7lrQgXbWpITGr8XgpwvSt5bZitEIvPAqNH/3MOjNmw+tFQOg2DLlQ2kSzwSdC/
+	 9I0g9Wsx9JdDQJFr4HkSEGnFoKGCzeC01G8LRgbtcKCtqZnanRhG0AkZGcJTNn8Hz5Kz2
+	 CYAO7SW73btSLwYKLCjJXq/CjCIEui5kvBToIE/IipUdDSIVmI36/nqY9l4MOmNnkCM+d
+	 UJLnPtabrtrWYbA+2oJ2ZWlo9QXJXzEkTpofmxaEPOBG5DCPbySBM8mN4nj/gDdVbyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795547086;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Content-Type:Content-Transfer-Encoding:From:Mime-Version:Subject:Date:
-	 Message-Id:References:Cc:In-Reply-To:To:X-Mailer;
-	bh=AmJ/S4XaOA8lG5+Jh1OFrugl87oVpjF5GU4FYG9swdc=;
-	b=uJ2kUMQnaH/sFaoVvjM7e/NuZhp7VuKya9gezbStFP412HQ+vLIuORNI2BuKxACcS0TJ
-	 WCdsk0OTFvRP49j+KD0lPOhGH3E+DtrRQPoTJYlVoPZT71ZTKeeW4VURcl5BNvjIjaEd1
-	 Y4uPr1R/m/IMARRAahHT3QrRFfZqPJmn34hMjZsFpj9Dj4EtEtBCG2JACghrYMVxZ3GdR
-	 ICBmGPX1RJjAy3e41MCmBfyLniSyBwV+kYz0CxeYMq1pIb14IJMwFW2uLmdKqc0bueOK4
-	 LF8L4mHE5+B7uUSVhe6uSm0yMrbFGPCFw26UFRqKdw2jZcCBa9C6gvqMqtIGyPnV0eA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795547944;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=s+OH9lhBgZRjrCE8Hc70RM7unRszPH9TIAt0k84DVCA=;
+	b=ndejWlXWI6vJmBkWQehaPfa+pXaq8lNY+InEGVeO/FZ5Neolb6GBeXha4Rt6eKx/Pv+5
+	 hYbaTYkBu0xAZ8p/n4/wf7T5dGsOXqraGXF3ZXhjBPYdp9LktIzJoQ8pOnPAV1IKc0wmZ
+	 gArZhqSaANtnzTem55LrLVjhT0aBBXk7BSPKZDLMMj7zAFZZKmoccJZuQvNVRhu6mHyxq
+	 WbOTgeIhjTS0kZEB7iZ3fsjmgafn+JEyNpMW/E1RYCXY/AQK0xGyvi9VNKoE/6DqYtgU4
+	 GObxUavXnk8upMrfTmXGAC4yZcBBIMTuxWQmMS62RMwEQ9+pwPFiA5mIhPWqZKKn24Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VcF+6ICx;
-	arc=none smtp.remote-ip=74.125.224.44
-Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=nwaDFkDd;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ey3JgZvx;
+	arc=none smtp.remote-ip=103.168.172.149
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5429606A327
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 19:04:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D5429606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF891606A31E
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 19:19:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BF891606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VcF+6ICx
-Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-67921b515a7so5298891d50.2
-        for <git@vger.kernel.org>; Tue, 24 Nov 2026 11:04:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795547085; x=1796151885; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=AmJ/S4XaOA8lG5+Jh1OFrugl87oVpjF5GU4FYG9swdc=;
-        b=VcF+6ICxMd8zT1syTRo+M7qn3fDUdgBi1kXCH8WLmuFH9pS1yxbusmPIrdLhzETg0o
-         Cq3170O1XeLhxD+d7RrFTdQKWVDudnA8ck4lt/l5wmTXP0+k3VJ7uvSLDBXbsJyO0c8+
-         TWOm2ALrwMahnhuZCX1gHVhbM91rOkT/QGmr1QITylYEl33A0sQ2SGckf8A5hRbO6MzF
-         A+Fp8RyiNWwWSu8+0+e35A1q/CrVyH+UA4uWpQ9JorV06KoEIeqBiPMGufI9Dsz705W0
-         qNLzWNIUKJxju8pZj/S4nWHFs93KIoGpi+dvuYZURW/SwxqImGh4YFuAplNTD8Uc8CsF
-         OcbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795547085; x=1796151885;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:content-type:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=AmJ/S4XaOA8lG5+Jh1OFrugl87oVpjF5GU4FYG9swdc=;
-        b=fJAA5NkCrSbHlm+WQ0x8nPOrzpWcdekBeNA8XpyZRHj5Clo4O1kTpQdvtjbJ8dLWI5
-         G8m8YHa5rZpNmkn+T1KIAF3aKeX5ax630zvuwO1Ja+gZiLKQOLgnjJLfkfRWT3wbEnE6
-         giCXi4u8H86Y/2jkU9QSna+B1/LSt4vZrUZHjuVkJhpZHvZsMIeKiLw/Bk2DRrwL1qL0
-         SWzX4e1D+U+CMepkkIl0/rNYw3ItwrVk34RxZBznRn9rDf6uuwniW8hMUpY7bfTH1ZkC
-         RuYE8GFrXYRL6P3coQWiwco5pK9Wss92cidrrNTZSftGXMSyw2WGrg/ZvBnbefak+x+d
-         GO6w==
-X-Forwarded-Encrypted: i=1; AL+hErF4Vw+elCeULXWSH8lue4A128NlPcL+oi6lRaUMqhmtPo+AdM6NN/PYXqGsgyyUKS3kw58=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/WwhH2+AJs259WRY/Buex4TZxvyyR1Xt0yef0tZxTuk3SewiKR
-	CIb/6hqgjogMexI+5qzVP5M0yT1IJwxmEvYpXTrS1Hs/Y6S7NGHRibtV
-X-Gm-Gg: AZFdTZdB+HSq/gd/SGSJNmZwop5UgCNsrEkpWgy2UBTEPYAWp89fhILlBhTWGLzgyBf
-	1MTDEaBK6C4cbGaPEbv4bPdxyAWlGCqwwhQzacNFnMmGAof1c3L338nj7ZuJBre8NngJUCQhTxG
-	nIxpsmbfRdQ72W0Qfm8SBMWc66oA2v+B6EIVCCwpIH6zNGrerjb/gsrBgluL+ETjB2u6dqyeCO+
-	I5o5FT8JfNOio5lpfWIcQr3EZRhAs6IK+RKNHpvuCTzxbPG4PSc0li+aKpjLvkNCLzEMnpUraPL
-	rnCqguepK795WsDDvako0E8Gs8jOc/OT/UPrhIb/BApxFwGN+oKoPosH+I0K/TszYeNs6Nf0Lae
-	Dgrhb/PQRbguGk7mrJbR+snpHhrkfhr+sWWhb+InEit8BqwYkbvlydjIwLeJAsShE2B1C0xfIZh
-	UFBT6N7AtEhNqYU8klZuqODKMPVJj8vsXE1GeXjA+qKnn7CHBB0cc1O6CpTCyFh977yut3Ox7ex
-	pY9QSnkjKyZyWeuj1ZmRZ+ZIIUd3qfGoSGuur3u2EtTfWmrxIeiOtysf5v+akpB3+h0lMq11wlJ
-	lE9YumYBB51DvUKQ1zsyiv+mAiX7GziOxPjTkzJgpdfuroX3BiCh4QqObQhHjdGtWR/I1WsvpsN
-	+nUPZj8NTe9qzoKDN/k2krAW5Iatq6nZpz4bkNWBtz650NGHO/tqlZ0J8dFoXLnxr0jkIGx0sJM
-	zUuA==
-X-Received: by 2002:a05:690e:168a:b0:67d:a4e2:eccd with SMTP id 956f58d0204a3-67df4494c09mr7139224d50.101.1795547084797;
-        Tue, 24 Nov 2026 11:04:44 -0800 (PST)
-Received: from smtpclient.apple ([2605:a601:9d46:600:f854:fa55:5df9:927f])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-67df3378f59sm7164077d50.14.2026.11.24.11.04.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2026 11:04:44 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=nwaDFkDd;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ey3JgZvx
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id EAAE7EC01DF
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 14:19:02 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 24 Nov 2026 14:19:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1795547942; x=1795634342; bh=s+OH9lhBgZ
+	RjrCE8Hc70RM7unRszPH9TIAt0k84DVCA=; b=nwaDFkDdcE1l2c7kgNshqPWYCi
+	gsSm7NfPhN7DsZZHhIqS5HGD8nq+3d54sI8pW5RcTa6ZAD3YOhn4st3z/K3fRYDH
+	+HC+1KnxGQtTKvAL58ySHavffNdD7t7/Q3pSaUfS2j3CHpoXBH+eA+MnXhbDKXHA
+	a7vaAgkDI194hVhsD8SG9ikp71aT7LxLE83sv+oirApYy4/iKzoDkRV5G/l7i+GG
+	jupOAEIKr01Z0+ilW5sqrSC2uym7H+Id9jctXoOh8n65nYGA6Hn7yZd26wC0vVbA
+	8nfUkdUl1yNb8uCJiE0C8sZT0ajeHVPx2d/moS6qdCIZXJskglb0+FDkVUCA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795547942; x=1795634342; bh=s+OH9lhBgZRjrCE8Hc70RM7unRszPH9TIAt
+	0k84DVCA=; b=ey3JgZvxmkLTGl4yEvgmN1WXJGjBErwAIM40RFVX/BWU/hCLzIx
+	FZi4Q3n10kbiaf3ENGRyni0qcsRf0EFjX2XC8TwAVBZdxaiROrDTKZ5goBdmGnvr
+	dd7pcc2Z8E+OAQzASs0kWkvr0cn+QDiQVzeLdZ2N8kHqCgG7P0+3VPprytpGqp2v
+	vTFWvyGgIAgspy7biHLXWBOpoRRyjwzpZAWyhfQHuS4tQWc1aa98taVkV3s+kdhs
+	glKNMyOZo0XOgwkb63wMbKzDqHo6tWhUaYDVNnBltyOSL7ZdUT4kfWGQ7oGIE9B0
+	WWMLYwtfvLfX2j0Rh+45oZB8XcT2ON8RCxA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795547942; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:Xii05r0ElPjJ/bc7UuOdSNagx4a4VhvYn8N8P1OQVMzLgZa
+	j7FZ+cNL8ds5L10W+0+3mhmYWE5YnapnRti536otK4x89X9JkkCINerGBKiyorAS
+	C1QhbZtwFijV17cC8PTovyZvgqbpUjIfEBQG9Sm0JZ70528oLwBtDkiHiDWgbpLA
+	Cws9W3KBIuqRkT4izN/GYZVxHrgbskxrnPj7rctkwSCzlcOFNai3pBjg5muVUfuo
+	RVuac4wSrwgOkC+yCoI+OUf9kAFWBxuMzZQO9J+7jy1mi1tzOdDJ/SM7RVVHGEPa
+	5q0aCwEaTwO7ICiEuh0nQ2hwBEvxHt0P86mW/RA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:XsSun9O7rf4cHSknKtJptWSHz1kqsWaRVOsSpQM+Ee0=:sXozPXZiEbiU7n7xLYJYh49tDuoukzXpJ2NpgcsmcRw=;
+X-ME-Sender: <xms:JuMFa06q0l_6cr6No3x_G0Ib_iRiRvDHcyRViDqeskTsts7bz9eXBA>
+    <xme:JuMFa4KbarScvmwQ7ENKbejxELhJSBhxMdNYyXh5XTPr3jHRWBD91veGeP1ZkM0LL
+    fOGYYB6ohiIKbw6dJpJWSwIsEwBDv46ZzNgUPaBiDIjTev3CQgUyg>
+X-ME-Received: <xmr:JuMFa1veNpwW2eBkY-m7I3O8M17uwZ8Xde5P0PSDz_YlK8TE1uPc8KrPASBqEUKS3NcBK9IUEobV-XOIW7bA8vsCErNUBnw36yEMNMU>
+X-ME-Proxy-Cause: dmFkZTFt5vGUNwjmFcl5UiG0wmKUZa4Op222tSpalS9NLStpWVZcNmLrsVbN51DYPa3uzG
+    6Ffwxr43TDFoavimOOAiSJpAiT1trBzzdmI1VragIRav3IFzoUSrgyS6qA7M5HCFNqW7p+
+    6y8JJg4YfgXGAyAJ7tWMiC1jPdRbo6fh6bcG6pKJPVybw62EgtZVo6xlEk+2bY+/g9lLAV
+    CwpmsxjbVaS3LxyuyVNTikO9CA9h1PXp5/PkbU26upmKuZwc6LdBfi9SA8+45K+8BCkS7F
+    BTdxpI+Tezbdd4az9oIOZ1euh98NP0jf9YV8cypNvzrbxJ9jrGKaR3l0BIFfnA5lcDyEFK
+    UXQSw3uFZk22S/ki9ThRxlIWyccfOofQlKFnJdHo2XriuublYd/7i1kXsWGxEXbHJl7XiX
+    LSmT7ACbcQY83wKSgYPUSlsJjuR9rkr/PCoK2oj9KezqxQI4DdqHTYtpp6dT7lR1edNbWw
+    Ao8uBcmA6zpJ+zJznX0YBSw+DYIPtTm/1MnDYf7K29oU11RcO9YC0Ucvn68QI5hkER7Mry
+    Qnk7rcXJweMf9ILcehKR1B+EYtZYwAf8Gq3sxsgQKIoSyizXoUgr4lHpUFQRWbp3c4UKyG
+    yVAeJUaEyt40yUvhyl0E+ir0Q7XWg1JID1cfD8dJAMGEDcE337v2hPvgvM3A
+X-ME-Proxy: <xmx:JuMFa_LctUMf8eTVrDY6GLf_2ZzU8KmC2aonK3C26cPkaHzRKvdrWQ>
+    <xmx:JuMFa29TvQs353n_7BcWBLuaQV7fUcClTuKgMRqtjiQifWHUBE0Rpg>
+    <xmx:JuMFawygM5cPfr0WyqfrDZMtTESt_BVd8AKlGgsnV-FHo2gzloqzFQ>
+    <xmx:JuMFa75IsClATPfAR8dRCp_OoJQ5aZErgvI6FOnRWurF4YwLSoOzAA>
+    <xmx:JuMFayBcM4vwtkkJCMj8hxwmgzCUD-QTYWOjUKrGa8ZYPJcULMX4SzDJ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Nov 2026 14:19:02 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Dominik Maier <dmnk@google.com>
+Cc: git@vger.kernel.org,  Grant Moyer <dev@grantmoyer.com>,  Michele Locati
+ <michele@locati.it>,  Patrick Steinhardt <ps@pks.im>,
+  dmnk+artist@google.com
+Subject: Re: [PATCH] filter-branch: check hex oids in state-branch map
+In-Reply-To: <20261119192316.2688525-1-dmnk@google.com> (Dominik Maier's
+	message of "Thu, 19 Nov 2026 20:23:16 +0100")
+References: <20261119192316.2688525-1-dmnk@google.com>
+Date: Tue, 24 Nov 2026 11:19:00 -0800
+Message-ID: <xmqqmrqyqbq3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,121 +124,41 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH] doc: add tutorial on branches for beginners
-Date: Tue, 24 Nov 2026 14:04:33 -0500
-Message-Id: <6F694BC8-2260-4E06-BF0A-CC284F03616D@gmail.com>
-References: <074bd710-1c32-4fec-9ddf-97157bd498b5@jvns.ca>
-Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-In-Reply-To: <074bd710-1c32-4fec-9ddf-97157bd498b5@jvns.ca>
-To: Julia Evans <julia@jvns.ca>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+Dominik Maier <dmnk@google.com> writes:
 
-> Le 24 nov. 2026 =C3=A0 10:56, Julia Evans <julia@jvns.ca> a =C3=A9crit :
->=20
-> =EF=BB=BF
->>=20
->>> 1. Introduce some imaginary characters who are learning branches for the=
+> When "--state-branch" loads an existing "filter.map" blob,
+> git-filter-branch splits each "from:to" line (restored to "from:to"
+> order in 4811dabed7 (filter-branch: fix commit map init from state
+> branch, 2026-10-02)) and writes "../map/$from_commit" without checking
+> that "$from_commit" or "$to_commit" contains valid hexadecimal object
+> IDs.
+>
+> A malformed or untrusted state branch whose "filter.map" contains empty
+> keys, slashes, backslashes, or ".." segments writes outside
+> "$tempdir/map" instead of failing cleanly.
 
->>>    first time and examples of workflows they might use. Test readers
->>>    said this was helpful because it helped them see different ways
->>>    they might use branches.
->> This is extremely helpful, not least because of what it does for this doc=
-, but
->> because it sets up future guides to refer back to well-known scenarios. I=
-n
->> particular, I'm mulling on a triangular workflow guide, which could feasi=
-bly be
->> one component of a guide to collaboration with remotes; these characters w=
-ill
->> have different things to say about remotes!
->=20
-> Cool! I think probably we'd want to re-introduce the characters each time (=
-and maybe even choose different characters depending on the situation). For a=
- more advanced workflow the characters might be different.
->=20
->>> +Step 8: Create another branch
->>> +-----------------------------
->>> +
->>> +Now create a second branch called `add-animals`. We're creating two
->>> +branches to show what the process of working on multiple changes at the=
+Nice catch.  With an empty key like ":foo", redirection to "../map/"
+fails with an "Is a directory" error inside the loop without calling
+die(), and keys containing "../" can escape "$tempdir/map" into the
+surrounding working tree.
 
->>> +same time looks like.
->>> +
->>> +First, switch back to the `main` branch. This is important because
->>> +normally when you start a new branch, you'll start it from the
->>> +current `main`.
->>> +
->>> +We normally start from `main` because if you create a branch called `tw=
-o`
->>> +while on the `one` branch, merging `two` into `main` will also
->>> +merge `one`. Starting from `main` keeps all the branches separate.
->> This feels a bit confusing to me on first read, if only because the "two"=
- and
->> "one" branches are hypothetical (and because we haven't covered merges ye=
-t).
->> I don't love to keep the reader in suspense ("we'll explain why we do thi=
-s
->> later"), but I do wonder if we can give a better demonstration of what ha=
-ppens
->> when we stack a branch like this by using the example names here?
->>=20
->> Perhaps we can start with the idea that we want to keep work independent
->> ("Branches are a tool to organize your work", "working on multiple unrela=
-ted
->> changes"), and then after merges are introduced we can revisit the stacke=
-d
->> version and show what happens in that scenario? There are pros and cons t=
-o
->> stacking, but I think covering "branch per independent idea" as the norm i=
-s a
->> good way to handle it.
->=20
-> I like this, I'll try just saying "You'll usually want to start all new br=
-anches from the `main` branch
-> to keep your branches independent from each other."
->=20
-> I agree it's weird to talk about merging since we haven't introduced it ye=
-t. I'll take that out.
->=20
-> I think stacking is probably too advanced for this beginner tutorial.
->=20
->>> ...
->> Here are the last handful of sections, and 2 paragraphs that come between=
- what I
->> see as major sections. Here alas flat text bites us a bit: it's not parti=
-cularly
->> evident that step 13 + it's merge conflict note form "the end" of the pra=
-cticum,
->> and the stuff afterwards is (somewhat) back to the introductory concept i=
-dea or
->> examples.
->=20
-> I agree the last few sections are pretty messy, thanks for finding that.
->=20
-> I've reorganized things for v2 like this::
->=20
-> - Move the "merge conflicts" section into a note
-> - Move the "3 ways to think about branch" inline in the step-by-step tutor=
-ial, after step 6 (next to the example it's talking about)
-> - Rename the section about workflows to "Examples of using branches to col=
-laborate" to make it clear that the `git pull` section is a subsection of th=
-e overall workflows section
-> - Add a little overview at the beginning explaining the structure of the d=
-ocument:
->=20
-> This tutorial contains:
->=20
->   1. <<intro,An introduction to branches>>
->   2. <<tutorial,A step-by-step practical tutorial>>
->   3. <<workflows,Example collaboration workflows>>
->   4. <<tip,Tips, GUI tools, and where to learn more>>
->=20
-> "Tips, GUI tools, and where to learn more" is still a little bit of a grab=
- bag at the end but at least it's laid out at the beginning now
->=20
-> Thanks for the review!
+> Read lines with "IFS= read -r line", and require "$from_commit" to be
+> non-empty lowercase hex and "$to_commit" to contain only lowercase hex
+> digits and spaces (allowing empty "$to_commit" for pruned commits)
+> before writing "../map/$from_commit".
 
-All sounds great to me :)=
+Mentioning that $to_commit can be empty and the reason why is good.  It
+might help future readers to briefly mention why spaces are allowed in
+$to_commit as well.  I presume that it is because a single 'from' can be
+mapped to more than one commits, and the map() function that dumps the
+contents of ../map/$from_commit file is expected to be used like
+
+    for reparent in $(map "$parent"); do ... use each $reparent ...; done
+
+without dq around $(map) call, to replace $parent (a from commit) with
+these commits in the $to_commit SP delimited list?
+
+Looks good.  Thanks.
