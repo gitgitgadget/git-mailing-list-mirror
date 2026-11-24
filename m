@@ -1,121 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.224.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795543950;
-	b=1KI/43bBWpuGCJowrYAK0v5y6r471eWR+qBqswZMFGWk4v1lTt6TD9Gs8jPJKgqNjPtk
-	 PGqoh5mAIXQm9rBF1Kw8sNhGYpJ2cEDAzivMNcA9tqK3HiYkn9r3YA4NA/ZvEGJYPkdja
-	 aq8j6Qxnvn6JLWLOtFgUkpTX77naBiFnwmG3O+awOkQ5hqdBdoetvFhVvG5ShyVlwK7fi
-	 XO3UabJnWGEU/aD+wr5LyrSnGNnLC45ImpfiUIg897da7v1B3YTPXqctZsFsTtxPRIeJr
-	 A1Ro1VhBREgiNN8aA4maKaufbupcq9NOeb1SN7oNR01rm3V25Ietb8jrB3zUej8AVwQ==
+	t=1795547086;
+	b=nSi94/g3KO1zNr1RRUYmBB1TxWoKWtwMBU0qEjcR5ybMSo03Ae1YTo06Sp5/sMg3EkRB
+	 AFaS0nUtgZqKy6NmJsNLIizLjcNhG+pHLBQ34IT6wwIvm2zZwNMkRPzXXbYkpsTYJ3bIa
+	 VsaUFT0GYCKK1smIhHcUFLv5EfXPRtoNaUNqG6zsKNNSBbp5GYzsG1aP/CQENnidMncrN
+	 Rz73yuZ39heB9GbwRtIdRVrhiuXmcR4tGSWB9yVPPzEGBpGE2SQT5KTzgq8ICZTzs8+oq
+	 z6460wDvXGcBD/ReLSqYDom4FKI2+FIeZPbf9omnIEwruB343Iw4MR2CULYLc2PODAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795543950;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=6eDz6dN3Qc/NPHdJFdFuw4YMjFHCgAafAUbHYTL8cLY=;
-	b=q6qUlB1nJ3TKC7+JrhZW2PORl+iK/kpjnOrkGjG+mQu164yfvNTLzZh1Xv3fyV1K66pJ
-	 nBSW1B4Ed2bY5PhfV0xwYEO+FBt/fIiaYN0H1LclQnnz6Z1t6wPPf+tZCg5q2aBkk+B7w
-	 ZaiHyYmgR1lIMcoyrnxGNqc1B3Ch7wdyIy+Wj+RbrxHPv9/laTA2q6WtOKB3eq5zNGsKH
-	 JtGDyjmrgn9e1+h6+zcP8AF6aykSzWjQ+8CZdYcNOJKb41ZMQPi+IUFB5ZhoxxfYbmn9W
-	 pOTHNtziADOvScw1Y+JddNyvRL33bU9zs44xTD7XBTpmBjdTQJimaXpqHUdDlgSgQEQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795547086;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Content-Type:Content-Transfer-Encoding:From:Mime-Version:Subject:Date:
+	 Message-Id:References:Cc:In-Reply-To:To:X-Mailer;
+	bh=AmJ/S4XaOA8lG5+Jh1OFrugl87oVpjF5GU4FYG9swdc=;
+	b=uJ2kUMQnaH/sFaoVvjM7e/NuZhp7VuKya9gezbStFP412HQ+vLIuORNI2BuKxACcS0TJ
+	 WCdsk0OTFvRP49j+KD0lPOhGH3E+DtrRQPoTJYlVoPZT71ZTKeeW4VURcl5BNvjIjaEd1
+	 Y4uPr1R/m/IMARRAahHT3QrRFfZqPJmn34hMjZsFpj9Dj4EtEtBCG2JACghrYMVxZ3GdR
+	 ICBmGPX1RJjAy3e41MCmBfyLniSyBwV+kYz0CxeYMq1pIb14IJMwFW2uLmdKqc0bueOK4
+	 LF8L4mHE5+B7uUSVhe6uSm0yMrbFGPCFw26UFRqKdw2jZcCBa9C6gvqMqtIGyPnV0eA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=aWw1Zl0H;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=hHv36HEc;
-	arc=none smtp.remote-ip=103.168.172.150
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VcF+6ICx;
+	arc=none smtp.remote-ip=74.125.224.44
+Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20929606A31E
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 18:12:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 20929606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5429606A327
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 19:04:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D5429606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=aWw1Zl0H;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=hHv36HEc
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3E2A0EC0C2B
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 13:12:29 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 24 Nov 2026 13:12:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795543949; x=1795630349; bh=6eDz6dN3Qc
-	/NPHdJFdFuw4YMjFHCgAafAUbHYTL8cLY=; b=aWw1Zl0HzMFU5V1qG8c5Fc41bT
-	NbG+LSJVil3t8vvYgNm7U93rm94T8bcJOAWGpVWLMyfi3rfPJN0OHNYVkBLVMqGD
-	bEg6oFumel9TmT6CJ1ZT3ZchdXBZKubM7tSto1/tnCiHTRMeBVols3XauI8gm1/u
-	+fzlm4NtIpnrzShQ7QrXaw4lxyj+wjjaroqL5RyvWJwkyFz7WR8Bjbz8QTkCnzD0
-	rGpxGY8MBRBbRmYU8KKj+FpTpT2B3MoNualOZ+MnZKFGkKyT9hBLfR1YGu9o8f94
-	6OnuO/rcrIh+KKJZcomKogSzydqaahEUoL9PblDllOw5hPCkJZz3eNPqUIUA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795543949; x=1795630349; bh=6eDz6dN3Qc/NPHdJFdFuw4YMjFHCgAafAUb
-	HYTL8cLY=; b=hHv36HEcALb+Tks8l03JYtELUUXHyXfZWn2FqeYmh3zdNUjrnfI
-	uGbm1ty/BGDw2jdmCJEt7AXXXE161snHzAcUz/3IQpN50cfI/x1gTXC1fWOX2+Nm
-	3vla5fjxtzeSqW42WSndyR95k0hUhj7sbuw4ef5DmodwUzRF529aLy4hHP/9neVU
-	5IpsGzfIwTWrWSGERIIaLcDKiqzuXKMZlQmFuLTZLBTev9+Zh7u/Uz4d7Sib8U0q
-	iGAEIQTXaG3iXR4kfGm0ZqUicukAXi4C2xOKhRsfpq7OR62BvRYaJLKLm63atIUA
-	rB+sJan0yyqC0t4ET7IKqe+cVxivImJpKGg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795543949; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:YG5F1fMk9cIOs4mrnq/38XExcDujj/1D4ElhiFSpRS8QjGt
-	3djrUMuWgf3GhEtcewFeA2A/T/K/31KeRv9pVAuVOAtQYHa1ogd3HcrGIhOUga+P
-	Q9sL9pz2ApRXgV9ohs+qyWbbuh91WtlfTD+X+SUNEuy1CWT1m8wY3FlB3+Gn89IP
-	Y8xzXVOJVXZRjHI2jqOqdBFex90IV6r+60K81nC7AeigP5P0GXDkBDy3NKAN7/Z1
-	yLCCyzwqaKzDUxyJqi3xPgC4RIgXLSFeR8xemC2zeVedHGykh0k8Xt0y/y5TRP7o
-	c/x1ck5vS0ZGqMnFv9t/QLlR5PKdxwasnJrXDJg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:ispE9cm5A1JdcsgNGkVvaS12EwIR3L4DGATmmjEA/28=:6eDz6dN3Qc/NPHdJFdFuw4YMjFHCgAafAUbHYTL8cLY=;
-X-ME-Sender: <xms:jNMFa54Irtbeou65vwDhyLtTZwzAL9qnCt4GZZsDUtxSNKnApNFu8w>
-    <xme:jNMFa4bJID8oi6kWwQh8FwV1zxSnoD0ryr2LE9Dhw6Eqmc5BUuFn9hyq9wuIztv7Y
-    7DtZNH48bj7007ZIRKgXwcUjbQCzaQOHHmnlDJrwshIh0vaD4g_QNzO>
-X-ME-Received: <xmr:jNMFawjvoYYEifsHoEKdAh-d2HmxLcRDpA6VAOhMdy4IxLuUoyB1iwQN_cLd0heP0YnJHpP21xI1rgUEBP0MMuZuUgLsjTVmfVkDr5c>
-X-ME-Proxy-Cause: dmFkZTE0oVZ7rz801sQIM8rSKbGOuW447iqXX8jV7YYvNFqybFDUAQjGSUag61UKz1/rzd
-    Ndx7OoItidB5hWRNJ24eYitOCyKa6CvjjeARUA/VKJLNysneDGKAyjc+8HCXZ3HuOpo/AF
-    gQeGq3ej0LYMEJMB644siOwxNlW+gMgFviKnecVSIeuQx7osrTPkr5G4IQnatOtM3VhCmf
-    NjTLapXfpzv87WW62IDeI9r2jf/nnPQSTxMLXmhDr3vBPkLNl5DL//bZK5UEkBWwsGG5rn
-    YwkPdM8uvccgQViKrah+YD/F2tmLy9SwfXQbM87lsaVJbwEn5AdWLvw/7lJ6ykMxXmjnjt
-    mah3qxt1ps6uG2iGoBvtdVKNnyrsgZ1UbMO58hTbA0Vjxyu8OLz/UfF2T5iATzJl6DxdWE
-    W3pn7VdB20qAfMrVjD2Uwsp94KHnOUqhWEhMuwlAB3ysy6VeJEUZxtE8H6DomtAezYGYd4
-    7dy2syAuEA4s88PYu34BrAc5nEwoG+kmspq4ZHm02AUT8/5AzCOI9hZgF43LSo0M6ZE6Qu
-    c4pTl6GB/8XHZKTV6Ixj1RLSkKFJdbLEpK0pPePEqht7cdvv+PxV7F9Oy68Ptgd1NtAhds
-    IeXr1qQUBCWJ+zDufQ59peUfrSOUnfKsN3XMpYhTTQYCI1ZRsadi7OX2THxQ
-X-ME-Proxy: <xmx:jNMFax9QEB_VbBrL5VD4UYF1IFV_nP1saPf9euey6OYsmxYW-U7DBQ>
-    <xmx:jNMFazo_u_Z82WzIgDzNA-rJjvEcZzkSFh_PKGa9ZSrTKSwN6sDpnA>
-    <xmx:jNMFaxVJcdWBihfwCLXkEunEgsCub_2fUopCkASvjOACtKS0pUCZcg>
-    <xmx:jNMFa6BWBIc2YE3sDwOqVrl1tft3aTNSMFudDQSGeIBSPw6rxHXYyQ>
-    <xmx:jdMFa0Fdv4nqTMjGvbTPwLaTDAKPIMmGUUY8AtoiVQ6wBbTj2WEdSAdK>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Nov 2026 13:12:28 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Wonseok Oh via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Wonseok Oh <wonseok_oh@korea.ac.kr>,  Wonseok Oh
- <marinelay7@gmail.com>
-Subject: Re: [PATCH v2] fast-import: die on EOF after an inline M command
-In-Reply-To: <pull.2323.v2.git.1795497145494.gitgitgadget@gmail.com> (Wonseok
-	Oh via GitGitGadget's message of "Tue, 24 Nov 2026 05:12:25 +0000")
-References: <pull.2323.git.1795246845186.gitgitgadget@gmail.com>
-	<pull.2323.v2.git.1795497145494.gitgitgadget@gmail.com>
-Date: Tue, 24 Nov 2026 10:12:27 -0800
-Message-ID: <xmqq33sqt7xw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VcF+6ICx
+Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-67921b515a7so5298891d50.2
+        for <git@vger.kernel.org>; Tue, 24 Nov 2026 11:04:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795547085; x=1796151885; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=AmJ/S4XaOA8lG5+Jh1OFrugl87oVpjF5GU4FYG9swdc=;
+        b=VcF+6ICxMd8zT1syTRo+M7qn3fDUdgBi1kXCH8WLmuFH9pS1yxbusmPIrdLhzETg0o
+         Cq3170O1XeLhxD+d7RrFTdQKWVDudnA8ck4lt/l5wmTXP0+k3VJ7uvSLDBXbsJyO0c8+
+         TWOm2ALrwMahnhuZCX1gHVhbM91rOkT/QGmr1QITylYEl33A0sQ2SGckf8A5hRbO6MzF
+         A+Fp8RyiNWwWSu8+0+e35A1q/CrVyH+UA4uWpQ9JorV06KoEIeqBiPMGufI9Dsz705W0
+         qNLzWNIUKJxju8pZj/S4nWHFs93KIoGpi+dvuYZURW/SwxqImGh4YFuAplNTD8Uc8CsF
+         OcbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795547085; x=1796151885;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=AmJ/S4XaOA8lG5+Jh1OFrugl87oVpjF5GU4FYG9swdc=;
+        b=fJAA5NkCrSbHlm+WQ0x8nPOrzpWcdekBeNA8XpyZRHj5Clo4O1kTpQdvtjbJ8dLWI5
+         G8m8YHa5rZpNmkn+T1KIAF3aKeX5ax630zvuwO1Ja+gZiLKQOLgnjJLfkfRWT3wbEnE6
+         giCXi4u8H86Y/2jkU9QSna+B1/LSt4vZrUZHjuVkJhpZHvZsMIeKiLw/Bk2DRrwL1qL0
+         SWzX4e1D+U+CMepkkIl0/rNYw3ItwrVk34RxZBznRn9rDf6uuwniW8hMUpY7bfTH1ZkC
+         RuYE8GFrXYRL6P3coQWiwco5pK9Wss92cidrrNTZSftGXMSyw2WGrg/ZvBnbefak+x+d
+         GO6w==
+X-Forwarded-Encrypted: i=1; AL+hErF4Vw+elCeULXWSH8lue4A128NlPcL+oi6lRaUMqhmtPo+AdM6NN/PYXqGsgyyUKS3kw58=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/WwhH2+AJs259WRY/Buex4TZxvyyR1Xt0yef0tZxTuk3SewiKR
+	CIb/6hqgjogMexI+5qzVP5M0yT1IJwxmEvYpXTrS1Hs/Y6S7NGHRibtV
+X-Gm-Gg: AZFdTZdB+HSq/gd/SGSJNmZwop5UgCNsrEkpWgy2UBTEPYAWp89fhILlBhTWGLzgyBf
+	1MTDEaBK6C4cbGaPEbv4bPdxyAWlGCqwwhQzacNFnMmGAof1c3L338nj7ZuJBre8NngJUCQhTxG
+	nIxpsmbfRdQ72W0Qfm8SBMWc66oA2v+B6EIVCCwpIH6zNGrerjb/gsrBgluL+ETjB2u6dqyeCO+
+	I5o5FT8JfNOio5lpfWIcQr3EZRhAs6IK+RKNHpvuCTzxbPG4PSc0li+aKpjLvkNCLzEMnpUraPL
+	rnCqguepK795WsDDvako0E8Gs8jOc/OT/UPrhIb/BApxFwGN+oKoPosH+I0K/TszYeNs6Nf0Lae
+	Dgrhb/PQRbguGk7mrJbR+snpHhrkfhr+sWWhb+InEit8BqwYkbvlydjIwLeJAsShE2B1C0xfIZh
+	UFBT6N7AtEhNqYU8klZuqODKMPVJj8vsXE1GeXjA+qKnn7CHBB0cc1O6CpTCyFh977yut3Ox7ex
+	pY9QSnkjKyZyWeuj1ZmRZ+ZIIUd3qfGoSGuur3u2EtTfWmrxIeiOtysf5v+akpB3+h0lMq11wlJ
+	lE9YumYBB51DvUKQ1zsyiv+mAiX7GziOxPjTkzJgpdfuroX3BiCh4QqObQhHjdGtWR/I1WsvpsN
+	+nUPZj8NTe9qzoKDN/k2krAW5Iatq6nZpz4bkNWBtz650NGHO/tqlZ0J8dFoXLnxr0jkIGx0sJM
+	zUuA==
+X-Received: by 2002:a05:690e:168a:b0:67d:a4e2:eccd with SMTP id 956f58d0204a3-67df4494c09mr7139224d50.101.1795547084797;
+        Tue, 24 Nov 2026 11:04:44 -0800 (PST)
+Received: from smtpclient.apple ([2605:a601:9d46:600:f854:fa55:5df9:927f])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-67df3378f59sm7164077d50.14.2026.11.24.11.04.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Nov 2026 11:04:44 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,20 +92,121 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH] doc: add tutorial on branches for beginners
+Date: Tue, 24 Nov 2026 14:04:33 -0500
+Message-Id: <6F694BC8-2260-4E06-BF0A-CC284F03616D@gmail.com>
+References: <074bd710-1c32-4fec-9ddf-97157bd498b5@jvns.ca>
+Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+In-Reply-To: <074bd710-1c32-4fec-9ddf-97157bd498b5@jvns.ca>
+To: Julia Evans <julia@jvns.ca>
+X-Mailer: iPhone Mail (23D8133)
 
-"Wonseok Oh via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Wonseok Oh <marinelay7@gmail.com>
->
-> After "M <mode> inline <path>", fast-import expects a "data" command.
-> If the input ends there, file_change_m() leaves its read loop without
-> reading any data and writes an uninitialized object ID into the tree.
-> fast-import then exits 0, and "git fsck" reports a missing blob.
+> Le 24 nov. 2026 =C3=A0 10:56, Julia Evans <julia@jvns.ca> a =C3=A9crit :
+>=20
+> =EF=BB=BF
+>>=20
+>>> 1. Introduce some imaginary characters who are learning branches for the=
 
-This describes the problem accurately, but wouldn't the series at
-https://lore.kernel.org/git/20261122140347.41990-1-gitster@pobox.com/
-solve this infinite loop, together with a few others?
+>>>    first time and examples of workflows they might use. Test readers
+>>>    said this was helpful because it helped them see different ways
+>>>    they might use branches.
+>> This is extremely helpful, not least because of what it does for this doc=
+, but
+>> because it sets up future guides to refer back to well-known scenarios. I=
+n
+>> particular, I'm mulling on a triangular workflow guide, which could feasi=
+bly be
+>> one component of a guide to collaboration with remotes; these characters w=
+ill
+>> have different things to say about remotes!
+>=20
+> Cool! I think probably we'd want to re-introduce the characters each time (=
+and maybe even choose different characters depending on the situation). For a=
+ more advanced workflow the characters might be different.
+>=20
+>>> +Step 8: Create another branch
+>>> +-----------------------------
+>>> +
+>>> +Now create a second branch called `add-animals`. We're creating two
+>>> +branches to show what the process of working on multiple changes at the=
 
-Thanks.
+>>> +same time looks like.
+>>> +
+>>> +First, switch back to the `main` branch. This is important because
+>>> +normally when you start a new branch, you'll start it from the
+>>> +current `main`.
+>>> +
+>>> +We normally start from `main` because if you create a branch called `tw=
+o`
+>>> +while on the `one` branch, merging `two` into `main` will also
+>>> +merge `one`. Starting from `main` keeps all the branches separate.
+>> This feels a bit confusing to me on first read, if only because the "two"=
+ and
+>> "one" branches are hypothetical (and because we haven't covered merges ye=
+t).
+>> I don't love to keep the reader in suspense ("we'll explain why we do thi=
+s
+>> later"), but I do wonder if we can give a better demonstration of what ha=
+ppens
+>> when we stack a branch like this by using the example names here?
+>>=20
+>> Perhaps we can start with the idea that we want to keep work independent
+>> ("Branches are a tool to organize your work", "working on multiple unrela=
+ted
+>> changes"), and then after merges are introduced we can revisit the stacke=
+d
+>> version and show what happens in that scenario? There are pros and cons t=
+o
+>> stacking, but I think covering "branch per independent idea" as the norm i=
+s a
+>> good way to handle it.
+>=20
+> I like this, I'll try just saying "You'll usually want to start all new br=
+anches from the `main` branch
+> to keep your branches independent from each other."
+>=20
+> I agree it's weird to talk about merging since we haven't introduced it ye=
+t. I'll take that out.
+>=20
+> I think stacking is probably too advanced for this beginner tutorial.
+>=20
+>>> ...
+>> Here are the last handful of sections, and 2 paragraphs that come between=
+ what I
+>> see as major sections. Here alas flat text bites us a bit: it's not parti=
+cularly
+>> evident that step 13 + it's merge conflict note form "the end" of the pra=
+cticum,
+>> and the stuff afterwards is (somewhat) back to the introductory concept i=
+dea or
+>> examples.
+>=20
+> I agree the last few sections are pretty messy, thanks for finding that.
+>=20
+> I've reorganized things for v2 like this::
+>=20
+> - Move the "merge conflicts" section into a note
+> - Move the "3 ways to think about branch" inline in the step-by-step tutor=
+ial, after step 6 (next to the example it's talking about)
+> - Rename the section about workflows to "Examples of using branches to col=
+laborate" to make it clear that the `git pull` section is a subsection of th=
+e overall workflows section
+> - Add a little overview at the beginning explaining the structure of the d=
+ocument:
+>=20
+> This tutorial contains:
+>=20
+>   1. <<intro,An introduction to branches>>
+>   2. <<tutorial,A step-by-step practical tutorial>>
+>   3. <<workflows,Example collaboration workflows>>
+>   4. <<tip,Tips, GUI tools, and where to learn more>>
+>=20
+> "Tips, GUI tools, and where to learn more" is still a little bit of a grab=
+ bag at the end but at least it's laid out at the beginning now
+>=20
+> Thanks for the review!
+
+All sounds great to me :)=
