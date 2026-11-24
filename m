@@ -1,84 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795540972;
-	b=WkDMfwXHHknSYcrh1Af8Kn/uKCPwzsaDO9XGsofsWVzZhNVRrhq71Y+qgvr+HfP/UUkn
-	 BhcQLbwnq8AvZLzAoCE+rCSsBThhlruMVELbGzOrEs886X/nJ50KLAa6hfzGNfP2h8QTR
-	 XMzyGKHDw3L7mY8ppRkItoRLVt1lpwPO0pKv8uc7obpUtTPUpPg93wrqZueoIJFADKh+8
-	 qAuyReeR5H6hQTD1nM3ZszclC35sYIe0N1iI7lYrT7Bv95FdXujCNEL7+2Qu9qGPctL1J
-	 oZMhmp6Qelf8GHKzmj6B9L8KK0qFPzUjkpzvzNGwHVJBk7y3eXxJWRNTyXbGxOa7O1Q==
+	t=1795541000;
+	b=AM8RBc9h0dh1yZA/2Uoo50JSa18JXYHweaYNa2K+iEQLp90BnThHJC3/ETfPgXxpyQW4
+	 NaeMuSGfkT8kNs1Azg+Ku95/kxXRAEoO2qTtR6b/mq6IP0HbOq5mN1wCmGCj/v86zltZ1
+	 qFLw8rSbZNycOMTMmRv/vw7Mq5KWs3d5quxydB1MKnFRvWu4FF1Z4gX510eMbbovxwoqj
+	 k9txr2QnY77/557n9y8AvjyaZsvHrMwDCA+DNVwYbUdgdlixtozirur+Au8ux4s1XcLDm
+	 e5M7mb9IndSiPkcYUIhMsaQw4lfYzeyXTKnp85xZkjJmt3tfcgZ/e8NaCJFC8f8dJ9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795540972;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795541000;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=kezZGHeLloHaJ2MKhoiAIbrQQR8LDYCZTYZeN0WxIEU=;
-	b=puVjx4R5xjmcja2fHlSv2uaAbl62FIBLs5DIrcgiYdpoctKsY+SWuoyzyhHIgo6j5m89
-	 ODZ3cmdZK6v4nHDq98b7iesuQV09j2zg2kyMO66ETs1vlEw471GuX38au0j480Hw7Kshl
-	 n6JDjgS70QJxTxPPrQQ7NP+55rEkfsMM7Y0HrMVwU2jJB5B7wuBJSV7R+au8+XuZi7CQB
-	 j4V+b657NZeNFlQdrQofD5XEJg379e5goSjEOFkxGCjDK7y1gOZzExqhdM+B3tLJ3ksFX
-	 wEbQfjNy3tyfzaZA5qvkmOYMsE8jGrDMuxM2vUQJX6yqeV3YtaYnLchJ9Xo9XDyTS1g==
+	bh=1I1Vrog9fdI8kljcvuSbh45rUrbPup3oMA9Sww25HEU=;
+	b=X1W4UkoQhpIMU0rsug4jN50w3GomG4IAVmFZd2guL7gbLuz2C90z+9Yv10vKnXsLLVkX
+	 HkUsQ8PTewqjb8dUpPMj8VhmtGcZB4qXbP+dtTdSwAxsedACVhn2OD4R/oMz6TN5GS41H
+	 oLFSx0I8EoTRCFR3XcBKwsW3P0nl4q2xmiwNZz9dAVFPqhWABlJ4hAeDzh/6oUtnhwHgL
+	 vFnsGDhz4XTyxyqcg1xYKyLnXnsh/0HGvXyldwCucNKocg93NoSbNHjqChOgREqvnbBpZ
+	 7i6ixIWjgLFwBC7owEit2TGagc2DgnHYkuBopcCAc5RgdeAzLfBR801jk+WLYD/sqzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CzRgw4xw;
-	arc=none smtp.remote-ip=209.85.208.50
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sSszWy6m;
+	arc=none smtp.remote-ip=209.85.218.44
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC742606A31E
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 17:22:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CC742606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 599CD606A31E
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 17:23:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 599CD606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CzRgw4xw
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6ba380cd8dbso6421372a12.3
-        for <git@vger.kernel.org>; Tue, 24 Nov 2026 09:22:51 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=sSszWy6m
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-c5118deebcfso710989266b.1
+        for <git@vger.kernel.org>; Tue, 24 Nov 2026 09:23:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795540970; x=1796145770; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795540999; x=1796145799; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=kezZGHeLloHaJ2MKhoiAIbrQQR8LDYCZTYZeN0WxIEU=;
-        b=CzRgw4xwiEAhTLIYId9wJWcX4IB+V9+EBK8z7CcKIts+oPS4MTtJ98HFQ1ggK3FDL1
-         B5dhRFZAzj+YquCpcdYLxZzpQoGnqpoZlUQ1/EgzXp9hejr2i88AduePFvTcU3MTweet
-         4rT19kfPFaebQuUOGyKMlcV5UcCKFyzkBhj+X07othKSPM55o5VmqlhoBGF5zgGOZqhU
-         4AAr01Tmx0bnpqgoFJWxSUEyXJNASwnLsIQUYKqZq0VyccCz1hBZheWVJQnUdM112wTj
-         w1YKfwx+bAiGfqhrjoYzMgPotliW2PoNIzQTJqB91Aey3WfAcAYeyrrUMKXcp5mZmlSk
-         uYMQ==
+        bh=1I1Vrog9fdI8kljcvuSbh45rUrbPup3oMA9Sww25HEU=;
+        b=sSszWy6mGp214kOKfgralpoL7EOsVoaJ6m9h882wxp38EKxVA8lCHeo+9lOmdWqKVJ
+         P4TqGAs6501ks54IWU8rSjdCNHCf7dt4TqhfhPhBAxK1UZB4SUm0UHr2fwIarqLw7tg5
+         3sf2YohiofLwzFrPF+c4bRMP2u254CsbNuP1BH1gxGwsckr1WZmMHLxqZIi5AiA1tIVm
+         oUo8ho8arR+620nfDIBO7QwF8ivSLMHIB9mzKCIz7qmWcCuDCuvfkka9ZfowRG7uZU0k
+         wS0iulNrWzbRHI+G1qvMhtkM6KKRXy8is/Aw9SDOiiJsCAmQ5N6D8piNOMPbgOAYTiMw
+         wMcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795540970; x=1796145770;
+        d=1e100.net; s=20260707; t=1795540999; x=1796145799;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=kezZGHeLloHaJ2MKhoiAIbrQQR8LDYCZTYZeN0WxIEU=;
-        b=Xduuc1SWXMrwGK3IdaKT3SVHLMVFSQHVPzu4dBO1z3vDDk9d6Zk81dwGS6Ov1YNetT
-         izNVr89XLlw3ZDvmjqm98UelB0AToXmHVM3ZF+ZRLSgjqEDYv4ekgRMew1GJwuLuY8CT
-         66F8w5aUAKKAfZeuwjrFAkLRE6Sn0My9QnZySsIZOuVhuIRFNHt3lcooDZx4lP5dBAIX
-         D/FbZ0P0R95wc7Gl8QJvXAUi15kXlWvpqJ1KHaz740u1N5EEe0Disue9zGYNzTYTul5U
-         71jSszHamI78K0zv1ojMmNnJxjtyGg2S5lkYphBrvlNcKfV4PqOXXntucicGtYZ9yxgZ
-         ta6A==
-X-Gm-Message-State: APuU4Z9EkO1Ii0QXE3hLnmo6bl9N2HLCZkskjxoTGdC7h5Aq0gVtZOUO
-	4WAZ1etBdDQoF3n91MlJrH8tu2WOJeEvLRpqWywn2HkocuBwYj6MP1Yl8+Or0W5D4Gw=
-X-Gm-Gg: AZFdTZdPn3SAV/ddJuYhoXoqQ+arQzV7cCfkeA7rlIXNmWRjC1E55MdKPyVj+FggSeO
-	rhgN7gHlGwfmNIWYS7RMuoLHgtEwD1daIwP7/OX7t8eAwNcMLKBNy/DAJAN5/qf/D8DLu97uqfM
-	WCBliwz1vfr7Kw2xeZMwr89jT1O8t2SiOMB+8TfVkTuf5IgCRlYsOwZp2GL58vMoNbh57fCEXnK
-	ygHM8x11dRTXmSNx0j5EP401FCxyK8mkXXEpZ93CG1LOOoAh6jKtKDcItF3i/cSdNJkjGJQWw5G
-	m1RiiO2LWqU+LaVeHWKiLid6Cb5/oPTc2EI8l4RxaIGnZEVyRF9x39PK23xwMhJl+ZcILJSnIIi
-	RakmkpmZJHhy1adwXxHg1oauEkD2/o2JVXTcAnpgC96ks2lh2EgYI3w+U14vWzxZeh3bHVXB6DW
-	AK4w0fFSHeKbauu0Ja0CO347y+J43wfZ9YtBXyelYDb7e/EG1hWjEJbPxs5nZ6MMBgRmB5OOl/m
-	ayb5yrA8zUQiR0IKk4CBom+Dt8WHSm/2NpBxXo7TOO2NtT7MM1sMHTGV+SNuENl8sE6pIbn+kiG
-	vVT0SsEpTvqP4vKIvaduRURH74f6ljib8wBq14sMqKBjksJwxRfWaR1UoB+f7XCRZCLgR2tc4Ae
-	TxBBGxlUu57US58EoGD8ixR2yz1ghU30CteuzwVBC/XPhpObYfgXoWByLHOKnXdSjbBMfS0GlMq
-	boow8+PPiE4xAnlrRC7pMR4jeyXBtx
-X-Received: by 2002:a17:907:9584:b0:c34:e9fe:82ed with SMTP id a640c23a62f3a-c513a88223amr1197255966b.28.1795540969887;
-        Tue, 24 Nov 2026 09:22:49 -0800 (PST)
+        bh=1I1Vrog9fdI8kljcvuSbh45rUrbPup3oMA9Sww25HEU=;
+        b=MsO2URPaKRf2zIs673FuAVqf1j4VfbEmnCfypNSlS5zJP76GcitOs/B4FmHcEZFUJn
+         KDh4AYOTEmJPqV2aAjQgn5AB/OcZLbXnyTApFt3A7Q6uHH2PHCc1JD2FjpMRZtL6DKKH
+         CrExiJSQotKMAwEvndvj7lfZxbzp5E8Jr1hCvRqVdSldXgXqzdpgw7JlnkgXO3c8xb2F
+         e8D1/5VLkhsHDBT7yWuFbh4ERYpw+RUmYfbXBFrk/3Xqbd8TEvZTssnknGPHy6kHs9oP
+         QxHUQ9mBzS8BL/xa//MsQMUNySGtftoYXdFHWjA4jKbcyJtkmfnBgJwflOJiV7HCL7by
+         z0cA==
+X-Gm-Message-State: APuU4Z9rMAuGJYHcriHNR6O+du0NlbgO3A4eREQEPQVxZYVzpmsAY3Pt
+	72mS1dQqnsOCneS3Svkl1S2zt+dxuNOqpWQ5LEEoxpoTau7YcU6CUgJ1yaQt0iSJMbQ=
+X-Gm-Gg: AZFdTZcJfRa+MJlQovTOjSlSXFbTgGke7h97t6Av9uojZnxYCuU86vq+N6bCE377dSW
+	/y1OjaGRRJqlxAwUP0yRUZnhztrJpRZ2cEnT5UH0xdY6whU5qrbeks3ntMtBput6nTAJrXlkfhT
+	jE5MR6BskXbFDBa56SxvJaHmYuNTovGBTbrjgM3uyGOKUlN0Q1yPOlKvMpidUFJPlh3Oz48FQYv
+	lFArYYY1OfYaVNzzuxGT8baS1JImdOadTKKCgGGi7ADkwvtjwmpPIQyGM6bSrsRhqXnlfQmzB/4
+	wtixMyTbrQmMxZwwY3+e2CfEYJHkbgM7mM1rlAJTm7mrhA2UQuMsPYYuiivdNYK+sAK/OvsAJzH
+	d7d301AiH1R7EY/Q6HeecUOXCbbvkpfzp9ILHoiAh0lRSskruF62uanEa9f0baJfgwu4D3ijqu4
+	4RAZqGzt9yzBCmXoYtN+dRkVAaYynVBehfFCnKLx40Rsa/JxrKksB+J/aZIYbucep2eN0T8THAv
+	MO1VUZxS6AHpvFbb0MWtN8E5kJZmT74kUiJAbDZ9qq4QsidaZUToViqSPxYwOMf5UXwNerOmGHj
+	2bA4f9win2op+swSETPu8ZDZKdfZDjBv/+8wrjRFrI01sGK/FNDMgBbcaJ9U20qHkgbR/NEmUBi
+	1iOsHPU69JkvrNfZY1GgDHwyRWLOVmlscqDkPo7g5hDtDq67137r/75GwaACWiLDlg/qc/dYcUh
+	omEo64FIBg9KN90vELINbMeN0GvSmK
+X-Received: by 2002:a17:907:9306:b0:c50:5d6f:df2 with SMTP id a640c23a62f3a-c513ac9944bmr1250720666b.45.1795540998563;
+        Tue, 24 Nov 2026 09:23:18 -0800 (PST)
 Received: from localhost.localdomain ([104.28.251.99])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c513afe01a0sm547394466b.68.2026.11.24.09.22.47
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c513afe01a0sm547394466b.68.2026.11.24.09.23.15
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 24 Nov 2026 09:22:49 -0800 (PST)
+        Tue, 24 Nov 2026 09:23:18 -0800 (PST)
 From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
 To: git@vger.kernel.org
 Cc: christian.couder@gmail.com,
@@ -87,12 +87,13 @@ Cc: christian.couder@gmail.com,
 	siddharthasthana31@gmail.com,
 	kaartic.sivaraam@gmail.com,
 	okhuomonajayi54@gmail.com
-Subject: [PATCH v2 0/5] notes: start passing the repository through notes.[ch]
-Date: Tue, 24 Nov 2026 18:21:41 +0100
-Message-ID: <20261124172146.18330-1-okhuomonajayi54@gmail.com>
+Subject: [PATCH v2 1/5] notes: store the repository in struct notes_tree
+Date: Tue, 24 Nov 2026 18:21:42 +0100
+Message-ID: <20261124172146.18330-2-okhuomonajayi54@gmail.com>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261105203344.48513-1-okhuomonajayi54@gmail.com>
+In-Reply-To: <20261124172146.18330-1-okhuomonajayi54@gmail.com>
 References: <20261105203344.48513-1-okhuomonajayi54@gmail.com>
+ <20261124172146.18330-1-okhuomonajayi54@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,110 +105,233 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This is a preparatory series. It makes the code in notes.[c,h] and its
-direct callers work on the repository stored in struct notes_tree instead
-of the_repository. It deliberately does not convert the whole notes
-subsystem yet; it does the bulk of the work in notes.[c,h] and leaves the
-rest for future series.
+A notes tree is always read from one repository, but the tree
+does not record which one. Later code has to fall back to
+the_repository.
 
-What it does:
- - stores the repository in struct notes_tree;
- - uses the tree's repository when reading, writing and pruning notes;
- - passes the repository to the ref glob helpers and the combine_notes
-   callbacks.
+Store the repository on the tree. Rename init_notes() to
+notes_tree_init() and load_notes_trees() to notes_tree_load(),
+since every caller changes anyway. notes_tree_init() takes the
+tree first and the repository second, and saves the repository
+in t->repo. notes_tree_load() takes the repository first.
+notes_cache_init() passes the repository it was given. Other
+callers pass the_repository for now.
 
-What is left for future series:
- - notes.c: the display-notes code keeps its state in globals, and log,
-   format-patch, diff-tree and format-rev are given a repository but do
-   not pass it on. format_note() still falls back to the global
-   default_notes_tree, and expand_loose_notes_ref() only takes a strbuf.
-   The hash-size helpers are also still on the global.
- - notes-utils.[c,h]: still use the_repository. And the hash-size helpers
-   still on the global are reached from here, through create_notes_commit()
-   -> write_notes_tree(), so converting notes-utils is tied to converting
-   those helpers too.
- - notes-merge.[c,h]: still work on the global repository.
+Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+---
+ builtin/notes.c |  8 +++++---
+ notes-cache.c   |  3 ++-
+ notes-utils.c   |  3 ++-
+ notes.c         | 30 ++++++++++++++++++------------
+ notes.h         | 11 +++++++----
+ 5 files changed, 34 insertions(+), 21 deletions(-)
 
-Changes since v1:
- - Dropped the final patch (notes-utils: use the given repository) so the
-   series stays within notes.[c,h] and its callers, and reframed it as a
-   preparatory series.
- - Moved the copy_note() change out of the combine_notes patch into the
-   writing-and-pruning patch, where it belongs, and updated both commit
-   messages.
-
-Okhuomon Ajayi (5):
-  notes: store the repository in struct notes_tree
-  notes: use the tree's repository when reading notes
-  notes: use the tree's repository when writing and pruning
-  notes: pass the repository to the ref glob helpers
-  notes: pass the repository to the combine_notes callbacks
-
- builtin/notes.c |   8 ++-
- notes-cache.c   |   3 +-
- notes-utils.c   |   9 ++-
- notes.c         | 164 ++++++++++++++++++++++++++++--------------------
- notes.h         |  40 +++++++-----
- 5 files changed, 134 insertions(+), 90 deletions(-)
-
-Range-diff against v1:
-1:  79ca75340a = 1:  5ad0f1bd62 notes: store the repository in struct notes_tree
-2:  9692b4f18c = 2:  1018419720 notes: use the tree's repository when reading notes
-3:  f87b683aeb ! 3:  67a2942c09 notes: use the tree's repository when writing and pruning
-    @@ Commit message
-         the repository, passed down from the tree. prune_notes() hands
-         the repository to its callback in a small struct.
-     
-    +    copy_note() also writes through the tree, by calling add_note(),
-    +    so it uses the tree's hash algorithm for its null object ID.
-    +
-         Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-     
-      ## notes.c ##
-    @@ notes.c: int write_notes_tree(struct notes_tree *t, struct object_id *result)
-      	}
-      }
-      
-    +@@ notes.c: int copy_note(struct notes_tree *t,
-    + 	if (note)
-    + 		return add_note(t, to_obj, note, combine_notes);
-    + 	else if (existing_note)
-    +-		return add_note(t, to_obj, null_oid(the_hash_algo), combine_notes);
-    ++		return add_note(t, to_obj, null_oid(t->repo->hash_algo),
-    ++				combine_notes);
-    + 
-    + 	return 0;
-    + }
-4:  469aa752ab = 4:  7ea6c0e5a2 notes: pass the repository to the ref glob helpers
-5:  517c056f8d ! 5:  ff8cf4d22a notes: pass the repository to the combine_notes callbacks
-    @@ Commit message
-         belongs to another repository. The callbacks are only called from
-         note_tree_insert(), which has the tree.
-     
-    -    Pass the tree's repository to all combine_notes callbacks. Also make
-    -    copy_note() use the tree's hash algorithm for its null object ID.
-    +    Pass the tree's repository to all combine_notes callbacks.
-     
-         Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-     
-    @@ notes.c: int combine_notes_cat_sort_uniq(struct object_id *cur_oid,
-      			       buf.len, OBJ_BLOB, cur_oid);
-      
-      out:
-    -@@ notes.c: int copy_note(struct notes_tree *t,
-    - 	if (note)
-    - 		return add_note(t, to_obj, note, combine_notes);
-    - 	else if (existing_note)
-    --		return add_note(t, to_obj, null_oid(the_hash_algo), combine_notes);
-    -+		return add_note(t, to_obj, null_oid(t->repo->hash_algo),
-    -+				combine_notes);
-    - 
-    - 	return 0;
-    - }
-     
-      ## notes.h ##
-     @@ notes.h: struct strbuf;
-6:  75b58d578b < -:  ---------- notes-utils: use the given repository
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 9f1f0ec840..725280c785 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -370,7 +370,8 @@ static int notes_copy_from_stdin(int force, const char *rewrite_cmd)
+ 		if (!c)
+ 			return 0;
+ 	} else {
+-		init_notes(NULL, NULL, NULL, NOTES_INIT_WRITABLE);
++		notes_tree_init(NULL, the_repository, NULL, NULL,
++				NOTES_INIT_WRITABLE);
+ 		t = &default_notes_tree;
+ 	}
+ 
+@@ -420,7 +421,7 @@ static struct notes_tree *init_notes_check(const char *subcommand,
+ {
+ 	struct notes_tree *t;
+ 	const char *ref;
+-	init_notes(NULL, NULL, NULL, flags);
++	notes_tree_init(NULL, the_repository, NULL, NULL, flags);
+ 	t = &default_notes_tree;
+ 
+ 	ref = (flags & NOTES_INIT_WRITABLE) ? t->update_ref : t->ref;
+@@ -841,7 +842,8 @@ static int merge_commit(struct notes_merge_options *o)
+ 	else
+ 		oidclr(&parent_oid, the_repository->hash_algo);
+ 
+-	init_notes(&t, "NOTES_MERGE_PARTIAL", combine_notes_overwrite, 0);
++	notes_tree_init(&t, the_repository, "NOTES_MERGE_PARTIAL",
++			combine_notes_overwrite, 0);
+ 
+ 	o->local_ref = local_ref_to_free =
+ 		refs_resolve_refdup(get_main_ref_store(the_repository),
+diff --git a/notes-cache.c b/notes-cache.c
+index 74cef802bd..b9a2940435 100644
+--- a/notes-cache.c
++++ b/notes-cache.c
+@@ -50,7 +50,8 @@ void notes_cache_init(struct repository *r, struct notes_cache *c,
+ 	strbuf_addf(&ref, "refs/notes/%s", name);
+ 	if (!notes_cache_match_validity(r, ref.buf, validity))
+ 		flags |= NOTES_INIT_EMPTY;
+-	init_notes(&c->tree, ref.buf, combine_notes_overwrite, flags);
++	notes_tree_init(&c->tree, r, ref.buf,
++			combine_notes_overwrite, flags);
+ 	strbuf_release(&ref);
+ }
+ 
+diff --git a/notes-utils.c b/notes-utils.c
+index 5c1c75d5b8..ea43fedd43 100644
+--- a/notes-utils.c
++++ b/notes-utils.c
+@@ -169,7 +169,8 @@ struct notes_rewrite_cfg *init_copy_notes_for_rewrite(const char *cmd)
+ 		free(c);
+ 		return NULL;
+ 	}
+-	c->trees = load_notes_trees(c->refs, NOTES_INIT_WRITABLE);
++	c->trees = notes_tree_load(the_repository, c->refs,
++				   NOTES_INIT_WRITABLE);
+ 	string_list_clear(c->refs, 0);
+ 	free(c->refs);
+ 	return c;
+diff --git a/notes.c b/notes.c
+index ec9c2cb150..b79fe65478 100644
+--- a/notes.c
++++ b/notes.c
+@@ -1012,8 +1012,9 @@ char *default_notes_ref(struct repository *repo)
+ 	return notes_ref;
+ }
+ 
+-void init_notes(struct notes_tree *t, const char *notes_ref,
+-		combine_notes_fn combine_notes, int flags)
++void notes_tree_init(struct notes_tree *t, struct repository *r,
++		     const char *notes_ref, combine_notes_fn combine_notes,
++		     int flags)
+ {
+ 	struct object_id oid, object_oid;
+ 	unsigned short mode;
+@@ -1025,7 +1026,7 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
+ 	assert(!t->initialized);
+ 
+ 	if (!notes_ref)
+-		notes_ref = to_free = default_notes_ref(the_repository);
++		notes_ref = to_free = default_notes_ref(r);
+ 	update_ref_namespace(NAMESPACE_NOTES, xstrdup(notes_ref));
+ 
+ 	if (!combine_notes)
+@@ -1034,6 +1035,7 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
+ 	t->root = (struct int_node *) xcalloc(1, sizeof(struct int_node));
+ 	t->first_non_note = NULL;
+ 	t->prev_non_note = NULL;
++	t->repo = r;
+ 	t->ref = xstrdup(notes_ref);
+ 	t->update_ref = (flags & NOTES_INIT_WRITABLE) ? t->ref : NULL;
+ 	t->combine_notes = combine_notes;
+@@ -1041,15 +1043,15 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
+ 	t->dirty = 0;
+ 
+ 	if (flags & NOTES_INIT_EMPTY ||
+-	    repo_get_oid_treeish(the_repository, notes_ref, &object_oid))
++	    repo_get_oid_treeish(r, notes_ref, &object_oid))
+ 		goto out;
+-	if (flags & NOTES_INIT_WRITABLE && refs_read_ref(get_main_ref_store(the_repository), notes_ref, &object_oid))
++	if (flags & NOTES_INIT_WRITABLE && refs_read_ref(get_main_ref_store(r), notes_ref, &object_oid))
+ 		die("Cannot use notes ref %s", notes_ref);
+-	if (get_tree_entry(the_repository, &object_oid, "", &oid, &mode))
++	if (get_tree_entry(r, &object_oid, "", &oid, &mode))
+ 		die("Failed to read notes tree referenced by %s (%s)",
+ 		    notes_ref, oid_to_hex(&object_oid));
+ 
+-	oidclr(&root_tree.key_oid, the_repository->hash_algo);
++	oidclr(&root_tree.key_oid, r->hash_algo);
+ 	oidcpy(&root_tree.val_oid, &oid);
+ 	load_subtree(t, &root_tree, t->root, 0);
+ 
+@@ -1057,7 +1059,8 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
+ 	free(to_free);
+ }
+ 
+-struct notes_tree **load_notes_trees(struct string_list *refs, int flags)
++struct notes_tree **notes_tree_load(struct repository *r,
++				    struct string_list *refs, int flags)
+ {
+ 	struct string_list_item *item;
+ 	int counter = 0;
+@@ -1065,7 +1068,8 @@ struct notes_tree **load_notes_trees(struct string_list *refs, int flags)
+ 	ALLOC_ARRAY(trees, refs->nr + 1);
+ 	for_each_string_list_item(item, refs) {
+ 		struct notes_tree *t = xcalloc(1, sizeof(struct notes_tree));
+-		init_notes(t, item->string, combine_notes_ignore, flags);
++		notes_tree_init(t, r, item->string,
++				combine_notes_ignore, flags);
+ 		trees[counter++] = t;
+ 	}
+ 	trees[counter] = NULL;
+@@ -1136,7 +1140,8 @@ void load_display_notes(struct display_notes_opt *opt)
+ 						     item->string);
+ 	}
+ 
+-	display_notes_trees = load_notes_trees(&display_notes_refs, 0);
++	display_notes_trees = notes_tree_load(the_repository,
++					      &display_notes_refs, 0);
+ 	string_list_clear(&display_notes_refs, 0);
+ }
+ 
+@@ -1270,7 +1275,8 @@ void free_notes(struct notes_tree *t)
+  * Fill the given strbuf with the notes associated with the given object.
+  *
+  * If the given notes_tree structure is not initialized, it will be auto-
+- * initialized to the default value (see documentation for init_notes() above).
++ * initialized to the default value (see documentation for
++ * notes_tree_init() above).
+  * If the given notes_tree is NULL, the internal/default notes_tree will be
+  * used instead.
+  *
+@@ -1290,7 +1296,7 @@ static void format_note(struct notes_tree *t, const struct object_id *object_oid
+ 	if (!t)
+ 		t = &default_notes_tree;
+ 	if (!t->initialized)
+-		init_notes(t, NULL, NULL, 0);
++		notes_tree_init(t, the_repository, NULL, NULL, 0);
+ 
+ 	oid = get_note(t, object_oid);
+ 	if (!oid)
+diff --git a/notes.h b/notes.h
+index 6dc6d7b265..c81bc99446 100644
+--- a/notes.h
++++ b/notes.h
+@@ -50,6 +50,7 @@ int combine_notes_cat_sort_uniq(struct object_id *cur_oid,
+  * simultaneously.
+  */
+ extern struct notes_tree {
++	struct repository *repo;
+ 	struct int_node *root;
+ 	struct non_note *first_non_note, *prev_non_note;
+ 	char *ref;
+@@ -63,7 +64,7 @@ extern struct notes_tree {
+  * Return the default notes ref.
+  *
+  * The default notes ref is the notes ref that is used when notes_ref == NULL
+- * is passed to init_notes().
++ * is passed to notes_tree_init().
+  *
+  * This the first of the following to be defined:
+  * 1. The '--ref' option to 'git notes', if given
+@@ -107,8 +108,9 @@ char *default_notes_ref(struct repository *repo);
+  * Precondition: The notes_tree structure is zeroed (this can be achieved with
+  * memset(t, 0, sizeof(struct notes_tree)))
+  */
+-void init_notes(struct notes_tree *t, const char *notes_ref,
+-		combine_notes_fn combine_notes, int flags);
++void notes_tree_init(struct notes_tree *t, struct repository *r,
++		     const char *notes_ref, combine_notes_fn combine_notes,
++		     int flags);
+ 
+ /*
+  * Add the given note object to the given notes_tree structure
+@@ -319,7 +321,8 @@ void format_display_notes(const struct object_id *object_oid,
+  * Load the notes tree from each ref listed in 'refs'.  The output is
+  * an array of notes_tree*, terminated by a NULL.
+  */
+-struct notes_tree **load_notes_trees(struct string_list *refs, int flags);
++struct notes_tree **notes_tree_load(struct repository *r,
++				    struct string_list *refs, int flags);
+ 
+ /*
+  * Add all refs that match 'glob' to the 'list'.
 -- 
 2.56.0
 
