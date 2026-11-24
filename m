@@ -1,88 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.144
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795531486;
-	b=0VnHYCnRGuzTM1Rq5xewQOIOoU4mHux1ZINa/AoeN9bNgbptoGx/a4nwHrm93UfGmQGa
-	 oZJPqoedwHRB+O67KmH9r/mbFqDmJkFYQKsqbHHwr/Glc7vqleJsrmqLC+0Pt6LsaU8b9
-	 iAWcogeNgxrQxQCBCDewh5+77jC0yNkhmfBYqLJmxNh+nmejoC5CggxSjeZCd6ESrtaoo
-	 G+LutduVEDSL+hTTUKp1aUryDqIb4o4UjPX0J4iS7FGGMknTWDxVoMVO0JmQvzhDIpRWb
-	 rnmKiQ3mhnyF3YngJZr122N8hfk2higtO8E1hO3vX551OsvGgapvMQX4GzrjryUkEpw==
+	t=1795532046;
+	b=xWztjUzLao1Plh4hOMZ/8y4OnNG2xezsoml5RmUfI/dSVxA847Kqp+zuTnN3sUS8fW5r
+	 oAQLCFewWeDSW7LiyN+/duOqJpeGoRuzGOMM6L7MncIMCnOrKggp2gtfFZNccAYXK7Y0Y
+	 Xn1loxVITbiR06iuXZf5dyM0QEE+yaAjU0vB+/BX3CAifHk8Acy4pSnhb37e3/sbsORr9
+	 cqRgNz8y3Jr77e7J7BFxAeVxxaCeDoQUl/coszfKZf+bZxVjmsFXia0PZQxcrIepwrCv3
+	 cJ6hQ7pKUuI8JAByc73olleSnlC85+AhDxOsPiAA6IR4qZWluPll9k9aXvmfyiqKs9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795531486;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:
-	 References:Content-Language:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=iQfBiK7s8/xtwKaRViJE7IHOrIW3gDh7YhjhyhjweLo=;
-	b=vnIzjul5z0ulwNZao+UHFk+2n5SR44E5dhBOBCS20RXXTOFKLr90ibhlyu3hmEynf2H4
-	 v7hCfcFhZKbsGBfj069iBZZ6wcAxmf4QUyh7XCgHIPRlKDkDCuQIOmAW1CmlPIoj3nXZw
-	 fzjX6Kzj/gdSfU2it2XiC14Mwl5jJJFoeQo/rik0aauZBLnldBYVpFxur0cr8Uc3HAd7f
-	 d+Vr9mpj3J8o+qbaVZLeVtGfNo+wi0Kh3kOPk6q+hiGu/VkdVqGVtMNmnr8TA8JlZir1t
-	 xtcGs0EchmJpEQv199KNTBI8gi/6PP5oNr7Z6nhuV06YqmqsoeyQ1LmsVarFOU4zR3w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795532046;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=N71SIE9mO+LsFoIZzp9im/biwFiSQK+RANGV6khL+1c=;
+	b=2upfUaFg+YbbqN4MNkQ0ncTB2mrBUmEPS2K6QzJHn6dRAX6G4UdTqrqQKzlOJTPLMs9J
+	 z/q/SftwzUsY1Oj1pNaN864aPBQgcdYDwmSg0SVzaJRBww8FNMPlI2rhmnOkoGkPhI3GN
+	 /x0sJVdsqy6NaaGQLHmfJdpVJxaOkIK7lBbKcbC59jzBIux0G0gEOqHyAiYHTwXam6PZ5
+	 3HDiGKCAmabGceGW70zWjaVyjBGORv6B55E3MJ6PCryVKOAQZI5FagMplVwmF5iDTgZMN
+	 BOc56RH0r7sM3Tn9kE8nxwxqKs+UcF5eXHmKH20BwCY5N3NyMiVlBwDfb43dzvl+0RQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cWjfB9mo;
-	arc=none smtp.remote-ip=209.85.128.52
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=P7syKGDL;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=cfx7oC14;
+	arc=none smtp.remote-ip=103.168.172.144
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715A6606A31E
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 14:44:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 715A6606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6E7606A31E
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 14:54:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0F6E7606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cWjfB9mo
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4bb64c99d2fso44641335e9.3
-        for <git@vger.kernel.org>; Tue, 24 Nov 2026 06:44:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795531485; x=1796136285; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=iQfBiK7s8/xtwKaRViJE7IHOrIW3gDh7YhjhyhjweLo=;
-        b=cWjfB9mofljbH+rNDi0SaXa0UNTTth7AcrbJLR9adEcsNF3mHPGsMr7P8k6iqsDKWP
-         gROkItIQGvfrGHvN6FpwAq1SV65NSo3VvWNorDD5yMGWFVDWWlDONCDWlFrLlMY778QR
-         2MXmU8enGqBpelqZjvSmthR6cLPKxvN7QdaIhxjYSK5hL1cvJ0RUNzxpiI0F703HMo1H
-         6TmckgdYhZ5CR9xKs0FGZUBvYlOQbWnb6LBtozNTrFQCog7Cet0mOj56e/NLvSlTgWVu
-         hkk+h4FY1bf3D6F+Gf/y0b8dzQtK5Y3p1unfwGoFQrJipOj5IWzTioJSMLLmVp0DQILa
-         Zs1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795531485; x=1796136285;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=iQfBiK7s8/xtwKaRViJE7IHOrIW3gDh7YhjhyhjweLo=;
-        b=0OsJEHuJHNmInoPs3v7lUoYc9r7d75NjM9l5i7Q5QLziJru3GFFa4EbOdZfA3L9Htb
-         AEd1UQJ9+YeYOA6ar7zNQT05YPES2uZDzGIGE+byXKQLcHYjLBqcMxEucGaWbrD9DCu9
-         /GdpvLrmcY91LcrZCm+yn6yOgQrLVesSqJLYFs3MtFnO+q8CStx/wdC/zrtjFztF8nhE
-         MjZxEcRoBxwj0BpPaUemWgnjJxinY/oalMS4+p7bYSAIDo5GuwM3d6wTeolhSbXiTA+i
-         3ByxaDEgpjACsdehWS4mnmistSyKfxROcSRbTCZymsLxpMqXiF3yz8bE67sbXPZnxtfm
-         uR/w==
-X-Forwarded-Encrypted: i=1; AL+hErFY7cEW4Omg+f54we4qX5JKa82sMa9X6q8DJnPc3pKy5/JvZ8AjMcOA3fUfo2/TAazBMnY=@vger.kernel.org
-X-Gm-Message-State: APuU4Z9DWIP5BlSX6L6sVSE1/yzoZ/1K53PWOExkOh0GmjaiBpT/3HTB
-	oMkyorfueF/q/6EVzknrcogfAXItpICsFEoRUrdE90QYJqImfTonHpUr
-X-Gm-Gg: AZFdTZfjpi1fyYXS1aNFHzf61xlyvAozasuHZYhYn8UHBxYLd3DX6rDvsQdOM5llbVb
-	J0pmkuH2FDCQiTDywf4UKwVyq3CS7lHSVY2ysPjRHJPXFGoyApVkYnxnGWrE4WAiBaw80Pex90S
-	Ea5t8ZF50Ee252DVs4a/bRpI/72H57/1Na8Blt4SI7ZyuzQs1d/ka6n2O8//tUpndpzB0Y72fR7
-	dfvvcWHI4kMuheaxfpwTjTj671Rsei4VdS/eWjqoD95Erq5hiCYVrvi/UBYeNaZKAolS0AUMKbZ
-	EtK1LPn87aNJ9SFCPCqUZs4VR6gUdpp66cd/Y/ycSrI4WB4sGvwT4E3x9DvWbuVyjLlGNBpmBu/
-	DAdvyCErJXF28Km3O6gxu6+GT9QfaS0T+tpQSTiSsc29i1oUdacH8LM+f/PNEkpGjbqHsE+J9KQ
-	0l5YGpxwRH9xNZSPVr8hzaLj5gpGWwGefCXN2NyJBEAbs5O2MxpA44EaoZN7MrlCijoPwbMxxWa
-	gcvps5WJioJCnYE35IkXB4ey9owMCtuLPEBdysZZl5EJfkUa7w1aN9i7qf3HM6QvaSJ3ZGtiHSg
-	vSBYpIOC2EzCyYAn5gU8GzLHdir5yDOVisO1XfBvuDh9joFrTbqeCyUcTHTHlsOVAVU5C6tR12b
-	ns2xHzGOgSaS2CPt1QE2oSH2FrVxL
-X-Received: by 2002:a05:600c:3b1a:b0:4bb:875b:3d91 with SMTP id 5b1f17b1804b1-4bb88820bfamr315970995e9.30.1795531484505;
-        Tue, 24 Nov 2026 06:44:44 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb884b8429sm690744745e9.14.2026.11.24.06.44.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Nov 2026 06:44:44 -0800 (PST)
-Message-ID: <778be7d6-4211-459b-9e12-f1d9455bc807@gmail.com>
-Date: Tue, 24 Nov 2026 14:44:35 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=P7syKGDL;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=cfx7oC14
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 373BFEC097E
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 09:54:05 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Tue, 24 Nov 2026 09:54:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1795532045; x=1795618445; bh=N71SIE9mO+
+	LsFoIZzp9im/biwFiSQK+RANGV6khL+1c=; b=P7syKGDLpUjnwARqVLilTovr3H
+	A14b3cRzTXvD08WC19A9DAKS0aGVqTIT1TZ2dvtjhlHumOiXHRWCddoretFGaUUV
+	mkX83OVQenGsWiIq6cx7UXyVwSYXmH+bQgPhCdDpzd7JyMNujNwqLzYjcB27yMNr
+	BCZSBQDzn/cSZo8EnUwvx5807nMFNaf2T7owjrjj5YtjY0X97bqoCr0bnmUvz7qs
+	vpUYEMlQfHKQSnGm7EnXDOlCoF+UQKByvtY56tbJfq40vrFRAZU1EvuLXWWaVbVC
+	JvCeY8mqJFpJ8JR3F3CGiuXd9g1m0i2Oru1CdeiMAuUadjWVVQh5hRIF13Dw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795532045; x=1795618445; bh=N71SIE9mO+LsFoIZzp9im/biwFiSQK+RANG
+	V6khL+1c=; b=cfx7oC14E0d+14GL2IvYGjpTG8MVYrSOnINAadlzksPj3DGcm/K
+	6FOGL+4eCApd533JcD44+fzBu1XDgE+yuPl5dFOzXMXuqUVEMfErEVKAhQML5tuk
+	yRmN8z03GYzddstdGE+k7f3YryrRB626f7siDhedNH2Yeh3/vYx2xk6vu5WU1zww
+	4bOZN2rKxDbQgvcHeVqH6MpQmOBZLT7Kow3PqRay1p/a3XeWvuAhIO3cHGSbPJ3u
+	DvZrhFKtT/55W1OTBfiIolrZq66NMp+JjNJ7nq5bx8y5N+QOfm5m5yWan3xtYYPg
+	BcaJ5z/s1RDE+eryBAO/oiPiHRueqH1UweA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795532045; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:F1eDTeOwl74dZGLfC9zjtcJH+B52ShZBfvzcPsA0cJC0xsT
+	3OiBqBGTyR1ym/K/Ta5KBCcvLwy6zWCdn3L0g3PvKujP3R5Dr0tDj6tiCTXqcmr2
+	FJ0HsZonf0iTgSXgXI0gZSkYttYzLDFXvzoPutJuxmVTNBDiaYOldVALkuK7A9+1
+	9DPag3vUs9jLQDQjyuC29a8EYUlBiNtr5MM3YqQNN5PmIsjcdi/Wn6clx9reRDnX
+	YE6gsNx6d42rvY2qg1E3dRhzmHcTdFthnZidQMB4oJ3OeViGpiFD6968O3FzIhXR
+	eJqm0DIfu2Z9Ro+8YBiyvim+nKsezJlFlu39JrA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:UIb9u0B39xAO67bnnkl+PEw2+nvao7BiwNvBKbD/wms=:i2gVszpxW9MYaiVCdq7JOPkboH44IniYbGZUuKm3nkw=;
+X-ME-Sender: <xms:DKUFa1-vIDl0yiF0W1D5iVQNa3OTuAW4VPa1RAdeJn45rYPbNRBALQ>
+    <xme:DKUFa7Mvr0P1YdByGZ8g2GbAATlxJkHWi1C2HaHCkUa1PW9KiUvw-zYSWHyLrwSEZ
+    RpG7mFW_0PeWrrdvDyVfTU_W7ZHvWRJzVkM27PY5IIU8TZiZtO2bwk>
+X-ME-Received: <xmr:DKUFazHei57pD1_KhdnZqsA7aPxqMRx__SbMon2VJGLERyRaNATwwOp2xLXg_SlpR9JSWFmHWiFqNoBaFxEPRotQIrvdVrnS9B9IcsY>
+X-ME-Proxy-Cause: dmFkZTFnlqRvzqAK8toxIOdYsC4T8U6DSW+Yohkv9YwpXaSDg2twvwxyK3/1oJAnHR6EuN
+    hN9tb7wQ6z1K7WaCDlwUAwvOfAa8ext6KK1H9yaPz+FlvFkGa7lZGjjmZLy/5J/cmvqMhb
+    jGGv95GxEKXea/R75IYLN3L968Rv7AJTrlUFCizPnTvaREUYJSgjfpwvw6//hS2g1YhuXW
+    wy40+koae1DmE872QM/T3hbSB38UTpR2N7x22L8G/KPF2L8mWBr6AFX3Cs1LpijgcFr2ry
+    Pik/mrWqRAchl4fJDy9Qw/oSKVeKj8oZVjqvCuHaVjjaYrkirTdTlUOstqs65mUaAXwveg
+    /ykNM3/4uFzK3V/so1PqjNkVKempco1xN+dQFKydkXx4Wts1nej7jyV0VUXh9aXLftlFco
+    VpDsVohnKlUJD5MNSGzAm+pbglv0Tk95WFkzxJYqMvT+NwSxnZqYL0x444viiDxsQhIvN/
+    V7o7a3WzEfh78fJzqzn+KkIyWZvPNTM1qe0HuwSsINWRujYKcHq8GD0zc9+6WPhPeCKzXX
+    F/Gb0xq8UxPT1qSZB+l+KkU1qWKeWTR30LRIwQN+9r7XJEnGjoUbBwVEyCWZIbKkmTB2Jo
+    MLLZYTTBde1NxYCZafOoHqCYEAgDL8M4LxN/X8FGDcBWE1vHV+qGYYXIXywA
+X-ME-Proxy: <xmx:DKUFa5T6VYJnqNdrxS1YEFdD4acTDrIfZoasBcVrOV4OVoGad0UUnQ>
+    <xmx:DKUFawvxZWz1ClLLaCwl5_1yLzKfBJ3ZXToGoUa7b-FnaEPg6aGnyg>
+    <xmx:DKUFaxLFjHWnK_sClFye_3EwIREB5pQADsQxwVuyh6iggrlCLCXzKA>
+    <xmx:DKUFa1lvWRe5dXMYb3Geyem_uo2Ew747GaRP0hemuzFRaxXJLCMrNg>
+    <xmx:DaUFa7rro4vrm0VPs0gbtn5-DUvEbyTRpjS-BF8L30fYn95D41k_PGLB>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Nov 2026 09:54:04 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Wonseok Oh via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Wonseok Oh <wonseok_oh@korea.ac.kr>,  Wonseok Oh
+ <marinelay7@gmail.com>
+Subject: Re: [PATCH] sequencer: reset saved HEAD OID when picking onto an
+ unborn branch
+In-Reply-To: <pull.2317.git.1795242633923.gitgitgadget@gmail.com> (Wonseok Oh
+	via GitGitGadget's message of "Sat, 21 Nov 2026 06:30:33 +0000")
+References: <pull.2317.git.1795242633923.gitgitgadget@gmail.com>
+Date: Tue, 24 Nov 2026 06:54:02 -0800
+Message-ID: <xmqqh5h6wa9h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,134 +125,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 5/5] date: avoid overflow in approxidate relative-time
- multiplication
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Harald Nordgren
- <haraldnordgren@gmail.com>, Simon Richter <Simon.Richter@hogyros.de>,
- Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.2253.git.1791958171.gitgitgadget@gmail.com>
- <pull.2253.v2.git.1795472027.gitgitgadget@gmail.com>
- <6057734709542cfe83a0ae885cb588e01806f247.1795472027.git.gitgitgadget@gmail.com>
-Content-Language: en-US
-In-Reply-To: <6057734709542cfe83a0ae885cb588e01806f247.1795472027.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Johannes
+"Wonseok Oh via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On 23/11/2026 22:13, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> Parsing relative dates can overflow `int` when multiplying a value by a
-> unit length, before converting the result to `time_t`. Signed overflow
-> is undefined behavior, therefore checking the converted value is too
-> late.
-> 
-> Reject quantities above `INT_MAX` before narrowing to `int` on all
-> platforms. The inputs are non-negative, meaning that checking unsigned
-> arithmetic is sufficient. The product must also fit the native `time_t`
-> range. Report arithmetic or conversion failures as parse errors rather
-> than saturating the offset.
+> From: Wonseok Oh <marinelay7@gmail.com>
+>
+> When picking multiple commits, "git cherry-pick" stores the current HEAD
+> in .git/sequencer/head for "--abort" to return to. If the branch is
+> unborn, repo_get_oid() fails and leaves the object ID uninitialized,
+> but sequencer_pick_revisions() saves it anyway instead of clearing it
+> to the null OID that sequencer_rollback() checks for to report
+> "cannot abort from a branch yet to be born".
+>
+> As a result, "--abort" errors out with "Could not parse object" in my
+> master build, while in Debian's 2.47.3 build the uninitialized memory
+> happened to hold the last picked commit's OID and moved the new branch
+> there.
+>
+> Clear the object ID to the null OID when HEAD cannot be resolved, and
+> add a test.
 
-This looks good and is much simpler than the previous version.
+As Phillip mentioned, the commit message can use some clarification.  In
+addition to tightening the first paragraph so the relationship between
+oidclr() and sequencer_rollback() reads clearly, the second paragraph
+frames the symptoms around anecdotal builds ("in my master build" and
+"in Debian's 2.47.3 build") instead of describing the general
+undefined-behavior failure modes.  And the final ", and add a test" is
+filler that does not add much value.
 
-Thanks
+> +test_expect_success 'cannot abort a cherry-pick sequence on a new history' '
+> +	pristine_detach initial &&
+> +	git checkout --orphan new_disconnected_seq &&
+> +	git reset --hard &&
+> +	test_must_fail git cherry-pick base..anotherpick &&
 
-Phillip
+This cherry-pick will fail at the very first step.  HEAD stays unborn
+and the abort-safety file would be empty.  Even without the code fix, if
+the variables on the stack happened to be zero-initialized, doesn't this
+test pass by coincidence, or fail in rollback_is_safe() with "could not
+parse abort-safety" rather than "could not parse object"?  Perhaps it is
+a good idea to check how the command fails and with what error message,
+not just having test_must_fail to make sure that the command dies a
+controlled death, plus validating that the sequencer/head file stores
+$ZERO_OID, to harden the test?
 
-> Pointed out by Coverity.
-> 
-> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> Assisted-by: Claude Opus 4.6 and GPT-6.1
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->   date.c          | 26 ++++++++++++++++++++------
->   t/t0006-date.sh | 13 +++++++++++++
->   2 files changed, 33 insertions(+), 6 deletions(-)
-> 
-> diff --git a/date.c b/date.c
-> index c50f45d310..3cbfe20b37 100644
-> --- a/date.c
-> +++ b/date.c
-> @@ -1307,7 +1307,14 @@ static const char *approxidate_alpha(const char *date, struct tm *tm, struct tm
->   	while (tl->type) {
->   		size_t len = strlen(tl->type);
->   		if (match_string(date, tl->type) >= len-1) {
-> -			update_tm(tm, now, tl->length * *num);
-> +			uintmax_t length = tl->length, num_t = *num, seconds;
-> +
-> +			if (unsigned_mult_overflows(length, num_t))
-> +				return NULL;
-> +			seconds = length * num_t;
-> +			if (date_overflows(seconds))
-> +				return NULL;
-> +			update_tm(tm, now, (time_t)seconds);
->   			*num = 0;
->   			*touched = 1;
->   			return end;
-> @@ -1377,8 +1384,11 @@ static const char *approxidate_digit(const char *date, struct tm *tm, int *num,
->   	}
->   
->   	/* Accept zero-padding only for small numbers ("Dec 02", never "Dec 0002") */
-> -	if (date[0] != '0' || end - date <= 2)
-> +	if (date[0] != '0' || end - date <= 2) {
-> +		if (number > INT_MAX)
-> +			return NULL;
->   		*num = number;
-> +	}
->   	return end;
->   }
->   
-> @@ -1404,14 +1414,18 @@ static timestamp_t approxidate_str(const char *date,
->   		if (!c)
->   			break;
->   		date++;
-> -		if (isdigit(c)) {
-> +		if (isalpha(c))
-> +			date = approxidate_alpha(date-1, &tm, &now,
-> +						 &number, &touched);
-> +		else if (isdigit(c)) {
->   			pending_number(&tm, &number);
->   			date = approxidate_digit(date-1, &tm, &number, time_sec);
->   			touched = 1;
-> -			continue;
->   		}
-> -		if (isalpha(c))
-> -			date = approxidate_alpha(date-1, &tm, &now, &number, &touched);
-> +		if (!date) {
-> +			*error_ret = 1;
-> +			return 0;
-> +		}
->   	}
->   	pending_number(&tm, &number);
->   	if (!touched)
-> diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-> index 6e63130ea2..2a33aaa327 100755
-> --- a/t/t0006-date.sh
-> +++ b/t/t0006-date.sh
-> @@ -211,6 +211,19 @@ check_approxidate 3.weeks.ago '2009-08-09 19:20:00'
->   check_approxidate 3.months.ago '2009-05-30 19:20:00'
->   check_approxidate 2.years.3.months.ago '2007-05-30 19:20:00'
->   
-> +test_expect_success HAVE_64BIT_TIME 'parse a large number of weeks' '
-> +	echo "Jan 1 2099 4000 weeks ago -> 1651778400" >expect &&
-> +	test-tool date timestamp "Jan 1 2099 4000 weeks ago" >actual &&
-> +	test_cmp expect actual
+> +	test_must_fail git cherry-pick --abort 2>advice &&
+> +	test_grep "cannot abort from a branch yet to be born" advice &&
+> +	test_must_fail git rev-parse --verify HEAD
 > +'
 > +
-> +test_expect_success TIME_IS_64BIT 'reject a quantity that does not fit in int' '
-> +	git reflog expire --dry-run --all --expire="1 day 1 second ago" &&
-> +	test_must_fail git reflog expire --dry-run --all \
-> +		--expire="1 day 18446744073709551615 seconds ago" 2>err &&
-> +	test_grep "invalid timestamp" err
-> +'
-> +
->   check_approxidate '6am yesterday' '2009-08-29 06:00:00'
->   check_approxidate '6pm yesterday' '2009-08-29 18:00:00'
->   check_approxidate '3:00' '2009-08-30 03:00:00'
-
+>  test_expect_success 'allow skipping stopped cherry-pick because of untracked file modifications' '
+>  	test_when_finished "rm unrelated" &&
+>  	pristine_detach initial &&
+>
+> base-commit: e1ec09b23c8e0deb21a0b95ac5996422277395d4
