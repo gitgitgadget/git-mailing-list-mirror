@@ -1,120 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.50
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795540586;
-	b=OJX7ojXwYjW17oDG8wj31TzeaaNKW29r5mmHzXprNmeR870viTXkUy+NoowTTXcRBxx8
-	 hGn2KTQo0y3x2mXjndi4Buq0U2oxGZ1Gc9AuWl2jGbMZPLwGePIFjhGPCQ5JJPtVEmj1l
-	 mjhg/pxtXasilaC0AUKDG03T6IMIoODs+7cupgRi5e+wNJgzY7/59dnkGblEPiTHR3e3s
-	 SfBd1v/qV4uhMP6aY57iq4nUZmw/poSMQ6l8rLmr0jwLEQQztBHJPJcNNkv1B06/xSYwj
-	 4j/odQIXihbX8nXH44ocDoN2/KcECmBFh2vfPpkUANGJcvowzEuVe/vUsSDGmJ6vhfA==
+	t=1795540972;
+	b=WkDMfwXHHknSYcrh1Af8Kn/uKCPwzsaDO9XGsofsWVzZhNVRrhq71Y+qgvr+HfP/UUkn
+	 BhcQLbwnq8AvZLzAoCE+rCSsBThhlruMVELbGzOrEs886X/nJ50KLAa6hfzGNfP2h8QTR
+	 XMzyGKHDw3L7mY8ppRkItoRLVt1lpwPO0pKv8uc7obpUtTPUpPg93wrqZueoIJFADKh+8
+	 qAuyReeR5H6hQTD1nM3ZszclC35sYIe0N1iI7lYrT7Bv95FdXujCNEL7+2Qu9qGPctL1J
+	 oZMhmp6Qelf8GHKzmj6B9L8KK0qFPzUjkpzvzNGwHVJBk7y3eXxJWRNTyXbGxOa7O1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795540586;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=xptx+72BhLRFn1Dm+ttumQpHJSgl2UKuwhFMDfCNTT8=;
-	b=tmLCgod49CIiL+bGeN2BnfjGF5m5xQPIUGSijQj0zsICi8N6SFV00puqOL7Zle8BvLwd
-	 2Jy54pN6/jZ9vnAnHABVHT/xk+d4EIRPtJL38yS9UF2lFZFR4l3weXb8gjKuptZkuMlgH
-	 ozpdWp7HqNSSL6V2Orf3n2nKYn5Hx1yS1BrLbA3pLlyZvmnpLskaVEPvIATBhOQtA5+mG
-	 V4adCE6DUxLdjcncpIfZkbMl2rVKfAr0VQbndMoJm6+aw+u6JIoq21jt0h+rCfHCPQW9L
-	 0k17BfD6B/1EM1HbtauXt+dMVQZ5DZe+tWFk7RSbuhrAsqarGhXzxvkIcv0FKmG3zMA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795540972;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=kezZGHeLloHaJ2MKhoiAIbrQQR8LDYCZTYZeN0WxIEU=;
+	b=puVjx4R5xjmcja2fHlSv2uaAbl62FIBLs5DIrcgiYdpoctKsY+SWuoyzyhHIgo6j5m89
+	 ODZ3cmdZK6v4nHDq98b7iesuQV09j2zg2kyMO66ETs1vlEw471GuX38au0j480Hw7Kshl
+	 n6JDjgS70QJxTxPPrQQ7NP+55rEkfsMM7Y0HrMVwU2jJB5B7wuBJSV7R+au8+XuZi7CQB
+	 j4V+b657NZeNFlQdrQofD5XEJg379e5goSjEOFkxGCjDK7y1gOZzExqhdM+B3tLJ3ksFX
+	 wEbQfjNy3tyfzaZA5qvkmOYMsE8jGrDMuxM2vUQJX6yqeV3YtaYnLchJ9Xo9XDyTS1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=VcADrOwP;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=LxfUdcQg;
-	arc=none smtp.remote-ip=103.168.172.150
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CzRgw4xw;
+	arc=none smtp.remote-ip=209.85.208.50
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F57A606A326
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 17:16:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7F57A606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC742606A31E
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 17:22:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CC742606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=VcADrOwP;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=LxfUdcQg
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id A7B91EC0B0B
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 12:16:24 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 24 Nov 2026 12:16:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795540584; x=1795626984; bh=xptx+72BhL
-	RFn1Dm+ttumQpHJSgl2UKuwhFMDfCNTT8=; b=VcADrOwP8aBTTBkaU+HZFoSKNX
-	LBNPbGemoDiOVvZi1+15f2cfSw5chv/lX752KJmifWpkErX5r0WHk2dhuFydV9Jb
-	BHUAoJM23NtiZw0B2Vsi1zXPZZC/cRsUXUpTS6n+g2h+b01ZfDI2sFAy8u3ePtwg
-	EFSSh8v0IYT9omLK4QKQZwwWB8EJeLuyOmEHPaXyMKO6WzPivhhcGJ8mhbfWVJzY
-	kmqbxtXueSkCrdmIanKIBktF15TMoiqLc6okMwPeIAYjggUlxyTRFHuGDARsvvMd
-	OQONwfq4jdkU7XRgq6/RZBMwHlPnNEDGexq+758mkhbCr1XUC5cZ7x7ywSFg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795540584; x=1795626984; bh=xptx+72BhLRFn1Dm+ttumQpHJSgl2UKuwhF
-	MDfCNTT8=; b=LxfUdcQgtZFFoFMAwSqpUrQAN41Oz6Khr8DR8BUisb4cdkeO56F
-	5Jig280VO7YoVlkioPNaw7g47OUs/ySfjk1zFm/f6G6pQAGLY5n/HGg9cJQGrJpB
-	wIIBnMmqvrhP+77Q1W0QzTKi8z8jqDySL4fDoDRsiqJMqd/YBu9iBK29CgoJDvjs
-	EB2ScnpRWQuVzfUgGRgvqvet1w5+Bg967+I7gQWjJmTkp/6CEPK/htKOOknhwZs8
-	xsk/uI0l/8kQP4B9dj+Y0NTaivRbC6hgxyWjUfNcb4FaGFG5zwMhPC0ZwUpujiaa
-	iX8fDDO8bsvtA0x/HcWJhg23AYxSwh/86Zw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795540584; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:Xa8dXyj4Zx/EtDsDbIdHz784Imdp6LB5xVHA9Afr2Xb4f/n
-	MiKRC9yyDVx4qpEiXjGD9RrJzZwuVIDK/w/w7Z/FAO4cFImGh/cr13WgvTJ5sAEj
-	4aQdzCxIFEfJgfYmhJAdlf5upJ/tcNx0pWQrpV1+URgX2RusW8XQGtW4jDrtGXIm
-	MJaIKWyujcoMSxLTMcXyuGQ+xkgYp9RWfiErE1NEOEy3gMIo1pp91t0wr8nGWQO1
-	POF+AVhmvVvI0jPYKh5Y14ecx9+lEmnH9PtiysmxFDdP1i3nrVKzRfwcpjOFHcry
-	JY/jy8gN5RxoV0SilYMUpLDra2hb5ANffqkrkyA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:JHz01wtPZNCoFQZao7W9vbgOdE0vGP3khw4hdcgMIpI=:92I8lizAQy4+/iWzoiMcZdiLOEWdB+jInV9W0QrlwDw=;
-X-ME-Sender: <xms:aMYFawULO_L7U6xV2TjjgKEtwdUfDDv8SLwjsYeJcPpBOEYN1WHcAA>
-    <xme:aMYFa4RwF6UK2YaCZlGYJVmGSH24uc0l1ebciz_oflYRBxJwWa3VjGKsV56UBYy5S
-    SjJvxubRj3vwWLCpL5E8PpNU5QiuvHkjsIM-fl-912JRovNce8yjUI>
-X-ME-Received: <xmr:aMYFa-PahNT6brTbeiCpNZjfGTd2L9-Of0DJLvuR8Cs9z68Fr03tVqG5efqS4vHOF1ip5tIKDQoF8-uaZcfprMWsivhSBszFMHHqMfA>
-X-ME-Proxy-Cause: dmFkZTF9/vtkAWR0dDTfATw71koYMSnlf/87EXuM45ef8JJpTLN3WX2SybHxaTdtgKUgfY
-    l8NWVbiWuIEFY76N49lWtrKZrSi2LfvHhLYv9o212CxgEGzOSVvihTBgmRMbyWSDEDL5lC
-    2roDYtOmSfJMDRO5IP8WaMJ1QpQokplY+aYUbTKieaDXZVfehm4eVojJzYAv5hKELyiFob
-    vjL1TekfqMXEyWUtJgZEQfYSN/YWB86POsj/uax1J0RbNH9ql0mLAa3LLTeEdg9n0ih2KT
-    so0ygN+XiQd5/BRQYV90OaG4kAvuiMxpLVuoViFJI+FxfNIarM3v4x535iq8FDOTQ+bMSf
-    BBgNcQJhUgdjA8U5lJgahVTwwxbNUZ+ebtyff3jmDjMm/Eb4NrtJ9sR6BDPfhiURurSrCD
-    OX4T5ONL0U61qVReY2uT+C5zicwrGadmrMYI70v3t1cr2cdbYG1WnrZp+PNPUaEYME2+e5
-    V3gdkPX2+ilK7DWYI29wPF9T4HmOPuv316YhA7LH0BiGjHdrnaQGWOnoFXGmlVFscsqpXp
-    ETXOtw1G9HTtbCHQ6O+T96TQPgVv49cpLK0dVCIAlg/jNmBFsxodUIzdjfitsI2Hj3cHqH
-    ZlbLPkz7FXeEUIWiSesoKbUzo+BKGhrfdpkS2qTi9p2us+pAn3wf9I0GftUw
-X-ME-Proxy: <xmx:aMYFa2SUamDxCbI6GAKF7sEwedd-xMYMQ3KmF3za6RD_B52BO2GVVA>
-    <xmx:aMYFa8jVWLlcSYrlsEQYd-FZc5ntZNULJzSeanirdhmXc2tdZe4bBA>
-    <xmx:aMYFa__UdM4c5NBKK0kUJnsE5x0DY117jI7hjXg1-w6xy_flZ6IT0w>
-    <xmx:aMYFazFBOGpVOspB9l_atUNGP-os5kjyDk_cCVcf_DCaAbLA8-1m3w>
-    <xmx:aMYFa-6DlEIly2KHgpvVHk355qFFVZnk-sb-4oac-gy_kMntJRGd_Ux7>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Nov 2026 12:16:23 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  "D. Ben Knoble"
- <ben.knoble@gmail.com>,  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH] doc: add tutorial on branches for beginners
-In-Reply-To: <pull.2307.git.1794259990263.gitgitgadget@gmail.com> (Julia Evans
-	via GitGitGadget's message of "Mon, 09 Nov 2026 21:33:10 +0000")
-References: <pull.2307.git.1794259990263.gitgitgadget@gmail.com>
-Date: Tue, 24 Nov 2026 09:16:22 -0800
-Message-ID: <xmqqa4myup3t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CzRgw4xw
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6ba380cd8dbso6421372a12.3
+        for <git@vger.kernel.org>; Tue, 24 Nov 2026 09:22:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795540970; x=1796145770; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=kezZGHeLloHaJ2MKhoiAIbrQQR8LDYCZTYZeN0WxIEU=;
+        b=CzRgw4xwiEAhTLIYId9wJWcX4IB+V9+EBK8z7CcKIts+oPS4MTtJ98HFQ1ggK3FDL1
+         B5dhRFZAzj+YquCpcdYLxZzpQoGnqpoZlUQ1/EgzXp9hejr2i88AduePFvTcU3MTweet
+         4rT19kfPFaebQuUOGyKMlcV5UcCKFyzkBhj+X07othKSPM55o5VmqlhoBGF5zgGOZqhU
+         4AAr01Tmx0bnpqgoFJWxSUEyXJNASwnLsIQUYKqZq0VyccCz1hBZheWVJQnUdM112wTj
+         w1YKfwx+bAiGfqhrjoYzMgPotliW2PoNIzQTJqB91Aey3WfAcAYeyrrUMKXcp5mZmlSk
+         uYMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795540970; x=1796145770;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=kezZGHeLloHaJ2MKhoiAIbrQQR8LDYCZTYZeN0WxIEU=;
+        b=Xduuc1SWXMrwGK3IdaKT3SVHLMVFSQHVPzu4dBO1z3vDDk9d6Zk81dwGS6Ov1YNetT
+         izNVr89XLlw3ZDvmjqm98UelB0AToXmHVM3ZF+ZRLSgjqEDYv4ekgRMew1GJwuLuY8CT
+         66F8w5aUAKKAfZeuwjrFAkLRE6Sn0My9QnZySsIZOuVhuIRFNHt3lcooDZx4lP5dBAIX
+         D/FbZ0P0R95wc7Gl8QJvXAUi15kXlWvpqJ1KHaz740u1N5EEe0Disue9zGYNzTYTul5U
+         71jSszHamI78K0zv1ojMmNnJxjtyGg2S5lkYphBrvlNcKfV4PqOXXntucicGtYZ9yxgZ
+         ta6A==
+X-Gm-Message-State: APuU4Z9EkO1Ii0QXE3hLnmo6bl9N2HLCZkskjxoTGdC7h5Aq0gVtZOUO
+	4WAZ1etBdDQoF3n91MlJrH8tu2WOJeEvLRpqWywn2HkocuBwYj6MP1Yl8+Or0W5D4Gw=
+X-Gm-Gg: AZFdTZdPn3SAV/ddJuYhoXoqQ+arQzV7cCfkeA7rlIXNmWRjC1E55MdKPyVj+FggSeO
+	rhgN7gHlGwfmNIWYS7RMuoLHgtEwD1daIwP7/OX7t8eAwNcMLKBNy/DAJAN5/qf/D8DLu97uqfM
+	WCBliwz1vfr7Kw2xeZMwr89jT1O8t2SiOMB+8TfVkTuf5IgCRlYsOwZp2GL58vMoNbh57fCEXnK
+	ygHM8x11dRTXmSNx0j5EP401FCxyK8mkXXEpZ93CG1LOOoAh6jKtKDcItF3i/cSdNJkjGJQWw5G
+	m1RiiO2LWqU+LaVeHWKiLid6Cb5/oPTc2EI8l4RxaIGnZEVyRF9x39PK23xwMhJl+ZcILJSnIIi
+	RakmkpmZJHhy1adwXxHg1oauEkD2/o2JVXTcAnpgC96ks2lh2EgYI3w+U14vWzxZeh3bHVXB6DW
+	AK4w0fFSHeKbauu0Ja0CO347y+J43wfZ9YtBXyelYDb7e/EG1hWjEJbPxs5nZ6MMBgRmB5OOl/m
+	ayb5yrA8zUQiR0IKk4CBom+Dt8WHSm/2NpBxXo7TOO2NtT7MM1sMHTGV+SNuENl8sE6pIbn+kiG
+	vVT0SsEpTvqP4vKIvaduRURH74f6ljib8wBq14sMqKBjksJwxRfWaR1UoB+f7XCRZCLgR2tc4Ae
+	TxBBGxlUu57US58EoGD8ixR2yz1ghU30CteuzwVBC/XPhpObYfgXoWByLHOKnXdSjbBMfS0GlMq
+	boow8+PPiE4xAnlrRC7pMR4jeyXBtx
+X-Received: by 2002:a17:907:9584:b0:c34:e9fe:82ed with SMTP id a640c23a62f3a-c513a88223amr1197255966b.28.1795540969887;
+        Tue, 24 Nov 2026 09:22:49 -0800 (PST)
+Received: from localhost.localdomain ([104.28.251.99])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c513afe01a0sm547394466b.68.2026.11.24.09.22.47
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 24 Nov 2026 09:22:49 -0800 (PST)
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com,
+	ps@pks.im,
+	usmanakinyemi202@gmail.com,
+	siddharthasthana31@gmail.com,
+	kaartic.sivaraam@gmail.com,
+	okhuomonajayi54@gmail.com
+Subject: [PATCH v2 0/5] notes: start passing the repository through notes.[ch]
+Date: Tue, 24 Nov 2026 18:21:41 +0100
+Message-ID: <20261124172146.18330-1-okhuomonajayi54@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261105203344.48513-1-okhuomonajayi54@gmail.com>
+References: <20261105203344.48513-1-okhuomonajayi54@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,155 +102,112 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+This is a preparatory series. It makes the code in notes.[c,h] and its
+direct callers work on the repository stored in struct notes_tree instead
+of the_repository. It deliberately does not convert the whole notes
+subsystem yet; it does the bulk of the work in notes.[c,h] and leaves the
+rest for future series.
 
-> From: Julia Evans <julia@jvns.ca>
-> ...
-> +Next, edit README.md and make another commit, like this:
-> +
-> +----
-> +git commit -am "Update README.md"
-> +----
-> +
-> +`git commit -am` commits the current version of all files that Git is
-> +tracking.
-> +
-> +Now we're set up and we can start creating branches.
-> +
-> +Step 2: Find your current branch
-> +--------------------------------
-> +
-> +In Git, you normally have a "current branch". You can see your current
-> +branch by running `git status`. It's usually on the first line, like this:
-> +
-> +----
-> +$ git status
-> +
-> +On branch main
-> +----
+What it does:
+ - stores the repository in struct notes_tree;
+ - uses the tree's repository when reading, writing and pruning notes;
+ - passes the repository to the ref glob helpers and the combine_notes
+   callbacks.
 
-After reading through the steps, the abrupt appearance of the "$" prompt
-feels a bit disorienting.  You have a good reason to use a prompt here,
-to make it possible to tell what you type and what the commands tell you
-apart.  Wouldn't it be better to use the prompt consistently, e.g.,
-making the last example of the previous step
+What is left for future series:
+ - notes.c: the display-notes code keeps its state in globals, and log,
+   format-patch, diff-tree and format-rev are given a repository but do
+   not pass it on. format_note() still falls back to the global
+   default_notes_tree, and expand_loose_notes_ref() only takes a strbuf.
+   The hash-size helpers are also still on the global.
+ - notes-utils.[c,h]: still use the_repository. And the hash-size helpers
+   still on the global are reached from here, through create_notes_commit()
+   -> write_notes_tree(), so converting notes-utils is tied to converting
+   those helpers too.
+ - notes-merge.[c,h]: still work on the global repository.
 
-----
-$ git commit -a -m "Update README.md"
-----
+Changes since v1:
+ - Dropped the final patch (notes-utils: use the given repository) so the
+   series stays within notes.[c,h] and its callers, and reframed it as a
+   preparatory series.
+ - Moved the copy_note() change out of the combine_notes patch into the
+   writing-and-pruning patch, where it belongs, and updated both commit
+   messages.
 
-instead?
+Okhuomon Ajayi (5):
+  notes: store the repository in struct notes_tree
+  notes: use the tree's repository when reading notes
+  notes: use the tree's repository when writing and pruning
+  notes: pass the repository to the ref glob helpers
+  notes: pass the repository to the combine_notes callbacks
 
-	Side note.  Yesterday I learned while reviewing an unrelated
-	patch that we encourage users not to squish short options
-	together into a single word, so I split your "-am <msg>" in the
-	above rewrite of the example.
+ builtin/notes.c |   8 ++-
+ notes-cache.c   |   3 +-
+ notes-utils.c   |   9 ++-
+ notes.c         | 164 ++++++++++++++++++++++++++++--------------------
+ notes.h         |  40 +++++++-----
+ 5 files changed, 134 insertions(+), 90 deletions(-)
 
-There are a handful of other places where you add the "$" prompt in a
-block that has both input and output, and many blocks that lack the "$"
-prompt.  The mixture looks rather messy.
+Range-diff against v1:
+1:  79ca75340a = 1:  5ad0f1bd62 notes: store the repository in struct notes_tree
+2:  9692b4f18c = 2:  1018419720 notes: use the tree's repository when reading notes
+3:  f87b683aeb ! 3:  67a2942c09 notes: use the tree's repository when writing and pruning
+    @@ Commit message
+         the repository, passed down from the tree. prune_notes() hands
+         the repository to its callback in a small struct.
+     
+    +    copy_note() also writes through the tree, by calling add_note(),
+    +    so it uses the tree's hash algorithm for its null object ID.
+    +
+         Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+     
+      ## notes.c ##
+    @@ notes.c: int write_notes_tree(struct notes_tree *t, struct object_id *result)
+      	}
+      }
+      
+    +@@ notes.c: int copy_note(struct notes_tree *t,
+    + 	if (note)
+    + 		return add_note(t, to_obj, note, combine_notes);
+    + 	else if (existing_note)
+    +-		return add_note(t, to_obj, null_oid(the_hash_algo), combine_notes);
+    ++		return add_note(t, to_obj, null_oid(t->repo->hash_algo),
+    ++				combine_notes);
+    + 
+    + 	return 0;
+    + }
+4:  469aa752ab = 4:  7ea6c0e5a2 notes: pass the repository to the ref glob helpers
+5:  517c056f8d ! 5:  ff8cf4d22a notes: pass the repository to the combine_notes callbacks
+    @@ Commit message
+         belongs to another repository. The callbacks are only called from
+         note_tree_insert(), which has the tree.
+     
+    -    Pass the tree's repository to all combine_notes callbacks. Also make
+    -    copy_note() use the tree's hash algorithm for its null object ID.
+    +    Pass the tree's repository to all combine_notes callbacks.
+     
+         Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+     
+    @@ notes.c: int combine_notes_cat_sort_uniq(struct object_id *cur_oid,
+      			       buf.len, OBJ_BLOB, cur_oid);
+      
+      out:
+    -@@ notes.c: int copy_note(struct notes_tree *t,
+    - 	if (note)
+    - 		return add_note(t, to_obj, note, combine_notes);
+    - 	else if (existing_note)
+    --		return add_note(t, to_obj, null_oid(the_hash_algo), combine_notes);
+    -+		return add_note(t, to_obj, null_oid(t->repo->hash_algo),
+    -+				combine_notes);
+    - 
+    - 	return 0;
+    - }
+     
+      ## notes.h ##
+     @@ notes.h: struct strbuf;
+6:  75b58d578b < -:  ---------- notes-utils: use the given repository
+-- 
+2.56.0
 
-> +Example: Emilia the PhD student
-> +-------------------------------
-> +
-> +Emilia is writing her PhD thesis. She follows the steps from
-> +linkgit:gittutorial[7] to set up a Git repository on the Internet so
-> +that she can back up her work.
-> +
-> +To back up her work after making a commit, she runs:
-> +
-> +----
-> +git push origin main
-> +----
-> +
-> +Sometimes, she creates a branch to make an experimental change she's not
-> +sure that she's going to keep, like `rewrite-chapter-5`.
-> +
-> +She does this by running:
-> +
-> +----
-> +git switch -c rewrite-chapter-5
-> +----
-
-Would it help to explicitly mention that after running 'switch -c'
-to create the branch, Emilia actually does some work on it before
-the "If she decides to keep/If she decides to discard" paragraphs?
-
-> +
-> +If she decides that the experimental change should be merged, she merges
-> +it into `main` like this:
-> +
-> +----
-> +git switch main
-> +git merge rewrite-chapter-5
-> +----
-> +
-> +Or if she decides the rewrite of chapter 5 was a bad idea, she can
-> +delete the branch:
-> +
-> +----
-> +git branch -D rewrite-chapter-5
-> +----
-
-This is slightly misleading after saying "Or if she decides", which
-implies that the previous one did not happen.  If she did not switch
-to 'main' and merge, she would still be on the rewrite-chapter-5
-branch, and the "branch -D", even with a capital "-D", would fail.
-
-Perhaps make the example switch back to 'main' before discarding the
-branch?
-
-> +Example: Daniela and Carmen with the cat shelter website
-> +--------------------------------------------------------
-> +
-> +Daniela and Carmen create a Git repository for their cat shelter website.
-
-A very minor thing, but wouldn't breaking the alphabetical order of
-appearance of the characters be a bit jarring to readers?  Does this
-example need to be about Daniela and Carmen, not Carmen and Daniela?
-
-> +They both clone it onto their computer like this:
-> +
-> +----
-> +git clone git@example.com:cat-shelter/kitties.git
-> +----
-> +
-> +They decide to work together by just pushing all of their commits to the
-> +`main` branch, without using any other branches.
-> +
-> +When Daniela wants to do work, she first runs `git pull` on the main
-> +branch, like this:
-> +
-> +----
-> +git pull
-> +----
-> +
-> +She also checks in with Carmen to make sure they won't be working on
-> +the same files. Then she works on her changes. Then, before pushing her
-> +changes, she runs this command to merge any changes Carmen has made.
-
-Wouldn't it be helpful to be more explicit that before running this
-command (git pull), she commits all her work?  We assume that "pull"
-somehow finishes cleanly, so ...
-
-> +----
-> +git pull --no-rebase
-> +----
-> +
-> +We don't have space for a full introduction to linkgit:git-pull[1]
-> +here, but `git pull` fetches Carmen's changes and merges them into the
-> +current branch. The `--no-rebase` flag tells Git to use `git merge` to
-> +do the merge.
-> +
-> +Then she pushes her changes with:
-> +
-> +----
-> +git push
-> +----
-
-... there is no extra need for "git commit" before the "git push" that
-comes after the "git pull --no-rebase".
-
-Thanks.
