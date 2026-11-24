@@ -1,124 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.145
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795559478;
-	b=mpiWBBpQ76p+501nYXLOmdOuH2nWcL67Vdh+b/2sBXSWQ2ocgFCq54n/xPda5OGSo10v
-	 5UwwW7s/qfBVERZE59W6vs6rQMv3sxAWds64a6HJSJWxdqklGebWcBww+m2dn4Lr+nkMR
-	 LUd9yynnsqrOe99ZEuZHYR3tlZsLaSXHPzGLOKjXX38RnNdFcdbNXsjbePZEq1YEhhGaF
-	 9K9vdG1A6XfEWaNo/Mh5OW0/04EFisXqWRKD9QPmwEN3HPXuGcoCH9gUFPIJUS0Lke2mD
-	 Nd/1mLUTchN560XiSUCkrCK9KuaUibKwuRTZChThgiZiZLYVx8oGW2/szOyUoBLhS6Q==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795559478;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=bJWNo63kXQn5Nv0Rjlj+Yu0lzbe9Cz9Y9RR32+wh84M=;
-	b=tYs0mjjfC98qAxlLxoTRIox/LBN2dDLnqET7xQx6i5yKBkRlPmE0fd8goSciGEA6kZ9r
-	 vp41Gn3LywbFxGuNz6HDkrGkiUQkA0UcLYNkO+Hl19MzSalgMtt5CYXT/ejEGFF9RoL9X
-	 S5Qg48Mk5hEWrGmAxZhUKkhUGSDT9GE4GBSRCwC6RtSuES+FiBME1ETlzUoWdV9g8nTDR
-	 eC3MMb3RrM9ZQoDcnaNGY1WLqPP1FTn9/Vm8QRIYACNbTZPNEZi581gu/TB63KqHinWpF
-	 OncNB8qZIv2J1rhv7I07tnymvxXsSmc4ldKCViZbxKGrVOp2+ib8IN4pge6S7exEvWQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=RVyzY5ud;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=vNfF1pom;
-	arc=none smtp.remote-ip=103.168.172.145
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.54
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795560223;
+	b=ngeMM8YX0Tybrub3bO8kBsfgL9paJAJLQ3YsL6pfYdgK4G6fQvvV9JsN/D8mfCzlKobz
+	 rKb70M12dtHWQqCzZO5RgO6daUXiFiedzttL1oIPxAsSp7mGKL94VH51Pe/d0W+kuFtDg
+	 jZGNedbrZOVzCYooIqLj1+0Et+WGQCGvT5f1dgKXa8IHcpLVnCe9vsGW1m8MN4BsYA8E2
+	 KlCP8ejFfOKihQxveXPxx38eHRP7gTl6p3Lv6sVqbvP6hgtvkgZslwlU8tcN++kTil2Ir
+	 evIYA6nxMIl5RK12YDt27qmr3OyIVN5sZmGy+Ig0o05RdS+Ra8Hw1h75Ht83TMwIsYg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795560223;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=nQGt4vOk9JGakHn9vCjvkjc7ZuKvNoo+WrM1oMYvY5U=;
+	b=0m0nC0tbd0IW9wEv6O7CES51pkZOuCrk5uiMFq8otNPl0oeIZF+eiAxUFy6+deF/Kvsw
+	 VrEEhQ+g3D92QQJz/2CFj24zPLnI4+ECLF+K8mifwEkdW8o4iUYDK3MHxtUaaStvi4jvP
+	 a5g+d8/XEup0q2UbxxWf+Yt38jxYKf5Tg4Vc714ZQhpjIn/Su3Q7TCXAbKUX1an42lONL
+	 2SCI5OlrTRMaGN7SOJjC3nzJ8MnU/GNG6FgksqznNWtaFpdD04EFdguehNh9E7kJowS8C
+	 E35Y/hpcQMzW+VOhhWqZDLDcW92EYRh9fYLuU1X+5lYr6hrWg47kqfGduRxo6tW+khg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AP6hUxW0;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.54
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F48606A334
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 22:31:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 55F48606A334
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053B4606A31E
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 22:43:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 053B4606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=RVyzY5ud;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=vNfF1pom
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 71ACFEC0AB6
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 17:31:17 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Tue, 24 Nov 2026 17:31:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795559477; x=1795645877; bh=bJWNo63kXQ
-	n5Nv0Rjlj+Yu0lzbe9Cz9Y9RR32+wh84M=; b=RVyzY5udemkKG9v+jrLtqN9zNU
-	u4aO5E2AUriLttNxMCMbOjFulNTgyQq8H+i/VSRgb0vXffVZ0HvtoUE+XAO3K5fK
-	0pCvibdb8U1d8Z80WBqmJe1g07dKCuRiDU5Ye2Co1b3l4xcWLU33kpwY9F6e3a77
-	5MVfd4ipzQgckNdA3e6KkrmJROn43vMMV0vTTuLhfvaEbCgaY5/mazwFiGiXgXvW
-	O000PhenWa8MSseK30Pqtdp8z75QWhF7ZlmfWETwklJSaHlsKe1SRgoqFsRql4ct
-	DnPLaNfi/t4ECUNubghI4bV32B/0QWe6jctOQsdlKlkysfDQZ1Z423qz+NZw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795559477; x=1795645877; bh=bJWNo63kXQn5Nv0Rjlj+Yu0lzbe9Cz9Y9RR
-	32+wh84M=; b=vNfF1pomja8T/MhP/wkIIfk5bLf1sYZ6UqucsavQDUY27Jf+w9q
-	l7T0+jH2yYeCbRRsuMnOWaL302c8akATaxfxq8zrhtJVQYnr/owpBKma84nSKkuh
-	L/8m3JY6WXitXpbcfTELL2HUC/mEvagfO/Z+Mi0ZClzvZvwxP/QTk/u1wYF4fjcH
-	mdjTqaSTuqSVAjoDEHG67ISwzdj0vcH7NdszudIkfHVOU8Zi1ZEyF6hPYmZdb/+V
-	OTc40f0ZXbx58eo0DDORXv3TrCQO9Z9JGwIZUh3kr07Uv5LN2w5U1eK7bjaWX/5X
-	RHracoo+EoUlePEbLhdTK4Uju9j/Yz2Ce1Q==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795559477; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:MXMuLvKr1k1NBj9LmVYKoUe52/nv5reRLGn0KBAhlQ/5skP
-	LpWhVM/ZUFve7sXQuTV9ohNk7cW3B0mL0cHgWMj4m/j9fxBNmcJZYal7sEdnsFrJ
-	yiEt7eO+heM12/BfguVVPKhskBoeD2qSMXK0lZGNVr3rpLIQk1twx9Lha7Y82TBp
-	Ym0vhwhkG8O8o6W8hJod+wFDFkDpXlsHf7aws7zwZMOD/dsnH5P2J8s+UtMACJ8b
-	MEPJw6GH1F1/oe1tILUyYkEmNZeKidnha2M7+Whr6PQf1J9/RswDwDFiJSIoz3bj
-	4AzhTnUIGAGk2J3KEG4pj/2Ahpaz0k6vTpGpy0w==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:HfMOeWlDEaWL4ddt7utDw+drCZLAFb4BPIG6CKass6s=:jytuTmSSdmQvJHf42WDRsmFgWwJswMOw/Ok+LvpCM2M=;
-X-ME-Sender: <xms:NRAGa3oS2uQ883KsAb34liCd8jGxhT9VdWZo84_tnvrQWsJUQ0z0XA>
-    <xme:NRAGaz5-uTDRLz4e_kI5ZECM_4cmn7Kd6AU1hiM21MVc4ijAx8vYCQm0h__BPwNbb
-    zW7lYaCaoTn_Wisnzgkbz3Mvx2sXtzfoz3WvJSjsrH9juA9aExki60>
-X-ME-Received: <xmr:NRAGa2dQ0na3_KXjxgp1S4E5VnqFTExSn4EjFZuvv1PmUnDRp16TlAmutrzrLX0Fb-vS-0H4yPEct2Bjg0V5_cf3ntAKWKyetk2nQuA>
-X-ME-Proxy-Cause: dmFkZTEL9p22SRmekyh63/uZgmMbJ57IZ2D8Btdl7F4NFstMjOj1DE5PMlgrbA99Ozur2E
-    T22Li6sTzJ3DlFg/xoKaT5Ra4Ljw/QRikOzu7zLpo7KRCFKhkiNX9inRXWthQlNwjUJQYO
-    8UcIZOkQdQU0JR+1x2rEvcG5nXjPbw6J9KTMPqBiaKO9FgfJR4SGiCw80ue/y3FyhTsT2f
-    tZFacQoMYAOa9i73idh9c1OoaWx8Ep9RWyhdzGeGn4QFG37V6tS/FcdmiOC+fxWM5f1feF
-    TLXBhoZi3//P+PudU6COoTWwDk0MhSU4QioSj5Ih6AZBVmKsiWSCyfxTqWMMrJ+8ZsV9G+
-    gWeSBG3hbSZdLYZkqedQMJuPgYfh5gk+MMEjZNgcahSjp5V0GGJw2qejxL0Fy2qYluW9ih
-    VHZde4s2DmTWWE7YmZ6TQ25kZ9DZ75yBLVB2SHQ4xTgDl1KQ+6D4L2fDdMhGyka5rUuzBU
-    HwcY8IBGzXcohhGkNncXu+satn4/Ty997b0DQ+hooQXYsV8IYYTgbMjHPPzRzJShMUIkCP
-    4XpabF7LGabeqc6tREHs1/3k8ugjI4hd3ZtIViMJ0q7rqmW6w3C6guKz11od8ohcS8B+kW
-    PZKwWNrPZPm2DyYcDvtNDmRKVk0F3wTtvpye9U4jMl0sbH0Mita4qk6JaaeQ
-X-ME-Proxy: <xmx:NRAGaw40bIsdFVWSQYFhwLsCJZEQf1FW91IVBf75HBhE18K7VG3tzw>
-    <xmx:NRAGa1uSc_zsuUZ6hbj7HUBY326GXPZtLYmIRAKI5FSFfigqEEcdjA>
-    <xmx:NRAGa4hy5HoIWNJikA12ryjT7QB_LyEwHfxuebGFXd56HFrI4PAjSA>
-    <xmx:NRAGa4pPZYvFt5G0QzUSmADFsZ1WsUH45k6leGGL4PVTUdnfMM5tbA>
-    <xmx:NRAGa67O6adVAtI87-gxDyh6B-dBSuCi12Y-stESBFfrfUlUj3S0JqrP>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Nov 2026 17:31:16 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Ravi Mistry via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>,
-  Patrick Steinhardt <ps@pks.im>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  Ravi Mistry <rmistry@google.com>
-Subject: Re: [PATCH v4 2/5] http: add exponential backoff without Retry-After
-In-Reply-To: <fc5dbf8aea6cce544e091b578b585098849d0d71.1795103883.git.gitgitgadget@gmail.com>
-	(Ravi Mistry via GitGitGadget's message of "Thu, 19 Nov 2026 15:58:00
-	+0000")
-References: <pull.2287.git.1793462224.gitgitgadget@gmail.com>
-	<pull.2287.v4.git.1795103883.gitgitgadget@gmail.com>
-	<fc5dbf8aea6cce544e091b578b585098849d0d71.1795103883.git.gitgitgadget@gmail.com>
-Date: Tue, 24 Nov 2026 14:31:15 -0800
-Message-ID: <xmqqzeuxkgjw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AP6hUxW0
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-6b4bd3d98bfso6377135a12.1
+        for <git@vger.kernel.org>; Tue, 24 Nov 2026 14:43:42 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795560221; cv=none;
+        d=google.com; s=arc-20260327;
+        b=MO0dwWMUm9gCks6OmyO57Vmy7+EkrYWH0AY7ujKwwg3g/RCyipOupw5TX2mJUxLAkm
+         yIaB0o87N/9NsEnX7XpHCgiq1z+MWvZcYu3jviuQXdFfo4n1yY0itiMNd6xf3HmGW2yU
+         +ff0sc0kFBT7zcq+pNI8sm+J/+qmykHYIVZMFeSvS2edeYkOBN59sJdwO1yW48uQrPIZ
+         wQ3MHVYqIZ3AxZfuy0cFKrwnpLURcJ6qYfiUhNBWimKeoi62zvphhSvX+hR+aaD47uAc
+         8rjCnp6RpkYBkFqc0FameyR7Y5Ys4J1dh/Wz3JuJqIeyxNTgouJI5JcSmCsK53ETrHY5
+         qLNg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=nQGt4vOk9JGakHn9vCjvkjc7ZuKvNoo+WrM1oMYvY5U=;
+        fh=vNr9qSrSfgHpidduVhSRPvKPoYfGoL3STHjVV1mCHpM=;
+        b=oeLLGZEWue30qz+kbNf0fTaio3imObCK36G9VFpvRXmd7amrN8+WqU8CEH1nN+ux0l
+         nKbFrVG7SljFMGDdhWEy9egssHV2XRMVexoRVM4Fx+VMuEVdlFTjIr+Y1zmo1ZEasQMo
+         9dJHWGwJFMQUxkuuymE+KpmKLzNKLP5ObuUaiaEvNMiWOLYyGuvklPbGhq4AQcMCMiLZ
+         KQHHSsWOxj4dRHT6GhuwlnTMmmXPpTYIHcbDUyaHbmlkDD9QHJFhp1jfbb7f/6ZE21iz
+         PBML4YjyENY3kH7Miro3MGNLey8cCQm7whdLwKjeu6FVN53AyupFxOkFfnc7yUjaAWVp
+         +Syw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795560221; x=1796165021; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=nQGt4vOk9JGakHn9vCjvkjc7ZuKvNoo+WrM1oMYvY5U=;
+        b=AP6hUxW0VGfHErkxV0kYbQpxKthRRYGKptaXkaTgejQBmcnjg3pGhuao2+I+QYzC3/
+         F46v9+ZmIexjsWnlsVhAXgNHvGUlq1lZg3s1GHKBR0Xd1lNeCXv/Rw5vPI7dvQKlPFzG
+         pVsQWrrM15o+MVdUvExQrlP/HJJlfrrPUVXpjwC+Fe5aOQrGIt5UA+SWK0d6Z9nWcGh5
+         dz3VKIQx189uRyIo0Q54DVmOkgQgP33c+KwClT6eamNE7Yp70SD3zAxLEV0DN9xmnaI9
+         CAeeN60ryYLadZ486xceRKwzqw+LO85b3Pf0o8KaVf3vzJ30K4CrShyx1aDsy+6sZKoQ
+         a6Ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795560221; x=1796165021;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=nQGt4vOk9JGakHn9vCjvkjc7ZuKvNoo+WrM1oMYvY5U=;
+        b=z7S/BVVz6Jcxlagjnxp3w+FAJ4ydiDjvazhRB9URk1rAy4O0JuJmrBQBBgZdXZvsXz
+         JhJjxR4XzCP0a2mrcIpObL9KB3aY9te7vQBTeqI4RYctXZxXirScmUjqMcfUjGsKeEvj
+         99tUbs80jluBwxH5sCRVLik1+lPpSAsbfpBKe/+6S6oXooMShUHknhj/8+mcINombKAX
+         bQ9vLIUgakegoA7rSvy4iDErixUQA3FPfY7jFpFcXewuQtfNsZpJmfAXP/H72F2jE07B
+         zKbJyaQe9iqPQScoDHpT/+hKSLkLwhHMfkFvk+8N4ZpZRU036DMejrssr88sotwgQDLD
+         NfpQ==
+X-Forwarded-Encrypted: i=1; AL+hErEzPsDKc0CN20X0goL+xQEpESCjaoixlvyvn2r2K1LIUepkXebGLQkpvelRAUju9k+cmQU=@vger.kernel.org
+X-Gm-Message-State: APuU4Z81++FKxL7VnHKBsk80oZd2Lb2MTFVUBl95H0Ctf9WL5lv+giZx
+	KJU55TfgQxgQgJxJkZy7463VoCD2TJ+GdctzF88Oe7UjNdu1Dfp7cqicS0Llnih8N73Za5GkLPb
+	ixvl14qO2yyM6n22gqGv6orw0ymBam8c=
+X-Gm-Gg: AZFdTZdhAoiSJH9vh6v7uW1328MEKEkwFm7rkDeA5mdD2CZBwd3M1nm7U5cdvZY/aIt
+	1B4U504i1cbxFlIH/ruw3EUrv6uOtzemnXD6sI3j1WFufImPzJbV8jyzIwgx9Lzyr6Fb9+nwKv3
+	cA9U43GSiexSqNeF7z5FI2yOLJY0nqROI+ZEj8vpDfFIZMBmzu91dekmijnCf2rda3h890Zqm26
+	FCdU6HR+V5EhhFcOv7dGSXhJlKFmUcODiq/FVQ+5chiGqOHsHdDzmMS1a+28na6QPqOOvh9aRJA
+	Uak4HaH21ZEedDaNEuLeAw1eEko09vWu60BVRMjD+YiX9meszDp/+qYYirLqns7WUUUBPWeI3xD
+	U2JxueJsz+F5IwEhKOtqUYQlWcQzDEaOpjO+C
+X-Received: by 2002:aa7:c0da:0:b0:6b7:d55:87e0 with SMTP id
+ 4fb4d7f45d1cf-6ba37e90613mr8215853a12.21.1795560221213; Tue, 24 Nov 2026
+ 14:43:41 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -128,43 +104,70 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
+ <pull.2425.v10.git.git.1795293722.gitgitgadget@gmail.com> <xmqqse0r44y2.fsf@gitster.g>
+ <CAHwyqnXs99Jd5ajrskjpGyVQZmR1DOOPmXturzDxOyWuE9dfBA@mail.gmail.com> <xmqqld6iouk7.fsf@gitster.g>
+In-Reply-To: <xmqqld6iouk7.fsf@gitster.g>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Tue, 24 Nov 2026 23:43:04 +0100
+X-Gm-Features: Aa3M54rjK6FU8f4cMuhk6yKOvXrBrkwPr-AywhLC3X6J4ue2pOk-TfFGeYvJmx8
+Message-ID: <CAHwyqnW4Exnfd_mTy2XFbATWb3ExwY63_ncZgkJ6_0NH8eaK6Q@mail.gmail.com>
+Subject: Re: [PATCH v10 0/5] branch: let --delete-merged find squash merged branches
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, "D. Ben Knoble" <ben.knoble@gmail.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>, Jasper Mayone <me@jaspermayone.com>, 
+	Tuomas Ahola <taahol@utu.fi>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Ravi Mistry via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, Nov 24, 2026 at 9:15=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Harald Nordgren <haraldnordgren@gmail.com> writes:
+>
+> > On Mon, Nov 23, 2026 at 10:24=E2=80=AFPM Junio C Hamano <gitster@pobox.=
+com> wrote:
+> >>
+> >> "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >>
+> >> >  * New commit: --dry-run also works with -d and -D. It is still reje=
+cted
+> >> >    with options that do not delete branches.
+> >>
+> >> Much better than before, but we still have a few operations to go, I
+> >> guess.  Users may legitimately wish to try (with assurance not to
+> >> cause harm) renaming and creating.  It may be OK to leave these as
+> >> gaps to be filled for now.
+> >>
+> >> What is important is to wean us from the "The dry-run option is
+> >> incompatible with anything but the delete-merged option" mindset to "A=
+s
+> >> long as we add dry-run to the command it ought to be supported by all
+> >> the operation modes, but some do not support it yet".  So, perhaps in
+> >> the ideal future, we may want to see
+> >>
+> >>     $ git branch --dry-run test v1.5.0
+> >>     fatal: would avoid clobbering existing branch 'test' by creating
+> >>     $ git branch --dry-run -m foo bar
+> >>     fatal: would fail to rename a non-existent branch 'foo'
+> >>     $ git branch --dry-run -m foo bar
+> >>     fatal: would avoid clobbering existing branch 'bar' by renaming
+> >
+> > I think it's a great idea, but I also think this topic is probably the
+> > wrong place for it. What do you think?
+>
+> If dry-run is a wrong option to introduce as part of this topic, then
+> yes.  But if we want to introduce dry-run as part of this topic, then
+> the users would expect these "I do not support it yet" from individual
+> operations, I would think.
 
-> diff --git a/http.c b/http.c
-> index 0308f973a6..b766bbf035 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -2411,7 +2411,7 @@ static int update_url_from_redirect(struct strbuf *base,
->   * Returns a negative value if configuration is invalid (delay exceeds
->   * http.maxRetryTime), otherwise returns the delay in seconds (>= 0).
->   */
-> -static long handle_rate_limit_retry(long slot_retry_after)
-> +static long handle_rate_limit_retry(long slot_retry_after, size_t attempt)
->  {
->  	/* Use the slot-specific retry_after value or configured default */
->  	if (slot_retry_after >= 0) {
+Fair enough. I wouldn't name it with "yet" though, because you never
+know if we forget about it, just better to not promise anything.
 
-OK.  Now "attempt" is size_t instead of int (in v3).
+But I can do that after this topic merges: add dry-run to the rest of them.
 
-> @@ -2437,7 +2439,14 @@ static long handle_rate_limit_retry(long slot_retry_after)
->  		}
->  		trace2_data_string("http", the_repository,
->  			"http/429-retry-source", "config-default");
-> -		return http_retry_after;
-> +		for (size_t a = 1; a < attempt && delay > 0; a++) {
-> +			if (delay >= http_max_retry_time - delay) {
-> +				delay = http_max_retry_time;
-> +				break;
-> +			}
-> +			delay *= 2;
-> +		}
-> +		return delay;
->  	}
->  }
+#leftoverbits
 
-Nice to see a careful way to increase "delay" without causing integer
-wraparound.
 
-Looking good.
+Harald
