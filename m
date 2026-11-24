@@ -1,96 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.175
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.151
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795563146;
-	b=xeZr3QQ4bcoYGOY650G5DJTIF6RudEu9hWPf0FVjEYRAnx8dwwVypyshltRuCn0CTQeU
-	 5vky0uHHvCBa1sitSw7twwWyKH+nWZ5dFQZ/J0453xfXHHUYaerQp21jDyU99RfWxHoxt
-	 0Q38Sy91/f7AO+RPWDy6RzFafbEDjX4HGKFA0ta5FHSB/HJyGE9IxZshAzulbKnMXy7FG
-	 KNOvUb7DkH3Z9sSgUrb5oZOQCvwWWfCRtNoHY9JOCoFLXD45O1IfJVQz83KCBrXLDwHvp
-	 NUcZ5fHz1+wQEIAo2SKK52pS3MXJ2MkRss18QAhwZeWznO22+5aBxj7Jki62GKXFzag==
+	t=1795564048;
+	b=h17LxTbD8pawZqmmxhdV/FuXkJfHzsjT9sfZAiC00WLEo6eEKtEA5GfoI5L3dBRWUyG6
+	 eKZmI0e1nhxIcnPJIp6LuCFknUxpzVGxVLhWtUvYPCDBWHz3Rt2lv5NCvMYtavfCfyvJF
+	 1TN6ydeIhi6ICiDasnzJN3eZoFWXYFZUrFZxI09eXr08dcp75XTlbu3EYVi3hjACmyYoK
+	 D8hd00tLDT8MNJws6F6f4JV7CS1Ip6+z9NoKPKPzf+VVFgy1/xDJg3JaIXKhPqKGPkDIK
+	 WEqnt1vi7u4Im1bZYISh0Uw2VFLpGDNcP1o2ECsI1fS/17ZdxBcBylS2mWtqeZ/edmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795563146;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Sender:From:To:Cc:
-	 Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=h3zt7yn41IG565ZREGslcLBkHA6lcSpRgQyjddIWGMk=;
-	b=RyxqbsXsx8UUQ8N9/8Dzw9f2Ge6X5nyY/zJFWEJgy5v1LB54Y8AftBScvWhAzTUtBZ8j
-	 s2VpEBTBuBb2gm8n2pqp5QQWf0khFv0KVsrJyiCOpks6nsSg/5H1uhFUSkonwz69pucfU
-	 9Cxdv/No6qJ+wW64ZZ26uf+Sz8qFPVDWW97JYy+6maMun/TtternuDbRnqbQekQuXKqUK
-	 p/Jh3wtMWMyK77u95Kv6mjRafnBkNB6pDaHZTKjkkq+ieTLLFyDvPNfpeLJ8hQ+thtLhs
-	 Covy/yuFfU8O+oppynAuas/bQZas7KLOZadTssVb8qNkyKVo95C6ADSiFRZ8dfgyNGA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795564048;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=LAKO/4Zl8w+Tqyi73DaNvhvV4KECCQpN2l8xkLaNZUs=;
+	b=UHKkn4WpaXodRY+uCvC/ojR2HE/sbEY0dC2V0jA+PTNYQv/4+eu86s/xEXl3f9EUFcIi
+	 koVXSja7/jZSGcgtkXPASDA33wD8tUGl9UneehkDv+CA7TwxFBXZhMSVmd95LWXHFJNjz
+	 OAWqv5+7M4BUY8zl/Sb1Mn1KtX6VvWDb9Bn4venpAAsMukw3gJ7lBOwpyvgQNBntskze5
+	 9DVH/urrsTzSkyPAmO8AqO9UjljXgEaw5QF/nJ8XHpq4PdV3iF/xOP2xev129TzImRQ4F
+	 6HFBZbHJ0tp9XA5YDjyECw7pYIoCGFStj04ytoTlXFEVr/ZYdcVHXyJ36FXwgmixokw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=cervined.in;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ejxDj44Y;
-	arc=none smtp.remote-ip=209.85.208.175
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=gEZ2qXNz;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=eTEnQbPT;
+	arc=none smtp.remote-ip=103.168.172.151
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8B7606A327
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 23:32:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2A8B7606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cervined.in
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99127606A321
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 23:47:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 99127606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ejxDj44Y
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-3ae85e3685cso33697531fa.2
-        for <git@vger.kernel.org>; Tue, 24 Nov 2026 15:32:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795563144; x=1796167944; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=h3zt7yn41IG565ZREGslcLBkHA6lcSpRgQyjddIWGMk=;
-        b=ejxDj44YF0AXYUHCG6MyL0tCaUj+2A5Ue51xtSIp9tHzMDQp+R62TZO4Z0M/mqLOGZ
-         5tyQz5wFRl/xkWENC/7bn4ZC4x4NSOdoQF1V0j2E3u48ID9oDE3wU1RCbYqqAf+xb2wF
-         JCBSv6HuJA0FmpWAfhxNfiu+B2Awv+co0Drdaxe/IY8SAIMFLFTqboKwPRQjexLuxIij
-         sejoyuJeYvvutCdK/UPja2G8TSTo6cy2QFria+b/vRf0nxDVBc8Kfj7OS2NtfmZbLj4x
-         5R7X1J+auqCoRRgZUfyDF8jcKPGW6k/TQ9MDvCSGTjVNT40WCxl4eEY87P7UawUfMmvp
-         CI5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795563144; x=1796167944;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=h3zt7yn41IG565ZREGslcLBkHA6lcSpRgQyjddIWGMk=;
-        b=zt3po/jClF1tEHjqVaLObzJf8LPS3Q80Pqzmz/n8kW8FyLogM5PAvzDABH3VRkYLSY
-         YSyqZlW1uLu/z0vCAvhOkoeHqlRNHd0McJUygo9K6CKzouEFHB8pCE6jXHC4lC52qvDL
-         Bn+wnvn9VI3h6j3Y+oFT7C8U1CddHqsf9eEoQD0sNy0UNa5uH4Gbix1os8OEaK8lra0Z
-         fg+moP7imU8r542f+4t7LKuQlU1tOWcd2Uaof/quCMUhJIjdSOwsRog7mtVTm+GwWSvi
-         lmWynV/VVqzfqht8RI4huuVdaos39ySJLnw3e+sWFVDiK9TeBTnHwWCJQ84lwy6ZQsbS
-         IZtg==
-X-Gm-Message-State: APuU4Z/sVP45PDvHSSPSd8E2qrBY6ixxlR2SuPFaCwlxJKh7kcD7L1wd
-	HOm51Z4rcJ2tu95kS9/zmV6StYXS6ztPsot5IcbfE/D7VzPF/35yCjrZC+y2yw==
-X-Gm-Gg: AZFdTZcjjwBfo5TRSn3BC3XNU6EhlK6kSMZdeiALwpbTHyfPKir42HfNuBnkLyFPY1O
-	nD9J4Mr8DU5DkIGzQtf2SL7HNsnG7+yCtJekN88X8NAI7F1RlwtDEbLyUQi75QI4Tts+ndqRN+a
-	uJ0UXnYaxhT9H8heCtWAwaa5Kk0PY1Y5pJ7LUxdapUhglUOU0qUItPoghlHqOYY6N/juLGmNgif
-	bTDR9Wy2u3ksMgN0qtxVf0wyJ65CJVq/TLfTVU0q/i5C8pq/8MDxaJSWF/Pud/oA2gP9ccRRBmR
-	w6sNQvyC+UbEaq/OgvBXIgVv0ZofK0had+52ikdJdh897ixzqxeRg/J+6XoxaaUGch50qdGHZG1
-	jfTzOJuPGcnV69ZrUa/rfifbfREcXQdz2alxUKAvWtoIwu+Udn4MHiKJDR1htj5IPcEzNaDqlld
-	7Z9MNBCxvvwF2jkfL4P7zaEJvSdGWG4IP/qy5iRCdRk5YHabBa1YHhwtgVtsSYNN22tKldAst1r
-	S5KwENLrvPUaiVofpFMDjosIhB9PDMwUXnQOTcvgQ6cZLP9rp4dF9YkwQv/rc4odzQRQ0LGCF0i
-	tSgQgez7YvpHX3nnhf706ASZRndOmanrpJPToS5Uarpf2cwW9SU3nAGUetQ447k3/H8pkKNtgC8
-	LMlUWO6Vloa0F+Pg3sPLg7xBO2Sb6GCfxyyqX8GiQOP2hOA==
-X-Received: by 2002:a05:6512:3056:b0:5c1:4b7c:96c6 with SMTP id 2adb3069b0e04-5c1bc8054c2mr4943472e87.32.1795563143891;
-        Tue, 24 Nov 2026 15:32:23 -0800 (PST)
-Received: from localhost ([2001:2043:be0a:d700:bd32:e7e3:cfbd:5b51])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3ae8044df03sm40020581fa.1.2026.11.24.15.32.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2026 15:32:23 -0800 (PST)
-Sender: Erik <erik88@gmail.com>
-From: Erik Cervin-Edin <erik@cervined.in>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	phillip.wood123@gmail.com,
-	Erik Cervin-Edin <erik@cervined.in>
-Subject: [PATCH v4 3/3] commit: allow -c/-C for all --fixup variants
-Date: Wed, 25 Nov 2026 00:32:11 +0100
-Message-ID: <159a56c5106c12b8013e91244ab1142a74e59400.1795562078.git.erik@cervined.in>
-X-Mailer: git-send-email 2.56.1.978.gcc9bcf3eaa
-In-Reply-To: <cover.1795562078.git.erik@cervined.in>
-References: <cover.1790082176.git.erik@cervined.in> <cover.1795562078.git.erik@cervined.in>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=gEZ2qXNz;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=eTEnQbPT
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id AF30BEC0948
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 18:47:26 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 24 Nov 2026 18:47:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1795564046; x=1795650446; bh=LAKO/4Zl8w
+	+Tqyi73DaNvhvV4KECCQpN2l8xkLaNZUs=; b=gEZ2qXNzzcXPC0Q+XThp7wc9Ep
+	HYJZsxWR0pqMtkJoJO7m6sggPsijj2ZF0kyFrqfi+dPSpF2aSpVOVRrNN0WfeDhk
+	pvGyMCI5GGlQtvEPt82Ho01G84G6q9l21kJm2D8srxJJffNj5fGJlxer7/rGb+Oj
+	U+C0F+pM/YRWzYcIP6Lv4JNStuFFl1IiwO3J4oXBJe6xrIcUhXUTqFT2h+7v9uDo
+	+uPbRbboD19JpkPw0Msm6J6K8P5jtRjYEsUEdxQA+nfkjRP30Pm4gbakyi+hC6CO
+	XURkF3kCKJ3Aeoa+zb374FvHQyaWr79k/XG4mYOrPVu/g75n0045uocRSABw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795564046; x=1795650446; bh=LAKO/4Zl8w+Tqyi73DaNvhvV4KECCQpN2l8
+	xkLaNZUs=; b=eTEnQbPT6/IkRK3w4WJCnc4kwVOF+qoOAmTkSFJ95P/s5VrmCEJ
+	U8VcjWbNnyUFoO+u9CYSLoScRBKkiZ4hraZPXr3vhUkX3no+Bc7BTOpbt+AWb41U
+	37SQuhLgQ5MW6TwgmDUEfr+H7vlOtLAIt7mquaj/RJ8EjyMTGsDUa1HUokSZDIUf
+	YfpnwJL/tCSrvbdhiID1HF1N1hE+9dOcvj000quZYtcCnesxnadf71SpmUlYXTgR
+	/87uDpQkZrgbQ2QCuUdCWT8xu7/HF5tdiuLJk+5tY2Y7MblJvw0CPG7wMjvGIzwm
+	p87JWg6VLt1iGdmcU07r46xem2br77yXsQw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795564046; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:KvIT5l7reVwDZVMSlUJ+qtpSpJhoSgTdOKO1EbwUIOgRoMk
+	PE6+K/qAhGDzYe64OpgmFu/elYwyNdUu/+xEvZQh7CBRr8VQNcdVr11Y4yIUA90X
+	Nk7djG4pjpQoaOKKZuSOIUyPNz/sMiXZuFLVKt8nicI66EgvzzdohBtH0nMkuPNJ
+	wYpS8UUPHUKKEIx5+9gp2fquGWLU+w2xa1e5FkMewInUoQBVHKXYj/3qWb+LRK3f
+	P6ro/L7w0KhkVjQGQvTdEB/j/S2WfV5RRP+SdTeBX3uPsP+zpb5qOknDsZEX8Vpo
+	7EQ5vkq83GDmoP6JxzG/oCtkuDrfBQQIcjDH00g==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:wcxz/pnJZAcXrPLpKcFqSuKNeOs/ww5Hgiz0594/3Ig=:C4Of3lztNgwNgWsM8fPPk5/AREWjsjEA8QULsygk9Dc=;
+X-ME-Sender: <xms:DiIGa6rXesSuglAnVPFvQmNH9uRDOAekNAuAreOXWrrwLCE_R5aVMQ>
+    <xme:DiIGawGHmvRqyFa4cHKrTorkeeqV7ffGMtmk8L4HdxbiEBETqp32t1b5yuU8Q_t7r
+    IAfkQeXuVpiD3AJWF7YQ_R6NmadBADKYpzKUnzopnvWouXhPNTa2g>
+X-ME-Received: <xmr:DiIGa8lpgIJXI8gO6sv8lvoWwmy8pw5K5CvVdN9_bC-g5A9E5b1cO3ebKsGnbvsLSYifiqZUP6xH1LcYoGxCo9fCgX8miIxFYxaZiUw>
+X-ME-Proxy-Cause: dmFkZTERvPNkyf0xMbSXBiZW/QMFz7lDguqVQPxownrWqtbw6zZNc6PjcpyE6dM7z4tFuM
+    jBlKZOji/IuGxroXDlwz2XdKlwLf524iF8uvlrQVi5UOKNpC7smSWOnMaoWGTAXp6h/oQM
+    aOe2IILRapa99/0Zqgh4YL4zep17mQSKIux9nDlrnOv0qQvJ26uOWZsy7+gCF+nZoHxJYl
+    bCPq7Kt14va5SzS3vMBwLuzlnKRB3KYGjp52rTn7e5EJPEHj/xWwxJrvLsxEu7BYGKA1p8
+    zQPZ/96t1IQoKEDvA8zpsjZSPHf/VWl0pvPgEFoOv5Le8EhnFtlpl9rocQr79I30lrqIl2
+    /qq/3pUNbnmD+gGaht7S7kMeYdBDzvCsdpctY251lRCRjeFGgM1S4OCxhXGf7i3aM3Awk/
+    2pvaHs/cK4y9WOfiGxXFbODpbJz4GqjMUBOWW/ryEXuZzFo4mz2gERdKMKqYH6LwWSj3BO
+    /+bztvZt811lWL1kED2S0g2O4mw/kYsItlvUgvJ+/G6ahHApDBEsWFGayZdlEdi6A8a+Oh
+    JapFW8ETyyWFYn07i69X5AJpE66WvQXdVNiRSdQfukTYj0iHKar6cKJ5AdLgG0HwQrHu/B
+    zPJ5A/9DA+lcuHxqNBBh5mpvBLbE6DXDaNYodkyk3Pt5HcXBIJf5n8kun3FA
+X-ME-Proxy: <xmx:DiIGazkkzqtpsJfWLNqDTPKh4o4SOSEdnUSyUuO7iYOAveCbb66y0g>
+    <xmx:DiIGa9sdPpjyVUYT6ODJTbzKhOTqx0eCT0aJ04cd6_S7s2R2Fcznsg>
+    <xmx:DiIGa2n5uhto78YwgxvsnesM8OPbekbgT82AzNHTQT41prk14g-C5w>
+    <xmx:DiIGa4uRTzPdYtJYkt67geJR9dc8a2mu8qCdyEt-_G6-rEfuGRzBrw>
+    <xmx:DiIGa4OJkr4WBy9K3oXCGldmNrnpnJbYl_pvL_NUfBM8hKhxoKGI13fu>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Nov 2026 18:47:26 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/6] packfile: rename lifecycle functions
+In-Reply-To: <20261120-pks-packfile-global-statistics-v1-2-19beb83b145f@pks.im>
+	(Patrick Steinhardt's message of "Fri, 20 Nov 2026 13:02:29 +0100")
+References: <20261120-pks-packfile-global-statistics-v1-0-19beb83b145f@pks.im>
+	<20261120-pks-packfile-global-statistics-v1-2-19beb83b145f@pks.im>
+Date: Tue, 24 Nov 2026 15:47:25 -0800
+Message-ID: <xmqqfqwphjw2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -100,198 +124,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-The fixup code path in prepare_to_commit() only knows how to take a
-message body from -m or -F.  Now that the previous commit allows -m and
--F for all --fixup variants, -c/-C are the odd ones out.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Teach the fixup path to take the message body from the commit given to
--c/-C, using prepare_amend_commit() as --fixup=amend does when no
-message source is given.
+> Ideally we'd modernize all of that, but that would lead to a huge amount
+> of churn. Instead, let's improve the subsystem one step at a time and
+> rename lifecycle-related functions to match modern best practices.
 
-The main motivation is consistency: with -c/-C allowed, every message
-option works with every --fixup variant, and there's no exception to
-document or remember.  Using -c/-C under --fixup is admittedly niche,
-but not useless; for example, rewording commit Y based on X's message
-after an earlier rebase split X into X' and Y, when Y wasn't reworded at
-the time:
+Scoping the rename to lifecycle functions makes this much easier to
+review, and add_packed_git() to packfile_from_idx() is especially
+welcome because the function never actually added the pack to a store.
+All callers of the seven renamed symbols across the repository look
+consistently updated with behavior preserved.
 
-    git commit --fixup=reword:Y -c X
+> @@ -217,32 +217,33 @@ int for_each_object_in_pack(struct packed_git *p,
+>  #define PACKDIR_FILE_GARBAGE 4
+>  extern void (*report_garbage)(unsigned seen_bits, const char *path);
+>  
+> +uint32_t get_pack_fanout(struct packed_git *p, uint32_t value);
+> +
+> +struct object_database;
 
-Like --fixup=amend, this copies only the body when the source itself is
-an "amend!" commit.  Under --fixup the subject is always generated, and
-the body of an "amend!" commit is the message intended for its target,
-so copying its "amend!" line would leave it in the final message after
-autosquash.  This also means that "git commit --fixup=amend:X -C X"
-produces the same message as "GIT_EDITOR=: git commit --fixup=amend:X".
+The forward declaration for struct object_database moved here was
+already unused in packfile.h, since odb.h is included at the top of the
+header and no prototype here takes that type.  Moving it around can
+probably be skipped, or it could be dropped separately.
 
-Plain --fixup never opens an editor, so -c there behaves like -C.
+Other than that, the step is done very nicely.
 
-The incompatibility check grouping -C, -c, and --fixup can go away
-entirely, as -C and -c are already rejected together by the check that
-groups them with -m and -F.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Erik Cervin-Edin <erik@cervined.in>
----
- Documentation/git-commit.adoc             |  9 ++--
- builtin/commit.c                          | 19 ++++---
- t/t7500-commit-template-squash-signoff.sh | 60 +++++++++++++++++++++--
- 3 files changed, 74 insertions(+), 14 deletions(-)
-
-diff --git a/Documentation/git-commit.adoc b/Documentation/git-commit.adoc
-index 61efd29e66..98c50a3be5 100644
---- a/Documentation/git-commit.adoc
-+++ b/Documentation/git-commit.adoc
-@@ -102,8 +102,8 @@ include::diff-context-options.adoc[]
- +
- The commit created by plain `--fixup=<commit>` has a title
- composed of "fixup!" followed by the title of _<commit>_,
--and is recognized specially by `git rebase --autosquash`. The `-m`
--or `-F` option may be used to supplement the log message
-+and is recognized specially by `git rebase --autosquash`. The `-m`,
-+`-F`, `-C`, or `-c` option may be used to supplement the log message
- of the created commit, but the additional commentary will be thrown
- away once the "fixup!" commit is squashed into _<commit>_ by
- `git rebase --autosquash`.
-@@ -112,8 +112,9 @@ The commit created by `--fixup=amend:<commit>` is similar but its
- title is instead prefixed with "amend!". The log message of
- _<commit>_ is copied into the log message of the "amend!" commit and
- opened in an editor so it can be refined. The replacement message may
--also be supplied directly using `-m` or `-F`, bypassing the
--need to open an editor. When `git rebase
-+also be supplied directly using `-m`, `-F`, or `-C`, bypassing the
-+need to open an editor, or using `-c` to open the editor pre-populated
-+with the referenced commit's message. When `git rebase
- --autosquash` squashes the "amend!" commit into _<commit>_, the log
- message of _<commit>_ is replaced by the refined log message from the
- "amend!" commit. It is an error for the "amend!" commit's log message
-diff --git a/builtin/commit.c b/builtin/commit.c
-index e0fac284bc..b52ef283f2 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -827,7 +827,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 			die_errno(_("could not read log file '%s'"),
- 				  logfile);
- 		hook_arg1 = "message";
--	} else if (use_message) {
-+	} else if (use_message && !fixup_message) {
- 		const char *buffer;
- 		buffer = strstr(use_message_buffer, "\n\n");
- 		if (buffer)
-@@ -835,12 +835,20 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		hook_arg1 = "commit";
- 		hook_arg2 = use_message;
- 	} else if (fixup_message) {
-+		const char *refname = NULL;
-+
- 		hook_arg1 = "message";
--		if (!strcmp(fixup_prefix, "amend")) {
-+		if (use_message)
-+			refname = use_message;
-+		else if (!strcmp(fixup_prefix, "amend"))
-+			refname = fixup_commit;
-+
-+		if (refname) {
- 			struct pretty_print_context ctx = {0};
--			struct commit *c = lookup_commit_reference_by_name(fixup_commit);
-+			struct commit *c = lookup_commit_reference_by_name(refname);
-+
- 			if (!c)
--				die(_("could not lookup commit '%s'"), fixup_commit);
-+				die(_("could not lookup commit '%s'"), refname);
- 			ctx.output_encoding = get_commit_output_encoding();
- 			prepare_amend_commit(c, &sb, &ctx);
- 		}
-@@ -1329,9 +1337,6 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 	}
- 	if (fixup_message && squash_message)
- 		die(_("options '%s' and '%s' cannot be used together"), "--squash", "--fixup");
--	die_for_incompatible_opt3(!!use_message, "-C",
--				  !!edit_message, "-c",
--				  !!fixup_message, "--fixup");
- 	die_for_incompatible_opt4(have_option_m, "-m",
- 				  !!edit_message, "-c",
- 				  !!use_message, "-C",
-diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
-index 9b2ecb1356..04520be0c3 100755
---- a/t/t7500-commit-template-squash-signoff.sh
-+++ b/t/t7500-commit-template-squash-signoff.sh
-@@ -492,6 +492,62 @@ test_expect_success 'commit --fixup works with -F' '
- 	EOF
- '
- 
-+test_expect_success 'commit --fixup works with -C' '
-+	commit_for_rebase_autosquash_setup &&
-+	GIT_EDITOR=false git commit --fixup HEAD~ -C HEAD &&
-+	test_commit_message HEAD <<-EOF
-+	fixup! $(git log -1 --format=%s HEAD~2)
-+
-+	$(get_commit_msg HEAD~)
-+	EOF
-+'
-+
-+test_expect_success 'commit --fixup=amend: works with -c' '
-+	commit_for_rebase_autosquash_setup &&
-+	GIT_EDITOR="echo edited >>" git commit --fixup=amend:HEAD -c HEAD~ &&
-+	test_commit_message HEAD <<-EOF
-+	amend! intermediate commit
-+
-+	target message subject line
-+
-+	target message body line 1
-+	target message body line 2
-+
-+	edited
-+	EOF
-+'
-+
-+test_expect_success 'commit --fixup=amend:HEAD with -C HEAD and without have the same message' '
-+	commit_for_rebase_autosquash_setup &&
-+	start=$(git rev-parse HEAD) &&
-+
-+	git commit --fixup=amend:HEAD -C HEAD &&
-+	git commit --fixup=amend:HEAD -C HEAD &&
-+	git log -1 --pretty=%B >with-c &&
-+
-+	git reset --hard "$start" &&
-+	git commit --fixup=amend:HEAD &&
-+	git commit --fixup=amend:HEAD &&
-+	git log -1 --pretty=%B >without-c &&
-+
-+	test_cmp with-c without-c
-+'
-+
-+test_expect_success 'commit --fixup=amend: with -C copies full subject + body of squash commit' '
-+	commit_for_rebase_autosquash_setup &&
-+	git commit --squash HEAD~ -m "inner body" &&
-+	echo "extra" >>foo &&
-+	git add foo &&
-+	git commit --fixup=amend:HEAD -C HEAD &&
-+	test_commit_message HEAD <<-EOF
-+	amend! squash! $(git log -1 --format=%s HEAD~3)
-+
-+	squash! $(git log -1 --format=%s HEAD~3)
-+
-+	inner body
-+	EOF
-+'
-+
- test_expect_success 'commit --fixup=reword: works with -F' '
- 	commit_for_rebase_autosquash_setup &&
- 	echo "message from file" >msgfile &&
-@@ -553,9 +609,7 @@ test_expect_success 'invalid message options when using --fixup' '
- 	echo changes >>foo &&
- 	echo "message" >log &&
- 	git add foo &&
--	test_must_fail git commit --fixup HEAD~1 --squash HEAD~2 &&
--	test_must_fail git commit --fixup HEAD~1 -C HEAD~2 &&
--	test_must_fail git commit --fixup HEAD~1 -c HEAD~2
-+	test_must_fail git commit --fixup HEAD~1 --squash HEAD~2
- '
- 
- cat >expected-template <<EOF
--- 
-2.56.1.978.gcc9bcf3eaa
+Thanks.
 
