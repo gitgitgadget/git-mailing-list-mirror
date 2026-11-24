@@ -1,123 +1,67 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=172.105.7.114
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795560653;
-	b=q74Mcx4hj75cMOl7by8Y44rz387Pb18cwspXC9GoeHOWKQMqixVH7uh3TN+3f1A+SDA8
-	 xwrwc44Ed7iyZzTFsN3iwJlO9C7TAlsf3IvJL+1mVZiHZ8Cg6pHBHOdgqUU288xq/CGJB
-	 bKv0ZkH4m7k2HWHEoea79LmsaPXlLJYg6DAh1suZdatW/n6z23nifl8TeeUCgaWjKHWmC
-	 LmAjS9Df3egfmqA3LRWevEg2NDc5M4ta+MVlDRElPlzulmnU6vcLwAuzzVLbOeJX2A1No
-	 dMu8jhdaA0QLY6vm232mWQ4r3jIKBRB79quMaPw2wlT5VqwE6GrbGF3JzUHa9yvgXkA==
+	t=1795561065;
+	b=5Ziq9sMYCuRg+2w9E8V07s8KjxlOs0TVQ3bMkqGU6okxvQic7KnNbFWHbX3ICz5RCGck
+	 KUuU8NdzTM/skwQznqxKIlld92pGbnMUitLgHQYg9pJyq18g817Mh7XX6e0IMOcl6yflJ
+	 Batj7Y0mmnTWT9NVNHOhPeIzZk+sof+I8fE7Je780oBzwHcSRHD8jDygb48jzdNTAOFo9
+	 BojTLA0IcPBUenkmZm37F8MUBviv58p+j7DNs9P3hAyYufHYtFlcMnv33JE/gN+qPlCRR
+	 PYNB00IOHp08zcVY1FTyrjjLm8NUcp6BP14ku/8o1x2iGySpMPOC7JjOlmh5t8ZQm1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795560653;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=2Z26zU5SsKIF7e1C/RVirJV78zjhDOI7qJ2nZ/mDGDw=;
-	b=3Vh3aJXqUugvF2LsWRdF9hOqCMWhY+icOZHNR6vdTbTn4V9J379CBWwFjeWuACrNDwO+
-	 SYyyAGhFRjASQnC6PaHpzUyjvdI0JhUtqM+ErAfbHSJW3IMUwgOdyZua4LsjXINEfQOO7
-	 4tC2s6yY8uwcooQo01qixbv02rnCO0DOF/eY/T8ZgKxf6F51X/QWSOtRTlRM36jyh/nrI
-	 N8BDmY/IKpdusn6NpD2a7/WES0DAbu9w08yCQmqaxv0RB4mmFJIYEXQNVJzlaagGEKVhW
-	 Q/XxxrXNSCIR9ZclTX2RqO3AHNhFfU3MLZ2U+xZhdSOmheLCUEdJsgfWrZFpJW5zL6w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795561065;
+	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=SfkaZbRu+pV7ouKS/0ao4Yd3AzTCvbHGda3tvYObjB0=;
+	b=gScezGKtPGufGt1xujmig4yICB3t0SmPgpoKwtRPKd0Icm+b1VA32EnY9Ham3doHkwzv
+	 wS+oiy0/gxrmnYKLlyz2HlwYnSqL9PbIkVGejhvjao/hvrTaDPSjYZt3/E2BOWIb3fPel
+	 BQhvydoZCBVDO3v1tUR0lT1VApRv6pkVZoy92JAU39HFV9c5hxHUMri+MMvBQG7RGgann
+	 fPMXbhKj5yw1WdOQ9T357QHmr8NDabdaIFi2Z7rTG0xJw5sT+/i2fKra/ICEsjEUX6X8P
+	 IM8haR+Ide1iYiUPSJ3ICRrbeT8ODAOYifsjhlpR8ueKJLK6krGwkXUfdVjjGoAHroA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ZLEDf663;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="YDQ5/KOb";
-	arc=none smtp.remote-ip=103.168.172.154
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	dmarc=pass header.from=crustytoothpaste.net;
+	spf=pass smtp.mailfrom=crustytoothpaste.net;
+	dkim=pass header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=M5ubWPjX;
+	arc=none smtp.remote-ip=172.105.7.114
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119F6606A31E
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 22:50:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 119F6606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8050C606A323
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 22:57:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8050C606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ZLEDf663;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=YDQ5/KOb
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 256BA1400333
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 17:50:52 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 24 Nov 2026 17:50:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795560652; x=1795647052; bh=2Z26zU5SsK
-	IF7e1C/RVirJV78zjhDOI7qJ2nZ/mDGDw=; b=ZLEDf663CPNg5z+WVJtLIeFDXk
-	KNuFIMLKr3UKhj2Zt4ueMj/v1ztaYYKX7gWnRT7aai3BO7O0onWE5B6VXjuCWHH4
-	OgsX6+66oMOfrZq2CH74R+BQ6Pcvw9luWjT/8px9aVN4MJaprV1nKx3aX249z9NT
-	OIECAQ934ldbu0GOB8RZvobQbNdbClZqLU/TiJ0Lzfirf/LPzDkIbEQDClofBU2c
-	zoSAuV5I+5IDmgfG/DijZlV2zTfxL4V89mlpWoHGzqKQi3jjInGXDo5+q53gNd4x
-	2TDthAjkb0KQJWFC36hjPQ050sPCVTigqCk9EP0HMSi/tbGosuqSoCgHgbmA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795560652; x=1795647052; bh=2Z26zU5SsKIF7e1C/RVirJV78zjhDOI7qJ2
-	nZ/mDGDw=; b=YDQ5/KObE84A/9+TmYTkVq78etnASQaKnLAyuI/cfHqHp6oFSKo
-	e4QK77gfJ4XBOF0R2RkbZkNfCgOg8DKL7YV5NQxBsnVIg5FAD7CQQ4dt1uuByooC
-	jyR2vROSBqPy0dnAny0sHS9xdwiz8T2Bgxc/NjVFNjbDnrdGSxvYhVD+T7DFswVu
-	XybjGlsehmE/i6VpXdd2G/wyGEkxTw2TfSTFPb9RLBhSDpk081x5BjV9eZ05I6S7
-	zpB0nD/PHtlE2wNoibWwTJLnmyrJsGsmnV8sDZMuwo+WfnuDVgzihhYhX93gNkfp
-	acbXQ8591Wn+YYOkHqsU5MntuAtyGMvOswg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795560652; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:PU94jlH5UE0z5ENbhKVrMnJWZI6vW++5sc2YH4w9zYdKsIe
-	zUWZLzgoFtSvi+vsdf2pzzHEUKiBnMyy9oJ+y9GIBwz/oNqvThFkUyt4iGNxwGqa
-	YyXxyn+prggdYEWzn1C+uwRSzKNfo+Wm2jgddzYRU9tRjZsfbl8lOmEikIPV32z/
-	J3NPcdbXT6uUCB44UPgmVoR2K9bws1epE+lyWSgF6KTKcugeIIFfhk8nTZindkdB
-	5gjYsuB424SOkWwXu08jCaRadXVQxecG12m7ImiGn9BXH+BGfAVnbYcbG0H26GlU
-	PhL45OpmqtsM2K7GwR2c1ofciBzFsVi9UejjR0w==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:1CtVfOn0emvaJf2oD0TRUT1/vq0Dsleimr1LZK40JRI=:5q3E7uFPuGs4Ohvyyx95dmhrhFzi8mnBJ1y5yPWajyk=;
-X-ME-Sender: <xms:zBQGa1Cq4tKzrmE_GPZv3O1HAEZn7XJ-bLXUUUrpvizHmcVG36-rvg>
-    <xme:zBQGaylfr19r9tbs5WlDxaXCpsOEtoil3twLsu6Bc-eNfpdx4OFdI_rLukRxP7oeP
-    jrWpMwGMZxbGDFk246oUtLMlwd7fPM18rAG84uOjhpxhxU9emENtw>
-X-ME-Received: <xmr:zBQGa2wYgygk_WrpmJVGe-6pKka_fhFahg9wxyrR2Ve0BmFORJZEg6Mgudmm9QizjuZY21ZdyNKDO6Z24O5b7NjrrPo6fyTIL-ujeHA>
-X-ME-Proxy-Cause: dmFkZTERoLLCwWyeJGEhJFvHIGuCONRpwtvaOyMcWKK5aTQ6/B/I8F+8hIyPMswtzHmg7x
-    n0+TqptaTwFWPGb+mflsQGliQRKHUve+GRynWFtuXWEiUGiLlrPab9iDMe70lOwMtU6/jK
-    WD486mq5GjnqzvmBTI9aKLI0DD6SWl9upc67e2ftQYGwjsLNd8PcfDPAkrUDcm475PCbvU
-    i9NCeF0CApUWSa6Ut4tpSB1A5vf/f2yxpvE4BpSZYjHTb2gl8uwmBKVqcu6r32Pkm23Vf0
-    RHqbziG5wb1Xm4y8yu/4napW8vwoDJrzCmdGw4vakA8+0JLwmJi2g+klYma+qasKZf3Ljq
-    9/SUsGgOf3Fm2Yby2QwPGO0o47Hv6VIia0+RJOFKBu5qYIRSiNfN2N2ZaOv+c6xzZPnh1k
-    Y6yc99Lv0wsHeI320m6lUG3st5x/HUcpnx5WRBZJ+QFkkfxRYDZ0iE08+Zt+pfWlqE6cHG
-    lBSH2YfRXs3tFB1EfkNrGr7X459ETtg9wZEvpsKrJYG0qVf7ihxt8MLyDTZ4BPtjzQJ+uD
-    Z8iBarxLbcr6rGtecInvZkWQufYLbWYesS7OH+OUKXi4VSP9Z8foYtjNRrCqUIaKSZygQz
-    PGaWB/7FwqVX1yAjWHpWHXJs0HFEIG4yGLUwHj5D/Jpo+BYkjI+BMsVZer5w
-X-ME-Proxy: <xmx:zBQGa8SLO6j2Vop-Ac12B70IaLAkDrCgw8sSntYwzmXwtHVq77muvg>
-    <xmx:zBQGa-8o2xlxvnKwKhueqqx08GAy0mCp42tRbDHua6PXArx47I_Zyg>
-    <xmx:zBQGa6slI8iXZle6JbQCm_0cE7M-SctPZSsKhqHGZ0480YVy2c1Dtw>
-    <xmx:zBQGa2P8NVG1A_GKHhdfMRNzqWq5x4ZBFgeuEFRehzM3d-JU4mIJKA>
-    <xmx:zBQGa6AcXa9oZE1Ebn-jTQe0VDVVKeMEwjfJMBKScmT8ZS1ofVCk2DKf>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Nov 2026 17:50:51 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,  ps@pks.im,
-  usmanakinyemi202@gmail.com,  siddharthasthana31@gmail.com,
-  kaartic.sivaraam@gmail.com
-Subject: Re: [PATCH v2 0/5] notes: start passing the repository through
- notes.[ch]
-In-Reply-To: <20261124172146.18330-1-okhuomonajayi54@gmail.com> (Okhuomon
-	Ajayi's message of "Tue, 24 Nov 2026 18:21:41 +0100")
-References: <20261105203344.48513-1-okhuomonajayi54@gmail.com>
-	<20261124172146.18330-1-okhuomonajayi54@gmail.com>
-Date: Tue, 24 Nov 2026 14:50:50 -0800
-Message-ID: <xmqqld6hkfn9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.a=rsa-sha256 header.s=default header.b=M5ubWPjX
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1795561063;
+	bh=Bo78HOn13eIZRDrz1JvNJnC+A28+gFQN2gXNZxs7rQw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+	 In-Reply-To:References:Content-Type:Content-Disposition;
+	b=M5ubWPjXEt5Ieem7DqZ/APctE/3bMxqc4hscRzlhn++WhDvTQE1nkpuU54PoEPcqv
+	 IpWuPlXOjIvXuOagbianxpmAJriJFc+re/hahNxIFQdUXUAy0f2ggRr/2VYxMyCmqK
+	 r0KQywCsp1+2jR4Ug84xUeJsKK1tsQK9Llr4lhZfRey6UKv4TO0jfsGDDsdQ98Hy0b
+	 Qq/zVzZiymJUee4R8c6KZ3u4ST4hk820DEV4IIztzwJjoZeeMkt6cI2kC//WJACgah
+	 Zl1NIpVsUHlSU69stxWYgSEwaZW8ckV8SjmsMSDkWxTQnUXh6beeD+MeyW8OagA1aG
+	 HXUSkIWigt/MrrrpuFMh5GLzzqcntN5guOI60VtWgG4xMboSbqlaCPH5h3CgC3X8GP
+	 RmzzqYQdI5Wh/b7akfb72mwEst0nDZYlgnjAVGW+UOzM5yAP/+wp6UOK9hfF/yl2eS
+	 JSDAiG1dDdAVCKQpPtseVPJZowDQQDRUGOWmNkBt3E0hnRigA85
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:52b3:5d58:319:ece6])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 7A260200B1;
+	Tue, 24 Nov 2026 22:57:43 +0000 (UTC)
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3] docs: indicate clearly that http.extraHeader is not for creds
+Date: Tue, 24 Nov 2026 22:56:56 +0000
+Message-ID: <20261124225656.1615821-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.53.0.697.g625c4fb2daa
+In-Reply-To: <20261121222723.23714-1-sandals@crustytoothpaste.net>
+References: <20261121222723.23714-1-sandals@crustytoothpaste.net>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -127,21 +71,89 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Okhuomon Ajayi <okhuomonajayi54@gmail.com> writes:
+People frequently use http.extraHeader for credentials, but it is not
+intended for that and is easy to misuse.  People using it for
+credentials often do not use the URL-qualified option, exposing their
+credentials to every server Git connects to, or they specify it on the
+command line or in the config file, potentially exposing it to other
+users or to anyone who accesses the repo, respectively.
 
-> This is a preparatory series.
+It's also known that using http.extraHeader for the Authorization header
+breaks some uses of Git LFS, where some parts of the protocol can
+include their own Authorization header.  This is because that tool does
+as Git does and always adds the header, leaving two Authorization
+headers which breaks authentication.  However, using a credential helper
+works fine, since Git LFS only calls the credential helper if it doesn't
+have credentials.
 
-Whatever it is, this claims to be a "v2", but in the same discussion
-thread, there already is a two-patch series labelled "v2" from November
-3rd.  The original sin was the initial iteration of 6-patch series from
-November 5th that did not identify itself as "v3", and calling this one
-"v2" again is making things worse.  This is breaking automation, e.g.,
-"b4 am" gets very confused.  I could use the "--no-parent" option, but
-I shouldn't have to.
+Indicate clearly that http.extraHeader should not be used for
+credentials now that we have more robust credential helper support.
+Remove text that suggests it might have sensitive information in it,
+since it should not.
 
-The next one should probably be called "v5", as this is what should have
-been "v4", probably?
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+Changes since v2:
+* Use camelCase for `http.extraHeader`.
+* Use backticks for `Authorization`
+* Link to gitcredentials(7).
 
-Thanks.
+ Documentation/config/http.adoc | 9 +++++++++
+ Documentation/git.adoc         | 7 +++----
+ Documentation/gitfaq.adoc      | 3 ++-
+ 3 files changed, 14 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/config/http.adoc b/Documentation/config/http.adoc
+index 792a71b413..8f26eed6a4 100644
+--- a/Documentation/config/http.adoc
++++ b/Documentation/config/http.adoc
+@@ -111,6 +111,15 @@ http.extraHeader::
+ 	more than one such entry exists, all of them are added as extra
+ 	headers.  To allow overriding the settings inherited from the system
+ 	config, an empty value will reset the extra headers to the empty list.
+++
++Note that this option should not be used to pass credentials and using it for
++that purpose may cause security issues.  Using this option for the
++`Authorization` header can also break some external tools.
+++
++A credential helper is almost always more secure and does not impact external
++tools negatively; note that modern credential helpers can implement any
++reasonable method of authentication, including Bearer. See
++linkgit:gitcredentials[7] for more information.
+ 
+ http.cookieFile::
+ 	The pathname of a file containing previously stored cookie lines,
+diff --git a/Documentation/git.adoc b/Documentation/git.adoc
+index 1aa0608bae..d2f56e2f91 100644
+--- a/Documentation/git.adoc
++++ b/Documentation/git.adoc
+@@ -104,10 +104,9 @@ where other processes might be able to read your command line
+ (e.g. `/proc/self/environ`). That behavior is the default on
+ Linux, but may not be on your system.
+ +
+-Note that this might add security for variables such as
+-`http.extraHeader` where the sensitive information is part of
+-the value, but not e.g. `url.<base>.insteadOf` where the
+-sensitive information can be part of the key.
++Note that this might add security for variables where the sensitive
++information is part of the value, but not e.g. `url.<base>.insteadOf`
++where the sensitive information can be part of the key.
+ 
+ --exec-path[=<path>]::
+ 	Path to wherever your core Git programs are installed.
+diff --git a/Documentation/gitfaq.adoc b/Documentation/gitfaq.adoc
+index b26e4e3a09..dce40e659b 100644
+--- a/Documentation/gitfaq.adoc
++++ b/Documentation/gitfaq.adoc
+@@ -120,7 +120,8 @@ them for a certain period of time.
+ You can also just enter your password when prompted.  While it is possible to
+ place the password (which must be percent-encoded) in the URL, this is not
+ particularly secure and can lead to accidental exposure of credentials, so it is
+-not recommended.
++not recommended.  For similar reasons, we don't recommend using the
++`http.extraHeader` option for credentials, either.
+ 
+ [[http-credentials-environment]]
+ How do I read a password or token from an environment variable?::
