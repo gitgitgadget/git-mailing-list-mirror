@@ -1,102 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.51
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795536806;
-	b=LTqPB3yQeMgOZ7rNLZlcZfL75WiCLK28pKd6sazqhTDL00wZOAeYbLhICQol+VcSE9E3
-	 4n4NGfF/CycXi1KzepBe3yzG7FZ23VJmbz6QaLJ6Fa4XDcWFwGU5FiAtoenCy8TtEyhGy
-	 nIqh5lGLJzFVh88VDLzzi7/cBEl4rOLDA3Ge054ez4UYZtiScv2mM/C2oprkU15hcGiRY
-	 1uMHt5+Pp+pgEawfpMk3g2nJcD7lEcX6MHbUFRUyP4BhFgeJ45AKIt/0jBtw5EsHOshYB
-	 7Y/G9y5Hzc7oWf5sa10Iw9iaE+BC6ISJdvdOMtI8612Dk9bFVvkw9NfSWCZCX4XjS2Q==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795536806;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.43
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795539776;
+	b=vm7Pzryb7Id4QNLIPL+O3GU3C9gubNoATrqXHQif13WM6uJUqKGE8czr8j/vdiKC0xb5
+	 QtNTCFM3xpqiiobVTlzD2wGFSvVdh9GlA/c8TYx1K/Fgv9DU+4+mldNymVSP6e8OxHJCf
+	 uJKX104YxESOP8b/1zzFHV0j7gCcm8PcWq5kpRh6cIOixw+MWx5G+9y/qcFC0C+2REpzM
+	 DntuRKn0WhQ2Ss40BcIJX/Wf6V5sHhtWMj3xzb6P7tEJxCAO27JWbsFzcQr1CBwPSFSn3
+	 d8JJDyBroBQhTeS0G4KuYCnRiR/ItI3cfan9Rq9iXCs3FmAtKZp+OsLH9pdssxCBYjQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795539776;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=xFEgFJCLkhqDnHxeIYsSFOv/y/oat2ldu84bTi9SLd0=;
-	b=mYg6+wbtpnuU4+03L+0AmmgPIo1kCrdAhhy4lmccLNbtTp+BySuadjte9M8jHcJ5zZaB
-	 2k2cJ65ffYMQGj2w1dLAODY30nzLkRUdxoJx57/PjFydlplQAmdOam72376QExBYL/leI
-	 yQ7JrEDwEcciMPuomvNI2joD5p6AcI32pI1K85FTkoAA2EaeK4Cn8icLR0mNZbrLBN7Dt
-	 NiuhY0snCDmLofHfDN+d8Rz4bX80nN7a5I9RYBsZm4744v44voTrJHCironySVr10g5mA
-	 dqY06z6ntp4I4TlISaPxpfKVc64Az3PtNB1y4yKvZLrZPeIjUlZmP/4fw4IJnFNt2bg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:From:Subject:Reply-To:To:Cc:
+	 References:Content-Language:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=TF7auDeQ29AW/Mq9zokPaF+HFqH/Pt8PSwTRwfNdgKA=;
+	b=lhWIgOrwsELziMb1y6qz3beSrmqHedbwjtOS17VYr4xJ2ilt2yv1FUUIHrBcXHq5mfKB
+	 Nyd+TUy2TLS08rYd51lrF9MAwL/37BDVanOXNfcfIcwVY50vMzeKB+SeuOWDjiFfUaojU
+	 jmQDR4Fg2UvaCHoiaxsYf3sw7i+3nEImsXIs0tsVdObd54OH8S3BBPN32/6IRTZs2AWuH
+	 AMPR6o/RKFqxyhYMy2rXgEhBwgxlQR5PvCpact9kJAR7dwm+2VJnk5w1F2qkR0O1AoDtg
+	 oPN6mKWlXiBn3XfzeKTWMA4VrX07pu5lJIcuQJW4lbzg1ZikJP/dUiT6IOt8x493ZUw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fx+NljvC;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.51
-Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="p1sg/QGU";
+	arc=none smtp.remote-ip=209.85.221.43
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50E1606A321
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 16:13:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E50E1606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D26B606A31E
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 17:02:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1D26B606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fx+NljvC
-Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-67db35e7953so4852304d50.0
-        for <git@vger.kernel.org>; Tue, 24 Nov 2026 08:13:25 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795536805; cv=none;
-        d=google.com; s=arc-20260327;
-        b=INRs1FeCHj8Ag+WBkoGEhcBlce/vXXuGQJkWLQyZQXKgg88utZgBQs023cF1PMAhDd
-         /R++Gf7GIOl7NVafqO2aeZ0D2zQ0hG/dVUrz8YnqUwMZFWbHb9lPfVJ9QDSNwehhKlNA
-         n4J6dSvxNRRfcFRt5mbtnCdCVm1FeHw8mqIw3BqDZVIF2HvruyfD+f2dEJfLc9jL3Laa
-         L2P5jzMQrLoHa/TyPjATaKmAvHvkYzUIcz/tMPdibneRdAC/kygcQBpUjm6bXFo8sqsx
-         uKwyKIK3X5Kjzy7vJEE4egEfuLC8mgQXYfkAquy2tZNY4BOpunutyYd8CgZp534lZHuF
-         GYxw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=xFEgFJCLkhqDnHxeIYsSFOv/y/oat2ldu84bTi9SLd0=;
-        fh=cJCXurRSZzlTE4BxroFU87ZbMnK6VtskUbjiTpuPIYw=;
-        b=TD5tx0Td3EKqxz2sOJ/QFWmit5GND/oHDGMLhxaE6ECS4tC3VBkmPHDy5bgEiwwPHe
-         yN6lMVvo2UxEd6w43zH8NMkBwRGF5c9oAvzRzG68t9ow1QVv9YJ0Hh2DDyFKT9SBdUeB
-         sWqw2QQfpJZNRiQeqgE3W19XQ5+VkngBsU8Djq9GzN57PFy2bdzDiYRK0ViQKy+SZex3
-         PFP1atqBw8HEJZey33ztLzgZNnYsdOzZJu8QA8pVQPDXPgwOXBrZkDJ7ZO9O2I1CkM7N
-         yJfAKbXgPGb8Cbspqj9YUcexh+9ue6XJjrn744B8yvwK6JIrysUeMGB/66qPKFnDJ9Wh
-         5kGA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=p1sg/QGU
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-491f34b4e0fso2223924f8f.2
+        for <git@vger.kernel.org>; Tue, 24 Nov 2026 09:02:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795536805; x=1796141605; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=xFEgFJCLkhqDnHxeIYsSFOv/y/oat2ldu84bTi9SLd0=;
-        b=fx+NljvCu8sItAsFrwgdMG4TczYISo0b39C1bKOod7f62zY2cRisdYI7qTWQjH+Cph
-         XshYFAQ48iEQDKoPQIyhpSyWHgkOqL1/hU3XGKfeiMXp7G2+BQf5fY1z5P5K/2d3HNXu
-         TTkf9iBQ4eMOdUVsz4uiUbq25WkVb+MNqBnjf97N0hV+a7BrIs1Lcz5D9ZYDzDAfLsIv
-         gjmS4/4Aiks4Rt2yS0B+mDPI7iEUgnW+Cgyry/nPeAkgkcQKh/Qlyyqhh1dAh8DU72DO
-         Pl4CP5ZJLKwIlJo4GS/x+7NSrzDw36S5D6jUWykm1RyKPj/pLuHGuActwTz0tbd5eetB
-         6ZPw==
+        d=gmail.com; s=20260707; t=1795539775; x=1796144575; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:reply-to:subject:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=TF7auDeQ29AW/Mq9zokPaF+HFqH/Pt8PSwTRwfNdgKA=;
+        b=p1sg/QGUwx+Xx81oYrceoYmRONK8z8585b9C/0FKFzrtCaD73a5164aQyGKFrc+ida
+         u6Wb9CaIiu2MbwnjwheP82Ok822WVsxrQnSJK9OCyVNzbPRcLS0vEuTh741q2uF1h3QD
+         nnfkveLB3tNI/fTfJ+s/XNJJyq5Cl14Zo3Q+XVZ9WtHixaBbPPMPNNLnhHs+KMGGTaTb
+         XaakSLFA5Fko1D/cNozDJG5H4/M1wcOW5vl/v3gM69lJUBmfDEiubUx6IvjSOjeJX2a+
+         0LRfrag8w9KuSvhTtUW4obyEaJkrHVD/G53b/ETy0LhL/PxYDynxuPWdCSofIkmRgNsK
+         fVMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795536805; x=1796141605;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=xFEgFJCLkhqDnHxeIYsSFOv/y/oat2ldu84bTi9SLd0=;
-        b=IoaasCv8gmr/6WcoRyn2wCdkP/G6TVyUGWAIRYXD45bEEhi8gmnCDFx2kHsK8OLGnM
-         w7ecUmbAdEj51SyZYY+NT+nhO2mQGFTKcPFTOBGIBPXHaWxEISuwh5p5PQqNKzrPF1A3
-         EzaWjnUI8KoElfH4gpePzFFTmPShBM0bRXN0DnNPHaQqkswsU79oJ6RvpWA+pU/nF04t
-         iX4ahhwEuK2WWYs4vdls3PV4/ZEkZ/XcJ2z8M6zYdSjjJ867ei+DbX8iGyuRrWOLb5C9
-         +hZGnJ8JM0WObY156dVNrZ+dGbpswZhjpf6OC7Yd3H6Z3M75uEPq+ceg3Uh7sNA8sx25
-         B2Mg==
-X-Forwarded-Encrypted: i=1; AL+hErHGpeoRiBrywdX+KAreUiRr8QENYjsvKoIMoVoy4TsbT/hgVq9lcWIZuZwHtV3kR8BCCag=@vger.kernel.org
-X-Gm-Message-State: APuU4Z+QxdnKzvV3vlHpvSuzKpdW1m7F7xPJza6jA428xv82A9uSg1+n
-	9rDGB2EFzZI9B+pfXPelC13r4OSGicpYPn5porSq/VDgAzwOvMM65uPM1e0Pvfuh4VvNRkOs/J0
-	a4ROax6pfA2sEMpuVh4eaNFbBScizM+M=
-X-Gm-Gg: AZFdTZcHPGRtQxZbDx5fTd38bJ0zpXfpG139EwmhUtzuc0vtVW6BBDUUKwHHuB71F7P
-	e1nOsgxYekne7qduCOXt0wsQy2i4PPRyYUlSRFCLVhbJD5NmZdc2l+LfnTmlihqfk16h2rw1V3p
-	trW/WZvtR+C3oYR5yUXU9x9v7xBiD1RJwWPsupYaKzZ2uBYag9dE/gbQWI3G08tM9LXOeVYYeDe
-	fZZVCtoLGPEhTTSgwWsGCz3weFSyO88chhZtlYwP7J/mElc6Jl+jlDiUCk9dgjcbZRFhwwVH10U
-	+OknUrM5EHWImI3DLiVLQzaEzXHdQYMsT0mLeYEDa67u+MWCn561YyVDepQbWgISMWKMd6tpVC2
-	sAUHwfWv6AErjA6AjDkQlRbDfXuEbQYcN55rKg1pw0lGsNPE7r5amuWIFfldt3CMYqErxcKWOjP
-	8rGk9fgS8eZb4Kz+1i0E2iVulsoN9UsfeIbP3kjgb2mrbORR5FRx5K6BP9YrffXnQe8MNYUklQL
-	4He8xSLfmDj7R6Cg1PJg6DVB+Cnuxs5uOaRA2ZRCugyXkQsRHsii7tli459
-X-Received: by 2002:a05:690e:488a:b0:67c:2b34:31a5 with SMTP id
- 956f58d0204a3-67df447a9cfmr2824201d50.56.1795536804850; Tue, 24 Nov 2026
- 08:13:24 -0800 (PST)
+        d=1e100.net; s=20260707; t=1795539775; x=1796144575;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:reply-to:subject:from:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=TF7auDeQ29AW/Mq9zokPaF+HFqH/Pt8PSwTRwfNdgKA=;
+        b=2m2xhIiXbRQCf5x5AVe3y4kprelYNLka76e+ahXNgG1G7VRrJnBcg+I1EeIdgn3wc3
+         QDrnmW3DuweOyC3l8xFCYeMXIEmDZJyu9CB87b8cV69ubkhYxMEAnJKPl3YnBibY5MyH
+         I7YRKBQwaXLBC1AZzTwaVNqFnyawGjZEOYEcd1BSJgKDTEX0iio9H58Q6I9vW+Mb5vjQ
+         Eor1ChbVMLaASSswInKK4lMsMEXvaI5cPQopsDy4eqs1vOjMp7wALVUpzF95/i/7iwQa
+         VURR16QME0/x4Jtug71JzwI2ay09g4w3YHf7KazMCL+l0qHdKmJBrimdVrreCyLN3+GV
+         YB0g==
+X-Forwarded-Encrypted: i=1; AL+hErF/ZXOsb6bE6v8ewWmYRPXWYwBLp+mhcn/bbwgCslN0AwHXVb1Lj3rmeUAzLBJl6eWxEDc=@vger.kernel.org
+X-Gm-Message-State: APuU4Z99g+VU0h4VAJ5VrOVXKEzqaSYMiCx3nPmuDkIvptS/X0oxL7Ns
+	mkc1YMeGlYJ6kAew73Fs0qtA5vZiyR4eJhHfCtyEu0OKzWItjVlhXfe8
+X-Gm-Gg: AZFdTZe953BC6RhLI0yvqzzyWDwYbudI7ctT2x55gIJKKEZcMWyK6J0YOgbSMZJFyxk
+	s19+dyJzldURINZyvzIrWAxN8XRcfqte/A31Lj4YQw5NJ61nAFKf1rqmB1Jdx4vCC/1SOW0kLfm
+	cjNt5c2P3fFRGjnBlolrxZXHSynMhNm4mGEcQv0C/nPP4CaAxMMwtXMagpDShPyszqyPWTNnsx5
+	Mz2qdkKnIE09UtKBsw3yPw6FBcGcUGEie9qP6N8DX5n59YTEQiX3vaeFWjyCU67JXBHD/16Bab+
+	HpKJKWZfEY4xiJgOgx6V1DHr3lXSoKwShBIPtDRyiP87OQqe9WqyhYXXGOpLQsdEXXPmKsz5NH6
+	riZ54HyhihYAuF2sREjvqZSMXrGj5/vwvmynmMpKxTQdlFFUhX0ZB7AHk2FHwIhxzQwn8gpls9B
+	xfK7V2YsRDKi+S+59KnsLtmTsAWfJCihHLeaj/8JvOmdqawP2CTrQKTz1lPQ31lkLAgtokRKEZf
+	hMV17+YsAdEfUvkkK1GN/xNg8/cJhgllFK8NRzI0J0nEU/6KOYCcxUVfkTkKTsR//K2bSQDUCkR
+	K1gsLiP9QyLOT+BlUGVbuAdLaku9s7vEer1KwzveH51lQvdLu9tFW3anROukhWSDDOnj8xj1RBJ
+	fKC1SmNGCW/Tp
+X-Received: by 2002:a05:6000:310a:b0:491:286f:8e63 with SMTP id ffacd0b85a97d-4abaf7401fdmr33806698f8f.14.1795539774414;
+        Tue, 24 Nov 2026 09:02:54 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:724:6601:5667:a2d8:e11c:6db1? ([2a0a:ef40:724:6601:5667:a2d8:e11c:6db1])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab6b2050f1sm28849615f8f.38.2026.11.24.09.02.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Nov 2026 09:02:53 -0800 (PST)
+Message-ID: <9ff62027-f0a1-478f-b038-9ece951e6c17@gmail.com>
+Date: Tue, 24 Nov 2026 17:02:57 +0000
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -106,88 +92,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <xmqq1p8zw49g.fsf@gitster.g> <20261105203344.48513-1-okhuomonajayi54@gmail.com>
- <20261105203344.48513-6-okhuomonajayi54@gmail.com> <avGP6txIm0tK377H@pks.im>
- <CAFpMFfBA-O+BqXzCo3sG28hh63G-N4HpSr0zv7tfUhBAN_57+w@mail.gmail.com> <CAP8UFD0b612_d6SEVerqs0GzSTOQzx9RaSvVDxAYORMKRWbQrw@mail.gmail.com>
-In-Reply-To: <CAP8UFD0b612_d6SEVerqs0GzSTOQzx9RaSvVDxAYORMKRWbQrw@mail.gmail.com>
-From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Date: Tue, 24 Nov 2026 17:13:13 +0100
-X-Gm-Features: Aa3M54pnQHKBm4sL_W11A4fCzeSt3MrkAMeIt8eFQXq73jP3jFjaJxNaDEWD3sY
-Message-ID: <CAFpMFfBjjEEabuZ7F=PSKG9E+xw5T8nLLy9=b5gCHhB0M1eCRg@mail.gmail.com>
-Subject: Re: [Outreachy PATCH 5/6] notes: pass the repository to the
- combine_notes callbacks
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, usmanakinyemi202@gmail.com, 
-	siddharthasthana31@gmail.com, kaartic.sivaraam@gmail.com, gitster@pobox.com, 
-	karthik.188@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 2/4] diff: use size_t for the allocation size of
+ word-diff buffers
+Reply-To: phillip.wood@dunelm.org.uk
+To: Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>, Jeff King <peff@peff.net>,
+ Junio C Hamano <gitster@pobox.com>,
+ Christian Couder <christian.couder@gmail.com>
+References: <cover.1793352943.git.gitter.spiros@gmail.com>
+ <cover.1793439137.git.gitter.spiros@gmail.com>
+ <b27ef2a8882c2badb88d257ca28ed38b67c13c1b.1793439137.git.gitter.spiros@gmail.com>
+Content-Language: en-US
+In-Reply-To: <b27ef2a8882c2badb88d257ca28ed38b67c13c1b.1793439137.git.gitter.spiros@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Nov 24, 2026 at 4:28 PM Christian Couder
-<christian.couder@gmail.com> wrote:
-> I think it might be more coherent and easier to move forward if this
-> series was limited to its first 5 patches and if the cover letter said
-> right away that it's only a preparatory series. [...] The cover letter
-> could also list what is left to do in "notes.c", "notes-utils.[c,h]"
-> and "notes-merge.[c,h]" and why, and then say that it can be addressed
-> by future series.
+Hi Elia
 
-That makes sense, thanks. I'll send a v2 limited to the first 5 patches
-and say in the cover letter that it's a preparatory series: it does the
-bulk of the work in notes.[c,h] and its callers but intentionally
-doesn't finish the subsystem.
+On 31/10/2026 10:16, Elia Pinto wrote:
+> 
+> @@ -2192,7 +2192,7 @@ static void diff_words_fill(struct diff_words_buffer *buffer, mmfile_t *out,
+>   		regex_t *word_regex)
+>   {
+>   	int i, j;
 
-I'll also list in the cover letter what's left to do in notes.c,
-notes-utils.[c,h] and notes-merge.[c,h], including the hash-size helpers
-still on the global that are reached through create_notes_commit() ->
-write_notes_tree(), and note that it can be handled by future series.
+I've added more context below where you can see that i and j are used as
+offsets into buffer->text, so if we are making alloc a size_t, don't we
+need to do the same for those and also buffer->orig_{nr,alloc}? There is
+a complication though, i and j end up being converted regoff_t which is
+"a signed integer type capable of storing the largest value that can be
+stored in either an ptrdiff_t type or a ssize_t type". I think that
+means they're likely to be bounded to INT_MAX on 32bit platforms which
+makes supporting buffers larger than 2GB on those platforms tricky.
 
-Thanks again for the detailed review.
+Thanks
 
-Okhuomon
+Phillip
 
-On Tue, Nov 24, 2026 at 4:28=E2=80=AFPM Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> On Mon, Nov 9, 2026 at 11:12=E2=80=AFAM Okhuomon Ajayi
-> <okhuomonajayi54@gmail.com> wrote:
-> >
-> > Patrick Steinhardt <ps@pks.im> writes:
-> >
-> > > Hmm. I was hoping that at the end of this series we'd also get rid of
-> > > `USE_THE_REPOSITORY_VARIABLE` in "notes.c". Any reason why you decide=
-d
-> > > to not go all the way?
-> >
-> > I limited the series to code that already has a notes tree. The
-> > rest needs more than that, the display notes code keeps its state
-> > in globals, and log, format-patch, diff-tree and format-rev are
-> > given a repository but do not pass it on. format_note() falls
-> > back to the global default_notes_tree, where I wasn't sure which
-> > direction to take, and expand_loose_notes_ref() only takes a
-> > strbuf. The hash-size helpers are simpler, I just left them on
-> > the global.
->
-> I understand that this series was started after discussing a previous
-> patch focused on "notes-utils.[c,h]", but it's a bit strange that the
-> changes it makes in "notes.c" are limited in some ways, while
-> USE_THE_REPOSITORY_VARIABLE is removed from "notes-utils.[c,h]" in
-> patch 6/6.
->
-> For example, the hash-size helpers you left on the global are reached
-> from code in "notes-utils.c", like create_notes_commit() through
-> write_notes_tree().
->
-> I think it might be more coherent and easier to move forward if this
-> series was limited to its first 5 patches and if the cover letter said
-> right away that it's only a preparatory series. It does a big part of
-> the work in "notes.[c,h]" and its callers (and does it quite well),
-> but it doesn't go all the way in the notes subsystem. The cover letter
-> could also list what is left to do in "notes.c", "notes-utils.[c,h]"
-> and "notes-merge.[c,h]" and why, and then say that it can be addressed
-> by future series.
->
-> So I would encourage you to send a v2 taking into account the changes
-> suggested by the reviewers but limited to the first 5 patches.
->
-> Thanks.
+
+> -	long alloc = 0;
+> +	size_t alloc = 0;
+>   
+>   	out->size = 0;
+>   	out->ptr = NULL;
+
+	/* fake an empty "0th" word */
+	ALLOC_GROW(buffer->orig, 1, buffer->orig_alloc);
+	buffer->orig[0].begin = buffer->orig[0].end = buffer->text.ptr;
+	buffer->orig_nr = 1;
+
+	for (i = 0; i < buffer->text.size; i++) {
+		if (find_word_boundaries(&buffer->text, word_regex, &i, &j))
+			return;
+
+		/* store original boundaries */
+		ALLOC_GROW(buffer->orig, buffer->orig_nr + 1,
+				buffer->orig_alloc);
+		buffer->orig[buffer->orig_nr].begin = buffer->text.ptr + i;
+		buffer->orig[buffer->orig_nr].end = buffer->text.ptr + j;
+		buffer->orig_nr++;
+
+		/* store one word */
+		ALLOC_GROW(out->ptr, out->size + j - i + 1, alloc);
+		memcpy(out->ptr + out->size, buffer->text.ptr + i, j - i);
+		out->ptr[out->size + j - i] = '\n';
+		out->size += j - i + 1;
+
+		i = j - 1;
+	}
+}
+
