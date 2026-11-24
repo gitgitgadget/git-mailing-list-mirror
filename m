@@ -1,101 +1,114 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.43
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795535367;
-	b=OtEG++/0P3ZUobAs4PKgs3RoFB1wUgQOVEfF1hJXAdzGzBlnr6f1uDhNFur5bGzMS00N
-	 Gw8pS7wlAOENmuoSzqXjPSXkY8p4ioQEWCmcS4BP3oq48q5GfPM+AZJCl6PpBMdYAtWHw
-	 wINI7M1KjTVjCRJ4PGTf4+6tp5Xl1B5YDqUKh0stT1mzbGzldUT56PD6tNfgUITEY6S3b
-	 XcXSQRMJQ0ImS7u20jo/bAJQJ7Yssc1eUWRiBYixCdGTasECNX7R1wisa6kC3VXeFCLb5
-	 eiuDmSDAzlLVezkcl9y+Ytepj5DyarkE8mirJUy0xzUmImk1r5TnboRaQK2GIFxVRYQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795535367;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=Y39UN+iE06Q67IFcGwwsPwQ+szDOCgYcVeEwzPRd52I=;
-	b=weAKS5o2+Nixq2Wazx3WIMrH0DGrXyIOeqdjuPRiK2wiiKVqqUU6u8ZXlOn55rAEC8yq
-	 rotpLFDyF6hZQMtO0g4BG+PWfKOOwsuA+oB3xi6tc6ShgD1fLH1rN+5QhFrvyi90EpG6w
-	 VjLCWdiCXC+dkOUfFKKKRq+Cs0X9tRU+zPfK6y7Zg/DGGqOCBhNQXzgG97zKjbzZi0/wY
-	 kLc7PMrU48/a0K674oIXCVj8ZLz5DQEe9WaGysCuQADql5b+lC/OQJPLS8lsVLk2RoreH
-	 ZI+Vfb95zuYBaB3jo8F3xDHwXuC7h3JUdetn0MumUs5a3gikfP92aX6+6c5GO6ZQ7uA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PDe4ljgQ;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.43
-Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.147
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795535769;
+	b=eMEi28f5plCpZzxho2EJQF5APJqRagXYF8HcUeiPz6C0e0lE9SO4wdITI7F+A0doNZxE
+	 AAPR0svSvgqvVto3uGoaapRLFAs1HnPh6BbIEVlXKkTSOyFHtFqmFCUTJ8i0CALNiJF8S
+	 +AHXnqBtH2DI2W5DPOW0JPa8cM/IiUrKRwHwhXRMEFD46sn3qXcLjwipPDrnSn6wtl8D/
+	 A2PYF6I0YNbulORq7WtF6FI6f9Oc5KR3nt2KzcgHVYvYZ6vjNsqsYJ5Sj7s/98oj6J7AT
+	 pwM7Ik2PDJmbqcpPj7lOYKTXULHxKy4+iIfSlcz32toB5QHz4e/OnZOvddMSQQPbr9g==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795535769;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=pYsySVygj1zDAuURCjgSUME8zKVDBkcuM77Ikn8ZLqA=;
+	b=5gn2yABdRYx0L5wnzHrzP0z2P5P1GfmZJkezjXAstPsQAC+sz0N/kTbnWGlUQGNhU7I1
+	 HS/leqV39MSNjVDAlANvuiiWXOk9WlFKONanwtYaXRNkg4nqe/+/OQtnWm5LucHV+zxA1
+	 iOZdJVML1uYCMk4AgXgA0x97yPvRmHy1CTNOs4H7sPak5kFGiKt42p113Mp35qst+TnKP
+	 /ZhyK7wdeN5fRU5BWb9swoD5ygv+9PeoJW1tBaFLR3qfQbn+rlFMxjqwTKUv7ZI8x8zCT
+	 x9kc8f0Cag1JOlsogCfZdSHjWSbke4gPnHtdmTlhrIwMfMTLeBBew+lZ4msXzzWGCyQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=jvns.ca;
+	spf=pass smtp.mailfrom=jvns.ca;
+	dkim=pass header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm3 header.b=EPNgBySM;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=u483L4qe;
+	arc=none smtp.remote-ip=202.12.124.147
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E179606A321
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 15:49:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0E179606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98781606A329
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 15:56:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 98781606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PDe4ljgQ
-Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-6767d92cde6so5075543d50.0
-        for <git@vger.kernel.org>; Tue, 24 Nov 2026 07:49:26 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795535366; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Y3uMAhxnDOXiUI2Od30Pv3uc/BuHQDCT+YO+JM3s+iH9NPJGCO1Mlxy6X/BdBqAq+Q
-         1EGK0zXsipkUxP5ATQgwtSjtcw72eKhQBzgiKUmu/obIz6O66w2uOe9e//lJJYVGjYPA
-         lEisKvIehUhXbMNWX0zUgNNbYc/GKqkHZyA3oK4jp5ZkoMBge33Y5eMNgkq9mpr1Guup
-         dddFB+fBwS6sW6VlH2CGL2jm+3zQuDGizZuiSm4SZzyySp6YRimVJlX8tMVQLcJFdyYK
-         piX16uQRjI7HRTGx6zN96S2RKzcPhW+CtOSG/rThj13P5j55AJ6uJ0qFRS10K78mYYL4
-         75qg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Y39UN+iE06Q67IFcGwwsPwQ+szDOCgYcVeEwzPRd52I=;
-        fh=b93BLYhEU9d4PvUs854xLtULYcpDvObmLRSV+ERr1eo=;
-        b=RR38LJy/ArfYRmfGHJ5xS32z8ZlrLXc81ae4AF5qNEtC94JkTFmSjRr7sUYaBeoAtD
-         PF7dHVcN8mEd9NhC6kdLaNhfdYox6un857am34df6VDIsl2gnKGV4JvvTBOlF+TEQyrY
-         6Q1X96qefTWQBwiJu9b5DIasRARGtaTjYWGdUSmuIb+txJeDQGB1Gkbj8smlSbYpKZG+
-         QLLzvLZhF3VHFSOFQcEAM886h1WRi1dLB2yNL5WI5Q42h1tn5qiq377m3wPu7pp9Dl3p
-         k082ciCuBUzTc8ffIgtZQrZgcVmDpGecjRRS0QbVY0Alid6UglGM3pwAXoJLWcYbwHxS
-         3Jqg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795535366; x=1796140166; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Y39UN+iE06Q67IFcGwwsPwQ+szDOCgYcVeEwzPRd52I=;
-        b=PDe4ljgQ1JjIN6igMHH3YhtSaPDfzzF/9CXgf8e2l6vWf/S62QONKLH4UkqKQ5r2NP
-         LjMGc9cFaIuQTnsxUORY3wXOhTcXRW71HEb3yIMxPgTECFa+BreMPb5qkdzZs2IBu2Mp
-         8x+SgRKAjxnckuhxbvnkc5JPBGuKJpTYMPCA7w9hiWE8H3uRpot1HYh+s7dVOpBzeybs
-         GNxLGFPVZLSx9vFEKw8SwJyHdVB+BFU0YrHhR+mK0Y9UyeYhfzSJh+6UoIp5obAQhppT
-         bKmNcoqvg/Qrvo+NpzNMFGEqCKhQCPA3MPVueU6399tanGCOj/DlIwwloL6/CeCkdYXb
-         13zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795535366; x=1796140166;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Y39UN+iE06Q67IFcGwwsPwQ+szDOCgYcVeEwzPRd52I=;
-        b=CQ7xTfmqqWsEyuM4RzmQF9GPCrbpvVW/iG7NxyJbEBCLk4YjYNXemGBUHE4yVNqjW+
-         9T59U83LsqAalaSD/DLP7laMEl03B6SxcnZmzUAH5ea5XRXnFpSJrXRmJP6AERQKsqpW
-         1OdKOZiLVc4ySFeE9pgm9TMkon6qrtgV/cOgGZVHQBj7bxHkVKfaqxvhsnA2Cp18bQxI
-         T2YJzhxqEL+HU+LIo/XS3lchl/of39Ioi5Mvuv5KzUphfOZLucTWwT5Je9EwdSKc4aum
-         EMHIPPTrBghG+92ZBYb4r9iAS6zMFOZzH0/ZNZvNL+FFGOXTQQdc8ClNYGgtn9zDj7QH
-         L79g==
-X-Gm-Message-State: APuU4Z9qQHOMErufr7dDKXhFvX2CsRHL28Xpq8HrhigvkuYRx43LcQ60
-	Fv/KtkzDDkWMki9mrxntuQl1IXzXSRW+NQNxmYmyl835SanaO4zrrJR3mNyVacojSYy/wXGkBLo
-	QeXZSOA3R/pFmIUW02RAsL00YYi/B+cUx4daCFug=
-X-Gm-Gg: AZFdTZcTfM61vY562anEiH3j301OjuIWoZZFY/6thADccUB3/IaCcC67Tg42BgKzMIx
-	ayCx/mROAqMPGm6u1Ch2FKmZu14rimcDj5Cx/5qS2+hmBgqA8c6drP1l6nOHTk1xS8P8OYcyZ74
-	CpPzYGMqH/derFIsk/KxVahUt7Psf7S4FqeihyKPXearSm7hSVsm1B5bsXpdyQH1X0+gCY2Gt6x
-	lW5S6WOLIZxGUzMX/HPrc9TgNAy8Eb8d7HdelHqzbVpZfUP7NWB+6HqOp6RVdE/36zCSJJdDyDY
-	D14FegNESZ39swBy9PU7oS2dXjUpYJvuFHwjGjXwJ9Cf2Dvg0QHtWkFi+bP0yrKmCFoI615/VY7
-	rOCj+sqbCOQIGkZrxEe0GkszuMXmjkuY4Ze/uMNj46L3yoZaIxAgUmWiNJ78D2LfKtoLij2DbqR
-	x6Irc1uwFLOE7alxYdVTUnqBpZZqYLj01D3dQZxZvmiJpbbqGerxk3NThmugcBbpgRyyht2jnXL
-	nRgo5FewQaZTdP5wbGYyYn6NNnRz234xtD05g==
-X-Received: by 2002:a05:690e:108a:10b0:67c:3484:f8e6 with SMTP id
- 956f58d0204a3-67df43f8377mr4201850d50.38.1795535365579; Tue, 24 Nov 2026
- 07:49:25 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=jvns.ca header.i=@jvns.ca header.a=rsa-sha256 header.s=fm3 header.b=EPNgBySM;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=u483L4qe
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 969181D005D1
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 10:56:07 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Tue, 24 Nov 2026 10:56:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1795535767;
+	 x=1795622167; bh=pYsySVygj1zDAuURCjgSUME8zKVDBkcuM77Ikn8ZLqA=; b=
+	EPNgBySMJudepGbqtE8uQzwmCmec4w4EHd0y8MbepV2Fpyg+dw8KPygp3KKGxkrS
+	Sq45oUOdQW1w8oF2easK7X8twN8jFd72SP/skO8AXdbOk+dunbjvzW1i3sAgaZ0z
+	IJ19SjCQWurjLCcAI+EgAuRftxgQ7TLNikoKc49ko6YjaMWCBl7+xmjoJIdXVUkL
+	zgjNEzh17QUfu1N24H/jgEBYQmA/b873zxVX6Z1AIcy+k3rivTyMKkbSZ5QZi695
+	0XcPYrnl2qnDB8dXONQscvZMQz0Rp8Y/yLmbAheHC/uvWBLkoy3jYN5yhXY/JFYN
+	e8AI8sJTdT7c+J4mPSH1kQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795535767; x=
+	1795622167; bh=pYsySVygj1zDAuURCjgSUME8zKVDBkcuM77Ikn8ZLqA=; b=u
+	483L4qeocAMJyK/18Z+/M+4WGEJBMHdNLB5irh3ANPihxJzakmdxM85vYf675WZV
+	9AtDbMIl0EzkZTC0zDpio0y+U6sWQXXm/Wl9xyCBsyimTYO9vEXwNhcvzSTgkQ9n
+	1tCd42wi0kJlpdezmsYD8OqMFoRS0Sv+Us9/U0FxW8636g39bA6w9kVA3YvamTkw
+	DtMiNvY8d/yG/hv/cpL8WvVfmBNvbAHDU5s5UeFQ4AVrO2+g25OqLYKXYjG8/u9/
+	wx1N14oltskElompFeBRfOKb5wpqr4N85zSeiDXtprRYxZBpvoLF7Je0HovZTYeu
+	ZUwR1LSIf9A6DnrLldBVg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=jvns.ca a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795535767; d=jvns.ca;
+	mf=PGp1bGlhQGp2bnMuY2E+; rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:If/XL5kwZjLMymO9Iu6Ev6cioJ9ZYxpPrEqMwhl/t2Z4ORF
+	HK7XNmxw8MvwZWuld+HP65C7TEAX+GPWJ+muPJ6xYFPHAzlBVNSWYkC3WoH5atYF
+	kKAKoAqqtoB02P+hr7jgeDpLcdox1itLQOM3hkjVd/CbNP3f64OSg6AipWXWd9U9
+	TpYJka9IK9+vA5xmCeXas1aef3++00+rbpA7CGNmPDNxZNXO5htiXPuK0I2I6VdW
+	R4lmymkPzfvM7JaU4mMkp9250P22GJimmvZ/Nx+hZVk/nbWXA79IcXwWLJZ0we4h
+	eUE3DGWYOi1DC9ezOhcDRqNSGlGwCiGhCaRUwRQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=14;
+	hn=cc,content-language,content-transfer-encoding,content-type,
+	date,feedback-id,from,in-reply-to,message-id,mime-version,
+	references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:aisPB51O8sEF0vMHoDmbJfmPwzM1yASrdfmPBlgl+Gc=:mpN6EtXFFtJM3/Xz0S3ahytZvTClw06C3Iej8O5YF6w=;
+X-ME-Sender: <xms:lrMFa-cnDvsGZsKPe5WF-ax3qMV0cZQuHbXCrWQtkpjYIM_oZwHPSg>
+    <xme:lrMFa_NHAxv6nomeK-tBIeWWS0YIM_CrGxuIfTx1xS9sZHCbNIb2T9PJeKaggSl_p
+    W8Gvm6cQZSIsyw1Aw6uHhkLqCidQFppkODETLz1M2iA_mhhDCm1rM0>
+X-ME-Received: <xmr:lrMFa0gC-O7p20V27KOKm7ljPPj0_pQxlPyWi-QQuKjiAhkxLNqw_4Z7krWo0ABHkRFelyyjTQet39XB0-hmqdMPPjhFrw-v2X_aKL9KX2rs2_sxsA>
+X-ME-Proxy-Cause: dmFkZTGHiAwyvI0CQ8lKscbBKb8A07DXdcleTJo6FE4iJ4G8MWJc9w1XNslq9nc9/cxePN
+    B19CYlhqba65eUsy65E8EAxWY60UYbmXH+RW01Kkmqetpmm2cZ78cfjC6JDqynXcRMXGYe
+    jC6CxZaJ4o6KSLpmkw9oPZJZ04p1UZiZF0DkduE0P9FLJ7n+/UqkDb4si86cWySXWFYqXy
+    MHfdIE8H6/3o4qiasvbaB5lzIsMkgoHzSqvoON2uReWiH9HPzUUS1gOU8+cB9NzLCiQCMT
+    XUnLcd8b/FKsNtiGLtXqSbNGYHT+YeWCFLtpgZq/pFChA0SpanFMJQgKBszlVfwWQ9CWKF
+    b+9jp/kYFKckKzXFxhk5+3UJvdlck6OjtC4J8wXS6onbZU3lcImPhph3dSPvzE0xJN94gr
+    MpBGGs7+oYnOjsAsR7HOO+GbTerlRcniIlDbJ4traTRgNCettoKilEHj6bzQOLUv4ybu8B
+    /ITF4n/2+a35PHARit7vPugxvzcJ+u+ziv/N1b3fdATY2/ox6YgzcF8QNJSGujAJMuzygH
+    pQVztG2b8vH4t7cd6JapMIft+gAcWfjtlGz4vBkJHsBRgA61CkjsgZJ2F8k5rh3FCNlkm7
+    qA+vG5VJYZtuz6hKlHsqCI654hpyYtLjnStYgFnB1AKufWwC2lqB4XURUDzQ
+X-ME-Proxy: <xmx:lrMFa622JfV3yijRLR_TsJrfyQUEb8KZXUxXRys1x3EiMy4209AAoQ>
+    <xmx:lrMFa2hr613m15pOSEcclqTESDR3kSLUFvBvecjelhWkTYSVMmvHZA>
+    <xmx:lrMFayd5MgJy4BEPr0HqO3hYDl8r3lbHiLwjYTWPcCQQ3O6LRRL5Qg>
+    <xmx:lrMFaxmzNVLwWSBoJRWO1DD6hndKEItNT6KE3t5YE6bZ9nyOgEPJGQ>
+    <xmx:l7MFa4DSka8uIu1NDwYjY01HwWMqxyK1LIqq6TL_j2GjO-rEyVF6hhYX>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Nov 2026 10:56:06 -0500 (EST)
+Message-ID: <074bd710-1c32-4fec-9ddf-97157bd498b5@jvns.ca>
+Date: Tue, 24 Nov 2026 10:56:05 -0500
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,51 +118,98 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <xmqq1p8zw49g.fsf@gitster.g> <20261105203344.48513-1-okhuomonajayi54@gmail.com>
- <20261105203344.48513-6-okhuomonajayi54@gmail.com> <CAP8UFD3SosDP2_T3aWz-72TQy4yujaEtRH9tM01AxwEkXzmDtQ@mail.gmail.com>
-In-Reply-To: <CAP8UFD3SosDP2_T3aWz-72TQy4yujaEtRH9tM01AxwEkXzmDtQ@mail.gmail.com>
-From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Date: Tue, 24 Nov 2026 16:49:13 +0100
-X-Gm-Features: Aa3M54oUaq-CajeAUjZeMa3Ohnt0J-sXfUBh1PMtO36m-K_jqmah-0-9aXCkOBo
-Message-ID: <CAFpMFfDGOCmq2=kWAFU4FPkWa7fLZCUqeCSF-5XhrDkqMbWnGA@mail.gmail.com>
-Subject: Re: [Outreachy PATCH 5/6] notes: pass the repository to the
- combine_notes callbacks
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, usmanakinyemi202@gmail.com, 
-	siddharthasthana31@gmail.com, kaartic.sivaraam@gmail.com, ps@pks.im, 
-	gitster@pobox.com, karthik.188@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] doc: add tutorial on branches for beginners
+To: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Julia Evans via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+References: <pull.2307.git.1794259990263.gitgitgadget@gmail.com>
+ <CALnO6CD6vu1ed3jw4oDceV4n0+zdsOaJGqSHhgaeEWsgGk3owg@mail.gmail.com>
+Content-Language: en-US
+From: Julia Evans <julia@jvns.ca>
+In-Reply-To: <CALnO6CD6vu1ed3jw4oDceV4n0+zdsOaJGqSHhgaeEWsgGk3owg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Tue, Nov 24, 2026 at 4:27 PM Christian Couder
-<christian.couder@gmail.com> wrote:
-> It seems to me that the copy_note() change is not related to the
-> combine_notes callbacks, so if you moved that change to the second or
-> third patch in your series, the title of this commit would better suit
-> its content.
+>> 1. Introduce some imaginary characters who are learning branches for the
+>>     first time and examples of workflows they might use. Test readers
+>>     said this was helpful because it helped them see different ways
+>>     they might use branches.
+> This is extremely helpful, not least because of what it does for this doc, but
+> because it sets up future guides to refer back to well-known scenarios. In
+> particular, I'm mulling on a triangular workflow guide, which could feasibly be
+> one component of a guide to collaboration with remotes; these characters will
+> have different things to say about remotes!
 
-Looking at it again, the copy_note() change really doesn't belong with
-the combine_notes callbacks. I'll move it into the writing and pruning
-patch (patch 3) in v2, since copy_note() modifies the tree through
-add_note(), and adjust the commit title to match.
+Cool! I think probably we'd want to re-introduce the characters each 
+time (and maybe even choose different characters depending on the 
+situation). For a more advanced workflow the characters might be different.
 
-Okhuomon
-
-On Tue, Nov 24, 2026 at 4:27=E2=80=AFPM Christian Couder
-<christian.couder@gmail.com> wrote:
+>> +Step 8: Create another branch
+>> +-----------------------------
+>> +
+>> +Now create a second branch called `add-animals`. We're creating two
+>> +branches to show what the process of working on multiple changes at the
+>> +same time looks like.
+>> +
+>> +First, switch back to the `main` branch. This is important because
+>> +normally when you start a new branch, you'll start it from the
+>> +current `main`.
+>> +
+>> +We normally start from `main` because if you create a branch called `two`
+>> +while on the `one` branch, merging `two` into `main` will also
+>> +merge `one`. Starting from `main` keeps all the branches separate.
+> This feels a bit confusing to me on first read, if only because the "two" and
+> "one" branches are hypothetical (and because we haven't covered merges yet).
+> I don't love to keep the reader in suspense ("we'll explain why we do this
+> later"), but I do wonder if we can give a better demonstration of what happens
+> when we stack a branch like this by using the example names here?
 >
-> On Thu, Nov 5, 2026 at 9:34=E2=80=AFPM Okhuomon Ajayi <okhuomonajayi54@gm=
-ail.com> wrote:
-> >
-> > combine_notes_concatenate() and combine_notes_cat_sort_uniq() read
-> > and write note blobs in the_repository, even when the notes tree
-> > belongs to another repository. The callbacks are only called from
-> > note_tree_insert(), which has the tree.
-> >
-> > Pass the tree's repository to all combine_notes callbacks. Also make
-> > copy_note() use the tree's hash algorithm for its null object ID.
->
-> It seems to me that the copy_note() change is not related to the
-> combine_notes callbacks, so if you moved that change to the second or
-> third patch in your series, the title of this commit would better suit
-> its content.
+> Perhaps we can start with the idea that we want to keep work independent
+> ("Branches are a tool to organize your work", "working on multiple unrelated
+> changes"), and then after merges are introduced we can revisit the stacked
+> version and show what happens in that scenario? There are pros and cons to
+> stacking, but I think covering "branch per independent idea" as the norm is a
+> good way to handle it.
+
+I like this, I'll try just saying "You'll usually want to start all new 
+branches from the `main` branch
+to keep your branches independent from each other."
+
+I agree it's weird to talk about merging since we haven't introduced it 
+yet. I'll take that out.
+
+I think stacking is probably too advanced for this beginner tutorial.
+
+>> ...
+> Here are the last handful of sections, and 2 paragraphs that come between what I
+> see as major sections. Here alas flat text bites us a bit: it's not particularly
+> evident that step 13 + it's merge conflict note form "the end" of the practicum,
+> and the stuff afterwards is (somewhat) back to the introductory concept idea or
+> examples.
+
+I agree the last few sections are pretty messy, thanks for finding that.
+
+I've reorganized things for v2 like this::
+
+- Move the "merge conflicts" section into a note
+- Move the "3 ways to think about branch" inline in the step-by-step 
+tutorial, after step 6 (next to the example it's talking about)
+- Rename the section about workflows to "Examples of using branches to 
+collaborate" to make it clear that the `git pull` section is a 
+subsection of the overall workflows section
+- Add a little overview at the beginning explaining the structure of the 
+document:
+
+This tutorial contains:
+
+   1. <<intro,An introduction to branches>>
+   2. <<tutorial,A step-by-step practical tutorial>>
+   3. <<workflows,Example collaboration workflows>>
+   4. <<tip,Tips, GUI tools, and where to learn more>>
+
+"Tips, GUI tools, and where to learn more" is still a little bit of a 
+grab bag at the end but at least it's laid out at the beginning now
+
+Thanks for the review!
+
