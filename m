@@ -1,93 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.175
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795563144;
-	b=yA9wKZZ+go1arUnDpgebDW9rjuLwnLJmxqH6a7IiNBZO+A9DgdisOxIrY/PjVbDbHz/M
-	 F/D6POp6K8ltBu2jdNlUwQo3Rotmw9dvFR/AzQxzLQsvVDhaAujn8xdobqGdFQUS7WIZb
-	 1FcVTVskKfjUk2G2wM5JWE8WpisVJkr7ILNPbTDelbABHL+/zfGiqVQ0h/FCugbsFx5ma
-	 xltf1p826o3YrJOv++iGiPickkY8FnW3oqEsLdl56vSCsuVEmJvnTlWgX1DbROWlh0q9n
-	 WtrMBdLRbyVYJ2kz/EovNKcAaBSLcz7azZlqT+4DXn6Xbj6CMpnnF+cRDMWG7goUJvA==
+	t=1795563146;
+	b=xeZr3QQ4bcoYGOY650G5DJTIF6RudEu9hWPf0FVjEYRAnx8dwwVypyshltRuCn0CTQeU
+	 5vky0uHHvCBa1sitSw7twwWyKH+nWZ5dFQZ/J0453xfXHHUYaerQp21jDyU99RfWxHoxt
+	 0Q38Sy91/f7AO+RPWDy6RzFafbEDjX4HGKFA0ta5FHSB/HJyGE9IxZshAzulbKnMXy7FG
+	 KNOvUb7DkH3Z9sSgUrb5oZOQCvwWWfCRtNoHY9JOCoFLXD45O1IfJVQz83KCBrXLDwHvp
+	 NUcZ5fHz1+wQEIAo2SKK52pS3MXJ2MkRss18QAhwZeWznO22+5aBxj7Jki62GKXFzag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795563144;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795563146;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Sender:From:To:Cc:
 	 Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=tlpKCCkg1hSuZOotwcBu4HcfrMNB6Bnr1vibuJh3ijQ=;
-	b=afVU/rxaxjZgMVbSoqNeHLLwI/tHiAt+yc7qp0mQbeXKViMoFShw03zUjSvGi9yL5jpp
-	 updz14ItfuMtG3s5ayNx2cHWpvrAc5oFfbspLRk2O6QE0FCsBc3b8IeVEFnuJ0AomAmpH
-	 kQxP+SVJHGncMZUh8AA/7W8n7L31Q+tEhntRHGQeeNkoX/eUG7Hq8z31RC7FULTNiut6G
-	 gCBuJKW3FuYgSKYYZwq3/zckGFE8TEuMEY9XuiPD/lefnasFJo48jJ241TjdmZfxufg7/
-	 ERV0ztywpcUndEr6+Xm8jzNRtpM0u8dj7vr/xOe/YFGOdLMaY5ZKyiBbHmmgUVQ4YhA==
+	bh=h3zt7yn41IG565ZREGslcLBkHA6lcSpRgQyjddIWGMk=;
+	b=RyxqbsXsx8UUQ8N9/8Dzw9f2Ge6X5nyY/zJFWEJgy5v1LB54Y8AftBScvWhAzTUtBZ8j
+	 s2VpEBTBuBb2gm8n2pqp5QQWf0khFv0KVsrJyiCOpks6nsSg/5H1uhFUSkonwz69pucfU
+	 9Cxdv/No6qJ+wW64ZZ26uf+Sz8qFPVDWW97JYy+6maMun/TtternuDbRnqbQekQuXKqUK
+	 p/Jh3wtMWMyK77u95Kv6mjRafnBkNB6pDaHZTKjkkq+ieTLLFyDvPNfpeLJ8hQ+thtLhs
+	 Covy/yuFfU8O+oppynAuas/bQZas7KLOZadTssVb8qNkyKVo95C6ADSiFRZ8dfgyNGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=cervined.in;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Wch52qxU;
-	arc=none smtp.remote-ip=209.85.167.45
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ejxDj44Y;
+	arc=none smtp.remote-ip=209.85.208.175
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5572A606A32A
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 23:32:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5572A606A32A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8B7606A327
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 23:32:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2A8B7606A327
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cervined.in
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Wch52qxU
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5c31cdbeec9so889803e87.2
-        for <git@vger.kernel.org>; Tue, 24 Nov 2026 15:32:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ejxDj44Y
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-3ae85e3685cso33697531fa.2
+        for <git@vger.kernel.org>; Tue, 24 Nov 2026 15:32:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795563142; x=1796167942; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795563144; x=1796167944; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=tlpKCCkg1hSuZOotwcBu4HcfrMNB6Bnr1vibuJh3ijQ=;
-        b=Wch52qxUY2JxOlTVA2vJmcyDGvQoGkacs87n+0iXwCHqtP3HO4zQeVSPoJ3gnXp/Ig
-         SQv/MMWkNzDqcyFcjibzS4S6cnNujW0TsOSlSzoIMjm0ogQ0fX+SiXmHHpRCcqu6Ex4Z
-         Uzg3Ak6ZOFFBxNoG7Euh/hhjumF62NvTJ1kAzDpw/cqMs29l5snelyEfKidoAZVpaTOy
-         Ox7cZy6R7rrenBaEa6ZXu8YtHwqI3xVQ2Zg9xGaiwpcr+kOUR/ULyCugNLr+GqdlP7EN
-         d1taPAzJrL4XEklFjnKZma6wNdt56c0seax83NsswrO+tvclOk4digJDXvyIJnEV6wN2
-         cZmg==
+        bh=h3zt7yn41IG565ZREGslcLBkHA6lcSpRgQyjddIWGMk=;
+        b=ejxDj44YF0AXYUHCG6MyL0tCaUj+2A5Ue51xtSIp9tHzMDQp+R62TZO4Z0M/mqLOGZ
+         5tyQz5wFRl/xkWENC/7bn4ZC4x4NSOdoQF1V0j2E3u48ID9oDE3wU1RCbYqqAf+xb2wF
+         JCBSv6HuJA0FmpWAfhxNfiu+B2Awv+co0Drdaxe/IY8SAIMFLFTqboKwPRQjexLuxIij
+         sejoyuJeYvvutCdK/UPja2G8TSTo6cy2QFria+b/vRf0nxDVBc8Kfj7OS2NtfmZbLj4x
+         5R7X1J+auqCoRRgZUfyDF8jcKPGW6k/TQ9MDvCSGTjVNT40WCxl4eEY87P7UawUfMmvp
+         CI5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795563142; x=1796167942;
+        d=1e100.net; s=20260707; t=1795563144; x=1796167944;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=tlpKCCkg1hSuZOotwcBu4HcfrMNB6Bnr1vibuJh3ijQ=;
-        b=cQwQh5FbsICxd235uZ9SgROPJ54Z2oMSYnrsHdHO5RvPBs2W8ValWKm04KC2tXodLJ
-         O+QTApsnKM5S6jpKknQPe2Sg8rlgdGkh1iu66ujoBcyahWG/RzvJj5ZNVMZv4WNWpXDB
-         MEkRbrhWfUcyw7ybHPwDsM+nK4LktEYrCvff8bYFO8eUrV/bgfnyCrcJr2UGSidMhs59
-         4Fx12wTE1YOgtxy3h1+9dnNllqqsRruUElpdG6olfcWrJL7FaYZTDHSF9JgWFXMeeHrh
-         73TaLXSJ1ObIpwxsCrZ/VdRGuePTJj0x4nnJelxw2ROnCxWoLjcP9C8Agq76rZc8/VZi
-         SBpA==
-X-Gm-Message-State: APuU4Z8G4Ko3Sv6rTzu5NG2O0V/Zmv8gTb2r3hCycm38vUZOkRCq+S7R
-	CV8PMi1Pg+CC+ag0KaYNyv6enLAcrcc/MawlvZm6m01iwTKX6Ik41I/YjSSwlA==
-X-Gm-Gg: AZFdTZcoJdwj4Yku66vGFWkwxOl6U+fODyKEuFpQyAiH6plPv9AonjU1L+dlWspgRsO
-	tUUKgidqEBv1RJbIXfKZ6lfVuEAE9n9eidLwxvp0ywJSZ3SX/AKFbL4bpGt5EiBLctZhAeAbJ3o
-	yKf+mi80z4Vs1l7k0dP5AIYoDAGv22TlOQFr5dZ6ENYRzsJkx6JFFnqNh+9wx97Vay7BN3mW/d5
-	USquyPavFZ1H8woDpi6bAo0IM7Rr9q7TbI4omD+ibTUBg2Z4Ll6skUpBJa9TS7NSgDm1VRCYDTj
-	4gmXNktX2kuoXMseMgMe9k+FTInVg/eSac2CdJ4f5gw1MeIDEQfkpN8DkcSwNkwzZy9sou7H+Xc
-	K5b6G3p2CmVbEqMFRX2EIth6qwq5k5qn/KVv8/zIcQt6urxmPGDsF784DXOD6sCtfpqEQ2altfN
-	pEs5J1mEydbWEEy24oNUVhoCkCx7NnTEW3Oei59+6cqkj+ZnWdDcNrraHXBkgLnrPqgDtqQZAmi
-	kxHesxrMAabpcvR77o3SwLyc9qlPg1ECEylbiy5sOPtJfb0V/lZFoPrAHwWerknjsBqrro595V7
-	7rQ6QPav7ZQOIpzmKYxEHqIFixXSsdTxTp8biREuJYyCuRtTPW0px4QNVh+DQD+41lvL112wyAS
-	U4zobVNAoB/0YUaryIoEvScgdevmOavgSd5iEclY1RTvvqQ==
-X-Received: by 2002:a05:6512:b9d:b0:5c1:5975:a6d0 with SMTP id 2adb3069b0e04-5c1bc813d73mr4620897e87.49.1795563141993;
-        Tue, 24 Nov 2026 15:32:21 -0800 (PST)
+        bh=h3zt7yn41IG565ZREGslcLBkHA6lcSpRgQyjddIWGMk=;
+        b=zt3po/jClF1tEHjqVaLObzJf8LPS3Q80Pqzmz/n8kW8FyLogM5PAvzDABH3VRkYLSY
+         YSyqZlW1uLu/z0vCAvhOkoeHqlRNHd0McJUygo9K6CKzouEFHB8pCE6jXHC4lC52qvDL
+         Bn+wnvn9VI3h6j3Y+oFT7C8U1CddHqsf9eEoQD0sNy0UNa5uH4Gbix1os8OEaK8lra0Z
+         fg+moP7imU8r542f+4t7LKuQlU1tOWcd2Uaof/quCMUhJIjdSOwsRog7mtVTm+GwWSvi
+         lmWynV/VVqzfqht8RI4huuVdaos39ySJLnw3e+sWFVDiK9TeBTnHwWCJQ84lwy6ZQsbS
+         IZtg==
+X-Gm-Message-State: APuU4Z/sVP45PDvHSSPSd8E2qrBY6ixxlR2SuPFaCwlxJKh7kcD7L1wd
+	HOm51Z4rcJ2tu95kS9/zmV6StYXS6ztPsot5IcbfE/D7VzPF/35yCjrZC+y2yw==
+X-Gm-Gg: AZFdTZcjjwBfo5TRSn3BC3XNU6EhlK6kSMZdeiALwpbTHyfPKir42HfNuBnkLyFPY1O
+	nD9J4Mr8DU5DkIGzQtf2SL7HNsnG7+yCtJekN88X8NAI7F1RlwtDEbLyUQi75QI4Tts+ndqRN+a
+	uJ0UXnYaxhT9H8heCtWAwaa5Kk0PY1Y5pJ7LUxdapUhglUOU0qUItPoghlHqOYY6N/juLGmNgif
+	bTDR9Wy2u3ksMgN0qtxVf0wyJ65CJVq/TLfTVU0q/i5C8pq/8MDxaJSWF/Pud/oA2gP9ccRRBmR
+	w6sNQvyC+UbEaq/OgvBXIgVv0ZofK0had+52ikdJdh897ixzqxeRg/J+6XoxaaUGch50qdGHZG1
+	jfTzOJuPGcnV69ZrUa/rfifbfREcXQdz2alxUKAvWtoIwu+Udn4MHiKJDR1htj5IPcEzNaDqlld
+	7Z9MNBCxvvwF2jkfL4P7zaEJvSdGWG4IP/qy5iRCdRk5YHabBa1YHhwtgVtsSYNN22tKldAst1r
+	S5KwENLrvPUaiVofpFMDjosIhB9PDMwUXnQOTcvgQ6cZLP9rp4dF9YkwQv/rc4odzQRQ0LGCF0i
+	tSgQgez7YvpHX3nnhf706ASZRndOmanrpJPToS5Uarpf2cwW9SU3nAGUetQ447k3/H8pkKNtgC8
+	LMlUWO6Vloa0F+Pg3sPLg7xBO2Sb6GCfxyyqX8GiQOP2hOA==
+X-Received: by 2002:a05:6512:3056:b0:5c1:4b7c:96c6 with SMTP id 2adb3069b0e04-5c1bc8054c2mr4943472e87.32.1795563143891;
+        Tue, 24 Nov 2026 15:32:23 -0800 (PST)
 Received: from localhost ([2001:2043:be0a:d700:bd32:e7e3:cfbd:5b51])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5c1bd0417f4sm4128538e87.54.2026.11.24.15.32.21
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3ae8044df03sm40020581fa.1.2026.11.24.15.32.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2026 15:32:21 -0800 (PST)
+        Tue, 24 Nov 2026 15:32:23 -0800 (PST)
 Sender: Erik <erik88@gmail.com>
 From: Erik Cervin-Edin <erik@cervined.in>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
 	phillip.wood123@gmail.com,
 	Erik Cervin-Edin <erik@cervined.in>
-Subject: [PATCH v4 2/3] commit: allow -m/-F for all --fixup variants
-Date: Wed, 25 Nov 2026 00:32:10 +0100
-Message-ID: <051b659965fb31ee7c074d0cd31719fdf2027701.1795562078.git.erik@cervined.in>
+Subject: [PATCH v4 3/3] commit: allow -c/-C for all --fixup variants
+Date: Wed, 25 Nov 2026 00:32:11 +0100
+Message-ID: <159a56c5106c12b8013e91244ab1142a74e59400.1795562078.git.erik@cervined.in>
 X-Mailer: git-send-email 2.56.1.978.gcc9bcf3eaa
 In-Reply-To: <cover.1795562078.git.erik@cervined.in>
 References: <cover.1790082176.git.erik@cervined.in> <cover.1795562078.git.erik@cervined.in>
@@ -102,203 +102,193 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The ability to provide a commit message for git commit --fixup and its
-variants is limited:
+The fixup code path in prepare_to_commit() only knows how to take a
+message body from -m or -F.  Now that the previous commit allows -m and
+-F for all --fixup variants, -c/-C are the odd ones out.
 
-  * Plain --fixup accepts -m but not -F
+Teach the fixup path to take the message body from the commit given to
+-c/-C, using prepare_amend_commit() as --fixup=amend does when no
+message source is given.
 
-  * The amend/reword variants accept a message only through an editor
-    (or a GIT_EDITOR script standing in for one)
+The main motivation is consistency: with -c/-C allowed, every message
+option works with every --fixup variant, and there's no exception to
+document or remember.  Using -c/-C under --fixup is admittedly niche,
+but not useless; for example, rewording commit Y based on X's message
+after an earlier rebase split X into X' and Y, when Y wasn't reworded at
+the time:
 
-This makes the amend/reword variants poorly suited for non-interactive
-workflows -- notably when using AI coding agents.
+    git commit --fixup=reword:Y -c X
 
-When --fixup learned to take -m [1], it was noted that other options
-(-c/-C/-F) could also be supported, but were left out for lack of a
-clear use case.  Later, when the amend suboption was introduced in [2],
--m was initially supported for amend fixups too, but was dropped for the
-same reason [3].
+Like --fixup=amend, this copies only the body when the source itself is
+an "amend!" commit.  Under --fixup the subject is always generated, and
+the body of an "amend!" commit is the message intended for its target,
+so copying its "amend!" line would leave it in the final message after
+autosquash.  This also means that "git commit --fixup=amend:X -C X"
+produces the same message as "GIT_EDITOR=: git commit --fixup=amend:X".
 
-The rejections of these options hark back to when --fixup was introduced
-in [4], but as [1] noted, nothing inherently prevents supporting them.
+Plain --fixup never opens an editor, so -c there behaves like -C.
 
-The current patchwork of which options work with which --fixup variants
-has no strong logic to it, and allowing all of them simplifies the
-interface.
-
-Allow -m and -F to supply the message body for all --fixup variants,
-mirroring the flow of a regular commit.  With --fixup=amend/reword the
-given message replaces the one that would otherwise be copied from the
-target commit.  Options -c and -C are handled in the next commit.
-
-1. 30884c9afc (commit: add support for --fixup <commit> -m"<extra
-   message>", 2017-12-22)
-
-2. 494d314a05 (commit: add amend suboption to --fixup to create amend!
-   commit, 2021-03-15)
-
-3. https://lore.kernel.org/git/xmqqft1o80pe.fsf@gitster.g/
-
-4. d71b8ba7c9 (commit: --fixup option for use with rebase --autosquash,
-   2010-11-02)
+The incompatibility check grouping -C, -c, and --fixup can go away
+entirely, as -C and -c are already rejected together by the check that
+groups them with -m and -F.
 
 Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Phillip Wood <phillip.wood123@gmail.com>
 Signed-off-by: Erik Cervin-Edin <erik@cervined.in>
 ---
- Documentation/git-commit.adoc             | 19 ++++----
- builtin/commit.c                          |  5 +-
- t/t7500-commit-template-squash-signoff.sh | 56 +++++++++++++++++------
- 3 files changed, 53 insertions(+), 27 deletions(-)
+ Documentation/git-commit.adoc             |  9 ++--
+ builtin/commit.c                          | 19 ++++---
+ t/t7500-commit-template-squash-signoff.sh | 60 +++++++++++++++++++++--
+ 3 files changed, 74 insertions(+), 14 deletions(-)
 
 diff --git a/Documentation/git-commit.adoc b/Documentation/git-commit.adoc
-index 8329c1034b..61efd29e66 100644
+index 61efd29e66..98c50a3be5 100644
 --- a/Documentation/git-commit.adoc
 +++ b/Documentation/git-commit.adoc
-@@ -103,20 +103,21 @@ include::diff-context-options.adoc[]
+@@ -102,8 +102,8 @@ include::diff-context-options.adoc[]
+ +
  The commit created by plain `--fixup=<commit>` has a title
  composed of "fixup!" followed by the title of _<commit>_,
- and is recognized specially by `git rebase --autosquash`. The `-m`
--option may be used to supplement the log message of the created
--commit, but the additional commentary will be thrown away once the
--"fixup!" commit is squashed into _<commit>_ by
-+or `-F` option may be used to supplement the log message
-+of the created commit, but the additional commentary will be thrown
-+away once the "fixup!" commit is squashed into _<commit>_ by
+-and is recognized specially by `git rebase --autosquash`. The `-m`
+-or `-F` option may be used to supplement the log message
++and is recognized specially by `git rebase --autosquash`. The `-m`,
++`-F`, `-C`, or `-c` option may be used to supplement the log message
+ of the created commit, but the additional commentary will be thrown
+ away once the "fixup!" commit is squashed into _<commit>_ by
  `git rebase --autosquash`.
- +
- The commit created by `--fixup=amend:<commit>` is similar but its
+@@ -112,8 +112,9 @@ The commit created by `--fixup=amend:<commit>` is similar but its
  title is instead prefixed with "amend!". The log message of
  _<commit>_ is copied into the log message of the "amend!" commit and
--opened in an editor so it can be refined. When `git rebase
----autosquash` squashes the "amend!" commit into _<commit>_, the
--log message of _<commit>_ is replaced by the refined log message
--from the "amend!" commit. It is an error for the "amend!" commit's
--log message to be empty unless `--allow-empty-message` is
--specified.
-+opened in an editor so it can be refined. The replacement message may
-+also be supplied directly using `-m` or `-F`, bypassing the
-+need to open an editor. When `git rebase
-+--autosquash` squashes the "amend!" commit into _<commit>_, the log
-+message of _<commit>_ is replaced by the refined log message from the
-+"amend!" commit. It is an error for the "amend!" commit's log message
-+to be empty unless `--allow-empty-message` is specified.
- +
- `--fixup=reword:<commit>` is shorthand for `--fixup=amend:<commit>
-  --only`. It creates an "amend!" commit with only a log message
+ opened in an editor so it can be refined. The replacement message may
+-also be supplied directly using `-m` or `-F`, bypassing the
+-need to open an editor. When `git rebase
++also be supplied directly using `-m`, `-F`, or `-C`, bypassing the
++need to open an editor, or using `-c` to open the editor pre-populated
++with the referenced commit's message. When `git rebase
+ --autosquash` squashes the "amend!" commit into _<commit>_, the log
+ message of _<commit>_ is replaced by the refined log message from the
+ "amend!" commit. It is an error for the "amend!" commit's log message
 diff --git a/builtin/commit.c b/builtin/commit.c
-index 698823d4fa..e0fac284bc 100644
+index e0fac284bc..b52ef283f2 100644
 --- a/builtin/commit.c
 +++ b/builtin/commit.c
-@@ -793,8 +793,6 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		repo_format_commit_message(the_repository, c, fmt, &sb,
- 					   &ctx);
- 		free(fmt);
--		if (have_option_m && !strcmp(fixup_prefix, "amend"))
--			die(_("options '%s' and '%s:%s' cannot be used together"), "-m", "--fixup", fixup_message);
- 	} else if (squash_message) {
- 		/*
- 		 * Insert the proper subject line before other commit
-@@ -1331,9 +1329,8 @@ static int parse_and_validate_options(int argc, const char *argv[],
+@@ -827,7 +827,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 			die_errno(_("could not read log file '%s'"),
+ 				  logfile);
+ 		hook_arg1 = "message";
+-	} else if (use_message) {
++	} else if (use_message && !fixup_message) {
+ 		const char *buffer;
+ 		buffer = strstr(use_message_buffer, "\n\n");
+ 		if (buffer)
+@@ -835,12 +835,20 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		hook_arg1 = "commit";
+ 		hook_arg2 = use_message;
+ 	} else if (fixup_message) {
++		const char *refname = NULL;
++
+ 		hook_arg1 = "message";
+-		if (!strcmp(fixup_prefix, "amend")) {
++		if (use_message)
++			refname = use_message;
++		else if (!strcmp(fixup_prefix, "amend"))
++			refname = fixup_commit;
++
++		if (refname) {
+ 			struct pretty_print_context ctx = {0};
+-			struct commit *c = lookup_commit_reference_by_name(fixup_commit);
++			struct commit *c = lookup_commit_reference_by_name(refname);
++
+ 			if (!c)
+-				die(_("could not lookup commit '%s'"), fixup_commit);
++				die(_("could not lookup commit '%s'"), refname);
+ 			ctx.output_encoding = get_commit_output_encoding();
+ 			prepare_amend_commit(c, &sb, &ctx);
+ 		}
+@@ -1329,9 +1337,6 @@ static int parse_and_validate_options(int argc, const char *argv[],
  	}
  	if (fixup_message && squash_message)
  		die(_("options '%s' and '%s' cannot be used together"), "--squash", "--fixup");
--	die_for_incompatible_opt4(!!use_message, "-C",
-+	die_for_incompatible_opt3(!!use_message, "-C",
- 				  !!edit_message, "-c",
--				  !!logfile, "-F",
- 				  !!fixup_message, "--fixup");
+-	die_for_incompatible_opt3(!!use_message, "-C",
+-				  !!edit_message, "-c",
+-				  !!fixup_message, "--fixup");
  	die_for_incompatible_opt4(have_option_m, "-m",
  				  !!edit_message, "-c",
+ 				  !!use_message, "-C",
 diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
-index 5e782ad8d7..9b2ecb1356 100755
+index 9b2ecb1356..04520be0c3 100755
 --- a/t/t7500-commit-template-squash-signoff.sh
 +++ b/t/t7500-commit-template-squash-signoff.sh
-@@ -384,18 +384,24 @@ test_expect_success '--fixup=reword: ignores staged changes' '
- 	test_cmp foo actual
+@@ -492,6 +492,62 @@ test_expect_success 'commit --fixup works with -F' '
+ 	EOF
  '
  
--test_expect_success '--fixup=reword: error out with -m option' '
-+test_expect_success 'commit --fixup=reword: works with -m' '
- 	commit_for_rebase_autosquash_setup &&
--	echo "fatal: options '\''-m'\'' and '\''--fixup:reword'\'' cannot be used together" >expect &&
--	test_must_fail git commit --fixup=reword:HEAD~ -m "reword commit message" 2>actual &&
--	test_cmp expect actual
-+	git commit --fixup=reword:HEAD~ -m "reword commit message" &&
-+	test_commit_message HEAD <<-EOF
-+	amend! $(git log -1 --format=%s HEAD~2)
-+
-+	reword commit message
-+	EOF
- '
- 
--test_expect_success '--fixup=amend: error out with -m option' '
-+test_expect_success 'commit --fixup=amend: works with -m' '
- 	commit_for_rebase_autosquash_setup &&
--	echo "fatal: options '\''-m'\'' and '\''--fixup:amend'\'' cannot be used together" >expect &&
--	test_must_fail git commit --fixup=amend:HEAD~ -m "amend commit message" 2>actual &&
--	test_cmp expect actual
-+	git commit --fixup=amend:HEAD~ -m "amend commit message" &&
-+	test_commit_message HEAD <<-EOF
-+	amend! $(git log -1 --format=%s HEAD~2)
-+
-+	amend commit message
-+	EOF
- '
- 
- test_expect_success 'consecutive amend! commits remove amend! line from commit msg body' '
-@@ -432,6 +438,13 @@ test_expect_success 'deny to create amend! commit if its commit msg body is empt
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'deny to create amend! commit if -m is empty' '
++test_expect_success 'commit --fixup works with -C' '
 +	commit_for_rebase_autosquash_setup &&
-+	echo "Aborting commit due to empty commit message body." >expect &&
-+	test_must_fail git commit --fixup=amend:HEAD~ -m "" 2>actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'amend! commit allows empty commit msg body with --allow-empty-message' '
- 	commit_for_rebase_autosquash_setup &&
- 	cat >expected <<-EOF &&
-@@ -468,10 +481,26 @@ test_expect_success '--fixup=reword: give error with pathsec' '
- 	test_cmp expect actual
- '
- 
--test_expect_success '--fixup=reword: -F give error message' '
--	echo "fatal: options '\''-F'\'' and '\''--fixup'\'' cannot be used together" >expect &&
--	test_must_fail git commit --fixup=reword:HEAD~ -F msg  2>actual &&
--	test_cmp expect actual
-+test_expect_success 'commit --fixup works with -F' '
-+	commit_for_rebase_autosquash_setup &&
-+	echo "message" >msgfile &&
-+	git commit --fixup HEAD~ -F msgfile &&
++	GIT_EDITOR=false git commit --fixup HEAD~ -C HEAD &&
 +	test_commit_message HEAD <<-EOF
 +	fixup! $(git log -1 --format=%s HEAD~2)
 +
-+	message
++	$(get_commit_msg HEAD~)
 +	EOF
 +'
 +
-+test_expect_success 'commit --fixup=reword: works with -F' '
++test_expect_success 'commit --fixup=amend: works with -c' '
 +	commit_for_rebase_autosquash_setup &&
-+	echo "message from file" >msgfile &&
-+	git commit --fixup=reword:HEAD~ -F msgfile &&
++	GIT_EDITOR="echo edited >>" git commit --fixup=amend:HEAD -c HEAD~ &&
 +	test_commit_message HEAD <<-EOF
-+	amend! $(git log -1 --format=%s HEAD~2)
++	amend! intermediate commit
 +
-+	$(cat msgfile)
++	target message subject line
++
++	target message body line 1
++	target message body line 2
++
++	edited
 +	EOF
- '
- 
- test_expect_success 'commit --squash works with -F' '
-@@ -526,8 +555,7 @@ test_expect_success 'invalid message options when using --fixup' '
++'
++
++test_expect_success 'commit --fixup=amend:HEAD with -C HEAD and without have the same message' '
++	commit_for_rebase_autosquash_setup &&
++	start=$(git rev-parse HEAD) &&
++
++	git commit --fixup=amend:HEAD -C HEAD &&
++	git commit --fixup=amend:HEAD -C HEAD &&
++	git log -1 --pretty=%B >with-c &&
++
++	git reset --hard "$start" &&
++	git commit --fixup=amend:HEAD &&
++	git commit --fixup=amend:HEAD &&
++	git log -1 --pretty=%B >without-c &&
++
++	test_cmp with-c without-c
++'
++
++test_expect_success 'commit --fixup=amend: with -C copies full subject + body of squash commit' '
++	commit_for_rebase_autosquash_setup &&
++	git commit --squash HEAD~ -m "inner body" &&
++	echo "extra" >>foo &&
++	git add foo &&
++	git commit --fixup=amend:HEAD -C HEAD &&
++	test_commit_message HEAD <<-EOF
++	amend! squash! $(git log -1 --format=%s HEAD~3)
++
++	squash! $(git log -1 --format=%s HEAD~3)
++
++	inner body
++	EOF
++'
++
+ test_expect_success 'commit --fixup=reword: works with -F' '
+ 	commit_for_rebase_autosquash_setup &&
+ 	echo "message from file" >msgfile &&
+@@ -553,9 +609,7 @@ test_expect_success 'invalid message options when using --fixup' '
+ 	echo changes >>foo &&
+ 	echo "message" >log &&
  	git add foo &&
- 	test_must_fail git commit --fixup HEAD~1 --squash HEAD~2 &&
- 	test_must_fail git commit --fixup HEAD~1 -C HEAD~2 &&
--	test_must_fail git commit --fixup HEAD~1 -c HEAD~2 &&
--	test_must_fail git commit --fixup HEAD~1 -F log
-+	test_must_fail git commit --fixup HEAD~1 -c HEAD~2
+-	test_must_fail git commit --fixup HEAD~1 --squash HEAD~2 &&
+-	test_must_fail git commit --fixup HEAD~1 -C HEAD~2 &&
+-	test_must_fail git commit --fixup HEAD~1 -c HEAD~2
++	test_must_fail git commit --fixup HEAD~1 --squash HEAD~2
  '
  
  cat >expected-template <<EOF
