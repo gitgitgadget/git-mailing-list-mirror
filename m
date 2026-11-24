@@ -1,62 +1,111 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.61.206.94
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.154
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795514001;
-	b=XIvlEPC2PGglIVruF5hrqicM4szgWgvgtFin8iRqwKiiv2rPgKgchTNler9y+ALHILP4
-	 ELhCaOb+kqe+xOmG4p3t9eItAAdColtd4hV4d2KV6p9QShVAI8KqnKn86MckLArAp8MO3
-	 73t2mRrKzbF6JGqqYH4CUW6YQk+CKeiyjehhvAKdvg/7zo32hFbtMW6AYt5Yh4+fAxDkQ
-	 kqoBZECqtbhynxs7+r84pQT85ffuDr6l9+T8ad03AtO2R+zJDHZ4oOdYCqvB57wtMaZAi
-	 vMjpFWN5lLb1LsJXwCanHQeEc6uo2URV3eyKJjA2SWltIYrFVYswMhHqxD7BNQ9eYsA==
+	t=1795515974;
+	b=ugGuGO1pzS22vIxf6aeOQmoVr1eDpE+0z4AJ+yGUQi55l1NMB+IisGOfg7jcAR6uw4Fs
+	 zY8xmCsEXsSfMonTxdvTZCz7mVTbrTlOfIr5L5qVAcCnKRmoo2Kp4ILXIyWLO+tyt67z7
+	 tbUP9YH+xYUFG9k71BUXUyxEIoZOFy3j8OdyHyrOosn++WXWiRmlDnIDxsiWyLhWi9NRw
+	 SdxBLiGCl8KSK19XNqrBe1JFK9PfbvbJa2Q9cl6szmnGH+9tuoIwcn+B6zBqFWC+jT7ga
+	 YXlrZiUHRwBc7DyCcu3uift8fci0/hcSWV0c0qWNinR4xxtqh0FsUegxefwRFZDTcvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795514001;
-	h=DMARC-Filter:Received:DKIM-Signature:From:To:Cc:Subject:In-Reply-To:
-	 References:User-Agent:Date:Message-ID:MIME-Version:Content-Type;
-	bh=hSK0u1FKGt6YArw5FmTnDqPWE54bKIabL16KNrFxlmI=;
-	b=oBAhaJ/iy+OgllyotqVOJj2t/KljITCi7jCuKTAfhQZhB+jtMwuczrOKah6QPw9IZN81
-	 vnO7AcY48Y6HqtM7JEisLyd/jfmzqd7jbl/jeShA/CxH87TnVDsF32vb9t6yV/G0xZtcx
-	 O4HamWA2su3MynMBmV1/cFWtAeGPwI1wYVhMkkCB/7Ltj8Teui87om7MIxTcxtOk99AoU
-	 VN05c6fn+K2ofkRunS1/L/Zy1JCVXjVWE4Ikog2RYbEnvqTZKwh5Jol4tqlNCPZt/4FvT
-	 uNqTlMRFMzddn0w3OpK6XFavMQXCZKI3gUll6wqEhETMlDiJEHSIZVBNV5PLaW5TI6g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795515974;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 MIME-Version:X-ThreadId:Date:From:To:Message-Id:In-Reply-To:
+	 References:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=jJSb/HL7fqiOQxH+m0Vp4q9jBMm7ww1QzVSGnv4Qvcg=;
+	b=Oe3vlBkHZCfshnCfJmjM9/oosQXKeo3jLG+4GulGnAwQE02jPyHBr8gqrGnEZymJWEpk
+	 Ee/mJDrL2+xNfYWLYd2dJB0DZHVi8ARDv1mJDWrIEOsEQbUaIm0UBmlfENmjCQ/xOg5AZ
+	 nPi3Za23KeTQsWcW8/UBFL4hpxYEcM135aKJhfCU5a1NMqboVTB8qSlI56itahubAsMo3
+	 p+co4jY4Snzcmgj3nfpujx+zXOHJ1/07ZMH8qDgv+1Tm2en94VfjvkyNklto6FpVIaHc2
+	 ji7tyAn6Vr7i0BxFznwLVJWiQlG2RIpTwvqBdGS61ZFyofHbWu4gWhg8hSMr/r7FNxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gouders.net;
-	spf=pass smtp.mailfrom=gouders.net;
-	dkim=pass header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b="Dm/P5rHy";
-	arc=none smtp.remote-ip=202.61.206.94
-Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
+	dmarc=pass header.from=fastmail.com;
+	spf=pass smtp.mailfrom=fastmail.com;
+	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm3 header.b=YKN7SIKb;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="vr4Q2MQ/";
+	arc=none smtp.remote-ip=103.168.172.154
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33268606A685
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 09:53:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 33268606A685
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gouders.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCCD7606A322
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 10:26:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CCCD7606A322
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=Dm/P5rHy
-Received: from localhost ([193.175.198.193])
-	(authenticated bits=0)
-	by mx10.gouders.net (8.18.2/8.17.1.9) with ESMTPSA id 6AO9r6La2373660
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Tue, 24 Nov 2026 10:53:06 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gouders.net; s=gnet;
-	t=1795513986; bh=hSK0u1FKGt6YArw5FmTnDqPWE54bKIabL16KNrFxlmI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=Dm/P5rHyQN5AXDkbDopqeI0gFDfOCfiIuZt/4fq+hFiWjz+eROGL1UUHtUDaXjepi
-	 YSFeOpOuvm2M5BRY4+qJ0mqWUFm1NNf3ZnoqzZGX0UMPFnBXd3DOxlSOohxMF3fLTb
-	 8hAjtId19PE2+6fjkdN3yLLQr8l5oiqRJSBLK5LI=
-From: Dirk Gouders <dirk@gouders.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org,
-        "Junio C Hamano <gitster@pobox.com>, Andy Koppe"
- <andy.koppe@gmail.com>
-Subject: Re: [PATCH v5 3/4] utf8: respect string boundaries after skipping
- ANSI escape sequences
-In-Reply-To: <xmqq1p8ba395.fsf@gitster.g>
-References: <20261122-master-v5-0-313bd1bb3c45@gouders.net>
-	<20261122-master-v5-3-313bd1bb3c45@gouders.net>
-	<xmqq1p8ba395.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Tue, 24 Nov 2026 10:53:00 +0100
-Message-ID: <ghmrqyimir.fsf@gouders.net>
+	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm3 header.b=YKN7SIKb;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=vr4Q2MQ/
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C14731400242
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 05:26:12 -0500 (EST)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Tue, 24 Nov 2026 05:26:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1795515971;
+	 x=1795602371; bh=jJSb/HL7fqiOQxH+m0Vp4q9jBMm7ww1QzVSGnv4Qvcg=; b=
+	YKN7SIKbPOWxRNPVBqmP0XGvfLSiT4HQOu3U1NtxE4tf1QUPLa0j+W7VgBaA2JYE
+	9YxLJR2xG3pS5qV9iKVjxG1rlSC8/9yW7CTyxBlqDilrj3LJiFPwgFbpD7KSnQlL
+	zw8vKJ2WuY3VqT+pKFiK2GiqabxpwfXO3yGnTZguu67G/YlVzJkT13fmMRWZENgD
+	z/UJ0c8APBCabvCvIsM08Eqe0fwggz65N+6gFL621BwH7g2Xcx5ret9HUxID1fm8
+	skynrphF5Zb2Vfp2QfF8d91QopZcOkfRVa5EQYzln9dpdgUSkxpPVfnmyAcDcg0N
+	VrFiOXG3+mOEvFKYsv91Xw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1795515971; x=1795602371; bh=j
+	JSb/HL7fqiOQxH+m0Vp4q9jBMm7ww1QzVSGnv4Qvcg=; b=vr4Q2MQ/epW2AydMe
+	AFlhmvFBk+PPnVSp2+zTlVXnUniLB7/JeWsS1oCJrs4M/BuStqfh1GalHfzh+rpX
+	0oa4Nb+DyBvx/Xlt9VTbKJ1pT8nb20RFOpH5zRdBBADc0FJIkPdejvJWp4fBXjso
+	+pCfT4OunyFWnkHtNNVyb8YGoDhG38fXB66n7kFfYkvB0lLWYNcicfeM9UfS4w2Q
+	KpJZ5Y/cW/as0Qq8k/ugvVd6KAnIk2VA0h3l5LWBmNl6NyvISQpV/5eM2PgalKSa
+	tP+oGbJshOjDFAu68RiomMHhwlqvozuAgc/23V82DtqAJfJ5j6TJZa1Vp+Qa9qGa
+	rIrmA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795515971; d=fastmail.com;
+	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:mCxGj+HJnhffAmfku49xmx/Ui2Nr+mWbCF13U4Vku3IvpNu
+	2yUAVqDvWtu15ZLtJt31SVpJobLvduhPt1aMOMO2Nv+96VV7z/3/SAxoGkLMLelg
+	qNfLoeWCSUdUWye7DJpMUV15TU9PRIwL8XfjcxcGs7pN8diwYQ5BcIofaOB5nh6T
+	vQVAhgbCtbay5XjlunAeeNZFgcEcTa++cWnPG5XsjspYKx5H0kAZx3p+twzXQNgF
+	I3osv8MjSR29UZ/B393/AZRMtRqo+Yy8cOPl4PRA8qN87jsiqSM82yAo8dHYxHl/
+	pTvO6wvo6Em4pXbw7ZovzXD/LEOQ/iT8BtNcO4Q==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=11;
+	hn=content-transfer-encoding,content-type,date,feedback-id,from,
+	in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:343tYYelvTaISCUglAor/QloEIjizdUbMC52SwZS6wQ=:WWF61ftywivcaCdfGkJzlmTB8Yl6Cdwdlpv0DIgGu+o=;
+X-ME-Sender: <xms:QWYFa55QLF8SuxtQFnak6nqr0PN3hjdy7EF-kp5SWNquaOwCqz_2y94>
+    <xme:QWYFaxsbg4e6L_wZjuNUbnimBgN8ccDLqNHmYa6PDn6EAgf5eRMr0ErAp0OCcVDZi
+    VEomUxd39LHqtnS6SmwgfKVebISbbLVzVggSAo0QVUBJStfj8_jmto>
+X-ME-Proxy-Cause: dmFkZTE5IhNT+q8be5MtzaXfWRHmcyLNKl1/5t3Hoj4IzDL9EVvidw+RAcqRdHvCx9QAMd
+    dyAoXgNAY017SSqQ/iDhkGsOUWU+tjbQFjYSR3e8V2NvSyvY3PcwDjReXohv/wk3JhVjX+
+    pJ5VJhLy5siDa22ggxQotm4cwh3fHjcw22OU6EVZxZqlOuaiPErqoC1g8o8+2CXh9YghxY
+    1hHS1LlKtjQDaNOLGo3sBfIEMc43cy8ZExBoh0oB1qXgj0B7k6haryBkfDOp1TkVSykFRN
+    /016IQuFO1+Jd3qDvm53wgGKMJQJrw1hBX6EyBFiKtUpyDVRUMi7mtTDUiloC4GlSewbjc
+    iekDh2T1ajQyN536WKL8v7ozc32Dl4T+5xLleIsFeWXbFcKxc77869Qn8npracAyBFGDsb
+    IbdkxKp3vVs3ScEZqyvPz97VTjoFZD+0S/UW/TKgKpihxSUHF73fSeO6m/KLE+RtoOOh4b
+    PZtMvSZwzdFVdmtiG+I2Dx16pCCaGU8AfpKLo3T29qn6tpgUHqwFZForArDxlOS0iwTDNm
+    0ZcJdYOdpe6yZ2CNILlDhI5/LO3XQy4ar4oxnb2h3EMU+b6Vx+4JZYWujDZvTzpeeIsI7r
+    LOFpUvaGlAM6Nrai1aatwJEe3GSJLgrAvaibi0k7iHGOq2OKeevoT49sPkbw
+X-ME-Proxy: <xmx:QWYFa0kbxEWXLEYBcOyiZHzEuO1PYPsX2h85CMoVjsOMIQGDV2U6UA>
+    <xmx:QmYFaxx9KYJe3I7AtPAIbYTTSKx0hPTxW2ZvbZsYhtCifnfxU0ETDw>
+    <xmx:QmYFa6Pqpzn2G6ap2hEVkfK3QKNM2vTcX5dmZfYxVN51ph1glCVBZw>
+    <xmx:QmYFa9REKa84aTQA3vxYv4B40MYwRR_RxpXVl-TJ0C6hHCMzvkMDYg>
+    <xmx:Q2YFay1Wz0UiaK3PtYd3nX1c8WxdB-fniQcGmtVmm6Wjh760J97irA5P>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id ED32822C009C; Tue, 24 Nov 2026 05:26:08 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -66,83 +115,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+X-ThreadId: AGI3diiWwXGo
+Date: Tue, 24 Nov 2026 11:25:48 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Richard Kerry" <richard.kerry@atos.ai>,
+ "git@vger.kernel.org" <git@vger.kernel.org>
+Message-Id: <c11e143c-91ea-417f-8f20-cc178e280a6c@app.fastmail.com>
+In-Reply-To: 
+ <AS4PR02MB8336DCFEB4C0076DCE45F950EB452@AS4PR02MB8336.eurprd02.prod.outlook.com>
+References: <20261122152538.107580-1-omri.sarig13@gmail.com>
+ <xmqqfqwsk4a6.fsf@gitster.g> <6954cd53-43c8-48ca-82da-35c673dee260@gmail.com>
+ <AS4PR02MB8336DCFEB4C0076DCE45F950EB452@AS4PR02MB8336.eurprd02.prod.outlook.com>
+Subject: Re: [PATCH] doc: update-index: Format options correctly
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 23 2026, Junio C Hamano wrote:
-
-> Dirk Gouders <dirk@gouders.net> writes:
+On Mon, Nov 23, 2026, at 16:56, Richard Kerry wrote:
+> Hmmmm....
 >
->> utf8_strnwidth() can skip ANSI escape sequences and it is possible
->> that such sequences end the string within the given boundary.
+> We've just had some discussion on this.
+> Spot the line that isn't part of the reply?
+> And that is not surrounded by blanks.
+> So is not visible.
+
+This is referring to a change to MyFirstContribution which is
+in `seen` now:[1][2]
+
+    Leave a blank line between paragraphs. A block of quoted text counts
+    as a paragraph, so leave a blank line before and after it.
+
+[1]: https://lore.kernel.org/git/20261118105227.50447-1-okhuomonajayi54@=
+gmail.com/
+[2]: Which was motivated by https://lore.kernel.org/git/AS4PR02MB8336399=
+9DA64DD82F6E25FB0EB7B2@AS4PR02MB8336.eurprd02.prod.outlook.com/
+
+>[snip]
+>> -----Original Message-----
+>> From: Omri Sarig <omri.sarig13@gmail.com>
+>> Sent: 23 November 2026 15:32
+>> To: Junio C Hamano <gitster@pobox.com>
+>> Cc: git@vger.kernel.org
+>> Subject: Re: [PATCH] doc: update-index: Format options correctly
 >>
->> Check for such situations before proceeding and calling utf8_width().
->>
->> Add tests that test such corner cases.
->
-> It would become clearer if the above described externally observable
-> symptom and the condition to trigger it.
->
-> "such sequences end the string within the given boundary" is slightly
-> imprecise, isn't it?  IIUC, the problem is that an escape sequence
-> reaching orig + len would cause utf8_width() to read past len, which
-> leads it to count extra columns or reading out-of-bounds memory.
+>> Caution: External email. Do not open attachments or click links, unle=
+ss this email
+>> comes from a known sender and you know the content is safe.
 
-Yes, even for the one who observed this it can be difficult to
-reconstruct the needed imaginary after a few days.
+Why does Outlook leave this in the email itself? My Gmail restricts
+itself to =E2=80=9Ccautioning=E2=80=9D about it in the interface.
 
-I will try to provide an example.
+>[snip]
+> content. Although Atos endeavours to maintain a virus-free network, we
+> do not warrant that this transmission is virus-free and can accept no
+> liability for any damages resulting from any virus transmitted. The
+> risks are deemed to be accepted by everyone who communicates with Atos
+> by email.
 
-> The code change looks correct, though ;-)
->
->> diff --git a/t/unit-tests/u-utf8-width.c b/t/unit-tests/u-utf8-width.c
->> index 86e09c3574..5e2b636db9 100644
->> --- a/t/unit-tests/u-utf8-width.c
->> +++ b/t/unit-tests/u-utf8-width.c
->> @@ -2,6 +2,17 @@
->>  #include "utf8.h"
->>  #include "strbuf.h"
->>  
->> +/*
->> + * Test utf8_strnwidth for strings with SGR sequences and corner case length
->> + * arguments.
->> + */
->> +void test_utf8_width__strnwidth_ansi(void)
->> +{
->> +	cl_assert_equal_i(3, utf8_strnwidth("\033[31mhello", 4, 1));
->> +	cl_assert_equal_i(0, utf8_strnwidth("\033[31mhello", 5, 1));
->> +	cl_assert_equal_i(1, utf8_strnwidth("\033[31mhello", 6, 1));
->> +}
->
-> These are OK to be equal_i() for now, but I notice a TODO at the bottom
-> of utf8_strnwidth().  It might be helpful to leave a comment to warn
-> that this test needs to be updated when it happens?
-
-Ok, I will leave a similar comment.
-
-I also noticed the comment and started an .org file to note what the
-callers (and theirs ...) do with the return values and what changes are
-needed.  In quite some case those int's end as widths specifiers in
-format strings and I concluded I'd better stay away from this task.
-
->> diff --git a/utf8.c b/utf8.c
->> index 009e8fee39..dfc5261619 100644
->> --- a/utf8.c
->> +++ b/utf8.c
->> @@ -230,10 +230,14 @@ int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
->>  		int glyph_width;
->>  		size_t skip;
->>  
->> -		while (skip_ansi &&
->> -		       (skip = display_mode_esc_sequence_len_counted(string,
->> -							orig + len - string)) != 0)
->> -			string += skip;
->> +		if (skip_ansi) {
->> +			while ((skip = display_mode_esc_sequence_len_counted(string,
->> +					                orig + len - string)))
->> +				string += skip;
->> +
->> +			if (string >= orig + len)
->> +				break;
->> +		}
->
-> Thanks.
+This sounds dangerous. I certainly have not accepted communicating with
+Atos. Maybe I should have a rule to delete these emails just in case. I
+don=E2=80=99t want any computer viruses.
