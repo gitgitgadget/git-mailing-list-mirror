@@ -1,122 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.158
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795553045;
-	b=4bIQec6THEFkFThLHUlqVqyCEqZlnpAmRCvAVrGc/4Qy/t8qhI2W/CAToGMGQtWFOyan
-	 jbz8tHWyZRGK+cYsJOLq/sip0Y6T4EK0wSo5oQw3W9aWghN58tYDEEdKYUbRjpj4IAKrM
-	 KuamIeTiOP8sGsLoovjU9UALbDIgftXggmDPP4EGvQb+bEjTwsM3OPJOS4YWWyOlm2HAd
-	 15OVmFA043Bo+jfgXwhT6Cmz91XHZCdnRCNrLx0ZB01WWuHrwwwRLEyv9WCOD098xXbYJ
-	 FgrIwwd8o1z5NEr5Ql4/JZv1BAT06LNNpkDkxKY5wJnpYhesAaYkRDwpCVi5wfVE4/A==
+	t=1795554646;
+	b=XVJeweK+XmK8+tkEqbvWD0j3RMe3KnZ8XGmgRwG3GKFEkhYuxjl2lRIrTGL9aLw8eyXC
+	 Ovqe8CtFOIi+YCkWMMvc/4qORR9cF84QbR6StbjZtbghyL5drkN4rjfeGPcIkHB80hB6d
+	 nZ6NgvFomMA0+n7fQyJOU+ZI/EIMfTfgE0QIDRTEG7SF4yUz/EP+skLw1FrlUpEgoxmwF
+	 aOc5V8w4kdSTUnU3purzWHhBLYqr0k8d128vpiRJM7w9AM/fCUryYOh2kcUlQLorqwQ/p
+	 vVQkRSSITha1zwpRuret2fyfpdYN8cqRJKIDrIem9A3u+kcCb1ikfV0gnuSvucb5auw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795553045;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795554646;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=zpBrbeOSdMXmVpLQAETpFIVlqXaCrtz+Z9KLtul3SQo=;
-	b=4uSTowVMx+Av4Y4HIOgSlKSK/k7rUg6s3EZPYvBk6W/CfqpZ6yOHOkxH1ZyYaueo440Q
-	 22ehqpeeq2hLGoWsQWsKDQruFttIGugySNdp8SfkYyhs0wnyrHvTdmhVBxG5rq5Qxe06S
-	 brRsPeeraAZ1xzkDl09pXqH69ePvkOblQhUzdHw1d2rCooJRoIr6dJO5A+NjiaBd5GGjq
-	 Eqap5oaciWSznzdV+V5RsrzaKlW63CGEGmXC0kmFvSXZNcNwN38EGqrldB3hc5sgFMKEC
-	 ETGwWx7TiTklmvKcdzGskhSY7Vr/9LEq6ZChMDaT1Qjb4DZYC/50/EKzEzMYCZWgvUw==
+	bh=vobyzRcLh89B44QNsbtIywo0bjO6nrjBpYFss4l1cTw=;
+	b=XaPt6NG859bAJp99SVWQlmXQru5IZReGX2vXNFkaRgTTN7/oA1rVM2raOqWTEFQTVHux
+	 jgX7/PGAtVAlyy13bkloLDWWlzF+wFcuyYsH4eQrhoTg/uJ1BB+feDssnzt1uMsmWfCnW
+	 CVRVcY6cZOWX/w33tSvhDNgjfSd1Kb2dEHEjWlaP0nhUd6Q9bqt4HQNkt4r1z6x0BMCR3
+	 dwEL3a17JNCfDSSa4QWXcGDstgr3Fwp4/we8wnrAzbsLSJ1WEyiwt3slDdfJGXdgWUzhI
+	 NYonI5PotfXzxPDSSPC7CLDTpK85yKk0FT/waAlh4ezlrjNqnhBBhSEDMih766N/hjA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=XSzzz1kk;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=sAUPinYY;
-	arc=none smtp.remote-ip=103.168.172.147
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=CFBtr8Xc;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=dz4bBCR1;
+	arc=none smtp.remote-ip=103.168.172.158
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE85606A31E
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 20:44:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4EE85606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3683606A31E
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 21:10:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D3683606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=XSzzz1kk;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=sAUPinYY
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 65142EC09C2
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 15:44:04 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 24 Nov 2026 15:44:04 -0500
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=CFBtr8Xc;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=dz4bBCR1
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E25521400303
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 16:10:44 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Tue, 24 Nov 2026 16:10:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795553044; x=1795639444; bh=zpBrbeOSdM
-	XmVpLQAETpFIVlqXaCrtz+Z9KLtul3SQo=; b=XSzzz1kkGSJactTlbH8Hj9/EAW
-	RyvCpiHQyTmnBnrHOm3YWTg6ZKzwW5M2sVO3humraH9cNBpAQ2mHy/+OprEI5ZN0
-	0/saCOiMsHg+5kzjMEaAKoU8AkfJOY0ncKxVbOkcxJ02slGAF+AbNmxjZTl1e/HY
-	USmnN1CgtJ/fUH2bfDDgKktK5eXYTzmlhMk6Y+b5xbylYHDOBnsQkgtW87U7bcC0
-	VpugVvq/VjtGDTQN5r5EzyryppF7GrDWX0uF/yTw227wDebQik0ZS4qvZ18YozEs
-	j7Pzg8cAWHmIhTOsnCM0IzQsVXhj1GWsIIjPP6Y9w/d7J4NVNBPOAnT5iIDA==
+	:subject:to:to; s=fm2; t=1795554644; x=1795641044; bh=vobyzRcLh8
+	9B44QNsbtIywo0bjO6nrjBpYFss4l1cTw=; b=CFBtr8Xcfduc58ONyQh8L9ST4A
+	9Rpmx8NzE7tU1P5ikPpN1/KAFu6P/SB9KCswCFlSg9JvPP1OR5jz/beAK5ciyBnn
+	GuFc8/fSG7SyhtcQ/wSG/oYrZOQGuY07GkZTqsskjGXK2ZCqNP4Pa4OgnLjCOisg
+	dxOGrkixo4CvCaX3pO00UzebTI2wcfsBDoAt17+0mF8V86fjEBSA5ZMsks92Kgdv
+	N3Gr4MwKswoQU0/Uc0I1s6s4npHHT2r6yXx+M6YNXcgnTvoIzVLn8V3YoTH5Y04J
+	gZMvCvZD+f1LcZrD7lLdcAic9EXBlUtlQKql1ugjs9S6cfPH+wYoBsKsR68Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795553044; x=1795639444; bh=zpBrbeOSdMXmVpLQAETpFIVlqXaCrtz+Z9K
-	Ltul3SQo=; b=sAUPinYYfrMw5QBU7C0Ed417ciTf4pe56nuAjxtEZlkVYYdJk4I
-	8LPkMhgGQceG0fXRVHwdPg/GkTDaMNdqqHVan8NeOcCEXsu4rUURCF+xUCWnTrya
-	eRf+Yu4CYT1G3c5MGRwUwHOGYaXHCEaYQJrA1El/jO6fjmqhAv+EgGIgL6pc3nnf
-	1xVY/8VzH2jSxR64o6wpeIsP0Xj8Tnoib14mqjVDLChUcXs+CVY0t3qwDN5dSGhS
-	sXkV+b7PiA3bQKyZ/PmNMhWhLMSghA+g5mWnS20AE6hXnb4nD6yV6OD0oJp+RmQd
-	NN3m3IIU6ti/ycShA+qdn7znIk/Wqp+SnlQ==
+	1795554644; x=1795641044; bh=vobyzRcLh89B44QNsbtIywo0bjO6nrjBpYF
+	ss4l1cTw=; b=dz4bBCR16tYiK7sx+18Zdf8kA9HbgX9wWL8twJTQe3ZMzi2QHBu
+	v4o00j5F2TlhYLnRekWyZXRoU2RdcGW9yQ0wzmMAtihPWR/b03oXMwNZqkDi5Hcz
+	YW7xhH3M2A2HhxRlIgwfF8D+fgBZoU1hScyrZ0BlujBnt2uz6+iRqvYbp71B9tNC
+	vvYmCvLJqKmyI1utK9LT3yT/aETkA1hYOn16hgLSr0VnE1zu69cg2Vl3xv9sW8i7
+	uIhAya3GPm+GWzpolGgutgc08NHEo+7RID0206joj3VtQk2oEDgQeeIxafzju3wk
+	N9ljYSikO4yLPsfV4ZQO5gqDT5MeKxxegJg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795553044; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1795554644; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:WANsdu8fri2nBTE3+/fPQ3mi6V+OZ46/93qsegySuyIzKiN
-	8e7BtCc40AJQNV6PNjowfL+Rq4q5beZTYYpQkEPa09+2g8ZH613K0W0OmS1Us1LO
-	2qdBIcchCx18L/MyLmhUSbQ8OiU5+v7scG65/9dsXtiYPsNvCglNrAu4jOfTur1G
-	8u+zFjSqfr+DCaJcVqC+rwYtAIkwPyguYjf94D3HcGYhg8cnVVTSOJhaAnUBFgdX
-	ywZjIYk/0qpOpgJm0j9r9Nr6L/MjtDp7ai8Xuz9R8HSpvalmCoQHQz7Ea4wLihFa
-	eORCZrVQu3WJbIbqiFKQzJ5nfSMDcS26GfiuUJg==;
+	s=fm2:rsa-sha256:Rn0F03LVLg+n5TGh8DCCnbkzxcxcA6a5Rbrk5N0ucMoe/9j
+	xjRZd771QF6sGWc1AJLXb+ToSk0uFkOujW+IStDL0BYuh6axV1Oxkn/o75Mc2QA3
+	xV4u5ah5URwqFzSv0nVCmSjYiz0N004eziR4Ngs7UCuGtqBaorRgrVXTYxOD/Lcn
+	sDl9Z8JE93VLdNBj1/pURGxwfVewebxM3a3F3uSV6Vxfkhw1F+EqGbuhUyo7XYRP
+	na3GFGw2o5z17w5k7IwohnjCKOIKMTegZ2lJXPpGCNPxHhC5FaYcIiZPk0pBl+Sn
+	DMgGCym4/Bz8l9OvfZWxclyFd0W/3Q3nhQfI6oQ==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:09m6fBH1xdQ9JxgxM3+2M+KoDjzqHYBbumzV+G03HM8=:Rl4bS2zHKh7lk9YwSya7XpElLmufVQdjVaUtuzIRAkw=;
-X-ME-Sender: <xms:FPcFazY3jabn54wbhQw2poza7JrJSAhvidqRiqquS1DDFb4jY_cTtQ>
-    <xme:FPcFa5bGsebO_ozbL328nM__0Tq89AmuOoy4RhWAfdE8TRMgySGcfQGlEGAsYKrJd
-    FJEXHte_WvFdAdIj3dNsGB7v0hGdq_5JDEwjwaKBQhck12HpVCQGg>
-X-ME-Received: <xmr:FPcFa69fToaPYqKjoDTsNtbGhcPV2nR7WomdME8KjhXuEius3NVhFWpvodtgYjL56_I5i609_dUe_F6VBevVoLlJOFH8LpQXk4--q9k>
-X-ME-Proxy-Cause: dmFkZTGI8pEnokAYkPxZAV6jAm4FRBANdGj8q6CyPC93Yp7kgXbkp9cWQ3RYWwZ26ynv7U
-    Ofcl0WgZalmR5bF0NQe8hZGFmXYKSEw9rVi/SynG8lada2JZRT9FKZXuUjb1Bd0CU6GBfv
-    OU+gQfmY/A3P19OQ48J33RlxkObt/8Fzz+fW1u+5nnVfJhxli5gTBSACHxUnvl7eysPJLh
-    lnj7mG4eD23O+gwtj4k2Z7RX5GYdv9RCVY3bJg53QJpsgEEAxp5IpJtpDEDuwovObsyWhi
-    1SnoVjIhj6a6fbVzQzfGfRm/hE0aAAFx700O4VZIyuU3kmVvayflGBPxhI4V8eIy8yxGbB
-    uBZFJWV6zJIgERPNWpZWh0u2alBq05CZN1zTakKGoLJrL/cejJYw6fxug60Yn831vNZJzb
-    MVHCui1V27MD2+jxqXuxmb7q7H1AgCgyvUFW0m7s5+DdUr2wgSAEu6IaZXdemfdesxsA9j
-    /zxKRQWeI3yVUl7ALWX3gG5o3gs6S81dfB0XYNltFexB7gzuIZn+ueh7bIHCm0UIQg998T
-    lXDTXt9wqUvcdHryDl7O8L/Wiv6zLMIP56+W7Gwoju+NZxAmopMh4JRG6SdpMdcuU98NXw
-    HBPjCCBxYZQMn9S8Zd2Xo5xeaaANCARMmYOCzVHBoUSYiTHg3/vqy53Qw6Pw
-X-ME-Proxy: <xmx:FPcFa4gFymlmvIX4joAdU0oRsxdE4XX_QOXaiUNLY_vd8XEoXDp-ww>
-    <xmx:FPcFa6fAnUIcbeWR5G9knizHP6qHkN-eYongzVRNbG30ayRklbJkXA>
-    <xmx:FPcFa_pey9KQqyink0lE7J_Ve3HLt3evkkM4J0ll_ip-L6YE_ypq2g>
-    <xmx:FPcFa_AfT1qdQBRxqVVurD6VtpdUaXJL2sY_CWwi0LFsKQ_iWyvF2A>
-    <xmx:FPcFa6dWtUP13-kKJn7h4WwgL1Mufvecqe5_fRxXfCNre_3tXJTNw9G4>
+Message-Instance: m=1; h=sha256:i21L+5fDHs54dxT/yIyBQ6iGjxbS6C/UZdfyKfODtgA=:mZNPWqVUl9VqJs9GN2fpMLsoPeXPZnK27s3R+YyE/4U=;
+X-ME-Sender: <xms:VP0Fayofu6sEOwV7UGL-saP1EV1uLMVnHtS3KiDZqUCk6rSxH137mQ>
+    <xme:VP0Fa3jnkH7yd7OoJi-_6Vdd7CSHJhntdgIZhydQjwIiNbg_I4b20yF2ujLdwiZ4c
+    FCNaheq9LCJRMngaQsHEJeDzjWPE5k9CkPctrrgguZU0x9FlonFRRo>
+X-ME-Received: <xmr:VP0Fa_jwWimpKtAZgvYv5PUhc7EiclgNBYsPXqfSxAmGPwczpla77T7VTsE6dtReH8H27KmLSJUJgz_WGbbG64jY6VisoUInyAgnFjc>
+X-ME-Proxy-Cause: dmFkZTGHiDPZgyVYt8dJUqbhIpCBPs1kUBVY9B49fAa3fdGLXP+s2/10bXUN34dNqD3WkU
+    4vcDTw2TxC/S84u3iIwXx+wHJSuL/kYuxjQKe5LXhEuWwrfDM+w7ZIIjfhAHQYXa11I7Yx
+    zlZ4Z9jr/mrm7Zl7wbaidZtsIUIs3qBbSzrBL2L9ej3G1HoWB9Zy/dYHXnBYw84tJBkQUd
+    Lf0sViZ0ooiMF1oWL7dcHthHsBW0PRjPgIqoUWKMyjyb1c6rBHweGuLXDqimO4pwexBpKl
+    R95neVv7At7n/ecN5DyaUdQyZDTrvBI2O2omZXPhKZ2ZDaW5sttVYifvPl0Akte7GeIJY8
+    dohYDXY0ZT/U+gDhrNBlzV0OTa7Jk8KQFmkBLgkX0b0LcCPxfBaHnc3Y86QGvSbINyb/x8
+    Dd/ij8OliBrS0e7SatfgDTYDBoYhYrk3bVvFpdUZn7pL148HiqgEIfZJMGFRCtL97/d1lN
+    RKmGyq0PVzsPtWvTpva9T5o+rb+TmHT961ZbtRYBJ/lr0dMSehl+jzScSyqW37q+RPFbXj
+    8rkeVzxfY5jYCA4IU5Qrcuxy0jVBrWEZHA/6kb2wsAgi+x5tTzHN0G5KpdUMG3zcC4sQCn
+    Hp2ukvzs2F9Ayc3s5lSCAu0vT+q27omxV/5B20s8kIRzPH+J/e9Dq3904z9w
+X-ME-Proxy: <xmx:VP0Fa9iTeAq0G_U9S1a8rXyyo8yrw-ilphIHL0D3lz4m86khbndQSQ>
+    <xmx:VP0Fa_K_YJrGbddoN4GCgFv8u49N0BLRrR5gHXJo8h_WQPHtv2TfRg>
+    <xmx:VP0Fa8F_uXp_RDE7CjdiCw1SWK4i2cj-T0duz-vm7nwN-_5tLUAh7w>
+    <xmx:VP0FazQT6GOEKwe4u0IxdNbQeshbeGziHq6-lIpDbg7vs5cVreXITw>
+    <xmx:VP0Faw9azA7yaWLIBulWTXxYUH9ktFaZvAYcGs5KrnE6lFcIdRC4doZa>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Nov 2026 15:44:03 -0500 (EST)
+ 24 Nov 2026 16:10:44 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
-Subject: Re: [PATCH v2 3/3] submodule init: copy submodule.<name>.gitdir to
- config.worktree
-In-Reply-To: <b5d203d0147715dc2b38f13be427ef8d2138321d.1795273853.git.gitgitgadget@gmail.com>
-	(Yoichi NAKAYAMA via GitGitGadget's message of "Sat, 21 Nov 2026
-	15:10:53 +0000")
-References: <pull.2306.git.1794484985.gitgitgadget@gmail.com>
-	<pull.2306.v2.git.1795273853.gitgitgadget@gmail.com>
-	<b5d203d0147715dc2b38f13be427ef8d2138321d.1795273853.git.gitgitgadget@gmail.com>
-Date: Tue, 24 Nov 2026 12:44:02 -0800
-Message-ID: <xmqqo6benenh.fsf@gitster.g>
+To: Andy Koppe <andy.koppe@gmail.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  =?utf-8?Q?Ren=C3=A9?=
+ Scharfe
+ <l.s.r@web.de>
+Subject: Re: [PATCH] pretty: add %(body:trailers=<bool>)
+In-Reply-To: <4e6e2c256ef7d13dfc31cf0235f6163cc1509fca.1795153464.git.andy.koppe@gmail.com>
+	(Andy Koppe's message of "Fri, 20 Nov 2026 06:09:30 +0000")
+References: <4e6e2c256ef7d13dfc31cf0235f6163cc1509fca.1795153464.git.andy.koppe@gmail.com>
+Date: Tue, 24 Nov 2026 13:10:43 -0800
+Message-ID: <xmqqse0qlyuk.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -129,60 +127,181 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Andy Koppe <andy.koppe@gmail.com> writes:
 
-> Make 'git submodule init' copy an existing setting to the worktree
-> config only if it belongs to the current worktree; otherwise, generate
-> a new setting.
+> Add a "%(body)" placeholder that is equivalent to "%b", with a boolean
+> "trailers" option. With "trailers=no", the trailer block as found by
+> "%(trailers)" is omitted.
+
+Having a counterpart to %(trailers) that strips the trailer block
+without needing external post-processing makes "%w" rewrapping and
+separate coloring much cleaner.  Modeling the syntax after %(trailers)
+and %(describe) also fits the existing placeholders well.
+
+> The blank line separating the trailer block from the text before it is
+> dropped too. Content after the trailer block that "%(trailers)" ignores,
+> such as comment lines or an old-style "Conflicts:" section, is kept.
+> When there are no trailers, "%(body:trailers=no)" is the same as "%b".
 >
-> Warn when an existing setting does not match the current worktree and
-> is not copied to the worktree config.
-
-This makes the transition to extensions.worktreeConfig much safer for
-existing repositories, and the new warning plus test cases covering both
-main-worktree and linked-worktree migration look solid.
-
-> +static bool submodule_git_dir_matches_current_worktree(const char *gitdir)
+> The placeholder name matches the "%(contents:body)" field of
+> git-for-each-ref, which also excludes the subject, and the option syntax
+> follows the options of "%(trailers)" and "%(describe)".
+>
+> As an example, "%w(72)%(body:trailers=no)%w()%C(dim)%+(trailers)%Creset"
+> reflows the message body but not the trailers, which are dimmed.
+>
+> Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
+> ---
+> Coloring the trailers separately as mentioned in the use cases would
+> greatly benefit from the "pretty: fix lost and leaked colors at line
+> breaks" patch [1], which in fact was motivated by it. I think the two
+> patches are independently useful though, which is why I didn't make
+> them a series.
+>
+> [1] https://lore.kernel.org/git/e9f88b533dfbd10528c9151e2e87207419d0253d.1794905511.git.andy.koppe@gmail.com
+>
+>  Documentation/pretty-formats.adoc |  3 ++
+>  pretty.c                          | 58 +++++++++++++++++++++++++++++++
+>  t/t4205-log-pretty-formats.sh     | 55 +++++++++++++++++++++++++++++
+>  3 files changed, 116 insertions(+)
+>
+> diff --git a/Documentation/pretty-formats.adoc b/Documentation/pretty-formats.adoc
+> index 2ae0eb11a9..39d66d9f73 100644
+> --- a/Documentation/pretty-formats.adoc
+> +++ b/Documentation/pretty-formats.adoc
+> @@ -301,6 +301,9 @@ tags are added or removed at the same time.
+>  +%f+:: sanitized subject line, suitable for a filename
+>  +%b+:: body
+>  +%B+:: raw body (unwrapped subject and body)
+> +++%(body++`[:trailers[=<bool>]]`++)++:: body, like `%b`. With
+> +	`trailers=no`, the trailer block (see `%(trailers)` below) and the
+> +	blank line before it are omitted.
+>  ifndef::git-rev-list[]
+>  +%N+:: commit notes
+>  endif::git-rev-list[]
+> diff --git a/pretty.c b/pretty.c
+> index d8a9f370f6..c67c9160c7 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -997,6 +997,36 @@ const char *format_subject(struct strbuf *sb, const char *msg,
+>  	return msg;
+>  }
+>  
+> +static void format_body_without_trailers(struct strbuf *sb, const char *msg,
+> +					 const char *body)
 > +{
-> +	struct strbuf tmp = STRBUF_INIT;
-> +	struct strbuf submodule = STRBUF_INIT;
-> +	char *super;
-> +	bool matches;
+> +	struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
+> +	struct trailer_block *trailer_block;
+> +	const char *trailer_start, *trailer_end;
+> +	LIST_HEAD(trailers);
 > +
-> +	if (is_absolute_path(gitdir))
-> +		strbuf_addstr(&submodule, gitdir);
-> +	else if (!repo_worktree_path_append(the_repository, &submodule,
-> +					    "%s", gitdir))
-> +		return false;
-> +
-> +	if (strbuf_normalize_path(&submodule)) {
-> +		strbuf_release(&submodule);
-> +		return false;
+> +	opts.no_divider = 1;
+> +	trailer_block = parse_trailers(&opts, msg, &trailers);
+> +	trailer_start = msg + trailer_block_start(trailer_block);
+> +	trailer_end = msg + trailer_block_end(trailer_block);
+> +	trailer_block_release(trailer_block);
+> +	free_trailers(&trailers);
+
+Calling parse_trailers() with '.no_divider' set to 1 at the subject
+offset mirrors format_commit_one()'s %(trailers) branch, so both agree
+on where the trailer block starts and ends.  It does populate and
+immediately free the trailer list, which looks a bit curious.  I guess
+this is because trailer_block_get() is file-local to trailer.c, which is
+not available to us here.  We could expose it as a helper function if we
+wanted to, but the trade off there is unclear.  I'd say we can leave it
+as-is at least for now.
+
+> +	if (trailer_start == trailer_end) {
+> +		strbuf_addstr(sb, body);
+> +		return;
 > +	}
 > +
-> +	super = absolute_pathdup(repo_get_git_dir(the_repository));
-> +	matches = starts_with(relative_path(submodule.buf, super, &tmp),
-> +			      "modules/");
+> +	if (trailer_start > body) {
+> +		/* Include the preceding blank line in the chunk to cut. */
+> +		while (--trailer_start > body && trailer_start[-1] != '\n')
+> +			; /* back to the start of the line */
+> +	}
 
-Isn't there a subtle symlink / normalization mismatch here?
+Do we need an "else" clause here, IOW, can trailer_start be less than
+body at this point?
 
-repo_worktree_path_append() uses 'the_repository->worktree', which is
-canonicalized via real_pathdup() during repository setup.  In contrast,
-absolute_pathdup(repo_get_git_dir(the_repository)) uses 'PWD' (if
-matching 'getcwd()') without resolving symlinks when the gitdir is
-relative, and copies an explicit absolute GIT_DIR verbatim without
-resolving symlinks or normalizing '.' / '..'.
+The caller in format_commit_one() does
 
-While 'git submodule' normally runs cd_to_toplevel() (resetting PWD)
-when GIT_DIR is unset, running 'GIT_DIR=.git git submodule init' from a
-symlinked path to the worktree (or 'GIT_DIR=.git/../.git', or invoking
-'git submodule--helper init' directly via a symlink) causes 'super' and
-'submodule' to diverge, triggering a false mismatch warning and
-generating a new gitdir instead of copying the existing one, no?
+> +			format_body_without_trailers(sb, msg + c->subject_off,
+> +						     msg + c->body_off);
 
-Using real_pathdup(repo_get_git_dir(the_repository), 1) for 'super' (and
-strbuf_realpath_forgiving() for 'submodule' in case an existing absolute
-'gitdir' config contains symlinks) keeps both sides canonicalized, which
-might make it safer (though the resulting path may become uglier, as it
-often is the reason why people use symlinks that are more comfortable to
-the eyes and "cd" to a directory through them).
+where msg+c->subject_off is "msg" and msg+c->body_off is "body" for us.
+IOW, "msg" is the first line of the first paragraph in the commit object
+body (which is taken as "commit subject"), and "body" is the first line
+of the second paragraph, with each paragraph separated by blank lines.
+
+trailer.c:find_trailer_block_start() clearly says that the first
+paragraph cannot be trailers and skips it, so we should be safe.  There
+is no need for an "else" clause there.
+
+> @@ -1251,6 +1281,14 @@ static int match_placeholder_bool_arg(const char *to_parse, const char *candidat
+>  	return 1;
+>  }
+>  
+> +static int parse_body_options(const char **p, int *trailers)
+> +{
+> +	while (**p != ')')
+> +		if (!match_placeholder_bool_arg(*p, "trailers", p, trailers))
+> +			return -1;
+> +	return 0;
+> +}
+
+Use of match_placeholder_bool_arg() here is nice.  This handles bare
+"trailers", "trailers=<bool>", repeated options (last wins), and
+unclosed placeholders cleanly, since the function returns 0 at NUL.
+
+> +test_expect_success '%(body:trailers=no) ignores Conflicts: section' '
+> +	test_when_finished "git reset --hard HEAD^" &&
+
+This is not quite right way to set up test_when_finished.  You are
+assuming that at least up to your "git commit" things will not break and
+you will successfully create one commit, hence HEAD^ is the right place
+to go back to.  If you fail before managing to create the commit, then
+the following tests will run in a repository with one commit before
+where this test started.
+
+Perhaps remember where you are and prepare to go back exactly to that
+commit, i.e.,
+
+	go_back_to=$(git rev-parse --verify HEAD) &&
+	test_when_finished "git reset --hard $go_back_to) &&
+
+would be safer?
+
+> +	printf "subject\n\nConflicts:\n\tfile.c\n" |
+> +	git commit --allow-empty --cleanup=verbatim -F - &&
+> +	git log --no-walk --pretty="%(body:trailers=no)" >actual &&
+> +	git log --no-walk --pretty="%b" >expect &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success '%(body:trailers=no) keeps text after trailers' '
+> +	test_when_finished "git reset --hard HEAD^" &&
+> +	printf "subject\n\nbody\n\nA: b\n\nConflicts:\n\tfile.c\n" |
+> +	git commit --allow-empty --cleanup=verbatim -F - &&
+> +	git log --no-walk --pretty="%(body:trailers=no)" >actual &&
+> +	printf "body\n\nConflicts:\n\tfile.c\n\n" >expect &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success '%(body:trailers=no) is empty with only trailers' '
+> +	test_when_finished "git reset --hard HEAD^" &&
+> +	printf "subject\n\nA: b\n" |
+> +	git commit --allow-empty --cleanup=verbatim -F - &&
+> +	git log --no-walk --pretty="%(body:trailers=no)" >actual &&
+> +	echo >expect &&
+> +	test_cmp expect actual
+> +'
+
+It might also be nice to exercise "trailers=no,trailers=yes" and an
+invalid boolean value such as "%(body:trailers=bogus)".
+
+Overall this looks nicely done, except for these minor nits in the
+tests.
+
+Thanks.
