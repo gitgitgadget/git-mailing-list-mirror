@@ -1,121 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.170
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795554646;
-	b=XVJeweK+XmK8+tkEqbvWD0j3RMe3KnZ8XGmgRwG3GKFEkhYuxjl2lRIrTGL9aLw8eyXC
-	 Ovqe8CtFOIi+YCkWMMvc/4qORR9cF84QbR6StbjZtbghyL5drkN4rjfeGPcIkHB80hB6d
-	 nZ6NgvFomMA0+n7fQyJOU+ZI/EIMfTfgE0QIDRTEG7SF4yUz/EP+skLw1FrlUpEgoxmwF
-	 aOc5V8w4kdSTUnU3purzWHhBLYqr0k8d128vpiRJM7w9AM/fCUryYOh2kcUlQLorqwQ/p
-	 vVQkRSSITha1zwpRuret2fyfpdYN8cqRJKIDrIem9A3u+kcCb1ikfV0gnuSvucb5auw==
+	t=1795554793;
+	b=falRMJ1zgv6KXkKOUEe+2WLblNsk6GF/SCxRzaZ1oproQvxkoO9hI/sFvt/89ACfzS+o
+	 dZ1xXH4dQ0QlCDPh11Cf/qL3YwortghNoD/U8o7zsSA1CQIjvC7HhAJzDcihRpyfbwHja
+	 j2l3DM1E2JQx/dDF+v0YzoFWebVWZG9LzPGfeSlaaaK4yLPogE4h6jgoxxGdAKzRCksAs
+	 i6X420onEnuFph899veJ3OVn+CBcnMLMtSAMpfJo3nNgVwjyzqMUDyhsjVYeDFTW+R/9K
+	 ckpndsb38dK/jMYaIFtsFQNRKPYql/rTj1y4/UVjIy0GEYQDgBvCKshUFsy08ObJKuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795554646;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=vobyzRcLh89B44QNsbtIywo0bjO6nrjBpYFss4l1cTw=;
-	b=XaPt6NG859bAJp99SVWQlmXQru5IZReGX2vXNFkaRgTTN7/oA1rVM2raOqWTEFQTVHux
-	 jgX7/PGAtVAlyy13bkloLDWWlzF+wFcuyYsH4eQrhoTg/uJ1BB+feDssnzt1uMsmWfCnW
-	 CVRVcY6cZOWX/w33tSvhDNgjfSd1Kb2dEHEjWlaP0nhUd6Q9bqt4HQNkt4r1z6x0BMCR3
-	 dwEL3a17JNCfDSSa4QWXcGDstgr3Fwp4/we8wnrAzbsLSJ1WEyiwt3slDdfJGXdgWUzhI
-	 NYonI5PotfXzxPDSSPC7CLDTpK85yKk0FT/waAlh4ezlrjNqnhBBhSEDMih766N/hjA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795554793;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=Nb9tvfyC6biHaKCTkJv61zZUaJSPLvajCAITg/UaTDM=;
+	b=eNErwS0DCy/98GVKm84HRT0Lv+RkNhGsKwXRuVqGgQ9ptayGtAsKMhY5HylHRQ8DKP5b
+	 iXyxsM3DoEsnf7pRyO7bibownW6nBxECbl5YEwPF0qMXEClh8FSBrEOOWK7T20g4GPLhK
+	 l6CjaH35RFAcM15pwLr5d1rZE7Q+In7tG1aojBq4R4GXeuw9TZGnvZiuhNNyQQtV98w6O
+	 K+qdw9ka6aDLTiM1xt9TyMkjKq7es+6QbSDM4FxXsgHbhcd7RIY2bxLWv4cssQ2tsPcor
+	 Zymy253jnQpXfD3FVzqfpel8H63ERXsqvnsJD0/5pcPZvPkOWRTAAQEXKVqvi2sJAog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=CFBtr8Xc;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=dz4bBCR1;
-	arc=none smtp.remote-ip=103.168.172.158
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JBhTp3hy;
+	arc=none smtp.remote-ip=209.85.222.170
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3683606A31E
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 21:10:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D3683606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 780B9606A323
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 21:13:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 780B9606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=CFBtr8Xc;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=dz4bBCR1
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E25521400303
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 16:10:44 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 24 Nov 2026 16:10:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795554644; x=1795641044; bh=vobyzRcLh8
-	9B44QNsbtIywo0bjO6nrjBpYFss4l1cTw=; b=CFBtr8Xcfduc58ONyQh8L9ST4A
-	9Rpmx8NzE7tU1P5ikPpN1/KAFu6P/SB9KCswCFlSg9JvPP1OR5jz/beAK5ciyBnn
-	GuFc8/fSG7SyhtcQ/wSG/oYrZOQGuY07GkZTqsskjGXK2ZCqNP4Pa4OgnLjCOisg
-	dxOGrkixo4CvCaX3pO00UzebTI2wcfsBDoAt17+0mF8V86fjEBSA5ZMsks92Kgdv
-	N3Gr4MwKswoQU0/Uc0I1s6s4npHHT2r6yXx+M6YNXcgnTvoIzVLn8V3YoTH5Y04J
-	gZMvCvZD+f1LcZrD7lLdcAic9EXBlUtlQKql1ugjs9S6cfPH+wYoBsKsR68Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795554644; x=1795641044; bh=vobyzRcLh89B44QNsbtIywo0bjO6nrjBpYF
-	ss4l1cTw=; b=dz4bBCR16tYiK7sx+18Zdf8kA9HbgX9wWL8twJTQe3ZMzi2QHBu
-	v4o00j5F2TlhYLnRekWyZXRoU2RdcGW9yQ0wzmMAtihPWR/b03oXMwNZqkDi5Hcz
-	YW7xhH3M2A2HhxRlIgwfF8D+fgBZoU1hScyrZ0BlujBnt2uz6+iRqvYbp71B9tNC
-	vvYmCvLJqKmyI1utK9LT3yT/aETkA1hYOn16hgLSr0VnE1zu69cg2Vl3xv9sW8i7
-	uIhAya3GPm+GWzpolGgutgc08NHEo+7RID0206joj3VtQk2oEDgQeeIxafzju3wk
-	N9ljYSikO4yLPsfV4ZQO5gqDT5MeKxxegJg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795554644; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:Rn0F03LVLg+n5TGh8DCCnbkzxcxcA6a5Rbrk5N0ucMoe/9j
-	xjRZd771QF6sGWc1AJLXb+ToSk0uFkOujW+IStDL0BYuh6axV1Oxkn/o75Mc2QA3
-	xV4u5ah5URwqFzSv0nVCmSjYiz0N004eziR4Ngs7UCuGtqBaorRgrVXTYxOD/Lcn
-	sDl9Z8JE93VLdNBj1/pURGxwfVewebxM3a3F3uSV6Vxfkhw1F+EqGbuhUyo7XYRP
-	na3GFGw2o5z17w5k7IwohnjCKOIKMTegZ2lJXPpGCNPxHhC5FaYcIiZPk0pBl+Sn
-	DMgGCym4/Bz8l9OvfZWxclyFd0W/3Q3nhQfI6oQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:i21L+5fDHs54dxT/yIyBQ6iGjxbS6C/UZdfyKfODtgA=:mZNPWqVUl9VqJs9GN2fpMLsoPeXPZnK27s3R+YyE/4U=;
-X-ME-Sender: <xms:VP0Fayofu6sEOwV7UGL-saP1EV1uLMVnHtS3KiDZqUCk6rSxH137mQ>
-    <xme:VP0Fa3jnkH7yd7OoJi-_6Vdd7CSHJhntdgIZhydQjwIiNbg_I4b20yF2ujLdwiZ4c
-    FCNaheq9LCJRMngaQsHEJeDzjWPE5k9CkPctrrgguZU0x9FlonFRRo>
-X-ME-Received: <xmr:VP0Fa_jwWimpKtAZgvYv5PUhc7EiclgNBYsPXqfSxAmGPwczpla77T7VTsE6dtReH8H27KmLSJUJgz_WGbbG64jY6VisoUInyAgnFjc>
-X-ME-Proxy-Cause: dmFkZTGHiDPZgyVYt8dJUqbhIpCBPs1kUBVY9B49fAa3fdGLXP+s2/10bXUN34dNqD3WkU
-    4vcDTw2TxC/S84u3iIwXx+wHJSuL/kYuxjQKe5LXhEuWwrfDM+w7ZIIjfhAHQYXa11I7Yx
-    zlZ4Z9jr/mrm7Zl7wbaidZtsIUIs3qBbSzrBL2L9ej3G1HoWB9Zy/dYHXnBYw84tJBkQUd
-    Lf0sViZ0ooiMF1oWL7dcHthHsBW0PRjPgIqoUWKMyjyb1c6rBHweGuLXDqimO4pwexBpKl
-    R95neVv7At7n/ecN5DyaUdQyZDTrvBI2O2omZXPhKZ2ZDaW5sttVYifvPl0Akte7GeIJY8
-    dohYDXY0ZT/U+gDhrNBlzV0OTa7Jk8KQFmkBLgkX0b0LcCPxfBaHnc3Y86QGvSbINyb/x8
-    Dd/ij8OliBrS0e7SatfgDTYDBoYhYrk3bVvFpdUZn7pL148HiqgEIfZJMGFRCtL97/d1lN
-    RKmGyq0PVzsPtWvTpva9T5o+rb+TmHT961ZbtRYBJ/lr0dMSehl+jzScSyqW37q+RPFbXj
-    8rkeVzxfY5jYCA4IU5Qrcuxy0jVBrWEZHA/6kb2wsAgi+x5tTzHN0G5KpdUMG3zcC4sQCn
-    Hp2ukvzs2F9Ayc3s5lSCAu0vT+q27omxV/5B20s8kIRzPH+J/e9Dq3904z9w
-X-ME-Proxy: <xmx:VP0Fa9iTeAq0G_U9S1a8rXyyo8yrw-ilphIHL0D3lz4m86khbndQSQ>
-    <xmx:VP0Fa_K_YJrGbddoN4GCgFv8u49N0BLRrR5gHXJo8h_WQPHtv2TfRg>
-    <xmx:VP0Fa8F_uXp_RDE7CjdiCw1SWK4i2cj-T0duz-vm7nwN-_5tLUAh7w>
-    <xmx:VP0FazQT6GOEKwe4u0IxdNbQeshbeGziHq6-lIpDbg7vs5cVreXITw>
-    <xmx:VP0Faw9azA7yaWLIBulWTXxYUH9ktFaZvAYcGs5KrnE6lFcIdRC4doZa>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Nov 2026 16:10:44 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Andy Koppe <andy.koppe@gmail.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  =?utf-8?Q?Ren=C3=A9?=
- Scharfe
- <l.s.r@web.de>
-Subject: Re: [PATCH] pretty: add %(body:trailers=<bool>)
-In-Reply-To: <4e6e2c256ef7d13dfc31cf0235f6163cc1509fca.1795153464.git.andy.koppe@gmail.com>
-	(Andy Koppe's message of "Fri, 20 Nov 2026 06:09:30 +0000")
-References: <4e6e2c256ef7d13dfc31cf0235f6163cc1509fca.1795153464.git.andy.koppe@gmail.com>
-Date: Tue, 24 Nov 2026 13:10:43 -0800
-Message-ID: <xmqqse0qlyuk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JBhTp3hy
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-94961b68685so427666485a.3
+        for <git@vger.kernel.org>; Tue, 24 Nov 2026 13:13:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795554791; x=1796159591; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Nb9tvfyC6biHaKCTkJv61zZUaJSPLvajCAITg/UaTDM=;
+        b=JBhTp3hy+8XQdlUfvO7oOS0ncNFtirxBdMzolREy/P5yPXptGg6TNtHx6lHCwaUPxL
+         xAOgqHnXhqmm1Lm59cXCyvkNiEhW+uUaZkLzIEE+awQaTL4z+nGADKYdufhUlqU4UF1A
+         RcUYFIETN+yAmqi35r0r0ONuPqHHL7J6mkOYQmsnnfKpguD3KwkSkWmdoLpNDHklVtR4
+         Meq74XDYot9xvUmvBgYqZJTniazcnOBoUdw8eptnUR7yJ/pX79fOE0o98uz3kjWThBG9
+         Knd/W5mvdjj732Mzg/izf5NqJaSfwL4v/gXcmlzLXSegiB7qxtz7SYkmrGNU4CxFMDEH
+         9Eyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795554791; x=1796159591;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Nb9tvfyC6biHaKCTkJv61zZUaJSPLvajCAITg/UaTDM=;
+        b=AetJb22bO9bg4ld94fWIudMO2J3JeLUD8xbTkYVY7jSWz9rds1Z5vHTtRcPKWzBmTO
+         dNEygRzcX31uKAW2BBcIkPAJMZZKoJgvqz/3nt92EBDOiUUmXaSIwP+QkBQBwoPkhiep
+         SWxIGJSSJ2okMKZDl5VN8IIvSKx9hD0MHUovMFa/R6sWMnM+4znOoxXc8TbyJFBl+ZT2
+         XWcXTtiJvgbSwK+hv82fALyOtud87/RSsP/T6I/f2yWfcTNrU2xEdjqqW9XS7YoT8t1A
+         gJRUBlCUcUNQGziYmgliwGKsSLI4G0eEFovC8RX8KPTnanzTBfsocMJhJdooT3UESraW
+         aTZg==
+X-Gm-Message-State: APuU4Z+Nw9dsagSNhbhmoK1eUTu6XFbBhcDqG0ZJNVnXwGtMf8x6xRhO
+	rYAetY82BW2RrFmcp3stuGiIrUW/ElGD7naB3X7WcfWhfC9NYaFqIcO5ihaqww==
+X-Gm-Gg: AZFdTZeSKNw/xrqiPnedLmosj/EXSATJPvZrEZVYnRHVKmEpQuFlo3a+pBAMXnsBOUt
+	fSmLrItMgNQ6wICTaUQAwHEPCihxsCeDa98f0RAVqh4bc8Dr88HRKGcLB5QtCl4GZFnMwOA1Qua
+	A5GLxZbCtgYVZ2lwutsNXaLEAx0rjIiQqO0cHVjuQjOXPxK5wmhu7T554fgjDBwhJAP1jkScD1f
+	f1rECFotWRhsVSdIexT0fw/yTeRtNkL3tB5QsLtoX+U9YiLaB5/MuO4eW0ShMx9ROZAks36TpP0
+	sha2WsH89K0juQF0fUIvLh+ZLVIQlWZMolrltXhP8hgIFLoEQ1pt362RukZTXO4dRb+/X8MYVJR
+	DXObljJAOqjMClAQdIvBruNX4zu1r3da19QYfqRYp45KXTqOKi1J/XefC8P8T4gmBLNIWnWK8Is
+	ZPknMmWi4AfcZooUDsYc6N4N4uIPz9MD/2m2WrfRRVgOJOFUN2OB2E1OOUEY1tXkxSNQLFzyFcX
+	4hbllk2fh/XOmAkfIOB/Auw7u7EL8KE0z+eLmiygEcNk8QZWUDawbrw5uP0Ko26xV/Dah304Kxa
+	5ams1CuymrLONabvfcrp8W5AgNj6NgHa9FyqLyj4/CE54USEuvOTFZBy
+X-Received: by 2002:a05:620a:270d:b0:949:3ea1:3021 with SMTP id af79cd13be357-949bab6d711mr2762442785a.68.1795554789754;
+        Tue, 24 Nov 2026 13:13:09 -0800 (PST)
+Received: from [127.0.0.1] ([172.178.117.219])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-949bb3cb882sm1147107285a.27.2026.11.24.13.13.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Nov 2026 13:13:09 -0800 (PST)
+Message-Id: <pull.2307.v2.git.1795554788715.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2307.git.1794259990263.gitgitgadget@gmail.com>
+References: <pull.2307.git.1794259990263.gitgitgadget@gmail.com>
+From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 24 Nov 2026 21:13:08 +0000
+Subject: [PATCH v2] doc: add tutorial on branches for beginners
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -125,183 +96,1825 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Julia Evans <julia@jvns.ca>,
+    Julia Evans <julia@jvns.ca>
 
-Andy Koppe <andy.koppe@gmail.com> writes:
+From: Julia Evans <julia@jvns.ca>
 
-> Add a "%(body)" placeholder that is equivalent to "%b", with a boolean
-> "trailers" option. With "trailers=no", the trailer block as found by
-> "%(trailers)" is omitted.
+Because Git's branches are so flexible and the meaning of a branch is
+only what people assign to it, it's important to talk about some of the
+social context about branches. Do this in two ways:
 
-Having a counterpart to %(trailers) that strips the trailer block
-without needing external post-processing makes "%w" rewrapping and
-separate coloring much cleaner.  Modeling the syntax after %(trailers)
-and %(describe) also fits the existing placeholders well.
+1. Introduce some imaginary characters who are learning branches for the
+   first time and examples of workflows they might use. Test readers
+   said this was helpful because it helped them see different ways
+   they might use branches.
+2. Explain the importance of a "main" or "master" branch in many
+   projects, and give a few examples of how projects might use it.
 
-> The blank line separating the trailer block from the text before it is
-> dropped too. Content after the trailer block that "%(trailers)" ignores,
-> such as comment lines or an old-style "Conflicts:" section, is kept.
-> When there are no trailers, "%(body:trailers=no)" is the same as "%b".
->
-> The placeholder name matches the "%(contents:body)" field of
-> git-for-each-ref, which also excludes the subject, and the option syntax
-> follows the options of "%(trailers)" and "%(describe)".
->
-> As an example, "%w(72)%(body:trailers=no)%w()%C(dim)%+(trailers)%Creset"
-> reflows the message body but not the trailers, which are dimmed.
->
-> Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
-> ---
-> Coloring the trailers separately as mentioned in the use cases would
-> greatly benefit from the "pretty: fix lost and leaked colors at line
-> breaks" patch [1], which in fact was motivated by it. I think the two
-> patches are independently useful though, which is why I didn't make
-> them a series.
->
-> [1] https://lore.kernel.org/git/e9f88b533dfbd10528c9151e2e87207419d0253d.1794905511.git.andy.koppe@gmail.com
->
->  Documentation/pretty-formats.adoc |  3 ++
->  pretty.c                          | 58 +++++++++++++++++++++++++++++++
->  t/t4205-log-pretty-formats.sh     | 55 +++++++++++++++++++++++++++++
->  3 files changed, 116 insertions(+)
->
-> diff --git a/Documentation/pretty-formats.adoc b/Documentation/pretty-formats.adoc
-> index 2ae0eb11a9..39d66d9f73 100644
-> --- a/Documentation/pretty-formats.adoc
-> +++ b/Documentation/pretty-formats.adoc
-> @@ -301,6 +301,9 @@ tags are added or removed at the same time.
->  +%f+:: sanitized subject line, suitable for a filename
->  +%b+:: body
->  +%B+:: raw body (unwrapped subject and body)
-> +++%(body++`[:trailers[=<bool>]]`++)++:: body, like `%b`. With
-> +	`trailers=no`, the trailer block (see `%(trailers)` below) and the
-> +	blank line before it are omitted.
->  ifndef::git-rev-list[]
->  +%N+:: commit notes
->  endif::git-rev-list[]
-> diff --git a/pretty.c b/pretty.c
-> index d8a9f370f6..c67c9160c7 100644
-> --- a/pretty.c
-> +++ b/pretty.c
-> @@ -997,6 +997,36 @@ const char *format_subject(struct strbuf *sb, const char *msg,
->  	return msg;
->  }
->  
-> +static void format_body_without_trailers(struct strbuf *sb, const char *msg,
-> +					 const char *body)
-> +{
-> +	struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
-> +	struct trailer_block *trailer_block;
-> +	const char *trailer_start, *trailer_end;
-> +	LIST_HEAD(trailers);
-> +
-> +	opts.no_divider = 1;
-> +	trailer_block = parse_trailers(&opts, msg, &trailers);
-> +	trailer_start = msg + trailer_block_start(trailer_block);
-> +	trailer_end = msg + trailer_block_end(trailer_block);
-> +	trailer_block_release(trailer_block);
-> +	free_trailers(&trailers);
+On `git log`:
 
-Calling parse_trailers() with '.no_divider' set to 1 at the subject
-offset mirrors format_commit_one()'s %(trailers) branch, so both agree
-on where the trailer block starts and ends.  It does populate and
-immediately free the trailer list, which looks a bit curious.  I guess
-this is because trailer_block_get() is file-local to trailer.c, which is
-not available to us here.  We could expose it as a helper function if we
-wanted to, but the trade off there is unclear.  I'd say we can leave it
-as-is at least for now.
+- Use the output of `git log --graph` to visualize branches instead of
+  a more abstract ASCII diagram, since it serves a double purpose of
+  teaching people how to read `git log`'s output.
+  But also mention that folks may prefer to use a GUI to visualize
+  branches.
+- Include two sections to explain the output of `git log`, since several
+  test readers found it very hard to understand. In that explanation,
+  only explain `HEAD` fairly briefly and instead keep the focus on the
+  idea of a "current branch", since that's the term Git's UI normally
+  uses.
 
-> +	if (trailer_start == trailer_end) {
-> +		strbuf_addstr(sb, body);
-> +		return;
-> +	}
-> +
-> +	if (trailer_start > body) {
-> +		/* Include the preceding blank line in the chunk to cut. */
-> +		while (--trailer_start > body && trailer_start[-1] != '\n')
-> +			; /* back to the start of the line */
-> +	}
+On the conceptual introduction at the beginning:
 
-Do we need an "else" clause here, IOW, can trailer_start be less than
-body at this point?
+- One of the biggest issues with explaining branches is that there are 3
+  ways in Git to think of branches and it's not straightforward to
+  explain how to reconcile them:
+  1. just the commits that "branch off"
+  2. the latest commit on the branch
+  3. the full history since the beginning of time
+  Handle this by starting with the "tree" metaphor where branches
+  "branch off" a central trunk (way 1), since this makes sense with how
+  people actually want to use branches. Point out some issues with the
+  tree metaphor and talk about how it relates to the way Git represents
+  branches (way 2).
+- Avoid using computer science jargon, because it's a major barrier to
+  folks without a CS background. It's not useful or realistic to teach
+  most beginners the term "directed acyclic graph" just so they can
+  learn branches. Mention the term "directed acyclic graph" briefly in a
+  note for folks who are already familiar with that term and link folks
+  to the data model if they'd like more information.
+- Include some basic facts about commits. Folks seemed to find this
+  helpful, one person said they didn't realize it would be so hard to
+  change their email address later.
 
-The caller in format_commit_one() does
+To keep it readable:
+- Don't assume that the reader has read `gittutorial`, and instead
+  refer back to it explicitly if it's relevant.
+- Always include the output for every command. Test readers said
+  this was helpful.
 
-> +			format_body_without_trailers(sb, msg + c->subject_off,
-> +						     msg + c->body_off);
+Other choices about material that is/isn't included:
 
-where msg+c->subject_off is "msg" and msg+c->body_off is "body" for us.
-IOW, "msg" is the first line of the first paragraph in the commit object
-body (which is taken as "commit subject"), and "body" is the first line
-of the second paragraph, with each paragraph separated by blank lines.
+- `git-prompt.sh` (yes): Mention how important it is to be aware
+  what branch you're on, and suggest using `git-prompt.sh`. Link to
+  git-prompt.sh on GitHub since several test readers couldn't find it on
+  their machine. The test readers liked this.
+- fast-forward merges (yes): Explain the difference between a fast-forward
+  merge and a merge commit by giving examples of what each one looks
+  like.
+- upstreams/rebase (no): Don't explain what an upstream is or introduce
+  rebase, since we're already introducing a lot of concepts. Instead
+  include a "Where to learn more" section with some pointers to where to
+  continue learning.
+- GUIs (yes): Some readers wanted a suggestion for what GUI to use. It's
+  very hard to suggest an appropriate GUI because there are so many and
+  so many of them are not open source, but give a couple of suggestions
+  of open source tools that seem to be popular with the community. Also
+  mention that many non-open-source IDEs have built-in Git integrations
+  for folks who are already using those tools who might not be aware,
+  since they're a popular way to use Git.
 
-trailer.c:find_trailer_block_start() clearly says that the first
-paragraph cannot be trailers and skips it, so we should be safe.  There
-is no need for an "else" clause there.
+Co-Authored-By: Marie Claire LeBlanc Flanagan <hello@marieflanagan.com>
+Signed-off-by: Marie Claire LeBlanc Flanagan <hello@marieflanagan.com>
+Signed-off-by: Julia Evans <julia@jvns.ca>
+---
+    doc: add tutorial on branches for beginners
+    
+    This was reviewed by 17 test readers who overall said it helped them
+    understand branches. We addressed the feedback from the test readers to
+    improve it before submitting it here.
+    
+    I think it would be good to add a little table of contents to
+    gittutorial.adoc to match this one's TOC as well. I'm not sure what the
+    best way to do that is since my understanding is that rebasing on the
+    latest master causes problems.
+    
+    Changes in v2:
+    
+     * Use a $ for the commands for consistency (thanks to Junio)
+     * Add more details in the example workflows to make sure they make
+       sense logically (thanks to Junio)
+     * Make sure the characters are alphabetized in the section order and in
+       sentences. Rename Emilia -> Anita, Abdul -> Bruno, Betsy -> Carmen,
+       Carmen and Daniela -> Daniela and Emilia. Keep the genders the same
+       so we don't have to change all the pronouns. (thanks to Junio)
+     * Deal with the poorly structured sections that Ben pointed at the end
+       as follows:
+       * Add a summary at the beginning to explain the overall structure
+       * Move "3 ways to think about a branch" to the middle, right after
+         creating the branch we're using as an example
+       * Move the merge conflicts section to a note at the end of Step 13
+       * Rename some of the headings to more clearly explain the structure
+         (around "the step by step tutorial" and "Examples of using branches
+         to collaborate")
+     * Delete the "We normally start from main because if you create a
+       branch called two..." explanation and instead just say that we want
+       to keep branches independent (thanks to Ben)
+     * One test reader said that in "3 ways to think about a branch", it was
+       confusing to them than #1 and #3 were the same (just one commit). Add
+       an extra commit to the add-fruits branch so that the branch has 2
+       commits, to make it more clear what a branch with multiple commits on
+       it looks like.
+    
+    Note: I used this script
+    https://gist.github.com/jvns/bcd36fdd42952b9ec9a67ec139dba13e to create
+    the example repository used in this document and to copy and paste the
+    example output from. Not sure if we should store the contents of that
+    script somewhere: it's very annoying to update the examples without it.
+    I also realized there's an issue with that script where, because it
+    hardcodes GIT_COMMITTER_DATE, all the commits happen at the same time,
+    which makes the order of git log a bit weird. I manually adjusted Step
+    12 to account for that.
 
-> @@ -1251,6 +1281,14 @@ static int match_placeholder_bool_arg(const char *to_parse, const char *candidat
->  	return 1;
->  }
->  
-> +static int parse_body_options(const char **p, int *trailers)
-> +{
-> +	while (**p != ')')
-> +		if (!match_placeholder_bool_arg(*p, "trailers", p, trailers))
-> +			return -1;
-> +	return 0;
-> +}
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2307%2Fjvns%2Ftutorial-branches-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2307/jvns/tutorial-branches-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2307
 
-Use of match_placeholder_bool_arg() here is nice.  This handles bare
-"trailers", "trailers=<bool>", repeated options (last wins), and
-unclosed placeholders cleanly, since the function returns 0 at NUL.
+Range-diff vs v1:
 
-> +test_expect_success '%(body:trailers=no) ignores Conflicts: section' '
-> +	test_when_finished "git reset --hard HEAD^" &&
+ 1:  5eaecda843 ! 1:  d6824feca4 doc: add tutorial on branches for beginners
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +- Part 1 (linkgit:gittutorial[7]): Introduction to commits and `git push`
+      +- Part 2 (you are here): Introduction to branches
+      +
+     ++This tutorial contains:
+     ++
+     ++1. <<intro,An introduction to branches>>
+     ++2. <<tutorial,A step-by-step practical tutorial>>
+     ++3. <<workflows,Example collaboration workflows>>
+     ++4. <<tip,Tips, GUI tools, and where to learn more>>
+     ++
+     ++
+      +Meet some example Git users
+      +---------------------------
+      +
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +branches differently in different situations, so it might be useful for
+      +you to think about which is closest to your situation.
+      +
+     -+1. Abdul is making his first contribution to Python, a large open
+     ++1. Anita is using Git on her own to write her PhD thesis with LaTeX.
+     ++2. Bruno is making his first contribution to Python, a large open
+      +   source project.
+     -+2. Betsy is a Go developer for a social media website which has 100
+     ++3. Carmen is a Go developer for a social media website which has 100
+      +   other software developers. All of her changes need to be reviewed by a
+      +   coworker before they're released.
+     -+3. Carmen and Daniela are building a website for their local cat
+     ++4. Daniela and Emilia are building a website for their local cat
+      +   shelter. They're the only two people on the project.
+     -+4. Emilia is using Git on her own to write her PhD thesis with LaTeX.
+      +
+     ++[[intro]]
+      +Why use branches?
+      +-----------------
+      +
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +`Another update to README.md` could originally have been created on a
+      +different branch that was deleted after merging it into `main`.
+      +
+     -+The practical part
+     -+------------------
+     ++[[tutorial]]
+     ++Step-by-step tutorial
+     ++---------------------
+      +
+      +Now let's talk about how to actually use branches.
+      +
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +First, create an empty directory, move into it, and start a new Git repository:
+      +
+      +----
+     -+mkdir myproject
+     -+cd myproject
+     -+git init
+     ++$ mkdir myproject
+     ++$ cd myproject
+     ++$ git init
+      +----
+      +
+      +Then open your text editor and create a file called `README.md`, with
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +Then add the file and commit it, by running these commands:
+      +
+      +----
+     -+git add README.md
+     -+git commit -m "Initial commit"
+     ++$ git add README.md
+     ++$ git commit -m "Initial commit"
+      +----
+      +
+      +Next, edit README.md and make another commit, like this:
+      +
+      +----
+     -+git commit -am "Update README.md"
+     ++$ git commit -am "Update README.md"
+      +----
+      +
+      +`git commit -am` commits the current version of all files that Git is
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +
+      +
+      +----
+     -+git log --oneline
+     ++$ git log --oneline
+      +----
+      +
+      +The output should look something like this, though with
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +We're only going to talk about 2 kinds of decorations here:
+      +`(main)` and `(HEAD -> main)`. Here's how to read each of them:
+      +
+     -+- `e9c0b17 (main)` means that `e9c0b17` is the latest commit on the `main` branch.
+     ++- `e9c0b17 (main)` means that `e9c0b17` is the latest commit
+     ++  on the `main` branch.
+      +- `e9c0b17 (HEAD -> main)` means that `e9c0b17` is the latest commit on
+      +  the `main` branch, AND that `main` is the current branch.
+      +
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +Now make a third commit, by editing `README.md` again, and running this command:
+      +
+      +----
+     -+git commit -am "Another update to README.md"
+     ++$ git commit -am "Another update to README.md"
+      +----
+      +
+      +Now run `git log --oneline` again to see how our branch looks now.
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +First, create the branch and switch to it, by running this command:
+      +
+      +----
+     -+git switch -c add-fruits
+     ++$ git switch -c add-fruits
+      +----
+      +
+      +The `-c` flag stands for "create". You should see the output:
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +some fruits in it. Then add it and commit, like this:
+      +
+      +----
+     -+git add fruits.txt
+     -+git commit -m "Add fruit list"
+     ++$ git add fruits.txt
+     ++$ git commit -m "Add fruit list"
+     ++----
+     ++
+     ++Now edit `fruits.txt` again and commit it again, so that we can see what
+     ++it looks like when you make 2 commits on a branch.
+     ++
+     ++----
+     ++$ git add fruits.txt
+     ++$ git commit -m "Update fruit list"
+      +----
+      +
+      +Run `git log --oneline` again to get a list of all the commits on the
+      +current branch.
+      +
+      +----
+     -+cd4bb48 (HEAD -> add-fruits) Add fruit list
+     ++36d0cbf (HEAD -> add-fruits) Update fruit list
+     ++cd4bb48 Add fruit list
+      +37634fd (main) Another update to README.md
+      +e9c0b17 Update README.md
+      +2e018a5 Initial commit
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +See <<read_oneline,How to read `git log --oneline`'s output>> above for
+      +an explanation of how to interpret this output.
+      +
+     -+To summarize, this tells us that there's been 1 commit ("Add fruit list")
+     -+since our `add-fruits` branch split off from the `main` branch.
+     ++To summarize, this tells us that there have been 2 commits
+     ++("Add fruit list" and "Update fruit list") since our `add-fruits` branch
+     ++split off from the `main` branch.
+     ++
+     ++3 ways to think about a branch
+     ++------------------------------
+     ++
+     ++In Git there are always 3 ways to think about a branch, and different
+     ++commands will treat a branch in different ways. For example, let's look
+     ++at the 3 ways to think about this `add-fruits` branch.
+     ++
+     ++-----
+     ++* 36d0cbf (HEAD -> add-fruits) Update fruit list
+     ++* cd4bb48 Add fruit list
+     ++* 37634fd (main) Another update to README.md
+     ++* e9c0b17 Update README.md
+     ++* 2e018a5 Initial commit
+     ++-----
+     ++
+     ++We can think of the `add-fruits` branch as:
+     ++
+     ++1. Just the 2 commits that "branched off" of the `main` branch
+     ++   (`cd4bb48` and `36d0cbf`).
+     ++2. The full history of the branch since the beginning of the repository,
+     ++   including all the commits on `main` (5 commits in this case).
+     ++   For example, `git log add-fruits` will show you the full history.
+     ++3. Just the latest commit on that branch (`36d0cbf`).
+     ++   For example, `git show add-fruits` will show you the latest commit.
+      +
+      +Step 6: Get a list of all branches
+      +----------------------------------
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +You can get a list of all branches by running this command:
+      +
+      +----
+     -+git branch
+     ++$ git branch
+      +----
+      +
+      +The output should look like this:
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +Change your current branch to `main` by running:
+      +
+      +----
+     -+git switch main
+     ++$ git switch main
+      +----
+      +
+      +This command:
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +README.md
+      +-----
+      +
+     ++[NOTE]
+     ++Older Git tutorials used `git checkout` to switch branches.
+     ++`git switch` is a newer command which is easier to learn because it
+     ++only has one job.
+     ++
+      +Step 8: Create another branch
+      +-----------------------------
+      +
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +branches to show what the process of working on multiple changes at the
+      +same time looks like.
+      +
+     -+First, switch back to the `main` branch. This is important because
+     -+normally when you start a new branch, you'll start it from the
+     -+current `main`.
+     -+
+     -+We normally start from `main` because if you create a branch called `two`
+     -+while on the `one` branch, merging `two` into `main` will also
+     -+merge `one`. Starting from `main` keeps all the branches separate.
+     ++You'll usually want to start all new branches from the `main` branch
+     ++to keep your branches independent from each other. Right now
+     ++we're on the `add-fruits` branch, so we need to switch back to the
+     ++`main` branch:
+      +
+      +-----
+     -+git switch main
+     ++$ git switch main
+      +-----
+      +
+      +Then create a branch called `add-animals`.
+      +
+      +-----
+     -+git switch -c add-animals
+     ++$ git switch -c add-animals
+      +-----
+      +
+      +Now create a file named `animals.txt` with some animal names in it, add
+      +it, and commit it.
+      +
+      +-----
+     -+git add animals.txt
+     -+git commit -m "Add animal list"
+     ++$ git add animals.txt
+     ++$ git commit -m "Add animal list"
+      +-----
+      +
+      +Step 9: Look at our branches and commits
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +Run this command to show all branches and commits:
+      +
+      +-----
+     -+git log --oneline --graph --all
+     ++$ git log --oneline --graph --all
+      +-----
+      +
+      +The output should look like this:
+      +
+      +-----
+      +* 1ceb7b4 (HEAD -> add-animals) Add animal list
+     -+| * cd4bb48 (add-fruits) Add fruit list
+     ++| * 36d0cbf (add-fruits) Update fruit list
+     ++| * cd4bb48 Add fruit list
+      +|/
+      +* 37634fd (main) Another update to README.md
+      +* e9c0b17 Update README.md
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +
+      +-----
+      +* 1ceb7b4 (HEAD -> add-animals) Add animal list
+     -+| * cd4bb48 (add-fruits) Add fruit list
+     ++| * 36d0cbf (add-fruits) Update fruit list
+     ++| * cd4bb48 Add fruit list
+      +|/
+      +* 37634fd (main) Another update to README.md
+      +* e9c0b17 Update README.md
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +See <<read_oneline,How to read `git log --oneline`'s output>> above for
+      +how to read the decorations like `(main)` or `(HEAD -> add-animals)`.
+      +
+     -+Overall this shows that the `add-animals` and `add-fruits` branches have
+     -+both added one new commit since they split off from the `main` branch.
+     ++Overall this shows that the `add-animals` branch has added 1 commit and
+     ++`add-fruits` has added 2 commits since they split off from the `main`
+     ++branch.
+      +
+      +Step 10: Merge the `add-animals` branch into `main`
+      +---------------------------------------------------
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +Merge `add-animals` into the main branch by running these two commands:
+      +
+      +----
+     -+git switch main
+     -+git merge add-animals
+     ++$ git switch main
+     ++$ git merge add-animals
+      +----
+      +
+      +The output should look like this:
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +Step 11: Delete the `add-animals` branch
+      +----------------------------------------
+      +
+     -+Now that you've integrated `add-animals` branch into `main`, you can
+     ++Now that you've integrated the `add-animals` branch into `main`, you can
+      +safely delete it. Delete the branch by running this command. `-d` stands
+      +for "delete":
+      +
+      +-----
+     -+git branch -d add-animals
+     ++$ git branch -d add-animals
+      +-----
+      +
+      +Running this is safe: it'll refuse to delete any branch that hasn't
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +and commits again:
+      +
+      +-----
+     -+git log --oneline --graph --all
+     ++$ git log --oneline --graph --all
+      +-----
+      +
+      +The output should look like this:
+      +
+      +-----
+     -+* cd4bb48 (add-fruits) Add fruit list
+     -+| * 1ceb7b4 (HEAD -> main) Add animal list
+     ++* 1ceb7b4 (HEAD -> main) Add animal list
+     ++| * 36d0cbf (add-fruits) Update fruit list
+     ++| * cd4bb48 Add fruit list
+      +|/
+      +* 37634fd Another update to README.md
+      +* e9c0b17 Update README.md
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +Now run `git merge` to see what happens:
+      +
+      +----
+     -+git merge --no-edit add-fruits
+     ++$ git merge --no-edit add-fruits
+      +----
+      +
+      +The `--no-edit` option tells `git merge` to use the default commit
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +Once the branch is merged, delete it by running:
+      +
+      +----
+     -+git branch -d add-fruits
+     ++$ git branch -d add-fruits
+      +----
+      +
+      +To see what `git merge` did, run `git log --oneline --graph` again.
+      +
+      +----
+     -+*   e3c630d (HEAD -> main) Merge branch 'add-fruits'
+     ++*   576d053 (HEAD -> main) Merge branch 'add-fruits'
+      +|\
+     ++| * 36d0cbf Update fruit list
+      +| * cd4bb48 Add fruit list
+      +* | 1ceb7b4 Add animal list
+      +|/
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +* 2e018a5 Initial commit
+      +----
+      +
+     -+Here you can see that it created a new commit `e3c630d`. This commit
+     ++Here you can see that it created a new commit `576d053`. This commit
+      +looks different from the other commits because it has two parents:
+     -+cd4bb48 ("Add fruit list") and 1ceb7b4 ("Add animal list"). This kind
+     ++`36d0cbf` ("Update fruit list") and `1ceb7b4` ("Add animal list"). This kind
+      +of commit with two parents is called a "merge commit".
+      +
+     -+Note: merge conflicts
+     -+---------------------
+     -+
+     -+Git has an automatic merge algorithm to combine the code from two
+     -+branches. In the example from Step 13, it's simple: one side added
+     -+`fruits.txt` and the other side added `animals.txt`, so the merge adds
+     -+both files.
+     -+
+     -+But if the two branches both edited the same lines of the same files,
+     -+Git will ask you to decide how to handle it. This is called a "merge
+     -+conflict".
+     -+
+     -+See linkgit:gitmergeconflicts[7] (`git help mergeconflicts`) for a
+     -+guide to handling merge conflicts.
+     -+
+     -+3 ways to think about branches
+     -+------------------------------
+     -+
+     -+In Git there are always 3 ways to think about a branch, and different
+     -+commands will treat a branch in different ways. For example, let's look
+     -+at the earlier setup again with the `add-fruits` branch. It has a `main`
+     -+branch with 3 commits on it, and an `add-fruits` branch with one commit.
+     -+
+     -+-----
+     -+  * cd4bb48 (add-fruits) Add fruit list
+     -+ /
+     -+* 37634fd (main) Another update to README.md
+     -+* e9c0b17 Update README.md
+     -+* 2e018a5 Initial commit
+     -+-----
+     -+
+     -+We can think of the `add-fruits` branch as:
+     -+
+     -+1. Just the 1 commit that "branched off" of the `main` branch (`cd4bb48`).
+     -+2. The full history of the branch since the beginning of the repository,
+     -+   including all the commits on `main` (4 commits in this case).
+     -+   For example, `git log add-fruits` will show you the full history.
+     -+3. Just the latest commit on that branch.
+     -+   For example, `git show add-fruits` will show you the latest commit.
+     ++[NOTE]
+     ++If you merge two branches which both edited the same lines of the
+     ++same files, Git will ask you to decide how to handle it. This is
+     ++called a "merge conflict". See linkgit:gitmergeconflicts[7]
+     ++(`git help mergeconflicts`) for a guide to handling merge conflicts.
+      +
+     -+How to use branches to collaborate: it depends
+     -+----------------------------------------------
+     ++[[workflows]]
+     ++Examples of using branches to collaborate
+     ++-----------------------------------------
+      +
+      +There are lots of ways to use branches to collaborate with other people.
+      +We don't have space for a full guide to collaborating with Git here, but
+     -+after a very quick introduction to `git pull`, we'll give examples of
+     ++we'll give a quick introduction to `git pull` and examples of
+      +how each of our characters from the beginning might use branches.
+      +
+      +In these examples we're going to use `git push`, `git pull`, `git
+      +clone`, and `git remote add`. For a basic introduction to `git push` and
+      +`git remote add`, see Step 14 of linkgit:gittutorial[7].
+      +
+     -+Using `git pull`: the basics
+     -+----------------------------
+     ++Intro to `git pull`
+     ++-------------------
+      +
+      +Here's the simplest way to use `git pull`.
+      +
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +branch.
+      +
+      +-------
+     -+git clone https://example.com/example.git
+     ++$ git clone https://example.com/example.git
+      +-------
+      +
+      +After cloning a repository, you can run `git pull` while on the main
+      +branch to update it with the latest version, like this:
+      +
+      +-------
+     -+git switch main
+     -+git pull
+     ++$ git switch main
+     ++$ git pull
+      +-------
+      +
+      +This is all you need to know about `git pull` to understand these
+      +examples.
+      +
+     -+Example: Emilia the PhD student
+     -+-------------------------------
+     ++Example: Anita the PhD student
+     ++------------------------------
+      +
+     -+Emilia is writing her PhD thesis. She follows the steps from
+     ++Anita is writing her PhD thesis. She follows the steps from
+      +linkgit:gittutorial[7] to set up a Git repository on the Internet so
+      +that she can back up her work.
+      +
+      +To back up her work after making a commit, she runs:
+      +
+      +----
+     -+git push origin main
+     ++$ git push origin main
+      +----
+      +
+      +Sometimes, she creates a branch to make an experimental change she's not
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +She does this by running:
+      +
+      +----
+     -+git switch -c rewrite-chapter-5
+     ++$ git switch -c rewrite-chapter-5
+      +----
+      +
+     -+If she decides that the experimental change should be merged, she merges
+     ++Then she makes an experimental change, like rewriting Chapter 5 and commits it.
+     ++If she decides that the change should be merged, she merges
+      +it into `main` like this:
+      +
+      +----
+     -+git switch main
+     -+git merge rewrite-chapter-5
+     ++$ git switch main
+     ++$ git merge rewrite-chapter-5
+      +----
+      +
+      +Or if she decides the rewrite of chapter 5 was a bad idea, she can
+     -+delete the branch:
+     ++switch back to `main` and delete the branch:
+      +
+      +----
+     -+git branch -D rewrite-chapter-5
+     ++$ git switch main
+     ++$ git branch -D rewrite-chapter-5
+      +----
+      +
+     -+Example: Abdul the open source contributor
+     ++Example: Bruno the open source contributor
+      +------------------------------------------
+      +
+     -+Abdul is contributing to an open source project for the first time.
+     ++Bruno is contributing to an open source project for the first time.
+      +
+      +First, he finds the official Git repository for the project and clones
+      +it, like this:
+      +
+      +----
+     -+git clone https://example.com/project/project
+     ++$ git clone https://example.com/project/project
+      +----
+      +
+      +He doesn't have permission to push changes directly to that
+      +project, so he creates his own copy of the repository at
+     -+https://example.com/abdul/project.
+     ++https://example.com/bruno/project.
+      +
+      +Then he adds that repository as a second remote, like this:
+      +
+      +----
+     -+git remote add abdul https://example.com/abdul/project
+     ++$ git remote add bruno https://example.com/bruno/project
+      +----
+      +
+      +Before starting work on his branch, he makes sure that he has the
+      +latest version of the `main` branch using `git pull`, like this:
+      +
+      +----
+     -+git switch main
+     -+git pull
+     ++$ git switch main
+     ++$ git pull
+      +----
+      +
+      +Then he creates a new branch, like this:
+      +
+      +----
+     -+git switch -c new-feature
+     ++$ git switch -c new-feature
+      +----
+      +
+      +Once he's done with his branch, he pushes the branch to his Git
+      +repository, like this:
+      +
+      +----
+     -+git push abdul new-feature
+     ++$ git push bruno new-feature
+      +----
+      +
+      +Then he goes through the open source project's process to submit his
+      +branch for review.
+      +
+     -+Example: Betsy the corporate employee
+     -+-------------------------------------
+     ++Example: Carmen the corporate employee
+     ++--------------------------------------
+      +
+      +On her first day of work, she clones the company's Git repository by
+      +running:
+      +
+      +----
+     -+git clone git@example.com:company/project
+     ++$ git clone git@example.com:company/project
+      +----
+      +
+      +She has access to push new branches to this repository with her work,
+     @@ Documentation/gittutorial-branches.adoc (new)
+      +latest version of the `main` branch using `git pull`, like this:
+      +
+      +----
+     -+git switch main
+     -+git pull
+     ++$ git switch main
+     ++$ git pull
+      +----
+      +
+      +Then she creates a new branch, like this:
+      +
+      +----
+     -+git switch -c new-feature
+     ++$ git switch -c new-feature
+      +----
+      +
+      +Once she's done with her branch, she pushes the branch to the company
+      +Git repository, like this:
+      +
+      +----
+     -+git push origin new-feature
+     ++$ git push origin new-feature
+      +----
+      +
+      +Then she goes through her company's process for getting branches merged.
+      +
+     -+Example: Daniela and Carmen with the cat shelter website
+     ++Example: Daniela and Emilia with the cat shelter website
+      +--------------------------------------------------------
+      +
+     -+Daniela and Carmen create a Git repository for their cat shelter website.
+     ++Daniela and Emilia create a Git repository for their cat shelter website.
+      +
+      +They both clone it onto their computer like this:
+      +
+      +----
+     -+git clone git@example.com:cat-shelter/kitties.git
+     ++$ git clone git@example.com:cat-shelter/kitties.git
+      +----
+      +
+      +They decide to work together by just pushing all of their commits to the
+      +`main` branch, without using any other branches.
+      +
+     -+When Daniela wants to do work, she first runs `git pull` on the main
+     ++When Emilia wants to do work, she first runs `git pull` on the main
+      +branch, like this:
+      +
+      +----
+     -+git pull
+     ++$ git pull
+      +----
+      +
+     -+She also checks in with Carmen to make sure they won't be working on
+     -+the same files. Then she works on her changes. Then, before pushing her
+     -+changes, she runs this command to merge any changes Carmen has made.
+     ++She also checks in with Daniela to make sure they won't be working on
+     ++the same files. Then she works on her changes and commits them.
+     ++Then, before pushing her changes, she runs this command to merge any
+     ++changes Daniela has made.
+      +
+      +----
+     -+git pull --no-rebase
+     ++$ git pull --no-rebase
+      +----
+      +
+      +We don't have space for a full introduction to linkgit:git-pull[1]
+     -+here, but `git pull` fetches Carmen's changes and merges them into the
+     ++here, but `git pull` fetches Daniela's changes and merges them into the
+      +current branch. The `--no-rebase` flag tells Git to use `git merge` to
+      +do the merge.
+      +
+      +Then she pushes her changes with:
+      +
+      +----
+     -+git push
+     ++$ git push
+      +----
+      +
+     ++[[tip]]
+      +Tip: put your current branch in your shell prompt
+      +-------------------------------------------------
+      +
 
-This is not quite right way to set up test_when_finished.  You are
-assuming that at least up to your "git commit" things will not break and
-you will successfully create one commit, hence HEAD^ is the right place
-to go back to.  If you fail before managing to create the commit, then
-the following tests will run in a repository with one commit before
-where this test started.
 
-Perhaps remember where you are and prepare to go back exactly to that
-commit, i.e.,
+ Documentation/Makefile                  |   1 +
+ Documentation/gittutorial-branches.adoc | 964 ++++++++++++++++++++++++
+ Documentation/meson.build               |   1 +
+ command-list.txt                        |   1 +
+ 4 files changed, 967 insertions(+)
+ create mode 100644 Documentation/gittutorial-branches.adoc
 
-	go_back_to=$(git rev-parse --verify HEAD) &&
-	test_when_finished "git reset --hard $go_back_to) &&
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index b574ca2044..4f3fc9a97f 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -65,6 +65,7 @@ MAN7_TXT += gitremote-helpers.adoc
+ MAN7_TXT += gitrevisions.adoc
+ MAN7_TXT += gitsubmodules.adoc
+ MAN7_TXT += gittutorial-2.adoc
++MAN7_TXT += gittutorial-branches.adoc
+ MAN7_TXT += gittutorial.adoc
+ MAN7_TXT += gitworkflows.adoc
+ 
+diff --git a/Documentation/gittutorial-branches.adoc b/Documentation/gittutorial-branches.adoc
+new file mode 100644
+index 0000000000..579975ba4d
+--- /dev/null
++++ b/Documentation/gittutorial-branches.adoc
+@@ -0,0 +1,964 @@
++gittutorial-branches(7)
++=======================
++
++NAME
++----
++gittutorial-branches - How to use branches
++
++DESCRIPTION
++-----------
++
++This is part of a 2-part series on Git for beginners:
++
++- Part 1 (linkgit:gittutorial[7]): Introduction to commits and `git push`
++- Part 2 (you are here): Introduction to branches
++
++This tutorial contains:
++
++1. <<intro,An introduction to branches>>
++2. <<tutorial,A step-by-step practical tutorial>>
++3. <<workflows,Example collaboration workflows>>
++4. <<tip,Tips, GUI tools, and where to learn more>>
++
++
++Meet some example Git users
++---------------------------
++
++To start, we're going to introduce a few imaginary people who are learning
++to use Git branches for the first time. This is because people use
++branches differently in different situations, so it might be useful for
++you to think about which is closest to your situation.
++
++1. Anita is using Git on her own to write her PhD thesis with LaTeX.
++2. Bruno is making his first contribution to Python, a large open
++   source project.
++3. Carmen is a Go developer for a social media website which has 100
++   other software developers. All of her changes need to be reviewed by a
++   coworker before they're released.
++4. Daniela and Emilia are building a website for their local cat
++   shelter. They're the only two people on the project.
++
++[[intro]]
++Why use branches?
++-----------------
++
++Branches are a tool to organize your work and collaborate. For example,
++if you're working on a website, you might be working on multiple
++unrelated changes at the same time, like:
++
++* an update to the FAQ
++* making the website faster
++* adding a translation into Bengali
++
++With branches, you can work on each change at its own pace without them
++interfering with each other.
++
++The "tree" mental model of branches
++-----------------------------------
++
++A useful mental model for Git branches is a tree where the "trunk"
++is the main branch, and there are other branches branching "off" of
++main.
++
++Each of the branches branching off has only a few commits of their own.
++When you finish working on a branch, you can merge its commits back into
++the main branch. This is where the metaphor starts to break down: in a
++real tree, branches that branch off from the trunk don't merge back in
++later, but in Git they can.
++
++For example, here's an ASCII art diagram of a Git repository. The most
++recent commits are at the top. The main branch is in the center and the
++others come off the sides.
++
++---------
++  \ |
++   \| /
++    |/
++    |
++    |
++    |
++---------
++
++This mental model doesn't represent every single thing you can do with
++Git branches, but you can go a long way with it.
++
++[NOTE]
++When the Git documentation uses the word "tree", it means something more
++like "directory tree of files", which is a completely different concept.
++If you want some jargon: the computer science term for "a tree where the
++branches can come back together" is "directed acyclic graph".
++
++The main branch
++---------------
++
++When you run `git init`, Git creates a default branch. Usually this is
++called `main` or `master`. Git mostly doesn't treat this branch in any
++special way (you could even delete that branch if you really want!),
++but for most people using Git this branch does have a special meaning.
++For example:
++
++* In an open source project like Python, the "main" branch might have
++  changes that the maintainers have approved to be in a future release
++* A website's "main" branch might be deployed to the server every time
++  it's updated
++* A PhD student's "main" branch might have the latest version of their
++  PhD thesis
++
++When joining a new project, it's important to understand how that
++project uses its main branch.
++
++In this tutorial we'll call this branch `main`.
++
++Some important facts about Git commits
++--------------------------------------
++
++Before explaining how branches work, here are some important facts about
++Git commits.
++
++**Every commit has an ID**. The ID is made of the numbers 0-9 and letters
++a-f, for example `501584c1bf29ab88e815c09ffb99c887da81241c`. You can
++find the current commit's ID by running `git log`: it's on the first
++line. In this tutorial you're going to see a lot of "short" commit IDs
++(for example `501584c`), which are the first 7 characters or so of the
++commit ID.
++
++**Commits never change**. If you have a commit ID, then the files,
++author, and history of that commit with that ID will never change in any
++way. This is one of Git's biggest strengths, but it also has drawbacks.
++It guarantees that if you have a commit's ID then you can always get
++back its exact contents, but it also makes it difficult to change old
++commits. For example, if someone changes their email address and wants
++to update it on their old commits, it can be very disruptive. You'd need
++to replace all the old commits with new commits with a different email
++address.
++
++**Every commit has a parent** (except the first commit).
++This means that if you have a commit ID, you can follow the pointers to
++the commit's parent(s) to get the whole history of the project up to that
++point.
++
++See linkgit:gitdatamodel[7] for more about how Git represents commits.
++
++
++How Git represents branches
++---------------------------
++
++Even though the way people think about the "main" branch and other
++branches is quite different (one is the "trunk", the others "branch off"
++of main), Git represents all branches in the same way.
++
++Git stores branches as a name and a commit ID. They're stored in the
++`.git` directory in your local Git repository, for example:
++
++----
++main: 37634fd
++add-fruits: cd4bb48
++----
++
++At first, this might seem totally unrelated to the "tree" mental model
++we talked about before. But because every commit has a reference to its
++parent, Git can follow the links from a commit to its parent to get the
++structure (the "tree") of the whole repository.
++
++For example, in this ASCII diagram, the commit below a commit is its
++parent:
++
++-------
++  * cd4bb48 (latest 'add-fruits' commit) Add fruit list
++ /
++* 37634fd (latest 'main' commit) Another update to README.md
++* e9c0b17 Update README.md
++* 2e018a5 Initial commit
++-------
++
++Branches are very cheap to create: when you create a new branch, Git
++just needs to store one commit ID. But this also means that we don't
++always know the history of how a branch evolved over time. For example
++`Another update to README.md` could originally have been created on a
++different branch that was deleted after merging it into `main`.
++
++[[tutorial]]
++Step-by-step tutorial
++---------------------
++
++Now let's talk about how to actually use branches.
++
++This tutorial is from the point of view of someone who's using branches
++to organize their own work, because it's simpler. There are some
++examples at the end of how this might change if you're using Git to
++collaborate, like one of the example users at the beginning.
++
++Step 1: Create an empty repository with two commits
++---------------------------------------------------
++
++Before we start working with branches, we need a Git repository to work
++with.
++
++First, create an empty directory, move into it, and start a new Git repository:
++
++----
++$ mkdir myproject
++$ cd myproject
++$ git init
++----
++
++Then open your text editor and create a file called `README.md`, with
++these contents:
++
++-----
++This is an example file.
++It has two lines.
++-----
++
++Then add the file and commit it, by running these commands:
++
++----
++$ git add README.md
++$ git commit -m "Initial commit"
++----
++
++Next, edit README.md and make another commit, like this:
++
++----
++$ git commit -am "Update README.md"
++----
++
++`git commit -am` commits the current version of all files that Git is
++tracking.
++
++Now we're set up and we can start creating branches.
++
++Step 2: Find your current branch
++--------------------------------
++
++In Git, you normally have a "current branch". You can see your current
++branch by running `git status`. It's usually on the first line, like this:
++
++----
++$ git status
++
++On branch main
++----
++
++Step 3: Look at the commits on your current branch
++--------------------------------------------------
++
++Run this command to get a list of all commits on your current
++branch.
++
++
++----
++$ git log --oneline
++----
++
++The output should look something like this, though with
++different commit IDs:
++
++----
++e9c0b17 (HEAD -> main) Update README.md
++2e018a5 Initial commit
++----
++
++In this tutorial, we're going to use `git log --oneline` over and over
++again to visualize our branch. If you have a Git GUI installed, its
++visualization might be easier to read.
++See <<guis,GUI tools>> for a list of GUIs.
++
++[[read_oneline]]
++How to read `git log --oneline`'s output
++----------------------------------------
++
++In `git log`'s output, the latest commit is at the top.
++Here's an example of what the output might look like:
++
++----
++e9c0b17 (HEAD -> main) Update README.md
++2e018a5 Initial commit
++----
++
++Each line has 3 parts:
++
++1. The commit ID (like `e9c0b17`)
++2. Optional extra info (like `(HEAD -> main)`). Git calls this a "decoration".
++3. The commit message (like `Update README.md`)
++
++We're only going to talk about 2 kinds of decorations here:
++`(main)` and `(HEAD -> main)`. Here's how to read each of them:
++
++- `e9c0b17 (main)` means that `e9c0b17` is the latest commit
++  on the `main` branch.
++- `e9c0b17 (HEAD -> main)` means that `e9c0b17` is the latest commit on
++  the `main` branch, AND that `main` is the current branch.
++
++[NOTE]
++`HEAD` is a special file in the `.git` directory where Git stores the
++name of your current branch. So you can read `HEAD -> main` as "current
++branch is main".
++
++Step 4: Make another commit
++---------------------------
++
++When you make a new commit, Git updates your current branch to point
++at that commit. Right now, `git log --oneline` looks like this, because
++we've made 2 commits:
++
++----
++e9c0b17 (HEAD -> main) Update README.md
++2e018a5 Initial commit
++----
++
++Now make a third commit, by editing `README.md` again, and running this command:
++
++----
++$ git commit -am "Another update to README.md"
++----
++
++Now run `git log --oneline` again to see how our branch looks now.
++
++----
++37634fd (HEAD -> main) Another update to README.md
++e9c0b17 Update README.md
++2e018a5 Initial commit
++----
++
++This shows us that the latest commit on the `main` branch is now
++"Another update to README.md".
++
++Step 5: Create a branch
++-----------------------
++
++Here's how to create a new branch and make a commit on it. We're going
++to create a branch called `add-fruits` that adds a list of fruits.
++
++First, create the branch and switch to it, by running this command:
++
++----
++$ git switch -c add-fruits
++----
++
++The `-c` flag stands for "create". You should see the output:
++
++----
++Switched to a new branch 'add-fruits'
++----
++
++Now, in your text editor, create a new file called `fruits.txt` with
++some fruits in it. Then add it and commit, like this:
++
++----
++$ git add fruits.txt
++$ git commit -m "Add fruit list"
++----
++
++Now edit `fruits.txt` again and commit it again, so that we can see what
++it looks like when you make 2 commits on a branch.
++
++----
++$ git add fruits.txt
++$ git commit -m "Update fruit list"
++----
++
++Run `git log --oneline` again to get a list of all the commits on the
++current branch.
++
++----
++36d0cbf (HEAD -> add-fruits) Update fruit list
++cd4bb48 Add fruit list
++37634fd (main) Another update to README.md
++e9c0b17 Update README.md
++2e018a5 Initial commit
++----
++
++See <<read_oneline,How to read `git log --oneline`'s output>> above for
++an explanation of how to interpret this output.
++
++To summarize, this tells us that there have been 2 commits
++("Add fruit list" and "Update fruit list") since our `add-fruits` branch
++split off from the `main` branch.
++
++3 ways to think about a branch
++------------------------------
++
++In Git there are always 3 ways to think about a branch, and different
++commands will treat a branch in different ways. For example, let's look
++at the 3 ways to think about this `add-fruits` branch.
++
++-----
++* 36d0cbf (HEAD -> add-fruits) Update fruit list
++* cd4bb48 Add fruit list
++* 37634fd (main) Another update to README.md
++* e9c0b17 Update README.md
++* 2e018a5 Initial commit
++-----
++
++We can think of the `add-fruits` branch as:
++
++1. Just the 2 commits that "branched off" of the `main` branch
++   (`cd4bb48` and `36d0cbf`).
++2. The full history of the branch since the beginning of the repository,
++   including all the commits on `main` (5 commits in this case).
++   For example, `git log add-fruits` will show you the full history.
++3. Just the latest commit on that branch (`36d0cbf`).
++   For example, `git show add-fruits` will show you the latest commit.
++
++Step 6: Get a list of all branches
++----------------------------------
++
++You can get a list of all branches by running this command:
++
++----
++$ git branch
++----
++
++The output should look like this:
++
++----
++* add-fruits
++  main
++----
++
++This says that you have 2 branches (`main` and `add-fruits`). The one
++with the `*` next to it is the current branch.
++
++Step 7: Switch branches
++-----------------------
++
++Change your current branch to `main` by running:
++
++----
++$ git switch main
++----
++
++This command:
++
++1. Updates the files in your working directory to match the `main` branch.
++   For example, if `main` is at the commit `aa33bb`, then `git switch main`
++   will give you the files from the commit `aa33bb`.
++2. Sets your current branch to `main`, so that any new commits
++   you make will be on that branch
++
++
++Run `ls`. You should see that the new `fruits.txt` file you created is gone:
++
++-----
++$ git switch main
++$ ls
++README.md
++-----
++
++Of course, `fruits.txt` is not actually gone: it's stored in the `.git`
++directory and we can switch back to the `add-fruits` branch to get it
++back.
++
++Run `git switch add-fruits` to switch back to the `add-fruits`
++branch, and run `ls` again. The `fruits.txt` file should reappear:
++
++-----
++$ git switch add-fruits
++$ ls
++fruits.txt
++README.md
++-----
++
++[NOTE]
++Older Git tutorials used `git checkout` to switch branches.
++`git switch` is a newer command which is easier to learn because it
++only has one job.
++
++Step 8: Create another branch
++-----------------------------
++
++Now create a second branch called `add-animals`. We're creating two
++branches to show what the process of working on multiple changes at the
++same time looks like.
++
++You'll usually want to start all new branches from the `main` branch
++to keep your branches independent from each other. Right now
++we're on the `add-fruits` branch, so we need to switch back to the
++`main` branch:
++
++-----
++$ git switch main
++-----
++
++Then create a branch called `add-animals`.
++
++-----
++$ git switch -c add-animals
++-----
++
++Now create a file named `animals.txt` with some animal names in it, add
++it, and commit it.
++
++-----
++$ git add animals.txt
++$ git commit -m "Add animal list"
++-----
++
++Step 9: Look at our branches and commits
++----------------------------------------
++
++In Git it's extremely useful to be able to visualize your branches.
++There are many GUIs built by the community which can do this, but in
++this tutorial we're going to use the command line because it's the only
++interface we can guarantee everyone reading the tutorial has.
++
++Run this command to show all branches and commits:
++
++-----
++$ git log --oneline --graph --all
++-----
++
++The output should look like this:
++
++-----
++* 1ceb7b4 (HEAD -> add-animals) Add animal list
++| * 36d0cbf (add-fruits) Update fruit list
++| * cd4bb48 Add fruit list
++|/
++* 37634fd (main) Another update to README.md
++* e9c0b17 Update README.md
++* 2e018a5 Initial commit
++-----
++
++How to read `git log --graph`'s output
++--------------------------------------
++
++`git log --oneline --graph --all` prints out a text-based visualization
++of all your Git branches and their history.
++
++This isn't the best visualization, but to use branches well you need
++some way to get this information, and it's the only visualization the
++command line Git interface has. Almost every Git GUI will have another
++visualization you can use.
++
++Here's some example output:
++
++-----
++* 1ceb7b4 (HEAD -> add-animals) Add animal list
++| * 36d0cbf (add-fruits) Update fruit list
++| * cd4bb48 Add fruit list
++|/
++* 37634fd (main) Another update to README.md
++* e9c0b17 Update README.md
++* 2e018a5 Initial commit
++-----
++
++How to read this:
++
++* Every `*` is a commit
++* As usual with `git log`, the latest commit is at the top
++* The `|` and `/` are ASCII art lines that Git uses to show
++  what the parents of a commit are. Here they're showing that `37634fd`
++  is the parent of both `cd4bb48` and `1ceb7b4`.
++
++See <<read_oneline,How to read `git log --oneline`'s output>> above for
++how to read the decorations like `(main)` or `(HEAD -> add-animals)`.
++
++Overall this shows that the `add-animals` branch has added 1 commit and
++`add-fruits` has added 2 commits since they split off from the `main`
++branch.
++
++Step 10: Merge the `add-animals` branch into `main`
++---------------------------------------------------
++
++Now imagine that you're done with your work on the `add-animals` branch, and
++you're ready to bring that work onto your `main` branch.
++
++Right now `add-animals` is one commit "ahead" of the `main` branch.
++To bring all the work in `add-animals` into `main`, we can just move
++`main` forward to match the `add-animals` branch.
++
++This is the simplest possible situation when trying to bring the work
++from one branch into another branch, and Git calls it a **fast-forward
++merge**.
++
++Merge `add-animals` into the main branch by running these two commands:
++
++----
++$ git switch main
++$ git merge add-animals
++----
++
++The output should look like this:
++
++----
++Updating 37634fd..1ceb7b4
++Fast-forward
++ animals.txt | 1 +
++ 1 file changed, 1 insertion(+)
++ create mode 100644 animals.txt
++----
++
++The `Fast-forward` output means that this was a fast-forward merge.
++
++Step 11: Delete the `add-animals` branch
++----------------------------------------
++
++Now that you've integrated the `add-animals` branch into `main`, you can
++safely delete it. Delete the branch by running this command. `-d` stands
++for "delete":
++
++-----
++$ git branch -d add-animals
++-----
++
++Running this is safe: it'll refuse to delete any branch that hasn't
++already been integrated into the current branch.
++
++It's useful to delete branches after they've been merged because it
++stops them from cluttering up your branch list (from `git branch`).
++
++Step 12: Look at our branches and commits again
++-----------------------------------------------
++
++Now that we've made some changes, run this command to show all branches
++and commits again:
++
++-----
++$ git log --oneline --graph --all
++-----
++
++The output should look like this:
++
++-----
++* 1ceb7b4 (HEAD -> main) Add animal list
++| * 36d0cbf (add-fruits) Update fruit list
++| * cd4bb48 Add fruit list
++|/
++* 37634fd Another update to README.md
++* e9c0b17 Update README.md
++* 2e018a5 Initial commit
++-----
++
++Step 13: Merge the `add-fruits` branch into `main`
++--------------------------------------------------
++
++The output from the last step shows that we still have an `add-fruits`
++branch that's branched off a previous version of the `main` branch.
++
++In this situation where `main` and `add-fruits` both have new commits,
++we say that the two branches have "diverged". Having diverged branches
++is very common when working together on a team, because usually on a
++large team many people are making commits at the same time.
++
++If two branches have diverged, you still use the command `git merge`
++to combine them, but it does something different from our previous merge
++in Step 10.
++
++Now run `git merge` to see what happens:
++
++----
++$ git merge --no-edit add-fruits
++----
++
++The `--no-edit` option tells `git merge` to use the default commit
++message. Normally `git merge` will open a text editor to ask you to
++write a commit message, but we're skipping that step here.
++
++You should see the output:
++
++----
++Merge made by the 'ort' strategy.
++ fruits.txt | 1 +
++ 1 file changed, 1 insertion(+)
++ create mode 100644 fruits.txt
++----
++
++Once the branch is merged, delete it by running:
++
++----
++$ git branch -d add-fruits
++----
++
++To see what `git merge` did, run `git log --oneline --graph` again.
++
++----
++*   576d053 (HEAD -> main) Merge branch 'add-fruits'
++|\
++| * 36d0cbf Update fruit list
++| * cd4bb48 Add fruit list
++* | 1ceb7b4 Add animal list
++|/
++* 37634fd Another update to README.md
++* e9c0b17 Update README.md
++* 2e018a5 Initial commit
++----
++
++Here you can see that it created a new commit `576d053`. This commit
++looks different from the other commits because it has two parents:
++`36d0cbf` ("Update fruit list") and `1ceb7b4` ("Add animal list"). This kind
++of commit with two parents is called a "merge commit".
++
++[NOTE]
++If you merge two branches which both edited the same lines of the
++same files, Git will ask you to decide how to handle it. This is
++called a "merge conflict". See linkgit:gitmergeconflicts[7]
++(`git help mergeconflicts`) for a guide to handling merge conflicts.
++
++[[workflows]]
++Examples of using branches to collaborate
++-----------------------------------------
++
++There are lots of ways to use branches to collaborate with other people.
++We don't have space for a full guide to collaborating with Git here, but
++we'll give a quick introduction to `git pull` and examples of
++how each of our characters from the beginning might use branches.
++
++In these examples we're going to use `git push`, `git pull`, `git
++clone`, and `git remote add`. For a basic introduction to `git push` and
++`git remote add`, see Step 14 of linkgit:gittutorial[7].
++
++Intro to `git pull`
++-------------------
++
++Here's the simplest way to use `git pull`.
++
++When you use `git clone` to clone a repository, it checks out a branch
++by default. The branch it checks out is usually the "main" branch.
++This is the one exception to "Git mostly doesn't treat the main branch
++in any special way". Technically the repository's owner can set the
++default branch to anything, but normally they'll set it to the main
++branch.
++
++-------
++$ git clone https://example.com/example.git
++-------
++
++After cloning a repository, you can run `git pull` while on the main
++branch to update it with the latest version, like this:
++
++-------
++$ git switch main
++$ git pull
++-------
++
++This is all you need to know about `git pull` to understand these
++examples.
++
++Example: Anita the PhD student
++------------------------------
++
++Anita is writing her PhD thesis. She follows the steps from
++linkgit:gittutorial[7] to set up a Git repository on the Internet so
++that she can back up her work.
++
++To back up her work after making a commit, she runs:
++
++----
++$ git push origin main
++----
++
++Sometimes, she creates a branch to make an experimental change she's not
++sure that she's going to keep, like `rewrite-chapter-5`.
++
++She does this by running:
++
++----
++$ git switch -c rewrite-chapter-5
++----
++
++Then she makes an experimental change, like rewriting Chapter 5 and commits it.
++If she decides that the change should be merged, she merges
++it into `main` like this:
++
++----
++$ git switch main
++$ git merge rewrite-chapter-5
++----
++
++Or if she decides the rewrite of chapter 5 was a bad idea, she can
++switch back to `main` and delete the branch:
++
++----
++$ git switch main
++$ git branch -D rewrite-chapter-5
++----
++
++Example: Bruno the open source contributor
++------------------------------------------
++
++Bruno is contributing to an open source project for the first time.
++
++First, he finds the official Git repository for the project and clones
++it, like this:
++
++----
++$ git clone https://example.com/project/project
++----
++
++He doesn't have permission to push changes directly to that
++project, so he creates his own copy of the repository at
++https://example.com/bruno/project.
++
++Then he adds that repository as a second remote, like this:
++
++----
++$ git remote add bruno https://example.com/bruno/project
++----
++
++Before starting work on his branch, he makes sure that he has the
++latest version of the `main` branch using `git pull`, like this:
++
++----
++$ git switch main
++$ git pull
++----
++
++Then he creates a new branch, like this:
++
++----
++$ git switch -c new-feature
++----
++
++Once he's done with his branch, he pushes the branch to his Git
++repository, like this:
++
++----
++$ git push bruno new-feature
++----
++
++Then he goes through the open source project's process to submit his
++branch for review.
++
++Example: Carmen the corporate employee
++--------------------------------------
++
++On her first day of work, she clones the company's Git repository by
++running:
++
++----
++$ git clone git@example.com:company/project
++----
++
++She has access to push new branches to this repository with her work,
++but their system doesn't allow pushing to the `main` branch directly.
++
++Before starting work on her new feature, she makes sure that she has the
++latest version of the `main` branch using `git pull`, like this:
++
++----
++$ git switch main
++$ git pull
++----
++
++Then she creates a new branch, like this:
++
++----
++$ git switch -c new-feature
++----
++
++Once she's done with her branch, she pushes the branch to the company
++Git repository, like this:
++
++----
++$ git push origin new-feature
++----
++
++Then she goes through her company's process for getting branches merged.
++
++Example: Daniela and Emilia with the cat shelter website
++--------------------------------------------------------
++
++Daniela and Emilia create a Git repository for their cat shelter website.
++
++They both clone it onto their computer like this:
++
++----
++$ git clone git@example.com:cat-shelter/kitties.git
++----
++
++They decide to work together by just pushing all of their commits to the
++`main` branch, without using any other branches.
++
++When Emilia wants to do work, she first runs `git pull` on the main
++branch, like this:
++
++----
++$ git pull
++----
++
++She also checks in with Daniela to make sure they won't be working on
++the same files. Then she works on her changes and commits them.
++Then, before pushing her changes, she runs this command to merge any
++changes Daniela has made.
++
++----
++$ git pull --no-rebase
++----
++
++We don't have space for a full introduction to linkgit:git-pull[1]
++here, but `git pull` fetches Daniela's changes and merges them into the
++current branch. The `--no-rebase` flag tells Git to use `git merge` to
++do the merge.
++
++Then she pushes her changes with:
++
++----
++$ git push
++----
++
++[[tip]]
++Tip: put your current branch in your shell prompt
++-------------------------------------------------
++
++Accidentally doing a Git operation on the wrong branch can be really
++annoying to undo. Because of this, it's extremely useful in Git to
++always know what your current branch is.
++
++To help with this, Git comes with a shell script called `git-prompt.sh`
++that has instructions for how to make sure your current Git branch is
++always in your shell prompt. If it's not already on your machine, you can
++find it in the https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh[official Git repository here].
++There are also many shell plugins to do this.
++
++For example, if you're on the `main` branch, this can make your shell
++prompt look like this:
++
++----
++[user@host myproject (main)]$
++----
++
++[[guis]]
++GUI tools
++---------
++
++Here are a few open source GUI tools. All of them work on Linux, Mac,
++and Windows unless otherwise mentioned:
++
++- `gitk` and `git gui` both come with Git. `git gui` focuses on making
++  commits and `gitk` visualizes the project's history.
++  See linkgit:gitk[1] and linkgit:git-gui[1] for more info, and
++  https://git-scm.com/install/ for install instructions.
++- TortoiseGit (https://tortoisegit.org/) for Windows
++- GitUp (https://gitup.co/) for Mac
++
++Interactive terminal UIs:
++
++- LazyGit (https://github.com/jesseduffield/lazygit)
++- tig (https://jonas.github.io/tig/)
++
++Many text editors have Git integrations, for example:
++
++- Magit (https://magit.vc/) for Emacs
++- Fugitive (https://github.com/tpope/vim-fugitive) for Vim
++- Many IDEs (VS Code, Eclipse, JetBrains, etc) have built-in Git
++  integrations. This can be a good option if you're already using one
++  of them.
++
++Where to learn more
++-------------------
++
++- When merging two branches, there can be a conflict if both sides
++  edited the same lines of a file. linkgit:gitmergeconflicts[7]
++  (or `git help mergeconflicts`) is a guide to handling merge conflicts.
++- The UPSTREAM BRANCHES section in linkgit:git-pull[1] explains how to
++  configure where `git push` or `git pull` will push or pull from.
++- Some teams prefer to use linkgit:git-rebase[1] and a fast-forward
++  merge to combine branches instead of using merge commits.
++- linkgit:gitdatamodel[7] explains how Git represents branches and
++  commits.
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/meson.build b/Documentation/meson.build
+index b290557834..23634ebd7e 100644
+--- a/Documentation/meson.build
++++ b/Documentation/meson.build
+@@ -208,6 +208,7 @@ manpages = {
+   'gitrevisions.adoc' : 7,
+   'gitsubmodules.adoc' : 7,
+   'gittutorial-2.adoc' : 7,
++  'gittutorial-branches.adoc' : 7,
+   'gittutorial.adoc' : 7,
+   'gitworkflows.adoc' : 7,
+ }
+diff --git a/command-list.txt b/command-list.txt
+index 56d0d7ed9b..0e3e3fc378 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -245,6 +245,7 @@ gitrepository-layout                    userinterfaces
+ gitrevisions                            userinterfaces
+ gitsubmodules                           guide
+ gittutorial                             guide
++gittutorial-branches                    guide
+ gitweb                                  ancillaryinterrogators
+ gitworkflows                            guide
+ scalar                                  mainporcelain
 
-would be safer?
-
-> +	printf "subject\n\nConflicts:\n\tfile.c\n" |
-> +	git commit --allow-empty --cleanup=verbatim -F - &&
-> +	git log --no-walk --pretty="%(body:trailers=no)" >actual &&
-> +	git log --no-walk --pretty="%b" >expect &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success '%(body:trailers=no) keeps text after trailers' '
-> +	test_when_finished "git reset --hard HEAD^" &&
-> +	printf "subject\n\nbody\n\nA: b\n\nConflicts:\n\tfile.c\n" |
-> +	git commit --allow-empty --cleanup=verbatim -F - &&
-> +	git log --no-walk --pretty="%(body:trailers=no)" >actual &&
-> +	printf "body\n\nConflicts:\n\tfile.c\n\n" >expect &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success '%(body:trailers=no) is empty with only trailers' '
-> +	test_when_finished "git reset --hard HEAD^" &&
-> +	printf "subject\n\nA: b\n" |
-> +	git commit --allow-empty --cleanup=verbatim -F - &&
-> +	git log --no-walk --pretty="%(body:trailers=no)" >actual &&
-> +	echo >expect &&
-> +	test_cmp expect actual
-> +'
-
-It might also be nice to exercise "trailers=no,trailers=yes" and an
-invalid boolean value such as "%(body:trailers=bogus)".
-
-Overall this looks nicely done, except for these minor nits in the
-tests.
-
-Thanks.
+base-commit: 3c60ef1e38ee80337025a1b908327f7879386329
+-- 
+gitgitgadget
