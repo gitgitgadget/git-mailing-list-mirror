@@ -1,101 +1,52 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.179
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795630775;
-	b=rgoA6YdYiPKD15nluBxKqSImbM7bBhty/GhMCt6qcDBRyvZy22K92RSEEPrKB+hs+HsT
-	 0OsBKJYFUTxJU+6Rag4DCb94x/92O9QTw0OMALQfqWGkW0kFNZYPsA8QU+evUj3py7n3T
-	 Q8ktySECu3N6N1lW6hfIZGu/+YSjdcGmcFfq5UIbPxTPFyWL4SkjSoH8UUhn/3GmF9f7F
-	 d0MrwLwR3KTYUVr+VejIeGYQGl3zHvazzhDa+5piAaCClLnRyF73a141unQsbT7Xsi2HA
-	 GRNEOa9bG0qTW3hoQAenlfUbIwcGOX7izIOmXHBVQFjhA32b952ZxLO8Fq8eWEx6ooA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795630775;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=CvpKDk1oIfNh+3Hor/NyOWb2vmmNd4KClskDT53RdoE=;
-	b=dx02HXBUuvdQoC2eGA6KsZCGhu+PI7K0EsBxxe3gKS2ZBEp6h+xBhpZdwInlHLUwOy/i
-	 qOXSk/q/mGFzqEUs4D8Gi4yFfc1o3YNO6pWuQcTOpJuQ2F48BaZPYNPporwZ1BwP8sphf
-	 sv272vRiXmkDYs6TtXphgyqIA1eq/UJUgLdGxEqIiwSJt6ma8rp01zOsCaO5fCcELCSWf
-	 eLBdXcbOPo8SgAx1onkpf5lV3Lk99MTRcXEdsKiPxDh+KZARI/HSYcEKL1jTIV9UoLMXS
-	 b66W+V0yCzBpG2H1Vc6mXXsSJzQX9HEshiLzQHwp1nqwBnLgcBfUJTLUNpJSnaqRzjw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iwpeytUd;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.179
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.61.206.94
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795630814;
+	b=wP3tED5QBy9wne7a/A7eNTfLQ5k9VQwh7irLXX4UkVy/fpFv1fGffrYUo9wOtWWIBMm2
+	 hiCSRdWnau5AgzLKKg1zG13lp6kfDpuKyKUxWMcH6t8Ln2CAYS69uAyb/UF+GEU+Zyd6d
+	 4RZ2rtE1hOI9iyJza5C/S4BKtd+UtosklQBB+wgToNalmSX6W/15sdVEc8zF0yu7MzolA
+	 B0vay6QB7e/rV6GDqsBqnHh2dDhIE6A8aSTZKFRFCKu0DGeT1uyVRYo6AB/hktE4BRvLp
+	 LjF9VNNVyFajI/vMPFZBq6JMYYw4NcD/BlLg/+hdeqxWlmILLM3YHQ2DI7Ga6nLEuJw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795630814;
+	h=DMARC-Filter:Received:DKIM-Signature:From:Date:Subject:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:Message-Id:References:
+	 In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key;
+	bh=5yMFU/fQxnQde5x7SrdXGpaI2qYxgXHF86nTSx3gVmk=;
+	b=gofoKqffxVeTEysllp12TRpa6dslEnQDwu8rOLHFvT2otrSYr14lPrYTqOMUhQEsSkRk
+	 ozZJLwh6JVEjQdC46sKkYL3yVUPD6trAtCU3wW9OCZeSz/RXhP9gxTvBXDY2GCtVLgfXF
+	 nL/GpGxKa5wxjBQ4nAfLuJt8WqCwCOIz6XnObfRni0BGAIwkiUME3C5j/NS7q1Ar8g1GN
+	 Mz793c69WpDc6GXg2n0/EmCE2Ev22NM9wQFhhPxh6w7r8V2kw/zn4b1b+tAJi47SxPrtX
+	 1XHSRBcDs7iNWEsfBkKqzUCO80avpcsjJK4g76BMv2WNKvf1Y+zkEELsLhMXyTUkqSw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gouders.net;
+	spf=pass smtp.mailfrom=gouders.net;
+	dkim=pass header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=dYSpt3wV;
+	arc=none smtp.remote-ip=202.61.206.94
+Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E128606A31E
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 18:19:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0E128606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCAC606A31E
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 18:20:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4DCAC606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gouders.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iwpeytUd
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-8b4fb5d96b3so95115987b3.1
-        for <git@vger.kernel.org>; Wed, 25 Nov 2026 10:19:34 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795630774; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Uaa98EsTJk1zRX8FAqie4zjJkb1TDs/h1+o72djUfkDB0I+Z1rnENPZzn3koB120VP
-         ecrYsp7OWoF8erIzqSXtqB41JdSFQPJSI9EKSM7BoqsmJ91/RsrHYUFciVxWuJU9/saE
-         ANZDvrxnpOI6QpifA56EHtrF/9zCCnFV9BDn4gi4oT6mVI+aL7l3gRyPYeOLmLtMDTa7
-         jkzSNrv8Gn8Ew6LlwEou2aSq4eyx8n/xaChK0Zuwwe2/KKqfaNasK+h2HxaukvKg22yL
-         6++3kgws3dzldYAWu+x20uDEtRrHIcNJ3CfGRf223Yr/Re+XIMmxMLt+kZ3eq0O6pc9g
-         5hNQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=CvpKDk1oIfNh+3Hor/NyOWb2vmmNd4KClskDT53RdoE=;
-        fh=zEQd+5l/OBjEyzF6GIR9zxz6BTrbCyvCTKJbHzWgHEc=;
-        b=gg7xDJl0g3hssx5UA8oFdxcAy8ZvA2ag1UXWETL+krE84G7G3cuAGzvFUHxwlBeuBH
-         tEt32ng1LoC4fJ7EA4hgO5wKskY3rnmTRSS2HmJP5+WT85jO37wb148PRbT16pKFCTQJ
-         5woYPKFR2RpeScsmOVb+Eg5nN3XeDx7t4FBrMQq3ymQseO495EDwVl+WVFe/3MfbeBW4
-         stQx4atSwIWG1fWuptg/qYJP6aYihNCFf7HNBrnIR6OHFX8a8Qi4Rj9HV22Mh91sPLFI
-         8zFIeGY+RIJQTegeTYVnWFEcChXKkemvykL3jerdTeQciix06Qy/0Hg+SPR3kmDsHmrn
-         dvyQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795630774; x=1796235574; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=CvpKDk1oIfNh+3Hor/NyOWb2vmmNd4KClskDT53RdoE=;
-        b=iwpeytUdCY4izxS3ufzAqgYGkG0EzmQDZzvi+RXpZ8C9dd40RXjXOyULwFHcYYjKTS
-         /cLN58YrO18W/PmgLMb0qdiFf2XUyY6mB9GBkXGXYTwAmkjVezAMp9Tv9mQUYfHDoxrW
-         MyJG0LoARaWKpgEDa+ReRsMq/dT8y2SFtlcBbuGCFC1fJWM74MaYpE5Mx+vprvyZ/4/e
-         PXUqtXxG/E8OFRwKks75Ovz6hrEu7k0KAS6aqZu5qsIOjCdnmMkrL+bu93B5KoNY1JlY
-         P92Br7RUxI0jEh5klm5+3OtJWirvSIisuSOANEGSnYx24LsEEAVjP3Q/XX50sKcMlWZo
-         QboA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795630774; x=1796235574;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=CvpKDk1oIfNh+3Hor/NyOWb2vmmNd4KClskDT53RdoE=;
-        b=JlkRdAKVtYUx/iTK90KgSB/k310RRfogQPfONbK/R+/x449wnGgPw7RPxoGtQS71JC
-         jG4h40fSqqI0DHlolDwr7H9rzMdX0x30bCKPbgrifqO+97J4yIMT3tR5HIucsWYHQlvZ
-         Vs27k1FxkXZ3XILlvNTTTX4XdtcVUQx3vLEC0Zha6L2w/GnALbTD3WeD40/22DVJIJFD
-         67ifyhrV+AgAHzxtlVNUj/LoQg/mnc1vvdTFnI2yPo0wV4q3Br7xQROHywLsb5SmrnKJ
-         l6xtW4xR614T/zRIxYGhzEyXM7t3ck1BrGt/lou+DOfmXabr7Pc3nSXCpDIMs85S9T9q
-         9tEw==
-X-Gm-Message-State: APuU4Z+hQTmo4riTRh1V8+BFEqilQcaR3H3Kh+keTAbJY0pbCiUVZ7Zp
-	v1PPljuQ6aRsX1vw+P3w+8CLSSIc7pyVc6M5sYRB+5zNYyLJ5fslwIGkc1aPFVj9nHzpjoBy9OR
-	Qva+1MNg+61dTjjQVLLXIe+gz5mei6C4=
-X-Gm-Gg: AZFdTZcjv1t5pzkCCVowfAmNjiql4eCsnkWzBpE3LEI2dUKLaOi+ianEhgoDDX2mpL/
-	aTrOIoilrrGyLDjDxrTX32outIOvpTdsfh2HYeJ3KD1OwgcSTSHrcfdnalzaWbx3Alfg7h8Qy7o
-	Mj/GCU9UaUsyx2xqC6p0bF/2TTsza8kgZeojQNYn0aOiYc1Cd8FdBmIdge+o30379EjyFuFNWOv
-	PsPO0mZ1Cqx20NZ5Mulo5moCCq1FAWb/kjIOr+txdkb0R8cjTHdp8p3wwuAaDPpvymhlZb9HPJw
-	ZmU6IN0RPGK/MuK2FMnEctyw6n5f/WYHA0HIeb7mUs6VH9LPjFqgSOS/b07VGL2hKd2fXsabb9K
-	/QLzdXo405O4afvJBC3PO/apttURHKNuRhtwrAllQo+MZUdaJYKMDoHbFu6hsXKIVZ4550s+dIQ
-	UEuBsAqQlZne8QViamDLQP6saCAJFIVC1k72PXJ1VxJ3zZVvRtzqx2XJUY6jog9yawghuHgwn44
-	FjPuKdzwSk7qVIWzz5d5c+c/shxYfxth8qzNA==
-X-Received: by 2002:a05:690c:698a:b0:8b5:35a6:7c33 with SMTP id
- 00721157ae682-8b535a68299mr52911817b3.12.1795630773952; Wed, 25 Nov 2026
- 10:19:33 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=dYSpt3wV
+Received: from lena.gouders.net (ip-109-41-50-35.web.vodafone.de [109.41.50.35])
+	(authenticated bits=0)
+	by mx10.gouders.net (8.18.2/8.17.1.9) with ESMTPSA id 6APIJxx42481769
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Wed, 25 Nov 2026 19:20:07 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gouders.net; s=gnet;
+	t=1795630807; bh=5yMFU/fQxnQde5x7SrdXGpaI2qYxgXHF86nTSx3gVmk=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc;
+	b=dYSpt3wVIMWsZeYSquwZ2XxlkJgL0iokQ+CDoilupe3+j2P0GQ6Wb/y4cHudoVwki
+	 Dl+/WtagxTSGX/Jdns4f/M5vep3eSzOzD07dWNbUBQ1wRheuLs8ENr2rEb1LVJKOq1
+	 Z/iyUTSYI2NJRF3I9jbqhTdCaeHdfUN+qxXB58io=
+From: Dirk Gouders <dirk@gouders.net>
+Date: Wed, 25 Nov 2026 19:19:42 +0100
+Subject: [PATCH v6 2/4] utf8: fix comment for utf8_strnwidth()
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -105,56 +56,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261105203344.48513-1-okhuomonajayi54@gmail.com>
- <20261124172146.18330-1-okhuomonajayi54@gmail.com> <20261124172146.18330-3-okhuomonajayi54@gmail.com>
- <xmqqtsl5g28h.fsf@gitster.g> <CAFpMFfDnfJRt1HGx60esEeC-spfBbr4KKzp9ocLFceAMESx1yg@mail.gmail.com>
- <xmqqqzg86brs.fsf@gitster.g>
-In-Reply-To: <xmqqqzg86brs.fsf@gitster.g>
-From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Date: Wed, 25 Nov 2026 19:19:23 +0100
-X-Gm-Features: Aa3M54pjvYmbt9nP0ruSFJkvgR3yznUW-Y17wy42zZ03Scqv1CAhap5ZwisBEb4
-Message-ID: <CAFpMFfD3byGXPMT4BdDX_bvdVa3CKWRbhoMT=yKXVE76EoUJ4w@mail.gmail.com>
-Subject: Re: [PATCH v2 2/5] notes: use the tree's repository when reading notes
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, ps@pks.im, 
-	usmanakinyemi202@gmail.com, siddharthasthana31@gmail.com, 
-	kaartic.sivaraam@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261125-master-v6-2-cb60af83d189@gouders.net>
+References: <20261125-master-v6-0-cb60af83d189@gouders.net>
+In-Reply-To: <20261125-master-v6-0-cb60af83d189@gouders.net>
+To: git@vger.kernel.org
+Cc: "Junio C Hamano <gitster@pobox.com>, Andy Koppe" <andy.koppe@gmail.com>,
+        Dirk Gouders <dirk@gouders.net>, Junio C Hamano <gitster@pobox.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1080; i=dirk@gouders.net;
+ h=from:subject:message-id; bh=rk+ndf/83sOHjvjcIms7f6CHP2pxSeV4xGqJ/l7vlbI=;
+ b=owGbwMvMwMW4JPzVNXNTrzmMp9WSGLLZ1a7qKJxi45t68e5fWWXfXvHsntWbOx/zxl7w/rXVJ
+ fnfBNa+TsYJLAyMXAxVYoosSycV2aWprHhR9k01E2YQKxPIFGmRBgYgYGHgy03MKzXSMdIz1TbU
+ MwQydIwcIHL8DBrpBekO6fmlKalFxXp5qSWOppZG5kbGrmZmRiaOFq4W5mZuZkamZpaOJqbmro4
+ uZsbmxqYmjpbODFycAjDrZpiz/3f33e980OrYwQ0SX57HiXfGHtPJZwv+zV2ScvzPh4eHLedwV/
+ +w65r3827Yqm9vixhmVLB1JK24Xc20v7G6puT1zMKN/X/+12VoC0ZULc5QOa4jtnGV++8PW+Ptm
+ G5la+l5vl6Ss2Uyo9xVpfcCDmr8TrsZV1so3CxrP+vN3iDyxGP1fed5lZtrFdn2KTLHsHyTczbZ
+ +E1MV7HedWpxwgp+U63Z4hwXWWQztffOfuB91Pxia9Pxvf2+Uplf445rNn1NK/+x5ErerqPZ3xc
+ vPDV78+yMiZtfXpGKyi9b0jJbbkWub9irbe939KjfnzY7KezronOvbB1NF3y5V2q40lByr83hPb
+ 4ii8J+Rq19oAYA
+X-Developer-Key: i=dirk@gouders.net; a=openpgp;
+ fpr=943B4FA3CAB8EBC55754E5EA0DA2395F431875F6
 
-On Tue, Nov 25, 2026 at 1:54 AM Junio C Hamano <gitster@pobox.com> wrote:
-> So copy_notes() in [3/5] is the only unsafe conversion we need to
-> rework in the next iteration, I guess?
+The comment for utf8_strnwidth() states it works on a NUL-terminated
+string whereas the string is bounded by len.
+It also states it returns strlen() for cases when the given string
+doesn't look like valid utf8, but it returns its argument len in such
+cases.
 
-Yes, that's right. copy_note() in 3/5 is the only unsafe one. I'll add
-the NULL guard there in v5; the rest of the series stays as it is.
+Fix the comment accordingly.
 
-Okhuomon
+Helped-by: Andy Koppe <andy.koppe@gmail.com>
+Signed-off-by: Dirk Gouders <dirk@gouders.net>
+---
+ utf8.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-On Wed, Nov 25, 2026 at 6:50=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Okhuomon Ajayi <okhuomonajayi54@gmail.com> writes:
->
-> > On Mon, Nov 24, 2026 at 1:34 AM Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> >> But others? note_tree_find() calls note_tree_search() which by itself
-> >> does not touch 't' at all [...] The conversion in this step would caus=
-e
-> >> them to dereference t->repo without checking if t is not NULL or
-> >> t->initialized [...]
-> >
-> > note_tree_find() has a single caller, get_note(). It replaces a NULL 't=
-'
-> > with &default_notes_tree and asserts t->initialized before passing
-> > t->root down, so 't' is already non-NULL and initialized by the time we
-> > read t->repo. note_tree_search() not touching 't' doesn't matter here,
-> > since get_note() has already dereferenced it.
->
-> OK, I missed the guarantees that these limited number of callers give
-> these functions being modified.
->
-> So copy_notes() in [3/5] is the only unsafe conversion we need to
-> rework in the next iteration, I guess?
->
-> Thanks.
+diff --git a/utf8.c b/utf8.c
+index b161a5ee48..92c3bf29d1 100644
+--- a/utf8.c
++++ b/utf8.c
+@@ -217,8 +217,8 @@ int utf8_width(const char **start, size_t *remainder_p)
+ }
+ 
+ /*
+- * Returns the total number of columns required by a null-terminated
+- * string, assuming that the string is utf8.  Returns strlen() instead
++ * Returns the total number of columns required by a string bounded by len,
++ * assuming that the string is utf8.  Returns len instead
+  * if the string does not look like a valid utf8 string.
+  */
+ int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
+
+-- 
+2.55.0
+
