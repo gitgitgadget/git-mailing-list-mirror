@@ -1,125 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.48
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795635612;
-	b=Bmue2JqtrgY/SKLWHXB3y/PDO5lRG8o9pbFJTQmwrl4tuycVgxdKhSgdP6IDsgIfEb5+
-	 dSJEdHmQEcLfpqpmgIHUcLxN05KUel/WB69urZmG2do1CQ8U54MqfC9w/+LQnFGn84PWM
-	 7MDvz6lGwUQ9jX5ntYldGCnLqgFZeGaPijVReEQ/736yI+Zbrp8IY+/3TRJy7tBRqMW3B
-	 sfEM2NGkV+BoZ8pyo/M7evDrDTXIetwG44ZmVtRYUkI4i1q4GS4iPS8QI+EZtMFa3dvjd
-	 CFQhUsqdVxmzFwo5x20O8hyMDVUK+JdgQgoWr7PYQ4edHKavsHhK2aq23qqVFPOxing==
+	t=1795635627;
+	b=u5J1ABnyqHRdRwFbjngqScScZVM5KkdmHH6KFtuxafTQDXG8pnM4dGw6ZC2G9YGZVLbY
+	 fnRxvfHsliZEFfYrXFiBCyrD/rCvyVRVUWhM6gKqngOBb38gAFZLcDaO0WXt8uRcvCgvU
+	 Et4pIgc4/DR12hzf5sZWD9/1MTKDEWy1DLzxgGcB644FzB5fU8oWF+e8Y7jcTajf1m0cz
+	 tQqIxgaCk1o/q0S/gIysQ7hN4ZJ+ERE1dJUBsc0QyC8GT+LII5wTnzTXkeNQllEr4zq+a
+	 zr1e1+Vp1pkHf5hH/1CrwhVLLgfIIHxGQ1cJdFc5g7G/oOY4lIjozicSMMDNImVkwRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795635612;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Jle5psRBAYuHNZSa72Gof5p38fYQHt+IXvvdtTC6mmc=;
-	b=GkxDvtyrJcqGOqPIuS+vqvGmUkT7STugrIZ2VVEOvo5fRSftLOMCNEEztrqFj8Ae6Hai
-	 6rBxbvTeS/MmfqC0RKC1niobuy980Z9rvx/kDdmzNR74JZNLahvC30UZGem9fHgBorFSO
-	 LRgXh499F0vF4fWx9JTSnB7i8XA9DbTAD/dnbpZjYPr9zha1iAxpxwy+y1LcedlaZA9Os
-	 G18XvhmmjBvEmw6lxdMX6QNZNTqp3ywddrCDz1yFbarkgPLASZ34sxo2vj4qv+bR/Y5Fc
-	 XXsGlrgLL/rCHpvUYK6Xrjy2WTe9urSYz7tvelinVg8xZySlmoJvOspCjytu8LzqH3w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795635627;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
+	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
+	 Cc;
+	bh=kKUmX785yPmOX40N56hKJd4KhTUEjEHzqBNyU82YAY0=;
+	b=cwxxUbZDs7PhWeTsTskEtiiLcv05wBs6XDeLapgZXMq1B9GOjkLs8TxGPEnQ3rCPUF9S
+	 2cmyO4p+yTvIrnau/YZGrfm83t335UIJ6EP41R/cE2rBc742MrTW7JtOgBryIXAOVmWtC
+	 BCQLs4dchceLkZ4/l+lNZRGx7R5c1/oHAQc22+yv1LDqk0SKJbNU1qw0ry7Y1XXDblRi5
+	 dMV7Et+naSDhJ4WR4d+BgxY/KZpSmSUlhADCpo4JgnErqQfnnqBEjSvfQSYs7b3Ika6wk
+	 Txbn2n78+d3PdDugdEPrqXqdaNXCRw/+tes5rfzSFzslRHi+LaWCWMT9tCS2llWBdTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=S2Dne8zU;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Rf9YvX5N;
-	arc=none smtp.remote-ip=103.168.172.150
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iB6TmiHi;
+	arc=none smtp.remote-ip=74.125.82.48
+Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77245606A31E
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 19:40:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 77245606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91A6606A333
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 19:40:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D91A6606A333
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=S2Dne8zU;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Rf9YvX5N
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 524ACEC0C8B
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 14:40:11 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Wed, 25 Nov 2026 14:40:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1795635611;
-	 x=1795722011; bh=Jle5psRBAYuHNZSa72Gof5p38fYQHt+IXvvdtTC6mmc=; b=
-	S2Dne8zUouen+upFVRtrbnLkvUXPJuU/d5D4N/lfaVqA/I+IuKELTaCTVrZcRqNn
-	P2BfmDnwKt6JtASciyxIJbv1ympL5jv+FY0wrO1LZzMK3IktBNR7v8x38zzjaWdI
-	/sBFf8qzpombR20jWOTZIrxaV8hIlcIStVVnqrpZNwV/c09zqgIszKlIA6GrVMfa
-	In4kr4vDF+8y60Qgx/XghREfzKSu/VJNsHnaM5pjnA6OOAqrhewAQFBjU2I9rZ9x
-	4V0N0fDOhxhHfgIcUngKGVRcC3D75fNrmK2A8n2bBGsN/7smnC12OHvMhl92cn9r
-	gv7UuicwuUY2Ngm3q8f2RA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795635611; x=
-	1795722011; bh=Jle5psRBAYuHNZSa72Gof5p38fYQHt+IXvvdtTC6mmc=; b=R
-	f9YvX5No0P5Asx5vJ7CQcx/ihJiP7bMVMXX1AuD3KE2glYeKRCU1c617Z+z0f0ET
-	HWrT+mc/ioBAYYxnZ4lVKBWca+5j+qWU1VVFRXnmeBJMZkPz3Zw7xMv8cyq4geBD
-	wL/jxJsTImYcGX4GictodkrPpGmZOdzpgIF7fOQ9kFESGkWmlTfNHW4X5B0U26Oq
-	OvTQl73Y0lLDMrvtUI7Nlh0mCPNy5PDZUH/pKMxSA6IAtFd0PXMuPAQsGfaInie7
-	4Lf0+TJkBLLdQTY4lDPQzh7RTBLL6UPeCWLVnBxc5o3siHitygLMwaHyTuCa5M+a
-	1P25RckIzfJMvFnZ2NsXg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795635611; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:IoDxPhpvDz7jgFz3nJeL1Q9gHQSdR4z7xLAb30FteWtXGPm
-	GJ6awjkUqMtEaxL5l4NWKHOA9h2Ro5k8b9IzWopeVTNsfxuyhGMyWA7VvXphk+3p
-	RBkfxoFvGWwgDAxivWi3+CMvwO20LgnqLIKd+TZIbpjg9qWCy+ckxxT0tC0feOKs
-	P2OsHAPhpHERpr7fqh/vzbis8QK8JuQsxZKsEBauCVEzwLQWAME5kq6c6zJ98I9e
-	ON/gmIFro/ykSRtFxDs88TQ0SgEpAtiu3ESDrUdikEyGUz4SoKjt1us0Ew1blJuW
-	AnK2NW7UKP/ORuxicR4DQ4w38UyGKG76YSkJ4lQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=13;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to,
-	user-agent;
-Message-Instance: m=1; h=sha256:wLrKiiDw2UPtEQb71ky/FtiDsG02kgwG24txhAUVFkM=:HjKtHxt7cc0zcZo5nSrR0QgqJAOuptkZfGSQMok+tn8=;
-X-ME-Sender: <xms:mzkHa3de89NBLvmG6zcteJJ6G7MIt_VUOlDtgaE5Yxyu7kSTRCRdvw>
-    <xme:mzkHa0EJX0iksZLP7FX1wga2KjKhAarqyXUKwRpMm6mQt_nmonXEHieCBDdqHnc31
-    NPJJAuKSsehxWnXXL-Pq5WaimIzsCxEU8qYjQK8MvRy_RiDs6s8Gw>
-X-ME-Received: <xmr:mzkHa43pxbvbnRPRdV-aoLbxLVZz442ol1ietmR7yQy_xc4tpcPxWxhREl3gLbmgNFVGm3Ai4KqHEidNEeH6cn6RuHJ6N6cOVdj4Deo>
-X-ME-Proxy-Cause: dmFkZTFqxBEkuw71mFVmvByYVMImg7uLlhFa3+nF3p3dpRZtDKfQS5LuV9iIeHrXFlB83D
-    mCBvss1arfaNjEOck25npg04Sx9PXCuwFwE97SXz1sAaujbS/+48bSiIG4GKPR9SPGZDIY
-    ujc252wlrrrBJ3fYw2u/ouMi14QzSAppnA3MJXEoW7fFaHkv5FrSZqf8Vq3VOg7CWiHmQL
-    mHbbu8fAzVJjn2oe+Vrpy5II5+s3k7AWbVKIPrTkqaGUVjvk+KFoxoGSNaH2pEqdKkc5IG
-    dpthU1nb5bZKmyNJPQwe5XSgIIpaGZWQH34/XeNQCflFY9Ixw5SFfevUwp3FxtrRrFAVeJ
-    gckdlpuL5sFBe3bHpuKxu0tEm23GnBWSy3+iCH2MqXhxaZs4c3zwXBILho/Sk7hOeVTwLn
-    qPRR3gFozCbBs8a1Y3AabacT4OV7H/NmsnYd2rnpK1EK2CYa+wkaa4SPDZbUAvGNHXBYI/
-    MmdOYObgwff470lEpgn+rxGtlMJRb+fm8zVxT1g/uJAYeuPgDOlR932FBdib+Tr8TmFDk5
-    XY4Ln9lM2sc2aEvp4aMdLDMItS8qFf4rU2MOff6ueAnThtR7/09kHdB1q0PHoOXa7I2nGz
-    vOsSjp2Fralsb0rdg59jmNpaZpOnX9N756xKCspRVNgMZRKBe/v2xRUdjFwg
-X-ME-Proxy: <xmx:mzkHa0lJttwVwUruXsC5vgJ9JM44c0IJTaJcn93xV5EgiaOD_XD6YQ>
-    <xmx:mzkHaw-H1tHXPpYpe4TuxPPeq4zpNjwroe76tJ4tpSQS53Imv0JGtA>
-    <xmx:mzkHaxpVf53b9zBtv7-4D0TcQ-FXWpfAaGR4CQsngefEZUSLjo_u4w>
-    <xmx:mzkHaxng3csmWw1S4PYte7KzSIjXSQxlivhyiJOlA0p5R-4k7Hi2JQ>
-    <xmx:mzkHazBE5-1DBv9jLbJ_x_ctsVvayJRDuowdwxAUFJTJpw4AqRYdx47a>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Nov 2026 14:40:10 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Dirk Gouders <dirk@gouders.net>
-Cc: git@vger.kernel.org,
-  Junio C Hamano <gitster@pobox.com>,
-  Andy Koppe <andy.koppe@gmail.com>
-Subject: Re: [PATCH v6 0/4] utf8: bounds-related fixes and a doc fix
-In-Reply-To: <20261125-master-v6-0-cb60af83d189@gouders.net> (Dirk Gouders's
-	message of "Wed, 25 Nov 2026 19:19:40 +0100")
-References: <20261122-master-v5-0-313bd1bb3c45@gouders.net>
-	<20261125-master-v6-0-cb60af83d189@gouders.net>
-Date: Wed, 25 Nov 2026 11:40:09 -0800
-Message-ID: <xmqqjym01yzq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iB6TmiHi
+Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-1b3ada81853so7216637c88.0
+        for <git@vger.kernel.org>; Wed, 25 Nov 2026 11:40:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795635626; x=1796240426; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=kKUmX785yPmOX40N56hKJd4KhTUEjEHzqBNyU82YAY0=;
+        b=iB6TmiHijPnwbrWJPM228zz5qRoz/bhht6BYeFpXRxblA3DqC2sUsNPWFvMBw7wDdy
+         kdaF1fYW/qmBKP2AS5BOEOb+CHR0tzMnb0N08f3oN+STxu0WZlvC5py3HNyO/tXTjFjK
+         gX4OCOY9ZpeqUNDEzdG9E8bJn4ow08rhU7VuGHevJ1bh3HvsGFx/x6KStBFGwiZq1Mwp
+         lMuB2fi66A/iLr8ZrybBgU+RpRdxr9vTRVy8WdoB7iCim8Bv8fcDcPSCQUsCYNmlc3KS
+         OCUQioOFec7hX3UwDvgS8E3gCnLGg1oxh+QvxU16yGCok36ReLncYlHccyrlQjughg21
+         tQLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795635626; x=1796240426;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=kKUmX785yPmOX40N56hKJd4KhTUEjEHzqBNyU82YAY0=;
+        b=h+cKNUldgDxe3T+bkKkwtsrHLNzAMnwmPXl+yCcWDT2eG+brFJ0KDQkqONwDrqVtMK
+         dvZGLv8L9X3XGogCzy6fGDKoX53IbGm7ByYnSRzcWnfXduv1E1PptNIRWfphwABbf1rR
+         fzM/Wt8eCf+6zGk0vI8zEogbnybEE13q+LMVYvJ57xTXNTT1NronSAfBbQQ96dbYSGA0
+         NALBd2xHjXitzfKDmHfFCzm1xPA6DX6y8QHtNctyidpr7HighW2j1Hglo7XBDDrjTCW3
+         0i4NmCo2QDwbW5dzlaxS5bxW6EhgA9x+BqYlm4nwLJQQ04M6ERb+tYlz2Tk7QYITcFDT
+         L2BA==
+X-Gm-Message-State: APuU4Z/SJFlbyPKSJ6Tagk+TXL+HQf9/X40Srdw4jZAQhm3oWZ/gPKYt
+	EUs+B85qJsmuMxQHVsl8AnPtVvwc0f0YpbYRWZdxTLWn2BIqMa8C85smdDpoyA==
+X-Gm-Gg: AZFdTZdc/iDoNGQ9oYfw7n8uV96iDJhKnV77TSorXRfdIvFOXegS2K6AihWPhLUcQHg
+	hP5gIbV+xO3tJvpaNvVoLZzqcex8RSVr2OXFXRd1wPtBoba8ZyDUJtcJ6W67Mz67Ip6zlFT8n/a
+	vgait3XaFojkKCmthfI/z6ShaQqXOlaZVUaiToUysFbhB0oowpG34abMCAlHdARREXoloHf2A5L
+	8dptA9X5GehRmTv+WgvbclUsX25EM5PPXluYfTMXCjS3tWW4d5LLLdI0Pp7G0lvidc3xbP9XNzj
+	K/RnBRv2Tnnw3skjhJhvWqV8dYhn22yTfbB8xii58S62eeOIlnTAdukfxUNkPljc06fnEQtFkJz
+	VQLsEIggXRgA636TIytw3doJZ7ZXgxg2cKc2j/9Bni7fCRhxfx5K9h8gUZU6kdCv4q31n9Ff9gF
+	GLI6ehnumXQWb87aOdcxOORAelcDnJCp8ANb+W9wYck4H+Wcli8ijfE2BEaLFSzPrUPAWIEZEhc
+	FAQLdL2RHSD6I3xVE1kYQLlvIOsDgQITfGsfoFt/1nH8ndRWIH7Emscojbesk1kqw9msLp9v3Ht
+	i+fA4rRAUrOgODqjw1TsEXQPr8zoTg1CStADqRwNxPIVAck8qRUo9Kw=
+X-Received: by 2002:a05:701b:4586:10b0:1a3:9936:d11e with SMTP id a92af1059eb24-1b558384bf2mr17606576c88.41.1795635626005;
+        Wed, 25 Nov 2026 11:40:26 -0800 (PST)
+Received: from [127.0.0.1] ([57.154.167.210])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b56ef9fd16sm33572907c88.4.2026.11.25.11.40.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Nov 2026 11:40:25 -0800 (PST)
+Message-Id: <pull.2333.git.1795635624820.gitgitgadget@gmail.com>
+From: "Alessio Attilio via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 25 Nov 2026 19:40:24 +0000
+Subject: [PATCH] pack-objects: handle missing promisor objects
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -129,36 +93,74 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Alessio Attilio <attilio.alessio@protonmail.com>,
+    Alessio Attilio <attilio.alessio@protonmail.com>
 
-Dirk Gouders <dirk@gouders.net> writes:
+From: Alessio Attilio <attilio.alessio@protonmail.com>
 
->        • Don't use the _counted variant in strbuf_add_wrapped_text() where
->          a NUL terminator is the string's boundary.
->          Reword the commit message, accordingly.
+Objects missing from a partial clone are expected to be absent.
+When checking whether an object is in a promisor pack, do not BUG()
+if its object info cannot be read. Such an object cannot be included
+in the pack, so skip it.
 
-;-)
+Signed-off-by: Alessio Attilio <attilio.alessio@protonmail.com>
+---
+    pack-objects: handle missing promisor objects
 
->     -@@ utf8.c: void strbuf_add_wrapped_text(struct strbuf *buf,
->     - {
->     - 	int indent, w, assume_utf8 = 1;
->     - 	const char *bol, *space, *start = text;
->     -+	const char *end = text + strlen(text);
->     - 	size_t orig_len = buf->len;
->     - 
->     - 	if (width <= 0) {
->     -@@ utf8.c: void strbuf_add_wrapped_text(struct strbuf *buf,
->     - 		char c;
->     - 		size_t skip;
->     - 
->     --		while ((skip = display_mode_esc_sequence_len(text)))
->     -+		while ((skip = display_mode_esc_sequence_len_counted(text,
->     -+								end - text)))
->     - 			text += skip;
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2333%2Fkairosci%2Fattilio%2Fpack-objects-missing-promisor-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2333/kairosci/attilio/pack-objects-missing-promisor-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2333
 
-This update is really nice.  We do not need to measure strlen(text) and
-instead let the display_mode_esc_sequence_len() take care of it cheaply
-by passing SIZE_MAX.
+ builtin/pack-objects.c   |  2 +-
+ t/t0410-partial-clone.sh | 20 ++++++++++++++++++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
-All looks good.  Will replace.  Thanks.
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 65c2ad9a86..5228d7f90d 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -5092,7 +5092,7 @@ static int is_not_in_promisor_pack_obj(struct object *obj, void *data UNUSED)
+ 	};
+ 
+ 	if (odb_read_object_info_extended(the_repository->objects, &obj->oid, &info, 0))
+-		BUG("should_include_obj should only be called on existing objects");
++		return 0;
+ 	return source_info.source->type != ODB_SOURCE_PACKED || !source_info.u.packed.pack->pack_promisor;
+ }
+ 
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index 788e9a1631..a858aa0a85 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -32,6 +32,26 @@ promise_and_delete () {
+ 	delete_object repo "$HASH"
+ }
+ 
++test_expect_success 'fetch --unshallow with tree filter when remote has advanced' '
++	rm -rf server server.bare client &&
++	test_create_repo server &&
++	test_commit -C server c1 &&
++	test_commit -C server c2 &&
++	test_commit -C server c3 &&
++	test_commit -C server c4 &&
++	git clone --bare server server.bare &&
++	git -C server.bare config uploadpack.allowfilter true &&
++	git -C server.bare config uploadpack.allowanysha1inwant true &&
++	git init client &&
++	git -C client remote add origin "file://$(pwd)/server.bare" &&
++	tip=$(git -C server rev-parse HEAD~1) &&
++	git -C client fetch --no-tags --depth=1 origin "+$tip:refs/remotes/origin/master" &&
++	git -C client checkout -b master refs/remotes/origin/master &&
++	git -C client fetch --no-tags --filter=tree:0 --unshallow origin \
++		+refs/heads/master:refs/remotes/origin/master &&
++	rm -rf server server.bare client
++'
++
+ test_expect_success 'extensions.partialclone without filter' '
+ 	test_create_repo server &&
+ 	git clone --filter="blob:none" "file://$(pwd)/server" client &&
+
+base-commit: 1630431f326e15fcde608827b5ff38422528eb59
+-- 
+gitgitgadget
