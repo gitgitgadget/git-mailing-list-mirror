@@ -1,91 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.182
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795571094;
-	b=02IO8fTJBMaH0EPqKHffx4/EzGvNMxRwunxR/X3bq2OQKTmioqVr1sieiZ2j4lqV+AGh
-	 oooiNWze6ZByjH6RJvPJ6LN2mTxQ6LT6OB3djBNVIvEazHAejSm3zMnsOSpXdMF9JzpMk
-	 lfqy8otd4aalrc9U/51BWBu88fzo6H0Onpbe1RzHAMugJiGdApj03kIrEoTv3DD2c1Nbl
-	 tkuLCx5Y3SwjSmi/YZPPGz1ZStlyREYnNw0Nmi79qFiA3lsWSJ8d3rq5H1olyDzlUQHOl
-	 39TgVXDgM+VMUCPHgQ34of3NlFUdrg3EYt++OQECSSEP45bjjhOG24KuLtniatn2D1w==
+	t=1795571095;
+	b=zMSMmksD7UfG+VHdoZI1btZTzINEAYaKtlSop1+BcBLUgJvEtTdvNHPm0sodjdr3+dUQ
+	 urp1+wmSIhzrUtEppRBy99sHw1MHowm4DYLXCZuCHyRdmeZ+7wm2UTcQbkRQCD8TQh98Z
+	 whYUb5QPWGoo9tc/wkxvwZi6Do9knnbaUDF4I4MIbIhhgtpODWhQMiU5v5X1aiGc3oAZH
+	 g3MmjFjc+TfkmwFNuK5QZwlGV5rRV1FjwSk1+ZtWSc5k/AqUXIDLo1H5ZarWhWpu5GDgK
+	 XmYXddHQL4UnYvq+84hzO5Z5961jLao6iwFJoU+YuFYw9Kgv3Zi0wJJXzYJCpsSRsNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795571094;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795571095;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=/1k4GY+ISFlN6y2mzAcBTRTM0d0Jb9N6TJPEmCCMIhY=;
-	b=1rNmpAgcwLHQ8fC5/eiXnnR8OLjr/1hzMc5EMvyh1W70CE5g6XOTfSMhUorx3nkixd5r
-	 7dX8/6cwz1yrF4HB/EOlpbAfPgmEPowuqQjM8tvnNsJenZYYaF6XGxW8jP9apzEoUdwzG
-	 bb3/Qr0Gxt3unjHw+DYcnL069iUDA1tAIk65l2wqRUfvkBORcMaIqZrSPw2QsTD1CSOpH
-	 VxAInAaivoFNpAztHF8bxNXTrXfyqFuNc4jY5oNOseCbalelqNoYQMWEQ5fFlKAoQ335/
-	 nEIA0Lpj0/0DKt6YHeMW79Dx4OzsOfB9U5eEZj7XKHOZgBYY3eHaSLMUKHf7L1OWL0Q==
+	bh=BQT9EAhzlGcbyRyp/6ZK4rYLbcN5ng2SS8unOq3VXaM=;
+	b=W7b+XaDU2J3Y49HM8jigoHdIPUdzeFWbkTSYz8R0m7HOEjGrjSCrp/KdBEon3siUl2yH
+	 guB9HZx72QLtnhfA79iFqueaZBAVyLAtoeBrmaO1LZzWXObrKz40yeA73NajmFw7ERR/P
+	 uRy/mMb+jxj9EjMUouYMGojWBIZ1BZV9v47iCp5cF0ykH8r7r8mI7o8iXPbhtelauyFVy
+	 AmpIs/C4OmLnZXsPFB5CLQLnZRRZv/WchnfybWQ/BHCXAjlgkdlXTAG72XFIzXmI6Vgaw
+	 v/e4QumO+xKaOvGncIuREkmbqfuHLajU5leGQYfH1zUx/g+ByCA/eZXT/XCnz99UpnQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="C65DkRO/";
-	arc=none smtp.remote-ip=209.85.216.54
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KUaBkDzI;
+	arc=none smtp.remote-ip=209.85.215.182
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8CD606A327
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 01:44:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3A8CD606A327
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58DFB606A31E
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 01:44:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 58DFB606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=C65DkRO/
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-3b4cd193b50so910442a91.1
-        for <git@vger.kernel.org>; Tue, 24 Nov 2026 17:44:54 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KUaBkDzI
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-cc751eddf25so3394408a12.3
+        for <git@vger.kernel.org>; Tue, 24 Nov 2026 17:44:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795571093; x=1796175893; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795571094; x=1796175894; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=/1k4GY+ISFlN6y2mzAcBTRTM0d0Jb9N6TJPEmCCMIhY=;
-        b=C65DkRO/rT89I3iEy4XbXDK1UpXTZNS6bDKgsDyLlUTqN17xC2zS9zSB9p2Sc6adVG
-         T6hgs7piFKwVi43sXIg7obj6GyVhcq7BPc93Mutcb2g7azf/6AAzcGM9QAjAk+Hhn0Aw
-         QqgmxshjF6jCC5vciwhN0nUDxOA93eBXop9K4X4LRx0Ob21dYAgefQBu2Lx2v2fLlu5d
-         i0UQVTmxIYwZkt6momAHXGmT5StaGljGEibD2KXl/n+SSIt5xH0gOywUv6NBnwro4e9d
-         IYKrIGh8UdLEBqZZXt/gSrUDZU+aDxLxrpNrx6vHw2cE1uDQdNFUT+usbYSpfkI/CLRU
-         PTTA==
+        bh=BQT9EAhzlGcbyRyp/6ZK4rYLbcN5ng2SS8unOq3VXaM=;
+        b=KUaBkDzIdD/uQaMDaslouEOhVrYrXUQZlShvS9/R9qgA3T84Wbs08W/sxU/RoTRBr1
+         UCqITJjaAS/jXmVt1zXZZx0wCZ3J+2ZIhO119nfzJ3mB7wiFJbYoL/Pau6IgFksgQvOm
+         W0gDAO+Juvyn1LIaq9uWQCpMjGd7rKqwQg8upIXQ8UayyLlepPLJFOVCyt8nWQ8pmO4k
+         poIx0+7O1YiY61fV5xRJpYjd/Io+oYjxxodaeDl1dOHibbCARflo+0WzISg9LexMJKIN
+         w/934Tss9XxorxA5GUwh60pG5O3KECpDbWS1lfpX+tQGSfLG7yQZFSl+xNqHgASEQWnD
+         7low==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795571093; x=1796175893;
+        d=1e100.net; s=20260707; t=1795571094; x=1796175894;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=/1k4GY+ISFlN6y2mzAcBTRTM0d0Jb9N6TJPEmCCMIhY=;
-        b=xsJ/0szHSa9K6dtAOTurLbPMgDUAAwYz1tHpPier5XBAWWLFbCq+4DfSLaaWiG6Vsm
-         xPiTGcJy4PkYLn70rFcNVnE25XiH9VnJJgB5npVZOaPFm06XKO9nNtLQAZNPyFHS1A3O
-         x8zskbXWHT6t5GC3z/W1uVU7WzuC7mr5W5T/Qo/nma7z8qpaVgDzXA24Wl/mcKTmaX8Y
-         V7iO1fYg/KQ0cdQORxbGNBjXwSxmU+i4C+rB3jgOSV+XEAVqbZZxkWlng6MxhdZvWrv1
-         qTyMXZK/3lwBdDBoTVckfMU6j/KxqiR0YcNcjNvU/Pk2GEiVDVD5vfmTc4F/WAtuf2M+
-         gfIQ==
-X-Gm-Message-State: APuU4Z8hGfVCbwOPmyCj1RhOZDjbW0ZvW2kgTJ5YIILq2ymUttUEH6LI
-	G/13w9fkTQchFU0rpOGlio27m45duLXHW+weqT6yBiWmdga06L2I23KBBIOIJw==
-X-Gm-Gg: AZFdTZduUbAF39jyko3bpdAnxN6nQPKC73AC4RGvEcQ/Zbmpde/ieQ3n/AjLkoZCvJb
-	VHgvJ1TfoxLjcwXO6tbGMGozVEVaInetisqNb/1bZjSW0GEzAa7/uc7kl6N2isRmBQ5ZSNoN8le
-	NSmv4FIEVlja4iAsHmXquAT0MiLpI1ZCDwOJPj8NlWE82d2KMDwk9vQaVr05MqqXj72NCtZEOwt
-	eEsj9bytKgD1KzT1A4hRbaDssS21anP/BTjQ+I5izQ357oYGN2jBHwtYiX4QO0SJginXqAWrVAK
-	ttmpTkDarxr/Tzrho+/ijPpvLxf7zIXjOKpVH3ZRkK+lG0s3fj0Uy6Nj/NZJqPeFTAXEXE3VUqM
-	ASUuH7K0mKL3qy+Omnh17RZ2Mv++UnvXWr86Lz2RpZ+4bk44ZmOW9P8vKw337x8Ug4/XEDwK8BF
-	/KPIKPKaL4PAIhaIpwe6VJIb0p8NshtJ5vq4yhjtjJq6RYBufMlpZdeUfz7FG2P3zniHMNdNQMW
-	S7jT9mcBqpbRXV64vymCHEORweW0J9J03lLDDUufPCVZCnEh2x205cNjf0dBLoEmkeCbNl+kXE4
-	MwusR4N9RB9Kmzw7GT9AHjeNNaA6dA==
-X-Received: by 2002:a17:90b:3d92:b0:3b3:b621:4026 with SMTP id 98e67ed59e1d1-3b41c55a4aemr15545356a91.0.1795571093405;
-        Tue, 24 Nov 2026 17:44:53 -0800 (PST)
+        bh=BQT9EAhzlGcbyRyp/6ZK4rYLbcN5ng2SS8unOq3VXaM=;
+        b=1kG/6pSKLJ+tTP45pX+mzEoxmOnyALekiY0o3NQIR5npNDZiNJSqFjYREuOdj4Mh24
+         7wCQB3xedcrYaAoJ95moF/3QTtwuJPqEwBHT5DUojGFtwZmNJkUSuN67qQa1tzKa2N5G
+         AZM9j4ON4Yq3r2qOIOGL5uMCDAe49zB+18Q7GVFrbt7DmHkI3C04mx2SU2qyaoPPytgG
+         PepvK/Da2txMeMeiSDsvHr1Ns29lE46v2Oq3bZJVoCdN63T4kztYxJ1F3UAZJtJjRLzA
+         f3wmAmllV7qz0hFdZkbaK2xHfJFnCJWK9FR7pW5blT63JVwGHUESxtSUYJDqUBKYZf1G
+         gMpQ==
+X-Gm-Message-State: APuU4Z96rhdFYH7qRi50IeIeX49wk+gOOSLGjtwSSx+te2LoHT3ESaw9
+	TSGPLBefnFTtjyvYZQ1F4qPM64LThaRYt3dY5MQSs/HBxq+QZ3CMmuB27miV/A==
+X-Gm-Gg: AZFdTZegnh1G1v0iTfltvfVLG9kK1bjj9lddgmwMJooKn4ljwOLVCdT3500KjW6hmhO
+	o0KAA6rCAk5Bh81YdS7G/Mqm9xxmpBJrIyILNZjVAFfJ7UMoFw3V+PsbLSXCGuVEN2Xb/Zml+Mj
+	K5Z4iqq0sJ3PKU5kFfuUf6KxR1v52jIs9cWmZl6pQ4ADdREOlmTSc7v3tGnXLElQt4Pz74s/yTX
+	uvBlYOWf4KF8X1yY4Qmqdf6HPJvN5rVNNv1jU2nPaI3nOt1rtx5KAvgPV8arjIIbWX3R2QhLrw7
+	a/VGUd6WMFFnAqlv2GeV+WyYOrE5bokYOzdDSgFjg/kUmjWnkXHBe7SGv8j+6MHIO26KZVQQ7ff
+	BWOJImz9rDAMlC5TCkl8LdQctwWwszFhbJIYVf0kWdAzu4bnF8RNy6OLlSBKasTxYfktTO/XZx1
+	SPYgJGzNsZjHu86moFNO4gx7Ag/7Q3A4SqzahCkR8w7VmremDngU7bYOlB/TeTBR0HcFuQj6WAq
+	2Vtzis446YhpuZ6L/V7lPZV79Uxdttl4uHGavnzfSOW+oEGdm7p7RMzcQGh1rbeqM1hVeH6tldD
+	ra/+BYH/uB8j+EDmZRT/FF1xAXp3h9bkHWZxyh0K1ByNvzOsNpOi
+X-Received: by 2002:a05:6300:8095:b0:3de:8ee8:8323 with SMTP id adf61e73a8af0-4014c946a9emr14766793637.29.1795571094474;
+        Tue, 24 Nov 2026 17:44:54 -0800 (PST)
 Received: from [127.0.0.1] ([4.242.29.42])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b44b7d36bcsm10485779a91.3.2026.11.24.17.44.52
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8c87344058bsm7891308b3a.41.2026.11.24.17.44.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2026 17:44:52 -0800 (PST)
-Message-Id: <4157ce33a1d6c392575cc27fee7c6bd3126e97c6.1795571091.git.gitgitgadget@gmail.com>
+        Tue, 24 Nov 2026 17:44:54 -0800 (PST)
+Message-Id: <0f1f0356b46e59cb588b046540034e09dfa7fe7d.1795571091.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2314.v2.git.1795571091.gitgitgadget@gmail.com>
 References: <pull.2314.git.1794607911.gitgitgadget@gmail.com>
 	<pull.2314.v2.git.1795571091.gitgitgadget@gmail.com>
 From: "Adithya Chakilam via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 25 Nov 2026 01:44:50 +0000
-Subject: [PATCH v2 1/2] repack: add --filter-to-loose to write filtered-out
- objects as loose objects
+Date: Wed, 25 Nov 2026 01:44:51 +0000
+Subject: [PATCH v2 2/2] repack: also copy loose objects excluded by
+ --filter-to-loose
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -106,415 +106,305 @@ Cc: Martin Fick <mfick@nvidia.com>,
 
 From: Adithya Chakilam <achakilam@nvidia.com>
 
-Some external object stores (like key-value) manage and retrieve git
-objects individually. Although repack's --filter-to option can separate
-objects from the main object store, it writes them into packs. Using
-those objects individually then requires an additional unpacking step.
+--filter-to-loose only writes objects that were in an existing pack,
+because the filtered pack is built with --stdin-packs. Loose objects
+that the filter excludes stay behind in the source repository, so the
+destination does not get the complete set of filtered-out objects.
 
-Add --filter-to-loose=<dir> to write filtered-out objects directly as
-loose objects into <dir>, treating it as an object directory. Stream
-the filtered pack into unpack-objects instead of writing an intermediate
-pack file to disk.
-
-The filtered pack is built with --stdin-packs, so this initially handles
-only objects already stored in packs. Loose objects in the source
-repository are left in place.
+Copy such loose objects to the destination as well. An object already
+present in the destination is not rewritten. With -d, the source copies
+are removed once everything is written.
 
 Signed-off-by: Adithya Chakilam <achakilam@nvidia.com>
 ---
- Documentation/git-repack.adoc |  11 ++-
- builtin/repack.c              |  25 ++++-
- repack-filtered.c             |  44 ++++++++-
- repack.h                      |   1 +
- t/t7700-repack.sh             | 172 ++++++++++++++++++++++++++++++++++
- 5 files changed, 246 insertions(+), 7 deletions(-)
+ Documentation/git-repack.adoc |   4 ++
+ builtin/repack.c              |  11 ++++
+ repack-filtered.c             | 108 ++++++++++++++++++++++++++++++++++
+ repack.h                      |  13 ++++
+ t/t7700-repack.sh             |  59 +++++++++++++++++++
+ 5 files changed, 195 insertions(+)
 
 diff --git a/Documentation/git-repack.adoc b/Documentation/git-repack.adoc
-index a1f9e64f66..bcd7c1fe54 100644
+index bcd7c1fe54..1cba380177 100644
 --- a/Documentation/git-repack.adoc
 +++ b/Documentation/git-repack.adoc
-@@ -12,7 +12,7 @@ SYNOPSIS
- 'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]
- 	[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]
- 	[--write-midx[=<mode>]] [--name-hash-version=<n>] [--path-walk]
--	[--filter=<filter-spec>] [--drop-filtered [--dry-run]]
-+	[--filter=<filter-spec> [--filter-to-loose=<directory>]] [--drop-filtered [--dry-run]]
+@@ -192,6 +192,10 @@ depth is 4095.
+ 	not rewritten. All objects are written before any existing
+ 	pack is removed.
  
- DESCRIPTION
- -----------
-@@ -183,6 +183,15 @@ depth is 4095.
- 	`objects` and `objects/info/alternates` sections of
- 	linkgit:gitrepository-layout[5].
- 
-+--filter-to-loose=<directory>::
-+	Like `--filter-to`, but treat `<directory>` as an object
-+	directory and write the filtered out objects there as loose
-+	objects instead of as a pack. The directory must already
-+	exist. Cannot be combined with `--filter-to` or
-+	`--max-pack-size`. Objects already present in `<directory>` are
-+	not rewritten. All objects are written before any existing
-+	pack is removed.
++	Loose objects in this repository that the filter excludes are
++	copied to `<directory>` as well, and with `-d` the source copies are
++	removed once everything has been written.
 +
  --drop-filtered::
  	Delete the local objects that match the `--filter` specification
  	instead of keeping them in a separate packfile, reclaiming the
 diff --git a/builtin/repack.c b/builtin/repack.c
-index 21835453c6..dc2b4a3ce2 100644
+index dc2b4a3ce2..46a50d7c7d 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -1,6 +1,7 @@
- #define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "builtin.h"
-+#include "abspath.h"
- #include "config.h"
- #include "environment.h"
- #include "parse-options.h"
-@@ -41,7 +42,7 @@ static const char *const git_repack_usage[] = {
- 	N_("git repack [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]\n"
- 	   "[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]\n"
- 	   "[--write-midx[=<mode>]] [--name-hash-version=<n>] [--path-walk]\n"
--	   "[--filter=<filter-spec>] [--drop-filtered [--dry-run]]"),
-+	   "[--filter=<filter-spec> [--filter-to-loose=<directory>]] [--drop-filtered [--dry-run]]"),
- 	NULL
- };
- 
-@@ -182,6 +183,7 @@ int cmd_repack(int argc,
- 	const char *cruft_expiration = NULL;
+@@ -184,6 +184,7 @@ int cmd_repack(int argc,
  	const char *expire_to = NULL;
  	const char *filter_to = NULL;
-+	const char *filter_to_loose = NULL;
+ 	const char *filter_to_loose = NULL;
++	struct oidset moved_loose = OIDSET_INIT;
  	const char *opt_window = NULL;
  	const char *opt_window_memory = NULL;
  	const char *opt_depth = NULL;
-@@ -257,6 +259,8 @@ int cmd_repack(int argc,
- 			   N_("pack prefix to store a pack containing pruned objects")),
- 		OPT_STRING(0, "filter-to", &filter_to, N_("dir"),
- 			   N_("pack prefix to store a pack containing filtered out objects")),
-+		OPT_FILENAME(0, "filter-to-loose", &filter_to_loose,
-+			   N_("object directory to write filtered out objects into as loose objects")),
- 		OPT_BOOL(0, "drop-filtered", &drop_filtered,
- 				N_("delete filtered out objects (requires --filter)")),
- 		OPT_BOOL(0, "dry-run", &dry_run,
-@@ -282,8 +286,19 @@ int cmd_repack(int argc,
- 	po_args.depth = xstrdup_or_null(opt_depth);
- 	po_args.threads = xstrdup_or_null(opt_threads);
- 
--	die_for_incompatible_opt2(drop_filtered, "--drop-filtered",
--		!!filter_to, "--filter-to");
-+	die_for_incompatible_opt3(drop_filtered, "--drop-filtered",
-+			!!filter_to, "--filter-to",
-+			!!filter_to_loose, "--filter-to-loose");
-+	die_for_incompatible_opt2(!!filter_to, "--filter-to",
-+			!!filter_to_loose, "--filter-to-loose");
-+	die_for_incompatible_opt2(!!filter_to_loose, "--filter-to-loose",
-+			!!po_args.max_pack_size, "--max-pack-size");
+@@ -725,6 +726,14 @@ int cmd_repack(int argc,
+ 		ret = write_filtered_pack(&opts, &existing, &names);
+ 		if (ret)
+ 			goto cleanup;
 +
-+	if (filter_to_loose) {
-+		if (!is_directory(filter_to_loose))
-+			die(_("'%s' is not a directory"), filter_to_loose);
-+		filter_to = filter_to_loose;
-+	}
++		if (filter_to_loose) {
++			ret = move_loose_filtered_objects(repo,
++					&po_args.filter_options, filter_to,
++					&moved_loose);
++			if (ret)
++				goto cleanup;
++		}
+ 	}
  
- 	if (dry_run && !drop_filtered)
- 		die(_("--dry-run only takes effect with --drop-filtered"));
-@@ -553,7 +568,8 @@ int cmd_repack(int argc,
- 		strvec_pushf(&cmd.args, "--filter=%s",
- 			     expand_list_objects_filter_spec(&po_args.filter_options));
- 	else if (filter_to)
--		die(_("option '%s' can only be used along with '%s'"), "--filter-to", "--filter");
-+		die(_("option '%s' can only be used along with '%s'"),
-+		    filter_to_loose ? "--filter-to-loose" : "--filter-to", "--filter");
+ 	string_list_sort(&names);
+@@ -781,6 +790,7 @@ int cmd_repack(int argc,
+ 		if (show_progress)
+ 			opts |= PRUNE_PACKED_VERBOSE;
+ 		prune_packed_objects(repo, opts);
++		remove_moved_loose_objects(repo, &moved_loose);
  
- 	if (geometry.split_factor)
- 		cmd.in = -1;
-@@ -698,6 +714,7 @@ int cmd_repack(int argc,
- 		struct write_pack_opts opts = {
- 			.po_args = &po_args,
- 			.destination = filter_to,
-+			.loose = !!filter_to_loose,
- 			.packdir = packdir,
- 			.packtmp = packtmp,
- 		};
+ 		if (!keep_unreachable &&
+ 		    (!(pack_everything & LOOSEN_UNREACHABLE) ||
+@@ -805,6 +815,7 @@ cleanup:
+ 	string_list_clear(&keep_pack_list, 0);
+ 	string_list_clear(&names, 1);
+ 	oidset_clear(&drop_oids);
++	oidset_clear(&moved_loose);
+ 	existing_packs_release(&existing);
+ 	pack_geometry_release(&geometry);
+ 	pack_objects_args_release(&po_args);
 diff --git a/repack-filtered.c b/repack-filtered.c
-index 869b9fc6e3..b33274b5b8 100644
+index b33274b5b8..180c28a758 100644
 --- a/repack-filtered.c
 +++ b/repack-filtered.c
-@@ -9,19 +9,40 @@
+@@ -9,6 +9,11 @@
  #include "list-objects-filter.h"
  #include "odb.h"
  #include "promisor-remote.h"
-+#include "sigchain.h"
-+
-+static void start_unpack_objects(struct child_process *unpack,
-+				 const char *objdir)
-+{
-+	strvec_push(&unpack->args, "unpack-objects");
-+	strvec_push(&unpack->args, "-q");
-+	strvec_pushf(&unpack->env, "GIT_OBJECT_DIRECTORY=%s", objdir);
-+	strvec_push(&unpack->env, "GIT_ALTERNATE_OBJECT_DIRECTORIES");
-+	unpack->git_cmd = 1;
-+	unpack->in = -1;
-+	if (start_command(unpack))
-+		die(_("could not start unpack-objects for '%s'"), objdir);
-+}
++#include "copy.h"
++#include "object-file.h"
++#include "odb/source-files.h"
++#include "oidset.h"
++#include "path.h"
+ #include "sigchain.h"
  
- int write_filtered_pack(const struct write_pack_opts *opts,
- 			struct existing_packs *existing,
- 			struct string_list *names)
- {
- 	struct child_process cmd = CHILD_PROCESS_INIT;
-+	struct child_process unpack = CHILD_PROCESS_INIT;
- 	struct string_list_item *item;
- 	FILE *in;
- 	int ret;
- 	const char *caret;
- 	const char *pack_prefix = write_pack_opts_pack_prefix(opts);
- 
--	prepare_pack_objects(&cmd, opts->po_args, opts->destination);
-+	if (opts->loose) {
-+		sigchain_push(SIGPIPE, SIG_IGN);
-+		start_unpack_objects(&unpack, opts->destination);
-+		prepare_pack_objects(&cmd, opts->po_args, "--stdout");
-+	} else {
-+		prepare_pack_objects(&cmd, opts->po_args, opts->destination);
-+	}
- 
- 	strvec_push(&cmd.args, "--stdin-packs");
- 
-@@ -29,10 +50,18 @@ int write_filtered_pack(const struct write_pack_opts *opts,
- 		strvec_pushf(&cmd.args, "--keep-pack=%s", item->string);
- 
- 	cmd.in = -1;
-+	if (opts->loose)
-+		cmd.out = unpack.in;
- 
- 	ret = start_command(&cmd);
--	if (ret)
-+	if (ret) {
-+		if (opts->loose) {
-+			/* start_command() already closed cmd.out, i.e. unpack.in */
-+			finish_command(&unpack);
-+			sigchain_pop(SIGPIPE);
-+		}
- 		return ret;
-+	}
- 
- 	/*
- 	 * Here 'names' contains only the pack(s) that were just
-@@ -52,6 +81,17 @@ int write_filtered_pack(const struct write_pack_opts *opts,
- 		fprintf(in, "%s%s.pack\n", caret, item->string);
- 	fclose(in);
- 
-+	if (opts->loose) {
-+		ret = finish_command(&cmd);
-+		if (finish_command(&unpack))
-+			ret = -1;
-+		sigchain_pop(SIGPIPE);
-+		if (ret)
-+			ret = error(_("failed to write filtered out objects to '%s'"),
-+				    opts->destination);
-+		return ret;
-+	}
-+
- 	return finish_pack_objects_cmd(existing->repo->hash_algo, opts, &cmd,
- 				       names);
+ static void start_unpack_objects(struct child_process *unpack,
+@@ -171,3 +176,106 @@ cleanup:
+ 	oidset_clear(&all_promisor_blobs);
+ 	return ret;
  }
++
++static int collect_loose_oid(const struct object_id *oid,
++			     const char *path UNUSED, void *cb_data)
++{
++	oidset_insert(cb_data, oid);
++	return 0;
++}
++
++static void dest_loose_path(struct strbuf *buf, const char *objdir,
++			    const struct object_id *oid)
++{
++	const char *hex = oid_to_hex(oid);
++
++	strbuf_reset(buf);
++	strbuf_addf(buf, "%s/%.2s/%s", objdir, hex, hex + 2);
++}
++
++int move_loose_filtered_objects(struct repository *repo,
++				const struct list_objects_filter_options *filter,
++				const char *dest_objdir,
++				struct oidset *moved)
++{
++	struct odb_source_files *files =
++		odb_source_files_downcast(repo->objects->source);
++	struct oidset loose = OIDSET_INIT;
++	struct oidset omitted = OIDSET_INIT;
++	struct oidset_iter iter;
++	const struct object_id *oid;
++	struct strbuf src = STRBUF_INIT;
++	struct strbuf dst = STRBUF_INIT;
++	struct strbuf tmp = STRBUF_INIT;
++	int ret = 0;
++
++	if (filter->choice != LOFC_BLOB_LIMIT)
++		return 0;
++
++	ret = for_each_loose_file_in_source(&files->dirs->loose->base,
++					    collect_loose_oid, NULL, NULL,
++					    &loose);
++	if (ret)
++		goto out;
++	ret = list_objects_filter__filter_oidset(repo, filter, &loose,
++						 &omitted);
++	if (ret)
++		goto out;
++
++	oidset_iter_init(&omitted, &iter);
++	while ((oid = oidset_iter_next(&iter))) {
++		odb_loose_path(files->dirs->loose, &src, oid);
++		dest_loose_path(&dst, dest_objdir, oid);
++
++		/*
++		 * Only the destination decides whether the copy is needed;
++		 * the object being present in the source says nothing.
++		 */
++		if (!access(dst.buf, F_OK)) {
++			oidset_insert(moved, oid);
++			continue;
++		}
++
++		if (safe_create_leading_directories(repo, dst.buf) < 0) {
++			ret = error_errno(_("unable to create leading directories of '%s'"),
++					  dst.buf);
++			goto out;
++		}
++		strbuf_reset(&tmp);
++		strbuf_addf(&tmp, "%s.tmp-%"PRIuMAX, dst.buf,
++			    (uintmax_t)getpid());
++		if (copy_file(repo, tmp.buf, src.buf, 0444) ||
++		    finalize_object_file(repo, tmp.buf, dst.buf)) {
++			unlink(tmp.buf);
++			ret = error(_("unable to copy loose object '%s' to '%s'"),
++				    src.buf, dst.buf);
++			goto out;
++		}
++		oidset_insert(moved, oid);
++	}
++
++out:
++	oidset_clear(&loose);
++	oidset_clear(&omitted);
++	strbuf_release(&src);
++	strbuf_release(&dst);
++	strbuf_release(&tmp);
++	return ret;
++}
++
++void remove_moved_loose_objects(struct repository *repo,
++				const struct oidset *moved)
++{
++	struct odb_source_files *files =
++		odb_source_files_downcast(repo->objects->source);
++	struct strbuf path = STRBUF_INIT;
++	struct oidset_iter iter;
++	const struct object_id *oid;
++
++	oidset_iter_init(moved, &iter);
++	while ((oid = oidset_iter_next(&iter))) {
++		odb_loose_path(files->dirs->loose, &path, oid);
++		unlink(path.buf);
++	}
++	strbuf_release(&path);
++}
 diff --git a/repack.h b/repack.h
-index 61e554e4ed..d5528745ec 100644
+index d5528745ec..18a0dc6314 100644
 --- a/repack.h
 +++ b/repack.h
-@@ -41,6 +41,7 @@ void repack_remove_redundant_pack(struct repository *repo, const char *dir_name,
- struct write_pack_opts {
- 	struct pack_objects_args *po_args;
- 	const char *destination;
-+	bool loose;
- 	const char *packdir;
- 	const char *packtmp;
- };
+@@ -168,6 +168,19 @@ int write_filtered_pack(const struct write_pack_opts *opts,
+ 			struct existing_packs *existing,
+ 			struct string_list *names);
+ 
++/*
++ * Copy loose objects that the filter excludes into the loose-object store
++ * at `dest_objdir`, recording them in `moved`.
++ */
++int move_loose_filtered_objects(struct repository *repo,
++				const struct list_objects_filter_options *filter,
++				const char *dest_objdir,
++				struct oidset *moved);
++
++/* Delete the source copies of objects copied by move_loose_filtered_objects. */
++void remove_moved_loose_objects(struct repository *repo,
++				const struct oidset *moved);
++
+ int enumerate_promisor_blobs(struct repository *repo,
+ 			     const struct list_objects_filter_options *filter,
+ 			     struct oidset *to_drop);
 diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index f0a390e3c6..1b74d40551 100755
+index 1b74d40551..d48ab73293 100755
 --- a/t/t7700-repack.sh
 +++ b/t/t7700-repack.sh
-@@ -489,6 +489,178 @@ test_expect_success '--filter-to stores filtered out objects' '
- 	test "$blob_content" = "content1"
- '
+@@ -547,6 +547,44 @@ setup_loose_src () {
+ 	fi
+ }
  
-+test_expect_success '--filter-to-loose writes filtered out objects loose' '
-+	rm -rf loose-work loose-src.git loose-dst.git &&
-+	git init --bare loose-dst.git &&
-+	git init loose-work &&
-+	test_commit -C loose-work base file1 content1 &&
-+	git clone --bare loose-work loose-src.git &&
-+	git -C loose-src.git repack -a -d &&
++test_expect_success '--filter-to-loose copies loose filtered out blobs, and -d removes the source copy' '
++	setup_loose_src loose &&
++	test_path_is_file loose-src.git/objects/$(test_oid_to_path $big) &&
 +
-+	blob=$(git -C loose-src.git rev-parse HEAD:file1) &&
++	# without -d the source copy is left alone
++	git -C loose-src.git -c repack.writebitmaps=false repack -a \
++		--filter=blob:limit=1k --filter-to-loose=../loose-dst.git/objects &&
++	test_path_is_file loose-dst.git/objects/$(test_oid_to_path $big) &&
++	test_path_is_file loose-src.git/objects/$(test_oid_to_path $big) &&
++
++	# with -d it is removed from the source after being copied
++	rm -rf loose-dst.git/objects/$(dirname $(test_oid_to_path $big)) &&
 +	git -C loose-src.git -c repack.writebitmaps=false repack -a -d \
-+		--filter=blob:none --filter-to-loose=../loose-dst.git/objects &&
-+
-+	test_path_is_file loose-dst.git/objects/$(test_oid_to_path $blob) &&
-+	find loose-dst.git/objects/pack -name "*.pack" >actual-packs &&
-+	test_must_be_empty actual-packs &&
-+	test_must_fail git -C loose-src.git cat-file -e $blob &&
-+
++		--filter=blob:limit=1k --filter-to-loose=../loose-dst.git/objects &&
++	test_path_is_file loose-dst.git/objects/$(test_oid_to_path $big) &&
++	test_path_is_missing loose-src.git/objects/$(test_oid_to_path $big) &&
 +	echo $(pwd)/loose-dst.git/objects >loose-src.git/objects/info/alternates &&
-+	echo content1 >expect &&
-+	git -C loose-src.git cat-file blob $blob >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--filter-to-loose writes objects that also exist in the source' '
-+	rm -rf loose-work loose-src.git loose-dst.git &&
-+	git init --bare loose-dst.git &&
-+	git init loose-work &&
-+	test_commit -C loose-work base file1 content1 &&
-+	git clone --bare loose-work loose-src.git &&
-+	git -C loose-src.git repack -a -d &&
-+
-+	blob=$(git -C loose-src.git rev-parse HEAD:file1) &&
-+	git -C loose-src.git -c repack.writebitmaps=false repack -a -d \
-+		--filter=blob:none --filter-to-loose=../loose-dst.git/objects &&
-+
-+	test_path_is_file loose-dst.git/objects/$(test_oid_to_path $blob)
-+'
-+
-+# Create loose-work/loose-src.git/loose-dst.git; $big is a 2k blob on
-+# refs/heads/big in loose-src.git, packed unless $1 is "loose".
-+setup_loose_src () {
-+	rm -rf loose-work loose-src.git loose-dst.git &&
-+	git init --bare loose-dst.git &&
-+	git init loose-work &&
-+	test_commit -C loose-work base small small &&
-+	git clone --bare loose-work loose-src.git &&
-+
-+	big=$(test-tool genrandom big 2k | git -C loose-src.git hash-object -w --stdin) &&
-+	tree=$(printf "100644 blob %s\tbig\n" $big | git -C loose-src.git mktree) &&
-+	commit=$(git -C loose-src.git commit-tree -m big $tree) &&
-+	git -C loose-src.git update-ref refs/heads/big $commit &&
-+
-+	if test "$1" != loose
-+	then
-+		git -C loose-src.git repack -a -d
-+	fi
-+}
-+
-+test_expect_success '--filter-to-loose requires an existing directory' '
-+	setup_loose_src &&
-+
-+	ls loose-src.git/objects/pack/*.pack >packs-before &&
-+	test_must_fail git -C loose-src.git -c repack.writebitmaps=false \
-+		repack -a -d --filter=blob:limit=1k \
-+		--filter-to-loose=../no-such-dir 2>err &&
-+	test_grep "no-such-dir.*is not a directory" err &&
-+	test_path_is_missing no-such-dir &&
-+
-+	ls loose-src.git/objects/pack/*.pack >packs-after &&
-+	test_cmp packs-before packs-after &&
 +	git -C loose-src.git cat-file -e $big
 +'
 +
-+test_expect_success POSIXPERM,SANITY '--filter-to-loose failure to write leaves the source intact' '
++test_expect_success '--filter-to-loose leaves an identical existing destination object alone' '
 +	setup_loose_src &&
-+	mkdir read-only &&
-+	chmod a-w read-only &&
-+	test_when_finished "chmod u+w read-only" &&
 +
-+	ls loose-src.git/objects/pack/*.pack >packs-before &&
++	test-tool genrandom big 2k |
++	GIT_OBJECT_DIRECTORY=loose-dst.git/objects git hash-object -w --stdin &&
++
++	path=loose-dst.git/objects/$(test_oid_to_path $big) &&
++	test_path_is_file $path &&
++
++	ls -i $path >before &&
++	git -C loose-src.git -c repack.writebitmaps=false repack -a -d \
++		--filter=blob:limit=1k --filter-to-loose=../loose-dst.git/objects &&
++
++	ls -i $path >after &&
++	test_cmp before after &&
++	git -C loose-dst.git fsck
++'
++
+ test_expect_success '--filter-to-loose requires an existing directory' '
+ 	setup_loose_src &&
+ 
+@@ -605,6 +643,27 @@ test_expect_success '--filter-to-loose resolves a relative path from a subdirect
+ 	test_path_is_file extra-loose-objects/$(test_oid_to_path $big)
+ '
+ 
++test_expect_success '--filter-to-loose failure to copy a loose object leaves the source intact' '
++	setup_loose_src loose &&
++	path=$(test_oid_to_path $big) &&
++	>loose-dst.git/objects/$(dirname $path) &&
++
++	find loose-src.git/objects/pack -name "*.pack" | sort >packs-before &&
 +	test_must_fail git -C loose-src.git -c repack.writebitmaps=false \
 +		repack -a -d --filter=blob:limit=1k \
-+		--filter-to-loose=../read-only &&
++		--filter-to-loose=../loose-dst.git/objects 2>err &&
 +
-+	ls loose-src.git/objects/pack/*.pack >packs-after &&
++	test_grep "unable to create leading directories" err &&
++	find loose-src.git/objects/pack -name "*.pack" | sort >packs-after &&
 +	test_cmp packs-before packs-after &&
 +
 +	find loose-src.git/objects/pack -name ".tmp-*" >tmp-leftovers &&
 +	test_must_be_empty tmp-leftovers &&
++
++	test_path_is_file loose-src.git/objects/$path &&
 +	git -C loose-src.git cat-file -e $big
 +'
 +
-+test_expect_success '--filter-to-loose resolves a relative path from a subdirectory' '
-+	rm -rf sub-work extra-loose-objects &&
-+	git init sub-work &&
-+	test-tool genrandom big 2k >sub-work/big &&
-+	git -C sub-work add big &&
-+	test_tick &&
-+	git -C sub-work commit -m big &&
-+	big=$(git -C sub-work rev-parse HEAD:big) &&
-+	# objects in the index are never filtered out
-+	git -C sub-work update-index --force-remove big &&
-+	git -C sub-work repack -a -d &&
-+
-+	mkdir extra-loose-objects &&
-+	mkdir -p sub-work/sub/dir &&
-+	(
-+		cd sub-work/sub/dir &&
-+		git -c repack.writebitmaps=false repack -a -d \
-+			--filter=blob:limit=1k \
-+			--filter-to-loose=../../../extra-loose-objects
-+	) &&
-+
-+	test_path_is_file extra-loose-objects/$(test_oid_to_path $big)
-+'
-+
-+test_expect_success '--filter-to-loose does not move objects from kept packs' '
-+	setup_loose_src &&
-+
-+	for p in loose-src.git/objects/pack/pack-*.pack
-+	do
-+		>${p%.pack}.keep || return 1
-+	done &&
-+
-+	git -C loose-src.git -c repack.writebitmaps=false repack -a -d \
-+		--filter=blob:limit=1k --filter-to-loose=../loose-dst.git/objects &&
-+
-+	test_path_is_missing loose-dst.git/objects/$(test_oid_to_path $big) &&
-+	git -C loose-src.git cat-file -e $big
-+'
-+
-+test_expect_success '--filter-to-loose leaves unreachable objects in cruft packs alone' '
-+	setup_loose_src loose &&
-+	git -C loose-src.git update-ref -d refs/heads/big &&
-+	git -C loose-src.git repack --cruft -d &&
-+
-+	git -C loose-src.git -c repack.writebitmaps=false repack -a -d --cruft \
-+		--filter=blob:limit=1k --filter-to-loose=../loose-dst.git/objects &&
-+
-+	test_path_is_missing loose-dst.git/objects/$(test_oid_to_path $big) &&
-+	git -C loose-src.git cat-file -e $big
-+'
-+
-+test_expect_success '--filter-to-loose output survives gc and prune of the source' '
-+	setup_loose_src &&
-+
-+	git -C loose-src.git -c repack.writebitmaps=false repack -a -d \
-+		--filter=blob:limit=1k --filter-to-loose=../loose-dst.git/objects &&
-+
-+	echo $(pwd)/loose-dst.git/objects >loose-src.git/objects/info/alternates &&
-+	git -C loose-src.git gc --prune=now &&
-+	git -C loose-src.git prune --expire=now &&
-+
-+	git -C loose-src.git fsck &&
-+	git -C loose-src.git cat-file -e $big &&
-+	test_path_is_file loose-dst.git/objects/$(test_oid_to_path $big)
-+'
-+
-+test_expect_success '--filter-to-loose requires --filter, rejects --filter-to and --max-pack-size' '
-+	mkdir -p x y &&
-+	test_must_fail git -C bare.git repack -a --filter-to-loose=../x 2>err &&
-+	test_grep "can only be used along with" err &&
-+
-+	test_must_fail git -C bare.git repack -a --filter=blob:none \
-+		--filter-to=../y --filter-to-loose=../x 2>err &&
-+	test_grep "cannot be used together" err &&
-+
-+	test_must_fail git -C bare.git repack -a --filter=blob:none \
-+		--filter-to-loose=../x --max-pack-size=1M 2>err &&
-+	test_grep "cannot be used together" err
-+'
-+
- test_expect_success '--filter works with --max-pack-size' '
- 	rm -rf filtered.git &&
- 	git init --bare filtered.git &&
+ test_expect_success '--filter-to-loose does not move objects from kept packs' '
+ 	setup_loose_src &&
+ 
 -- 
 gitgitgadget
-
