@@ -1,89 +1,111 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.150
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795636881;
-	b=S2hf4IJIuSOec84BprGm1sScj4xXE3lcQl0gAfh6gexF6uTmi1AYtD1SaWvnoswY58S4
-	 R1PlJ7pllEL6s4y2vBBZUZRnihmq0S1vw8+mO1VFJH3/fJ34gUxHuPgBPIF6sW7ncARx8
-	 SG56fYHTjPKh2jtf+aK4kf6svWy5J9KGvBDI90xQ+b643VQqFMfkmX5yQVx1/7bg5LGgQ
-	 TMBbklkt9fWktgBHRmJPqqJjqkI6mIAQ03MQzNWQTPv/SI9JZJu8ckNWbdYWX/w9gtxVc
-	 AbKO/FI8DoqH3Aq0NSrPkjWFcdKFbF/XGXHLEL2EBT5uOcN8IvPALJKSrr3EkebUNcA==
+	t=1795637374;
+	b=Q6ZW/9/5aTFOyqBvz7YOyCicD/n5FjkcvOdwS83LQuKceu7SNearGlyghjbfWq1MUi6p
+	 dBNOYkkit8pCz36K/i5yeGRlcS/e9kkGHh/ODMAwQw1Wzu3IATw0IjCCZZDY99mVPjUT4
+	 g0CWOjMnxiT6PW1FpX2G5XDqQr/spitnZqkxngzaw8QmfdJ1fdkzIOF9q1FKs242vPU5H
+	 Rj7MW+Dd9BMWuxxPTuANRvxzXaBcrhkbdatWbSVcuwM57FhjCm7WEBXlnkxazMKxHSRmF
+	 cZWnGmHwAfm6XVjcipcFmsbLxtYmmVz3UB/6jodAJC6pI2P4R+3ilcLGlN1qHAucrfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795636881;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
-	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
-	 Cc;
-	bh=mIHxsxcuJ+8iMqu1GkRYB0162/LVSjQDIXZ4tYuaDnI=;
-	b=MTAG3Gk1tIdJ6W4yl83cmQvgC06fv9t9oSxyDmtsY/9dpLXh+C3w+r9R1W6aYGPeai+J
-	 oex4yxJ2FnifLwiRGOL0qPGbTP/4Mp/EtLJfPnj1pea67kVsB7CMsqR9j+behU+a0DZTn
-	 n5+kzTJZVkVHR2MgDhh/nQSDibnvVDx86NaasUTcSFg+nTrr3fYYnB3k3nbCDyZYT7yPt
-	 1Fmx1ecOiaI13Z9L3N6ElZXLtwjoSUwVm294lpkbduLalCrACHk1KfNqARixTfgnLSEFY
-	 Fcwn2sxesduWBUUXKI239TgvIApToKlM9b8kBlgVoxF8CtnzNSwaYk7ZCBcXoZ2pAfw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795637374;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
+	 References:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=xI1zNLTQT/XawOcx5QCMysFAyN5uGjcgJO2EPJCFV2M=;
+	b=xR9F/WNwq4K5HoSMerrX5V+H9ebzC1t+D/ih6Z4oAoODcNJK3iUdhhIY9R+LyDXakWPz
+	 EK0g0tPux4OwWwDyCve6/n8oLkhOnPoS7U5ibnwnCCaoal/hpZAfZsmYic41igLX6Afk8
+	 PGzEMu6XVsHJ7HtrrHSU7taeVe9PebWEnKOiiN4gMGJsR70+xLPQ6ixo2hv0rWEL2IA66
+	 2cmQLLLuroBGK3b8pGg98SnVbNvL8TaZAJhfoGX+/pabtDXpCdSyjVxhnUwLAcZY9lJUR
+	 vBI86rezXvZnoNUwyS/8o3C2+p13E/pK2ytmPNEGyeZpR8amEfpAI7UkiEnaEgx4jdw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EmxJ+6Bo;
-	arc=none smtp.remote-ip=209.85.216.50
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=fastmail.com;
+	spf=pass smtp.mailfrom=fastmail.com;
+	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm3 header.b="ag5a/GJh";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=yJQMHcWs;
+	arc=none smtp.remote-ip=103.168.172.150
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6EB3606A323
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 20:01:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D6EB3606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD1E606A321
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 20:09:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4CD1E606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EmxJ+6Bo
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-3b421e8d111so4213954a91.3
-        for <git@vger.kernel.org>; Wed, 25 Nov 2026 12:01:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795636880; x=1796241680; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=mIHxsxcuJ+8iMqu1GkRYB0162/LVSjQDIXZ4tYuaDnI=;
-        b=EmxJ+6Bol655jx94M09Vmgwyq0iOr4nl/BcNTIsoH08iOvtJ363zlSFh/X6De5/bBh
-         GJcsIoELwg8IL9HrjxjTl65IURbmiryhTa2kNANvT0ort//STnfv8MjqJ5ryV/fYcg/5
-         zHWmt0NZ98alOmrhSpTaybjvKOzqTWomHlr4JZTc0qhr9Hpo2w9E3gRwLQwHdyytQ9xp
-         vST24aiHl/3MeF2PJ5z+rBDjveVP4raj/LDD05dwSAySq6WWxGa5ayO5rO+XN485oEA5
-         sdsIX6z5cNgvkCG9m3JUr54mCWSAP2yRTWw5FOve9kisSdHL8KIrMcoS6ZyPMB3LAFda
-         6h/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795636880; x=1796241680;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=mIHxsxcuJ+8iMqu1GkRYB0162/LVSjQDIXZ4tYuaDnI=;
-        b=XTLLGBQ9IMGgZCiZ2OsVdo+m9OtupQUO8SaoYSQJ9bONR1EiFW1UdzJDil6x1HWb8Z
-         EIVMyG6MgCDN+s644i/FwULtPIEfMCNi4AlIPSgkhUbEqv1d8b5ROeYR3dbdlKh3ufcZ
-         b1XoMj9fOlVcoN0qG94H6nzzbxMzUVzTe/iamm8l2sYTHPxIceSYo8I6R1qNnUsfnWaZ
-         n3DlAasOUUYj6kO6Qx6mogq+IECz5sO+ASt10RGgqxkNpY1+X+88Qh8dshZGJLsM7i2x
-         4HIcPGhiTQhU4Pkwiohdqyyk4lXQjtWPjaLuLqbwJQFkuZUv1NX/sSP9ln1LX29T2JgZ
-         cf1Q==
-X-Gm-Message-State: APuU4Z80jsmcUpA/6cKh5BJkvUxm/Py+Ywc/LVX6j5LONN6TAq2COJl/
-	HDMjoW4uuu+iI7bYBp7HbQw0EojWp0tqTgIoow1FcmPbuR9aE2273tIwqWSAtg==
-X-Gm-Gg: AZFdTZdfoo3pNPC/A0n9A7sdG66fmKeeKsIFPMa1P52jc3HsPdaqidFI00a6LikUjdU
-	ekjj9+h+MVkPNhjuEeuYFE+sHjMa6J9W8wukHCd2eK8WQkKTK5m8VsOXPhD/jP7bIkpMOwJQpS6
-	nvH5NXzUizCfEabiQ+vSNcSz0wB/g9cLkbreHWCpse8IFL/HwdK2BSiiu/ZoLlreFNibYAmx4+i
-	Uz4X3Th5+e9SB//myURwfJICA+yhbDRxGvDF/z2l2mRZVg9SCSvQuaYOu16WPSLRPNgtsBuf2Mn
-	3EvXO7i8B2sDaZ9NH5ccX6Qn/x80XckaQoG4bGy3WtsDMOQRC4Itq0Gz8fDoFSEoQmvcXJhoUyM
-	qv5wSZ6HoekeZBSgM9tO7/8WlOLsGTRW5Fbjx8BGjuCl0MubXjxxk+G3LrbpW/ZWvXdgMc8l9br
-	CG4LrhEGsAjLSCJEo474HOdUu92AfcnoabdbBenAUP1xzvPnGucNRHvs5L7EDj8ip3NWWRPYpd9
-	WEYzB0JNS0K4TEgKByayG7Pfpj+74Hp6hGoIUoK78d5H9EV9Negev2FlZjKAajgJ4S4Td/6Gjjt
-	9l2yrKgPeLP9g6ETciM46UKBNnWKUvs=
-X-Received: by 2002:a17:90b:1c08:b0:3b0:9deb:d990 with SMTP id 98e67ed59e1d1-3b41cafd549mr17650837a91.39.1795636879974;
-        Wed, 25 Nov 2026 12:01:19 -0800 (PST)
-Received: from [127.0.0.1] ([20.168.124.60])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b40578dca0sm32297980a91.2.2026.11.25.12.01.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Nov 2026 12:01:19 -0800 (PST)
-Message-Id: <pull.2334.git.1795636878793.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 25 Nov 2026 20:01:18 +0000
-Subject: [PATCH] doc: mention the tutorial in 'man git'
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm3 header.b=ag5a/GJh;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=yJQMHcWs
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+	by mailfout.phl.internal (Postfix) with ESMTP id 3AA3CEC0AC5
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 15:09:33 -0500 (EST)
+Received: from ams-imap-15 ([10.64.2.35])
+  by ams-compute-01.internal (MEProxy); Wed, 25 Nov 2026 15:09:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1795637371;
+	 x=1795723771; bh=xI1zNLTQT/XawOcx5QCMysFAyN5uGjcgJO2EPJCFV2M=; b=
+	ag5a/GJhcOLS9LDLqQ7BMAQAJ6bk1eMBbX6zKEez5y+CaQrf3eBm2FwXrifZSMKZ
+	B2QOjn2QL7poq2s0LttlDfuy0GZaBnzDqqnqSFF3BcKswmqk3CKqN3c05DQkeMva
+	HjLIk6sGXkeD7KsuEWyUMHSMz27YGFg4KcxWuqS7DpYPBC/uxw0Vhh1ENPzk6Jc/
+	na3ziPJypwlJdDFasUl5agaYXJ0MJVusaJkGCUt5+ThDCS1QBpJ/5U3Bf5/tMo1y
+	/e4NujYZpEIZd6MfpA0GPQNShe8jXhHPHbjQsJrG8TZHdEWPaHd8EpxSx0ptFXqt
+	2pmHwzA0LPB3HBb8DsjwhQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795637371; x=
+	1795723771; bh=xI1zNLTQT/XawOcx5QCMysFAyN5uGjcgJO2EPJCFV2M=; b=y
+	JQMHcWscU69pinOgYLPx81veon8FoAigQHP7YsdihvXTzAzvg6gEDhF2rj2eIDZ2
+	d8K3lnnUxATCEe+afh8r88wBDhuscQq96L2EZAhw7lM18H7oVXwfsltA1ri7Gfrp
+	DJZHZEbXoprSxdbVdBMl02DbB8NjQakoM7A2P1xJ5hsmAW6ABgF/pdhspKYvTCtv
+	pYnhcviudnv5BEhzbYGhQRb7FgpCvFL1GQnqBl8UwBVYwDMz/yXOnV1D3YgY8CXs
+	hT17HM9JsZWve0+A6wRv6F32AwOHA5yQhqUynpOiFN+qY0IWAoMjNn6Bac0JyEYo
+	/WP3zfBvWkqbqDKVOVD3w==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=fastmail.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795637371; d=fastmail.com;
+	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm3:rsa-sha256:T/qiot5Ko7nGjEvSy9Flbibl0WF8ATO/rLEuwfnPknmF7PE
+	IKB0SrPFBG3zhekhezOfElbaHzVh7nCpp4RxDBa9+0pLrIq09/vVoCf44MuWWLDC
+	RZcKFkNTpDaigOEvtu0Sod2Dk70KIj4aJvWg+mx+wIrI+a6TXz2tqNg5UEFspTtg
+	YHOvi9xgPDOGN6ZY1a3HEk5NesQsKxAZ78+o+QqGYRzA2URveuVKosSWTrkbULtV
+	wQVTZWAMH621I9l3v9lGGHXotENe7HTVGaFTPmtePkihJDRX9Mc8Og88r/w4PYRs
+	LuJRmski2vNj0KbGTwe5LJl+A/Rkygup6Hx7xKA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to;
+Message-Instance: m=1; h=sha256:EET6inw+VoLvQnnaeAR4sVutGVKVnSy0BQjh3F0OYSk=:TZHO6MuY5tTxtm4kulmjNSKW75CxH8b8K19PcE+DqEY=;
+X-ME-Sender: <xms:d0AHayao_PiToN8xvCMcltHP7O4ApkmmppLyHypI2dUGeHmxn-G0fkU>
+    <xme:d0AHawOQPNVvhylksCGqDEX2ZWz71Giglk1qxpanvdTVwcjkXz4g4ASYLQHonB_3V
+    -y3jf6LaCBGIijBQBMWyQCwtKyTdlahobke7m_FAK40hx7N51rGNIk>
+X-ME-Proxy-Cause: dmFkZTFf+VPMu+w55COezYy+TgZyOJx52UWeC7kW1mZQSN5jAeDF2T3hCmPZgtt6WyMMf9
+    VPRuN/c7fNAUwBM6pM1wujsLE9a/hmzHMQ+yvhmIi8nwhXi/2eaIp2xmChefnwnuJJ5m7E
+    iElATK+aumzepJGtbklA6W0uM59BC3I0XNpHAet9s8ErjOrgX/jBg8NfYR6iYLOe25U3OO
+    W8dvr5TdQrxBEe1EW+k86xHYT0HiCDDYUvR1cbnArSCdhcf6vY8mhBpJ6pJijIbjLp9KQu
+    7+BounBrjT/oeYenL1KdwwThea4hgZnfktErvKGwN0DvW9Re23JAbYIQOi1sqCTYJ5tYCS
+    Jg8tSfDlvAb0R8Fbip9hKTkDzrTcwmEmJpQrjHaqZT85pzblm33VskqXOhFbXHG98uy9dH
+    UUXX/u84NMUDScrJIe/Vm6SUCkbHCjUCgOieDHwo2c1yaEdbbvqoNlR0HidpcaOgs3x4YK
+    AxgS8MEuUdzgWvjzaAYoGbAgdY27zjYRcPl3Gl1r2Wz0q45NpZfznG1rIOQBdFnCtgcVVh
+    DoYtMnXQuUNRpy/O9uiC/6f9djOZijusO6DcZS4uzUr67TZr5dHqcx3PVfe0d2ExO+VU7/
+    JKnVG7efURWrHRIHo46MmAFcKhIim6jHPb0pzQOgqdmoMv5SbJo861sNjEEA
+X-ME-Proxy: <xmx:eUAHa3_rPWxx05Bzvgm-62HuhQEyy73DT8Wi1Le4qt7XbozT85irEQ>
+    <xmx:eUAHaz3glv0zj-EgvKPa1p3Cn3hy_4AcEXCFrTYef9H2TuWyJouBQg>
+    <xmx:eUAHa89Rw5JKyCnKxjZ_GBKdXCsii4qJ0N78fNi1dYSmC6ZhKlsEHw>
+    <xmx:eUAHa7uPrEgMGBtvVNk86NTA1NqITuvGNcnbwo7rqyUlYiwqS1BcNw>
+    <xmx:e0AHayGqZXENA83o8xDJAG77KjZuvCO1S1wauiwGp8vQTOZXQ9WKDdR3>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id E47C522C009C; Wed, 25 Nov 2026 15:09:27 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,50 +115,81 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+X-ThreadId: AkCwORjixZW3
+Date: Wed, 25 Nov 2026 21:09:07 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Phillip Wood" <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+Cc: "Jeff King" <peff@peff.net>
+Message-Id: <b9ab8baf-0b87-498b-a37c-64af0d06b9be@app.fastmail.com>
+In-Reply-To: <608b25cc-6ec8-4f0a-8eeb-863ed44bd0db@gmail.com>
+References: 
+ <fa8b80af26481e0dc96fd8f80f3c7ba84f60f9d4.1795516651.git.phillip.wood@dunelm.org.uk>
+ <b8c40805-90f2-414c-ae70-e2f79a19170e@app.fastmail.com>
+ <608b25cc-6ec8-4f0a-8eeb-863ed44bd0db@gmail.com>
+Subject: Re: [PATCH] var: add GIT_COMMENT_STRING
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-From: Julia Evans <julia@jvns.ca>
+On Wed, Nov 25, 2026, at 17:19, Phillip Wood wrote:
+> On 24/11/2026 15:02, Kristoffer Haugsbakk wrote:
+>> On Tue, Nov 24, 2026, at 11:37, Phillip Wood wrote:
+>[snip]
+>
+>>> diff --git a/Documentation/git-var.adoc b/Documentation/git-var.adoc
+>>> index 5f240eb56e3..04aeccd7aa6 100644
+>>> --- a/Documentation/git-var.adoc
+>>> +++ b/Documentation/git-var.adoc
+>>> @@ -130,6 +130,10 @@ endif::git-default-pager[]
+>>>       The path to the global (per-user) configuration files, if any.
+>>>       This variable can have multiple values.
+>>>
+>>> +`GIT_COMMENT_STRING`::
+>>> +    The comment string used in template commit messages and rebase =
+todo
+>>> +    lists etc.
+>>
+>> This could also mention the config variables and git-config(1)?
+>
+> I had decided not do to that as the point of GIT_COMMENT_STRING is to =
+be
+> able to query the comment string without the user having to worry about
+> the intricacies of the config setting or what the default value is.
 
-Previously the tutorial was outdated, so we deleted it from git.adoc
-in e2e5e9f740 (doc: use `man git` to teach users how to
-navigate the docs, 2026-10-16).
+I don=E2=80=99t agree about it being an intricacy. The concrete name lin=
+ks them
+with no doubt even if they would have diverging description for example:
 
-Now that we have a new tutorial, bring it and 'gitdatamodel' back,
-using the same language as before.
+=E2=80=A2 String that marks lines to be discarded on save
+=E2=80=A2 Marks the beginning of a comment. A comment is not part of the=
+ saved
+  commit.
 
-Don't bring back the other documents, which are outdated.
+Granted that is completely invented...
 
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
-    doc: mention the tutorial in man git
-    
-    ccing Kristoffer who I think is the most recent person to edit this.
+> I guess saying "see `core.commentString` and `core.commentChar`in
+> git-config(1)" doesn't really do any harm but I don't think users are
+> going to get much additional useful information by reading the config
+> documentation.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2334%2Fjvns%2Fmention-tutorial-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2334/jvns/mention-tutorial-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2334
+Yeah that is correct. The link isn=E2=80=99t worth the space.
 
- Documentation/git.adoc | 3 +++
- 1 file changed, 3 insertions(+)
+> Perhaps saying "as set by `core.commentString`" would be
+> more better as it does not promise the reader that the config
+> documentation contains additional, useful, information?
 
-diff --git a/Documentation/git.adoc b/Documentation/git.adoc
-index 1aa0608bae..13be4cdcd6 100644
---- a/Documentation/git.adoc
-+++ b/Documentation/git.adoc
-@@ -22,6 +22,9 @@ Git is a fast, scalable, distributed revision control system with an
- unusually rich command set that provides both high-level operations
- and full access to internals.
- 
-+See linkgit:gittutorial[7] to get started with Git. See linkgit:gitdatamodel[7]
-+if you want to learn about the data model and important terminology.
-+
- There are two ways to get help with any Git subcommand (replace "push"
- with the command you want help with):
- 
+Yeah, this sounds like the sweet spot.
 
-base-commit: 77904e546de3bd940621092ecec47a88d0cede5d
--- 
-gitgitgadget
+>
+> The documentation for GIT_PAGER, GIT_EDITOR and GIT_SEQUENCE_EDITOR
+> mention the relevant config settings when describing how we determine
+> which program to use, but the documentation for things like
+> GIT_DEFAULT_BRANCH does do not.
+
+After reading just a little, I much prefer the verbosity of `GIT_EDITOR`
+compared to the terseness of `GIT_DEFAULT_BRANCH`.
+
+>
+> I have added a note to the documentation for `core.commentString` that
+> the comment string can be queried with `git var GIT_COMMENT_STRING`
+
+Sounds good.
