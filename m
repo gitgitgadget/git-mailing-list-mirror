@@ -1,123 +1,120 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.153
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626461;
-	b=4JaHec+xmI+nrdHpaJk/1mL3JMRTXxJ+v+CzsxYsUajnMuviVPu37rKeSwFu5Odk/hib
-	 SkRvYwec56Ug/gLcZQsDJO80Zt/d2eE0XK/6iM1jftwjIJIsPJ3SOYu7pILE4OKDc4hL8
-	 JMHla2A1j+xhhsvy3HXu/7DoOjOPNROFr7nk814tUhsHmALsRiNfOxomuh0nxLd6k6S1V
-	 2sD3iLQYQmb910bBrKYTmRjyJPUPk7eS0fwxX3XKCr5dRKqhmdlg4HRiaGt1/jfZTSKHd
-	 pQMeTEcTvZsugh+PGOj69uDAAtIzEHbdpb388fohprCvk5zS5pxH+gYxTtoNmrlM0OA==
+	t=1795627061;
+	b=Yq8/f7PvlX3M1czksJ7VreyZZpKWu7jpJyjSZPAYT+RKIHgUtl261tsrpjZS5R/j9ZMA
+	 zZ5YlLc04x9AMLIDFQwSyOYD7lge3cirw3jrMvzNhoTWLcAOvQ2HLLywB5U+0z1wiI+Qv
+	 hLsApnXXvh8UhgtHIQXusV9syfe3QfCG12ZewK1CuRkyyFlwAMC+ZPGB1IAk495bYzw6a
+	 9B6MKHIxdrQrKgYLGKe3qQxpRA+LY2iMpJlB3oXoSfKsyz3uhr3JBTw2S9Eche64CQmNZ
+	 kLkdTVaplaXp8uY4B1xi5PKdTf+gGICg+ehtDWT0QLMivLvpTlbuUhl07Fl5dFG6PAg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626461;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795627061;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=XjVcVdvaeL9SVZNIcVg8jFwSis6rxAhmKxxqhd3R4Ao=;
-	b=l8CCx/KAMWLpYO6LIPC3CMgZfsr7LvQUDx0jzocTUBfy2rYYwZzzIOPNxy3MHLGgm1ZJ
-	 dZuvrsMOP77tXbqficszYrZQBCi8pP+Gwuh2VTMOLs73k8gRj4hkTDOO4VcfK+RayMm1e
-	 oB8UVX0Hf/NYdVxTE/gqkJR/i5NYyGmDb5F1N3PefUma2rKQ/B/S2FNIKqszv4gttfaEY
-	 fYAlbXdFZhqoNu6+mGA2hTKDIZ2+rUvrywiYXy0iAGwDLokhhgBWAUeYL1ESEAK4cdZz+
-	 0e6poL8Pm0HCMRENdgfdwWaetBUIvPk+u2HG1RuckD20aacf3S7w5LOKQS6tr2MfWnA==
+	bh=XT9JYmIGW+yDW7J5jMk/mEsnGKFz5qYy8gwYyXtJn/w=;
+	b=Bd3ppqpyQU4qNlnKgEbZbVFSD56PjDQI/z8rrwFRNEobm8guiusgcD+VDpc414tcnD7e
+	 JeE5lhG6e7kXP9VbhxeTZS3ftIDgYJ1R6mkHBQgaTLZtdJEld6IvT9feJ3IY8ATS2r2bM
+	 o6C+ItVvytVdCv5jTqMVzEbc2mNR0iFcE6qxkzPz/pLojitzv9DQvmJp5CZGBMY0ASMjr
+	 IcBKTlGD0k5XqaV08II0VFBst7Cek87ctvhk5Q8EmDCaDAYNzsxwboxHZFP44FsYOakxe
+	 NLgH7OPxLz2R/8LldUu+uoyIjrCuWaTq3HIXPU6CYq1HyrveO0lWQOcqPWb4JzjJK6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=lLbvjUQH;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=x1MQAwh4;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=WmZ2W4eU;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=2M59rIFL;
 	arc=none smtp.remote-ip=103.168.172.153
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E8F606A323
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 17:07:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 96E8F606A323
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18425606A31E
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 17:17:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 18425606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=lLbvjUQH;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=x1MQAwh4
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=WmZ2W4eU;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=2M59rIFL
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A4C7D140038A
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 12:07:39 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 25 Nov 2026 12:07:39 -0500
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2D6F71400189
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 12:17:40 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Wed, 25 Nov 2026 12:17:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795626459; x=1795712859; bh=XjVcVdvaeL
-	9SVZNIcVg8jFwSis6rxAhmKxxqhd3R4Ao=; b=lLbvjUQHsMVhOOOX0n0s9L/ZUs
-	OwMVZI/bm5ghrngS9UzWS0Kj9emvRttiBiPZjnF8OtDpTY0ReGw6tbntjfKQNvWN
-	qoJg6UUMY3p5pi1rEvz+RyqA9CjjZDuaAzKFwZCpO1e311VTybwdwHbVQFHEJsU4
-	7wnpfbEKMZ6zz0kj95OofqezAjZuO3TteMRk+hWopVM8BIDQpDo+wDZiRGxvSSnN
-	Q7bBLpi+8tJcQvwwDBtLKeWWXCY+GjEnt8nfqJ/9Hjv6zMa8af33e/UIbmpBlCnx
-	eirb8L2uP0/+Y527GiIcn1jvvt13yA/ODVLnmkFubtyjz8AaU6Io/Vx1/G2Q==
+	:subject:to:to; s=fm2; t=1795627060; x=1795713460; bh=XT9JYmIGW+
+	yDW7J5jMk/mEsnGKFz5qYy8gwYyXtJn/w=; b=WmZ2W4eUYgCXwIfGeG92ZDZRu2
+	YKA36cNod59S6uZrqn6Jjk5/8YFoQRHx5icWzlHrDpvgbTiC/j9l9VA/QIQ9Piwg
+	LWbwMAj7Fe5oLEFfEz4ZlxDJnUv0qbVgF37JbdW+X8lZLHLr6tDjlr6wrFT3XmQl
+	EAodTDXYHoSe8+p1BY/VRTyFDKiNm86PlUlbqX9UZT6kAX8+KjWGxeWPZH4n0xi6
+	xhCCDwIhYGRUtkH+bvalmayGxW6bdnF1fLo802g7rRaiuE1J+3b4CyaE2bLXVcrf
+	gM2lvgfbKX2PNlbQDqRmOGwHtbJzkk7i+Pb4dz8eRo0MMWA2PqTx9nRLXB/w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795626459; x=1795712859; bh=XjVcVdvaeL9SVZNIcVg8jFwSis6rxAhmKxx
-	qhd3R4Ao=; b=x1MQAwh4quqTriTgUYjBnkVKHGQdxafgNNWePQD4rDBLA0on4iZ
-	TjHGU1DYBdm2v1njonRi57A7yB7la86FplwxZEGLTB6dQNuK/U89hdKFNQT4LDUE
-	Qczxk4tCT5U48Q1lS6JR5v66lmqym1G8S8jUEDNzSvHcrbhy4H3iqxDC1Yj2Xpke
-	UD203vffLzelO+C4/OI0mXCld9QY8hqF+cuPEzZlCjtiAjS1p1asA2ZpD+fOhIoE
-	zfmc7T2zrmtb9GE2znx9BNy2t2DJw4HrtoFDUenL6BK+ELcRKCv2ZLA4jLbZ6Tus
-	CYaKiEDg+N6e3qq9b84/J/o6kfyDBVNI14Q==
+	1795627060; x=1795713460; bh=XT9JYmIGW+yDW7J5jMk/mEsnGKFz5qYy8gw
+	YyXtJn/w=; b=2M59rIFLNhmYhmZQ4Q5HuzduTcg6w5XICUi+mG83XrTm0D2f8bE
+	QwoWk57csw0CrM8QlBtR/LPWt27kyniucnPPr8KxScZErEcq1zWkHwx8tQK6feh0
+	PmIeEi5/J00CLq3sxp5psrYgLGsOPArPfPQralz4Hj/nRxZI3tHA7Dkv67IZMHyt
+	hItc+fh/IYApSqZeW5w8veoJefTtgAKRA7fhcbtfo5PPc7nOO3Guc7o8UTMYLggz
+	pyAg0qFTt2ECXntdQnLQvEb+SVWYhodJtgBrtYT8QklxI8U0rXTxazv+dmb7vICK
+	hotzkDc0BgLg5wtUxPh2jfCf9Oc0Ij6kNQQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795626459; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1795627060; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:GDKaJ0ENlj7JFAeu9ajbsNfGAS60+dtWtMPPAMPOqF+6Csm
-	CgTXzr6Dvc7Y1JisDmdES0un48ebY1Mc+bBC6PnWQTjeVHyg8eZ/sLlaCe7I3oz3
-	NPgPl+hkgi61nhYPVLEXZzQI9P178s7DE0sD/hPgD8cLfe2XUbdamU1HuDssZu3j
-	NH5L2WipGwHuhL10EJFeP4oFdf9uXJrzd9Af1dnuQ9B8VV4nXe9rfwqMvoz1j3xV
-	jfuXqQTdilNBCAZrJwDXrg+EedGnG6XJwmGI669CECyGogLrht8iE76E1qT+Dlyn
-	KCccjHqv5meQktYfdQqJm2LP4J1P8UbBjDvXrPA==;
+	s=fm2:rsa-sha256:LU/fgsw91V7rbiBxx2g1VijH1CWo4yPixC4E7Jz4pzcNV6L
+	jLS83ZK74lJh34mGT66Nqylz9Roc+gLgRqDXhuYW0HpzpGFcWXGEPXV+oVlpVQXN
+	mLhxyRVwy9QWRZwRlxpI6TCuj0B88jnZyHzfdjt68lIykV5Gf+JNvCWHaGNkejHu
+	Jf3kVzQPUpQ2259HPsCeVKJfhj7y4vb8NPw+TaFi906bRWWX8su+H+/WWrOeCaHo
+	0lcdqo4kt4AXWoHAoc391k4CmxReb03qgYV22oog7Y1ogA1sY259M/ooXFtjfMgf
+	8b5v8vd/ULolGcBEWjKjiDOELbU9IDlrbQqi1MA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:NifYnEO4geSGvKcPH7SIbbMC3rpS4jVMUqBEQetgZ0w=:av+9k1SSXFjucGjKTOQxDwZmLwIvcLExsUsPzIofgWw=;
-X-ME-Sender: <xms:2xUHa1hizOgxTn8u70VEfVQdYdCPF_yi8P8xOr2P7zxO2cMxdcpZ5Q>
-    <xme:2xUHazVfbpzCtyMoM8qE3MaIL7d6TaGPjdYIvWmhawBk31eVJ0Kp6BVvKmEnJTvPv
-    mArispRfzJwvXLiRfbXhf6tP_A7zWDez5nAfN_Oft-sjW8UmI9-GO8>
-X-ME-Received: <xmr:2xUHa8X22eWN5D_e0A_CuiIGpvKdMOg2jocewh3Dkpwc75nyFG1QSJUyKpc6SrwhXTgd3oGrCNQQseI_i9lWCIDEA4AJxADh08r5pL8>
-X-ME-Proxy-Cause: dmFkZTEKMni+0JAx2wO22N9SQRXHyKsNt8kYK5BHEW2bVSTYyVu/t1o476MQEN0VLWONFz
-    twKb3EU+W0NWusEs5SLhiENotQ7A6+nKHkqG4yzkLcV6I2k3ylDsjyq+jHXQdVasht8/Rz
-    HQde6YJUaSjScH6qHdcII9VI3MLnHxvnuMXU3JBpnXUs0/U/zTFQacKIJ1GVXd5vMgutqU
-    KVj2YQnFtyKlVCeh6f4u0wTezy0iJ70hNnNqOISk5sXQ5+qGQQzslGg/YOsKaP7mjpnIbM
-    NU9OMtifoHY1WzopgvkVKWUCSzTc1Hlkp1+vnahhw98nJcomhf2DySXwOZqULxnYLhiUuH
-    5Mk/oejrYLHHJiU/vETbvB/y0wQrSSDhY1v7OJ745X23IDxvIvsuc8oJjZ8FkUQDUbL6hr
-    RPO8s2RJvVE5Bu+NJEPf4cj9lRK6P9WCZbd+QRZgihNHw9zJz47KSVO0jU6GBnRjjSBOvp
-    GiWIRm98C+2MtGOnoP8foZdAts0AvW+nakw2tAlAbDBQpv6GjfMM0BR35x4bSyK5Z7VNjo
-    hMyUg3PHG0bn/+4Xc7ZI3vHwgqTDZ0pCi+hzu2z6jhvp52N7LUjqnfSc2S0JsxCypiogEF
-    LaMV0HytRJPyGybJNNRH/fOS0Nr/S9583Be4F5faQGro8XFwFMsUp2wSfk1g
-X-ME-Proxy: <xmx:2xUHa7guT5TQYBUNooSH5-N1BlUbiuZ1iqJ2wyBT-J5l2oGCm0fUug>
-    <xmx:2xUHa_aqWPlF8KrN3iQ4e0vOiUODwf2yGtHpWUiYqhQuZtOAwWjusA>
-    <xmx:2xUHawrT78GairtQvhKVpbTD68rdZYk-_Sd8fwCj_HBAfZzGrzPsBg>
-    <xmx:2xUHa0OzMy-mr_2AD0BgphBTnc5v-Kz0MD3K4AIj6T14_dwNr1kQkw>
-    <xmx:2xUHa6137vM2cmJP6PaiJmKC85dw_rb4m30bJlI9yePXLCb0boKfI6Ct>
+Message-Instance: m=1; h=sha256:LuYm1NZB2WMO/nAnM8q0KPfyuGPh/ebMtD39gjg1Llg=:XT9JYmIGW+yDW7J5jMk/mEsnGKFz5qYy8gwYyXtJn/w=;
+X-ME-Sender: <xms:MxgHa-UWFP5Bgdg3z69AHktZ-Bqd2iwJQ5F_h2fcxS2x74P3h5cJcA>
+    <xme:MxgHa8Gn3HGVOLEb5tjAH5zpcOVsyT7d6zJMChrwBDs4HgBXuydirFcP4ICXe2Kwy
+    2-9TPK6euICmhPvkMRsFJ40TAYkCVFIELRm6FwKmMIaliGalyW6PJg>
+X-ME-Received: <xmr:MxgHayeQrPJXh7-x1hNLJX1p5K58RekEdcaL7NhdFODk6bbcd6QXJOKFe6A4KUdo0yE4J8o9rdx4fBLMcvj4h4lkoBxPTD2UkzUmZcM>
+X-ME-Proxy-Cause: dmFkZTE8byxVtBb9hZ9ShsahndqnfqWqDQs40YVwobhwOqOIXs+jdYTZJ6AQEN2okt132E
+    55iKBW80gu05N/ELPTlt/JNY67ruy6hNZcsfiwo6KlqRYCnZ3e3TnuNYItaPx72JWb6aNz
+    i+jK73VTzE05AA9GK2IXYhPygbx+FL9SWV8gB4uorWvPGXHuiCwgtGql6e1YFwt5kk5U+o
+    30SYEmKD0inU25Y+t89gN33SI6+JfihbmbINnmv+kX6BI6JmKKQh4yHnHEywhT8RS2XrOw
+    5jEonZ/Ssv6DH8wDl6ThK+1JhjUTd+3LEzsF+NbWxMC6UEvU3UJjE2SFDqQ5+eXwAgVeeb
+    f2kTkCCQe189rNWQ1JM8IR6kxR95Jjt7GfhVomGQz0tPHsDOWm6t03KYHrpaCRqSiX1akb
+    wAUR6WDU2VnfoWDYVE5U6OvpepLgiz0kg3rV1FoCO3/eHJcZgQsxpIHUNKc0+KNFeuftpw
+    c8O1PK4Vy1lle/n/T1KWO3A+mNi+nW0ufd5rVuH3MRSLIBCb/6pchrwN/6O4ra71PUZkRB
+    vqf1Kx1ebMiERe3VqhYxMraLV9ORjznxlz+TJhKAUjT3J4SA5QmXuH/Z9hB4AGlqneo0xp
+    bz+CprenE03EMRkqGyfakoE78Qsw7VLRycID/HrvtvVoJ0t1dQOHCD+x45LA
+X-ME-Proxy: <xmx:MxgHa1LE7BY1xPlAH3eg9pZQGXfrBgrgYkLGwDYxdsBsD8CcRQ58eQ>
+    <xmx:MxgHa_GKAunKqqwT73lDAwq5Z54JGH5aDVOTFWblLCmFesxjAG_AsQ>
+    <xmx:MxgHawDwhooYMC1W7uDaQ0z2CJwlvCYKd2Oix8stup1yTy5lOFi_ng>
+    <xmx:MxgHa6-K1783iAYFTmC7zmoqvhUNPjujuh80a5iYYlIGpflQ6KvgaQ>
+    <xmx:NBgHa3iRXtAFajUHNZykG2O2ie-Ij80fUeJJxt45UZgPalVbs9KNqXmE>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Nov 2026 12:07:39 -0500 (EST)
+ 25 Nov 2026 12:17:39 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Wonseok Oh via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  Wonseok
- Oh <wonseok_oh@korea.ac.kr>,  Wonseok Oh <marinelay7@gmail.com>
-Subject: Re: [PATCH v2 2/2] sequencer: save the null OID in abort-safety on
- an unborn branch
-In-Reply-To: <14e015ba240a661d8cf8b6bdbc4d7093bbc42ad3.1795577024.git.gitgitgadget@gmail.com>
-	(Wonseok Oh via GitGitGadget's message of "Wed, 25 Nov 2026 03:23:44
-	+0000")
+ Oh <wonseok_oh@korea.ac.kr>
+Subject: Re: [PATCH v2 0/2] sequencer: save the null OID for an unborn branch
+In-Reply-To: <pull.2317.v2.git.1795577024.gitgitgadget@gmail.com> (Wonseok Oh
+	via GitGitGadget's message of "Wed, 25 Nov 2026 03:23:42 +0000")
 References: <pull.2317.git.1795242633923.gitgitgadget@gmail.com>
 	<pull.2317.v2.git.1795577024.gitgitgadget@gmail.com>
-	<14e015ba240a661d8cf8b6bdbc4d7093bbc42ad3.1795577024.git.gitgitgadget@gmail.com>
-Date: Wed, 25 Nov 2026 09:07:38 -0800
-Message-ID: <xmqq4id496w5.fsf@gitster.g>
+Date: Wed, 25 Nov 2026 09:17:38 -0800
+Message-ID: <xmqqwlq07rv1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -132,80 +129,15 @@ Content-Type: text/plain
 
 "Wonseok Oh via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Wonseok Oh <marinelay7@gmail.com>
->
-> On an unborn branch, .git/sequencer/head holds the null OID, but
-> update_abort_safety_file() writes an empty .git/sequencer/abort-safety.
-> Write the null OID there as well so both state files represent an
-> unborn branch the same way, as older versions of Git expect.
+> When "git cherry-pick" picks multiple commits onto an unborn branch, it
+> saves an uninitialized object ID in .git/sequencer/head, so "--abort"
+> behaves unpredictably. Patch 1 saves the null OID there. Patch 2 makes
+> .git/sequencer/abort-safety hold the null OID for an unborn branch as well,
+> instead of leaving it empty, as Phillip suggested.
 
-Don't later versions of Git including the latest one also barf if
-get_oid_hex() is unhappy on the contents of the abort-safety file?
+The split in this iteration addresses the feedback from v1 cleanly.
 
-In sequencer.c, rollback_is_safe() reads the file like this
-
-    if (strbuf_read_file(&sb, git_path_abort_safety_file(), 0) >= 0) {
-            strbuf_trim(&sb);
-            if (get_oid_hex(sb.buf, &expected_head)) {
-                    strbuf_release(&sb);
-                    die(_("could not parse %s"),
-                        git_path_abort_safety_file());
-            }
-            strbuf_release(&sb);
-    }
-
-If a multi-commit cherry-pick on an unborn branch stops without
-CHERRY_PICK_HEAD (or after "git reset --merge") and the user runs "git
-cherry-pick --skip", sequencer_skip() calls rollback_is_safe() and hits
-that die(), I think.
-
-If there is another reroll, mentioning that rollback_is_safe() fails to
-parse an empty file would make the motivation even clearer.
-
-> diff --git a/sequencer.c b/sequencer.c
-> index 20bfe00ba3..e0bfc6305a 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -644,10 +644,9 @@ static void update_abort_safety_file(void)
->  	if (!file_exists(git_path_seq_dir()))
->  		return;
->  
-> -	if (!repo_get_oid(the_repository, "HEAD", &head))
-> -		write_file(git_path_abort_safety_file(), "%s", oid_to_hex(&head));
-> -	else
-> -		write_file(git_path_abort_safety_file(), "%s", "");
-> +	if (repo_get_oid(the_repository, "HEAD", &head))
-> +		oidclr(&head, the_repository->hash_algo);
-> +	write_file(git_path_abort_safety_file(), "%s", oid_to_hex(&head));
->  }
-
-The implementation is clean and covers all callers of
-update_abort_safety_file().  Trivially correct.
-
-> diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-> index d52fda1c54..fb1ce079f8 100755
-> --- a/t/t3510-cherry-pick-sequence.sh
-> +++ b/t/t3510-cherry-pick-sequence.sh
-> @@ -284,6 +284,17 @@ test_expect_success 'cannot abort a cherry-pick sequence started on an unborn br
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'unborn branch is saved as the null OID in the sequencer state' '
-> +	pristine_detach initial &&
-> +	git checkout --orphan new_disconnected_state &&
-> +	git reset --hard &&
-> +	test_must_fail git cherry-pick base..anotherpick 2>err &&
-> +	test_grep "could not apply .* unrelatedpick" err &&
-> +	echo $ZERO_OID >expect &&
-> +	test_cmp expect .git/sequencer/head &&
-> +	test_cmp expect .git/sequencer/abort-safety
-> +'
-
-Here "unrelatedpick" conflicts against the empty tree, so HEAD stays
-unborn and both state files are checked directly.
-
-We could also add a check to run "git reset --merge" followed by "git
-cherry-pick --skip" to cover rollback_is_safe() as well, though checking
-the state file directly already verifies the change.
-
-Looking good.
+Keeping the fix for the uninitialized OID in .git/sequencer/head
+separate from the .git/sequencer/abort-safety update makes both changes
+straightforward to verify, and the test adjustments in patch 1 match the
+commit log scenario well.
