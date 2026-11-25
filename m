@@ -1,101 +1,101 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.43
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795589113;
-	b=JWzcTTg8W91lo9aZRSHE/H3bMOroWo2NJvUHfzn+j+wtaM1hmnQqe6MDYv0qJKyjVR7P
-	 jLo96nq4TsXbcED7slUymqAlowl3itDUfe2vKCZsjbDu5rGUbxByUXExG8TsU9PATFiD0
-	 wZ6HJsEu9EJNYXoTGbuJCcGK637FMju18MLw1UdchfSAzJNmSotcTo2tXUK0mOQUd12gs
-	 Vk2yMYj0TRsVQ9uXA2X7Dp079DrdHXGh5+BXlMWF+m0n55atoWzhoCJ5X4FLNosC2Ng5a
-	 eupIq6rtnu4u5P3XeIubhaVHT0llhMr/BXj1PwAaTX7CxBH0VQ+qQCm+xaFhIRSQFIA==
+	t=1795589352;
+	b=5KXtzB2RaAgdFrevfM7pQtUDz2El4ZNWVV4CGQs3mw8t31PjxTFTb7cYuPUfXrlKodxx
+	 up+mC+dThdSeDAPrrLNLhHM1BDSuFM/2WImFvmnfbSl19vh1xBt68IVZ2ItxtVLjrUt8k
+	 nL6Hu5rTk/4cgbV9YGYPWKGCiIqvauYsC2mp+jl7Ij0mPuHkyfgExguUbY/rf9kCPm3bb
+	 jMZBtzfNjiJZeOxZB4cySzMUs9S/AiJUZIbkBaQTJYUbB6dKHK4VoMHCgb8wQXmZMZ69q
+	 Hyznd3Rv9tnCMU+/s1hudDCKvlndmkHsSx/i5bIBNQVOrIgNc6lBI9K7hc1MB7LqARg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795589113;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795589352;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
 	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=EVkKq4vKGZFEsMEj4p5LGUx2WPPpsLwLUIgokwy/1WA=;
-	b=19MbmgMHbxctZY0oNYy2PQpCh6ADP2r/mSPi6hFHKHu/RPrJis8lG6HAudGBH8a1a2LG
-	 C4g/nVl1U0IrKFPLAsSF0SKwL8Xj2LaPfv/tkYc7UwLJxV0KbRWQOmjCV24xvNtOC+9Zu
-	 tutXtg7JnQ5SD4pAiptZ4IKNbN3F3WlUsPrlCwH6cmDQxZvISFbnbth9VPo13s0+lmW9m
-	 Mu4XnyA1JOakSSddf2w1PcpsA5SZaAUDWNKMcFv8glhAjJIQfqeuk2/PBLDH71rbTrHnH
-	 hcYSUw7rgYesR7dE9GkeXJKvTn5xOg0cyeT0gGuXwbkw2wbrtpK0KmdwjzSEPnGAPhQ==
+	bh=NlPLgoCOAZ/qHhdbh96C0mjQJ7XmsBhHSaHI9EWpdYI=;
+	b=aBeOgUopHKmKBFmUQDYvtb9kHXaEb95G684rHXIwcK4qmNdfkCXiky8uZHGWWPTUWdq2
+	 Zjy2WnyAMmk040Ml5AVLWCpoaOBNm/u5jQm8t41IlD9sM49Ls6equqHgZaZ6ExoNh1Ts+
+	 +Q+rzqRi/dV/ZVAgu0r07XZN3O4ddX0n6xzBhitLWGG2RbS4KCulCT33OB2Ll21HF0sY6
+	 hmVG/S3TQxnC/UUn8Xm1RqU8ThRr8WlQ4AGMkjwIQAz6+YJLkc9+g/S6CYL1MoSC4HLWI
+	 x4l7PrethNvtRO6b+y3fMKCaxHzYmH8fknHbP3n06J5Qy2Epq9wcQu4Pg48EhlA21eg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=D7kGivWg;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=tsdTtlfW;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.43
 Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B253606A337
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 06:45:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1B253606A337
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C24606A31E
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 06:49:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 21C24606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=D7kGivWg
-Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-67db0791748so6178464d50.1
-        for <git@vger.kernel.org>; Tue, 24 Nov 2026 22:45:12 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795589112; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=tsdTtlfW
+Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-67db0791748so6181514d50.1
+        for <git@vger.kernel.org>; Tue, 24 Nov 2026 22:49:11 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795589351; cv=none;
         d=google.com; s=arc-20260327;
-        b=P9BXmkmGF5nPqa5FBSJWucZ8mhIPei4ztjowD9QKAJ2hwvkV/XDE+s23VCpCjdEVdE
-         78lWvV+m7PlJyWA6G186fPSsTV7xn9ormTleb3L19eAxLmpTpVQ2eZGfBze9/Nv2ko1S
-         1m/2DYN0ohMjQIDGI1uGbd1CNvijBsfYUnccUXDKMTDiT6wUKQhzBsTlVPU2runvaNXx
-         Chck9uHJEmUfd37pR/ja9pXqOne6cdB5DLwNUInndwHfcARMJfZAIxxvflvzgZRYu6yI
-         00QQ9FVlzSxmqDL1FZ8G/FpU7xL4swSsBEHF7B7In/Nk39EmJ5hShmuPGIoH2q9myTKZ
-         ghsA==
+        b=rHQXC+QNJJdJ+hgqI2JpLTKplTIDl9fkI6C0XSLQPCIDOj2DvhBwr++qvIbY0FAtJu
+         lvtogmDLxR4KXavhKtKbk3C6wskyTH1awITCd44yX9JMkLrZ4pEZDxZQgWBI10v/cUzH
+         aVVrkrfPraJCIxUJY1l96lwEJfM4i4gTZaYNzLpyE1V8JUGISiBl4/LuLnm+3nPrvYFn
+         s1n9qXacIJA+zIZoVlGRFc/7mlN6UdAInoN/q4n3VfC7GCSpcDUtoEQGyeqVrXqPQ8cl
+         cxl0YxtonZcfC4d5lMHzHEEcBEJuS6x68vLcEWihYyk8rjpvbhZqRb6XvKxmnwfAXq5H
+         ai0A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=EVkKq4vKGZFEsMEj4p5LGUx2WPPpsLwLUIgokwy/1WA=;
+        bh=NlPLgoCOAZ/qHhdbh96C0mjQJ7XmsBhHSaHI9EWpdYI=;
         fh=zEQd+5l/OBjEyzF6GIR9zxz6BTrbCyvCTKJbHzWgHEc=;
-        b=EZiKUbISSSNZr/mz5WxFgUUiIZfdR4nPxcLmB5rLSnuNYpXzcQk4Zf/LJMHXbNltHv
-         G9jnjlihn01JVdzpnL1QgSLfaGlJYncv+wadF3MwOQaxcFpIhF+eqWZe3OjS7J09k683
-         CwLAz8lBd/iAtAIv+eJa+4D3vaOusd+GnbFWq5gfFF3t/N3SMQbx/fRqi9nu4+RmBKT0
-         F5KcE8a2me2oYhqsCeFRmEemgnf+JRk792h4gug5WnkXSR9jXuZEkSD3rlhUHl0fvKQa
-         o63BSA+9bQGKJbL44CKVvGhr3qPVnjQOqc599X1rQnqQtxkdkUznrEHZrg96R0vBbgVN
-         XTPw==;
+        b=cT5/fzBiaExpZJSQkzxUNBB/s9zaT3/0Cf+CbwPuu1/ec+Mn0b0bU5Qq+E8H4S0KSr
+         9HNovKs95OvVzsV4+KdyadvsMwpkfjNVBDnpA8HkqAENoltUUCQ66fdjtlw2MtASHMyW
+         hBFHwABIrYCGnMJaaTJh0zPwwpkCXL0OeEdsDSadkmXKcHU+9ryveKjngjgf5zyb32ej
+         9qraGdDHtEEkLnF2X9VYLWD7ecixPu5NWjCigQew87y7MhlgXZsxILpHNNNzNYbzRoeB
+         xaZ3Fjad9xqC/9bflJcfDuGSnZZVUeR4y+caxVhfRBBe6uMkE2q6kLmrM2hX5lwOsiDt
+         FvXw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795589112; x=1796193912; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795589351; x=1796194151; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=EVkKq4vKGZFEsMEj4p5LGUx2WPPpsLwLUIgokwy/1WA=;
-        b=D7kGivWgwUr29i62wrNu/E9X678An0ufMTcZuUB2wGurXVlh2N0BwXtU0EKOeIBMjt
-         G84aq76B0nneDwNFUi8jlgX7T4Q7Q2SUZR3mY193AscJClC9BgNiWdhktHHCNlWj5JL2
-         CWyb3GirENtSZoG4lom2cwardt7b7us0hKJ0a4+D10tRNNKRoUs2vxDEj8taMzDmcast
-         SXJVldolyjZt6I+66ibanH2VfYNct/3a0uihC8m+dNJDULzKAMz5uaOazJsqbgPsSuTd
-         LIaOf1qZ9+XdekPV/ULHxMPvm/TcVj96KHGD5HEnmodAm829+VW68MC3nvbOkDQfIY4x
-         O8ew==
+        bh=NlPLgoCOAZ/qHhdbh96C0mjQJ7XmsBhHSaHI9EWpdYI=;
+        b=tsdTtlfWWjEx4x1ygSrkByhIYf6PUxrADUeWuAjAABQyYfC9agr7oPJr7z+Uic16jw
+         SpG/r8U2Q++Glz/gWg4xLMSfmNMjQIgPsSh0+nohSaO7bAnXluJaoi6N9NY/QaGRl2Gr
+         ll+O8iLIKplRJZsO37pm16nvS4FqKhIDGfYWbkcQdJXZe/JDUX+wlZ5kELLPrJILNvD4
+         nugv2O/DE2KHAVK7iXkH0emX9SKyPtRRP75JrEIRphsN/gzLlwtjUEoOmK28mO1QXR2+
+         Gtk4rxqq4uFw3LbvFm3uR596mZ1kAxsWC5tWOVn8A23s+QAJcoQYMqllJpRoDzXPntLy
+         ZkKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795589112; x=1796193912;
+        d=1e100.net; s=20260707; t=1795589351; x=1796194151;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=EVkKq4vKGZFEsMEj4p5LGUx2WPPpsLwLUIgokwy/1WA=;
-        b=b202s6Zg+Xbq/abpj77UCX0wM/4ROGG6VgcLHtLFaMxfiaUMbmJtADFpeIMak6yL9j
-         eOcD1pdJKYUG1GMg5OT42hpcA9mGcsHf0v6mT4NqgSzMLdhPVefl+m3MLhDPhv2JA0yX
-         7NUVMDSZqNq8UPppBhp+wsjNtppA8ZWELXY+Ctdjt3DHcyx4pyQ2phBYTMSZXAg25mYZ
-         M4zv4qdPdqwkZX89ng8Hkfs0QOwkLqTMv6wQjpvAxIoVMJUwKqmUh2wtVoKlc35vCTOy
-         0Ax7FW4lQZghV7JU2klhJjC9l+7WF+LUhmZqTWjv7/aKT4HHSvnPNr414Nj10V9uW9wc
-         7vNw==
-X-Gm-Message-State: APuU4Z8am13F+JsS9tToI+jJNPYUlY46irncQbohsUt5x7/s3OOtaeAV
-	2TwQkD6LFE4oQA7OCzJkyxtCOM9NyfoUvUC84NrkD7wjW9yLM90R8KS1JNm06riRAEuRFzC9RE8
-	VbTsu5PETT6g26hUiiz1dLfHdUKwjf/E=
-X-Gm-Gg: AZFdTZf19j1M55M4soUi3/BF1Lvsxt9ztXSLObtMC7YXwMCzGn4L72D+xCk+k8RTVLf
-	YQhrmcEnrwmBMIcYrQKrgH8pufiXtEZ/ZqkmDvJyo9aFchnnhtEqmBJFlicsgAdhwgYL3CZB88P
-	Ez6YWwXhC7WPwejErXdSJlrwazI5dSghtD4w6vxBPS6XyIzpSYp/zMwLeyBzJr0dr83Z37gwUGv
-	l0cllP1OOCchlUgapuRQ90bnTPtjbygtyen7MyAeJMv/1lf2KKv+T1UG856Lo6JJetG7qjJpaBH
-	fdbq/soKnF72LxAJ7uhvYxfTONYa91rnLCWrybH8WavWN9jBPjHyNSf3xg14ga9gWqr7x42DLYM
-	mo6ScVZH79/B6XVRm75zH19b6b+2yemGNNpqRakQdsjafg0jHn+ofq1JzgJgKO4eVgP/2sjXzYg
-	HUE1y73/dW7f8bwXrvPg/r4x/GrHgFZkkuobC8IR5nr4nT/Km/up38U9aBXpmUkX6HJDrxXUOVV
-	5VR+sJy+4+yUPN0XgESKGq2eVtakaIrmrSGjOo3
-X-Received: by 2002:a05:690e:1c1c:b0:67c:1dca:7e0 with SMTP id
- 956f58d0204a3-67e03cff709mr5362425d50.14.1795589112169; Tue, 24 Nov 2026
- 22:45:12 -0800 (PST)
+        bh=NlPLgoCOAZ/qHhdbh96C0mjQJ7XmsBhHSaHI9EWpdYI=;
+        b=AWKbrKr8+MJZR9clIiqcbSuADN3L859mZtwApeqz61WZ4Swm55u64EDbZ//KSkMhEz
+         Jh//uApO8mU/bODfdVAaU/IAykHJaC/rnRxoEZrMX5aO4b1NYMpwyNpNRUTzpK0o4hjy
+         1LBRviVK//GEIXFPBABYzeRiJmJ1y5HVbfJWwLh4+F3eY67Na2VUZbukpYGu9gT+PtJ4
+         BU/fr0GJ2ksLMBSr1CR9bRuMb+mr0iMIzcl0aTb5AOn3H7iRvYxNq9hu3oWvxi7Im6AW
+         QMjKyvBmXv9W3k4HLeCEYZIh3tmKufdwL0/3LOKsc71H0eeF9M+9+RLKWHjiOdEdAFEg
+         CDDA==
+X-Gm-Message-State: APuU4Z8VljkhJODxUzxEBySlAoF7nF3wS++u9q38TsvatfQGOoNr0GH/
+	kHq9FFQJTT+wN1NakH7MqEp7iI5d577ubM6y3snyWCLSxn9K3pBzaH9qUFEF6auL1YLDFVKGx4C
+	rFEbAOAvFEz1Cq9i06H/Sbjy3neXT0Yw4rIvNeuk=
+X-Gm-Gg: AZFdTZfGcB/w0mCPY8sdC9WAU+4acYTY8grCclEXAa/K+xxnLhBo1IFJpV3QkgzysTK
+	OGCbgdarYVcl6qSFNkXj+hw4izhu9hcW6XS8zONiIzHGkEwgC1Y4Opwqg3ij9WhBI6QvoTdO8wf
+	HOLpI3lgDxQqfcEiRIcFBqusXsoC1CNEpi2Tc/v72gWkzTIKr3he0Cla2lSEdwthUJ3PbOR2Nas
+	2TtqERyZUiY1cbW/1SXF6PaXn71971eGPmmecev7EB8u1pDkR5WupJjV2R5qOT4KH5NY0YzjFS8
+	JvIhXBeUkej4QJjfqkN8brFX6G0KPEzYEOO4Pi2vVM57OAvsFt715FBK4wERhIWG0LlQpzmNBpi
+	qg2DW5AqtrbUHyNBQj2FEoObcoAmPEIeSiXXtEcQJIrWpdkd2+HPik778WXA1/pkzvliwZjlPuT
+	EuEsTYS+YL5Db1Qua9orcPzfl+NMvMSW7MpkN6O2AByB7YrKC8tvzg52XQ5LdNq7mh4LdrVA7WD
+	HorKOkmMd2HVp7a0pQM1wwsPg5G7zNbghi+xoBv
+X-Received: by 2002:a05:690e:128b:b0:67d:b274:39de with SMTP id
+ 956f58d0204a3-67df44251b5mr6470057d50.65.1795589351060; Tue, 24 Nov 2026
+ 22:49:11 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -106,14 +106,14 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 References: <20261105203344.48513-1-okhuomonajayi54@gmail.com>
- <20261124172146.18330-1-okhuomonajayi54@gmail.com> <20261124172146.18330-3-okhuomonajayi54@gmail.com>
- <xmqqtsl5g28h.fsf@gitster.g>
-In-Reply-To: <xmqqtsl5g28h.fsf@gitster.g>
+ <20261124172146.18330-1-okhuomonajayi54@gmail.com> <20261124172146.18330-4-okhuomonajayi54@gmail.com>
+ <xmqqy0ahg28l.fsf@gitster.g>
+In-Reply-To: <xmqqy0ahg28l.fsf@gitster.g>
 From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Date: Wed, 25 Nov 2026 07:45:01 +0100
-X-Gm-Features: Aa3M54rehO0dckVEFGrMobb0-lROvlE3O_hgx5PEC7yf409wx66ZBfECwJB2jmI
-Message-ID: <CAFpMFfDnfJRt1HGx60esEeC-spfBbr4KKzp9ocLFceAMESx1yg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/5] notes: use the tree's repository when reading notes
+Date: Wed, 25 Nov 2026 07:48:59 +0100
+X-Gm-Features: Aa3M54qm2f3w3ioDV2Ec-lP0lou5vI60mQIGcPXTwOVvmQp5YBR_TZ7cmlK4qdw
+Message-ID: <CAFpMFfBwDU+iwxSsZPDK0L23moJQEfhD-zDqXWoaCbn+WQFctg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/5] notes: use the tree's repository when writing and pruning
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, christian.couder@gmail.com, ps@pks.im, 
 	usmanakinyemi202@gmail.com, siddharthasthana31@gmail.com, 
@@ -122,23 +122,28 @@ Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 On Mon, Nov 24, 2026 at 1:34 AM Junio C Hamano <gitster@pobox.com> wrote:
-> But others? note_tree_find() calls note_tree_search() which by itself
-> does not touch 't' at all [...] The conversion in this step would cause
-> them to dereference t->repo without checking if t is not NULL or
-> t->initialized [...]
+> Unlike prune_notes() and write_notes_tree(), copy_notes() does not like
+> to be fed a NULL as 't' and use the default_notes_tree as a stand-in.
+> [...] Dereferencing t->repo->hash_algo here would probably be wrong in
+> such a case. Instead, this function probably want the same
+> if (!t)
+> t =3D &default_notes_tree();
+> assert(t->initialized);
+> dance as the others have.
 
-note_tree_find() has a single caller, get_note(). It replaces a NULL 't'
-with &default_notes_tree and asserts t->initialized before passing
-t->root down, so 't' is already non-NULL and initialized by the time we
-read t->repo. note_tree_search() not touching 't' doesn't matter here,
-since get_note() has already dereferenced it.
+You're right. copy_note() reaches t->repo->hash_algo without ever
+substituting the default tree, so a NULL 't' would crash where it
+didn't before. I'll add the
 
-The other functions this patch converts are safe too, for slightly
-different reasons: remove_note() and format_note() guard a NULL 't'
-themselves, and add_non_note() and load_subtree() are only reached from
-init_notes() (and load_subtree()'s own recursion), where 't' is the tree
-being initialized and so is never NULL. So I believe this step is safe
-as it stands.
+if (!t)
+t =3D &default_notes_tree;
+assert(t->initialized);
+
+dance at the top of copy_note() in v5, matching remove_note() and the
+others.
+
+And thank you for the thorough read through the whole series. The
+reviews have been genuinely helpful, and I'll roll all of this into v5.
 
 Okhuomon
 
@@ -147,26 +152,51 @@ wrote:
 >
 > Okhuomon Ajayi <okhuomonajayi54@gmail.com> writes:
 >
-> > note_tree_find(), add_non_note(), load_subtree(), remove_note()
-> > and format_note() already have the notes tree, but still read
-> > objects and hash algorithms from the_repository.
+> > write_notes_tree() writes the notes tree into the_repository,
+> > and prune_notes() looks for missing objects there too. Both
+> > already have the notes tree.
 > >
-> > Read them from t->repo, the repository stored on the tree.
+> > Write through t->repo. tree_write_stack_finish_subtree() takes
+> > the repository, passed down from the tree. prune_notes() hands
+> > the repository to its callback in a small struct.
+> >
+> > copy_note() also writes through the tree, by calling add_note(),
+> > so it uses the tree's hash algorithm for its null object ID.
+> >
+> > Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+> > ---
+> > ...
+> > @@ -1368,7 +1379,8 @@ int copy_note(struct notes_tree *t,
+> >       if (note)
+> >               return add_note(t, to_obj, note, combine_notes);
+> >       else if (existing_note)
+> > -             return add_note(t, to_obj, null_oid(the_hash_algo), combi=
+ne_notes);
+> > +             return add_note(t, to_obj, null_oid(t->repo->hash_algo),
+> > +                             combine_notes);
+> >
+> >       return 0;
+> >  }
 >
-> Hmph.
+> Unlike prune_notes() and write_notes_tree(), copy_notes() does not like
+> to be fed a NULL as 't' and use the default_notes_tree as a stand-in.
+> The function begins with a call to get_note()
 >
-> Some of these functions like remove_note() and prune_notes() use
-> default_notes_tree as a stand-in when NULL is passed to 't', and they
-> also assert t->initialized before accessing t->repo.  So it should be
-> safe to convert them to access t->repo instead of the_repository.
+>         const struct object_id *note =3D get_note(t, from_obj);
+>         const struct object_id *existing_note =3D get_note(t, to_obj);
 >
-> But others?  note_tree_find() calls note_tree_search() which by itself
-> does not touch 't' at all as far as I can tell (which means 't' can
-> safely be NULL for notes_tree_search() because it does not dereference
-> it to access t->repo).  The conversion in this step would cause them to
-> dereference t->repo without checking if t is not NULL or t->initialized
-> member.  If they are already dereferencing t in the existing code and
-> assuming t is initialized, then this conversion is safe.  Otherwise, I
-> am not sure if a mechanical the_repository -> t->repo replacement is
-> good here.
+> so they can give you note and existing_note back to you safely, but t
+> copy_note() has may still be NULL, if the caller gave it a NULL.
+> Dereferencing t->repo->hash_algo here would probably be wrong in such a
+> case.  Instead, this function probably want the same
 >
+>         if (!t)
+>                 t =3D &default_notes_tree();
+>         assert(t->initialized);
+>
+> dance as the others have.
+>
+> Together with the earlier review on [2/5], if we were keeping
+> default_notes_tree support, we probably would want to tighten
+> how t=3D=3DNULL is handled by each function on the call graph before
+> moving forward, I am afraid.
