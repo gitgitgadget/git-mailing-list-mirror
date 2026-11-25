@@ -1,86 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.227.17.21
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.47
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795616429;
-	b=2xc3Dxeo8fSc7egrFE5w+wLPVyi0j55q9UmmyTIEjEcKBwf4qx8cOHqu7kuNvWEMLEtb
-	 gQhKUK75IVdsSleUHKFwdw5hqNbyP9MF/+H7dOsvKzdjzTdI1lU9phS6d4QKcklBtNV4Z
-	 15qJ2Ts+AwcOdz10dxJ7Ww6vgnu7R3grabHf8FiveVcNfug9Ke7WkAEiG89IbwW6WCXGQ
-	 27aho27OcQ7BopEnf5/YYyLfZgcGeEUxhx2QcSLDd5g1nSs59wJlg2dFJsN8toRPuPVDY
-	 AWS81jQM6Kn0ZPLvNTJDIDhlbqpvKAmofJl3bO8FwyG/EBVKtp1590yG2Nzrzuvop/w==
+	t=1795617478;
+	b=hWQizvUlyYcRv7yTjbbNY7xb2LEKAAZDVBrbx6YgbuwhD8PGfgvV0YhcXUV/qzsgQowm
+	 HJfcoDwYf0C7+GdGSkL5Fgl4AtyPxocopUxwT5OimERszXSjmP/6jfgyNntLVqN/CfN+H
+	 xiu+q+MCtBigEZRFvIYw/k1qIphqQ6LzUTUKH0iInIcY8vcfkF9pMUEFwFfEtSS2Z1ye3
+	 Kl9wrLIql4WWL9i90xeJfblZc2BEBoMaE01N/NI9XaUkU+fQ14mJjKI6C2On3/5lyhdgF
+	 0jXNRCKfM2QrUs63dHVCfMCPHY3xKk8eM4Yr0D0ljJs+VT6M/bgM8dvMe8nkdDbhclg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795616429;
-	h=DMARC-Filter:DKIM2-Signature:Message-Instance:DKIM-Signature:
-	 X-UI-Sender-Class:Received:Date:From:To:cc:Subject:In-Reply-To:
-	 Message-ID:References:MIME-Version:Content-Type:X-Provags-ID:
-	 X-Spam-Flag:UI-OutboundReport:Content-Transfer-Encoding;
-	bh=d2Y9mnG6pAcE4m13CZJrnE1oylaqOAnOw2XrKNP2VuA=;
-	b=ZistRarvFeAabrxohUVFsyxEpY7+U32+Bmc1YxJ1Lmz9V1ibdcc76puXLuz1vwdPWM0u
-	 gtbQvTPXbG28xwaTJdNAXrX6Q+CMYtVzpzy8rJNQo4DzBehss3Z0UQirar4kpqbBhkCxN
-	 FJjfmXC6CpLxrq3BIhVnwYF0O46Zb10JJgnkmPXCuRpNxGDnHfCHOuD9Am+Gbr3Q2rxJS
-	 3n9MjowJE5TXFfSgHemJfUX9jVPy78C8rcGzZA4xUIX98RBV7gKQaFNLQ1txrAl21n2Xv
-	 71OzOCfNkV5T4pmn7+A3ijV2UM1PEYalO/12HCMgGzd7SvpLh6Tg19nGbYVC5UHpkDQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617478;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=wWzW6MYlKcTbOnj8GC4hVTG8TEOemy/ifvkTa4qXcB0=;
+	b=4R069X/kc2aUKScTo0sgQhf8KAF2WbzBiPkYWRvXBNjTdPeXElvdxj8+Ra3UmhznERte
+	 wlvkKb6RxpMjMwLpkk/Q4LimG5NJ3c0nzY20XV8CB7y2S0KYaefLWfMed5iOToDMQQGxM
+	 KuEpdNruF3QFELlpE6QqOV29+RB0YnDPmRTxT4TXnsMcC2LEVhzSCffHVtNkPCCOnI5uX
+	 ebKs4eQ2lxfK2tuftCeiY5Qvb9y9DQFaVZHJN3UF4J6TCJQTOSPIellXFz8d6oUHgXT5M
+	 ob4QqqCGKqviZKqEGPiv0V/n1ic5ezF2rR2lpcMbKJsLFd/itUBMS7v7iuftdps2g/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmx.de;
-	spf=pass smtp.mailfrom=gmx.de;
-	dkim=pass header.d=gmx.de header.i=johannes.schindelin@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b="gcP/pkE8";
-	arc=none smtp.remote-ip=212.227.17.21
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YoIF7TKd;
+	arc=none smtp.remote-ip=209.85.128.47
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52161606A31E
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 14:20:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 52161606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B2E606A321
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 14:37:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 07B2E606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b=gcP/pkE8
-DKIM2-Signature:  i=1; m=1; t=1795616426;
- mf=PEpvaGFubmVzLlNjaGluZGVsaW5AZ214LmRlPg==;
- rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
- d=gmx.de;
- s=s31663417:rsa-sha256:uZfGyXZc2vEmex4RVOVZsW7osp2A
-   3N6Q9ge4cC8dA4On+8nGlDwPS1jJ/xsvxeSnsRwtDR0wXlWw4mufwMuwhmANxYjJ/Irx8cjoEE7
-   iixeKoGbQAdw2spzT0Y2IP4bcomvfEfjbzgChVAWSlWU3cB4jIzt8XDcDgOGuUseua6Z5Xmg1Lo
-   cghY9flQ5E0Nvt15PnTVpNfv1c7f2zhx3rE8mnICZTkyggJ8lvW61LSXmz/niptHRP3H8KrnDNJ
-   2doV6vhJYx7umjx3pJc3Ios33Axgd68GgPvEvwy8jNRnam0ezyKFcAD5KppafoO0pAEPtyqp/Zf
-   v5TyB8qFMpSRPQ==;
-Message-Instance:  m=1;
- h=sha256:
-   ThCHWgIh3/jAxxfGkcRvS6nwyMSGZKwENAamcCOSSfQ=:
-   ylDp6pvw43xyftAnc+fduFNT02XQSf6FZMH8Ly7LMao=,
-  sha512:
-   LbokKLrjTkgcSgsiJMfshNzUPyguRh0Lm2QCFcahiXeVHkKSRQdZBuysxQil7fTQpl1gicNv3LOTwgtyQGpbcw==:
-   lTX/ihpE8QXhgUDI34knPgExduGV4OFp2E70cPh/nasE2coePDnNpPXkpTltNfj9VvBgo4hhyEq9JNqsS63VjQ==;
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1795616423; x=1796221223;
-	i=johannes.schindelin@gmx.de;
-	bh=d2Y9mnG6pAcE4m13CZJrnE1oylaqOAnOw2XrKNP2VuA=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=gcP/pkE8dXtZy7YMCgkMiTlsMeTZq+NWxBb6buS1cgzZFnwtPmdsAcyi7r4yV7u2
-	 91KpHjRK70g+ChPNg3dsJzTDxPxxSwmf02JgyVdHcpU0LvcfNuKqKrrkE2UfFyDsc
-	 c4kSjgIvKwttMnJ+v0u1jeQQsuul+YFu9T2KSPqgW+H4X6IwqxVXstKeLiDiG6q4E
-	 9SdbOCk7ZChmweQA1bDzyNHGiNTv1zEUndLONVvFAtT/MVRhPTcyR/sGhZYPucyAq
-	 jWY8JnlDbcKMO20m+3VLAbIfNRtR39Gqx5YPyCc9VRJi/6oO8COJk6FhmnHTbO07r
-	 eYHPPfJ61henGrbxnA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MysRu-1yQg451Oxm-00t6D0; Wed, 25
- Nov 2026 15:20:23 +0100
-Date: Wed, 25 Nov 2026 15:20:16 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: phillip.wood@dunelm.org.uk
-cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
-    git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
-    Harald Nordgren <haraldnordgren@gmail.com>, 
-    Simon Richter <Simon.Richter@hogyros.de>
-Subject: Re: [PATCH v2 3/5] wrapper: avoid byte-count overflow in
- write_in_full()
-In-Reply-To: <2cf35f82-9477-4ef8-bbbd-42fd06d487ea@gmail.com>
-Message-ID: <3b2f0d79-c1a3-6b70-54ea-64983d3b446b@gmx.de>
-References: <pull.2253.git.1791958171.gitgitgadget@gmail.com> <pull.2253.v2.git.1795472027.gitgitgadget@gmail.com> <b24520c50dc1ccc079ce6194b9ff9028e38e1b2b.1795472027.git.gitgitgadget@gmail.com> <2cf35f82-9477-4ef8-bbbd-42fd06d487ea@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YoIF7TKd
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4bb702a7548so52147215e9.1
+        for <git@vger.kernel.org>; Wed, 25 Nov 2026 06:37:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795617476; x=1796222276; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=wWzW6MYlKcTbOnj8GC4hVTG8TEOemy/ifvkTa4qXcB0=;
+        b=YoIF7TKdh3MzWKcNfQq0SiA41thaDhlp3teb2ruM3DXKFCBfsolsLIY+N0j2f4ac9G
+         AsmU3xM4H6uv7zKTfci+xhjgtfyDp1v6fAVh9hd3H95gkv6+dNqXN2gPZrSwRYxKYUeu
+         Yy4u+ctyviwDeVywz9RywwNkPWW7Ae2LcmuMwskIKydgtkRfK+gDSnCejhMh5k8OXHW5
+         zcn+BM25Xp8XUTpy2gRMbVU0oGMQsO8PBJJLTmseVVNAmmuzNcnrZcqztTaJ41IJXeaY
+         YTGdNggHQveryHqRC/oii+Cm4n0Lfg10A/fATDwolW9mRgy86Pa52TXH9/Scuhh3sPs6
+         fx7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795617476; x=1796222276;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=wWzW6MYlKcTbOnj8GC4hVTG8TEOemy/ifvkTa4qXcB0=;
+        b=OXH3D2MuoutZCcI7mR6rkrdhUDbfNbDIQKDQJJDFqljJJcdnguwZkKJIvQukLzq2kd
+         CPy/Ut+y5IROaVFTZSCeXrIPz+sfOl98smuRHLQHLrLR5yIvKmKvlLWLAgzUZF7UQ8fG
+         UhhLg4uK2freRvF2bY2bRqPxH4CgvszBdPCCYClu2eAR07jL7V1J9md0BZmEmSuI6muD
+         pK0Sjj0e/JVBsu6ibLpAMc/o1ZpRXBc+kKKuMv0+X/kUZ8bNmQ7CJnazdZmx1rXV2M8i
+         +NAffJeMhx5ozuVvqKiIR356I2ov3G4EKCibvJn5XaPC7RPe587OptlgvhBGsRZGmux0
+         6mGA==
+X-Forwarded-Encrypted: i=1; AL+hErFH0ZpqDVr18OxliJXbaj14xmdI5nJO4+L6FGsS44413KTdkOZWrRzOMWcru5SOathCUkY=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/BKYHsj7kZZv9ynNA3dh7cGeQ9+lIt1s61VxByAHC4cOpEKwfx
+	TpHV8F2zxCaAgVTyCnLKNwDEUgTaE6i+i8j4M088DqHrEJ1jeGyQhec/
+X-Gm-Gg: AZFdTZd/5VxZ1CNSi9fOBPK6Yo9lc4oIPML1wqcITt9k4e7r/6g4qmYOBhGbWA1eUko
+	dURoo74PD0F8K8LVQuH1eTjMaoL/2SlvJagbvWvwgbrwSiuIuTiRJdq6kXUtciwkGn5d1XJW7bN
+	t7J6A+YSLgT5tl8Xiwlz3fnZf3Q+6/Co14cbtbb0MFpPN9YVWg66P4wmOPRkLEpkg1fS7AgDYFw
+	1lSALbtCvaZufL/vrpNe95mLX515zl0WnbzgeJ4PMD3ZFHevQ4Z2jp/euc7kdGlbI+Bh8rWuxDq
+	Q/VoHUmQ689adKLOI1sYyYU48Mex24RiDQxN1m5YPz9UVjWkjKcGLzp0dsuDZ2e4zjooEicuPv4
+	ZOzLAn7PxOGvNF+ydUzEmmmpdqm0F1t2dPCq240AbaJfJyznhUowu/JE+hIBIAjpxdCPrJoaonz
+	CzvFGPvpkuP/ExRR6cWWkEqGjAAa0iKC6oLAKhf1ZQHNPI9SxZ/rxDv23cqeub5nmpmA+CMa2VY
+	QEa63wxPTcatq1wintS9LYN/YkeIts8JHUN9UdUuMO0Go2jcouz3J6KZU1Q50QavvJwHcyXvuQn
+	2pDVaZB2ObbVxqmzY40w3Flfrnvu+i4Ir6TZC1YdE3xmnLVGDRo8UdSHkeYVRr91lh+ZBVgnKfk
+	MzVt9ufA=
+X-Received: by 2002:a05:600c:638f:b0:4bb:6752:8400 with SMTP id 5b1f17b1804b1-4bb8881a2bbmr333037335e9.17.1795617475930;
+        Wed, 25 Nov 2026 06:37:55 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab6a67fe75sm39640762f8f.24.2026.11.25.06.37.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Nov 2026 06:37:55 -0800 (PST)
+Message-ID: <bfb8aad3-7cab-4394-a16c-be743562eced@gmail.com>
+Date: Wed, 25 Nov 2026 14:37:54 +0000
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -90,387 +93,383 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-Provags-ID: V03:K1:iE4VwxOe/1z0JesPB8mUXg7g5sngqLcDxH7KRnjGWVWxJaddnZJ
- TXZV7COEkMpYuU195JytSNCHkLzjXTM9I2pUfa1OeigMxwZxXQbvIQMkV/zJOnMBS9z7uUN
- zYdueqhaQG7YuRdpiemtHPK29u9bUttbyB1pk7WfG9rVoCvJ6f80aG08eXBZVIw9K7S4jp4
- ZlmarrE4hDl2Txb7zEylA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:wEgYo+7phbo=;sqLiSbmruEOtyqAej4YtGI0BfAE
- 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
- bXfDBqtEfc8Ug7BqWl+XrY=
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 0/3] commit: allow -m/-F/-c/-C for all --fixup variants
+To: Erik Cervin-Edin <erik@cervined.in>, git@vger.kernel.org
+Cc: gitster@pobox.com
+References: <cover.1790082176.git.erik@cervined.in>
+ <cover.1795562078.git.erik@cervined.in>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <cover.1795562078.git.erik@cervined.in>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Phillip,
+Hi Erik
 
-On Tue, 24 Nov 2026, Phillip Wood wrote:
+On 24/11/2026 23:32, Erik Cervin-Edin wrote:
+> Changes since v3:
+> 
+>    * New 1/3 refactors prepare_to_commit() to write the --fixup subject
+>      in a block before the message-source chain, as --squash already
+>      does.  On v3 1/2 Phillip found it unfortunate that the -m and -F
+>      arms had to be guarded with "!fixup_message" while the fixup arm
+>      duplicated their work [1] and I agree.
+> 
+>      Originally, I wanted to avoid a refactor -- but the guards were
+>      getting nasty, and a refactor is the proper fix.  It turned out not
+>      to be that difficult and I think it makes the series land cleaner.
+> 
+>      With the subject written up front, the -m and -F arms serve every
+>      --fixup variant unchanged, and the fixup arm is left with only the
+>      amend case.
 
-> On 23/11/2026 22:13, Johannes Schindelin via GitGitGadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >=20
-> > Accumulating the output count in `write_in_full()` can overflow becaus=
-e
-> > it counts via a `ssize_t` variable which can overflow for valid `size_=
-t`
-> > sizes passed as input.
-> >=20
-> > Since this function either completes the requested count or fails,
-> > callers already know how many bytes were written on success. Let's jus=
-t
-> > return status instead, so the total transfer size need not fit in
-> > `ssize_t`.
->=20
-> This makes perfect sense and the changes in this patch all look good. Lo=
-oking
-> at how the callers of write_in_full() use the return value, there are a =
-few we
-> might want to tweak.
->=20
-> In config.c write_section() and write_pair() both return the result of
-> write_in_full(). All of the callers of those functions are only interest=
-ed in
-> whether the return value was negative, so there is no problem with the c=
-hange
-> in behavior, but we might want to change the return value to an int to m=
-atch
-> the new prototype of write_in_full().
->=20
-> In entry.c:write_entry() and parallel-checkout.c:write_pc_item_to_fd() w=
-e're
-> still using a ssize_t to store the return value even though it is now an=
- int.
->=20
-> In odb/streaming.c:odb_stream_blob_to_fd() we're also storing the return=
- value
-> in a ssize_t. Unlike the cases above we can simply avoid storing the val=
-ue at
-> all.
->=20
-> One final note - in refs.c:transaction_hook_feed_stdin(),
-> sequencer.c:pipe_from_strbuf() and transport.c:pre_push_hook_feed_stdin(=
-)
-> we're storing the result in an int and then checking if it is negative, =
-so
-> this patch actually fixes potential bugs in those callers.
+This change looks good and makes the second patch much nicer. I'm happy 
+with everything apart from
 
-Great call-out! I adjusted the callers accordingly.
+     Plain --fixup never opens an editor, so -c there behaves like -C.
 
-Thank you,
-Johannes
+in patch 3. It would be much nicer if we didn't change the meaning of 
+"-c" when it is combined with "--fixup". Users who do not want to edit 
+the message can use "-C". I've not looked at how easy it would be to fix 
+that. If it turns out to be tricky then I'm happy to merge this as is 
+and leave it as #leftoverbits.
 
-> Thanks
->=20
-> Phillip
->=20
->=20
->=20
-> > Pointed out by Coverity.
-> >=20
-> > Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> > Assisted-by: GPT-6.1
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >   Makefile                        |  1 +
-> >   imap-send.c                     |  2 +-
-> >   notes-merge.c                   | 13 ++--------
-> >   t/meson.build                   |  1 +
-> >   t/unit-tests/u-reftable-stack.c |  2 +-
-> >   t/unit-tests/u-wrapper.c        | 42 +++++++++++++++++++++++++++++++=
-++
-> >   wrapper.c                       |  6 ++---
-> >   wrapper.h                       |  7 ++++--
-> >   8 files changed, 55 insertions(+), 19 deletions(-)
-> >   create mode 100644 t/unit-tests/u-wrapper.c
-> >=20
-> > diff --git a/Makefile b/Makefile
-> > index 4c84eea6e2..0687eb82d3 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -1564,6 +1564,7 @@ CLAR_TEST_SUITES +=3D u-strvec
-> >   CLAR_TEST_SUITES +=3D u-trailer
-> >   CLAR_TEST_SUITES +=3D u-urlmatch-normalization
-> >   CLAR_TEST_SUITES +=3D u-utf8-width
-> > +CLAR_TEST_SUITES +=3D u-wrapper
-> >   CLAR_TEST_PROG =3D $(UNIT_TEST_BIN)/unit-tests$(X)
-> >   CLAR_TEST_OBJS =3D $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(CLAR_TEST_SUI=
-TES))
-> >   CLAR_TEST_OBJS +=3D $(UNIT_TEST_DIR)/clar/clar.o
-> > diff --git a/imap-send.c b/imap-send.c
-> > index bf1d2cf74d..dccc2264de 100644
-> > --- a/imap-send.c
-> > +++ b/imap-send.c
-> > @@ -392,7 +392,7 @@ static int socket_write(struct imap_socket *sock, =
-const
-> > char *buf, int len)
-> >    	n =3D SSL_write(sock->ssl, buf, len);
-> >   	else
-> >   #endif
-> > -		n =3D write_in_full(sock->fd[1], buf, len);
-> > +		n =3D write_in_full(sock->fd[1], buf, len) < 0 ? -1 : len;
-> >    if (n !=3D len) {
-> >     socket_perror("write", sock, n);
-> >     close(sock->fd[0]);
-> > diff --git a/notes-merge.c b/notes-merge.c
-> > index d361e70a48..991490a187 100644
-> > --- a/notes-merge.c
-> > +++ b/notes-merge.c
-> > @@ -319,17 +319,8 @@ static void write_buf_to_worktree(const struct
-> > object_id *obj,
-> >  =20
-> >    fd =3D xopen(path, O_WRONLY | O_EXCL | O_CREAT, 0666);
-> >   -	while (size > 0) {
-> > -		ssize_t ret =3D write_in_full(fd, buf, size);
-> > -		if (ret < 0) {
-> > -			/* Ignore epipe */
-> > -			if (errno =3D=3D EPIPE)
-> > -				break;
-> > -			die_errno("notes-merge");
-> > -		}
-> > -		size -=3D ret;
-> > -		buf +=3D ret;
-> > -	}
-> > +	if (write_in_full(fd, buf, size) < 0 && errno !=3D EPIPE)
-> > +		die_errno("notes-merge");
-> >  =20
-> >    close(fd);
-> >    free(path);
-> > diff --git a/t/meson.build b/t/meson.build
-> > index 1cf1d95f70..8938d4eb47 100644
-> > --- a/t/meson.build
-> > +++ b/t/meson.build
-> > @@ -27,6 +27,7 @@ clar_test_suites =3D [
-> >     'unit-tests/u-trailer.c',
-> >     'unit-tests/u-urlmatch-normalization.c',
-> >     'unit-tests/u-utf8-width.c',
-> > +  'unit-tests/u-wrapper.c',
-> > ]
-> >  =20
-> >   clar_sources =3D [
-> > diff --git a/t/unit-tests/u-reftable-stack.c
-> > b/t/unit-tests/u-reftable-stack.c
-> > index b6f1c6cc52..3e19f0466a 100644
-> > --- a/t/unit-tests/u-reftable-stack.c
-> > +++ b/t/unit-tests/u-reftable-stack.c
-> > @@ -86,7 +86,7 @@ void test_reftable_stack__read_file(void)
-> >  =20
-> >    cl_assert(fd > 0);
-> >    n =3D write_in_full(fd, out, strlen(out));
-> > -	cl_assert_equal_i(n, strlen(out));
-> > +	cl_assert_equal_i(n, 0);
-> >    err =3D close(fd);
-> >    cl_assert(err >=3D 0);
-> >   diff --git a/t/unit-tests/u-wrapper.c b/t/unit-tests/u-wrapper.c
-> > new file mode 100644
-> > index 0000000000..713ac0df92
-> > --- /dev/null
-> > +++ b/t/unit-tests/u-wrapper.c
-> > @@ -0,0 +1,42 @@
-> > +#include "unit-test.h"
-> > +#include "tempfile.h"
-> > +
-> > +static struct tempfile *file;
-> > +static char data[128 * 1024], actual[sizeof(data)];
-> > +
-> > +void test_wrapper__initialize(void)
-> > +{
-> > +	file =3D mks_tempfile("wrapper-test-XXXXXX");
-> > +	cl_assert(file !=3D NULL);
-> > +	for (size_t i =3D 0; i < sizeof(data); i++)
-> > +		data[i] =3D i % 127;
-> > +	memset(actual, 0, sizeof(actual));
-> > +}
-> > +
-> > +void test_wrapper__cleanup(void)
-> > +{
-> > +	delete_tempfile(&file);
-> > +}
-> > +
-> > +void test_wrapper__write_in_full(void)
-> > +{
-> > +	int fd =3D get_tempfile_fd(file);
-> > +
-> > +	cl_assert_equal_i(write_in_full(fd, data, sizeof(data)), 0);
-> > +	cl_assert(lseek(fd, 0, SEEK_SET) =3D=3D 0);
-> > +	cl_assert(read_in_full(fd, actual, sizeof(actual)) =3D=3D
-> > +		  (ssize_t)sizeof(actual));
-> > +	cl_assert(!memcmp(data, actual, sizeof(data)));
-> > +}
-> > +
-> > +void test_wrapper__write_in_full_empty(void)
-> > +{
-> > +	cl_assert_equal_i(write_in_full(-1, NULL, 0), 0);
-> > +}
-> > +
-> > +void test_wrapper__write_in_full_error(void)
-> > +{
-> > +	errno =3D 0;
-> > +	cl_assert_equal_i(write_in_full(-1, data, 1), -1);
-> > +	cl_assert_equal_i(errno, EBADF);
-> > +}
-> > diff --git a/wrapper.c b/wrapper.c
-> > index 05a9cd369c..87e1b4bfd2 100644
-> > --- a/wrapper.c
-> > +++ b/wrapper.c
-> > @@ -302,10 +302,9 @@ ssize_t read_in_full(int fd, void *buf, size_t co=
-unt)
-> >   	return total;
-> >   }
-> >  =20
-> > -ssize_t write_in_full(int fd, const void *buf, size_t count)
-> > +int write_in_full(int fd, const void *buf, size_t count)
-> >   {
-> >   	const char *p =3D buf;
-> > -	ssize_t total =3D 0;
-> >  =20
-> >    while (count > 0) {
-> >   		ssize_t written =3D xwrite(fd, p, count);
-> > @@ -317,10 +316,9 @@ ssize_t write_in_full(int fd, const void *buf, si=
-ze_t
-> > count)
-> >     }
-> >     count -=3D written;
-> >     p +=3D written;
-> > -		total +=3D written;
-> >    }
-> >   -	return total;
-> > +	return 0;
-> >   }
-> >  =20
-> >   ssize_t xwritev(int fd, struct iovec *iov, int iovcnt)
-> > diff --git a/wrapper.h b/wrapper.h
-> > index a6287d7f4d..726c5c2f6b 100644
-> > --- a/wrapper.h
-> > +++ b/wrapper.h
-> > @@ -45,7 +45,10 @@ int git_mkstemps_mode(char *pattern, int suffix_len=
-, int
-> > mode);
-> >   int git_mkstemp_mode(char *pattern, int mode);
-> >  =20
-> >   ssize_t read_in_full(int fd, void *buf, size_t count);
-> > -ssize_t write_in_full(int fd, const void *buf, size_t count);
-> > +
-> > +/* Return 0 on a complete write, or -1 with errno set on failure. */
-> > +int write_in_full(int fd, const void *buf, size_t count);
-> > +
-> >   ssize_t pread_in_full(int fd, void *buf, size_t count, off_t offset)=
-;
-> >  =20
-> >   /*
-> > @@ -57,7 +60,7 @@ ssize_t pread_in_full(int fd, void *buf, size_t coun=
-t,
-> > off_t offset);
-> >   */
-> >   ssize_t writev_in_full(int fd, struct iovec *iov, int iovcnt);
-> >  =20
-> > -static inline ssize_t write_str_in_full(int fd, const char *str)
-> > +static inline int write_str_in_full(int fd, const char *str)
-> >   {
-> >   	return write_in_full(fd, str, strlen(str));
-> >   }
->=20
->=20
+Thanks
+
+Phillip
+
+
+>    * 2/3 and 3/3 are rebuilt on top of 1/3, which now carries most of
+>      the change to builtin/commit.c.
+> 
+>    * 3/3 tests: took Phillip's suggestions [2].
+> 
+>    * Log messages: reworded 2/3's history of why these options were
+>      rejected; 3/3 now gives its motivation, with a use case, and
+>      explains the "amend!" handling that the v3 cover letter described.
+> 
+> Background
+> ----------
+> 
+> Today only -m works with plain --fixup, and neither -m nor -F works
+> with --fixup=amend: or --fixup=reword:, which makes those modes
+> awkward to drive non-interactively.  2/3 lets -m and -F supply the
+> message for all --fixup variants.  3/3 does the same for -c/-C, so
+> that all four message sources behave consistently across the plain,
+> amend, and reword forms.
+> 
+> As in v3, -c/-C go through prepare_amend_commit(), so if the source
+> commit is itself an "amend!" commit, its subject line is dropped and
+> only the body is copied.  This is what a no-source
+> --fixup=amend:<commit> already does.  The helper only knows about
+> "amend!" and not "fixup!" or "squash!"; that is pre-existing and I
+> have left it alone here.
+> 
+> The earlier rounds are described in the v2 [3] and v3 [4] cover
+> letters.
+> 
+> [1] https://lore.kernel.org/git/3354eeb4-3b9d-474e-bf9f-8efd2ca3a512@gmail.com/
+> [2] https://lore.kernel.org/git/de12af28-a64e-4472-8bd4-b65200772dbe@gmail.com/
+> [3] https://lore.kernel.org/git/cover.1779792311.git.erik@cervined.in/
+> [4] https://lore.kernel.org/git/cover.1790082176.git.erik@cervined.in/
+> 
+> Erik Cervin-Edin (3):
+>    commit: write the --fixup subject the way --squash does
+>    commit: allow -m/-F for all --fixup variants
+>    commit: allow -c/-C for all --fixup variants
+> 
+>   Documentation/git-commit.adoc             |  22 +++--
+>   builtin/commit.c                          |  61 ++++++------
+>   t/t7500-commit-template-squash-signoff.sh | 114 +++++++++++++++++++---
+>   3 files changed, 138 insertions(+), 59 deletions(-)
+> 
+> Range-diff against v3:
+> -:  ---------- > 1:  ebae1fbe05 commit: write the --fixup subject the way --squash does
+> 1:  4a493867bb ! 2:  051b659965 commit: allow -m/-F for all kinds of --fixup
+>      @@ Metadata
+>       Author: Erik Cervin-Edin <erik@cervined.in>
+>       
+>        ## Commit message ##
+>      -    commit: allow -m/-F for all kinds of --fixup
+>      +    commit: allow -m/-F for all --fixup variants
+>       
+>           The ability to provide a commit message for git commit --fixup and its
+>      -    variations is limited:
+>      +    variants is limited:
+>       
+>      -      * Plain --fixup only allows using the -m flag
+>      +      * Plain --fixup accepts -m but not -F
+>       
+>      -      * The amend/reword --fixup variants only allow supplying the message
+>      -        using an editor
+>      +      * The amend/reword variants accept a message only through an editor
+>      +        (or a GIT_EDITOR script standing in for one)
+>       
+>      -    For amend/reword, the -m and -F flags are rejected: -m is caught by a
+>      -    die() in prepare_to_commit(), and -F is caught by
+>      -    die_for_incompatible_opt4() which groups -F with --fixup as mutually
+>      -    exclusive.  This makes these modes poorly suited for non-interactive
+>      +    This makes the amend/reword variants poorly suited for non-interactive
+>           workflows -- notably when using AI coding agents.
+>       
+>      -    When support to use the -m option was introduced in [1] it was noted
+>      -    that there could be support for other options but at the time the use
+>      -    case was deemed too niche.  Later, when the amend suboption was
+>      -    introduced in [2] -m support for amend fixups was discussed but not
+>      -    pursued, and -F was already caught by the higher-layer incompatibility
+>      -    check grouping it with --fixup.
+>      +    When --fixup learned to take -m [1], it was noted that other options
+>      +    (-c/-C/-F) could also be supported, but were left out for lack of a
+>      +    clear use case.  Later, when the amend suboption was introduced in [2],
+>      +    -m was initially supported for amend fixups too, but was dropped for the
+>      +    same reason [3].
+>       
+>      -    The rejections of these options hark back to when --fixup was
+>      -    introduced in [3] and as noted in [1] -- there's nothing inherently
+>      -    preventing support for them.  The current patchwork of which flags
+>      -    work with which --fixup variants has no strong logic to it, and
+>      -    allowing all of them simplifies both the code and the interface.
+>      +    The rejections of these options hark back to when --fixup was introduced
+>      +    in [4], but as [1] noted, nothing inherently prevents supporting them.
+>       
+>      -    Allow -m and -F to supply the message body for all --fixup variations,
+>      -    mirroring the flow of a regular commit.  -c and -C, which are blocked
+>      -    by the same incompatibility check, are handled in the next commit.
+>      +    The current patchwork of which options work with which --fixup variants
+>      +    has no strong logic to it, and allowing all of them simplifies the
+>      +    interface.
+>      +
+>      +    Allow -m and -F to supply the message body for all --fixup variants,
+>      +    mirroring the flow of a regular commit.  With --fixup=amend/reword the
+>      +    given message replaces the one that would otherwise be copied from the
+>      +    target commit.  Options -c and -C are handled in the next commit.
+>       
+>           1. 30884c9afc (commit: add support for --fixup <commit> -m"<extra
+>              message>", 2017-12-22)
+>      @@ Commit message
+>           2. 494d314a05 (commit: add amend suboption to --fixup to create amend!
+>              commit, 2021-03-15)
+>       
+>      -    3. d71b8ba7c9 (commit: --fixup option for use with rebase --autosquash,
+>      +    3. https://lore.kernel.org/git/xmqqft1o80pe.fsf@gitster.g/
+>      +
+>      +    4. d71b8ba7c9 (commit: --fixup option for use with rebase --autosquash,
+>              2010-11-02)
+>       
+>           Helped-by: Junio C Hamano <gitster@pobox.com>
+>      -    Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
+>      +    Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+>           Signed-off-by: Erik Cervin-Edin <erik@cervined.in>
+>       
+>        ## Documentation/git-commit.adoc ##
+>      @@ Documentation/git-commit.adoc: include::diff-context-options.adoc[]
+>       
+>        ## builtin/commit.c ##
+>       @@ builtin/commit.c: static int prepare_to_commit(const char *index_file, const char *prefix,
+>      - 	if (have_option_m && !fixup_message) {
+>      - 		strbuf_addbuf(&sb, &message);
+>      - 		hook_arg1 = "message";
+>      --	} else if (logfile && !strcmp(logfile, "-")) {
+>      -+	} else if (logfile && !fixup_message && !strcmp(logfile, "-")) {
+>      - 		if (isatty(0))
+>      - 			fprintf(stderr, _("(reading log message from standard input)\n"));
+>      - 		if (strbuf_read(&sb, 0, 0) < 0)
+>      - 			die_errno(_("could not read log from standard input"));
+>      - 		hook_arg1 = "message";
+>      --	} else if (logfile) {
+>      -+	} else if (logfile && !fixup_message) {
+>      - 		if (strbuf_read_file(&sb, logfile, 0) < 0)
+>      - 			die_errno(_("could not read log file '%s'"),
+>      - 				  logfile);
+>      - 		hook_arg1 = "message";
+>      --	} else if (use_message) {
+>      -+	} else if (use_message && !fixup_message) {
+>      - 		const char *buffer;
+>      - 		buffer = strstr(use_message_buffer, "\n\n");
+>      - 		if (buffer)
+>      -@@ builtin/commit.c: static int prepare_to_commit(const char *index_file, const char *prefix,
+>      - 		hook_arg1 = "message";
+>      -
+>      + 		repo_format_commit_message(the_repository, c, fmt, &sb,
+>      + 					   &ctx);
+>      + 		free(fmt);
+>      +-		if (have_option_m && !strcmp(fixup_prefix, "amend"))
+>      +-			die(_("options '%s' and '%s:%s' cannot be used together"), "-m", "--fixup", fixup_message);
+>      + 	} else if (squash_message) {
+>        		/*
+>      --		 * Only `-m` commit message option is checked here, as
+>      --		 * it supports `--fixup` to append the commit message.
+>      --		 *
+>      --		 * The other commit message options `-c`/`-C`/`-F` are
+>      --		 * incompatible with all the forms of `--fixup` and
+>      --		 * have already errored out while parsing the `git commit`
+>      --		 * options.
+>      -+		 * Only `-m` and `-F` are handled here. `-c`/`-C` are
+>      -+		 * incompatible with --fixup and have already errored out
+>      -+		 * during option parsing.
+>      - 		 */
+>      --		if (have_option_m && !strcmp(fixup_prefix, "fixup"))
+>      -+		if (have_option_m) {
+>      - 			strbuf_addbuf(&sb, &message);
+>      --
+>      --		if (!strcmp(fixup_prefix, "amend")) {
+>      --			if (have_option_m)
+>      --				die(_("options '%s' and '%s:%s' cannot be used together"), "-m", "--fixup", fixup_message);
+>      -+		} else if (logfile && !strcmp(logfile, "-")) {
+>      -+			if (isatty(0))
+>      -+				fprintf(stderr, _("(reading log message from standard input)\n"));
+>      -+			if (strbuf_read(&sb, 0, 0) < 0)
+>      -+				die_errno(_("could not read log from standard input"));
+>      -+		} else if (logfile) {
+>      -+			if (strbuf_read_file(&sb, logfile, 0) < 0)
+>      -+				die_errno(_("could not read log file '%s'"), logfile);
+>      -+		} else if (!strcmp(fixup_prefix, "amend")) {
+>      - 			prepare_amend_commit(commit, &sb, &ctx);
+>      - 		}
+>      - 	} else if (!stat(git_path_merge_msg(the_repository), &statbuf)) {
+>      + 		 * Insert the proper subject line before other commit
+>       @@ builtin/commit.c: static int parse_and_validate_options(int argc, const char *argv[],
+>        	}
+>        	if (fixup_message && squash_message)
+> 2:  13608615d6 ! 3:  159a56c510 commit: allow -c/-C for all kinds of --fixup
+>      @@ Metadata
+>       Author: Erik Cervin-Edin <erik@cervined.in>
+>       
+>        ## Commit message ##
+>      -    commit: allow -c/-C for all kinds of --fixup
+>      +    commit: allow -c/-C for all --fixup variants
+>       
+>           The fixup code path in prepare_to_commit() only knows how to take a
+>           message body from -m or -F.  Now that the previous commit allows -m and
+>      -    -F for all --fixup variations, -c/-C are the odd ones out.
+>      +    -F for all --fixup variants, -c/-C are the odd ones out.
+>       
+>      -    Teach the fixup path to look up the ref given to -c/-C and seed its
+>      -    message when preparing to amend the commit, mirroring what --fixup=amend
+>      -    does when no message source is given.  With this in place, -m/-F/-c/-C
+>      -    all behave consistently across the plain, amend, and reword --fixup
+>      -    forms.
+>      +    Teach the fixup path to take the message body from the commit given to
+>      +    -c/-C, using prepare_amend_commit() as --fixup=amend does when no
+>      +    message source is given.
+>      +
+>      +    The main motivation is consistency: with -c/-C allowed, every message
+>      +    option works with every --fixup variant, and there's no exception to
+>      +    document or remember.  Using -c/-C under --fixup is admittedly niche,
+>      +    but not useless; for example, rewording commit Y based on X's message
+>      +    after an earlier rebase split X into X' and Y, when Y wasn't reworded at
+>      +    the time:
+>      +
+>      +        git commit --fixup=reword:Y -c X
+>      +
+>      +    Like --fixup=amend, this copies only the body when the source itself is
+>      +    an "amend!" commit.  Under --fixup the subject is always generated, and
+>      +    the body of an "amend!" commit is the message intended for its target,
+>      +    so copying its "amend!" line would leave it in the final message after
+>      +    autosquash.  This also means that "git commit --fixup=amend:X -C X"
+>      +    produces the same message as "GIT_EDITOR=: git commit --fixup=amend:X".
+>      +
+>      +    Plain --fixup never opens an editor, so -c there behaves like -C.
+>       
+>           The incompatibility check grouping -C, -c, and --fixup can go away
+>           entirely, as -C and -c are already rejected together by the check that
+>      @@ Documentation/git-commit.adoc: The commit created by `--fixup=amend:<commit>` is
+>       
+>        ## builtin/commit.c ##
+>       @@ builtin/commit.c: static int prepare_to_commit(const char *index_file, const char *prefix,
+>      + 			die_errno(_("could not read log file '%s'"),
+>      + 				  logfile);
+>        		hook_arg1 = "message";
+>      -
+>      - 		/*
+>      --		 * Only `-m` and `-F` are handled here. `-c`/`-C` are
+>      --		 * incompatible with --fixup and have already errored out
+>      --		 * during option parsing.
+>      -+		 * `-m`, `-F`, `-C`, and `-c` provide the message body.
+>      -+		 * If none was given and this is an amend, use the target
+>      -+		 * commit's body instead.
+>      - 		 */
+>      - 		if (have_option_m) {
+>      - 			strbuf_addbuf(&sb, &message);
+>      +-	} else if (use_message) {
+>      ++	} else if (use_message && !fixup_message) {
+>      + 		const char *buffer;
+>      + 		buffer = strstr(use_message_buffer, "\n\n");
+>      + 		if (buffer)
+>       @@ builtin/commit.c: static int prepare_to_commit(const char *index_file, const char *prefix,
+>      - 		} else if (logfile) {
+>      - 			if (strbuf_read_file(&sb, logfile, 0) < 0)
+>      - 				die_errno(_("could not read log file '%s'"), logfile);
+>      -+		} else if (use_message) {
+>      -+			struct commit *c = lookup_commit_reference_by_name(use_message);
+>      -+			if (!c)
+>      -+				die(_("could not lookup commit '%s'"), use_message);
+>      -+			prepare_amend_commit(c, &sb, &ctx);
+>      - 		} else if (!strcmp(fixup_prefix, "amend")) {
+>      - 			prepare_amend_commit(commit, &sb, &ctx);
+>      + 		hook_arg1 = "commit";
+>      + 		hook_arg2 = use_message;
+>      + 	} else if (fixup_message) {
+>      ++		const char *refname = NULL;
+>      ++
+>      + 		hook_arg1 = "message";
+>      +-		if (!strcmp(fixup_prefix, "amend")) {
+>      ++		if (use_message)
+>      ++			refname = use_message;
+>      ++		else if (!strcmp(fixup_prefix, "amend"))
+>      ++			refname = fixup_commit;
+>      ++
+>      ++		if (refname) {
+>      + 			struct pretty_print_context ctx = {0};
+>      +-			struct commit *c = lookup_commit_reference_by_name(fixup_commit);
+>      ++			struct commit *c = lookup_commit_reference_by_name(refname);
+>      ++
+>      + 			if (!c)
+>      +-				die(_("could not lookup commit '%s'"), fixup_commit);
+>      ++				die(_("could not lookup commit '%s'"), refname);
+>      + 			ctx.output_encoding = get_commit_output_encoding();
+>      + 			prepare_amend_commit(c, &sb, &ctx);
+>        		}
+>       @@ builtin/commit.c: static int parse_and_validate_options(int argc, const char *argv[],
+>        	}
+>      @@ t/t7500-commit-template-squash-signoff.sh: test_expect_success 'commit --fixup w
+>        
+>       +test_expect_success 'commit --fixup works with -C' '
+>       +	commit_for_rebase_autosquash_setup &&
+>      -+	git commit --fixup HEAD~ -C HEAD &&
+>      ++	GIT_EDITOR=false git commit --fixup HEAD~ -C HEAD &&
+>       +	test_commit_message HEAD <<-EOF
+>       +	fixup! $(git log -1 --format=%s HEAD~2)
+>       +
+>      @@ t/t7500-commit-template-squash-signoff.sh: test_expect_success 'commit --fixup w
+>       +
+>       +test_expect_success 'commit --fixup=amend: works with -c' '
+>       +	commit_for_rebase_autosquash_setup &&
+>      -+	test_set_editor : &&
+>      -+	git commit --fixup=amend:HEAD -c HEAD~ &&
+>      ++	GIT_EDITOR="echo edited >>" git commit --fixup=amend:HEAD -c HEAD~ &&
+>       +	test_commit_message HEAD <<-EOF
+>       +	amend! intermediate commit
+>       +
+>      @@ t/t7500-commit-template-squash-signoff.sh: test_expect_success 'commit --fixup w
+>       +
+>       +	target message body line 1
+>       +	target message body line 2
+>      ++
+>      ++	edited
+>       +	EOF
+>       +'
+>       +
+>      @@ t/t7500-commit-template-squash-signoff.sh: test_expect_success 'commit --fixup w
+>       +	git log -1 --pretty=%B >with-c &&
+>       +
+>       +	git reset --hard "$start" &&
+>      -+	test_set_editor : &&
+>       +	git commit --fixup=amend:HEAD &&
+>       +	git commit --fixup=amend:HEAD &&
+>       +	git log -1 --pretty=%B >without-c &&
+> 
+> base-commit: f7de81456940dd6f3274e461149bba12965de609
+
