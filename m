@@ -1,63 +1,127 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.144
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795624061;
+	b=L7EJZlkprwOhSG7fVUZX/TRwEt/cUlizkN2/3b/8bru7owsi3nyq+T9EUQ/PZLSwaDNF
+	 3KuiUHXinnc/mUT8DyhTTC+hUTkqbmdPhReN3mOodZxmg5X5bnT+72YiaahsLDP99Y4Sb
+	 0+COeuaUdejgVvVx8PPa6qJySHZAXozaq9VdXiZn7dnOqcICzqtXjLhwK5PvhMOQCln2a
+	 d9hDXjoHrMLM86DLYs6qSRYgPIzp3X6pOPVyvnp2McHYqhbbzDqgnMF183fDQ02ZxVj/6
+	 f4rYM1OU6L01j+q8pXmpAEy1L+XV5jWLGj9OddUnyv4M42v76a5NLVA7gwuzlVWOKBQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624061;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=i7V3z3yAHU8bd12iRL3ed1ewrTMkxv5znPhNMWvOJKQ=;
+	b=Bl1rYI5u8c1K4oj5uyjbGBbH7KJsGlu7OAFyKp+cOgg1ikrgDMVQVSl7ZV2EN9lSlHu+
+	 pXWiyGlssIjlLCbr8mrL9CJhOFheEYRNhu5loklbWfyjcOt8vpj9C7+s7nCPmm35jj44l
+	 TCudxGptcGnbFlxloa94AhPpKBsi4XS9diK0vqcwveXC2l6qXBZK1CPiuNpDQb/lxQhGj
+	 Rtr9W5muj3KUM3MPtPOvN8U681u7mp00UO6UO7AFMr0mhaZkXWbLwGLw9rgQzG0uZeZjQ
+	 VU4msDnO8y+JFzWeOc2VJBRIcg3483YmGTrJYgNhyCTL9xy1dsYoGBaXD0jF99J1jLw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=EE+ZtzaV;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=b5PKvaQX;
+	arc=none smtp.remote-ip=103.168.172.144
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F334606A330
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 16:20:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3F334606A330
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC14A606A329
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 16:27:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BC14A606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=o2Rt0bdz
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4b467581b98so58531085e9.0
-        for <git@vger.kernel.org>; Wed, 25 Nov 2026 08:20:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795623599; x=1796228399; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=HlBowunefpQ6amcun3267LGWHyNLMwzIHLbwoqQte2c=;
-        b=o2Rt0bdzfr2ZTGlJnWc0KJYwpn2BI28rji/nITrT21p0fFCNN5Ky1xkRV9Wt4wVaPO
-         rwdH827CBAl2/GxERy3S4Db7OSrjOGFde8I/OO/oZso8iF0W5Z8GYz6hceEVh6rEWhWi
-         iXioNhgCchoEUEOYhZamNNS7UFtuJFTjgaUM1fdB2SeIyGr+SK344uqb7uG0myNfKnvP
-         RFxoDkhz1cAf4tuFlcfaIOdbFMktEiNw40bCXPGiB2tQ3K/Th/+2Tz6ImNKPNjQ+5Gc0
-         kvAuw4GoJs44UBGhcW0VZyHRIMK5lskSPmMVnsgBs4bR0SRttdLhp3A0i7nZPIcArt0J
-         0Pcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795623599; x=1796228399;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=HlBowunefpQ6amcun3267LGWHyNLMwzIHLbwoqQte2c=;
-        b=WqBiyQt8t8DvZ9BbgyLjNwVUQQdN6BQugjgS285+tY1VsYSiwe06q3UXDz9clD5RaV
-         CrcM57sd0xR+aSHJ198+X6oKHojun/r3yKCt6QYabRLPFSMDfDT57EgxipSZCGRpoy4Y
-         5avdnx0BgIc1BRKfwlHC0ptL5Qq28xoKn/c+EhaQTBNEJYQ4LtkPvXuGZooNAn6+R3De
-         itI/Z3eg8BbzdMNc1qVJwNx7vdCqwoSkCnC5WxybGlEuqfGHFQnWP28djC1ty59cwUW9
-         VyoO3hW2pirGJkw/N/xCtqlfsSD3MJQUCkxFWvBfc9WLCxafGqWgPIrdMQ9NSuzxoyC8
-         Sv1w==
-X-Forwarded-Encrypted: i=1; AL+hErGWedgr35xNZnyNIp1KGNvDb4oOf9NMlwqN0WhsMtBRO+lUGSesjOUGnVevixgFL9On6Fs=@vger.kernel.org
-X-Gm-Message-State: APuU4Z97t1UcR3o3GsRwXjxvMlUloG1zRY4ii5CsYtZIldYwK31RQ9wM
-	ZRqr/Kd/9t/u2Yp/uNS47Skx2vKjWlHSZD2TMVyqvygBxtousIJn7QxZ
-X-Gm-Gg: AZFdTZdp1Gxn6Ru81A1ahVW0autEnUJiKkgHbf2VPVRWDptcCOHp2Gcn9frBxi/7lf8
-	YryHOGPgSzeRnwsq0T+Ekn72j5YEW5KoKud+84rIINi393bS5C1btmfwEdzaiMN8dASEAyVNDec
-	5zJe/Z1f4y92nIuN6kv8l8yQGabtMdZgZn2Wfn1ssy5nJii4Q/3gzBICG4qAGeI2qjKp3q9/L4Q
-	IUSBAc0gBWgLMxZfvFjeHMg1KLnFH6VXa21Z7bFw5dZn17muOVpygwCLTb8/0OaeV5erfYt8xpB
-	7Z9+d8VsKvNTWhjLPzcNpsQo7KDkWuNDfckNGzS5k4G6K0iTO79etD2lvICZkrM7A80tGsdPYhu
-	anEJRk4wc1Yk5tc+rIiiusZO92qIvoD2JJ1zLQ+VoLMFvl0ZX4c0Tkt2dHbjY+w/nSKKAiKLSZR
-	vyQQcOMmnc8VFcgEwafen55NqR5JZLv8vFNCZIJXjvZUwmr0n2kDvTYFSOOlgcBiauZsHAYUqjr
-	3fixRLHcF3fWUBy5Jg7mXj7Qmf60311BNPMb+l8xzK3zPUAPvxeb3RJdJmZ+l2nS4eXzuDVrrzf
-	WQZBz/1s3hAofWK/usQ9F4moxSzsOklOy0uQ04qRZruBJAlsN8aPISe1Z9Mhnh7PI2+BS/06m13
-	eUGWj5uo=
-X-Received: by 2002:a05:600c:4f48:b0:4a6:44b:2593 with SMTP id 5b1f17b1804b1-4bb8893ab9cmr392800365e9.29.1795623599257;
-        Wed, 25 Nov 2026 08:19:59 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb884c3063sm528598055e9.15.2026.11.25.08.19.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Nov 2026 08:19:58 -0800 (PST)
-Message-ID: <608b25cc-6ec8-4f0a-8eeb-863ed44bd0db@gmail.com>
-Date: Wed, 25 Nov 2026 16:19:57 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=EE+ZtzaV;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=b5PKvaQX
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id AF656EC0B40
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 11:27:39 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Wed, 25 Nov 2026 11:27:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1795624059;
+	 x=1795710459; bh=i7V3z3yAHU8bd12iRL3ed1ewrTMkxv5znPhNMWvOJKQ=; b=
+	EE+ZtzaVwk7fQ5P8mF6duWhTfEQUSeL8F+8oWnAdgnUMsV6+HjDFqXOBWk9WhxpX
+	1wz7/go/YZlr3+6qwEjrOG+2EUt458OtWYE7d+7LsLDMGxsNayJYNyUc9C/4hOXY
+	1zuU9uIIn45XZh5tQjVfyBkwmltxHFPUJCm0/Qm7MQ4Flnz0KArykedyzwEdzrfb
+	ljdPqTPyePMuxP8EQjH8hoD9DHhs7nfBt/hb74wXwEfWUVxWlq/ZqteKddYSTFsB
+	dltXB585ie9j+qOYj1Yshjb9hThaBbgEPHwrroZc0DzjyR81nFMdECLrRDumYphm
+	gC1CUNytMe3xFCmduNlC1Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795624059; x=
+	1795710459; bh=i7V3z3yAHU8bd12iRL3ed1ewrTMkxv5znPhNMWvOJKQ=; b=b
+	5PKvaQXKGJsY1o6I+6XDz5hkAmzzjSeWixmGlruleIdcKY3mhvPk/c7qNO6cb5t5
+	mIfvJHWajk+UI39S8iIrHwl5Nz9HUnQBYcVptJ7pzFFgw/0QFjcEqUmyahzFJalW
+	CP3tuwf59l7Od7+0u/HH8W7EdhlKcCtiGjOOYp87gK/ry8szQ9qBVFd1fHLipB3h
+	/03GNz5HwVFoUzEfqlu6RFj2BhvvVmI1VsT3C4yoebRGiE2S5NU7hY2351VMnlHg
+	zZ3IUTgninPGWdEVuQ/QUACVmVtlx5ynUrwJRtgyH67Z0bsy+iVbZLz+uQs24TXB
+	elO81JDkoe8JTcFktq51Q==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795624059; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:G4UycY2zFyGBEwLBZ16hnx1Tw0SH7jOqbgEq5lcPY3DZ4FL
+	4pY78Ty0peU4OOv8XRHU9MtId2TEUt1HwEtLpVYlqfBDFy+a/jY4c2/FbbRiWs1D
+	CDJH0/hf1tpYpQQeWdE03RuIW7xytP6czznTp2h9HGdzTwKZGIvY9rpTGm/uzWu4
+	+YdiKuQKz2uvxqTr4XMfy4I3AfWs1bmFOfHR4Ri+QIzP0T/9uENM221CNqoxg1Vt
+	2CVF0v+hp82zSxDnAGExOE6JvZmB8DnJiyh/8RIlTeo1kVUUtH1A0t8T5wy2HBoK
+	UD3O0joYvzoE3SCzUQ4da+/A22ct0zWgYEsaOkA==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=13;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to,
+	user-agent;
+Message-Instance: m=1; h=sha256:QQFqV3fpSgvUEWGPlv021IJs5W2d11csPmVr+xPzcFM=:FqctsgcJ1qPMaqt3Rm1nlgKxBOdox2P21AIVKzS3ckk=;
+X-ME-Sender: <xms:ewwHa9Lys_gvv_CfEb3BN2PlleX1L20NYM4_nxSnsRDucl6xKeb25Q>
+    <xme:ewwHawLQjekSt7bLWHo6ocLhw24TcPj7DduQ22NBK0cyKX-6ZfehlPGy-hAyG8WRN
+    N6CQTVeY3I66bIQDKTtWCqsci03-aZLqSGyQhr2pKeWfWxLpJjnqQ>
+X-ME-Received: <xmr:ewwHa6tqBcbgVpytuIWWoVxuYYyEUBJOevt9WI-1OAw5scq9um9cHqKAnVGTTD5XYnRxLm8USAQD9E09aiqZH73PlDr6GQeB8lhrS8M>
+X-ME-Proxy-Cause: dmFkZTEH8o8sjUdmc55tznRNBEtT0CnG4JFlk0p3c6nLupzsINmGG1oKWKEKBNp4d8UOrG
+    YsIXuuxKPmvEPULxR32pVcMER5HsfZQPMZV01ftcdaUZcBqvCA1Ei8XTDLWsyQx1xPUNkA
+    zIrfGneI9C94F3TjwKlQNq5v2hfTuYzv2WTFGdPq7cOvQLPtjEhK1YaYpu811N6dMSSmIA
+    +YkbJ46Woy381WcoalnXg8qfKauWdbwNwqvAV8hfrbxg7f08hWz3uEwOxB6VjiMV0bjV+Z
+    IGN8bspA5Gq9i+RXGPhOsnwbcP1IpgkztLhfjpUcm+SZ2ym3DAwO6QdaQJkAKKu9WNw8sL
+    hZbAqSovVJ/s7hfEvXSsi+fJk7h9WIZEZ9jI2ycypCWZB7y94CIltI7NghaZMkpu177hl8
+    j1DBzyBFdXaaP3polYrNcnifj/Gb7PZPCrAhXvRojLemEr/lmJaP16dbxv8kY5FKWRE2Rm
+    JON4FpnkKxXZobuxv7sqDjURDCo95jSnoNViX02J25l00antWzjNwWam2ZvaJjfmcECusg
+    fosdyZFEpplyaB7t+6KgvtCZNCoFAu8VijZst3MVALoDdXWyDBFC/jhdNTYMoZMgWjr5RH
+    h0njRd1Z2zuCfbhR/NgB8mUEewF0zXKWyJPc39i96opCdCoPRxh3Wlv4lpzg
+X-ME-Proxy: <xmx:ewwHa9Qa6KZW3Sp_tg3SwvW23fa9pq3Kwdmnw6o4x66EO4iFc3dhHQ>
+    <xmx:ewwHawMan9mLp79FiXZ0zclcmbiwobjzHvnjjPTkAFjBFH6NOXRVJg>
+    <xmx:ewwHayYTd30wYi49KImnUBq1YnHFCA2uzvHTxxucDbDzzUaKCMQTuQ>
+    <xmx:ewwHa6xe2olL_r6tVE5f62NOSzXYoYH56nx4zo1ZHytgdp41IRNKxA>
+    <xmx:ewwHazuZT4-Cw7hv469s1zDombsNcyNTlLOhOoacsN1si6YGCGJW5dbZ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 25 Nov 2026 11:27:39 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
+ <jn.avila@free.fr>
+Subject: Re: [PATCH 1/4] doc: apply synopsis style conversion with git-svn
+In-Reply-To: <7d5ab0faa0ac5c2c0c97090ff17999cdcadaad55.1795556940.git.gitgitgadget@gmail.com>
+	(=?utf-8?Q?=22Jean-No=C3=ABl?= Avila via GitGitGadget"'s message of "Tue,
+ 24 Nov 2026
+	21:48:57 +0000")
+References: <pull.2324.git.1795556940.gitgitgadget@gmail.com>
+	<7d5ab0faa0ac5c2c0c97090ff17999cdcadaad55.1795556940.git.gitgitgadget@gmail.com>
+Date: Wed, 25 Nov 2026 08:27:38 -0800
+Message-ID: <xmqqv75k98qt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -67,135 +131,101 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] var: add GIT_COMMENT_STRING
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>
-References: <fa8b80af26481e0dc96fd8f80f3c7ba84f60f9d4.1795516651.git.phillip.wood@dunelm.org.uk>
- <b8c40805-90f2-414c-ae70-e2f79a19170e@app.fastmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <b8c40805-90f2-414c-ae70-e2f79a19170e@app.fastmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On 24/11/2026 15:02, Kristoffer Haugsbakk wrote:
-> On Tue, Nov 24, 2026, at 11:37, Phillip Wood wrote:
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> Add GIT_COMMENT_STRING to "git var" to make it easier for scripts to
->> determine the comment character.
-> 
-> s/determine the comment character/determine the comment string/ ?
+"Jean-Noël Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Yes, that would be more consistent
+> -'rebase'::
+> -	This fetches revisions from the SVN parent of the current HEAD
+> +`rebase`::
+> +	Fetch revisions from the SVN parent of the current HEAD
+>  	and rebases the current (uncommitted to SVN) work against it.
 
->> diff --git a/Documentation/git-var.adoc b/Documentation/git-var.adoc
->> index 5f240eb56e3..04aeccd7aa6 100644
->> --- a/Documentation/git-var.adoc
->> +++ b/Documentation/git-var.adoc
->> @@ -130,6 +130,10 @@ endif::git-default-pager[]
->>       The path to the global (per-user) configuration files, if any.
->>       This variable can have multiple values.
->>
->> +`GIT_COMMENT_STRING`::
->> +    The comment string used in template commit messages and rebase todo
->> +    lists etc.
-> 
-> This could also mention the config variables and git-config(1)?
+Changing "This fetches" to imperative "Fetch" makes the verb on the next
+line disagree ("Fetch ... and rebases").  Changing "rebases" to "rebase"
+fixes that.
 
-I had decided not do to that as the point of GIT_COMMENT_STRING is to be 
-able to query the comment string without the user having to worry about 
-the intricacies of the config setting or what the default value is. I 
-guess saying "see `core.commentString` and `core.commentChar`in 
-git-config(1)" doesn't really do any harm but I don't think users are 
-going to get much additional useful information by reading the config 
-documentation. Perhaps saying "as set by `core.commentString`" would be 
-more better as it does not promise the reader that the config 
-documentation contains additional, useful, information?
+> -[verse]
+> +[synopsis]
+>  config key: svn-remote.<name>.commiturl
+>  config key: svn.commiturl (overwrites all svn-remote.<name>.commiturl options)
+>  +
 
-The documentation for GIT_PAGER, GIT_EDITOR and GIT_SEQUENCE_EDITOR 
-mention the relevant config settings when describing how we determine 
-which program to use, but the documentation for things like 
-GIT_DEFAULT_BRANCH does do not.
+The [synopsis] attribute makes the AsciiDoc/Asciidoctor filter highlight
+command tokens inside the block, so prose words like "config", "key:",
+"overwrites", "all", and "options" end up rendered as literal code.
+Elsewhere in this patch you removed [verse] and backtick-quoted the key
+instead, e.g.,
 
-I have added a note to the documentation for `core.commentString` that 
-the comment string can be queried with `git var GIT_COMMENT_STRING`
+    config key: `svn.rmdir`
 
-Thanks
+Doing the same here and in the svn.pushmergeinfo entry under --mergeinfo
+would keep the rendering clean and consistent, wouldn't it?
 
-Phillip
+> --F <filename>;;
+> ---file=<filename>;;
+> -	Take the commit message from the given file. This option
+> +`-F <filename>`;;
+> +`--file=<filename>`;;
+> +	Take the commit message from the file `<filename>`. This option
+>  	disables the `--edit` option.
 
-> 
->> +
->>   `GIT_HOSTNAME`::
->>       The hostname of the machine, as reported by the operating system.
->>       This is the hostname matched by `includeIf "hostname:..."` (see
->> diff --git a/builtin/var.c b/builtin/var.c
->> index eb85a985b15..6dc8ec4ba9f 100644
->> --- a/builtin/var.c
->> +++ b/builtin/var.c
->> @@ -188,6 +188,11 @@ static char *hostname(int ident_flag UNUSED)
->>   	return xstrdup(buf);
->>   }
->>
->> +static char *comment_string(int ident_flag UNUSED)
->> +{
->> +	return xstrdup(comment_line_str);
->> +}
->> +
->>   struct git_var {
->>   	const char *name;
->>   	char *(*read)(int);
->> @@ -262,6 +267,10 @@ static struct git_var git_vars[] = {
->>   		.name = "GIT_CONFIG_GLOBAL",
->>   		.multiread = git_config_val_global,
->>   	},
->> +	{
->> +		.name = "GIT_COMMENT_STRING",
->> +		.read = comment_string,
->> +	},
->>   	{
->>   		.name = "GIT_HOSTNAME",
->>   		.read = hostname,
->> diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
->> index 883a45399e2..f228cb5bb6f 100755
->> --- a/t/t0007-git-var.sh
->> +++ b/t/t0007-git-var.sh
->> @@ -434,4 +434,14 @@ test_expect_success 'git var -l lists the identity
->> components' '
->>   	test_grep "^GIT_COMMITTER_DATE=" actual
->>   '
->>
->> +test_expect_success 'GIT_COMMENT_STRING' '
->> +	git var GIT_COMMENT_STRING >actual &&
->> +	echo "#" >expect &&
->> +	test_cmp expect actual &&
-> 
-> This tests the default.
-> 
->> +	git -c core.commentChar=: -c core.commentString=%% \
->> +		var GIT_COMMENT_STRING >actual &&
->> +	echo %%>expect &&
->> +	test_cmp expect actual
-> 
-> Then it tests that `commentString` overriding `*Char` works as it
-> should. That makes sense and seems to cover all testing bases.
-> 
-> This happens if you have an invalid comment string:
-> 
->      $ bin-wrappers/git -c core.commentString= var GIT_COMMENT_STRING
->      error: core.commentstring must have at least one character
->      fatal: unable to parse 'core.commentstring' from command-line config
-> 
-> With non-zero exit status.
-> 
->> +'
->> +
->>   test_done
->> --
->> 2.56.1.576.g0cfbda1d5c7.dirty
-> 
+A few days ago I was referring somebody else to your earlier series [*]
+and noticed that you would have said _<filename>_ not `<filename>` in
+running text.  I am not quite sure about the differences, but as I
+noticed the use of `<filename>` here,...
+
+	[*] e9a99ef2da (doc: convert git-format-patch synopsis and
+	options to new style, 2026-07-23), appearing as a part of
+	bf6bc2ae42 (Merge branch 'ja/doc-synopsis-style-yet-more',
+	2026-08-11)
+
+> +`-r <arg>`::
+> +`--revision <arg>`::
+> +	Fetch the given revision range for partial/cauterized history.
+> +	Only used with the `fetch` command.
+>  +
+> -This allows revision ranges for partial/cauterized history
+> -to be supported.  $NUMBER, $NUMBER1:$NUMBER2 (numeric ranges),
+> -$NUMBER:HEAD, and BASE:$NUMBER are all supported.
+> +`<rev-num>`, `<ref-num-1>:<rev-num-2>` (numeric ranges),
+> +`<rev-num>:HEAD`, and `BASE:<rev-num>` are all supported.
+
+Shouldn't the left hand side of ':' be <rev-num-1> instead of ref-num-1?
+
+> ---authors-prog=<filename>::
+> -	If this option is specified, for each SVN committer name that
+> -	does not exist in the authors file, the given file is executed
+> -	with the committer name as the first argument.  The program is
+> -	expected to return a single line of the form "Name <email>" or
+> +`--authors-prog=<program>`::
+> +	Execute `<program>` for each SVN committer name that
+> +	does not exist in the authors file, with the committer name as the
+> +	first argument.  The program is
+> +	expected to return a single line of the form "Name _<email>_" or
+>  	"Name <>", which will be treated as if included in the authors
+
+The reference to author ident "Name _<email>_" or "Name <>" differs from
+the backticked "Name <email>" form used in patch 2/4.  Not clear to me
+which one we want to standardize on.
+
+>  	file.
+>  +
+> -Due to historical reasons a relative 'filename' is first searched
+> -relative to the current directory for 'init' and 'clone' and relative
+> -to the root of the working tree for 'fetch'. If 'filename' is
+> -not found, it is searched like any other command in '$PATH'.
+> +Due to historical reasons a relative `filename` is first searched
+> +relative to the current directory for `init` and `clone` and relative
+> +to the root of the working tree for `fetch`. If `filename` is
+> +not found, it is searched like any other command in `$PATH`.
+
+The same comment on `<program>` in the first sentence (vs _<program>_).
+
+Because the option parameter was renamed from <filename> to <program>,
+the second paragraph now refers to a filename that is no longer in the
+option header.  SHouldn't it be "a relative _<filename>_ is first ..."?
+
+Thanks.
 
