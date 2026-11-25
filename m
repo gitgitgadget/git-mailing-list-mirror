@@ -1,91 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.41
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795611192;
-	b=YQOqoM8ioo5tJnIyzXCWF0F8tc/6nZDZU2ODxkqTwHlwXfr0Se+LxMr129Pgnb0FVVuM
-	 810N6Dybh7jVbpNFfAvoA9leDQb/Lb4dRujez8pah/2IMdXbm0L+vq5vyNEf9X5t1CtMa
-	 rk4p3iNAi3vVC9BsMfMx1RhaKK8LFd7vkDgtvSKpNlXgO57uhcwIADC3FLe9qvLw1JPv+
-	 KmcznWzE1rbOKYlxxYZDDK02EsXY+M2pA/OWl3cyIOvLgj+G1kz+xD6e9dQuT4g4mxwqR
-	 1VFWyjiR28LmsKaIi1Do9ijjgCJfgOB4XBxW3r+CW+T7seh+XXWyMBd2TiirG16GU6Q==
+	t=1795611196;
+	b=LRmX4dZTVLx3ChIK6KBcdMNblc10XigunlD/5BL8dg6AQZR5YxxyXmKMnWZOvplnUznq
+	 m2giyvXraaJV+bQyYbdCNfkdL4upWKVTjdcxAnyf8BouboIPuIekU1RZuQdYT1U0wL1gs
+	 UIpcDLBkDe+CoV8zPrm1klnrAEnaA+BiTgIhoFu/9B8DAaj/xuaSse13tjyuox47KHqZv
+	 R3cV9DqQCAQVlemDQRX5Cic1qpwPci1+qBVQIP3JQ/08w86vlePS1Kpz4c4VMwePcN8hn
+	 v1AQ43EtTyzXHtSd/eK1uqMyz/lw7INXz8Fluti/2FzskfYJwvPNgR7/oaMQCjxwM9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795611192;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795611196;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=79txnamYkGgoMX2oYauOeClrkGxNkSyIMDuu+7GTcqQ=;
-	b=4QRzhCPhr+L8VFQrMHIOcUGmrWir19cA0r3tV9bvdCx/CGdPtUNwcL71u4oDGHmwBYWb
-	 7HUmYaPiGUXgc4N8QFeO6w+b0PZ/eaynwO9RiZ/Ub8CGE0YtsNiw8yR+qlnomZHg+5SU0
-	 sIx2NIucLBsq7IuRhM95i/Q0oNfcBBHt+Z2AWkLptXx3U9bIic3w3p/RLENDaLbC6TlIH
-	 +AVpHfvi4NEmtjiJ+8MQ1jX/ywv0f89qEkdh6A31xF0RnZ0ePrkBd23VbNgEkd7KTTGvW
-	 LYEFFpKDikUjhjpZODv5sRUblLIOu/MCFpk6WIQ3nzd2sxe8q9GVOs+AZdmgUZxRBMw==
+	bh=bhcdk0aN6UEPRLsDVagHK4AMU/2ndOcxI938D8y5ZDk=;
+	b=TPU7ZphHfLk8F3Bcx3DuH4aS/vl9dgVviIhqoxVt78BNen1WEl5j8S07b0WkU2YVpl9I
+	 gjPDbu8cW/TNfr/AbspcL9PCcoTdYVmOdxTVGwLaY26wOu6YEKMrH70CNYqL3fvbFbDwg
+	 5YNz5OWn3fbhtTnnZPZ/R+Wpz+lFb8e2YBa4WM+WSZv5TNjqCHCxCeYft3jtlzYMw8YwS
+	 +Dq4nq3SEclpp0T+zzeol5l8iLFtS15CRh8Oirg4CJnWFAvJ8+5JtWdRJwFr1N/EkaGEh
+	 bGqx3O1rj5Tl1Rm/6bWtfGV/g191oAYkyZVeMJ5e7mt7x6e3EPJ9/DLxqSS9Ti+gSSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=v3W1IB7G;
-	arc=none smtp.remote-ip=209.85.160.51
-Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XU+5XfSu;
+	arc=none smtp.remote-ip=209.85.210.41
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA126606A69D
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 12:53:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EA126606A69D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B657B606A684
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 12:53:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B657B606A684
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=v3W1IB7G
-Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-4adea5b7a2fso2052523fac.2
-        for <git@vger.kernel.org>; Wed, 25 Nov 2026 04:53:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XU+5XfSu
+Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-862bb0a189aso2778783a34.1
+        for <git@vger.kernel.org>; Wed, 25 Nov 2026 04:53:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795611189; x=1796215989; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795611191; x=1796215991; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=79txnamYkGgoMX2oYauOeClrkGxNkSyIMDuu+7GTcqQ=;
-        b=v3W1IB7GqKTwjGtjPyPGqDjsWM8hGIloylqanWpHmMxZofUgF9mNgwjQ2My+uQWA8h
-         R9tpMdFGcbLiO/e2SYajzQgGPzy9d206VxZwgYym7wMXM92UfEh6AUuI+8i7o6/u59C5
-         v1q72U3aQhZIvEEA62qADVDrxz6tyOlES38OfO+5+Qb/1eTCCNuEz3WsHInUM1RpsPWk
-         sViK0hc5uTAhg9txjAmagUjYcolo+gU0UCDWbQtCQwgXx/7fdYTbOc/Ip9J9utIEhLay
-         MXZBt9Tx0g9Ax0WNNppzNNbvkP2x3G0HKqr+tXG4zf/LgCVQ6jy+lfXAjnVT3UXK4D5O
-         cfOA==
+        bh=bhcdk0aN6UEPRLsDVagHK4AMU/2ndOcxI938D8y5ZDk=;
+        b=XU+5XfSu5JieIUudeeq8atN8K2USBxcX7OaEbkJ6E1koNo/TsKkUNvdSIQAZbk/pWv
+         Qx69txMJuRGXcdYy0RW1pACvXrw793WhjIqJe/SrnBxphkqTpqLUl0D18ipfwgLWSFQ7
+         oh9A179zVdk86Verv1TREuePUomAOaML5qBah5GyHVomR8lEHCvL40TDkZlEKiexYNZs
+         7pCdO0eoEfphcmybqN6ObljQ0Fd02WfCu10Ne7gxQwe/v4A6oRq/RF+gfnvf6PaEFaUd
+         nAKjLN1okjx4we9hBUXwqEK6UlonsBAuZiAkF/rWcJ+puiMr//BtZTqNNA7MGLp2yUx0
+         D6oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795611189; x=1796215989;
+        d=1e100.net; s=20260707; t=1795611191; x=1796215991;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=79txnamYkGgoMX2oYauOeClrkGxNkSyIMDuu+7GTcqQ=;
-        b=I8E0D+2cybA+YFRwWUKjp0yfytODdXgydVD/LOEREu3TFIottDwtZIBRZlCq6AFGYd
-         FrEd8GFOjxMMb8ezALx4JA8bMhzuS8q9uXmcHKHdGesqJLMSZwaCWmz4EA123D+tFeqE
-         BiHKZFrlOW7nNvgdhG8KzqQbUcuIw0FFSuAhS5pIqhLvd7ZMujoMTytDAHbOhUx4/ZTN
-         bNrPyny5LO1GMcQcVKdPNQn1oG9LKjpZYlQsx+aQ/rJyVYng35dv/zeu5e2z7DNvDWBq
-         MDn9O+s7ICi+LtrqJ+Jd63Re1z4eBn9Kt0px7bsxgmNx4jiS15Z7PqpooN4IoclNK/zo
-         mtPA==
-X-Gm-Message-State: APuU4Z9b9A6mrCeFZMTnN4uDH2czCdc0r9qCXHrK5uhSNBty7CagKZyP
-	mcGFtz3N23H8p8Cogkp1lfVMPkkARjLiU3tfRFjosx1BPZMnsF9AaDB/vVzJ8sn9
-X-Gm-Gg: AZFdTZeJS2VWHOPSb7SOe8wVKJjZDDXDY7cmUyIU23NZtK/TFd8sHpEBrPlqRbUokJL
-	lpFveErv7a9fnQ2v+DzjypQV7jfLCZdNxUNatK5RccQs71zRrkmtEIERBYRfZGMm2uqif3KatAv
-	cGDpJKKFqBL+8n6Vp+HWEdc35u8xGPmEimtpP0KMrIvAb5TpTbA9TtZINuc/ib8MNj+lKJBScyL
-	zk5zJU7RhzC8oiCDzTV1GOW5e2evKKd5TIAZSU9PFX2wXqd5+LrSaNH6lup0MPK44rtCy/lGBZo
-	Q2alY6ssvwARYfNILhKFcDISL/OTZHuFNU4qMO1wIC67tBQx4X7iLl2OfCYQcetCatbgeWESMUh
-	BjMqU8DRx4enfiyhp/FwJZ4jObcJayW1FgWryoS9nRHRXh056xm4j40xcmdeL0F2M/aIY6T9G+L
-	VeFrlY/ZxNygsE4Ihuh+GF0ae46UFcffnWz8auuUo2QlNM9+uUAS8DVpQqysOOL7lipks4aOE6s
-	eG/5WWOS71pPsyDwpw4ZpOzwc5ln1op00jKB2ig9EswNFzNHiz4XUPgd8qlL3kfYvUYNYESiKAy
-	kb0CoJ/bvRmKH5KQ3DtaPCzWz718qQZCm/2io2y7KSlNcG6cmKLp0Q==
-X-Received: by 2002:a05:6808:2391:b0:4f4:3790:660b with SMTP id 5614622812f47-57a0a60d67amr18659458b6e.29.1795611188634;
-        Wed, 25 Nov 2026 04:53:08 -0800 (PST)
+        bh=bhcdk0aN6UEPRLsDVagHK4AMU/2ndOcxI938D8y5ZDk=;
+        b=rsJMWyxoNMDs38DiVHDhm1ioIsLvG0HpMOut1/W6AjaVvgQVtfIdG5AHQncaO9Wje9
+         h+Jn6lhdRT1LdTd+ld+gWDEXqm5ftzyxump7TZ2g++cWj9aYjLewo0yrkkvouMRneSmT
+         QlmEQQWW+ZKATG2ilDll0ysk9nId2mYwodDYtIlx+b4Mt4DLJNkJLFRhFPNdwxs+sPgE
+         ySFatB72YTzL+SBlSuVDq9q8RTxrP2FW6SeY9IGa6r1LrVnFGyJNu+s5uOeBBsDFmjiq
+         P7N4qKd0dGc4uz62RkLRRjz/ZnTBwp/NMUPb63mfkNb6Zd9Rw7RVA/35z7hgtvkaioNs
+         jAYw==
+X-Gm-Message-State: APuU4Z8gH4ke/8c22PmpBrd+y32CiK+6E+4Or2ohrlolLk2K8vZfWLPL
+	CVumr3OnJymYIR5cLQY7uNKnqtmiPyxReFHh5FAWtZm+DSXNi9yfPUUQaJguTM9Y
+X-Gm-Gg: AZFdTZfRBcuylp1WZaRMnG4vc3A+JIk/Kpx10c73RoJRk4nroVXZLSmMnfrAw72MTrn
+	APni9lmmSu0/A3XiSzOChm8RCr5qCSTbwYJe6uInmkEMPpKZoxienG7XEJGXwuiBK9X3bc08Rfu
+	PiLPUHyqC3MiYRBdA8zvObY8WR4BGavdxLgzsaFY2MPi8aWRSijeqd+puQELgBFvotXlSdKZWmi
+	HMKivH8r5qqWySGAiil3qZOEiojVKJHLTJQTKfZVBswYIdOYZt6F4gUbWfFF9kRZmLIJemQrk1S
+	1rTjtGDTOLwYBlOdCe8Rbd8UKnN+0xq50rlOSxl1YuUST+fWtx7y2Y5EI/NGVB8A7/uChHo7AY1
+	JUGA5c8B7bis3JKQQzCF/SE3QrfBcnLHpg3QkpWwz4gky7kuWOpdRSb5FLalsyr52xnqL7V5OeL
+	iU+dgADOjdGupKYEe6w4mIq8P2Fr9NQultrpPnWCW58Wtr5sBczVrTveakUiIRue1trdzIzI+9M
+	v8DG7K/JCYZVaZakz34kyFnzYqHueK6FAoonysqiNohlUb83nB570+m7royXoh3x5VNLl5M7nVS
+	0wvPq0jtbJo8p7MAaVKEkFNKkRVW10Y0
+X-Received: by 2002:a05:6830:2e13:b0:818:56c:a8f6 with SMTP id 46e09a7af769-8631599b670mr22692597a34.26.1795611190617;
+        Wed, 25 Nov 2026 04:53:10 -0800 (PST)
 Received: from [127.0.0.1] ([20.12.245.213])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-57a35c5ac5dsm14164058b6e.15.2026.11.25.04.53.06
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-8631692f049sm13186520a34.25.2026.11.25.04.53.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Nov 2026 04:53:07 -0800 (PST)
-Message-Id: <4b8282f2a5c211064697e8684c1870b310f6618f.1795611175.git.gitgitgadget@gmail.com>
+        Wed, 25 Nov 2026 04:53:09 -0800 (PST)
+Message-Id: <daed6147ec06ce1641cc135789114ee115868193.1795611175.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2425.v11.git.git.1795611175.gitgitgadget@gmail.com>
 References: <pull.2425.git.git.1790667030497.gitgitgadget@gmail.com>
 	<pull.2425.v11.git.git.1795611175.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 25 Nov 2026 12:52:54 +0000
-Subject: [PATCH v11 4/5] branch: add --delete-integrated for rebased or
- squash-merged branches
+Date: Wed, 25 Nov 2026 12:52:55 +0000
+Subject: [PATCH v11 5/5] branch: let --delete-integrated find branches merged
+ onto changed files
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -106,685 +106,231 @@ From: Harald Nordgren <haraldnordgren@gmail.com>
 
 A branch that upstream integrated with
 
-    git rebase main topic
-    git checkout main
-    git merge --ff-only topic
-
-or with
-
     git merge --squash topic
     git commit
 
-is never deleted by "git branch --delete-merged". This is what the
-"Rebase and merge" and "Squash and merge" buttons on GitHub do. The
-upstream holds rewritten copies of the branch's work, so its tip is not
-reachable from it and it looks unmerged forever.
+after upstream had also changed the files the branch touches is still
+kept by "git branch --delete-integrated". The squash commit has neither
+the branch's version of those files nor the fork point's, so the
+previous check cannot see that the work landed. This happens all the
+time on hosting services such as GitHub, where the "Squash and merge"
+button lands pull requests this way, and other pull requests often
+touch the same files first. A rebase merge onto such changes looks the
+same.
 
-Add --delete-integrated, which does what --delete-merged does and also
-deletes a branch when some upstream commit since the fork point has the
-branch's version of every file the branch changed. That commit is named
-in the output so the user can see where the work went:
+For each such file, merge the branch's version into the upstream one
+and treat the change as landed when that leaves the upstream version
+unchanged. This has to read the files, so in a partial clone it may
+download blobs.
 
-    Deleted branch topic (was 1a2b3c4, landed as 9f8e7d6).
-
-The first such commit is used, so the branch is deleted even if
-upstream later reverted or reworked the changes. Nothing is lost, since
-that commit keeps them in the upstream history. Who made that commit
-does not matter, since the local branch is no longer needed either way.
-A branch whose changes only partly landed is kept.
-
---delete-merged keeps deleting only branches whose own commits are in
-the upstream, so it never removes a branch because somebody else made
-the same change.
-
-The check never reads file contents, so it stays cheap in a partial
-clone.
+The merge is always the built-in text merge, and merge drivers set
+with attributes are not used. A driver that favors one side, as "union"
+or a custom driver may, can leave the upstream version unchanged even
+though the branch's change is nowhere upstream, and the branch would
+then be deleted. A custom driver is also an arbitrary command that a
+branch cleanup should not run.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- Documentation/config/branch.adoc |   8 +-
- Documentation/git-branch.adoc    |  25 ++-
- builtin/branch.c                 | 249 ++++++++++++++++++++++++++++-
- t/t3200-branch.sh                | 263 +++++++++++++++++++++++++++++++
- 4 files changed, 529 insertions(+), 16 deletions(-)
+ Documentation/git-branch.adoc |  15 ++-
+ builtin/branch.c              |  82 +++++++++++++---
+ t/t3200-branch.sh             | 180 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 261 insertions(+), 16 deletions(-)
 
-diff --git a/Documentation/config/branch.adoc b/Documentation/config/branch.adoc
-index c2acd89c99..be9b296bda 100644
---- a/Documentation/config/branch.adoc
-+++ b/Documentation/config/branch.adoc
-@@ -106,7 +106,7 @@ for details).
- 
- `branch.<name>.deleteMerged`::
- 	If set to `false`, branch _<name>_ is exempt from
--	`git branch --delete-merged`.  Useful for a topic branch you
--	intend to develop further after an initial round has been
--	merged upstream.  Defaults to true.  Explicit deletion via
--	`git branch -d` is unaffected.
-+	`git branch --delete-merged` and `--delete-integrated`.  Useful
-+	for a topic branch you intend to develop further after an
-+	initial round has been merged upstream.  Defaults to true.
-+	Explicit deletion via `git branch -d` is unaffected.
 diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
-index 8efc4faed9..b496794d78 100644
+index b496794d78..20945a35ee 100644
 --- a/Documentation/git-branch.adoc
 +++ b/Documentation/git-branch.adoc
-@@ -26,6 +26,7 @@ git branch (-c|-C) [<old-branch>] <new-branch>
- git branch (-d|-D) [-r] [--dry-run] <branch-name>...
- git branch --edit-description [<branch-name>]
- git branch [--dry-run] (--delete-merged <pattern>)... [<branch-pattern>...]
-+git branch [--dry-run] (--delete-integrated <pattern>)... [<branch-pattern>...]
+@@ -240,11 +240,16 @@ remove it anyway.
+ 	Like `--delete-merged`, but also delete a branch whose changes
+ 	the upstream already has even though its commits are not there,
+ 	as happens after a squash or rebase merge. Such a branch is
+-	deleted when some upstream commit since the fork point has its
+-	version of every file it changed, even if those changes were
+-	later reverted, and the message names the first such commit.
+-	It does not matter who made that commit. The same rules for
+-	which branches are kept apply as for `--delete-merged`.
++	deleted when some upstream commit since the fork point has all
++	of its changes, even if they were later reverted, and the
++	message names the first such commit. It does not matter who made
++	that commit. A file counts when the commit has the branch's
++	version of it. It also counts when merging the branch's version
++	into the commit's version leaves the commit's version unchanged.
++	That merge is a plain text merge that ignores merge drivers set
++	in linkgit:gitattributes[5]. It reads the file, and in a partial
++	clone it may download blobs. The same rules for which branches
++	are kept apply as for `--delete-merged`.
  
- DESCRIPTION
- -----------
-@@ -235,14 +236,24 @@ A branch whose work has not yet been merged into its upstream is
- silently skipped. Delete it with `git branch -D` if you want to
- remove it anyway.
- 
-+`--delete-integrated <pattern>`::
-+	Like `--delete-merged`, but also delete a branch whose changes
-+	the upstream already has even though its commits are not there,
-+	as happens after a squash or rebase merge. Such a branch is
-+	deleted when some upstream commit since the fork point has its
-+	version of every file it changed, even if those changes were
-+	later reverted, and the message names the first such commit.
-+	It does not matter who made that commit. The same rules for
-+	which branches are kept apply as for `--delete-merged`.
-+
  `--dry-run`::
--	With `-d`, `-D` or `--delete-merged`, print which branches
--	would be deleted and exit without touching any ref.  A branch
--	that cannot be deleted is reported as an error, the same as
--	without `--dry-run`.  Useful for sanity-checking a wide pattern
--	like `'origin/*'` before committing to the deletion.  Other
--	operations, such as creating or renaming a branch, do not
--	support it.
-+	With `-d`, `-D`, `--delete-merged` or `--delete-integrated`,
-+	print which branches would be deleted and exit without touching
-+	any ref.  A branch that cannot be deleted is reported as an
-+	error, the same as without `--dry-run`.  Useful for
-+	sanity-checking a wide pattern like `'origin/*'` before
-+	committing to the deletion.  Other operations, such as creating
-+	or renaming a branch, do not support it.
- 
- `-v`::
- `-vv`::
+ 	With `-d`, `-D`, `--delete-merged` or `--delete-integrated`,
 diff --git a/builtin/branch.c b/builtin/branch.c
-index 82452836d6..bb4c52c69a 100644
+index bb4c52c69a..d608132e57 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -29,6 +29,12 @@
- #include "help.h"
- #include "advice.h"
- #include "commit-reach.h"
-+#include "commit-slab.h"
-+#include "diff.h"
-+#include "diffcore.h"
-+#include "hex.h"
-+#include "revision.h"
-+#include "tree-walk.h"
+@@ -35,6 +35,7 @@
+ #include "hex.h"
+ #include "revision.h"
+ #include "tree-walk.h"
++#include "xdiff-interface.h"
  
  static const char * const builtin_branch_usage[] = {
  	N_("git branch [<options>] [-r | -a] [--merged] [--no-merged] [(--forked <branch>)...]"),
-@@ -41,6 +47,8 @@ static const char * const builtin_branch_usage[] = {
- 	N_("git branch [<options>] [-r | -a] [--format]"),
- 	N_("git branch [<options>] (--delete-merged <pattern>)... "
- 	   "[<branch-pattern>...]"),
-+	N_("git branch [<options>] (--delete-integrated <pattern>)... "
-+	   "[<branch-pattern>...]"),
- 	NULL
- };
- 
-@@ -201,6 +209,7 @@ enum delete_branch_flags {
- 	DELETE_BRANCH_SKIP_UNMERGED = (1 << 2),
- 	DELETE_BRANCH_NO_HEAD_FALLBACK = (1 << 3),
- 	DELETE_BRANCH_DRY_RUN = (1 << 4),
-+	DELETE_BRANCH_INTEGRATED = (1 << 5),
- };
- 
- static int check_branch_commit(const char *branchname, const char *refname,
-@@ -844,6 +853,185 @@ static int branch_pushes_to_upstream(struct branch *branch,
+@@ -853,10 +854,17 @@ static int branch_pushes_to_upstream(struct branch *branch,
  	return ret;
  }
  
-+struct branch_change {
-+	char *path;
-+	struct object_id branch_oid;
-+	unsigned short branch_mode;
++enum change_state {
++	CHANGE_MISSING,
++	CHANGE_LANDED,
++	CHANGE_NEEDS_MERGE,
 +};
 +
-+struct landing_search {
-+	const char *branch_name;
-+	struct commit *rev;
-+	struct commit *upstream;
-+	struct branch_change *changes;
-+	size_t changes_nr, changes_alloc;
-+};
-+
-+define_commit_slab(changed_paths, struct string_list *);
-+
-+static void collect_branch_changes(struct landing_search *search,
-+				   struct commit *base)
-+{
-+	struct diff_options diffopt;
-+
-+	repo_diff_setup(the_repository, &diffopt);
-+	diffopt.flags.recursive = 1;
-+	diffopt.output_format = DIFF_FORMAT_NO_OUTPUT;
-+	diff_setup_done(&diffopt);
-+	diff_tree_oid(get_commit_tree_oid(base),
-+		      get_commit_tree_oid(search->rev), "", &diffopt);
-+	for (int i = 0; i < diff_queued_diff.nr; i++) {
-+		struct diff_filepair *p = diff_queued_diff.queue[i];
-+		struct branch_change *change;
-+
-+		ALLOC_GROW(search->changes, search->changes_nr + 1,
-+			   search->changes_alloc);
-+		change = &search->changes[search->changes_nr++];
-+		change->path = xstrdup(p->two->path);
-+		oidcpy(&change->branch_oid, DIFF_FILE_VALID(p->two) ?
-+		       &p->two->oid : null_oid(the_hash_algo));
-+		change->branch_mode = p->two->mode;
-+	}
-+	diff_flush(&diffopt);
-+}
-+
-+static int change_landed(const struct branch_change *change,
-+			 struct commit *commit)
-+{
-+	struct object_id oid;
-+	unsigned short mode;
-+
-+	if (get_tree_entry(the_repository, get_commit_tree_oid(commit),
-+			   change->path, &oid, &mode) || S_ISDIR(mode))
-+		return is_null_oid(&change->branch_oid);
-+	return oideq(&oid, &change->branch_oid) &&
-+	       mode == change->branch_mode;
-+}
-+
-+static int changes_landed(struct landing_search *search,
-+			  struct commit *commit)
-+{
-+	for (size_t i = 0; i < search->changes_nr; i++)
-+		if (!change_landed(&search->changes[i], commit))
-+			return 0;
-+	return 1;
-+}
-+
-+static struct string_list *changed_paths_of(struct changed_paths *cache,
-+					    struct diff_options *diffopt,
-+					    struct commit *commit)
-+{
-+	struct string_list **paths = changed_paths_at(cache, commit);
-+	struct commit *parent;
-+
-+	if (*paths)
-+		return *paths;
-+
-+	CALLOC_ARRAY(*paths, 1);
-+	string_list_init_dup(*paths);
-+	parent = commit->parents ? commit->parents->item : NULL;
-+	if (parent && repo_parse_commit(the_repository, parent))
-+		die(_("could not parse commit %s"),
-+		    oid_to_hex(&parent->object.oid));
-+	diff_tree_oid(parent ? get_commit_tree_oid(parent) : NULL,
-+		      get_commit_tree_oid(commit), "", diffopt);
-+	for (int i = 0; i < diff_queued_diff.nr; i++) {
-+		struct diff_filepair *p = diff_queued_diff.queue[i];
-+
-+		string_list_append(*paths, p->two->path);
-+	}
-+	diff_flush(diffopt);
-+	string_list_sort(*paths);
-+	return *paths;
-+}
-+
-+static void free_changed_paths(struct string_list **paths)
-+{
-+	if (!*paths)
-+		return;
-+	string_list_clear(*paths, 0);
-+	free(*paths);
-+}
-+
-+static int touches_changes(struct string_list *paths,
-+			   const struct landing_search *search)
-+{
-+	for (size_t i = 0; i < search->changes_nr; i++)
-+		if (string_list_has_string(paths, search->changes[i].path))
-+			return 1;
-+	return 0;
-+}
-+
-+static struct commit *find_landed_commit(struct landing_search *search,
-+					 struct changed_paths *cache,
-+					 struct diff_options *diffopt)
-+{
-+	struct commit *commit, *landed = NULL;
-+	struct strvec args = STRVEC_INIT;
-+	struct rev_info revs;
-+
-+	strvec_pushl(&args, "rev-list", "--reverse",
-+		     oid_to_hex(&search->upstream->object.oid), NULL);
-+	strvec_pushf(&args, "^%s", oid_to_hex(&search->rev->object.oid));
-+
-+	repo_init_revisions(the_repository, &revs, NULL);
-+	setup_revisions_from_strvec(&args, &revs, NULL);
-+	if (prepare_revision_walk(&revs))
-+		die(_("revision walk setup failed"));
-+	while (!landed && (commit = get_revision(&revs)))
-+		if (touches_changes(changed_paths_of(cache, diffopt, commit),
-+				    search) &&
-+		    changes_landed(search, commit))
-+			landed = commit;
-+	release_revisions(&revs);
-+	clear_commit_marks(search->upstream, ALL_REV_FLAGS);
-+	clear_commit_marks(search->rev, ALL_REV_FLAGS);
-+	strvec_clear(&args);
-+	return landed;
-+}
-+
-+static void find_landed_commits(struct landing_search *searches,
-+				size_t searches_nr,
-+				struct strmap *landed_commits)
-+{
-+	struct changed_paths cache;
-+	struct diff_options diffopt;
-+
-+	for (size_t i = 0; i < searches_nr; i++) {
-+		struct landing_search *search = &searches[i];
-+		struct commit_list *merge_bases = NULL;
-+
-+		if (repo_get_merge_bases(the_repository, search->upstream,
-+					 search->rev, &merge_bases) < 0)
-+			exit(128);
-+		if (merge_bases)
-+			collect_branch_changes(search, merge_bases->item);
-+		commit_list_free(merge_bases);
-+	}
-+
-+	repo_diff_setup(the_repository, &diffopt);
-+	diffopt.flags.recursive = 1;
-+	diffopt.output_format = DIFF_FORMAT_NO_OUTPUT;
-+	diffopt.no_free = 1;
-+	diff_setup_done(&diffopt);
-+	init_changed_paths(&cache);
-+
-+	for (size_t i = 0; i < searches_nr; i++) {
-+		struct commit *landed;
-+
-+		if (!searches[i].changes_nr)
-+			continue;
-+		landed = find_landed_commit(&searches[i], &cache, &diffopt);
-+		if (landed)
-+			strmap_put(landed_commits, searches[i].branch_name,
-+				   landed);
-+	}
-+
-+	deep_clear_changed_paths(&cache, free_changed_paths);
-+	diffopt.no_free = 0;
-+	diff_free(&diffopt);
-+}
-+
- static bool opted_out_of_delete_merged(struct strbuf *key,
- 				       const char *branch_name,
- 				       unsigned int flags)
-@@ -870,6 +1058,9 @@ static int delete_merged_branches(const struct strvec *upstreams,
- 	struct ref_array candidates = { 0 };
- 	struct strset deletable_branch_names = STRSET_INIT;
- 	struct strset protected_branch_names = STRSET_INIT;
-+	struct strmap landed_commits = STRMAP_INIT;
-+	struct landing_search *searches = NULL;
-+	size_t searches_nr = 0, searches_alloc = 0;
- 	struct strvec branches_to_delete = STRVEC_INIT;
- 	struct strbuf key = STRBUF_INIT;
- 	struct hashmap_iter iter;
-@@ -904,13 +1095,39 @@ static int delete_merged_branches(const struct strvec *upstreams,
- 			continue;
- 		if (check_branch_commit(branch_name, branch_name,
- 					&candidates.items[i]->objectname, NULL,
--					FILTER_REFS_BRANCHES, DELETE_BRANCH_SKIP_UNMERGED))
-+					FILTER_REFS_BRANCHES,
-+					DELETE_BRANCH_SKIP_UNMERGED)) {
-+			struct commit *rev, *upstream;
-+
-+			if (!(flags & DELETE_BRANCH_INTEGRATED))
-+				continue;
-+			rev = lookup_commit_reference(
-+				the_repository, &candidates.items[i]->objectname);
-+			upstream = lookup_commit_reference_by_name(upstream_refname);
-+			if (!rev || !upstream)
-+				continue;
-+			ALLOC_GROW(searches, searches_nr + 1, searches_alloc);
-+			searches[searches_nr++] = (struct landing_search) {
-+				.branch_name = branch_name,
-+				.rev = rev,
-+				.upstream = upstream,
-+			};
- 			continue;
-+		}
+ struct branch_change {
+ 	char *path;
+-	struct object_id branch_oid;
+-	unsigned short branch_mode;
++	struct object_id base_oid, branch_oid, upstream_oid;
++	unsigned short base_mode, branch_mode;
++	enum change_state state;
+ };
  
- 		if (!opted_out_of_delete_merged(&key, branch_name, flags))
- 			strset_add(&deletable_branch_names, branch_name);
+ struct landing_search {
+@@ -888,32 +896,84 @@ static void collect_branch_changes(struct landing_search *search,
+ 			   search->changes_alloc);
+ 		change = &search->changes[search->changes_nr++];
+ 		change->path = xstrdup(p->two->path);
++		oidcpy(&change->base_oid, DIFF_FILE_VALID(p->one) ?
++		       &p->one->oid : null_oid(the_hash_algo));
+ 		oidcpy(&change->branch_oid, DIFF_FILE_VALID(p->two) ?
+ 		       &p->two->oid : null_oid(the_hash_algo));
++		change->base_mode = p->one->mode;
+ 		change->branch_mode = p->two->mode;
  	}
- 
-+	find_landed_commits(searches, searches_nr, &landed_commits);
-+	for (size_t i = 0; i < searches_nr; i++) {
-+		const char *branch_name = searches[i].branch_name;
-+
-+		if (strmap_contains(&landed_commits, branch_name) &&
-+		    !opted_out_of_delete_merged(&key, branch_name, flags))
-+			strset_add(&deletable_branch_names, branch_name);
-+	}
-+
- 	protect_stacked_branch_bases(refs, &deletable_branch_names,
- 				     &protected_branch_names);
- 
-@@ -922,7 +1139,7 @@ static int delete_merged_branches(const struct strvec *upstreams,
- 				      FILTER_REFS_BRANCHES,
- 				      DELETE_BRANCH_SKIP_UNMERGED |
- 				      DELETE_BRANCH_NO_HEAD_FALLBACK |
--				      flags, NULL);
-+				      flags, &landed_commits);
- 
- 	if (!ret && !(flags & DELETE_BRANCH_DRY_RUN))
- 		clear_deleted_upstreams(&protected_branch_names,
-@@ -930,6 +1147,13 @@ static int delete_merged_branches(const struct strvec *upstreams,
- 
- 	strbuf_release(&key);
- 	strvec_clear(&branches_to_delete);
-+	for (size_t i = 0; i < searches_nr; i++) {
-+		for (size_t j = 0; j < searches[i].changes_nr; j++)
-+			free(searches[i].changes[j].path);
-+		free(searches[i].changes);
-+	}
-+	free(searches);
-+	strmap_clear(&landed_commits, 0);
- 	strset_clear(&protected_branch_names);
- 	strset_clear(&deletable_branch_names);
- 	ref_array_clear(&candidates);
-@@ -1002,6 +1226,7 @@ int cmd_branch(int argc,
- 	int delete = 0, rename = 0, copy = 0, list = 0,
- 	    unset_upstream = 0, show_current = 0, edit_description = 0;
- 	struct strvec delete_merged = STRVEC_INIT;
-+	struct strvec delete_integrated = STRVEC_INIT;
- 	int dry_run = 0;
- 	const char *new_upstream = NULL;
- 	int noncreate_actions = 0;
-@@ -1059,6 +1284,9 @@ int cmd_branch(int argc,
- 		OPT_CALLBACK_F(0, "delete-merged", &delete_merged, N_("pattern"),
- 			N_("delete merged branches whose upstream matches <pattern> (repeatable)"),
- 			PARSE_OPT_NONEG, parse_opt_strvec),
-+		OPT_CALLBACK_F(0, "delete-integrated", &delete_integrated, N_("pattern"),
-+			N_("like --delete-merged, but also delete branches whose changes landed upstream (repeatable)"),
-+			PARSE_OPT_NONEG, parse_opt_strvec),
- 		OPT_BOOL(0, "dry-run", &dry_run,
- 			N_("only print which branches would be deleted")),
- 		OPT__FORCE(&force, N_("force creation, move/rename, deletion"), PARSE_OPT_NOCOMPLETE),
-@@ -1109,7 +1337,7 @@ int cmd_branch(int argc,
- 
- 	if (!delete && !rename && !copy && !edit_description && !new_upstream &&
- 	    !show_current && !unset_upstream && !delete_merged.nr &&
--	    argc == 0)
-+	    !delete_integrated.nr && argc == 0)
- 		list = 1;
- 
- 	if (filter.with_commit || filter.no_commit ||
-@@ -1117,13 +1345,17 @@ int cmd_branch(int argc,
- 	    filter.points_at.nr || filter.forked.nr)
- 		list = 1;
- 
-+	die_for_incompatible_opt2(!!delete_merged.nr, "--delete-merged",
-+				  !!delete_integrated.nr, "--delete-integrated");
-+
- 	noncreate_actions = !!delete + !!rename + !!copy + !!new_upstream +
- 			    !!show_current + !!list + !!edit_description +
--			    !!unset_upstream + !!delete_merged.nr;
-+			    !!unset_upstream + !!delete_merged.nr +
-+			    !!delete_integrated.nr;
- 	if (noncreate_actions > 1)
- 		usage_with_options(builtin_branch_usage, options);
- 
--	if (dry_run && !delete && !delete_merged.nr) {
-+	if (dry_run && !delete && !delete_merged.nr && !delete_integrated.nr) {
- 		if (rename)
- 			die(_("--dry-run is not supported for branch renaming"));
- 		if (copy)
-@@ -1178,6 +1410,12 @@ int cmd_branch(int argc,
- 					     (quiet ? DELETE_BRANCH_QUIET : 0) |
- 					     (dry_run ? DELETE_BRANCH_DRY_RUN : 0));
- 		goto out;
-+	} else if (delete_integrated.nr) {
-+		ret = delete_merged_branches(&delete_integrated, argv,
-+					     (quiet ? DELETE_BRANCH_QUIET : 0) |
-+					     (dry_run ? DELETE_BRANCH_DRY_RUN : 0) |
-+					     DELETE_BRANCH_INTEGRATED);
-+		goto out;
- 	} else if (show_current) {
- 		print_current_branch_name();
- 		ret = 0;
-@@ -1357,6 +1595,7 @@ int cmd_branch(int argc,
- 
- out:
- 	strvec_clear(&delete_merged);
-+	strvec_clear(&delete_integrated);
- 	string_list_clear(&sorting_options, 0);
- 	return ret;
+ 	diff_flush(&diffopt);
  }
+ 
+-static int change_landed(const struct branch_change *change,
+-			 struct commit *commit)
++static bool mergeable_as_text(const mmfile_t *file)
++{
++	return file->size <= MAX_XDIFF_SIZE &&
++	       !buffer_is_binary(file->ptr, file->size);
++}
++
++static int merge_keeps_upstream(const struct branch_change *change)
++{
++	mmfile_t base, upstream, branch;
++	mmfile_t result = { 0 };
++	xmparam_t xmp = { .level = XDL_MERGE_ZEALOUS };
++	int ret;
++
++	read_mmblob(&base, the_repository->objects, &change->base_oid);
++	read_mmblob(&upstream, the_repository->objects, &change->upstream_oid);
++	read_mmblob(&branch, the_repository->objects, &change->branch_oid);
++	ret = mergeable_as_text(&base) && mergeable_as_text(&upstream) &&
++	      mergeable_as_text(&branch) &&
++	      !xdl_merge(&base, &upstream, &branch, &xmp, &result) &&
++	      result.size == upstream.size &&
++	      !memcmp(result.ptr, upstream.ptr, upstream.size);
++
++	free(base.ptr);
++	free(upstream.ptr);
++	free(branch.ptr);
++	free(result.ptr);
++	return ret;
++}
++
++static enum change_state change_state_at(struct branch_change *change,
++					 struct commit *commit)
+ {
+-	struct object_id oid;
+ 	unsigned short mode;
+ 
+ 	if (get_tree_entry(the_repository, get_commit_tree_oid(commit),
+-			   change->path, &oid, &mode) || S_ISDIR(mode))
+-		return is_null_oid(&change->branch_oid);
+-	return oideq(&oid, &change->branch_oid) &&
+-	       mode == change->branch_mode;
++			   change->path, &change->upstream_oid, &mode) ||
++	    S_ISDIR(mode))
++		return is_null_oid(&change->branch_oid) ?
++			CHANGE_LANDED : CHANGE_MISSING;
++	if (oideq(&change->upstream_oid, &change->branch_oid))
++		return mode == change->branch_mode ?
++			CHANGE_LANDED : CHANGE_MISSING;
++	if (is_null_oid(&change->base_oid) ||
++	    is_null_oid(&change->branch_oid) ||
++	    oideq(&change->upstream_oid, &change->base_oid) ||
++	    mode != change->branch_mode || !S_ISREG(mode) ||
++	    !S_ISREG(change->base_mode))
++		return CHANGE_MISSING;
++	return CHANGE_NEEDS_MERGE;
+ }
+ 
+ static int changes_landed(struct landing_search *search,
+ 			  struct commit *commit)
+ {
+-	for (size_t i = 0; i < search->changes_nr; i++)
+-		if (!change_landed(&search->changes[i], commit))
++	for (size_t i = 0; i < search->changes_nr; i++) {
++		struct branch_change *change = &search->changes[i];
++
++		change->state = change_state_at(change, commit);
++		if (change->state == CHANGE_MISSING)
+ 			return 0;
++	}
++	for (size_t i = 0; i < search->changes_nr; i++) {
++		struct branch_change *change = &search->changes[i];
++
++		if (change->state == CHANGE_NEEDS_MERGE &&
++		    !merge_keeps_upstream(change))
++			return 0;
++	}
+ 	return 1;
+ }
+ 
 diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 55dda3b265..deead4be24 100755
+index deead4be24..b47d52878e 100755
 --- a/t/t3200-branch.sh
 +++ b/t/t3200-branch.sh
-@@ -1963,6 +1963,39 @@ check_branches () {
- 	test_cmp expect actual
- }
- 
-+test_expect_success '--delete-merged does not delete unrelated branches' '
-+	setup_repo_for_delete_merged &&
-+	(
-+		cd repo &&
-+		git checkout -b unrelated-topic --track origin/next &&
-+		test_write_lines 1 2 3 4 >file &&
-+		git add file &&
-+		git commit -m "add file" &&
-+		git push origin unrelated-topic &&
-+		git checkout --detach
-+	) &&
-+	(
-+		cd upstream &&
-+		git checkout next &&
-+		test_write_lines 1 2 3 4 >file &&
-+		test_write_lines 5 6 7 >elif &&
-+		git add file elif &&
-+		git commit --author="unrelated user <uu@example.com>" \
-+			-m "unrelated commit adding an identical file" &&
-+		git checkout main
-+	) &&
-+	(
-+		cd repo &&
-+		git fetch origin &&
-+		git branch --delete-merged origin/next >actual 2>&1 &&
-+		test_must_be_empty actual &&
-+		check_branches <<-\EOF
-+		main
-+		unrelated-topic
-+		EOF
-+	)
-+'
-+
- test_expect_success '--delete-merged keeps cloned main without explicit push configuration' '
- 	setup_repo_for_delete_merged &&
- 	(
-@@ -2017,6 +2050,209 @@ test_expect_success '--delete-merged deletes only selected merged branches' '
+@@ -2160,6 +2160,186 @@ test_expect_success '--delete-integrated deletes a squash merged branch that was
  	)
  '
  
-+push_topic () {
-+	branch=$1 &&
-+	shift &&
-+	(
-+		cd repo &&
-+		git checkout -b "$branch" --track origin/next &&
-+		for commit in "$@"
-+		do
-+			test_commit "$commit" || return 1
-+		done &&
-+		git push origin "$branch" &&
-+		git checkout --detach
-+	)
-+}
-+
-+squash_merge_upstream () {
++test_expect_success '--delete-integrated deletes a squash merged branch after upstream changed the same file' '
 +	(
 +		cd upstream &&
 +		git checkout next &&
-+		git merge --squash "$1" &&
-+		git commit -m "Squash merge of $1" &&
-+		git checkout main
-+	)
-+}
-+
-+rebase_merge_upstream () {
-+	(
-+		cd upstream &&
-+		git rebase next "$1" &&
-+		git checkout next &&
-+		git merge --ff-only "$1" &&
-+		git checkout main
-+	)
-+}
-+
-+test_expect_success '--delete-integrated deletes a rebase merged branch' '
-+	setup_repo_for_delete_merged &&
-+	push_topic rebased rebased-one rebased-two &&
-+	(
-+		cd upstream &&
-+		git checkout next &&
-+		test_commit before-rebase &&
-+		git checkout main
-+	) &&
-+	rebase_merge_upstream rebased &&
-+	landed=$(git -C upstream rev-parse --short next) &&
-+	(
-+		cd repo &&
-+		git fetch origin &&
-+		sha=$(git rev-parse --short rebased) &&
-+
-+		git branch --delete-integrated origin/next >actual 2>&1 &&
-+		echo "Deleted branch rebased (was $sha, landed as $landed)." >expect &&
-+		test_cmp expect actual &&
-+
-+		check_branches <<-\EOF
-+		main
-+		EOF
-+	)
-+'
-+
-+test_expect_success '--delete-integrated deletes a squash merged branch' '
-+	setup_repo_for_delete_merged &&
-+	push_topic squashed squashed-one squashed-two &&
-+	push_topic partial lands-upstream stays-local &&
-+	squash_merge_upstream partial~1 &&
-+	squash_merge_upstream squashed &&
-+	squash=$(git -C upstream rev-parse --short next) &&
-+	(
-+		cd repo &&
-+		git fetch origin &&
-+		sha=$(git rev-parse --short squashed) &&
-+
-+		git branch --delete-integrated origin/next >actual 2>&1 &&
-+		echo "Deleted branch squashed (was $sha, landed as $squash)." >expect &&
-+		test_cmp expect actual &&
-+
-+		check_branches <<-\EOF
-+		main
-+		partial
-+		EOF
-+	)
-+'
-+
-+test_expect_success '--delete-integrated deletes a squash merged branch that was reverted' '
-+	setup_repo_for_delete_merged &&
-+	push_topic reverted reverted-work &&
-+	squash_merge_upstream reverted &&
-+	squash=$(git -C upstream rev-parse --short next) &&
-+	(
-+		cd upstream &&
-+		git checkout next &&
-+		git revert --no-edit HEAD &&
-+		git checkout main
-+	) &&
-+	(
-+		cd repo &&
-+		git fetch origin &&
-+		sha=$(git rev-parse --short reverted) &&
-+
-+		git branch --delete-integrated origin/next >actual 2>&1 &&
-+		echo "Deleted branch reverted (was $sha, landed as $squash)." >expect &&
-+		test_cmp expect actual &&
-+
-+		check_branches <<-\EOF
-+		main
-+		EOF
-+	)
-+'
-+
-+test_expect_success '--delete-integrated reports a merge plainly next to an unmerged branch' '
-+	setup_repo_for_delete_merged &&
-+	push_topic a-unmerged unmerged-work &&
-+	push_topic b-merged merged-work &&
-+	(
-+		cd upstream &&
-+		git checkout next &&
-+		test_commit upstream-work &&
-+		git merge --no-ff b-merged &&
-+		git checkout main
-+	) &&
-+	(
-+		cd repo &&
-+		git fetch origin &&
-+		sha=$(git rev-parse --short b-merged) &&
-+
-+		git branch --delete-integrated origin/next >actual 2>&1 &&
-+		echo "Deleted branch b-merged (was $sha)." >expect &&
-+		test_cmp expect actual &&
-+
-+		check_branches <<-\EOF
-+		a-unmerged
-+		main
-+		EOF
-+	)
-+'
-+
-+test_expect_success '--delete-integrated deletes a squash merged branch that turned a file into a directory' '
-+	(
-+		cd upstream &&
-+		git checkout next &&
-+		echo content >item &&
-+		git add item &&
-+		git commit -m "add item" &&
++		test_write_lines 1 2 3 4 5 6 7 8 9 10 >shared &&
++		git add shared &&
++		git commit -m "add shared" &&
 +		git checkout main
 +	) &&
 +	setup_repo_for_delete_merged &&
 +	(
 +		cd repo &&
-+		git checkout -b file-to-dir --track origin/next &&
-+		git rm item &&
-+		mkdir item &&
-+		echo content >item/part &&
-+		git add item &&
-+		git commit -m "turn item into a directory" &&
-+		git push origin file-to-dir &&
++		git checkout -b edits-shared --track origin/next &&
++		test_write_lines 1 two 3 4 5 6 7 8 9 10 >shared &&
++		git commit -a -m "edit line 2" &&
++		git push origin edits-shared &&
 +		git checkout --detach
 +	) &&
-+	squash_merge_upstream file-to-dir &&
++	(
++		cd upstream &&
++		git checkout next &&
++		test_write_lines 1 2 3 4 five 6 7 8 9 10 >shared &&
++		git commit -a -m "edit line 5" &&
++		git checkout main
++	) &&
++	squash_merge_upstream edits-shared &&
 +	squash=$(git -C upstream rev-parse --short next) &&
 +	(
 +		cd repo &&
 +		git fetch origin &&
-+		sha=$(git rev-parse --short file-to-dir) &&
++		sha=$(git rev-parse --short edits-shared) &&
 +
 +		git branch --delete-integrated origin/next >actual 2>&1 &&
-+		echo "Deleted branch file-to-dir (was $sha, landed as $squash)." >expect &&
++		echo "Deleted branch edits-shared (was $sha, landed as $squash)." >expect &&
 +		test_cmp expect actual &&
 +
 +		check_branches <<-\EOF
@@ -793,76 +339,146 @@ index 55dda3b265..deead4be24 100755
 +	)
 +'
 +
-+test_expect_success '--delete-integrated honors --dry-run and --quiet' '
++test_expect_success '--delete-integrated keeps branches whose changes did not land' '
++	(
++		cd upstream &&
++		git checkout next &&
++		test_write_lines 1 2 3 4 5 6 7 8 9 10 >doc &&
++		git add doc &&
++		git commit -m "add doc" &&
++		git checkout main
++	) &&
 +	setup_repo_for_delete_merged &&
-+	push_topic previewed previewed-work &&
-+	squash_merge_upstream previewed &&
-+	squash=$(git -C upstream rev-parse --short next) &&
++	(
++		cd repo &&
++		git checkout -b unmerged --track origin/next &&
++		test_write_lines 1 2 3 4 5 6 7 eight 9 10 >doc &&
++		git commit -a -m "edit line 8" &&
++		git push origin unmerged &&
++		git checkout -b half-landed --track origin/next &&
++		test_write_lines one 2 3 4 5 6 7 8 9 ten >doc &&
++		git commit -a -m "edit lines 1 and 10" &&
++		git push origin half-landed &&
++		git checkout -b conflicting --track origin/next &&
++		test_write_lines 1 2 three 4 5 6 7 8 9 10 >doc &&
++		git commit -a -m "edit line 3" &&
++		git push origin conflicting &&
++		git checkout --detach
++	) &&
++	(
++		cd upstream &&
++		git checkout next &&
++		test_write_lines 1 2 3 4 five 6 7 8 9 10 >doc &&
++		git commit -a -m "edit line 5" &&
++		test_write_lines one 2 3 4 five 6 7 8 9 10 >doc &&
++		git commit -a -m "take line 1 from half-landed" &&
++		test_write_lines one 2 THREE 4 five 6 7 8 9 10 >doc &&
++		git commit -a -m "edit line 3 differently" &&
++		git checkout main
++	) &&
 +	(
 +		cd repo &&
 +		git fetch origin &&
-+		sha=$(git rev-parse --short previewed) &&
 +
-+		git branch --dry-run --delete-integrated origin/next >actual 2>&1 &&
-+		echo "Would delete branch previewed (was $sha, landed as $squash)." >expect &&
-+		test_cmp expect actual &&
++		git branch --delete-integrated origin/next >actual 2>&1 &&
++		test_must_be_empty actual &&
 +
-+		check_branches <<-\EOF &&
++		check_branches <<-\EOF
++		conflicting
++		half-landed
 +		main
-+		previewed
++		unmerged
 +		EOF
++	)
++'
 +
-+		git branch --quiet --delete-integrated origin/next >actual 2>&1 &&
++test_expect_success '--delete-integrated keeps a branch that replaced a submodule with a file' '
++	(
++		cd upstream &&
++		git checkout next &&
++		git init lib &&
++		test_commit -C lib in-lib &&
++		git add lib &&
++		git commit -m "add lib as a submodule" &&
++		git checkout main
++	) &&
++	setup_repo_for_delete_merged &&
++	(
++		cd repo &&
++		git checkout -b replaces-lib --track origin/next &&
++		rmdir lib &&
++		echo "from the branch" >lib &&
++		git add lib &&
++		git commit -m "replace lib with a file" &&
++		git push origin replaces-lib &&
++		git checkout --detach
++	) &&
++	(
++		cd upstream &&
++		git checkout next &&
++		rm -rf lib &&
++		echo "from upstream" >lib &&
++		git add lib &&
++		git commit -m "replace lib with another file" &&
++		git checkout main
++	) &&
++	(
++		cd repo &&
++		git fetch origin &&
++
++		git branch --delete-integrated origin/next >actual 2>&1 &&
 +		test_must_be_empty actual &&
 +
 +		check_branches <<-\EOF
 +		main
++		replaces-lib
 +		EOF
 +	)
 +'
 +
- test_expect_success '--delete-merged keeps main despite a different default push remote' '
- 	setup_repo_for_delete_merged &&
- 	create_merged_branch on-next &&
-@@ -2195,6 +2431,27 @@ test_expect_success '--delete-merged honours branch.<name>.deleteMerged=false' '
- 	)
- '
- 
-+test_expect_success '--delete-integrated honours branch.<name>.deleteMerged=false' '
++test_expect_success '--delete-integrated ignores merge drivers' '
++	(
++		cd upstream &&
++		git checkout next &&
++		test_write_lines 1 2 3 4 5 6 7 8 9 10 >unioned &&
++		git add unioned &&
++		git commit -m "add unioned" &&
++		git checkout main
++	) &&
 +	setup_repo_for_delete_merged &&
-+	push_topic deleted opted-in-work &&
-+	push_topic kept opted-out-work &&
-+	squash_merge_upstream deleted &&
-+	squash_merge_upstream kept &&
++	(
++		cd repo &&
++		mkdir -p .git/info &&
++		echo "unioned merge=union" >.git/info/attributes &&
++		git checkout -b drops-line --track origin/next &&
++		test_write_lines 1 2 3 4 6 7 8 9 10 >unioned &&
++		git commit -a -m "drop line 5" &&
++		git push origin drops-line &&
++		git checkout --detach
++	) &&
++	(
++		cd upstream &&
++		git checkout next &&
++		test_write_lines 1 2 3 4 five 6 7 8 9 10 >unioned &&
++		git commit -a -m "edit line 5" &&
++		git checkout main
++	) &&
 +	(
 +		cd repo &&
 +		git fetch origin &&
-+		git config branch.kept.deleteMerged false &&
 +
-+		git branch --delete-integrated origin/next 2>err &&
++		git branch --delete-integrated origin/next >actual 2>&1 &&
++		test_must_be_empty actual &&
 +
-+		test_grep "Skipping .kept." err &&
 +		check_branches <<-\EOF
-+		kept
++		drops-line
 +		main
 +		EOF
 +	)
 +'
 +
- test_expect_success "branch -d still deletes a deleteMerged=false branch" '
+ test_expect_success '--delete-integrated reports a merge plainly next to an unmerged branch' '
  	setup_repo_for_delete_merged &&
- 	create_merged_branch kept &&
-@@ -2264,4 +2521,10 @@ test_expect_success '--dry-run is not supported when not deleting branches' '
- 	)
- '
- 
-+test_expect_success '--delete-integrated cannot be combined with --delete-merged' '
-+	test_must_fail git -C forked branch --delete-merged origin/next \
-+		--delete-integrated origin/next 2>err &&
-+	test_grep "cannot be used together" err
-+'
-+
- test_done
+ 	push_topic a-unmerged unmerged-work &&
 -- 
 gitgitgadget
-
