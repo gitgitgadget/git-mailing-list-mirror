@@ -1,124 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.150
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795633661;
-	b=nBnE55kCbwHFlNukQPUX4v2Jg2/4eNsTNzLbSqDHPeGZ1j2Ey1vfSqIsBWzcduklmB4i
-	 OeGUip/3m4pxVMxFHstr4o+R/Y9CF7yGWbDDeYz04AhlGY9wbcCtY5F8DUpEKeNIYoKyD
-	 uOawR54jKRO7kqOGLW3xST+QKvnBzsNVtlaC34yHyyDArmwGEy0Qj0dKINrKBDBFqtLmq
-	 qknXMrxft7JnZ8sqHedpL9uuWGzUierHLZt20rrzuuQf9FGpFhJz2fXoiRtW264czosqw
-	 xGCqje83bCwDi/EwA68bCw6bcA2caJjOEzFwuqDSISYKQUgukDLlmz4O/gs8PhyUKzw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795633661;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=Yp84Dx9Kw+Iz2ESlJRDRnhoZC1dgK4PH00RQq2C81UA=;
-	b=eLdvOujqmdTv7XJYyjz1KL9PhRt57fljHsjMIle7g7c5wCPwapTuxzQCWLkpGVWhLdWI
-	 ErcIlvapnMURV4rEMd7BKPUfgEDoVXeTC8PC5GIgtLty+L9/rDnWp9bE5DhUr/ZBFMrE2
-	 1yexlg88LqM1dXwi+jZQHIynImePrMpr0j5h5zcB/riovfvGl+JPZHcySRGhBklNhc4dn
-	 +1dN1OLYlTqanGFIfHk33ATOCKfXs1fGL+zYzkAS6b44LbTEixMhtxgKVZqFdqk929uDB
-	 CHyFHKNxUF6SdKvbLOq9jdM2csK9qeRtUCgM1CukSTCEE4062W9K6wgf4YuOmP7IT2Q==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=igMH6lCo;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=TtoK5VBW;
-	arc=none smtp.remote-ip=103.168.172.150
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.54
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795633782;
+	b=fI68vpIe0y/k2vgwQETHqH1yiK94syri37o/23tq7/zw/I1KUG1dIUUfQBzOXE+JPn6f
+	 m+29WximTHGvmShuG39x1cAay0b83C3oe6uE7EOcgezzP5ExVthwzF8mEoc+/CJ0GpHk4
+	 q9uY2evbfv042h5kiK1h1AmAH/6BEbsrJOKt3zwKugSq69ni5UzH51KUv9pKzqWDKlyH/
+	 gZaFPSVWCJLN6PCviQvzvNMS3i5VKN4LI/RqOiW3Tr/xgTViKzbRFHfRipU3GUUOxJ/62
+	 EM8Ax66Q9eHicQM7pnd+3cMswPxXKR/8y61G33+SIwwV4BU/+n67222pI1BtXQhXdCg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795633782;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=BJ7INbFooR7em1w5qKUdv1VXkTgwRbOhsKIVZVe6EPE=;
+	b=kCf6176mIKRhq2WlEOOXBQWeZDo9U4bqb3pvlIKUZZ0ZLnaVZyJsu38o9PG4I4Cp0/mp
+	 +4xOXWcBCRj1sFSTcUvLzAmbXkRNI/i65VSPUQYUfCwfbNIg7X/B9E85WNe4zfGBLlUTs
+	 nf32QweH6CEUISYZWRMymdXp9jjk/qsL6eaDX+5to+gIVtqEE2zDncoB4ryiaN5g9Isxd
+	 ZhKcuGb0ih7Lu2WGW2+A63inho3Dwsftx0OMvk26fs0KsfzqxMZvkRV7WgqMrmtHmnSdi
+	 4OkSKrbQfhvjBP1rwb0XPKwJDhdcJgSdkWyCrMhyhdzjy9HwsQNQQ6bi3konbmTSdxA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FeWqNsEU;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.54
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9754606A327
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 19:07:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E9754606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4665F606A31E
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 19:09:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4665F606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=igMH6lCo;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=TtoK5VBW
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0BBDEEC0C50
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 14:07:40 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Wed, 25 Nov 2026 14:07:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795633660; x=1795720060; bh=Yp84Dx9Kw+
-	Iz2ESlJRDRnhoZC1dgK4PH00RQq2C81UA=; b=igMH6lCoaYjJ46+snIGoeztnTl
-	balj9aqEDz5iInmwK5eWG4Fu/TWvUOUBV5PPs9n3jbqN4HRoQfiCo0iJiDL6wH/x
-	bUdSjdA3QsFNeB2WlyRSmlpP9vurBN3MO9rBpyHAmFyMqUHTnq+Qer5hkV+VYxBc
-	YB2sqrMgwBeauCo+3hj798hYoHiBVqh/gc6dMfEf3JSijRUSVdt5mm69kk9XJ24m
-	MeS0d6Tf9lH6ogjJZXRM1a2iwoGh0jXbiu+8EkJ7yXaCjZ3e+SoZOshZAEH2NHgF
-	lGAnpnLbCLlq1/pIDDqzcwi77EJofJ5ar2ZX7/n3aXdUYGH/5xsCG41twCsw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795633660; x=1795720060; bh=Yp84Dx9Kw+Iz2ESlJRDRnhoZC1dgK4PH00R
-	Qq2C81UA=; b=TtoK5VBWT92vhbagergzI9nwtvQfu1gyN22MBSx8R1rsrbqyItq
-	dxDagAUjozMpK7BaMgOf3wIP6ki7YWtdt3yX5v5voJl9WKoOY7Y6gxN8pI2DSMVv
-	S8onEUni7W7L0JEB/T9iJm6dQJ52OHoahpGoxlCcR/M/gTzCedHTlwTcoLIpfobK
-	2gKzJkxoMZOdyuh+/6CVxBOBF+VGkgUdzCItK7pbwKUDWzEHuDk0xQYr8vTW8APS
-	cZLA7U7u5y+J3oeiYQ0GreTnKrmGUacFSx5IUKWCFd4t45+8EO67ADecLioi4/Bm
-	5yHXSMuAocdE1XAsLRe60gLgZtlTPo8+Otg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795633660; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:Ecw5RmkhtBZMM+cz+LdJ6U65yCaj09OrcXiw3hqdKw4cZri
-	EnrbUEzkUUMkzowVpkBhMu+FF7rEGNFWbieUizINshMYNGRJ4PKwd5C9bZ9yvYeA
-	aPCGMbA7YKJDLofx+zrj9NOku3oxSJt8xojFsjPmkIpUwhZKRKyWjHtYjxbA1lqn
-	x6cRIkKLLCNyEcypi6Z0Krg7gH8spZyqL2WE8DYddRvAdl0NZ1nGRecOPRgL7nfx
-	24T0cDgYX8hMnf7msARBqy6XvI/OAu3Rcnswj38n0FmqwSXopG8jJvubT5rnqBn0
-	84/Ko8ml/YNXYTlh5VllMDQQ3ELdPUxXGcswLVQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:7s7fpg4pENVwFkuvjAg9TyN0Sx2CTsXz+fwNxVXAmZk=:exMA5Y2pNYi6O9vhhBwm1naU+hoXQ2MCP7QjOMC2Q+0=;
-X-ME-Sender: <xms:-zEHawXQIns3sj6U0qdC2XygrKUv74-yW5YMBDLgKcel7TJiMOeEvQ>
-    <xme:-zEHa4RRxMZCUqUi9vXNSHxcrUvPIOJeXCY5IfIP_X7OaL6YQG6BbkvpOHeGNR04r
-    LsPSi4w38iMsPgTZy-FUeMqgeRw5HNAmJLqPVNjoWGWvzqL8CnuRl0>
-X-ME-Received: <xmr:-zEHa-OnRukEtIph-93Fk358ui6Zhd5HG_GdciDWDVlD1AbFHcfLFNGzyjtdZ_KKiX_uC7hHDpg2z5UBMroYmgTFMaIJbxAqBWDWwz8>
-X-ME-Proxy-Cause: dmFkZTFV0j9q97yMTo2F6xpYUCmh8tSGCfPB/rnHjO6JCDJ3gnInVPU+LTa1oGWQ5gHGvG
-    jqDJW1ohoCzcbfXUPbDcxv9pFH2bSO0d8N/PV1nJm8JznuJG+rTURsbmUodjX2CfnQnwoY
-    2ikSifFuvg+cIQ8xslm9jp9zM/7e19q9rbuiU1+Ckeq7mKn/ulAc6EDjZnzD+eYlIEyePS
-    AgQ53EQL+L5xn+hxN7/kZORT9mCCTtr+aixl/DyAlagHvgBe8xz7aYKMDUfGAsI/XcXhNq
-    I5C6jV/L99zAUavM7O5A7NSq59jr/ocnZgZEuPBjOt1EYK8EYdEYJGqYyG5kSyLk+fQqrU
-    AfgCrPO8a7ENbBadDBlXTYkEYASmk9ATMO2a1jat8toaMHklZdICoV7JRbCXGmf5pZ0d9x
-    JAycibKfExoKxPvlmovX2T7UOYXWdUEv1LCCRHWfyePxcrO2UPQ9D+yHdh+kh7c7ZKjuWe
-    dvCTXKxnFoaXz4QMoCxvlrpfCXB1hYT4982FljCyc4KyivShISuWf4aqYXsam0qPWyO+rb
-    avwx1PGmmG0sy6/gAJYOoEqQWQv6iR70QHQIje45RSVeXIS6SKzSp5PrrDyMTMSzNnzpFB
-    JLaZerathAy2dSyVq43uVaFZBBTmm50f5KZmCpip1f31S6b0qya59X/XlHiQ
-X-ME-Proxy: <xmx:-zEHa2TdHFG-IDVy02GRRHUt9Lr_GHQYIBEGTvVK06CcHwqXEKE_uA>
-    <xmx:-zEHa8jq165l3on6J4GdjPZM3R-gt4skNEe-lSvqUVXFLoXoDzZZDw>
-    <xmx:-zEHa__Fbt53zsdSLfKuzCiemAfJfs5nr10HZcwM3QmHUWoxtrEc_Q>
-    <xmx:-zEHazHeKfIRwpaw57JLLq__u9nUIlr-rbYEnB6ssDy7dOWed_xYFA>
-    <xmx:_DEHaxKdDnfJ9iWERwU-q8xWlqgAWpLwM7XuIplzZTkRhekWoWK2K-gL>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Nov 2026 14:07:39 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Adithya Chakilam via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Martin Fick <mfick@nvidia.com>,  Christian Couder
- <christian.couder@gmail.com>,  Adithya Chakilam <achakilam@nvidia.com>
-Subject: Re: [PATCH v2 1/2] repack: add --filter-to-loose to write
- filtered-out objects as loose objects
-In-Reply-To: <4157ce33a1d6c392575cc27fee7c6bd3126e97c6.1795571091.git.gitgitgadget@gmail.com>
-	(Adithya Chakilam via GitGitGadget's message of "Wed, 25 Nov 2026
-	01:44:50 +0000")
-References: <pull.2314.git.1794607911.gitgitgadget@gmail.com>
-	<pull.2314.v2.git.1795571091.gitgitgadget@gmail.com>
-	<4157ce33a1d6c392575cc27fee7c6bd3126e97c6.1795571091.git.gitgitgadget@gmail.com>
-Date: Wed, 25 Nov 2026 11:07:38 -0800
-Message-ID: <xmqq4id43f2d.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FeWqNsEU
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-6b87a240de3so7799636a12.1
+        for <git@vger.kernel.org>; Wed, 25 Nov 2026 11:09:42 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795633781; cv=none;
+        d=google.com; s=arc-20260327;
+        b=UGZoeMNICS2D2r1t7EFCc4ianK9j15HmmWo+Z+Jsd+wkMpoO/Bw2N9E2af8YQepjmQ
+         DqU/dnuNzuN3itC+a6WmSnKkj6YB228JUBlMdZ6C1nVEDhY444SUlxZtIeE3Pqmddfqb
+         W+9xNYaySJDJDYU2aS1om2KQOKqnOd/NLZ4sTm3ccLrjiLV8XZDCFTRL8Ks04RLxWDAZ
+         b80Pxl2E81/Uz5tE1XBwfbcSKq7Xcut5apPqtB2pIPuYVogjDKBCL6wUcsRDnubUc/L6
+         aX4kZMDrcBGRkuO9iaL0MNb078krnDsB4mrgoPVOoT/x7cMqUnQTyTnAsMoG2oK/90Gw
+         0u8g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=BJ7INbFooR7em1w5qKUdv1VXkTgwRbOhsKIVZVe6EPE=;
+        fh=1phDC3yz1lxe32tPkWHEVzddhF4Zqux1hAbeDwm4P5Q=;
+        b=mVdzCmimOPDRYMJ7q+7FE8D91DtAliFcImmPXW0n8iihCRYI2ZY7AnfDIoKTR1a9Ku
+         XCyrsiKgP1ZLJFxAOYEm4XAMMukOxYiRkThkFsWfvzvLv9Lw9nRQPw72v9ujfYhSZRri
+         wRQ5xWJ4g4JB/bwD9ZtIOfqSJanmutQv8Mgf5ZkZEqd3+JQWZ2PWiYZsy2wtknYLPKjO
+         ruk/ofNcQrTzhRie6g+yaU1iETkhU7O+dS+CNIpMi6jPH9ELdoSSzpiXs+SQv8rL9ZOc
+         RlLacQyFkc7xejC/+IfnZadn8XmBees3OnxJiudPc6cAyvLHUWImni42d0pdy3TChkU/
+         dHBQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795633781; x=1796238581; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=BJ7INbFooR7em1w5qKUdv1VXkTgwRbOhsKIVZVe6EPE=;
+        b=FeWqNsEUK349eRIHpYPfTPCIViWei7tn/33mQ0pEYsOILhLph8TrNpj/ItRYa24sgS
+         lUr+VJYGwJ1z/uDyEs+VG6Mzi1BdLfdl47CFtgmRjOGXTChDNp2ekQ+N8zF/tYOQHSf9
+         B+IbH5QREiFklGCHVc26d0EiQUyqXIA3yN50+wiVNtzltz2BuZILEgIFI14TkIYb34X1
+         wmVlZJM12sLS5jW/uzXfnRBI7vQqzkahrEvjQGiCMALzrpygSn9lzw+V/SyV8oeinFNF
+         4exmEW6jfGy2IF178UdvGuljfBOqJhSUUTB0R1F17M/ga6JI891k3pAeTCfIk2Ttv9nz
+         gRDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795633781; x=1796238581;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=BJ7INbFooR7em1w5qKUdv1VXkTgwRbOhsKIVZVe6EPE=;
+        b=vaYKCJgA/Yz/r6EJnOKhGvSTukKeTEcLtG/6Wkg3B+tnd0ogPcJnv1pe9KpyBSHHDq
+         D8gMNysZcuWS1g4ANGt7BdYd4iLw0W1NGZXU22U9fwe9z0z1UUptw+1bFFAP5AkipdOh
+         fDCq2ttuu4IChkeo0XD12BiCqGt5sOWCy8sWWpfdrTRojH4XFz2yhFeelfa/2a8pj04N
+         plRkchacQXW5Cdija08YcPt6wifmOAzz07bWw3tZrqdOl3jp70cTxHgO6vsU7gcH7cFX
+         ATXVWls113O3nIuGR+QtSCINETMQsRi34Kk4toMaCWYx2Q4xtqrt9zRhQtLl+rWaxELn
+         wuZA==
+X-Gm-Message-State: APuU4Z/ZEUwDdnsQcm2mlvgoyPcY8eM4MiwTY6E1IYJCIc85JSNuviiz
+	l3CVum0IEwg22JUDBnuGS5wEgb3e69QCLbaC3qASjflU7N+PXZ7jm0kyug52oKuMPVZ/QAKC/m+
+	jVt11/OxaRSWkcw+K9gQKUFZYv6sOeANiWA==
+X-Gm-Gg: AZFdTZeU3vNq4wBXSmwGEZ2eoyb6fDGemBoioooqMV72XI8IQfaaJ/7cCzbyAh06sgJ
+	tF/Pgo7cVoP619413boVso2WdzP1nMlKAkso6A/EGtsPWT45m9IuF3m74I9/6C5Lp26EA6TjfC9
+	/swOed8G+QYLHVhQWTHDbAVQNA2j0frod18VHxcpu70l6RQbVTbKA+x1mlu+AwpMD5YM00qxrWH
+	cduIOBX5jC9DyZDbvL3Z6XjJITwjGusvOVQhWUf4iO5Ul9fDZ1MLCO/miBR5FrPwZ1VW7si71ca
+	LgQoF4W+D+3VugCdt/CYwk1nKZk0MmaofEE5eUUPOeZXI5jNHezJB6BdiH8IX/AebwJpFZoBfI6
+	yyaF5LWvRQz8rGY167CKHygf1/HIFB8uZAkI77Q==
+X-Received: by 2002:a05:6402:4028:b0:6bb:791:ff67 with SMTP id
+ 4fb4d7f45d1cf-6bb079203damr4540099a12.5.1795633780306; Wed, 25 Nov 2026
+ 11:09:40 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -128,186 +103,190 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20261119-ks-ci-long-test-hang-fix-v1-1-45c2fff6d9f0@gmail.com> <20261119-ks-ci-long-test-hang-fix-v2-1-37011c08380d@gmail.com>
+In-Reply-To: <20261119-ks-ci-long-test-hang-fix-v2-1-37011c08380d@gmail.com>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Wed, 25 Nov 2026 20:09:03 +0100
+X-Gm-Features: Aa3M54oX1xljZc8gZL522FG-btTJBDtbHRGVGponDgWaavwGwOhLFINwEuo6qBk
+Message-ID: <CAHwyqnXT=WP8PuY5hfuLzvfBu23P8z_PF3Jv60gTuOHRwY+6GQ@mail.gmail.com>
+Subject: Re: [PATCH v2] test-lib: run EXPENSIVE tests one at a time
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: Git mailing list <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Adithya Chakilam via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Great idea! Hopefully we can get this merged soon to unbreak the
+GitHub CI pipeline.
 
-> Add --filter-to-loose=<dir> to write filtered-out objects directly as
-> loose objects into <dir>, treating it as an object directory. Stream
-> the filtered pack into unpack-objects instead of writing an intermediate
-> pack file to disk.
 
-Micronit: the patch to the documentation says <directory>, not <dir>.
+Harald
 
-> The filtered pack is built with --stdin-packs, so this initially handles
-> only objects already stored in packs. Loose objects in the source
-> repository are left in place.
+On Wed, Nov 25, 2026 at 8:08=E2=80=AFPM Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
 >
-> Signed-off-by: Adithya Chakilam <achakilam@nvidia.com>
+> Recently, we've acquired quite a few expensive tests in our test suite.
+> For instance, these commits add several tests that require
+> multi-gigabytes of memory:
+>
+>   - 9048b48fb (t1600-index: add expensive tests for over-long
+>     tree paths, 2026-10-16) added tests to t1600
+>
+>   - 288266c11d (xdiff: use size_t for merge buffer size computations,
+>     2026-10-16) added tests to t4300
+>
+>   - 55c54fd375 (apply: reject binary patches greater than MAX_APPLY_SIZE,
+>     2026-03-25), added tests to t4141
+>
+> We also have the memory hungry 5GB filtered hash-object test in t1007.
+>
+> When GIT_TEST_LONG is set, "prove --jobs" happily runs several of these
+> at once. On the 16GB GitLab CI runners this exhausts memory: the
+> sanitizer jobs have been hanging in t1007 until they hit the job
+> timeout ever since the new EXPENSIVE tests in t1600 started running
+> alongside it. Running the two under a 16GB memory cap reproduces it,
+> with the t1007 git process getting OOM-killed.
+>
+> GitHub CI runners are no exception and observe the same behaviour.
+>
+> Take a lock shared by all test scripts around each EXPENSIVE test, so
+> only one of them runs at a time. The lock is a directory in
+> TEST_RESULTS_DIR, created with mkdir(1) like the existing valgrind
+> symlink lock. It records the holder's PID so that a lock left behind by
+> a script that was killed with SIGKILL gets taken over by the next
+> waiter. It is released after the test and its cleanup finish, and from
+> the EXIT trap when a script dies or is interrupted while holding it.
+>
+> Cheap tests in the same scripts keep running in parallel. Only the
+> expensive ones wait for each other.
+>
+> Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 > ---
->  Documentation/git-repack.adoc |  11 ++-
->  builtin/repack.c              |  25 ++++-
->  repack-filtered.c             |  44 ++++++++-
->  repack.h                      |   1 +
->  t/t7700-repack.sh             | 172 ++++++++++++++++++++++++++++++++++
->  5 files changed, 246 insertions(+), 7 deletions(-)
+> In recent times, we've been noticing the sanitizer jobs (linux-leaks,
+> linux-reftable-leaks, linux-asan-ubsan) hang and fail with timeout in
+> our GitLab CI runners. On some digging, it turns out that this is
+> because of multiple memory hungry tests running in parallel.
 >
-> diff --git a/Documentation/git-repack.adoc b/Documentation/git-repack.adoc
-> index a1f9e64f66..bcd7c1fe54 100644
-> --- a/Documentation/git-repack.adoc
-> +++ b/Documentation/git-repack.adoc
-> @@ -12,7 +12,7 @@ SYNOPSIS
->  'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]
->  	[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]
->  	[--write-midx[=<mode>]] [--name-hash-version=<n>] [--path-walk]
-> -	[--filter=<filter-spec>] [--drop-filtered [--dry-run]]
-> +	[--filter=<filter-spec> [--filter-to-loose=<directory>]] [--drop-filtered [--dry-run]]
-
-This is getting overly long.  Time to line-wrap?
-
-> @@ -183,6 +183,15 @@ depth is 4095.
->  	`objects` and `objects/info/alternates` sections of
->  	linkgit:gitrepository-layout[5].
->  
-> +--filter-to-loose=<directory>::
-> +	Like `--filter-to`, but treat `<directory>` as an object
-> +	directory and write the filtered out objects there as loose
-> +	objects instead of as a pack. The directory must already
-> +	exist. Cannot be combined with `--filter-to` or
-> +	`--max-pack-size`. Objects already present in `<directory>` are
-> +	not rewritten. All objects are written before any existing
-> +	pack is removed.
-
-I wonder if the readers find this description sufficient to decide
-between the use of this option and writing the evicted objects into a
-pack.  What is your motivation behind the addition of this option?  What
-makes it more useful to evict them as individual loose object files, as
-opposed to a single 'junk' pack?  Is there some lesson or story you can
-offer to help the readers decide if this option matches their needs?
-
-
-> diff --git a/builtin/repack.c b/builtin/repack.c
-> index 21835453c6..dc2b4a3ce2 100644
-> --- a/builtin/repack.c
-> +++ b/builtin/repack.c
-> @@ -1,6 +1,7 @@
->  #define DISABLE_SIGN_COMPARE_WARNINGS
->  
->  #include "builtin.h"
-> +#include "abspath.h"
->  #include "config.h"
->  #include "environment.h"
->  #include "parse-options.h"
-> @@ -41,7 +42,7 @@ static const char *const git_repack_usage[] = {
->  	N_("git repack [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]\n"
->  	   "[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]\n"
->  	   "[--write-midx[=<mode>]] [--name-hash-version=<n>] [--path-walk]\n"
-> -	   "[--filter=<filter-spec>] [--drop-filtered [--dry-run]]"),
-> +	   "[--filter=<filter-spec> [--filter-to-loose=<directory>]] [--drop-filtered [--dry-run]]"),
->  	NULL
->  };
->  
-> @@ -182,6 +183,7 @@ int cmd_repack(int argc,
->  	const char *cruft_expiration = NULL;
->  	const char *expire_to = NULL;
->  	const char *filter_to = NULL;
-> +	const char *filter_to_loose = NULL;
->  	const char *opt_window = NULL;
->  	const char *opt_window_memory = NULL;
->  	const char *opt_depth = NULL;
-> @@ -257,6 +259,8 @@ int cmd_repack(int argc,
->  			   N_("pack prefix to store a pack containing pruned objects")),
->  		OPT_STRING(0, "filter-to", &filter_to, N_("dir"),
->  			   N_("pack prefix to store a pack containing filtered out objects")),
-> +		OPT_FILENAME(0, "filter-to-loose", &filter_to_loose,
-> +			   N_("object directory to write filtered out objects into as loose objects")),
-
-As OPT_FILENAME() always gives you a newly allocated string, you would
-need to free(filter_to_loose) below the 'cleanup' label, where you
-release resources held by other variables like 'po_args', 'existing',
-etc.
-
-It may make sense to drop 'const' from the type, as it seems to be our
-convention to make things we pass to free() non-const.
-
-> @@ -282,8 +286,19 @@ int cmd_repack(int argc,
->  	po_args.depth = xstrdup_or_null(opt_depth);
->  	po_args.threads = xstrdup_or_null(opt_threads);
->  
-> -	die_for_incompatible_opt2(drop_filtered, "--drop-filtered",
-> -		!!filter_to, "--filter-to");
-> +	die_for_incompatible_opt3(drop_filtered, "--drop-filtered",
-> +			!!filter_to, "--filter-to",
-> +			!!filter_to_loose, "--filter-to-loose");
-> +	die_for_incompatible_opt2(!!filter_to, "--filter-to",
-> +			!!filter_to_loose, "--filter-to-loose");
-> +	die_for_incompatible_opt2(!!filter_to_loose, "--filter-to-loose",
-> +			!!po_args.max_pack_size, "--max-pack-size");
+> So, I thought of suggesting this patch to serialize the expensive tests
+> at least to avoid the putting the CI runners under memory pressure.
+>
+> The GitHub CI runners also observed the same behaviour.
+>
+> Both CI runners are happy with this change.
+>
+> GitHub: https://github.com/sivaraam/git/actions/runs/43281285339
+> GitLab: https://gitlab.com/gitlab-org/git/-/pipelines/3079929506
+> ---
+> Changes in v2:
+> - Corrected commit messages as per Patrick's suggestions
+> - Tweaked the shell function comment to avoid mentioning 'prove --jobs'
+> - Made the owner and waiting variables local within acquire_expensive_loc=
+k_
+>
+> Link to v1: https://patch.msgid.link/20261119-ks-ci-long-test-hang-fix-v1=
+-1-45c2fff6d9f0@gmail.com
+> ---
+>  t/README      |  4 +++-
+>  t/test-lib.sh | 45 +++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 48 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/README b/t/README
+> index fd7e8504b5..c156dd3af6 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -117,7 +117,9 @@ appropriately before running "make". Short options ca=
+n be bundled, i.e.
+>  -l::
+>  --long-tests::
+>         This causes additional long-running tests to be run (where
+> -       available), for more exhaustive testing.
+> +       available), for more exhaustive testing. These tests can use a
+> +       lot of memory and disk, so only one of them runs at a time, even
+> +       when several test scripts run in parallel (e.g. "prove --jobs").
+>
+>  -r::
+>  --run=3D<test-selector>::
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index c56654b7c5..193bf06aea 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -784,6 +784,7 @@ die () {
+>         # test script run with '--immediate' fails, or when the user hits
+>         # ctrl-C, i.e. when 'test_done' is not invoked at all.
+>         test_atexit_handler || code=3D$?
+> +       release_expensive_lock_
+>         if test -n "$GIT_EXIT_OK"
+>         then
+>                 exit $code
+> @@ -1089,6 +1090,43 @@ fail_117 () {
+>         return 117
+>  }
+>
+> +# EXPENSIVE tests may need many gigabytes of memory or disk, so two of
+> +# them running at the same time can exhaust the machine.
+> +#
+> +# Allow only one at a time across all test scripts that share
+> +# this TEST_OUTPUT_DIRECTORY.
+> +expensive_lock_=3D"$TEST_RESULTS_DIR/expensive.lock"
+> +have_expensive_lock_=3D
 > +
-> +	if (filter_to_loose) {
-> +		if (!is_directory(filter_to_loose))
-> +			die(_("'%s' is not a directory"), filter_to_loose);
-> +		filter_to = filter_to_loose;
-> +	}
-
-What happens when you use --filter-to-loose and specify your own object
-directory, e.g., --filter-to-loose=objects in a bare repository, or
---filter-to-loose=.git/objects?
-
-unpack-objects runs while the source packs are still on disk, sees via
-odb_freshen_object() that every filtered-out object already exists in a
-pack, and skips writing loose copies.  With -d, cmd_repack() then
-removes the old packs, losing those objects, I suspect.
-
-Perhaps you want to prevent such permanent data loss by comparing
-realpath(filter_to_loose) and repo_get_object_directory(repo) or
-something?  Perhaps add a test to make sure this does not happen?
-
->  	else if (filter_to)
-> -		die(_("option '%s' can only be used along with '%s'"), "--filter-to", "--filter");
-> +		die(_("option '%s' can only be used along with '%s'"),
-> +		    filter_to_loose ? "--filter-to-loose" : "--filter-to", "--filter");
-
-OK.
-
-> +test_expect_success '--filter-to-loose writes filtered out objects loose' '
-> +	rm -rf loose-work loose-src.git loose-dst.git &&
-> +	git init --bare loose-dst.git &&
-> +	git init loose-work &&
-> +	test_commit -C loose-work base file1 content1 &&
-> +	git clone --bare loose-work loose-src.git &&
-> +	git -C loose-src.git repack -a -d &&
+> +acquire_expensive_lock_ () {
+> +       local owner waited=3D
+> +       mkdir -p "$TEST_RESULTS_DIR" || return 1
+> +       while ! mkdir "$expensive_lock_" 2>/dev/null
+> +       do
+> +               owner=3D$(cat "$expensive_lock_/pid" 2>/dev/null)
+> +               if test -n "$owner" && ! kill -0 "$owner" 2>/dev/null
+> +               then
+> +                       # The holder was killed without releasing the loc=
+k.
+> +                       rm -rf "$expensive_lock_"
+> +                       continue
+> +               fi
+> +               if test -z "$waited"
+> +               then
+> +                       say >&3 "waiting for another EXPENSIVE test to fi=
+nish"
+> +                       waited=3Dt
+> +               fi
+> +               sleep 1
+> +       done
+> +       echo $$ >"$expensive_lock_/pid"
+> +       have_expensive_lock_=3Dt
+> +}
 > +
-> +	blob=$(git -C loose-src.git rev-parse HEAD:file1) &&
-> +	git -C loose-src.git -c repack.writebitmaps=false repack -a -d \
-> +		--filter=blob:none --filter-to-loose=../loose-dst.git/objects &&
+> +release_expensive_lock_ () {
+> +       test -n "$have_expensive_lock_" || return 0
+> +       rm -rf "$expensive_lock_"
+> +       have_expensive_lock_=3D
+> +}
 > +
-> +	test_path_is_file loose-dst.git/objects/$(test_oid_to_path $blob) &&
-> +	find loose-dst.git/objects/pack -name "*.pack" >actual-packs &&
-> +	test_must_be_empty actual-packs &&
-> +	test_must_fail git -C loose-src.git cat-file -e $blob &&
+>  test_run_ () {
+>         test_cleanup=3D:
+>         expecting_failure=3D$2
+> @@ -1103,6 +1141,12 @@ test_run_ () {
+>                 fi
+>         fi
+>
+> +       case ",$test_prereq," in
+> +       *,EXPENSIVE,*)
+> +               acquire_expensive_lock_
+> +               ;;
+> +       esac
 > +
-> +	echo $(pwd)/loose-dst.git/objects >loose-src.git/objects/info/alternates &&
-> +	echo content1 >expect &&
-> +	git -C loose-src.git cat-file blob $blob >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success '--filter-to-loose writes objects that also exist in the source' '
-> +	rm -rf loose-work loose-src.git loose-dst.git &&
-> +	git init --bare loose-dst.git &&
-> +	git init loose-work &&
-> +	test_commit -C loose-work base file1 content1 &&
-> +	git clone --bare loose-work loose-src.git &&
-> +	git -C loose-src.git repack -a -d &&
-> +
-> +	blob=$(git -C loose-src.git rev-parse HEAD:file1) &&
-> +	git -C loose-src.git -c repack.writebitmaps=false repack -a -d \
-> +		--filter=blob:none --filter-to-loose=../loose-dst.git/objects &&
-> +
-> +	test_path_is_file loose-dst.git/objects/$(test_oid_to_path $blob)
-> +'
-
-Curious.  This is identical to the early half of the previous test.  If
-the previous one passes, this one certainly would, as there is nothing
-done differently.
+>         setup_malloc_check
+>         test_eval_ "$1"
+>         eval_ret=3D$?
+> @@ -1115,6 +1159,7 @@ test_run_ () {
+>                 test_eval_ "$test_cleanup"
+>                 teardown_malloc_check
+>         fi
+> +       release_expensive_lock_
+>         if test "$verbose" =3D "t" && test -n "$HARNESS_ACTIVE"
+>         then
+>                 echo ""
+>
+> ---
+> base-commit: e1ec09b23c8e0deb21a0b95ac5996422277395d4
+> change-id: 20261117-ks-ci-long-test-hang-fix-008e72fd40c6
+>
+>
