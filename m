@@ -1,105 +1,105 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.52
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795619613;
-	b=jzWeKmLtynhdVCbp2ncmQYBD4ACnfvM3bFHxsyapf6T8HjyXLXhcl1fcA3ejywzBew2z
-	 DJHyaneacm65uE5E1QmRmQ4G4rEPviD0NSmqkTSE3z0Q2Ts0euO6Ats4egGhHcKsZ5Xt8
-	 dvcUKinoOWHDMPDJ+WMHEcaPhSMY/BhacuzySG+q24c9+c7RRWzM6WnTGEqD5HZI7/lY8
-	 eFYN8snpIoH+AhSO+mQ11Ok3+ddo13g5QPSRec02NshnflqRFWNmiZuCcFeEhZVrNMx1g
-	 +CiQXiwQgEMsMMl89nWjpb6Ej1wsklB/jHET1/rA5WyHjsFz1Ovc7Zx/TZWAwlou6tw==
+	t=1795619614;
+	b=J5z2doWX8tj4g+tVdtHb/VN14lIW7u9XsYcj2gXHtLH9qdC1XyI3qGaWYnLf26XHkWox
+	 5Q0slK9dgOAQ1zexCHj7v7+10ZlggV4TrUXy6bhCjMfWoKTABXST/UaPfSflxB//TDV1j
+	 3urxSPo3Zr38VLOVvH2YqgEcEP/hyf4cyhubiIygHG3DqkotN2NIHtp/z1+lRCTuVabcP
+	 zP0w+tXbnh2sOmrjW9wEFcgRNtHs3TBLdsr6GY3fm6p+OdWF5W+24z02sMT1Bh+R/nLnO
+	 s+99LYNfvj+mQfJJOyxHEsVq0bCwgX9gpPkzjcNAf4fg91y9rIKjHxaoF3Yh6exVawg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619613;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619614;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:In-Reply-To:References:
 	 MIME-Version:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type;
-	bh=+vk2XHDz2S4njPEnTBX9D7jnB8ze0zVXB2tky50CKZ8=;
-	b=JJCcMdd07q02Gd/8bjCQUHnAfqDAMKJfXYus9iZHqEmaf99LOlsB7UoRvFxb8hl1Eotu
-	 unbAVOxUg3t1V+UCRDes8t1MQxv7tDKo65RDgYC4sgmR9G84R0ni6mNf6E0S4OyodqjgZ
-	 JlmKybN8uJyc2/lC5GurgiiWrN3R1maMUnz43SseYV7LMehK4K9kzt+s8Swd+9NUBGLaQ
-	 jz6mtdUBUUDUYDFb88EBLhxzEb9mDm93/wKe2bVa6Ibw7SxLGH5xi16Cxc+yeSxrovY19
-	 Hot92A9qh0ZBPyeLu5o08OCMU9RGbE7sYHlxIgODwIMEA//DKNMooYdWmXkVEMP/D8Q==
+	bh=E8fYilJcGMrZ/G9XmqgEPl1QJl3yMEBNvxeKNRhC7qQ=;
+	b=Rj7wqXs7Qnubovq4CcuLdq/VblvBBHS5nADx4PPoCB5DA9wNVr7yIAN4/4zzfquwahdD
+	 cMd7CJY/fb4A7MI1HmtzrOFy6JC8aOdH8LX5n0lsbTHFSi2KZPresXc2BbMDq/61mPDsp
+	 D1d0mbUlvUN9RliqvPXwuorVV17ngFBSaebVhkB/9s/Xw1eICiWQZba272KcdJkbFyUN9
+	 dsnZDwI+ilBRDN64MGVX+/Izoi6udbi41wg+viwmsuUukLTYDQ0vL34fNSt7ftvB9DeeS
+	 TrojPWFnNW6n9C3GMYMXjV/RmTSq/d9yzZg68uHKNaZZp6DMbWSiiC86eAO6cvBvQ9w==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=google.com;
 	spf=pass smtp.mailfrom=google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=Ju2NLy1Q;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.49
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=VpF+0CH8;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.52
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE335606A321
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 15:13:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EE335606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70321606A332
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 15:13:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 70321606A332
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=Ju2NLy1Q
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-6b869ea8224so52716a12.0
-        for <git@vger.kernel.org>; Wed, 25 Nov 2026 07:13:32 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795619611; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=VpF+0CH8
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-6b869ea8224so52719a12.0
+        for <git@vger.kernel.org>; Wed, 25 Nov 2026 07:13:34 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795619613; cv=none;
         d=google.com; s=arc-20260327;
-        b=EfsCfG6j3txgbm+fF3+uNI4g6iem+NJN1T+X9jcVoueq58ffd0WPgCfjxaBGvgW/x2
-         aZlLRj0lPr3P0jvJvpKZgjBOK7A8/ErxsTeCCvzbnYKXGbpcwNHT335vfe4PFL5tHp4C
-         N0uJJIyUZrN5Bzs9PgMo/rSC6qDrCNU4bn8OUF/DU0ywTQ3QxEPONOtnEKdwfvD/zhxu
-         2kZUAr/euT2lxTufdn/GuCSBGUM9jPS4ghBk+tKf9LzmHQ51hS9af7/bAd5n647+ONuW
-         g9Qv4SwPUnM8KAIadB6k+nwH0MatkrKz2VLfAl52jc+ARZUNPyjrNw8gNDjCcbFxRu1C
-         Fn0g==
+        b=g8SKiw56ZXv0/l9n2lAG8LGNgUzIecw4LHWjJ0vYXCLg5tR2XbfHi7GHjGgvkj9XsX
+         N9XIQ8o+rDk9G9HRw75k4xJ/IyTraZOaPZ1dqk79JFlGkl27ctBnKM4qr5ppIa5HChGq
+         /WfSCcQ2Hrhd+71qFMsIRbRw8pdLD0LDOmG3uy1e8cNgPVD+fzyBdvkhxZKLe69Vl+4U
+         qbXbfzaCj9pgnNwCs9SOfcO7m6+NwD+SNGaGonDP4ghH1FuaOyuh5IOWTdskucsrEVTS
+         212hCzxSE8zdFed63LkWJe1JrM8TL0DMnZKSJlVx6V92j4oqPV9m3ZrzeuqTadVvMtFL
+         7l7w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:mime-version:references
          :in-reply-to:dkim-signature;
-        bh=+vk2XHDz2S4njPEnTBX9D7jnB8ze0zVXB2tky50CKZ8=;
+        bh=E8fYilJcGMrZ/G9XmqgEPl1QJl3yMEBNvxeKNRhC7qQ=;
         fh=YkC1o8BhKLEX/2gF2JnmcaCV6Pt0EAOAIz81VezVYjw=;
-        b=NBkIW4DfOHDczcHDVZJP6eXl1Eeh39LCltn1rwKEvxRO5R1s4O/cge3VTdzfGEZvLG
-         tHVFbJF4f+m+xXbZyvJ50DrrCd6Jy4/wkol/khvOvX+U9TMwYNpB4dPv/1q8K6QdsecE
-         K8wfCH0f7FjHBpjewFSF/w8n9Ow/fzdADcHNLqwEoiTVT0V1GEbmLNG2w43fV5jf0MkW
-         iKkdKikz8jXT7Dn5r7nM9GVrgfLpU09vD0Zh5/Gq/TK5uBoZqUZVxRqrYCceg6pdz9uP
-         VOUceufY2hrwdqaDeu/MKNIGn31IXAvz5C1f8MXIVR5Kbu/vTjkLanRyj3Ln3XWVA+xM
-         iktg==;
+        b=EZqh8iiyFYuK/zj+O9gR4M3T4UCRrEKSpw+jkC5wP+MNWLccZW7J48XG2CuKcvFiui
+         iNDZ7lUgnkRP8+c/EpZZuyTq5002+oll5xXMgfX9HHxKf0wUcphs7f4fopPIQURrvviR
+         kwgfR0l/pYJ4wPd40wyLpA9jR8ZzXv599G9xABvvizCccpGIiT4+tvY3qJTCEWq4X+pE
+         rmyUfgIztenVyECzV2YH6/ZKHz2DQBJF5iZ6QbNyqntBWhbiNAdgUKiecXsN+kdFOnfM
+         uinRVaI0URycCIH8fYMklxNczDwyK6DWCpx8aT7VPyYrH7H1AYXTisNLhzDDKTCbgwwH
+         zsVw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795619611; x=1796224411; darn=vger.kernel.org;
+        d=google.com; s=20260707; t=1795619613; x=1796224413; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:from:mime-version
          :references:in-reply-to:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=+vk2XHDz2S4njPEnTBX9D7jnB8ze0zVXB2tky50CKZ8=;
-        b=Ju2NLy1Qo5PpFzYFpslbYhjkLIDFrQZxHzXUA5cYBMgLIRjZTIqyEATdnrYfgZJhPR
-         EsksVIwvWlJNCwxYWgo+7JsO1UUqsJgwueC/Bso3QEyQv0Ku9kKskUhfat5NPX1XnuFN
-         xy9l7m6/KPELh6wSvzA5ksDej4X00K3iDRhjFI+gRROdyRU6OjHCJcmDBzUl24Qi8VDo
-         sagbOWZK/Nt+GGqpU/y4Z0SDfZ4daikPGtZXuNlaFNYcMbEhWum980E0VAGb3oJNn6x0
-         yXyXR2T+Ew0J3DzpFB+hxrnucnKnxqSULW0hhbmerzB6GJ5Sm9tgte59yxdsTZHLMM4S
-         /Afg==
+        bh=E8fYilJcGMrZ/G9XmqgEPl1QJl3yMEBNvxeKNRhC7qQ=;
+        b=VpF+0CH8kDXFUWLP420ii2DcVpgKhqb5k9/zLV6SChRV8go/oHXz9Ad6UKcR/rcZtR
+         H4OYS1mAdHpoHIvqVGPoBp8YmJ9rEOGJlF6CKT6H/qw0rruR3x+eGWtTq07r63Ksvx8O
+         QCQBxnJt9FHwB4SiwsUb5n2WSJK/4VbBR3B7eFb+/wHDpsmGjQHp14HR1NyJJ6JMIakG
+         XxDUYcHV8x5cJseOcfF25f66M5kt2SBpempLEupMtUkWwb/oA3sW+HIXdT6E7udtuUhP
+         FATJ/fH5wBkitqzxcVjvGcr+GmoWON3lbdLtLxp2HsCr1rnrxEndediH88Vp1zwjkPmC
+         Z8LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795619611; x=1796224411;
+        d=1e100.net; s=20260707; t=1795619613; x=1796224413;
         h=content-type:cc:to:subject:message-id:date:from:mime-version
          :references:in-reply-to:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=+vk2XHDz2S4njPEnTBX9D7jnB8ze0zVXB2tky50CKZ8=;
-        b=yPhNmxcHqClGQJz05T6Tk2UY80JH72LKYeCXNiH3h9zJAGLvtIi3nVRu4tNYd3swX0
-         UNwnf08t9zcAeyfz9mZFm3NLN3aIjxt/FLKzpW54ImV9lnSot/bx7v+ZrAbsVL23n5tm
-         robEFO8g4apl7ekGi5ZM17Hi+/2cUKJUthAYlBACp868k2nWcIsaP0CExe0jg8pdoOOQ
-         sMCaygI0wh6lf0W/PEVbAiXeZ5HGgUf+iw/SknTm322JVSylZoVEljZmth0wRVID/9pZ
-         g1b3CJRDr+/DuTjCPizdYZwB6IDY/v4aEIjx5YtCI5MxKCEXg7+bpway9n2LOg53J/4q
-         OTGQ==
-X-Gm-Message-State: APuU4Z9aTF675bYzNjseuLH0UCFwLh0jHT6Ka5WXuUbVpnZAolWFUcEx
-	ZtyWvIP3EVzI7mJcZl3b1o2DgDM9vt0aensWKhW74q28lnzL+1hbASXVY9+f+2baPMXYm3Cgv8x
-	g1TW0+VpHvZK/bi1b23m3zhXdr/1EzesX2m/oNz4D
-X-Gm-Gg: AZFdTZf1HoewSGh67PSOHOV3q83dKuSYNGTBK7SKCyNJPgM1Zx8zTiBHRa9eB2lZLP0
-	FZ8go3rVyODxa3D4FZ5dNTwt/PX68d3ep5Z2OZD1qNcOblKwC37d2wNd3/8DhhGt4l4FZMnUYas
-	tIoziKomIdv9GLpqcF37ESJC2Jv1sLUXwQPFBTbcTsDdf1eMt8DYldeo9DNVbxP2N+7BoHhRi02
-	NMRN/NeqWQYuNWRnAhBQxuuzVTliWS3l3I3ANEiaAUASF2E7zhuMSWkjghRssUFPuTGFCGiA0u8
-	u28iEvAiYjP8TmO2ohFBTAM8WduslNL+qat8YToX+DV43AIrrtlxSTi1UqJ6hDfVxQJzwjW18df
-	oMp0Rj5TyOYSkecDxHeq8OlX9PolQn5Mx2t9aICsw+7iGgtDzcidtFLph/LZjffJ67bUEW+8RC5
-	sofKJoBqAOXg==
-X-Received: by 2002:aa7:c614:0:b0:6b4:629a:6352 with SMTP id
- 4fb4d7f45d1cf-6ba65b4065amr423167a12.5.1795619610571; Wed, 25 Nov 2026
- 07:13:30 -0800 (PST)
+        bh=E8fYilJcGMrZ/G9XmqgEPl1QJl3yMEBNvxeKNRhC7qQ=;
+        b=REdE8QH323RYdX8ZAPwFgD8ARlc/7AdgWSzwCxQ/tl+ZXP3bpJXfJV+kGbsCbhCFhH
+         lLB7gcncTkp3K5LOEueOON1Z09x6d51DFOjJ/ZrxXbQ77hwaMBR4qE7wM3JFTRzwIt7K
+         DpwzbeQUWrGPMNt8ZwKgeRdKR8v4elZ0UT88e90anOAnMk+msmJlTqG9XJK480Y+RSvP
+         7gWh7FEYhXuv9webTdSMgC9d1p1cu/YTspzPFOCyPQK+BffFaNJ9B4uIFbpJMAbfuBIT
+         OelKKMxuWJBPc0t5JV74ZB/oUQJ0Tst3qq+d7hzOP1QD00t+rJV37Uvt3/O3qocrspEr
+         KpLg==
+X-Gm-Message-State: APuU4Z8zjvkLnSYHuLFR4pwDELhshlwiLtsYcQ2ndeMerKZE5+P1Xz4o
+	UenDl32WGOMQlCuVLjzuTYo5DknN7VbbToyH1dVgPuWwdiMue9M+BeOMQKN1xO92cjIXLDtZtax
+	fR9ArBO19ZWBvfCa2pcY2fNxVOQ0Rps6OTZFraOwnS9Viieq64nqz6w==
+X-Gm-Gg: AZFdTZf31+SO2MwP2ySboKT6ee0qcyDAX2aV0lz52gDoWyAQpYK9+jxNUOhvAlYisCA
+	EYSFwqgnjJkRUSAOYtu8/cBqzlMIUwp3XVeBoyYi2LzAJPMgvCJaBpHEZqMBFyBTR2vKCM3AH4A
+	deQYRfdteemR8PIyXgXWOLKwS9A0lLHaVxqhCwgoN2cJGI3GAU6gx/4rx08D/Anrt1GfxaXnfuT
+	kBwF8W1ASX8kVlpd+1LwyRoIGB6ffRXrxCdJwv3mIIvOH1pyrt1BNd7dsdgCMv+oSlZzgsh/F2R
+	u+nRI9AxWl3FjXuYVgJMz1BzHgCxfy4m5Ow+PzJeivHb7needOhGguT944CXj1lzdcCHvGNM19A
+	DLk6zGTkBeHxiefSAOecux3mHApMgD6+BsSM8s+SxQ2C7lOVOLiV5I/ZQeizlEkUxUNG8zg1abI
+	gWwL9UgKKSXA==
+X-Received: by 2002:a05:6402:a545:10b0:6aa:128c:36ad with SMTP id
+ 4fb4d7f45d1cf-6ba6ed88c52mr190385a12.10.1795619612078; Wed, 25 Nov 2026
+ 07:13:32 -0800 (PST)
 Received: from 913411032810 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 25 Nov 2026 07:13:30 -0800
-In-Reply-To: <xmqqqzg9kfyl.fsf@gitster.g>
+ HTTPREST; Wed, 25 Nov 2026 07:13:31 -0800
+In-Reply-To: <xmqq4id5kf19.fsf@gitster.g>
 References: <pull.2287.git.1793462224.gitgitgadget@gmail.com>
- <pull.2287.v4.git.1795103883.gitgitgadget@gmail.com> <8dc66bfca4f42b1d847cf5e39d5940e0150ef2e4.1795103883.git.gitgitgadget@gmail.com>
- <xmqqqzg9kfyl.fsf@gitster.g>
+ <pull.2287.v4.git.1795103883.gitgitgadget@gmail.com> <ca247f390c8ecd2df20f7054f3357bf8da86bee2.1795103883.git.gitgitgadget@gmail.com>
+ <xmqq4id5kf19.fsf@gitster.g>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -110,10 +110,10 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 From: Ravi Mistry <rmistry@google.com>
-Date: Wed, 25 Nov 2026 07:13:29 -0800
-X-Gm-Features: Aa3M54pGzm-tgeAp2t45nRfe1xL5UcgDXq5AEtwfs1tWIj_UkAycf64ReKixqRM
-Message-ID: <CAF+mdicKWo8wFYguMfs06bcvSBda-0zSORbBLbDs=Uzk9SkgCQ@mail.gmail.com>
-Subject: Re: [PATCH v4 3/5] http: add http.retryStatusCodes config option
+Date: Wed, 25 Nov 2026 07:13:31 -0800
+X-Gm-Features: Aa3M54qsjXXOOQcpUEy-o85LII0qzxLSq4FvmHzaYnrFtZJq6OyPPQcNtjaUUag
+Message-ID: <CAF+mdicWKt5WWAJufz68wOH9vsvM83HfTz0XdHfJF8vZBM+dhQ@mail.gmail.com>
+Subject: Re: [PATCH v4 4/5] remote-curl: retry transient HTTP errors in post_rpc()
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>, 
 	Patrick Steinhardt <ps@pks.im>, "brian m. carlson" <sandals@crustytoothpaste.net>
@@ -121,19 +121,21 @@ Content-Type: text/plain; charset="UTF-8"
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> http_retry_status_codes is a file-scope static that has the value
-> obtained from the  environment variable or a configuration variable.
-> It may be worth noting in the documentation that configuring it to an
-> empty string does not restore the default (i.e., 429 and nothing else)
-> but disables all retries.
->
-> It is outside the code touched by this patch, but because
-> handle_curl_result() checks missing_target() and 401 before
-> asking this code if we should retry, 401 and 404 would not be retried
-> even if the user includes them in the configuration.  That may or may
-> not be worth noting.
+> The variable result is initialized at the beginning of the function just
+> once, but is not reset before we retry.  Would it cause issues if
+> run_one_slot() returns early due to start_active_slot() failing (which I
+> presume would not cause finish_active_slot() to be called on it to
+> update slot's results)?  Just wondering if we need to somehow clear to
+> give a fresh results object to run_one_slot() here.
 
-Makes sense. I will document both in http.retryStatusCodes in v5 (and
-add a test for the empty string case).
+Oh, good point. When start_active_slot() fails, run_one_slot() returns
+HTTP_START_FAILED without calling finish_active_slot(), so results
+still holds the http_code and curl_result of the previous attempt.
+
+It does not change what we do next, since HTTP_START_FAILED is never
+retried, but report_rpc_error() would print those stale values.
+
+I will clear results before each run_one_slot() call in post_rpc() and
+probe_rpc() in v5.
 
 Thanks!
