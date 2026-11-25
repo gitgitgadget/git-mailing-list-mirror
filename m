@@ -1,111 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.70.43.22
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795637374;
-	b=Q6ZW/9/5aTFOyqBvz7YOyCicD/n5FjkcvOdwS83LQuKceu7SNearGlyghjbfWq1MUi6p
-	 dBNOYkkit8pCz36K/i5yeGRlcS/e9kkGHh/ODMAwQw1Wzu3IATw0IjCCZZDY99mVPjUT4
-	 g0CWOjMnxiT6PW1FpX2G5XDqQr/spitnZqkxngzaw8QmfdJ1fdkzIOF9q1FKs242vPU5H
-	 Rj7MW+Dd9BMWuxxPTuANRvxzXaBcrhkbdatWbSVcuwM57FhjCm7WEBXlnkxazMKxHSRmF
-	 cZWnGmHwAfm6XVjcipcFmsbLxtYmmVz3UB/6jodAJC6pI2P4R+3ilcLGlN1qHAucrfA==
+	t=1795637590;
+	b=A6EHC6DEYqlUrxFx+KvIbx4WPoUjv9Vu9vo5up+sedPYuCTidJMQzSst2qTRKD/nAGIq
+	 gaSU757iZwG9yjJbFkbPBNAtvi7CIDBkGo4z5YIj79dflz2rF1dg7kCb60As0pVdeAK78
+	 PbrSjMuN+DiQInI1fps3Fj+uiaQte1YaRwT7jV7ZlSR3qg+bgmyML6zuZyCIlxk/Zykzm
+	 04rs2Fz8w0cy5fvD3zPFl9giZLPogI/Fbxz8zvKmSrH/1l1QxA/UGzBxhDWAdcAd5+ERn
+	 4n4miTGGsmzIKmP4iQBjw/EM5PLZKV7pITGBGca2M5hAzewVQFyorzzgAqHsYVlOSgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795637374;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
-	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
-	 References:Subject:Content-Type:Content-Transfer-Encoding;
-	bh=xI1zNLTQT/XawOcx5QCMysFAyN5uGjcgJO2EPJCFV2M=;
-	b=xR9F/WNwq4K5HoSMerrX5V+H9ebzC1t+D/ih6Z4oAoODcNJK3iUdhhIY9R+LyDXakWPz
-	 EK0g0tPux4OwWwDyCve6/n8oLkhOnPoS7U5ibnwnCCaoal/hpZAfZsmYic41igLX6Afk8
-	 PGzEMu6XVsHJ7HtrrHSU7taeVe9PebWEnKOiiN4gMGJsR70+xLPQ6ixo2hv0rWEL2IA66
-	 2cmQLLLuroBGK3b8pGg98SnVbNvL8TaZAJhfoGX+/pabtDXpCdSyjVxhnUwLAcZY9lJUR
-	 vBI86rezXvZnoNUwyS/8o3C2+p13E/pK2ytmPNEGyeZpR8amEfpAI7UkiEnaEgx4jdw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795637590;
+	h=DMARC-Filter:DKIM-Signature:Date:To:From:Cc:Subject:Message-ID:
+	 In-Reply-To:References:Feedback-ID:X-Pm-Message-ID:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=FfiCPPqE+4jaD24MllUFtrQkI3W7O/vpr3m3egGQsaw=;
+	b=UZ7oJL+mMCeoKDVd5p7w3u4w4TC3CEU+RaMk3RCnZw1uqeLFKlnkh2mSY/QAfF+C2QZy
+	 xpXfL5O6Drl86NjgBTHlJhlFdv6FVuENoPm23zT8cT4yXSRLveO/eOLY6CMRp1RXCOsIQ
+	 XUbOWb/MTP1IX72bMO6ie02pmzJnwn8iBbuEDEr+gCHQ506/SubWqWY6XdpMZOWfWghVs
+	 qxs8rhWlG77g787ZV2cChnEzqd5rSWaah+d9RUcg4OtuDViJSmx176Pi6T7jnegfuk7OA
+	 d7KpNy3rOkrh0tY5Mwbe40A3paPTjxSDOIJGoJIf2/Cwbt2PkKniL7XBFJL6WSKd9AQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=fastmail.com;
-	spf=pass smtp.mailfrom=fastmail.com;
-	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm3 header.b="ag5a/GJh";
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=yJQMHcWs;
-	arc=none smtp.remote-ip=103.168.172.150
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	dmarc=pass header.from=proton.me;
+	spf=pass smtp.mailfrom=proton.me;
+	dkim=pass header.d=proton.me header.i=@proton.me header.a=rsa-sha256 header.s=zwq7rhqoangl3e7ax6fuik2c5q.protonmail2 header.b=zanT60Ed;
+	arc=none smtp.remote-ip=185.70.43.22
+Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD1E606A321
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 20:09:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4CD1E606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D884606A31E
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 20:13:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6D884606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm3 header.b=ag5a/GJh;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=yJQMHcWs
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3AA3CEC0AC5
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 15:09:33 -0500 (EST)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Wed, 25 Nov 2026 15:09:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1795637371;
-	 x=1795723771; bh=xI1zNLTQT/XawOcx5QCMysFAyN5uGjcgJO2EPJCFV2M=; b=
-	ag5a/GJhcOLS9LDLqQ7BMAQAJ6bk1eMBbX6zKEez5y+CaQrf3eBm2FwXrifZSMKZ
-	B2QOjn2QL7poq2s0LttlDfuy0GZaBnzDqqnqSFF3BcKswmqk3CKqN3c05DQkeMva
-	HjLIk6sGXkeD7KsuEWyUMHSMz27YGFg4KcxWuqS7DpYPBC/uxw0Vhh1ENPzk6Jc/
-	na3ziPJypwlJdDFasUl5agaYXJ0MJVusaJkGCUt5+ThDCS1QBpJ/5U3Bf5/tMo1y
-	/e4NujYZpEIZd6MfpA0GPQNShe8jXhHPHbjQsJrG8TZHdEWPaHd8EpxSx0ptFXqt
-	2pmHwzA0LPB3HBb8DsjwhQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795637371; x=
-	1795723771; bh=xI1zNLTQT/XawOcx5QCMysFAyN5uGjcgJO2EPJCFV2M=; b=y
-	JQMHcWscU69pinOgYLPx81veon8FoAigQHP7YsdihvXTzAzvg6gEDhF2rj2eIDZ2
-	d8K3lnnUxATCEe+afh8r88wBDhuscQq96L2EZAhw7lM18H7oVXwfsltA1ri7Gfrp
-	DJZHZEbXoprSxdbVdBMl02DbB8NjQakoM7A2P1xJ5hsmAW6ABgF/pdhspKYvTCtv
-	pYnhcviudnv5BEhzbYGhQRb7FgpCvFL1GQnqBl8UwBVYwDMz/yXOnV1D3YgY8CXs
-	hT17HM9JsZWve0+A6wRv6F32AwOHA5yQhqUynpOiFN+qY0IWAoMjNn6Bac0JyEYo
-	/WP3zfBvWkqbqDKVOVD3w==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=fastmail.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795637371; d=fastmail.com;
-	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:T/qiot5Ko7nGjEvSy9Flbibl0WF8ATO/rLEuwfnPknmF7PE
-	IKB0SrPFBG3zhekhezOfElbaHzVh7nCpp4RxDBa9+0pLrIq09/vVoCf44MuWWLDC
-	RZcKFkNTpDaigOEvtu0Sod2Dk70KIj4aJvWg+mx+wIrI+a6TXz2tqNg5UEFspTtg
-	YHOvi9xgPDOGN6ZY1a3HEk5NesQsKxAZ78+o+QqGYRzA2URveuVKosSWTrkbULtV
-	wQVTZWAMH621I9l3v9lGGHXotENe7HTVGaFTPmtePkihJDRX9Mc8Og88r/w4PYRs
-	LuJRmski2vNj0KbGTwe5LJl+A/Rkygup6Hx7xKA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:EET6inw+VoLvQnnaeAR4sVutGVKVnSy0BQjh3F0OYSk=:TZHO6MuY5tTxtm4kulmjNSKW75CxH8b8K19PcE+DqEY=;
-X-ME-Sender: <xms:d0AHayao_PiToN8xvCMcltHP7O4ApkmmppLyHypI2dUGeHmxn-G0fkU>
-    <xme:d0AHawOQPNVvhylksCGqDEX2ZWz71Giglk1qxpanvdTVwcjkXz4g4ASYLQHonB_3V
-    -y3jf6LaCBGIijBQBMWyQCwtKyTdlahobke7m_FAK40hx7N51rGNIk>
-X-ME-Proxy-Cause: dmFkZTFf+VPMu+w55COezYy+TgZyOJx52UWeC7kW1mZQSN5jAeDF2T3hCmPZgtt6WyMMf9
-    VPRuN/c7fNAUwBM6pM1wujsLE9a/hmzHMQ+yvhmIi8nwhXi/2eaIp2xmChefnwnuJJ5m7E
-    iElATK+aumzepJGtbklA6W0uM59BC3I0XNpHAet9s8ErjOrgX/jBg8NfYR6iYLOe25U3OO
-    W8dvr5TdQrxBEe1EW+k86xHYT0HiCDDYUvR1cbnArSCdhcf6vY8mhBpJ6pJijIbjLp9KQu
-    7+BounBrjT/oeYenL1KdwwThea4hgZnfktErvKGwN0DvW9Re23JAbYIQOi1sqCTYJ5tYCS
-    Jg8tSfDlvAb0R8Fbip9hKTkDzrTcwmEmJpQrjHaqZT85pzblm33VskqXOhFbXHG98uy9dH
-    UUXX/u84NMUDScrJIe/Vm6SUCkbHCjUCgOieDHwo2c1yaEdbbvqoNlR0HidpcaOgs3x4YK
-    AxgS8MEuUdzgWvjzaAYoGbAgdY27zjYRcPl3Gl1r2Wz0q45NpZfznG1rIOQBdFnCtgcVVh
-    DoYtMnXQuUNRpy/O9uiC/6f9djOZijusO6DcZS4uzUr67TZr5dHqcx3PVfe0d2ExO+VU7/
-    JKnVG7efURWrHRIHo46MmAFcKhIim6jHPb0pzQOgqdmoMv5SbJo861sNjEEA
-X-ME-Proxy: <xmx:eUAHa3_rPWxx05Bzvgm-62HuhQEyy73DT8Wi1Le4qt7XbozT85irEQ>
-    <xmx:eUAHaz3glv0zj-EgvKPa1p3Cn3hy_4AcEXCFrTYef9H2TuWyJouBQg>
-    <xmx:eUAHa89Rw5JKyCnKxjZ_GBKdXCsii4qJ0N78fNi1dYSmC6ZhKlsEHw>
-    <xmx:eUAHa7uPrEgMGBtvVNk86NTA1NqITuvGNcnbwo7rqyUlYiwqS1BcNw>
-    <xmx:e0AHayGqZXENA83o8xDJAG77KjZuvCO1S1wauiwGp8vQTOZXQ9WKDdR3>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id E47C522C009C; Wed, 25 Nov 2026 15:09:27 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key, unprotected) header.d=proton.me header.i=@proton.me header.a=rsa-sha256 header.s=zwq7rhqoangl3e7ax6fuik2c5q.protonmail2 header.b=zanT60Ed
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=zwq7rhqoangl3e7ax6fuik2c5q.protonmail2; t=1795637587;
+	x=1795896787; bh=FfiCPPqE+4jaD24MllUFtrQkI3W7O/vpr3m3egGQsaw=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=zanT60EdXnnbcgaUU0Z6fg632e53ollMF9ObGUIJF31OzSYh4E9LsMv7lYkoBFH+w
+	 hXSzZFnLdPY9Sly6u88QbLzpn47fYlSCGImiO3K2b/VudEELp2C+b5zV24CdHuZdMR
+	 m+x5Hkjx4Czw0coGFEhCyxwv5w8yt1+XpfhH+E4MggScDGvoPpTyKmF2AWNZMqstSN
+	 tcQ8JTJbqNJ+Hy6PEXA3YwoDbUUlTCD5MtLAyhtg286qVMIUK2y+1lLH7Pnm/zVNv4
+	 dSyv3V3ipf77OIe4fZz1h1feAZwcxdbhWb2HfVQKTkpOq4TsZHR/h8sCDA7wcRF+2f
+	 M3xm+qvqoGBsA==
+Date: Wed, 25 Nov 2026 20:13:01 +0000
+To: Junio C Hamano <gitster@pobox.com>
+From: Julian Maurin <julian.maurin.dev@proton.me>
+Cc: Julian Maurin via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, Jeff King <peff@peff.net>, "brian m. carlson" <sandals@crustytoothpaste.net>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH] remote-curl: honor --no-thin when pushing
+Message-ID: <qE2F9rf_tOQLNozkn9xXkfvNYq_9M7ZGhSqCtUJ_Z3n9YMD-3J28upfMF7XE2D2i5YD0XfCckhs1Lb_7nZ1uOPMXzdRJPzmffOuNdvwmX9Q=@proton.me>
+In-Reply-To: <xmqqbj7c6bfx.fsf@gitster.g>
+References: <pull.2328.git.1795595886592.gitgitgadget@gmail.com> <xmqqbj7c6bfx.fsf@gitster.g>
+Feedback-ID: 50061477:user:proton
+X-Pm-Message-ID: 308f738d590bcbe577859faad819120804d04d6c
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -115,81 +64,155 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-ThreadId: AkCwORjixZW3
-Date: Wed, 25 Nov 2026 21:09:07 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Phillip Wood" <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Cc: "Jeff King" <peff@peff.net>
-Message-Id: <b9ab8baf-0b87-498b-a37c-64af0d06b9be@app.fastmail.com>
-In-Reply-To: <608b25cc-6ec8-4f0a-8eeb-863ed44bd0db@gmail.com>
-References: 
- <fa8b80af26481e0dc96fd8f80f3c7ba84f60f9d4.1795516651.git.phillip.wood@dunelm.org.uk>
- <b8c40805-90f2-414c-ae70-e2f79a19170e@app.fastmail.com>
- <608b25cc-6ec8-4f0a-8eeb-863ed44bd0db@gmail.com>
-Subject: Re: [PATCH] var: add GIT_COMMENT_STRING
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 25, 2026, at 17:19, Phillip Wood wrote:
-> On 24/11/2026 15:02, Kristoffer Haugsbakk wrote:
->> On Tue, Nov 24, 2026, at 11:37, Phillip Wood wrote:
->[snip]
+> Here is my attempt.
 >
->>> diff --git a/Documentation/git-var.adoc b/Documentation/git-var.adoc
->>> index 5f240eb56e3..04aeccd7aa6 100644
->>> --- a/Documentation/git-var.adoc
->>> +++ b/Documentation/git-var.adoc
->>> @@ -130,6 +130,10 @@ endif::git-default-pager[]
->>>       The path to the global (per-user) configuration files, if any.
->>>       This variable can have multiple values.
->>>
->>> +`GIT_COMMENT_STRING`::
->>> +    The comment string used in template commit messages and rebase =
-todo
->>> +    lists etc.
->>
->> This could also mention the config variables and git-config(1)?
->
-> I had decided not do to that as the point of GIT_COMMENT_STRING is to =
-be
-> able to query the comment string without the user having to worry about
-> the intricacies of the config setting or what the default value is.
+>     If one pushes from a shallow, treeless partial clone
+>     (--filter=3Dtree:0) to an HTTPS remote, a thin push lazily fetches
+>     every advertised tip's missing tree from the promisor one by one,
+>     and --no-thin has no effect over HTTP to avoid it.
 
-I don=E2=80=99t agree about it being an intricacy. The concrete name lin=
-ks them
-with no doubt even if they would have diverging description for example:
+Thanks, that reads better than what I had. I'll take it as is in v2.
 
-=E2=80=A2 String that marks lines to be discarded on save
-=E2=80=A2 Marks the beginning of a comment. A comment is not part of the=
- saved
-  commit.
+> But we may want to take another look at these uses of strncmp() when
+> the dust settles (#leftoverbits).
 
-Granted that is completely invented...
+Agreed, that is for a separate patch.
 
-> I guess saying "see `core.commentString` and `core.commentChar`in
-> git-config(1)" doesn't really do any harm but I don't think users are
-> going to get much additional useful information by reading the config
-> documentation.
+Thanks for the review.
 
-Yeah that is correct. The link isn=E2=80=99t worth the space.
+Julian
 
-> Perhaps saying "as set by `core.commentString`" would be
-> more better as it does not promise the reader that the config
-> documentation contains additional, useful, information?
 
-Yeah, this sounds like the sweet spot.
+On Wednesday, November 25th, 2026 at 18:57, Junio C Hamano <gitster@pobox.c=
+om> wrote:
 
->
-> The documentation for GIT_PAGER, GIT_EDITOR and GIT_SEQUENCE_EDITOR
-> mention the relevant config settings when describing how we determine
-> which program to use, but the documentation for things like
-> GIT_DEFAULT_BRANCH does do not.
-
-After reading just a little, I much prefer the verbosity of `GIT_EDITOR`
-compared to the terseness of `GIT_DEFAULT_BRANCH`.
-
->
-> I have added a note to the documentation for `core.commentString` that
-> the comment string can be queried with `git var GIT_COMMENT_STRING`
-
-Sounds good.
+> "Julian Maurin via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>=20
+> > From: Julian Maurin <julian.maurin.dev@proton.me>
+> >
+> > "git push --no-thin" to a smart HTTP remote still sends a thin pack.
+> > transport-helper.c does not forward the "thin" option to remote
+> > helpers, and remote-curl always runs send-pack with --thin.
+> >
+> > "thin" was left out of the forwarded options of ef08ef9ea0
+> > (remote-helpers: Support custom transport options, 2009-10-30) after
+> > review noted that --no-thin did nothing on any transport at the time.
+> > f7c815c3ee (push: respect --no-thin, 2013-08-12) made it work again,
+> > but only for the native transports.
+> >
+> > Forward "thin" to helpers and teach remote-curl to honor it. A helper
+> > that does not know the option answers "unsupported", which push
+> > ignores, so it keeps working as before.
+> >
+> > Signed-off-by: Julian Maurin <julian.maurin.dev@proton.me>
+> > ---
+>=20
+> Sounds like a clean fix.
+>=20
+> >    I ran into this in production, pushing from a shallow, treeless part=
+ial
+> >    clone (--filter=3Dtree:0) to an HTTPS remote. In a shallow repositor=
+y a
+> >    thin push reads the tree of every advertised tip it has locally, and
+> >    each missing tree is lazily fetched from the promisor remote, one fe=
+tch
+> >    per tree. --no-thin avoids that work, but has no effect over HTTP.
+>=20
+> Some of the supporting materials under the three-dash line, like the use
+> case that benefits from avoiding lazy tree fetches from a shallow,
+> treeless partial clone, make the motivation very clear, and may want to
+> be included in the commit log message, perhaps in a bit more condensed
+> form?  Here is my attempt.
+>=20
+>     If one pushes from a shallow, treeless partial clone
+>     (--filter=3Dtree:0) to an HTTPS remote, a thin push lazily fetches
+>     every advertised tip's missing tree from the promisor one by one,
+>     and --no-thin has no effect over HTTP to avoid it.
+>=20
+> > diff --git a/Documentation/gitremote-helpers.adoc b/Documentation/gitre=
+mote-helpers.adoc
+> > index 39cdece16e..8203ef497c 100644
+> > --- a/Documentation/gitremote-helpers.adoc
+> > +++ b/Documentation/gitremote-helpers.adoc
+> > @@ -542,6 +542,10 @@ set by Git if the remote helper has the 'option' c=
+apability.
+> >  =09transaction.  If successful, all refs will be updated, or none will=
+.  If the
+> >  =09remote side does not support this capability, the push will fail.
+> >
+> > +'option thin' {'true'|'false'}::
+> > +=09When pushing, request the helper to send a thin pack (see
+> > +=09`--thin` in linkgit:git-pack-objects[1]).
+> > +
+> >  'option object-format true'::
+> >  =09Indicate that the caller wants hash algorithm information
+> >  =09to be passed back from the remote.  This mode is used when fetching
+> > diff --git a/remote-curl.c b/remote-curl.c
+> > index 2c35dd5240..8309d9d2a4 100644
+> > --- a/remote-curl.c
+> > +++ b/remote-curl.c
+> > @@ -184,6 +184,14 @@ static int set_option(const char *name, size_t nam=
+elen, const char *value)
+> >  =09=09else
+> >  =09=09=09return -1;
+> >  =09=09return 0;
+> > +=09} else if (!strncmp(name, TRANS_OPT_THIN, namelen)) {
+> > +=09=09if (!strcmp(value, "true"))
+> > +=09=09=09options.thin =3D 1;
+> > +=09=09else if (!strcmp(value, "false"))
+> > +=09=09=09options.thin =3D 0;
+> > +=09=09else
+> > +=09=09=09return -1;
+> > +=09=09return 0;
+>=20
+> The above two hunks match with each other, naturally.
+>=20
+> In remote-curl.c:cmd_main(), '.thin' of 'options' defaults to 1 (side
+> note: I didn't know that ;-)), and push_git() passes "--thin" to send-pac=
+k
+> only when '.thin' is set.  Honoring 'true' and 'false' here while
+> returning -1 for invalid values matches the surrounding boolean options
+> in set_option().
+>=20
+> It is an unrelated tangent, but the use of strncmp() with namelen means
+> set_option("t", 1, "true") would allow setting 'thin' to 'true'.  Git
+> internally always sends the full option name, so it does not cause any
+> problem in practice, and it certainly is the right thing for this patch
+> to do to imitate the surrounding code.  But we may want to take another
+> look at these uses of strncmp() when the dust settles (#leftoverbits).
+>=20
+> > diff --git a/transport-helper.c b/transport-helper.c
+> > index d5a064d386..6052407b9a 100644
+> > --- a/transport-helper.c
+> > +++ b/transport-helper.c
+> > @@ -275,7 +275,6 @@ static int disconnect_helper(struct transport *tran=
+sport)
+> >  static const char *unsupported_options[] =3D {
+> >  =09TRANS_OPT_UPLOADPACK,
+> >  =09TRANS_OPT_RECEIVEPACK,
+> > -=09TRANS_OPT_THIN,
+> >  =09TRANS_OPT_KEEP
+> >  =09};
+>=20
+> Running 'git grep TRANS_OPT_THIN' tells me that builtin/push.c is the
+> only thing that sets TRANS_OPT_THIN via transport_set_option().  We used
+> to claim that this was unsupported, but when push asks to use it, we now
+> pass it through.
+>=20
+> set_helper_option() notices that the boolean_options[] array still has
+> this token, and sets 'option thin true' or 'option thin false' depending
+> on the value and calls strbuf_set_helper_option() to send it out.
+>=20
+> It is a bit surprising that there is absolutely nothing else that needs
+> to be added to support the option, but given that this was about
+> resurrecting a feature that already exists but was left castrated due to
+> a historical mistake, it is an understandable confusion on the reader's
+> side ;-)
+>=20
+> Looking good.
+>=20
+> Thanks.
+> 
