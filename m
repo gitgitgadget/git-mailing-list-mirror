@@ -1,52 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.61.206.94
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795630814;
-	b=mf2EvubeU5Vi0EMJ3abXvvEItQYRW5GuQRU+WCJrgFw66TFJSR/KzWWZJizENcTvFpqf
-	 k6k4rhl6l3waP4g4ZUnm6t/xf/5VhfvG4cA3qJqoukWVdiFheYGbkl7Vl/3HS+MrKs6ec
-	 KtfioZWQPEqK7nRPYFYMtctrTQ3AxcKUnISlOkhGtcrekHpWb6rYfeDJO0s6trKqlHl9N
-	 EUYBpJbyDGiPPQLXPkpbKjZWEnqPNfW8X5cuTtzIpxftIlg51KMMsmzQIYgqJzGw+UFMM
-	 wsfs9YIwh5ObqRL/f2zOq3qAvDZ3mJuwgESOhl1dt7R+xSB/2gQ3XiUEbbszRAGo0vQ==
+	t=1795632877;
+	b=bsZoR47A2up25lz7muVeqACY5vdMXUjefni24bhWUYZrs9LXxqCWox8VtODDFauNYNyg
+	 o/fxGICw1aP1dnHEzu7zTSNegXFFZlL3gOZJyrPly3Qq1VzTN2JUyKpZPvSA9K/Jr99G0
+	 iIxwxMWcg0Uezsm2rdm80Aug6gu6yFZQvxtldvD5aslp8trjFKf0PcGc7awd632luvcUf
+	 tvNxPHB+29SseJAHRnP7CDxdGEeriP0GifrdOAnTGyJLFF61HWkcawKCtLOMNxkn3YkLT
+	 RjPJ3cw3bGKCQVu71U6q81ZUMfNW+cePTPz7UOfQrTElylz8OijSBqSRM1DFhkpUyqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795630814;
-	h=DMARC-Filter:Received:DKIM-Signature:From:Date:Subject:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:Message-Id:References:
-	 In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key;
-	bh=+XdwzAjlRNuAD+7vTj5CaAg1d+TtCKcQ7DmmhwfWBTo=;
-	b=cJdIf0RHBz01tcljQayg/X9R3oZf6c3WnX1QgbLDVwPFq+up6TN/XCS2NLKNFU711nzw
-	 6LjOCtlioQ2r0izy3pP/SxlSwEZKOGRw1CRRk4hYfwptsjxFJK7xOzK6omTy9oPEQu4xR
-	 97lWU6Rj98tPZUp/lPR9lsg6g45bLsrFOl4PQTMr7Ewj35K3ShB0sKM8iZ+Ijp4sAYNRd
-	 Ig//NZYAuxvcsqb+9Ri2yXUq2JNAEspIpOku6055ue4TrP5Wo+3J6FvIxrMkzP0zuO4Jt
-	 d/kKhePs2FBLmapF8vJgxl+I6LTFrjVcZKYVcCdoS5UDSAVnny1ODfftaweYekx0OCw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795632877;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
+	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
+	 Cc;
+	bh=b2AwxI8m4H8Kw22HlId2KRLRSeA4VvvSzxz/JUPx6Nc=;
+	b=JHBh8oDc6RRq46CGA9h9SH6Az7NY1g+yPy1gBnob/Dr0zqsTl5qxDcGZOkqVFtqqbvx/
+	 2FYHdfknW5tBZZ4d0FP0Thy4Q2iMpJSTL6xilICnQzP7ZjywZv6JnvnYQX/YlfLTGO7v/
+	 kifBoTmG2+iRaP9KKpE3kLou/j37hzfGSoVOHPRJeML5+0AUFZ47YG4cbgmDU0l+s9dQ5
+	 G+A8uzYyBRWbKwpUCzIzQ/u4ch7JCJZU7HeCwQaN6zXL29JnnrvHgCT8t5KXEscxspwIN
+	 BSBcNghGybo8+3zic2k0K+HUKl7dTOzBHifeVHP80AJCnjdZdeMx3F6P4zHHlojBSKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gouders.net;
-	spf=pass smtp.mailfrom=gouders.net;
-	dkim=pass header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=ILh8OPTA;
-	arc=none smtp.remote-ip=202.61.206.94
-Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="CXZ/i7M6";
+	arc=none smtp.remote-ip=209.85.160.172
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD5E606A326
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 18:20:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4DD5E606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gouders.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56814606A31E
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 18:54:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 56814606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.a=rsa-sha256 header.s=gnet header.b=ILh8OPTA
-Received: from lena.gouders.net (ip-109-41-50-35.web.vodafone.de [109.41.50.35])
-	(authenticated bits=0)
-	by mx10.gouders.net (8.18.2/8.17.1.9) with ESMTPSA id 6APIJxx32481769
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Wed, 25 Nov 2026 19:20:06 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gouders.net; s=gnet;
-	t=1795630806; bh=+XdwzAjlRNuAD+7vTj5CaAg1d+TtCKcQ7DmmhwfWBTo=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=ILh8OPTAwDPYOaDBUXMGZmk9QEVeeINRu6NjwPa/iNsGwQBXxM+ZghhRtXcBJ6aIo
-	 EFreVmc7eQ5OWucdIOji/ScKE78FxHM+OzVpJorX/7DHoIPPUNUk2U7lOE3BrLQUdh
-	 pSPtLw8sMxMTp0aEPLwlavMCcQvQJKbcCiJc5dww=
-From: Dirk Gouders <dirk@gouders.net>
-Date: Wed, 25 Nov 2026 19:19:41 +0100
-Subject: [PATCH v6 1/4] utf8: add display_mode_esc_sequence_len_counted()
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CXZ/i7M6
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-5365d26ccbdso68520671cf.0
+        for <git@vger.kernel.org>; Wed, 25 Nov 2026 10:54:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795632876; x=1796237676; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=b2AwxI8m4H8Kw22HlId2KRLRSeA4VvvSzxz/JUPx6Nc=;
+        b=CXZ/i7M6xk5aF7Xa3zXOJON+bJak+fu1vFB6j/OTuy/Yua1EaRI6bpgTq0Qy0FLIct
+         CfarRrPCWaNE5zVQ4dCfTcMLBjtKG5AveX/dFATSNqDv0xIeFRUfG9fY5TI19n1jZNWx
+         UWfNkOFJ6NEoGbxgb04Wm+/cSqBS37ZX9xNLX5kTJRLeAKTCUitoSQ9s2JztuSZEXqqq
+         q8FTRck5FwUUpgN3p9lNp4deXRbPVWBuHmHDRkaqnKHCcRMmUsWZrzNQy/cgEQQzplm6
+         kydQodaULbMA5wonZ8jpvOdfD7XVGwvhzbElOUXwOKjXUvS0NZ0Um0zKda8HJDMVL1E4
+         NtcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795632876; x=1796237676;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=b2AwxI8m4H8Kw22HlId2KRLRSeA4VvvSzxz/JUPx6Nc=;
+        b=ZDLarHIOFJBAsAgJ0HkH5eLNix07a2WSQcmNq02ajkygdJ0sq359gM6Iw7IWZOs8Gg
+         X19eRRcG8z6EkElvS4ZWzANDdK0/Qwwp+qA11UlvJnqA3v1ytgrlCU9UgdfQ515JE2la
+         1sQIRVbx8T/TQwxxCGOB/Rlmv6sYZJlwxmjwItdm1TGopCYmgDNeesLt4KZcpFLLEAZB
+         3gPPxFY1/yz0DEmXCDePEDY1EzyQbGjO9ItRPW0Ej7NslzkSAjlBaWoOBtjXAWSskt6v
+         rQ9LxvoBUioUA+xUh4zHbV6WT29cIQhtYI1vJ1F0BZqlo5qcanrA6HZNgwphbsmydqdM
+         urgw==
+X-Gm-Message-State: APuU4Z9DHJ14s/yc+Dy91MynCQMClC5AO7b/t736swud42LsCs+LmPU0
+	67L4AhjItnQyBRtltiFZHS3mcDx2TcT0jVcXmaablUAKcOaGtARcYeYD8e4M2g==
+X-Gm-Gg: AZFdTZf6b+VecuHbx8fTkjHO6Sd+f1dMJTFuR2fGqtM6K9IVMc2SBqyRPcttGjpY4Lo
+	Kn3TENBTQrIcTvVp2xv1a/h2djlR520WBabwTnHPaMK7fdo5PGHoiSNywlPvAh7f/TSQHnnmA3S
+	xvcMLJWEh0vWdibf2bK6zYqx1nVmZHMltC24um4uUZpy1wOdOtKdov8IlgKCh1Yfe9H8kyGQKT5
+	gYzjGzA3S7lQYsuYW3cZOEbLzG9ksNuI9Awnj2ztulr95jo9AD91GmpR6F9mU7Ky62QGhxo+qV9
+	mG09HezL2KqkUQdNmwtChAN5A2iiJ9JzqlOmrj6cInzYJGlr/YPh6EjjAk602Dn1HVw1y24eNaX
+	03TVIdH8RfHMm4MhPdcQIZzH0xVqy894zFGxjEkcryvWwp4C2hioRxnxrx5NtN4HBjUZzYypVr8
+	x15sW7lZEAy3qhAkyfLSWuxv/1PlHvIcjDO4FsqVpkNGg5R5ktFeEcqN7lHhee146wXKB+rG24+
+	xBZg1c+302Kg1H68WmdQS85uHBKeo/u3NEx0GrkDcRg0KbU+zaSFjJb6/8EKCJ0/NmhO49TEh4v
+	oDX2exiJUSUZk2Xn0CHrIt7Z5n1guQ==
+X-Received: by 2002:ac8:5e0e:0:b0:535:cee0:6740 with SMTP id d75a77b69052e-55d76a2071bmr330275411cf.36.1795632876244;
+        Wed, 25 Nov 2026 10:54:36 -0800 (PST)
+Received: from [127.0.0.1] ([20.55.95.30])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-55d78812968sm162930741cf.9.2026.11.25.10.54.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Nov 2026 10:54:35 -0800 (PST)
+Message-Id: <pull.2457.git.git.1795632875345.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 25 Nov 2026 18:54:35 +0000
+Subject: [PATCH] config: make the suggested "set" command safe to paste
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -56,249 +93,169 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20261125-master-v6-1-cb60af83d189@gouders.net>
-References: <20261125-master-v6-0-cb60af83d189@gouders.net>
-In-Reply-To: <20261125-master-v6-0-cb60af83d189@gouders.net>
 To: git@vger.kernel.org
-Cc: "Junio C Hamano <gitster@pobox.com>, Andy Koppe" <andy.koppe@gmail.com>,
-        Dirk Gouders <dirk@gouders.net>, Junio C Hamano <gitster@pobox.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8462; i=dirk@gouders.net;
- h=from:subject:message-id; bh=MAy4QOmz0sd09mfIwIz5OT6PT2emRKQQiTUNqb/JabE=;
- b=owGbwMvMwMW4JPzVNXNTrzmMp9WSGLLZ1a4+X8Lh7rpuZnLQUkkhp4Cy24viOnu1C+58+5+Wc
- 9zGXFWzk3ECCwMjF0OVmCLL0klFdmkqK16UfVPNhBnEygQyRVqkgQEIWBj4chPzSo10jPRMtQ31
- DIEMHSMHiBw/g0Z6QbpDen5pSmpRsV5eaomjqaWRuZGxq5mZkYmjhauFuZmbmZGpmaWjiam5q6O
- LmbG5samJo6UzAxenAMy6jNns/9P9EyXebJoqKLFSwUH08Aah9u8L4vj/nLYqVfDWWl2+t+Inww
- sLC3WVFmmhM5371m6Pi7F1/v1o3Z7dJYuuT1v+VCQ1X09a9YP+wgNeF4X2HN3ok6sbtreid+MN1
- p9fHryOc8/UubA6xPT0nUteZzucw092m79fmeSrf/8ut75p5XTLjG8nCn+uj/LImX+gj7fIPMeg
- vrJbZu9c3a6LEXzn/HynXDwdPHWjrOPieWkmTxO4DLa/3rz+16OTnysW/TG7mNBeICg29bGb+Ia
- PgT+m6B5c3Wco1nrxbst+470dqXt2q8if+mcYz6uksPxrY3f6+idhb16cfVnKIlqzL/+BzHL1y3
- Y7fVX1lrQ+VQYA
-X-Developer-Key: i=dirk@gouders.net; a=openpgp;
- fpr=943B4FA3CAB8EBC55754E5EA0DA2395F431875F6
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-From: Junio C Hamano <gitster@pobox.com>
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-display_mode_esc_sequence_len() scans for an ANSI display mode
-escape sequence (e.g. "ESC [ 1 ; 31 m") at the start of a string,
-relying on NUL termination to stop.  Some callers, however, work on
-a counted buffer: utf8_strnwidth() takes <string, len> and must not
-scan past it, while strbuf_utf8_replace() knows the end.
+When "git config" is given "<key>=<value>" as a single argument and
+the value contains spaces, the suggested command does not work when
+pasted back into a shell:
 
-Add display_mode_esc_sequence_len_counted() taking <ptr, len>,
-which never reads at or beyond ptr[len], and make
-display_mode_esc_sequence_len() a thin wrapper for NUL-terminated
-strings.
+    $ git config status.comparebranches="@{upstream} @{push}"
+    error: missing value to set to the variable 'status.comparebranches=@{upstream} @{push}'
+    hint: did you mean "git config set status.comparebranches @{upstream} @{push}"?
 
-Use the counted variant in utf8_strnwidth() for correctness, and in
-strbuf_utf8_replace() where the length can easily be calculated.
+The shell splits the value into two arguments and the command fails
+with "wrong number of arguments".
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Andy Koppe <andy.koppe@gmail.com>
-[ak: warned against O(n²) degradation and suggested to use SIZE_MAX]
-Signed-off-by: Dirk Gouders <dirk@gouders.net>
+Quote the value when it needs it, and put the command on a line of
+its own the way other hints show commands, so it can be copied
+without the surrounding quotes:
+
+    hint: did you mean:
+    hint:
+    hint:   git config set status.comparebranches '@{upstream} @{push}'
+
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- Makefile                   |  1 +
- t/meson.build              |  1 +
- t/unit-tests/u-utf8-ansi.c | 85 ++++++++++++++++++++++++++++++++++++++++++++++
- utf8.c                     | 35 +++++++++++++------
- utf8.h                     |  1 +
- 5 files changed, 113 insertions(+), 10 deletions(-)
+    config: make the suggested "set" command safe to paste
+    
+    When git config <key>=<value> is given a value with spaces, the
+    suggested command fails when pasted back into a shell. Quote the value
+    when it needs it and put the command on its own line, the way other
+    hints show commands:
+    
+    $ git config status.comparebranches="@{upstream} @{push}"
+    error: missing value to set to the variable 'status.comparebranches=@{upstream} @{push}'
+    hint: did you mean:
+    hint:
+    hint: 	git config set status.comparebranches '@{upstream} @{push}'
+    
 
-diff --git a/Makefile b/Makefile
-index 4c84eea6e2..db8f7f5c60 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1563,6 +1563,7 @@ CLAR_TEST_SUITES += u-string-list
- CLAR_TEST_SUITES += u-strvec
- CLAR_TEST_SUITES += u-trailer
- CLAR_TEST_SUITES += u-urlmatch-normalization
-+CLAR_TEST_SUITES += u-utf8-ansi
- CLAR_TEST_SUITES += u-utf8-width
- CLAR_TEST_PROG = $(UNIT_TEST_BIN)/unit-tests$(X)
- CLAR_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(CLAR_TEST_SUITES))
-diff --git a/t/meson.build b/t/meson.build
-index 1cf1d95f70..ae7479a98e 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -26,6 +26,7 @@ clar_test_suites = [
-   'unit-tests/u-strvec.c',
-   'unit-tests/u-trailer.c',
-   'unit-tests/u-urlmatch-normalization.c',
-+  'unit-tests/u-utf8-ansi.c',
-   'unit-tests/u-utf8-width.c',
- ]
- 
-diff --git a/t/unit-tests/u-utf8-ansi.c b/t/unit-tests/u-utf8-ansi.c
-new file mode 100644
-index 0000000000..a3c76b1ed3
---- /dev/null
-+++ b/t/unit-tests/u-utf8-ansi.c
-@@ -0,0 +1,85 @@
-+#include "unit-test.h"
-+#include "utf8.h"
-+
-+/*
-+ * Test display_mode_esc_sequence_len_counted() for NUL-terminated strings.
-+ */
-+void test_utf8_ansi__sgr_len_counted(void)
-+{
-+	cl_assert_equal_u(0, display_mode_esc_sequence_len_counted("", SIZE_MAX));
-+
-+	cl_assert_equal_u(0, display_mode_esc_sequence_len_counted("\033", SIZE_MAX));
-+	cl_assert_equal_u(0, display_mode_esc_sequence_len_counted("\033[", SIZE_MAX));
-+	cl_assert_equal_u(3, display_mode_esc_sequence_len_counted("\033[m", SIZE_MAX));
-+	cl_assert_equal_u(3, display_mode_esc_sequence_len_counted("\033[ma", SIZE_MAX));
-+
-+	cl_assert_equal_u(0, display_mode_esc_sequence_len_counted("\033[3", SIZE_MAX));
-+	cl_assert_equal_u(0, display_mode_esc_sequence_len_counted("\033[31", SIZE_MAX));
-+	cl_assert_equal_u(5, display_mode_esc_sequence_len_counted("\033[31m", SIZE_MAX));
-+	cl_assert_equal_u(5, display_mode_esc_sequence_len_counted("\033[31ma", SIZE_MAX));
-+
-+	cl_assert_equal_u(0, display_mode_esc_sequence_len_counted("\033[31;", SIZE_MAX));
-+	cl_assert_equal_u(6, display_mode_esc_sequence_len_counted("\033[31;m", SIZE_MAX));
-+	cl_assert_equal_u(6, display_mode_esc_sequence_len_counted("\033[31;ma", SIZE_MAX));
-+
-+	cl_assert_equal_u(7, display_mode_esc_sequence_len_counted("\033[31;0m", SIZE_MAX));
-+	cl_assert_equal_u(7, display_mode_esc_sequence_len_counted("\033[31;0ma", SIZE_MAX));
-+}
-+
-+/*
-+ * Same test as above for the wrapper display_mode_esc_sequence_len().
-+ */
-+void test_utf8_ansi__sgr_len(void)
-+{
-+	cl_assert_equal_u(0, display_mode_esc_sequence_len(""));
-+
-+	cl_assert_equal_u(0, display_mode_esc_sequence_len("\033"));
-+	cl_assert_equal_u(0, display_mode_esc_sequence_len("\033["));
-+	cl_assert_equal_u(3, display_mode_esc_sequence_len("\033[m"));
-+	cl_assert_equal_u(3, display_mode_esc_sequence_len("\033[ma"));
-+
-+	cl_assert_equal_u(0, display_mode_esc_sequence_len("\033[3"));
-+	cl_assert_equal_u(0, display_mode_esc_sequence_len("\033[31"));
-+	cl_assert_equal_u(5, display_mode_esc_sequence_len("\033[31m"));
-+	cl_assert_equal_u(5, display_mode_esc_sequence_len("\033[31ma"));
-+
-+	cl_assert_equal_u(0, display_mode_esc_sequence_len("\033[31;"));
-+	cl_assert_equal_u(6, display_mode_esc_sequence_len("\033[31;m"));
-+	cl_assert_equal_u(6, display_mode_esc_sequence_len("\033[31;ma"));
-+
-+	cl_assert_equal_u(7, display_mode_esc_sequence_len("\033[31;0m"));
-+	cl_assert_equal_u(7, display_mode_esc_sequence_len("\033[31;0ma"));
-+}
-+
-+/*
-+ * Test display_mode_esc_sequence_len_counted() with length limits.
-+ */
-+void test_utf8_ansi__sgr_len_limited(void)
-+{
-+	/* sequences followed by one non-sequence character */
-+	char sgr_1[] = "\033[ma";
-+	char sgr_2[] = "\033[31ma";
-+	char sgr_3[] = "\033[31;ma";
-+	char sgr_4[] = "\033[31;0ma";
-+
-+	cl_assert_equal_u(0, display_mode_esc_sequence_len_counted(sgr_1, 0));
-+	cl_assert_equal_u(0, display_mode_esc_sequence_len_counted(sgr_1, 1));
-+	cl_assert_equal_u(0, display_mode_esc_sequence_len_counted(sgr_1, 2));
-+	cl_assert_equal_u(3, display_mode_esc_sequence_len_counted(sgr_1, 3));
-+	cl_assert_equal_u(3, display_mode_esc_sequence_len_counted(sgr_1, 4));
-+
-+	cl_assert_equal_u(0, display_mode_esc_sequence_len_counted(sgr_2, 3));
-+	cl_assert_equal_u(0, display_mode_esc_sequence_len_counted(sgr_2, 4));
-+	cl_assert_equal_u(5, display_mode_esc_sequence_len_counted(sgr_2, 5));
-+	cl_assert_equal_u(5, display_mode_esc_sequence_len_counted(sgr_2, 6));
-+
-+	cl_assert_equal_u(6, display_mode_esc_sequence_len_counted(sgr_3,
-+								   sizeof(sgr_3) - 2));
-+	cl_assert_equal_u(6, display_mode_esc_sequence_len_counted(sgr_3,
-+								   sizeof(sgr_3) - 1));
-+
-+	cl_assert_equal_u(7, display_mode_esc_sequence_len_counted(sgr_4,
-+								   sizeof(sgr_4) - 2));
-+	cl_assert_equal_u(7, display_mode_esc_sequence_len_counted(sgr_4,
-+								   sizeof(sgr_4) - 1));
-+}
-diff --git a/utf8.c b/utf8.c
-index 96460cc414..b161a5ee48 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -16,18 +16,31 @@ struct interval {
- 	ucs_char_t last;
- };
- 
--size_t display_mode_esc_sequence_len(const char *s)
-+/*
-+ * Return the length of the ANSI display mode escape sequence (e.g.,
-+ * "\033[1;31m") that appears at the beginning of the "len" bytes
-+ * of string "s", or 0 if the bytes do not begin with a complete
-+ * such sequence.  Never looks at s[len] or beyond.
-+ */
-+size_t display_mode_esc_sequence_len_counted(const char *s, size_t len)
- {
--	const char *p = s;
--	if (*p++ != '\033')
-+	size_t i = 0;
-+
-+	if (len <= i || s[i++] != '\033')
- 		return 0;
--	if (*p++ != '[')
-+	if (len <= i || s[i++] != '[')
- 		return 0;
--	while (isdigit(*p) || *p == ';')
--		p++;
--	if (*p++ != 'm')
-+	while (i < len && (isdigit(s[i]) || s[i] == ';'))
-+		i++;
-+	if (len <= i || s[i++] != 'm')
- 		return 0;
--	return p - s;
-+	return i;
-+}
-+
-+/* Same as above, but for a NUL-terminated string "s". */
-+size_t display_mode_esc_sequence_len(const char *s)
-+{
-+	return display_mode_esc_sequence_len_counted(s, SIZE_MAX);
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2457%2FHaraldNordgren%2Fconfig-set-hint-quote-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2457/HaraldNordgren/config-set-hint-quote-v1
+Pull-Request: https://github.com/git/git/pull/2457
+
+ builtin/config.c  | 21 ++++++++++++++++++--
+ t/t1300-config.sh | 49 +++++++++++++++++++++++++++++++++++++++++------
+ 2 files changed, 62 insertions(+), 8 deletions(-)
+
+diff --git a/builtin/config.c b/builtin/config.c
+index 2554322317..795a5fb136 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -211,6 +211,18 @@ static void check_argc(int argc, int min, int max)
+ 	exit(129);
  }
  
- /* auxiliary function for binary search in interval table */
-@@ -218,7 +231,8 @@ int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
- 		size_t skip;
++static void add_suggested_arg(struct strbuf *buf, const char *arg)
++{
++	struct strbuf quoted = STRBUF_INIT;
++
++	sq_quote_buf_pretty(&quoted, arg);
++	if (strcmp(quoted.buf, arg) && !strchr(arg, '\''))
++		strbuf_addf(buf, "'%s'", arg);
++	else
++		strbuf_addbuf(buf, &quoted);
++	strbuf_release(&quoted);
++}
++
+ static NORETURN void die_missing_set_value(const char *arg)
+ {
+ 	const char *last_dot = strrchr(arg, '.');
+@@ -218,9 +230,14 @@ static NORETURN void die_missing_set_value(const char *arg)
+ 	char *prefix = eq ? xstrndup(arg, eq - arg) : NULL;
  
- 		while (skip_ansi &&
--		       (skip = display_mode_esc_sequence_len(string)) != 0)
-+		       (skip = display_mode_esc_sequence_len_counted(string,
-+							orig + len - string)) != 0)
- 			string += skip;
+ 	if (prefix && git_config_key_is_valid(prefix)) {
++		struct strbuf suggestion = STRBUF_INIT;
++
++		add_suggested_arg(&suggestion, prefix);
++		strbuf_addch(&suggestion, ' ');
++		add_suggested_arg(&suggestion, eq + 1);
+ 		error(_("missing value to set to the variable '%s'"), arg);
+-		advise(_("did you mean \"git config set %s %s\"?"),
+-		       prefix, eq + 1);
++		advise(_("did you mean:\n\n\tgit config set %s"), suggestion.buf);
++		strbuf_release(&suggestion);
+ 	} else if (git_config_key_is_valid(arg)) {
+ 		error(_("missing value to set to the variable '%s'"), arg);
+ 	} else {
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index e3f8064889..796e11000c 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -470,15 +470,47 @@ test_expect_success 'invalid key' '
+ '
  
- 		glyph_width = utf8_width(&string, NULL);
-@@ -378,7 +392,8 @@ void strbuf_utf8_replace(struct strbuf *sb_src, int pos, int width,
- 		int glyph_width;
- 		size_t n;
+ test_expect_success 'set with 1 arg of "key=value": valid key suggests split form' '
++	cat >expect <<-EOF &&
++	error: missing value to set to the variable ${SQ}pull.rebase=false${SQ}
++	hint: did you mean:
++	hint:
++	hint: 	git config set pull.rebase false
++	EOF
+ 	test_must_fail git config set pull.rebase=false 2>err &&
+-	test_grep "missing value to set to the variable .pull\\.rebase=false." err &&
+-	test_grep "did you mean .git config set pull\\.rebase false." err
++	test_cmp expect err
+ '
  
--		while ((n = display_mode_esc_sequence_len(src))) {
-+		while ((n = display_mode_esc_sequence_len_counted(src,
-+								  end - src))) {
- 			strbuf_add(&dst, src, n);
- 			src += n;
- 		}
-diff --git a/utf8.h b/utf8.h
-index cf8ecb0f21..57ca2ab270 100644
---- a/utf8.h
-+++ b/utf8.h
-@@ -6,6 +6,7 @@ struct strbuf;
- typedef unsigned int ucs_char_t;  /* assuming 32bit int */
+ test_expect_success 'set with 1 arg of "key=value": implicit form suggests split form' '
++	cat >expect <<-EOF &&
++	error: missing value to set to the variable ${SQ}pull.rebase=false${SQ}
++	hint: did you mean:
++	hint:
++	hint: 	git config set pull.rebase false
++	EOF
+ 	test_must_fail git config pull.rebase=false 2>err &&
+-	test_grep "missing value to set to the variable .pull\\.rebase=false." err &&
+-	test_grep "did you mean .git config set pull\\.rebase false." err
++	test_cmp expect err
++'
++
++test_expect_success 'set with 1 arg of "key=value": suggestion quotes value with spaces' '
++	cat >expect <<-EOF &&
++	error: missing value to set to the variable ${SQ}status.comparebranches=@{upstream} @{push}${SQ}
++	hint: did you mean:
++	hint:
++	hint: 	git config set status.comparebranches ${SQ}@{upstream} @{push}${SQ}
++	EOF
++	test_must_fail git config status.comparebranches="@{upstream} @{push}" 2>err &&
++	test_cmp expect err
++'
++
++test_expect_success 'set with 1 arg of "key=value": suggestion keeps shell alias readable' '
++	cat >expect <<-EOF &&
++	error: missing value to set to the variable ${SQ}alias.st=!git status${SQ}
++	hint: did you mean:
++	hint:
++	hint: 	git config set alias.st ${SQ}!git status${SQ}
++	EOF
++	test_must_fail git config alias.st="!git status" 2>err &&
++	test_cmp expect err
+ '
  
- size_t display_mode_esc_sequence_len(const char *s);
-+size_t display_mode_esc_sequence_len_counted(const char *s, size_t len);
- int utf8_width(const char **start, size_t *remainder_p);
- int utf8_strnwidth(const char *string, size_t len, int skip_ansi);
- int utf8_strwidth(const char *string);
+ test_expect_success 'set with 1 arg of "key=value": invalid key does not suggest split form' '
+@@ -494,9 +526,14 @@ test_expect_success 'set with 1 arg: variable name starting with digit is invali
+ '
+ 
+ test_expect_success 'set with 1 arg: digit-led section name is valid' '
++	cat >expect <<-EOF &&
++	error: missing value to set to the variable ${SQ}1foo.bar=baz${SQ}
++	hint: did you mean:
++	hint:
++	hint: 	git config set 1foo.bar baz
++	EOF
+ 	test_must_fail git config set 1foo.bar=baz 2>err &&
+-	test_grep "missing value to set to the variable .1foo\\.bar=baz." err &&
+-	test_grep "did you mean .git config set 1foo\\.bar baz." err
++	test_cmp expect err
+ '
+ 
+ test_expect_success 'set with 1 arg: subsection plus invalid variable name' '
 
+base-commit: c51408889c3b372814bc20b9431c3b74d0d268eb
 -- 
-2.55.0
-
+gitgitgadget
