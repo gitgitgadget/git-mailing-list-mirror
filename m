@@ -1,86 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.173
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.178
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795632937;
-	b=tympZ0ElcqMfe+lTczsmK//jO3676BD7Y/MryW1Cc7j1VOGOW6phquz9VBd/LjHoCLLC
-	 aQk5ct5ZUVrtvCr3+kTzwzdMfic3cFOr+2qPms1dvIngJg2PwCFbjTNPgSNhiNChlrAts
-	 j14xmu8hobYumBYL9gGG2SOFjoUFvOltQ59XjOeUDzEkIZM43E4Eb0u0qA26PeaIfh12B
-	 gWQL3igTY5XpDOtJzmUyPqtMb43assOiKjJYx3FENHCsj69wdoGYOUtxXi1UwtQX5TZDe
-	 irM8yZ4B5DDnbvbyP3nLnD3FAosVYddQMop0VK5adnq4HxP8tl61/myGmwaH4K+lvxg==
+	t=1795632938;
+	b=ODcYtNtaN47IBbJf4UQo+aWgk+Ir2KEFwNIW3uFm3YdGRnfaVOWPkVLIWHNdxZpq8WoM
+	 Pt0m3FfL99AZdGP/Mygv3ALw8EEJw25veMkL5i5/ulk7qiJeAzWchP3mRXw+fJx7opzUI
+	 a3vIStmB6Myb9grac+oVEwph5mDSKNDekOLA5ong6uFCKAgsArK3yMlw0Mr6eXNsTCo6z
+	 w51dznJXwjG2ardRlFrflXg/+l4Za7J8X5V+5WTUD9HxKqAlJd0o8+Src2LLMigfGN7zX
+	 xuPaymAbpBK91MUA3zSoGCdR3Zo+bfVv9DugM9h0Hpx05g6fsJs/9GIe+T9hJw5ZVQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795632937;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795632938;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
-	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
-	 Cc;
-	bh=HlFG/fipObnrVg2YkZEfCrW8u3MXK/zJrDw7MISJ30Q=;
-	b=w1wJNgoVArcUm/AFzHHufm94s6TrTbT6UFJTLfv6d1hRvsTFDUM0OjmWkzft2BGYhkOq
-	 hnLQ+jLpMS110pEpJDHvJ/lfeuZjw5UXiyjc6E6mH5Q7lGKy6G3EXZuQG629Mwpzk+yFp
-	 6IMOfP4Jqm7Wdvr7b0Cplm+v0iibENVATdoffxXS0G7/RoLc3lcmUZA4dY8Q5zvdMmLD8
-	 iNVKLCWbUUEq3/2W7oCgqunpu9i82HzJ9ArBnPi6/ruVWSd4hO6UCDv4MPjBdodZsbBFV
-	 LHFqOOwDUbq44NJFSOiEd7/7pOqgfoE2b8LF31jB9tjccgPjZAnlgtoSTDIvgxpc6Gw==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=EtIhLjY75jmKxciFbREU0c4A18lzpzPvvtmZhG8geY4=;
+	b=O4Rd3jPyiL3MnZaf7TN8OJHJqr901LLWN3U4LJ3OclWvDxSrclYRU8IzC4HLZsJM6QYe
+	 pFgCgT+g+k72nAqop4U1rVn8Yt0mnoatSxHNpXepPDNOkUuDE1xph4289+PncS2tvdd2f
+	 B7MQDIzRO+3Gf8AHBerNts9CG/UkuB1rW+FgYmE+5HFSuUaa5BqX0HfwAmkzWPxKk1xud
+	 /R7FKQH7cC/574lTyddrjJ62qMTxxm8s8j0Va0T/JxTU9Tgk2LLMzZH+Z5dpWzXD8bOnL
+	 LwStwlSZUrntCFEsN3wJKgLGm0L1/1AKNIsy3/K1jd/6n8sWHzvMKlMp6sZIwClLatw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BBGLJh0C;
-	arc=none smtp.remote-ip=209.85.160.173
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Z6MvSYHJ;
+	arc=none smtp.remote-ip=209.85.160.178
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF84606A31E
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 18:55:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BAF84606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9141606A329
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 18:55:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D9141606A329
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BBGLJh0C
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-5365d725440so55693101cf.0
-        for <git@vger.kernel.org>; Wed, 25 Nov 2026 10:55:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Z6MvSYHJ
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-5366ae57896so62705411cf.3
+        for <git@vger.kernel.org>; Wed, 25 Nov 2026 10:55:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795632936; x=1796237736; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795632937; x=1796237737; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=HlFG/fipObnrVg2YkZEfCrW8u3MXK/zJrDw7MISJ30Q=;
-        b=BBGLJh0CCOY3N6OOhEVABo4GiS7raAibNoN+l5sNKh3GbsEZNAqbzLM3nDILT3iZe9
-         rDKSJ2q+pCgtjiliONV8hB/eOBFc3rN62vxuCLP7+VPv+48/vM0q6jUeQ4fMGkZf0OSv
-         qmLzailAnbvMz01mprdF8TzroNa9X/9VR5s+qV7P7YXN1Wh/RR2/iF5UO5gsTOFMxm1B
-         ap1jFRmQpmAJhDGzS+nwKCnY40xhw5LhWUQ8LyOanNLV7BxNVdX+BA1dVcOplUbV0vlH
-         KrjTkIkeqjQv3vwKA8xZ6ki1SpNQtYab1lHZy/w4GSNdlOOgfuelwmUPnrgEKBdbBrmr
-         EImw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795632936; x=1796237736;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=HlFG/fipObnrVg2YkZEfCrW8u3MXK/zJrDw7MISJ30Q=;
-        b=JzHlKeKf1AknAuXuwQqUTekTAgB/edA7XUeWYfdkztbnPHPisaA14ATzUWbaCb66oq
-         1uU0FYLndT3ONGXB7wGWuioN0Vn08NMayBUOk3KmYxYo2pdJr15pwG7Xb7V55MI9oO3O
-         KzuSJ+T+umLi/5LOzqFhRfjjkzJkR0554hMWb4sCVgm7qwicrITHPEqqfH29e75cHPqH
-         wmhZOoqtwO+ifrqDSsABcRIV78jOKChvFVdOxF8mQLrSicuDuoetwfjdbhPdrW/CJ7Ql
-         2m0I8dTJ751M5+dFD+8cH+lyN/zufuuG3foZ5OYJM7gsimkyjumjgVu0JiX7ovPKwR+x
-         55Ug==
-X-Gm-Message-State: APuU4Z+5ipgb0r2wH4abVeW44audQ90F5DxI0kHJHVP/lnCFxpZcGs8M
-	Oz4OCdb3RU9TsmUWctYIsr5cX/h0Ztdhp1ZGoEvqUP6phHz9i6e/NHpMS55kvfFR
-X-Gm-Gg: AZFdTZeYKXJk72SNLL7xFWfTmcBzPzmEuaxQq6mlF6JRXwV3mfkJRXoBKMocWc7luFw
-	FCgZMulpJUPgObQPok7+kiLtai117yJVjtnZM8Bsw+oFDtVvDivgPgD13T/J2JT4j25tK/5BYtO
-	tnriqtBvt5gJwtJb1Blak3pugsjbbU+98un+mic6Aq23lTF9JPHvtjsm88Ly1ZeqIezwVPlq5Ty
-	DMIl0AJPJhY94iedv/RvCJLy1Qc4Q+o9d4a+wSp3eVklMM0OeXhdP2PyJsumd+hOvXNZtstkyyK
-	2dnbPKx1jajhpEtJ3P6bjFVj2WLwhcT79x+JsMgM4q61p/VoxvngcGo/xRWPaZ1AJZu7tkReb+S
-	UCqsCvisMtUYtMq3aAjHDkCjNeSnSsYN3aXPnhyJf6RjwsQo7k0A/inFR0urRPZqOAmUngmJxT5
-	jn3+9my0S1C6bsyn2GbKmO42FQjtMzfK0LYxyN5rFd8ts7n1TVSHHb9YvnwgBSkq8TnO8WvLKXm
-	J14+S+r8QPrbs5sXKmxdyuhyjHKvCcvo4qAIYzNSC/TeqRTEKejsNrRCUuCvznrms0Vs4pCGJ34
-	DGoGw+Olq98OfkO50RxNWXXpxfLdh6LSVg==
-X-Received: by 2002:a05:622a:4c87:b0:55b:9d8d:f2a2 with SMTP id d75a77b69052e-55d76a27d68mr327598411cf.18.1795632935798;
-        Wed, 25 Nov 2026 10:55:35 -0800 (PST)
+        bh=EtIhLjY75jmKxciFbREU0c4A18lzpzPvvtmZhG8geY4=;
+        b=Z6MvSYHJS1fxYvJeg+M3Trk1TOGvmiT+SPwg3WxEui1otiPKQq5s2R7/1EDnans4lm
+         Ik9wD77XoyZH+2JfmVy9hXYDsYv1yAtLnlYUBG5bjpwdAcnIS3V8TaYHshC+YR6Ve6a8
+         dtPPX7BnWqFP8m20R8dz8CVqrsDWEufrUU7y2C6jCGMG41hmPHIt79qs/d1HWOFkN8ZK
+         z/MmbBdMQx8Frl6cAkhHNq6TKfMUgTWQgSTZE5NhnChpwrWCPa0aLfNvbH0ACqEt+yKK
+         BjsLWJgGp/5UEPBvtgXVOfVMoWCkygsKkQdjfYgqvW5Z2/x8UuuE3sJSxROTDopgmI0N
+         EmRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795632937; x=1796237737;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=EtIhLjY75jmKxciFbREU0c4A18lzpzPvvtmZhG8geY4=;
+        b=NxUlXLnKQ3tURWHCHjFghkMqhjj2jS670G/sDQkq0+ATMu4gZuGbLzmyJcTOqodyax
+         bgTzZzRhLFXkA8++NF1LQ1hbgDGB6n1BgMECu6TqHTEVLRXv1We/Ta3DB0D0cOp5EISm
+         jnryppEso1VLL3jC9GfluA9JQWEKa56p1CrRTFRZwRFuguidPNnWlwC+DuLQSn7IvwSF
+         lgGl3cTfJa8ohLQXEZB1+2aa9dJEtGTZmkSWuIfrYUqOJOX5DVXIVr3M3Z7E7qqLWGfE
+         rzKcZGnu3ti0ya2rtJJHKX5BTJVywyWowfxIMOPPyKjQQYWhWU7j83SzIUzHaYOhjSrQ
+         Ta2w==
+X-Gm-Message-State: APuU4Z8eGksQXY/VvadfU/jylwrtzrtW8TajiTeNYmGN658NpE1vpwIS
+	oXEixIpjkUfIJylIArprnEtQ6d5eUmli6sxit+rujZOgCYrKym3C668DiuxgZGyA
+X-Gm-Gg: AZFdTZc8sgLK7UTdgSavFHOd269HDqsJR+G4zjw4UKT2H1NHFIRE6vXY3XZcDm0WKai
+	AYcp3YQbvsn0sv5aVZFum9+YqcObEaK7F2UMk6julFqdiwYek3bvZzgrZ7B1PVFLr/zFRvFLPQb
+	rMJnzLhvZ09Tz3p43xB6ai56n7EwvlwAhyyNMHdt7yMJVeEY8qNrp3eeNrwS4XZxhtRs3PR2bDx
+	UhqptI4LL5KWjchcHfqQ5nBLnlgWtpvy+ezBO+nJwTaj1WbWfB9VFHPcHxZsaNYURs2bxnu4PMS
+	7Ah70Vy+g9bVdv1yUEtZ4Vi/gIMX8ieWLvYyOQBwFyeFpL5uxERH5WEgV5A43EvbNmWAEMum4DQ
+	l2zFhAmeq9gwdDYQ3ZetdfKbjgM86rB8AaiTGAfBWMppildHF11V2Iy5jV2EP9sa6UjblC5kc0S
+	oQeHeq2ma8up3SZjzCOYR0kDMgYpDb78/Ssirpjwa8tc0fdv4J8xsf7xVgsVbiSulEQcTO8zx1d
+	z8H8gWctjW3JZiiIa/V2io8sEMXyQy4/dNNBRamPAI8ejPKeRO3Kvl0GRqEMQIW9+u4OVfeu6Ju
+	zZeYsM+OQQajRfIWQsQLF6M4P953grQcVQ==
+X-Received: by 2002:a05:622a:98e:b0:54b:a422:59b6 with SMTP id d75a77b69052e-55d76938ba0mr342556721cf.7.1795632936782;
+        Wed, 25 Nov 2026 10:55:36 -0800 (PST)
 Received: from [127.0.0.1] ([20.228.220.120])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-921349f8c34sm170613726d6.32.2026.11.25.10.55.35
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9213514d20esm168879436d6.23.2026.11.25.10.55.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Nov 2026 10:55:35 -0800 (PST)
-Message-Id: <pull.2429.git.git.1795632934.gitgitgadget@gmail.com>
+        Wed, 25 Nov 2026 10:55:36 -0800 (PST)
+Message-Id: <b829c46707c53095345ae0480e7e82bd83afef02.1795632934.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2429.git.git.1795632934.gitgitgadget@gmail.com>
+References: <pull.2429.git.git.1795632934.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 25 Nov 2026 18:55:31 +0000
-Subject: [PATCH 0/3] remote: reject invalid branch names
+Date: Wed, 25 Nov 2026 18:55:32 +0000
+Subject: [PATCH 1/3] remote: reject invalid branch names in add -t
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -94,25 +97,77 @@ List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-Reject invalid branch names in remote add -t, add -m and set-branches before
-any configuration is written, instead of silently breaking every future
-fetch on that remote.
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-Harald Nordgren (3):
-  remote: reject invalid branch names in add -t
-  remote: reject invalid branch names in set-branches
-  remote: reject invalid branch names in add -m
+A typo in "git remote add -t", or a shell that expands something
+unexpected like @{u}, silently produced a fetch refspec that could
+never match anything, or in some cases outright invalid syntax. Every
+later fetch from that remote then failed with a confusing error and
+nothing pointed back at the original mistake.
 
- builtin/remote.c  | 27 +++++++++++++++++++++++++++
- t/t5505-remote.sh | 28 ++++++++++++++++++++++++++++
- 2 files changed, 55 insertions(+)
+Check each branch name given to -t before anything is written, so the
+command fails without creating the remote at all.
 
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+---
+ builtin/remote.c  | 15 +++++++++++++++
+ t/t5505-remote.sh |  7 +++++++
+ 2 files changed, 22 insertions(+)
 
-base-commit: 6de20f6092dcf9bdb1c8efe03db4b70c82b423dd
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2429%2FHaraldNordgren%2Fremote-add-branch-validate-name-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2429/HaraldNordgren/remote-add-branch-validate-name-v1
-Pull-Request: https://github.com/git/git/pull/2429
+diff --git a/builtin/remote.c b/builtin/remote.c
+index de989ea3ba..63d2db39fe 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -123,6 +123,19 @@ enum {
+ #define MIRROR_PUSH 2
+ #define MIRROR_BOTH (MIRROR_FETCH|MIRROR_PUSH)
+ 
++static void validate_tracked_branchname(const char *branchname, int mirror)
++{
++	struct strbuf ref = STRBUF_INIT;
++
++	if (mirror)
++		strbuf_addf(&ref, "refs/%s", branchname);
++	else
++		strbuf_addf(&ref, "refs/heads/%s", branchname);
++	if (check_refname_format(ref.buf, REFNAME_REFSPEC_PATTERN))
++		die(_("'%s' is not a valid branch name"), branchname);
++	strbuf_release(&ref);
++}
++
+ static void add_branch(const char *key, const char *branchname,
+ 		       const char *remotename, int mirror, struct strbuf *tmp)
+ {
+@@ -211,6 +224,8 @@ static int add(int argc, const char **argv, const char *prefix,
+ 		die(_("specifying a master branch makes no sense with --mirror"));
+ 	if (mirror && !(mirror & MIRROR_FETCH) && track.nr)
+ 		die(_("specifying branches to track makes sense only with fetch mirrors"));
++	for (size_t i = 0; i < track.nr; i++)
++		validate_tracked_branchname(track.items[i].string, mirror);
+ 
+ 	name = argv[0];
+ 	url = argv[1];
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 5fbfcb0848..055fa42e27 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -266,6 +266,13 @@ test_expect_success 'add invalid foreign_vcs remote' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'add -t with an invalid branch name' '
++	echo "fatal: '\''@{u}'\'' is not a valid branch name" >expect &&
++	test_must_fail git remote add -t "@{u}" badtrack bar 2>actual &&
++	test_cmp expect actual &&
++	test_must_fail git config get remote.badtrack.url
++'
++
+ test_expect_success 'without subcommand' '
+ 	echo origin >expect &&
+ 	git -C test remote >actual &&
 -- 
 gitgitgadget
+
