@@ -1,89 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795648287;
-	b=GuhHX/gGU9B3PGaqflzSNfC4tlwldhrTVZbFgVFiaZYym12B/wzUkp05JV2guLZ/1w1P
-	 02MjVo7Ohu3kNLMm/4BcwQ9X3VNHOEWUC6Iokco/7+GPP6xTJmVbGuXzLH2hPMoAg39YE
-	 t/+ckWeBlTNk+vi7Szjk2IBYebcOo0AWNlLKseMIOmOV27zpv7J1i3oGHs7ainhhC/F2L
-	 ZDEXwhC7pbrWkt+JhgqqKR+z9becThjWsw2bCY65S8V0E1bOsxE7bsiVtWtI9kKYFw386
-	 ugXmnSM5jFT/6jTk6gZWwewW3IMRwudsiU/aXBHxMElsf9cMQe/bSCgHTKbK8Eng/mA==
+	t=1795648955;
+	b=K2Uv8bMgC++rw5HlSvc+DWsCTfcTmJCtzlaJciEAm5TX08niOHLfJs05okmOK61Su8N6
+	 4+em2qybHqss5/76xi9tm06kiA39THg4s18z5Gcy6XXRjXFMaXWj2xYCXBtJT7EPEPDA7
+	 qxIYhYD5gdkQfI7v0A2VU35kbiBbChqUvWXOLScntApVGSm9Oh5eaENY1eqfFYA00YqIm
+	 uXAs0Ob2zRAl7dX00xkGDmULJ/hMv/Nod2J93JG+hP7epl65/B4Ih8xqIeUgplNf4elwP
+	 5JVlaMmNu4LCJO6xwAoNJW5F5Us7Z/gA6STWSf5nVhrjVi1F2m6GxMgKUbMbAwR67Lg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795648287;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795648955;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=t8/UXvo53nBrbSab/JvzJ9/PLWNS8stHuTagzPp9IjI=;
-	b=TOhH2jIirpQC78TphhJI9G1dPek6c6GgIXEKjcB0Sj1Vrm/w7uyesK2CBSO+oJRwjfKq
-	 Rpr88daNGmGuHATdLvKY7xLuRw0mxOORkReNS0CNWBYwGyp/EyHd/sSCCdZqgEoeYeMuH
-	 S6/ESfJDkesP9dhlO7vBvTyzD7pYa91sr+rutWdLS8VBqVMQ2RWk7hTiHa/0ie7cn6aRu
-	 kunEkEkum38trJgPQk9EwAbPB3xeEfbA6RD+/CJwUCzXWvNHHurlkXkMr+x1j5bJKa+/P
-	 Z7beun875ysCSC97jC9NinAil9UNv14rK+GkHiAQhkv9JZnzIlZ6ikeX7pqQ/IZMuQw==
+	bh=2u3jrDOycnwCJSCu6AjzHY7QW4o9MbEblv+hlyeZbYY=;
+	b=VILECccTyaAghxLPWWbcV567yjosYIMqu4yGJGQvaeQgneBpJCush0kcqFWheF5gwQdo
+	 BPfA1aalqDvPdIPZLnLDJFfWSfD8UACd4xJknCDUQksva2CQoS0fI3dKvbb70YpJYdpWJ
+	 9ZqeasFrW2OqAGItNIVoP0X5mEjOoMBAxblsbDCva7ppmiGA76ZpXe5nfejAyJIRQOvC+
+	 zxhIRAvkYghKpHjcduLTwQcOYwGjgfFNjGu/YO4/4yj0wfcU3Vx7Ri7vNq7atXCdyRcf6
+	 rFWsmMchZp+JVw/FxCk4iVT8VOLjuKQ9QiJ7j82P4aZ8KdTqdnUiu5D/+nmtfPZuPtw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=L163PaVC;
-	arc=none smtp.remote-ip=209.85.161.54
-Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dIAQVI33;
+	arc=none smtp.remote-ip=209.85.161.45
+Received: from mail-oo1-f45.google.com (mail-oo1-f45.google.com [209.85.161.45])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A938606A31E
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 23:11:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8A938606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B400606A31E
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 23:22:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8B400606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=L163PaVC
-Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-71b45386310so3003772eaf.3
-        for <git@vger.kernel.org>; Wed, 25 Nov 2026 15:11:26 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dIAQVI33
+Received: by mail-oo1-f45.google.com with SMTP id 006d021491bc7-702dedeb70dso3754193eaf.1
+        for <git@vger.kernel.org>; Wed, 25 Nov 2026 15:22:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795648285; x=1796253085; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795648953; x=1796253753; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=t8/UXvo53nBrbSab/JvzJ9/PLWNS8stHuTagzPp9IjI=;
-        b=L163PaVCTFa9H+Ehe9JhuDk282JZeLSXPjX13ymRXK3z13OBrfFL3vygQAeWeSeNlg
-         zUWWeG2Sn69YlTNmtxVArS5k3qXqahZzXz7sbTtlnXKsD+7MiQgkfdzu8FJ2Wk8xCKjo
-         N7TmRl9AcgUHJFUz4XjTxL/TJ1/9H4NdsmlHqVZZLR0Oi+DrLEXDyH8bRflqHsg7K2Se
-         O4zXiVTy9AaKAVCindhEta/z7FAm+s7PZkm47+6F0wBOHmcxhYYbXs75ab3K6M5pe5Su
-         9NZsnE9gIx0dIWXaoFJN2M9aVAzU53rJnKWl29aIR5gNuVKHtWsc3ooP1F5mQef4z166
-         Dd7g==
+        bh=2u3jrDOycnwCJSCu6AjzHY7QW4o9MbEblv+hlyeZbYY=;
+        b=dIAQVI333B979VIrKwmVztVKViZwPCg+4uaKPKAqnBP1Xh4nQuXhsA5AMYbacPme3C
+         AVspUZ493iSgW0guTO6l5seLyp+abl3i6FWePQnh6YQVU8hf0zjfjaW3KSI3kKB2ISic
+         BFBm57SI3p9ZidCtPLMYOSOZsV3Es3NufFlMR+jW5EUs+2mLbdKzUcxQA57sVjZbcH7A
+         Sorq/LW8Fvd5rWGXPjNhmvBhZn3OJPuX1ol7atk/wWq8xxS8yt3PUYfClDbVZraXjkDG
+         cEw4ZZWudJcL846q10ixWnvyQwM4ZOPveIwxbbD+8VVu0FWbCLB7Q2hKV/gtaZsodAkp
+         GuBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795648285; x=1796253085;
+        d=1e100.net; s=20260707; t=1795648953; x=1796253753;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=t8/UXvo53nBrbSab/JvzJ9/PLWNS8stHuTagzPp9IjI=;
-        b=HVMh/ojqpq9i9Wsc3fisCjxS6ekpfP1v34onelU42ST42DVIPySG5MPlLgvvG1DOor
-         /gIcW+bmKG6eYXCxAYUSFaMtQmQblIFY2SW9fkfifK8ONYHKMwH2OyZo07z2jmQRIeTQ
-         z37mZ/DjSxEdGrw1QEK6X2yNb3b4tBJmMpcH607POy89YP+57cz2JIHowidsSKTWo5HR
-         +HKwrNNZ/YejbpdZcvVohQmE9ZmxPmNIXSU1jPObZhs84sgYdT1Gf2cqkTMTTdzW1g7G
-         PwaibAjM2vlgmERoZ740reJa6CshyhOPDc/iLJh3geBJOtIAtzn0YGjmNXYl1BraYqlR
-         QZpw==
-X-Gm-Message-State: APuU4Z9wUgsW0jW+CVlDntsbCjLF8pIKY1c/razBuo6BF31pP6b4MrXa
-	qzv9K82CE8pFnjJlsWwP0Ye+ldQISR74luqzQ1gNsuCQpZkN16Cn6G007Wv8CQ==
-X-Gm-Gg: AZFdTZdlek/Rdc7P8I2kRcLvh94neABjGg4xvzKr+065K/wSgccnZlgaMtsEgSTcJqc
-	DZ4MTgsTqz3FWWYsmWQtyE9sPNApV6Xnd56cZy2jUQ+eWQsFQX4MxzViWsarYCvDqZr+JCJZESw
-	kfZwQPUpTzZjo/6nxwvShwVY72f7+c2cV1zcgB7qOEFPQdDBG6DVtEZ4HU1aGXmRIIMIhV+4BtZ
-	yFvppj+MJQu/oqKA6NlBuc0oG1tOd7dH4j+G/Vj7xeI6y0fyNMcFbrck4qUWtyB8eCdZOqcAzhB
-	DfHSa6FpyzkmY/Lx0uCGuM5z1eQ1vnfs69xMCouaLEnD2KAhEXU+0NYvDnGldqWCYPG9FqQaS+R
-	fGy1FAUZPvcJQhFDvhIQv6S+lzyMy6Sie61l7N/Ix/eF2DTqRxrevPBPION/7lnvijfHTDmDp40
-	fQGoVt2S0O53R23R/ne9AXUoG261bFRCXMwxXUITAQptUeGiY/z9oquP5p+TT7Aivxa3AzkmXja
-	ES3ZiFqE1TVy4vHgm5XxCIvb0k20i6uLwmFB0RalV+MmwjsmgAfwfkB398DG4FX8HMZQPyfGsLK
-	xYt0JPvSrMe6G4vOJrZ8+r7sfRisWUxnizLwfF45zW6ouYG2CEzKw7M=
-X-Received: by 2002:a05:6820:61e:b0:71b:7883:8d89 with SMTP id 006d021491bc7-71b7883ae62mr4281864eaf.66.1795648285372;
-        Wed, 25 Nov 2026 15:11:25 -0800 (PST)
-Received: from [127.0.0.1] ([64.236.153.102])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4bc61659cb8sm19015959fac.17.2026.11.25.15.11.22
+        bh=2u3jrDOycnwCJSCu6AjzHY7QW4o9MbEblv+hlyeZbYY=;
+        b=YqAA60cF3STCGYgxZc18SmOZ+fmpRKH/aR3kZRI5i4bwRVtPCNFAjcRkr0iejIasGS
+         GA4EnQIrzXjwHL3/uwgibngVMiVplJ6pC8mPmhDxiyqQgVd1sua7QeDd9OcD5B4ib60M
+         HyfNnZsy7MLYn1vunmAjV81UFFQbpHoWwQnNbqLi8IdMeiBqFy7GxlkCoMzlp1K7oeVL
+         Q5MUT9rdijO6aJau3Xc/CUNtxp30Gc4BOyj7q9Pdj8Z8cdBhJ9LagemXvf8fyGL/EF8N
+         3gkyVmMB/7XoIadF5TMuK2dR/bt6z0EzmiThx3X4X0T0SfMzcuPltdzeNzEiWm8HZnVx
+         ZoRQ==
+X-Gm-Message-State: APuU4Z/zToCj+6QddYGHxNV4uAuND19AqKW47DHd8hH9SsksS6pc2Tzp
+	kcIPYMKzu6/1Ql9SEc/VY1QxF2p/x7LaJ4JOdQ59oxFy7+ll0GvpANIF+WDmr8ve
+X-Gm-Gg: AZFdTZfBBy+Utern71+BEJYYHqtB7zlLYQh7/xh+HhQ2y8/56P3f61gh4IOtbSZAsMb
+	XT3p3CZF0jRvsRFIiu+0UMYQ17QDBX7+yHCJeLCEvYTR6ng+sMIrhuej2IEHWzZvoVdPdL3MEcM
+	lOba8DSDhs3LC2YNcjSUmEmmBd1n4WGSz0k/kyirDnv2hcLkBir00bQXkwUG6CPkX+2gmdI5ZRb
+	OLIbjiCFu1ijIykd7AZym9TIJJtNQFTYaEbakZbZ+yOVQzH0unQMNIYF1dLxV5dJOc7OtPs9Q7T
+	onVPFZ5oDZsv7UCShnKEPb9siYPa5XQc2HYKpuHgkdRHqWTcYJ9dlwUlP2IRsRBlcq9cxsu9hn6
+	+7lcqo+yaocqbmMyZzG4eZXbxLvBAULii8mBzjz5X0tmo/pUYpJ3XzOvFi2FaSigpofwrgUNC8g
+	ALMRcJJWrNkHV35PCMHVkvDfEoi8tywqr7Mk3KSVn7llpW3kEXNnsV2YBIQjX218XIzxdwzrdGI
+	e8EJ3c/KPUbQT2jXbgrPdXRWI3RDKk+uR1Ggo2Y1VEfaYIumqrJblIHSgVGRG/9u1keY7pa5NDX
+	7E7rKWbVIpHUkgmimqov+14/WCz4G/E=
+X-Received: by 2002:a05:6820:55d0:10b0:71a:fb0f:810b with SMTP id 006d021491bc7-71b394472d7mr10821376eaf.29.1795648953414;
+        Wed, 25 Nov 2026 15:22:33 -0800 (PST)
+Received: from [127.0.0.1] ([20.80.111.51])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-71b8590ba0fsm1078623eaf.2.2026.11.25.15.22.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Nov 2026 15:11:23 -0800 (PST)
-Message-Id: <pull.2333.v3.git.1795648282594.gitgitgadget@gmail.com>
+        Wed, 25 Nov 2026 15:22:32 -0800 (PST)
+Message-Id: <pull.2333.v4.git.1795648951606.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2333.git.1795635624820.gitgitgadget@gmail.com>
 References: <pull.2333.git.1795635624820.gitgitgadget@gmail.com>
 From: "Alessio Attilio via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 25 Nov 2026 23:11:22 +0000
-Subject: [PATCH v3] pack-objects: handle missing promisor objects
+Date: Wed, 25 Nov 2026 23:22:31 +0000
+Subject: [PATCH v4] pack-objects: handle missing promisor objects
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -102,13 +102,23 @@ Cc: Alessio Attilio <attilio.alessio@protonmail.com>,
 
 From: Alessio Attilio <attilio.alessio@protonmail.com>
 
-Objects missing from a partial clone are expected to be absent.
-When checking whether an object is in a promisor pack, do not BUG()
-if its object info cannot be read. Such an object cannot be included
-in the pack, so skip it.
+During a filtered fetch in a partial clone, index-pack --promisor
+re-packs local links from the incoming pack into promisor packs. It
+invokes pack-objects with --exclude-promisor-objects-best-effort to
+skip links already stored in promisor packs. After a filtered
+--unshallow or --deepen, this walk can encounter a promisor commit
+whose tree is missing. The object-info lookup then hits a BUG and the
+fetch fails.
 
-Pass OBJECT_INFO_SKIP_FETCH_OBJECT explicitly so the lookup does not
-trigger a lazy fetch.
+Do not lazy-fetch while checking these links: this is a best-effort
+repack, not a request to retrieve missing objects. If the object is
+missing, pack-objects cannot include it, so treat it like an object
+already in a promisor pack and continue. This callback is used only by
+the best-effort repack started for an incoming promisor pack, whose
+output is itself marked promisor. If the missing object was not
+actually promised, this still cannot discard available data; the
+object was already absent and any later access would fail unless the
+promisor remote can provide it.
 
 Test filtered --unshallow and --deepen fetches, as well as a subsequent
 fetch that repacks links to promisor commits with missing trees.
@@ -124,35 +134,43 @@ Signed-off-by: Alessio Attilio <attilio.alessio@protonmail.com>
      * Cover filtered --unshallow and --deepen fetches, and a later fetch
        after unshallowing a filtered clone.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2333%2Fkairosci%2Fattilio%2Fpack-objects-missing-promisor-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2333/kairosci/attilio/pack-objects-missing-promisor-v3
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2333%2Fkairosci%2Fattilio%2Fpack-objects-missing-promisor-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2333/kairosci/attilio/pack-objects-missing-promisor-v4
 Pull-Request: https://github.com/gitgitgadget/git/pull/2333
 
-Range-diff vs v2:
+Range-diff vs v3:
 
- 1:  a7e378ca3d ! 1:  cbe2fc475c pack-objects: handle missing promisor objects
-     @@ builtin/pack-objects.c: static int is_not_in_promisor_pack_obj(struct object *ob
-       
+ 1:  cbe2fc475c ! 1:  b2112b07dd pack-objects: handle missing promisor objects
+     @@ Metadata
+       ## Commit message ##
+          pack-objects: handle missing promisor objects
       
-       ## t/t5616-partial-clone.sh ##
-     -@@ t/t5616-partial-clone.sh: test_expect_success 'after fetching descendants of non-promisor commits, gc work
-     - 	git -C partial gc --prune=now
-     +@@ t/t5616-partial-clone.sh: test_expect_success 'merge does not lazy-fetch locally written objects' '
-     + 	done &&
-     + 	test_cmp server/only-in-C client/only-in-C
-       '
-     - 
-      +for opt in --unshallow --deepen=1
-      +do
-      +	test_expect_success "filtered fetch $opt of a moved ref repacks local links" '
-     @@ t/t5616-partial-clone.sh: test_expect_success 'after fetching descendants of non
-      +	git -C target rev-parse --verify refs/remotes/origin/main &&
-      +	git -C target fsck
-      +'
-     -+
-       
-       . "$TEST_DIRECTORY"/lib-httpd.sh
-       start_httpd
+     -    Objects missing from a partial clone are expected to be absent.
+     -    When checking whether an object is in a promisor pack, do not BUG()
+     -    if its object info cannot be read. Such an object cannot be included
+     -    in the pack, so skip it.
+     +    During a filtered fetch in a partial clone, index-pack --promisor
+     +    re-packs local links from the incoming pack into promisor packs. It
+     +    invokes pack-objects with --exclude-promisor-objects-best-effort to
+     +    skip links already stored in promisor packs. After a filtered
+     +    --unshallow or --deepen, this walk can encounter a promisor commit
+     +    whose tree is missing. The object-info lookup then hits a BUG and the
+     +    fetch fails.
+      
+     -    Pass OBJECT_INFO_SKIP_FETCH_OBJECT explicitly so the lookup does not
+     -    trigger a lazy fetch.
+     +    Do not lazy-fetch while checking these links: this is a best-effort
+     +    repack, not a request to retrieve missing objects. If the object is
+     +    missing, pack-objects cannot include it, so treat it like an object
+     +    already in a promisor pack and continue. This callback is used only by
+     +    the best-effort repack started for an incoming promisor pack, whose
+     +    output is itself marked promisor. If the missing object was not
+     +    actually promised, this still cannot discard available data; the
+     +    object was already absent and any later access would fail unless the
+     +    promisor remote can provide it.
+      
+          Test filtered --unshallow and --deepen fetches, as well as a subsequent
+          fetch that repacks links to promisor commits with missing trees.
 
 
  builtin/pack-objects.c   |  7 +++--
