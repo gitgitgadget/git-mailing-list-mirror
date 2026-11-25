@@ -1,90 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.48
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795595889;
-	b=igN5o93dcV7Ehm3UGtRw+TD8MU7nZwb5tUsZxnPYEQEJ0KEnb6xVKnkp6ddWUc2LsTGi
-	 v+eY+U/KtskUyvCXb5PFkYl01WtrjDrvHyWndPRshBM+K+q7cC9tTW3hSDxFBn9k+1ogU
-	 arGV4svFeoNqqzHtgvF2dhTWmRryLjaHMUKYC0LGA6UkvDsCBKJEzMxpnrLIegobalzgn
-	 4B31rsin9j+IUK7vLsnhe7k3JXHlfl3oEQWw92U2cfFa2/FuyZDCIcIclpwRw4lWcJSqo
-	 KVuMYmVb8kZSzHt1mWht+bk3apVDFkwN5ae6xJE1K+gKQ/b9AO8pe+CKtHSEs1Lz+FQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795595889;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.173
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795599505;
+	b=RqMF8CX4DbxaXxF6oFlSmZ0BuycTtNyEGlzlhzUlBHiqJilediCz4WNwbok9SWfJpFmH
+	 YxTNRI4x9Oy0fHoDqKATZvb2aD9v6g1MF/5y00ZRNXEgNdwpqu0gryyz02p08W1J2GEIY
+	 aFY8qxzfVPzntL//oKJkY8X15ucYca3JcQjhGmbF0oYdZp4nb6iztUlYnbxS4H4JFMjfA
+	 vr/h2Kdc/9kEzI5oX0R/B5Ybw3aksmNy4iPt3k9H3C8h/qDnuu7JxXM7TvrW6Dgl8+fD7
+	 RnK6zgYHfstubuhGb9OyE48UxibFE8unAqHi2DDX6Hej1h2jhZflez6lHfHifBH0Fdg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795599505;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
-	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
-	 Cc;
-	bh=7ZtmMqm6Zj9eEx40WtUR2QVS/bJsDhYoYoXpiv9chVk=;
-	b=GeDuH9yixB7HoDnd9/uzf4ltEIQEpSJi4wljYEMV9nS4Z7O7gNztjwv8diZlEoLR4QA7
-	 iQ1rAADu7SXoHDrl81KV6iV57sq1KrEuY5UxvAOvFgXg0USxq1JHQ/NqxT1WqHLWXeJ+W
-	 ulXMuHQNHeETpqiwx3Twn57MEHiqWpl+g69RkBjOUtNOJROvPjWrFX63XlKuToA1rAUTr
-	 bpjjHBhR0Z0u01Vp6iQdL4nIZM7LgL/xMrG2JGGp7Ns//+2E/Gvd7n5YPB2ciAUS94Yi7
-	 w4Tzz3AE5EYhg3NSUG1zPjVdxh9P6Aonp6S5ft8jOmjydzGqQah87qm+iYWDWYOEh2g==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=KrmPaIBrHPa/qQQAa30z7wwsH4vDjRzQJqmEhC0eSHk=;
+	b=NbO1Jrf3qxy39SylJ1KfrhMCEsUwZYEZLwPAf+NRtiViA96Z0yDbGhn5TfvUJ79xIDpK
+	 PKklIycRWLLuUTvLvDMskUEuGc1zyfnPfjkaL+IuVHTKUQZLuJdAjhsNN0RB5dt0rNhP7
+	 PM1QBKdZHh0mUvsSaTnMVAp+vFpdp2NgKqCDCL5lg75qonzweZ6vztxCXPkAxbbZc1166
+	 Pki/JWP+YzXD5JPBJtKpZwVccXuXRznwZLxkgFM9aKuQuShYRxQjongnY7FNDVNmEqbbF
+	 3qmzlrm7Haq8F5vm+Bgr60at6enhXMFnzYfmD7kiFDgUuH0QCJpjEtKIIrRtcZvce1w==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XLhgbjb4;
-	arc=none smtp.remote-ip=209.85.219.48
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dWJ+0k9C;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.173
+Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859D6606A32E
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 08:38:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 859D6606A32E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9844D606A321
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 09:38:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9844D606A321
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XLhgbjb4
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-9212dac247aso57644106d6.1
-        for <git@vger.kernel.org>; Wed, 25 Nov 2026 00:38:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dWJ+0k9C
+Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-5eac01ff101so2007226e0c.2
+        for <git@vger.kernel.org>; Wed, 25 Nov 2026 01:38:24 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795599503; cv=none;
+        d=google.com; s=arc-20260327;
+        b=kLYsFNt+ZZDmdH3zZlTPJ9pj4KYaXN+iweVPjqSN/49sJ/7BbEl6Bh323oLlunpPXQ
+         bLZbU64BGwfkfPxrtPOmb8hkly/cSWCzraIebO/6OeD0RNP91QpMg95jbCfIE6Ov1H9B
+         npQbXguuSjEWLxhf+Z92pkx8scDgyDoq5+w+TdHFBFw+UOhaq91G/54v14nVlLtnM+r/
+         F6bx9xpyygYc+MLiNrbJOn/bIlPb/Q1QD7qq/wiPdp2TPOHnyUHxkfnbNCUyJcKDEP5A
+         KoI7NNaD6kewDZjs4Gl3pe+NLeXUG2jtK1H41bPslaAw/Nqe6Om5Wa5hqpvucQXDZHo4
+         Pj2Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=KrmPaIBrHPa/qQQAa30z7wwsH4vDjRzQJqmEhC0eSHk=;
+        fh=EuzTZeHClKMU1eF+pSgnKtda53qXUr4g9Wi36cauPto=;
+        b=VYUKKkOFLDGz9H1Nym/ZUMwNa2G4j6OPHrK7/Rs00sUgcaDlEgvEJ8bUGbI8bP5Jbp
+         xDnV3jRi92zHCJ0XtUeYjDh1UISpwnncilHE7pYKMyl/xlbQVdFI5+FlAI5O4GwNIbnP
+         LvtkECW8zaaPNrszL41a+57rdXJRmaExVzbfzDUid3zJiLumt4RBZGlbeH/cTuGO9Roe
+         uw9BEyWHl3x9+UP3eN6vwOaKGTn/VqCnze/ZvGFhAOkD9+vRLxwuK3DUDB3zG1Vgm54Q
+         JmQLisw0uQ7uz6ZxqcgZYTbWM5fQ1jnxzny2yopFlDP1uvop1R+K7PZnglXaZ3DF3MWc
+         +x2g==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795595888; x=1796200688; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=7ZtmMqm6Zj9eEx40WtUR2QVS/bJsDhYoYoXpiv9chVk=;
-        b=XLhgbjb4Atl7F7NFbYy03AtPpn4eANJ6CKwAw4MWeznTHvKI/r4pJmvJjlt4VZSkak
-         I7KzX+tqi/Nacm9P04Y1wvKNR6jFjCrw9yq4FWJDuoHGUYs3dC0Fj6tYYoYzOstlKiwV
-         AJP16k5gJyEUKsjg9VEcaDnDW4tOL5XJepZxMeckfieE4TD80SMHQCVW7lkvIfBCQ+zz
-         Rm7nEUTi98VS+Og76xP7+DMK1U/Enm6pop6DBgRn/d43h04cWqYpYzgsqKgbf6YE8y5e
-         nkInUMKLEX+lr00TFDdobR9k7Cbmd5fgN+wp5PMG2E1Zybzho9eSUg/MG8KquwiIELGq
-         Cefw==
+        d=gmail.com; s=20260707; t=1795599503; x=1796204303; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=KrmPaIBrHPa/qQQAa30z7wwsH4vDjRzQJqmEhC0eSHk=;
+        b=dWJ+0k9CCIVqqUqWntgDQo2k/KvNl3PKjsGV19KeE2LBzpmjddszSk8k2hOJmdIDSs
+         1DHj2XYfWxxBgfiRooFh2WZo6LLy0/mbF8aBXZa4p0f14A7HzMqR9QYU8oBgHe17TCt4
+         wVg5hs+/HB3do7LG+EciZqlNUx+LwBLchorucCbeR7XNU0yK7hqyKAEE4rhixdz2OAR5
+         jRME0qOWLTUFFoschQI7mZxvho6fYEQPiA5/y+3eb25t+Xo5PvzWahmFdfVWF3bKR829
+         PiYyv47Vi4I+OHxQnY47f1zLa7+S0oJE67bXDcjK6wCk6Mg0MwwH1dFKcHqWwQjllr52
+         ySPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795595888; x=1796200688;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20260707; t=1795599503; x=1796204303;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=7ZtmMqm6Zj9eEx40WtUR2QVS/bJsDhYoYoXpiv9chVk=;
-        b=qIcSeVH1p3m0S4jlUZjWnt8IIbmh++A4zwyVSdV9PNTiFnfB6Pvww5l1s4MmpsTBq6
-         oGNSKEmARyzBhDS48EfZf0Z6evnSilZyxGcrflpa5DNjPgRNEjjsxvYuEP9Ij8Lt1qZG
-         htcj2Xlp6n7ThBX2GK2dUa1RI1mjRkRSnbMAnwG0oIJDX+CavBhlxfKNxucZDeDBJA8K
-         GtEAufqxkYbWFIBNHhvQZ5w17c8Vx9/2pc8NtH2AVCnIDFpZ0QxRLyfWbYjj/r5WZff5
-         F57L4wApsS5NKvwSOsOXIEi6VNXT1WytCrV5RMeFcHCGKVX4Wov5OFAUIHoVpjokUc93
-         pBPA==
-X-Gm-Message-State: APuU4Z/ZX31yJ5D1Us5pz9ua3myddwt00aYAH7Wl4Zo/QpHSC24og2q5
-	Juu5NuLH2JqUPcJ8phFM3eseFVquX6Z8qVNCuiyL7ESldN734O6OTXegHdXWAA==
-X-Gm-Gg: AZFdTZffMAw+S/JO7KpfFgSpzZy3f88IpH8pVC6KZXgjhx5y2KEyinoU9aHJs/n1+pe
-	vpupa7TFVOfBTxUDEHe0DV+RTspPa2KBuA2YkNW4+v0gj3udLwU0kWd+U3CM9jl2zOCaw8zcY7C
-	1eFUXFvWEJemEFgqdyZfSUWrDRxdis5lZdiRZcas2YMjYRhFKgAT/mOrnOU+WVOz5+d+1FnIcK/
-	P0ZIMAf0K4o9jDi/MX71xoKfJ8LiHPgB6MK9FPNrBHcn88yN8px2dDVM/oRC/K6ojdg0y5fMfsu
-	7TlrcP0CZMHNvY2GAD9TC1HVyMpkIbABdUzgMBjO9hsDlvcT0Ub5kJ+QX3KROJ1l9+VzA+q1iG6
-	+L/j/UAk8qkIVk6InmNs5C3DwGJxrLdV4Fwg8ZCbSz2ZLEF5kFOdyoTMCu/WhTnY5rg0d8412EY
-	Tb6cfVRrgiwsQfNSZemK9jaLUf6yRrPGUtB38OZBujtVFUzAbOsk90m4OwyowIOM9W+ehnmdMdv
-	EBtTx3KKiRicj87mDbm0/zMutWl/znwvq6O/V5GFRPSj4jte5rr8n1gj6SIj3z52ShPfObFuEv7
-	knySc09D1n/ep5zZaCg78QLeXocchFz4UHlXF7jW9I9Zz4IoOrQYHz2qy9V8AxV840CGokbEZ6x
-	DpmgGlZsApmqoWpD6jw==
-X-Received: by 2002:a05:6214:1242:b0:91c:6d30:7c2c with SMTP id 6a1803df08f44-92134af091bmr295251576d6.52.1795595887486;
-        Wed, 25 Nov 2026 00:38:07 -0800 (PST)
-Received: from [127.0.0.1] (ec2-3-41-210-71.compute-1.amazonaws.com. [3.41.210.71])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-921349d0e35sm156687926d6.20.2026.11.25.00.38.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Nov 2026 00:38:06 -0800 (PST)
-Message-Id: <pull.2328.git.1795595886592.gitgitgadget@gmail.com>
-From: "Julian Maurin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 25 Nov 2026 08:38:06 +0000
-Subject: [PATCH] remote-curl: honor --no-thin when pushing
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=KrmPaIBrHPa/qQQAa30z7wwsH4vDjRzQJqmEhC0eSHk=;
+        b=K0BItQLw9TsFisHEWesOZNcf4XLlY6zSo1pPycIpCxrSsrM4Ccj63bUR+jDmMCBPN6
+         kqDy04N2xnQPcgZkuAUJxkuGVNqZd94/5IHfopXIuwNhOVzKUyuaF7eC1X72epCK4bDt
+         y7yAfIKEX8LvArcQHLvyDy8wozbXxhZHeOXKl5htCh/UUr0H/p0q7WdHPudd3xSamTxX
+         9+zQ9UykEBg3lEBRpFB1BTJsm0P9RFRyZe5MEFj+GGrAlmjX3K9leVZap67r7O8peMKG
+         yaLkabnP8J3Xi9vEIjw/n9PN3axoT/dWkKzqAetKA3QTT8aW/Ww4QYVMxO1saZB0HCm5
+         LnTw==
+X-Gm-Message-State: APuU4Z9ejc7oHkEvJhO9Db2ppIxMDg/b2ZPVEt1eFydi78ODvOihjuQv
+	IMv3JhKRsx/7aOC59JWKtbfJvcG1Qv69CJT18ax9JZjlcnfS2RFU2lkhOmYLM2XWUOoDYoh9VSk
+	mcfBtDHxRInm2EL0vk1TRCQ9s4FPJuoE=
+X-Gm-Gg: AZFdTZdCq/LKS77ksPWLXPEjrd/hSous/9Qfu2kdb2QGdCSz6DSGKQYhz1mL+37mwx1
+	LW1OO5CDAfADQ6dwWuCH+/apYipznOW2VEOiUsoo8M9nYA3Pa70P71cuEil2Us1pgrbWOD4JJ3C
+	t76Oa5H3VqmNrIdHSm8FIsBCGA01wegIZAy7ZUmPtDStaYcQW+dZ+iJj/n3TtPCMPhkafxqxofq
+	Vv4f7urIgNKJn/sZPqcLt5Rx0IY5z/ar8a0xrTBELIVSysVhhq3mTy01SkekSCkwhGTKzP2VMbr
+	YQFK5u1gHbXF1nmJAj5yUwQ8OfrO2SAbn1mr7WSf/lUs39KLdD0AJypQgMF49iQmBQtaLAyXT9w
+	1w3xN51eF5i+3eB5hUQIMrEwC+d/P+N3udIYN81RJyWbpQGsw1U7RAvWL2dQ1+npRdaRzizei+C
+	6AapYmHMKv1TEDMno4qBmDZBA=
+X-Received: by 2002:a05:6122:e469:b0:5ea:d14a:ef8f with SMTP id
+ 71dfb90a1353d-5ee8ae8a1f2mr8999428e0c.4.1795599503343; Wed, 25 Nov 2026
+ 01:38:23 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -94,138 +103,259 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,
-    "brian m. carlson" <sandals@crustytoothpaste.net>,
-    Patrick Steinhardt <ps@pks.im>,
-    Julian Maurin <julian.maurin.dev+github@proton.me>,
-    Julian Maurin <julian.maurin.dev@proton.me>
+References: <20261119192247.2671852-1-dmnk@google.com> <20261124180557.70212-1-dmnk@google.com>
+In-Reply-To: <20261124180557.70212-1-dmnk@google.com>
+From: Caspar Duregger <caspar.duregger@gmail.com>
+Date: Wed, 25 Nov 2026 10:37:53 +0100
+X-Gm-Features: Aa3M54pD9q3sVjJYpHn0aIwG1mWEdM57Yxur00lt9PWLbj8KfSYashX0H3lZ8Ds
+Message-ID: <CAFzd1+4aiyNtUxN4YM8HHrcV6qnhOGeyYAR-Ru_pp=jpn1_hMA@mail.gmail.com>
+Subject: Re: [PATCH v2] graph: do not fuse merge parents with the column to
+ their left
+To: Dominik Maier <dmnk@google.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Pablo Sabater <pabloosabaterr@gmail.com>, dmnk+artist@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-From: Julian Maurin <julian.maurin.dev@proton.me>
+LGTM
 
-"git push --no-thin" to a smart HTTP remote still sends a thin pack.
-transport-helper.c does not forward the "thin" option to remote
-helpers, and remote-curl always runs send-pack with --thin.
+Regards
+Caspar
 
-"thin" was left out of the forwarded options of ef08ef9ea0
-(remote-helpers: Support custom transport options, 2009-10-30) after
-review noted that --no-thin did nothing on any transport at the time.
-f7c815c3ee (push: respect --no-thin, 2013-08-12) made it work again,
-but only for the native transports.
-
-Forward "thin" to helpers and teach remote-curl to honor it. A helper
-that does not know the option answers "unsupported", which push
-ignores, so it keeps working as before.
-
-Signed-off-by: Julian Maurin <julian.maurin.dev@proton.me>
----
-    remote-curl: honor --no-thin when pushing
-    
-    "git push --no-thin" over smart HTTP was ignored and a thin pack was
-    sent anyway, which has been corrected.
-    
-    I ran into this in production, pushing from a shallow, treeless partial
-    clone (--filter=tree:0) to an HTTPS remote. In a shallow repository a
-    thin push reads the tree of every advertised tip it has locally, and
-    each missing tree is lazily fetched from the promisor remote, one fetch
-    per tree. --no-thin avoids that work, but has no effect over HTTP.
-    
-    A small reproduction with the test suite's httpd (400 commits, 40
-    advertised refs, a --depth=180 --filter=tree:0 clone pushing a merge):
-    
-    default push:                   37 lazy fetches
-    --no-thin, without this patch:  37 lazy fetches
-    --no-thin, with this patch:      0 lazy fetches
-    
-    
-    Helpers with the "connect" capability (ext::, fd::) already honor
-    --no-thin, as the native transport code takes over their connection.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2328%2FJulianMaurin%2Fpush-no-thin-over-http-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2328/JulianMaurin/push-no-thin-over-http-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2328
-
- Documentation/gitremote-helpers.adoc |  4 ++++
- remote-curl.c                        |  8 ++++++++
- t/t5541-http-push-smart.sh           | 17 +++++++++++++++++
- transport-helper.c                   |  1 -
- 4 files changed, 29 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/gitremote-helpers.adoc b/Documentation/gitremote-helpers.adoc
-index 39cdece16e..8203ef497c 100644
---- a/Documentation/gitremote-helpers.adoc
-+++ b/Documentation/gitremote-helpers.adoc
-@@ -542,6 +542,10 @@ set by Git if the remote helper has the 'option' capability.
- 	transaction.  If successful, all refs will be updated, or none will.  If the
- 	remote side does not support this capability, the push will fail.
- 
-+'option thin' {'true'|'false'}::
-+	When pushing, request the helper to send a thin pack (see
-+	`--thin` in linkgit:git-pack-objects[1]).
-+
- 'option object-format true'::
- 	Indicate that the caller wants hash algorithm information
- 	to be passed back from the remote.  This mode is used when fetching
-diff --git a/remote-curl.c b/remote-curl.c
-index 2c35dd5240..8309d9d2a4 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -184,6 +184,14 @@ static int set_option(const char *name, size_t namelen, const char *value)
- 		else
- 			return -1;
- 		return 0;
-+	} else if (!strncmp(name, TRANS_OPT_THIN, namelen)) {
-+		if (!strcmp(value, "true"))
-+			options.thin = 1;
-+		else if (!strcmp(value, "false"))
-+			options.thin = 0;
-+		else
-+			return -1;
-+		return 0;
- 	} else if (!strncmp(name, "push-option", namelen)) {
- 		if (*value != '"')
- 			string_list_append(&options.push_options, value);
-diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
-index 8c34833027..280b2d9078 100755
---- a/t/t5541-http-push-smart.sh
-+++ b/t/t5541-http-push-smart.sh
-@@ -253,6 +253,23 @@ test_expect_success 'push --atomic fails on server-side errors' '
- 	test_grep "^ ! .*rejected.* atomic -> atomic .*atomic transaction failed" output
- '
- 
-+test_expect_success 'push --[no-]thin is passed to pack-objects' '
-+	d=$HTTPD_DOCUMENT_ROOT_PATH/no-thin.git &&
-+	git init --bare "$d" &&
-+	test_config -C "$d" http.receivepack true &&
-+	up="$HTTPD_URL"/smart/no-thin.git &&
-+	git push "$up" main &&
-+
-+	test_commit thin-default &&
-+	GIT_TRACE2_EVENT="$PWD/trace-thin" git push "$up" main &&
-+	test_subcommand_flex git pack-objects --thin <trace-thin &&
-+
-+	test_commit thin-disabled &&
-+	GIT_TRACE2_EVENT="$PWD/trace-no-thin" git push --no-thin "$up" main &&
-+	test_subcommand_flex git pack-objects <trace-no-thin &&
-+	test_subcommand_flex ! git pack-objects --thin <trace-no-thin
-+'
-+
- test_expect_success 'push --all can push to empty repo' '
- 	d=$HTTPD_DOCUMENT_ROOT_PATH/empty-all.git &&
- 	git init --bare "$d" &&
-diff --git a/transport-helper.c b/transport-helper.c
-index d5a064d386..6052407b9a 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -275,7 +275,6 @@ static int disconnect_helper(struct transport *transport)
- static const char *unsupported_options[] = {
- 	TRANS_OPT_UPLOADPACK,
- 	TRANS_OPT_RECEIVEPACK,
--	TRANS_OPT_THIN,
- 	TRANS_OPT_KEEP
- 	};
- 
-
-base-commit: 03b41523c576f26ad34085378717a0c1b287470f
--- 
-gitgitgadget
+Am Di., 24. Nov. 2026 um 19:06 Uhr schrieb Dominik Maier <dmnk@google.com>:
+>
+> When a merge is skewed to the left and its second parent is the column
+> right next to it, the edge to that parent is lost:
+>
+>         | | * M                | | *   M
+>         | |/|\                 | |/|\
+>         |/| |         =>       |/|/ /
+>         | | * C                | | * C
+>
+> With four or more parents it gets worse: the remaining parents shift
+> one slot too far left, leaving the last dashed-parent entry in
+> graph->mapping[] at -1 and reading before graph->new_columns[0] in
+> graph_draw_octopus_merge().
+>
+> graph_insert_into_new_columns() has a shortcut that lets a column to
+> the right of a merge join the merge's last edge right away ("|\|").
+> It compares against the last edge added so far. For a left-skewed
+> merge, the first parent does not add an edge, so when the second parent
+> comes up, that "last edge" is the column to the left of the merge, and
+> the shortcut swallows the parent's own edge.
+>
+> Only take the shortcut for existing non-parent columns (idx < 0), which
+> is the case it was written for.
+>
+> Helped-by: Caspar Duregger <caspar.duregger@gmail.com>
+> Signed-off-by: Dominik Maier <dmnk@google.com>
+> ---
+> Changes in v2:
+> - Reword commit message to show the 3-parent missing-edge case alongside
+>   the 4+-parent out-of-bounds read, add the 3-parent test, and drop the
+>   extra BUG() in graph_draw_octopus_merge() (Caspar Duregger).
+>
+>  graph.c                      |  3 ++-
+>  t/t4215-log-skewed-merges.sh | 52 ++++++++++++++++++++++++++++++++++++
+>  2 files changed, 54 insertions(+), 1 deletion(-)
+>
+> diff --git a/graph.c b/graph.c
+> index 95eef3a95e..c55b1fb5aa 100644
+> --- a/graph.c
+> +++ b/graph.c
+> @@ -685,7 +685,8 @@ static void graph_insert_into_new_columns(struct git_graph *graph,
+>                 mapping_idx = graph->width + (graph->merge_layout - 1) * shift;
+>                 graph->width += 2 * graph->merge_layout;
+>
+> -       } else if (graph->edges_added > 0 && i == graph->mapping[graph->width - 2]) {
+> +       } else if (idx < 0 && graph->edges_added > 0 &&
+> +                  i == graph->mapping[graph->width - 2]) {
+>                 /*
+>                  * If some columns have been added by a merge, but this commit
+>                  * was found in the last existing column, then adjust the
+> diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
+> index eebab71039..359383a8ad 100755
+> --- a/t/t4215-log-skewed-merges.sh
+> +++ b/t/t4215-log-skewed-merges.sh
+> @@ -509,4 +509,56 @@ test_expect_success 'log --graph --graph-lane-limit=7 check if it shows all 3 pa
+>         EOF
+>  '
+>
+> +test_expect_success 'log --graph with left-skewed merge into its left neighbor' '
+> +       git checkout --orphan 8_p &&
+> +       test_commit 8_root &&
+> +       git checkout -b 8_pA 8_p && test_commit 8_A &&
+> +       git checkout -b 8_pB 8_p && test_commit 8_B &&
+> +       git checkout -b 8_pC 8_p && test_commit 8_C &&
+> +       TREE=$(git write-tree) &&
+> +       test_tick &&
+> +       M=$(git commit-tree $TREE -p 8_pA -p 8_pB -p 8_pC -m 8_M) &&
+> +       test_tick &&
+> +       TOP=$(git commit-tree $TREE -p 8_pA -p 8_pB -p $M -m 8_TOP) &&
+> +
+> +       lib_test_check_graph $TOP <<-\EOF
+> +       *-.   8_TOP
+> +       |\ \
+> +       | | *   8_M
+> +       | |/|\
+> +       |/|/ /
+> +       | | * 8_C
+> +       | * | 8_B
+> +       | |/
+> +       * / 8_A
+> +       |/
+> +       * 8_root
+> +       EOF
+> +'
+> +
+> +test_expect_success 'log --graph with left-skewed 4-parent octopus into left neighbor' '
+> +       git checkout -b 8_pD 8_p && test_commit 8_D &&
+> +       TREE=$(git write-tree) &&
+> +       test_tick &&
+> +       M4=$(git commit-tree $TREE -p 8_pA -p 8_pB -p 8_pC -p 8_pD -m 8_M4) &&
+> +       test_tick &&
+> +       TOP4=$(git commit-tree $TREE -p 8_pA -p 8_pB -p $M4 -m 8_TOP4) &&
+> +
+> +       lib_test_check_graph $TOP4 <<-\EOF
+> +       *-.   8_TOP4
+> +       |\ \
+> +       | | *-.   8_M4
+> +       | |/|\ \
+> +       |/|/ / /
+> +       | | | * 8_D
+> +       | | * | 8_C
+> +       | | |/
+> +       | * / 8_B
+> +       | |/
+> +       * / 8_A
+> +       |/
+> +       * 8_root
+> +       EOF
+> +'
+> +
+>  test_done
+>
+> Range-diff against v1:
+> 1:  e28b8150c7 ! 1:  a2e27b8fa9 graph: do not fuse merge parents into left columns
+>     @@ Metadata
+>      Author: Dominik Maier <dmnk@google.com>
+>
+>       ## Commit message ##
+>     -    graph: do not fuse merge parents into left columns
+>     +    graph: do not fuse merge parents with the column to their left
+>
+>     -    In graph_insert_into_new_columns(), the branch that coalesces a column
+>     -    into graph->mapping[graph->width - 2] and resets graph->edges_added = -1
+>     -    is intended for existing columns to the right of a merge commit
+>     -    (idx < 0) so that two adjacent edges can join immediately as "|\|".
+>     +    When a merge is skewed to the left and its second parent is the column
+>     +    right next to it, the edge to that parent is lost:
+>
+>     -    When a merge commit itself is skewed left (merge_layout == 0), its first
+>     -    parent does not advance graph->width, leaving graph->width - 2 pointing
+>     -    at the column immediately to the left of the merge commit. If the second
+>     -    parent of a 4+-parent octopus merge matches that column while idx >= 0,
+>     -    it overwrites graph->mapping[graph->width - 2] without advancing
+>     -    graph->width and resets graph->edges_added = -1. Subsequent parents are
+>     -    placed one slot too far left, leaving the last dashed-parent slot in
+>     -    graph->mapping[] at -1 and indexing graph->new_columns[-1] in
+>     -    graph_draw_octopus_merge().
+>     +            | | * M                | | *   M
+>     +            | |/|\                 | |/|\
+>     +            |/| |         =>       |/|/ /
+>     +            | | * C                | | * C
+>
+>     -    Restrict the right-neighbor edge fusion to existing non-merge columns
+>     -    (idx < 0) and guard against negative mapping indices in
+>     +    With four or more parents it gets worse: the remaining parents shift
+>     +    one slot too far left, leaving the last dashed-parent entry in
+>     +    graph->mapping[] at -1 and reading before graph->new_columns[0] in
+>          graph_draw_octopus_merge().
+>
+>     +    graph_insert_into_new_columns() has a shortcut that lets a column to
+>     +    the right of a merge join the merge's last edge right away ("|\|").
+>     +    It compares against the last edge added so far. For a left-skewed
+>     +    merge, the first parent does not add an edge, so when the second parent
+>     +    comes up, that "last edge" is the column to the left of the merge, and
+>     +    the shortcut swallows the parent's own edge.
+>     +
+>     +    Only take the shortcut for existing non-parent columns (idx < 0), which
+>     +    is the case it was written for.
+>     +
+>     +    Helped-by: Caspar Duregger <caspar.duregger@gmail.com>
+>          Signed-off-by: Dominik Maier <dmnk@google.com>
+>
+>       ## graph.c ##
+>     @@ graph.c: static void graph_insert_into_new_columns(struct git_graph *graph,
+>                 /*
+>                  * If some columns have been added by a merge, but this commit
+>                  * was found in the last existing column, then adjust the
+>     -@@ graph.c: static void graph_draw_octopus_merge(struct git_graph *graph, struct graph_line
+>     -
+>     -   for (i = 0; i < dashed_parents; i++) {
+>     -           j = graph->mapping[(graph->commit_index + i + 2) * 2];
+>     -+          if (j < 0)
+>     -+                  BUG("octopus merge mapping uninitialized");
+>     -           col = &graph->new_columns[j];
+>     -
+>     -           graph_line_write_column(line, col, '-');
+>
+>       ## t/t4215-log-skewed-merges.sh ##
+>      @@ t/t4215-log-skewed-merges.sh: test_expect_success 'log --graph --graph-lane-limit=7 check if it shows all 3 pa
+>         EOF
+>       '
+>
+>     -+test_expect_success 'log --graph left-skewed 4-parent octopus merge joining adjacent left column' '
+>     ++test_expect_success 'log --graph with left-skewed merge into its left neighbor' '
+>      +  git checkout --orphan 8_p &&
+>      +  test_commit 8_root &&
+>      +  git checkout -b 8_pA 8_p && test_commit 8_A &&
+>      +  git checkout -b 8_pB 8_p && test_commit 8_B &&
+>      +  git checkout -b 8_pC 8_p && test_commit 8_C &&
+>     -+  git checkout -b 8_pD 8_p && test_commit 8_D &&
+>     -+  git checkout -b 8_M 8_pA &&
+>     -+  git merge --no-ff 8_pB 8_pC 8_pD -m 8_M &&
+>     -+  git checkout 8_pB && test_commit 8_B2 &&
+>     -+  git checkout -b 8_TOP 8_pA &&
+>     -+  git merge --no-ff 8_pB 8_M -m 8_TOP &&
+>     ++  TREE=$(git write-tree) &&
+>     ++  test_tick &&
+>     ++  M=$(git commit-tree $TREE -p 8_pA -p 8_pB -p 8_pC -m 8_M) &&
+>     ++  test_tick &&
+>     ++  TOP=$(git commit-tree $TREE -p 8_pA -p 8_pB -p $M -m 8_TOP) &&
+>      +
+>     -+  lib_test_check_graph --date-order 8_TOP <<-\EOF
+>     ++  lib_test_check_graph $TOP <<-\EOF
+>      +  *-.   8_TOP
+>      +  |\ \
+>     -+  | * | 8_B2
+>     -+  | | *-.   8_M
+>     ++  | | *   8_M
+>     ++  | |/|\
+>     ++  |/|/ /
+>     ++  | | * 8_C
+>     ++  | * | 8_B
+>     ++  | |/
+>     ++  * / 8_A
+>     ++  |/
+>     ++  * 8_root
+>     ++  EOF
+>     ++'
+>     ++
+>     ++test_expect_success 'log --graph with left-skewed 4-parent octopus into left neighbor' '
+>     ++  git checkout -b 8_pD 8_p && test_commit 8_D &&
+>     ++  TREE=$(git write-tree) &&
+>     ++  test_tick &&
+>     ++  M4=$(git commit-tree $TREE -p 8_pA -p 8_pB -p 8_pC -p 8_pD -m 8_M4) &&
+>     ++  test_tick &&
+>     ++  TOP4=$(git commit-tree $TREE -p 8_pA -p 8_pB -p $M4 -m 8_TOP4) &&
+>     ++
+>     ++  lib_test_check_graph $TOP4 <<-\EOF
+>     ++  *-.   8_TOP4
+>     ++  |\ \
+>     ++  | | *-.   8_M4
+>      +  | |/|\ \
+>      +  |/|/ / /
+>      +  | | | * 8_D
+> --
+> 2.56.1.831.g720f3f5937-goog
+>
