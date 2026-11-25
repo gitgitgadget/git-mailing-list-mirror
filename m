@@ -1,94 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.182
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795571095;
-	b=zMSMmksD7UfG+VHdoZI1btZTzINEAYaKtlSop1+BcBLUgJvEtTdvNHPm0sodjdr3+dUQ
-	 urp1+wmSIhzrUtEppRBy99sHw1MHowm4DYLXCZuCHyRdmeZ+7wm2UTcQbkRQCD8TQh98Z
-	 whYUb5QPWGoo9tc/wkxvwZi6Do9knnbaUDF4I4MIbIhhgtpODWhQMiU5v5X1aiGc3oAZH
-	 g3MmjFjc+TfkmwFNuK5QZwlGV5rRV1FjwSk1+ZtWSc5k/AqUXIDLo1H5ZarWhWpu5GDgK
-	 XmYXddHQL4UnYvq+84hzO5Z5961jLao6iwFJoU+YuFYw9Kgv3Zi0wJJXzYJCpsSRsNA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795571095;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.51
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795571236;
+	b=LIGDO0MRE8RuSaxBpa5WGG684c3Hgv0EzuQA8kTibc2n5erC/xYx401+IwgLbd5Nvf8r
+	 si49epFTpfJRd50q6unF8M1ay8v4K/On4LVcBZ0Cy8sy6JERWv6TSO2PMDse/PZv+AAsO
+	 VsBlwiHVNwfJxxuJMtmYQrDPviM6dHgcI+97G18ooLKdXZN82SAmhhKHRHIJeAg+2UjeD
+	 lE8+fA//BQ7W33Z1Yt+7qVVyHDJ1Cgs4rGLYCPkM1OJ7gCwdsxnf5v9lkYuwooF4cL1SB
+	 XWqgZ2M+r1sOaaxjvnmK9u3icBwLmeCn75vwtbuMehENkmGt8ET9kw0HZ0r+dy3Myzw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795571236;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
-	 References:From:Date:Subject:Fcc:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=BQT9EAhzlGcbyRyp/6ZK4rYLbcN5ng2SS8unOq3VXaM=;
-	b=W7b+XaDU2J3Y49HM8jigoHdIPUdzeFWbkTSYz8R0m7HOEjGrjSCrp/KdBEon3siUl2yH
-	 guB9HZx72QLtnhfA79iFqueaZBAVyLAtoeBrmaO1LZzWXObrKz40yeA73NajmFw7ERR/P
-	 uRy/mMb+jxj9EjMUouYMGojWBIZ1BZV9v47iCp5cF0ykH8r7r8mI7o8iXPbhtelauyFVy
-	 AmpIs/C4OmLnZXsPFB5CLQLnZRRZv/WchnfybWQ/BHCXAjlgkdlXTAG72XFIzXmI6Vgaw
-	 v/e4QumO+xKaOvGncIuREkmbqfuHLajU5leGQYfH1zUx/g+ByCA/eZXT/XCnz99UpnQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KUaBkDzI;
-	arc=none smtp.remote-ip=209.85.215.182
-Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=O/DtyQ8qPRlggL0XcvFMqw/UbqZJ9DY9Ouh4yjHzwtY=;
+	b=bHtXgs6B2QTWXw/u26UR/bLVS+fyJmPn6e/AlDMnCYHg8YbzNbbTDRgVKd027NYQ4t/y
+	 cBcxnOs+uHxNgJjsCtgEXgDNqGgcCcKwTycs27b9I6YsXxnfaB1j8FP/rOQd28NpDc6CU
+	 nWBnOwGCofKXg92YTCtGqfLOZwPI6pxoklgyotUI4eVhrPiR2UdPGEZ0SkI/nxfxIEs5J
+	 aX4fdqWHNSkgFlSz8++KvFBbS57rc+yMvsva2uI1ep82gXQZCuznhiF33aFzDDMW3I28u
+	 9/8yzIN7dPg1GNCZYkau676zJfbbmWNZF9B3yAWHOKkrNABHqY9JXwijI5osINGSZgA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=korea.ac.kr;
+	spf=pass smtp.mailfrom=korea.ac.kr;
+	dkim=pass header.d=korea.ac.kr header.i=@korea.ac.kr header.a=rsa-sha256 header.s=google header.b=m8mPyBsu;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.51
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58DFB606A31E
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 01:44:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 58DFB606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17ED7606A31E
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 01:47:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 17ED7606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=korea.ac.kr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=korea.ac.kr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KUaBkDzI
-Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-cc751eddf25so3394408a12.3
-        for <git@vger.kernel.org>; Tue, 24 Nov 2026 17:44:55 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=korea.ac.kr header.i=@korea.ac.kr header.a=rsa-sha256 header.s=google header.b=m8mPyBsu
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6b8977f2785so6843777a12.3
+        for <git@vger.kernel.org>; Tue, 24 Nov 2026 17:47:13 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795571232; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Pe0lG0fDZhQWra7pSkL6LKGUUxWLy0sAEJjRKZjT5yt8RxDnSZMzMmuvOxBOMcC8ji
+         vaMrpEy0p9QTTrmm5ItXPHWwfA2k8j3R4wZKCQyUhNsQegIS25q4YHS8XqISm8HK96h0
+         DGVGqWXnI98W3ZfXR6key36wYBva4qVCWfCECvz/ZzZ7Mn5xvnWRj4hFpHhYsnK4Nm87
+         BUX9xE7nRHkn+VgKLmrOm3LpUg7o8p8HULtrr2e7R2xrsAMYfksM45xVEZpmY8bO4ESb
+         k+W0+lvVavz/j5Mi8mHn0BfOU4KL/j6Y69CpxpnxTR09UWdUCIJJgpT5tLh4P5mPqZ2Q
+         TJJw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=O/DtyQ8qPRlggL0XcvFMqw/UbqZJ9DY9Ouh4yjHzwtY=;
+        fh=Wzr8+y1UwvDYZ0oVU6Huitc9Achc+D9BGCxy+/EJL68=;
+        b=mk7PpVcwguHTD2/ypNOimZDAJvurC/YIeeyjuM9eqtoh02m3qoSTzVZ1jngbUMU6HS
+         HMOhDiA9YVsdOUgFAMfMeDzg1R4JXSMvXrU0d+1gJYJLH7GzqpZ35H0eojduoN5NBtdm
+         gJuUhObxr22s3pSuLOnNOrXLg5RJgqSYR0R15OOI+gPb+S48xt7Wc5rfF44MNBiXgnTC
+         Jafwcxn/C2//edEzQ4GGFx0oRqtK76V4pqKILgmf1zaptzbqFaPMdBfu+E/rgo1vgYDA
+         EyRAXUWDcgreROYa2JzM6ZRhY1DMOgyz8/TFnLKZRKVz7STnYlDGNcYNl8nah1SgVAOx
+         xLZA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795571094; x=1796175894; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=BQT9EAhzlGcbyRyp/6ZK4rYLbcN5ng2SS8unOq3VXaM=;
-        b=KUaBkDzIdD/uQaMDaslouEOhVrYrXUQZlShvS9/R9qgA3T84Wbs08W/sxU/RoTRBr1
-         UCqITJjaAS/jXmVt1zXZZx0wCZ3J+2ZIhO119nfzJ3mB7wiFJbYoL/Pau6IgFksgQvOm
-         W0gDAO+Juvyn1LIaq9uWQCpMjGd7rKqwQg8upIXQ8UayyLlepPLJFOVCyt8nWQ8pmO4k
-         poIx0+7O1YiY61fV5xRJpYjd/Io+oYjxxodaeDl1dOHibbCARflo+0WzISg9LexMJKIN
-         w/934Tss9XxorxA5GUwh60pG5O3KECpDbWS1lfpX+tQGSfLG7yQZFSl+xNqHgASEQWnD
-         7low==
+        d=korea.ac.kr; s=google; t=1795571232; x=1796176032; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=O/DtyQ8qPRlggL0XcvFMqw/UbqZJ9DY9Ouh4yjHzwtY=;
+        b=m8mPyBsu6CAF5YGqKw59O4iRceRyJOR36fMRTPKGlNnrc36PlMWvcRiSzkyhNS3gpd
+         MP+DbiCgtMrOdslNDSO5aQE8OSdCa9mQLj/yhtVzbd/pobHDSJ1DYvMF4nY1zma3Yojv
+         l0Qt2eic9hDyDE3pITJlz+l57qCyNARZVHcYDV2/62PE6RR2EQ7cRtGFEOdzvQkAcUqF
+         6HtbDisvn6UTmYgoOF6WruBZPrxrgDdYGw5ng9JLGssjrbhIP8zSv+j758wLBRUqh4Um
+         E+I5p2U/Q7jy2numnwTzbXEYPg1ypfx3acWG3BscAFFmHyHuOtV82qsYJCRFGK+Fev3M
+         WKwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795571094; x=1796175894;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+        d=1e100.net; s=20260707; t=1795571232; x=1796176032;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=BQT9EAhzlGcbyRyp/6ZK4rYLbcN5ng2SS8unOq3VXaM=;
-        b=1kG/6pSKLJ+tTP45pX+mzEoxmOnyALekiY0o3NQIR5npNDZiNJSqFjYREuOdj4Mh24
-         7wCQB3xedcrYaAoJ95moF/3QTtwuJPqEwBHT5DUojGFtwZmNJkUSuN67qQa1tzKa2N5G
-         AZM9j4ON4Yq3r2qOIOGL5uMCDAe49zB+18Q7GVFrbt7DmHkI3C04mx2SU2qyaoPPytgG
-         PepvK/Da2txMeMeiSDsvHr1Ns29lE46v2Oq3bZJVoCdN63T4kztYxJ1F3UAZJtJjRLzA
-         f3wmAmllV7qz0hFdZkbaK2xHfJFnCJWK9FR7pW5blT63JVwGHUESxtSUYJDqUBKYZf1G
-         gMpQ==
-X-Gm-Message-State: APuU4Z96rhdFYH7qRi50IeIeX49wk+gOOSLGjtwSSx+te2LoHT3ESaw9
-	TSGPLBefnFTtjyvYZQ1F4qPM64LThaRYt3dY5MQSs/HBxq+QZ3CMmuB27miV/A==
-X-Gm-Gg: AZFdTZegnh1G1v0iTfltvfVLG9kK1bjj9lddgmwMJooKn4ljwOLVCdT3500KjW6hmhO
-	o0KAA6rCAk5Bh81YdS7G/Mqm9xxmpBJrIyILNZjVAFfJ7UMoFw3V+PsbLSXCGuVEN2Xb/Zml+Mj
-	K5Z4iqq0sJ3PKU5kFfuUf6KxR1v52jIs9cWmZl6pQ4ADdREOlmTSc7v3tGnXLElQt4Pz74s/yTX
-	uvBlYOWf4KF8X1yY4Qmqdf6HPJvN5rVNNv1jU2nPaI3nOt1rtx5KAvgPV8arjIIbWX3R2QhLrw7
-	a/VGUd6WMFFnAqlv2GeV+WyYOrE5bokYOzdDSgFjg/kUmjWnkXHBe7SGv8j+6MHIO26KZVQQ7ff
-	BWOJImz9rDAMlC5TCkl8LdQctwWwszFhbJIYVf0kWdAzu4bnF8RNy6OLlSBKasTxYfktTO/XZx1
-	SPYgJGzNsZjHu86moFNO4gx7Ag/7Q3A4SqzahCkR8w7VmremDngU7bYOlB/TeTBR0HcFuQj6WAq
-	2Vtzis446YhpuZ6L/V7lPZV79Uxdttl4uHGavnzfSOW+oEGdm7p7RMzcQGh1rbeqM1hVeH6tldD
-	ra/+BYH/uB8j+EDmZRT/FF1xAXp3h9bkHWZxyh0K1ByNvzOsNpOi
-X-Received: by 2002:a05:6300:8095:b0:3de:8ee8:8323 with SMTP id adf61e73a8af0-4014c946a9emr14766793637.29.1795571094474;
-        Tue, 24 Nov 2026 17:44:54 -0800 (PST)
-Received: from [127.0.0.1] ([4.242.29.42])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8c87344058bsm7891308b3a.41.2026.11.24.17.44.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2026 17:44:54 -0800 (PST)
-Message-Id: <0f1f0356b46e59cb588b046540034e09dfa7fe7d.1795571091.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2314.v2.git.1795571091.gitgitgadget@gmail.com>
-References: <pull.2314.git.1794607911.gitgitgadget@gmail.com>
-	<pull.2314.v2.git.1795571091.gitgitgadget@gmail.com>
-From: "Adithya Chakilam via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 25 Nov 2026 01:44:51 +0000
-Subject: [PATCH v2 2/2] repack: also copy loose objects excluded by
- --filter-to-loose
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=O/DtyQ8qPRlggL0XcvFMqw/UbqZJ9DY9Ouh4yjHzwtY=;
+        b=heUC2na5AgvMyFlTXDB8qFLhluvDXdumhxFR+u1uceQ/8d3DvWHMLtQE8mdQj5p40b
+         y8j6/JVhGIcF2vT32AFm+isHT8RKKKQpw2dPMjC1xwQ6PNph7DpmsJBJIRAtYHqcv91J
+         ewtczuR+J73YtDuq+/nD+GxScCGX3781Xb03+v1nAp8BKf2oHAWI8y8bT9tarWjdWuWp
+         sMz4RjASfkBQD4pwGeDvd+60wRzIKXZ+hBWhnLngCNAzNV4oM8lJPT3lrJbyVUHrp25b
+         kzK5WSmpKhud/kVVjiEiXATOcdSC0h2NWRgBsLJYI/FN5uW4AiMcrU6a3DnI6uSDJc7r
+         AafA==
+X-Forwarded-Encrypted: i=1; AL+hErEgZf+ZQ4VlCciwOJV00YBNgAWDBOZIxXKLmd4R2G050aomm1WAFzyyj+yfrh39okDv04M=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/IrojPqcMBeJITNmr2xlJrUt3sAH4ywUTzGeZGc+rpvJIBg8/u
+	nitkm2haOCNxMhu+o+BDTh0ZITvbZhcqHZ0JMSIwCAsvJ1GiCtRunfB/ZiO/Re1zIF7jBslyeAE
+	6IUNPZYVu1VV7pIWiTJCCwE5Cuvh1ZF/YtJXXihiLTw==
+X-Gm-Gg: AZFdTZeCmdp4b0xPjhVjCNlBw+MEfi7EZf6ArRLYzqzNmtptAj01vKNz5GAu1jRsRUr
+	XgaKX9O9TdeGgiolDFA3ruKUaga2nBkCQpuqhSiUmvTiKmc+rsKQQTttUPuf/gbT8iKy0CDUo3O
+	RecIeYsZnLR64qQaL2uNG1Ib08k9VImeUO1dY1O6WMR2RyU+y7QYPH0aKaEpfoogl0/Oz1t/z33
+	1+vsWkiFuMP7wKG85QrSjteuCyX1vyGq/eriPg01tpsUa/ME3E4V8MXnQncGWr71cXDOH4J8R5x
+	ME/YjVf/G4K6CfuBr4AwfAfcQVz00BoIc5blGGYZxgbiEhjnipYgehE8ZyjaR2bPLioEfRk/CW7
+	jT87D6uv7puF6Du/RNZRuF3l0QSkJk468CX7JnEChyVAR/wekGiLOjxCotNb0lpTuEYgOqVk=
+X-Received: by 2002:a05:6402:1d4f:b0:6b8:80e3:d58a with SMTP id
+ 4fb4d7f45d1cf-6ba37d47763mr12051266a12.23.1795571232474; Tue, 24 Nov 2026
+ 17:47:12 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -98,313 +104,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Martin Fick <mfick@nvidia.com>,
-    Christian Couder <christian.couder@gmail.com>,
-    Adithya Chakilam <achakilam@nvidia.com>,
-    Adithya Chakilam <achakilam@nvidia.com>
+References: <pull.2323.git.1795246845186.gitgitgadget@gmail.com>
+ <pull.2323.v2.git.1795497145494.gitgitgadget@gmail.com> <xmqq33sqt7xw.fsf@gitster.g>
+In-Reply-To: <xmqq33sqt7xw.fsf@gitster.g>
+From: Wonseok Oh <wonseok_oh@korea.ac.kr>
+Date: Wed, 25 Nov 2026 10:46:59 +0900
+X-Gm-Features: Aa3M54pY1t67Pf6d67vPEJ4iTm0ata_wxjEVrfx1DI4yFkUy2ilyWdA-2OwrGDM
+Message-ID: <CAD2pp5v4dkHbwxZ9UH0jPeG+3hMaYCQ__QpN9wSUC1L1tZDL=g@mail.gmail.com>
+Subject: Re: [PATCH v2] fast-import: die on EOF after an inline M command
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Wonseok Oh via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Adithya Chakilam <achakilam@nvidia.com>
+Hello Junio,
 
---filter-to-loose only writes objects that were in an existing pack,
-because the filtered pack is built with --stdin-packs. Loose objects
-that the filter excludes stay behind in the source repository, so the
-destination does not get the complete set of filtered-out objects.
+> This describes the problem accurately, but wouldn't the series at
+> https://lore.kernel.org/git/20261122140347.41990-1-gitster@pobox.com/
+> solve this infinite loop, together with a few others?
 
-Copy such loose objects to the destination as well. An object already
-present in the destination is not rewritten. With -d, the source copies
-are removed once everything is written.
+With your series, v1 patch no longer gets stuck
+in an infinite loop on the unterminated "cat-blob" input.
 
-Signed-off-by: Adithya Chakilam <achakilam@nvidia.com>
----
- Documentation/git-repack.adoc |   4 ++
- builtin/repack.c              |  11 ++++
- repack-filtered.c             | 108 ++++++++++++++++++++++++++++++++++
- repack.h                      |  13 ++++
- t/t7700-repack.sh             |  59 +++++++++++++++++++
- 5 files changed, 195 insertions(+)
+If you prefer v1 on top of your series,
+I'll go back to it.
 
-diff --git a/Documentation/git-repack.adoc b/Documentation/git-repack.adoc
-index bcd7c1fe54..1cba380177 100644
---- a/Documentation/git-repack.adoc
-+++ b/Documentation/git-repack.adoc
-@@ -192,6 +192,10 @@ depth is 4095.
- 	not rewritten. All objects are written before any existing
- 	pack is removed.
- 
-+	Loose objects in this repository that the filter excludes are
-+	copied to `<directory>` as well, and with `-d` the source copies are
-+	removed once everything has been written.
-+
- --drop-filtered::
- 	Delete the local objects that match the `--filter` specification
- 	instead of keeping them in a separate packfile, reclaiming the
-diff --git a/builtin/repack.c b/builtin/repack.c
-index dc2b4a3ce2..46a50d7c7d 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -184,6 +184,7 @@ int cmd_repack(int argc,
- 	const char *expire_to = NULL;
- 	const char *filter_to = NULL;
- 	const char *filter_to_loose = NULL;
-+	struct oidset moved_loose = OIDSET_INIT;
- 	const char *opt_window = NULL;
- 	const char *opt_window_memory = NULL;
- 	const char *opt_depth = NULL;
-@@ -725,6 +726,14 @@ int cmd_repack(int argc,
- 		ret = write_filtered_pack(&opts, &existing, &names);
- 		if (ret)
- 			goto cleanup;
-+
-+		if (filter_to_loose) {
-+			ret = move_loose_filtered_objects(repo,
-+					&po_args.filter_options, filter_to,
-+					&moved_loose);
-+			if (ret)
-+				goto cleanup;
-+		}
- 	}
- 
- 	string_list_sort(&names);
-@@ -781,6 +790,7 @@ int cmd_repack(int argc,
- 		if (show_progress)
- 			opts |= PRUNE_PACKED_VERBOSE;
- 		prune_packed_objects(repo, opts);
-+		remove_moved_loose_objects(repo, &moved_loose);
- 
- 		if (!keep_unreachable &&
- 		    (!(pack_everything & LOOSEN_UNREACHABLE) ||
-@@ -805,6 +815,7 @@ cleanup:
- 	string_list_clear(&keep_pack_list, 0);
- 	string_list_clear(&names, 1);
- 	oidset_clear(&drop_oids);
-+	oidset_clear(&moved_loose);
- 	existing_packs_release(&existing);
- 	pack_geometry_release(&geometry);
- 	pack_objects_args_release(&po_args);
-diff --git a/repack-filtered.c b/repack-filtered.c
-index b33274b5b8..180c28a758 100644
---- a/repack-filtered.c
-+++ b/repack-filtered.c
-@@ -9,6 +9,11 @@
- #include "list-objects-filter.h"
- #include "odb.h"
- #include "promisor-remote.h"
-+#include "copy.h"
-+#include "object-file.h"
-+#include "odb/source-files.h"
-+#include "oidset.h"
-+#include "path.h"
- #include "sigchain.h"
- 
- static void start_unpack_objects(struct child_process *unpack,
-@@ -171,3 +176,106 @@ cleanup:
- 	oidset_clear(&all_promisor_blobs);
- 	return ret;
- }
-+
-+static int collect_loose_oid(const struct object_id *oid,
-+			     const char *path UNUSED, void *cb_data)
-+{
-+	oidset_insert(cb_data, oid);
-+	return 0;
-+}
-+
-+static void dest_loose_path(struct strbuf *buf, const char *objdir,
-+			    const struct object_id *oid)
-+{
-+	const char *hex = oid_to_hex(oid);
-+
-+	strbuf_reset(buf);
-+	strbuf_addf(buf, "%s/%.2s/%s", objdir, hex, hex + 2);
-+}
-+
-+int move_loose_filtered_objects(struct repository *repo,
-+				const struct list_objects_filter_options *filter,
-+				const char *dest_objdir,
-+				struct oidset *moved)
-+{
-+	struct odb_source_files *files =
-+		odb_source_files_downcast(repo->objects->source);
-+	struct oidset loose = OIDSET_INIT;
-+	struct oidset omitted = OIDSET_INIT;
-+	struct oidset_iter iter;
-+	const struct object_id *oid;
-+	struct strbuf src = STRBUF_INIT;
-+	struct strbuf dst = STRBUF_INIT;
-+	struct strbuf tmp = STRBUF_INIT;
-+	int ret = 0;
-+
-+	if (filter->choice != LOFC_BLOB_LIMIT)
-+		return 0;
-+
-+	ret = for_each_loose_file_in_source(&files->dirs->loose->base,
-+					    collect_loose_oid, NULL, NULL,
-+					    &loose);
-+	if (ret)
-+		goto out;
-+	ret = list_objects_filter__filter_oidset(repo, filter, &loose,
-+						 &omitted);
-+	if (ret)
-+		goto out;
-+
-+	oidset_iter_init(&omitted, &iter);
-+	while ((oid = oidset_iter_next(&iter))) {
-+		odb_loose_path(files->dirs->loose, &src, oid);
-+		dest_loose_path(&dst, dest_objdir, oid);
-+
-+		/*
-+		 * Only the destination decides whether the copy is needed;
-+		 * the object being present in the source says nothing.
-+		 */
-+		if (!access(dst.buf, F_OK)) {
-+			oidset_insert(moved, oid);
-+			continue;
-+		}
-+
-+		if (safe_create_leading_directories(repo, dst.buf) < 0) {
-+			ret = error_errno(_("unable to create leading directories of '%s'"),
-+					  dst.buf);
-+			goto out;
-+		}
-+		strbuf_reset(&tmp);
-+		strbuf_addf(&tmp, "%s.tmp-%"PRIuMAX, dst.buf,
-+			    (uintmax_t)getpid());
-+		if (copy_file(repo, tmp.buf, src.buf, 0444) ||
-+		    finalize_object_file(repo, tmp.buf, dst.buf)) {
-+			unlink(tmp.buf);
-+			ret = error(_("unable to copy loose object '%s' to '%s'"),
-+				    src.buf, dst.buf);
-+			goto out;
-+		}
-+		oidset_insert(moved, oid);
-+	}
-+
-+out:
-+	oidset_clear(&loose);
-+	oidset_clear(&omitted);
-+	strbuf_release(&src);
-+	strbuf_release(&dst);
-+	strbuf_release(&tmp);
-+	return ret;
-+}
-+
-+void remove_moved_loose_objects(struct repository *repo,
-+				const struct oidset *moved)
-+{
-+	struct odb_source_files *files =
-+		odb_source_files_downcast(repo->objects->source);
-+	struct strbuf path = STRBUF_INIT;
-+	struct oidset_iter iter;
-+	const struct object_id *oid;
-+
-+	oidset_iter_init(moved, &iter);
-+	while ((oid = oidset_iter_next(&iter))) {
-+		odb_loose_path(files->dirs->loose, &path, oid);
-+		unlink(path.buf);
-+	}
-+	strbuf_release(&path);
-+}
-diff --git a/repack.h b/repack.h
-index d5528745ec..18a0dc6314 100644
---- a/repack.h
-+++ b/repack.h
-@@ -168,6 +168,19 @@ int write_filtered_pack(const struct write_pack_opts *opts,
- 			struct existing_packs *existing,
- 			struct string_list *names);
- 
-+/*
-+ * Copy loose objects that the filter excludes into the loose-object store
-+ * at `dest_objdir`, recording them in `moved`.
-+ */
-+int move_loose_filtered_objects(struct repository *repo,
-+				const struct list_objects_filter_options *filter,
-+				const char *dest_objdir,
-+				struct oidset *moved);
-+
-+/* Delete the source copies of objects copied by move_loose_filtered_objects. */
-+void remove_moved_loose_objects(struct repository *repo,
-+				const struct oidset *moved);
-+
- int enumerate_promisor_blobs(struct repository *repo,
- 			     const struct list_objects_filter_options *filter,
- 			     struct oidset *to_drop);
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index 1b74d40551..d48ab73293 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -547,6 +547,44 @@ setup_loose_src () {
- 	fi
- }
- 
-+test_expect_success '--filter-to-loose copies loose filtered out blobs, and -d removes the source copy' '
-+	setup_loose_src loose &&
-+	test_path_is_file loose-src.git/objects/$(test_oid_to_path $big) &&
-+
-+	# without -d the source copy is left alone
-+	git -C loose-src.git -c repack.writebitmaps=false repack -a \
-+		--filter=blob:limit=1k --filter-to-loose=../loose-dst.git/objects &&
-+	test_path_is_file loose-dst.git/objects/$(test_oid_to_path $big) &&
-+	test_path_is_file loose-src.git/objects/$(test_oid_to_path $big) &&
-+
-+	# with -d it is removed from the source after being copied
-+	rm -rf loose-dst.git/objects/$(dirname $(test_oid_to_path $big)) &&
-+	git -C loose-src.git -c repack.writebitmaps=false repack -a -d \
-+		--filter=blob:limit=1k --filter-to-loose=../loose-dst.git/objects &&
-+	test_path_is_file loose-dst.git/objects/$(test_oid_to_path $big) &&
-+	test_path_is_missing loose-src.git/objects/$(test_oid_to_path $big) &&
-+	echo $(pwd)/loose-dst.git/objects >loose-src.git/objects/info/alternates &&
-+	git -C loose-src.git cat-file -e $big
-+'
-+
-+test_expect_success '--filter-to-loose leaves an identical existing destination object alone' '
-+	setup_loose_src &&
-+
-+	test-tool genrandom big 2k |
-+	GIT_OBJECT_DIRECTORY=loose-dst.git/objects git hash-object -w --stdin &&
-+
-+	path=loose-dst.git/objects/$(test_oid_to_path $big) &&
-+	test_path_is_file $path &&
-+
-+	ls -i $path >before &&
-+	git -C loose-src.git -c repack.writebitmaps=false repack -a -d \
-+		--filter=blob:limit=1k --filter-to-loose=../loose-dst.git/objects &&
-+
-+	ls -i $path >after &&
-+	test_cmp before after &&
-+	git -C loose-dst.git fsck
-+'
-+
- test_expect_success '--filter-to-loose requires an existing directory' '
- 	setup_loose_src &&
- 
-@@ -605,6 +643,27 @@ test_expect_success '--filter-to-loose resolves a relative path from a subdirect
- 	test_path_is_file extra-loose-objects/$(test_oid_to_path $big)
- '
- 
-+test_expect_success '--filter-to-loose failure to copy a loose object leaves the source intact' '
-+	setup_loose_src loose &&
-+	path=$(test_oid_to_path $big) &&
-+	>loose-dst.git/objects/$(dirname $path) &&
-+
-+	find loose-src.git/objects/pack -name "*.pack" | sort >packs-before &&
-+	test_must_fail git -C loose-src.git -c repack.writebitmaps=false \
-+		repack -a -d --filter=blob:limit=1k \
-+		--filter-to-loose=../loose-dst.git/objects 2>err &&
-+
-+	test_grep "unable to create leading directories" err &&
-+	find loose-src.git/objects/pack -name "*.pack" | sort >packs-after &&
-+	test_cmp packs-before packs-after &&
-+
-+	find loose-src.git/objects/pack -name ".tmp-*" >tmp-leftovers &&
-+	test_must_be_empty tmp-leftovers &&
-+
-+	test_path_is_file loose-src.git/objects/$path &&
-+	git -C loose-src.git cat-file -e $big
-+'
-+
- test_expect_success '--filter-to-loose does not move objects from kept packs' '
- 	setup_loose_src &&
- 
--- 
-gitgitgadget
+Thanks.
+
+2026=EB=85=84 11=EC=9B=94 25=EC=9D=BC (=EC=88=98) =EC=98=A4=EC=A0=84 3:12, =
+Junio C Hamano <gitster@pobox.com>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=B1:
+>
+> "Wonseok Oh via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: Wonseok Oh <marinelay7@gmail.com>
+> >
+> > After "M <mode> inline <path>", fast-import expects a "data" command.
+> > If the input ends there, file_change_m() leaves its read loop without
+> > reading any data and writes an uninitialized object ID into the tree.
+> > fast-import then exits 0, and "git fsck" reports a missing blob.
+>
+> This describes the problem accurately, but wouldn't the series at
+> https://lore.kernel.org/git/20261122140347.41990-1-gitster@pobox.com/
+> solve this infinite loop, together with a few others?
+>
+> Thanks.
