@@ -1,123 +1,102 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.155
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795629461;
-	b=gMGnPUN9gM1rRsrYVcYMRr2D1YjRrkhgQDsbPg+O1RPOJ5nFnKcSuROwRbYnxshj3uEB
-	 2GcTygkmnRpGwhP/RDLiK1SMYxzX7ae40hoirSSoNvJ832wAy+MiZUPBFEHOeo+g7LdNu
-	 a9ZR2lttpC0r5VflhcG5KpnT0vBg7QU935wJOBvOsPt/hXxR51yIP5LWVFYHMihHimLVO
-	 yoXNdNKQZELfaZfB22n50OLyGIdwpus6+ZnGRHY7A9ByJtFm66Pmq/ezyK8xEyeb3soYI
-	 E8IuNeFcEAgiOIlvyQS2hTj0KSAvFbSIKUFyqrqWhFEpwVKsaUklp30bnjPh/ehZn6g==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795629461;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=eIM22DkMZd/3+Xc+Cfaod6yN1hI11eBwd6XjVIAQpYA=;
-	b=0j7Wzh00EQ/7Ja5a7wwd5mkyp4lioUyWtG1u71piVDvd0HMffpgiMVaOvdLkjpOT82da
-	 YVcoarF3j4NhkfvmtEqTh2OnMBRkc92Qw7KW4/Ga/hAp9ON88Xgn4Tfw1i/zD6ETql1Gm
-	 UrUIwzNH2beTjNmBm2mZW5PqBrilGpO8GWVaZhDA+9pWcFsGGPgvyN/qffwGzYquFSXus
-	 uDvUhtDPgDKnL6YcjgfECiCACKOugId+6mz3XVgVBxw2u9ypG0zp3Q15smTFSskCdtIkp
-	 QZC5mbvJCCTMFDNRBpXytn1ce1yM/YaDriI8UOlJO67dxF46uKbcF0t8WUJuz9Q4H7A==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b="ONF/+NPo";
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=A7Z7BjVQ;
-	arc=none smtp.remote-ip=103.168.172.155
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.51
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795630407;
+	b=nijsVRq0f+p2+czW2A+e4cKEFHITd1ioAnqa12NOG6MhApg3Lp3lZcvyKi3lQZ+XzVQc
+	 rNC1C26vkeYdfWqARrR43vkjum09dUbN3g9kpTaOxa9nwy+4/pwmc5vzVpq31T/rMpk1z
+	 1C70aH4gWsNcqd8sF6yrpHSUwn5zO5H7MPkHDuWdRClpUueEoTbs+Oz9JgY+o6fHjZlCg
+	 xOeMytZxf6i1GvBMue12JnnqGJWfY8e5h0e9ekQuCPf1tnNBOIEgq6DtVXBbs8jsWv7Hp
+	 nzUw6Y9USpVvI+D5mTW3SGT4nUh0IFeBzQhNoDHMl52v5s6s9i9X/i134uGVVXglqpA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795630407;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=dxTcSuSrCjdvwL/7iEPonQHSAhLbYNvbU0ABS18l6ao=;
+	b=MTJXW4c0jbWMPtBfcXIMoVLyxWFp/hcZNxvahR1XRgI2qnZ3yVRFzuUZLufdTuggXJhS
+	 VcaMwVgdpNPbDTn+0M5KL6Ln9X1wAY50M0dHXxa/DQ7W0DtMWCsdRVTB2W7D1Jfnf1X3w
+	 ZxxG+sYSmtzAms1XfAlGhEEuTtqKhwtECKAdtoiInM0vJpout2Zeaw/COdhXIxoTj+h/3
+	 JLfH1QRz0eZr05ADBMf54zAD+wvnK+FjtFYn0lZTL7TRN8RZglYwvBn83Dau1c0+fT6dE
+	 yD4RhY9kYPldc+Z8h0MmR9RqWpSGrw50cb0gV1IJhnhGR3OiZ3BmE40IJbTUTYwybzQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pq5jDE5m;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.51
+Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7FEE606A323
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 17:57:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C7FEE606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4248F606A696
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 18:13:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4248F606A696
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ONF/+NPo;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=A7Z7BjVQ
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E2E2A1400346
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 12:57:39 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 25 Nov 2026 12:57:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795629459; x=1795715859; bh=eIM22DkMZd
-	/3+Xc+Cfaod6yN1hI11eBwd6XjVIAQpYA=; b=ONF/+NPo4oaroau5t83RWeYWSb
-	4pUWsj58GgvhG4fSSKezqu8cQTBlti2MmGE3UWcX99JUWm07f8L5G9T2yIWFOyBP
-	DxX2DHnGFidmcqDiE2DW7xtO8hNMDL0qs/yl/nEViKX+RKcKDeRH/jzzenwEp8ww
-	MLGlFg+zuqBTGGQEgk5YJRYfIMrsds6l+QnEsZaClT4VSUMTX8PaHr/PO29oT26w
-	aiP+nr20GiBW6+hc9w73qhyQOKz+LMjlNCOsgtu9yvRL7FK62ZlnPTEc5FVG8cnT
-	V9mxSXDCVVRnq5h5kwTA88odLuthpTT37xqA8NSeHRgW5xzU3nuYvOF+2Jew==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795629459; x=1795715859; bh=eIM22DkMZd/3+Xc+Cfaod6yN1hI11eBwd6X
-	jVIAQpYA=; b=A7Z7BjVQ37lxcDnvE/BndrVojpDLZ7/zjxx8zM1R3usMQswkqd5
-	rDaJWzH0iAvFMzURGopmlh0Zcv7CT9cKuuMZxwqROKlTa5+LGDfpW50siBy9Al1Y
-	0kfjHwHTnUEkrv7vSj5OKB0cXqrD0tik43iGSQSZe3babidvOxBnMy+QtcSTHH7d
-	K8ZPwaeBYuEQxTbNPH5yNV6u/mGDTRdAc6OMyhEcH1g+hf3n+KlqaKJ9OY6zK46C
-	CFjwCvWBpaiMJvbmsvj088TMT+r/UKp6KHq7q3Nuj+pC9EmOtvvHf9+g2lRbhVDn
-	Rsgm6HZWMHb2YqEr6zsrEGvmw4+oJoqgPIg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795629459; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:mbZHsl78IWsPKhem+X9VwrCpX8IzskEUcvl0RBWVdrCpw9U
-	HX57NxtQMGu8KZwrvAnUw7g007LmQnkF3vA7WPqLBFeb00CnkM6/3pDUpKYUjKq0
-	V8FZdxoEUOvsExM356bzFETKQQ93tIJVJdGySkCVXK1FpdqTS++Qu0bWs099bh5k
-	shK54fD/TW0LtyIMp8qBfis7LQPRVJ9uhwvqdQpFYCTmticrViVh4tzkXZSYVkg6
-	dkPQF0R+okoEYwlnqe47YA8QflvpfCdzyUBMOGBBqaV8lvvJMgNziIGNIDHnMjAm
-	ruEu3wMDnAFIMfYMr4ItM9vD2UQDBoCF3haAy6g==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:XWihvUkKx3EdhdW7bnp5qd6ltyn7xwg0vrx4RQGLSZs=:GE8pvnh6IcEDVaeLVmxdtDcZH9OjyV0++3Yz0buoAfY=;
-X-ME-Sender: <xms:kyEHaz35fB4nPnBVpFrZaM7YwOi77wTLRxsBa_83AVZJnWpXumaUAQ>
-    <xme:kyEHaxLox3tlJvECgN2UT8W5S5L6OR2lA3_LgxrbRJhN9xfUC66vSVOg8c42SODS3
-    qwuimT3sqRaECBDngYuw5JKlfCCb4-NqwNO5kTF7Jn9G44ZgC_Tgzo>
-X-ME-Received: <xmr:kyEHa6G5wm4M_2GX8YUIyfhVEEhnP9S6JToYFmpkbJ5Tti_pYS1FZnTnjzeNy_KUFJf4VRfW5gG0bYdjB525gyA9bImtxCqBX1gem_o>
-X-ME-Proxy-Cause: dmFkZTFIjNfeurg4LXioFJarOVkXuxvdJ0/wLRiL6IFILeSU5KpfmX/J1ReSO+yTRf4H53
-    AkEeDvNGLBthefpbrCos/eA4K2B2mGFRyw6CEwpv0yuW0dwKpbQV5ce9Ugg1hbidzJ60R5
-    JxqeU/CezNsQ79moHLfZYEuo/n+Z+8/6h075zX9RRUD070eBUzr4h9L+9k9Ku9cVnDRsjk
-    pYeeyrmwEcgKoqK6LKHwINZgKIJG1xizY/hoDjLU4uQntCzYrRTmQVVPnQinK1fGEbaZ6u
-    FbmQayPKq/fr+B1J9xC8vMTJv8fTj32WMSUemmBP3BP0r0Id6lN1QXs/WHjWATdOE06HCv
-    3H08heeIrSjuYxaBgMktDt2r0zDAa1q+iWYiVVC5CP1YA/KioPXZ1HL3wYwAkAWHRaQvQq
-    mWdh7f2WzxiK8FsUxfdrmc6VUsChsE5FkA4Mqz6m7NJdn34KIU67VFmXqWGnXXg+mvOS+g
-    PTCARkHiQINsVUhmu//AcwRyORTEOFPQNAspji8na4D3JOGQIsCjLl//edREK545mXTHgn
-    uRnZZ/E/9qwybslweQC9f2r95T0+8szuP9YPP6cE79tOKIxDrqxiOLuPlmlGXatiLyWbDf
-    jAzP3NvWZmnpJInjzneLtg5C3umlY7S6CsUjYvluh1TmUGhHTtjH0iZ8tTZQ
-X-ME-Proxy: <xmx:kyEHa1XNBE9PYJJVGtmrV_lt8jwXmHLuWpDX9dbRQ3WPj6WoWzevqw>
-    <xmx:kyEHa6xZIB6A70Nyw0_yTQ2EaLM8s8_spp3Rt-aTVs0PblBa8_5Jzw>
-    <xmx:kyEHayS0npdgAkYfVvwRN2PjF69AUwXqg46jNu1pgoqP8OekCXFbvQ>
-    <xmx:kyEHa-hbXvBcIV-gHpqcx5ZBeJtp2bxN_sXst65OdI5RarYIgSEojg>
-    <xmx:kyEHa3Gr-F86h5CcMzXCOFIdBs53y6c2iqoLUAhyZx7wKXZ1iuMCmGpj>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Nov 2026 12:57:39 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julian Maurin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  Patrick Steinhardt <ps@pks.im>,  Julian
- Maurin <julian.maurin.dev+github@proton.me>,  Julian Maurin
- <julian.maurin.dev@proton.me>
-Subject: Re: [PATCH] remote-curl: honor --no-thin when pushing
-In-Reply-To: <pull.2328.git.1795595886592.gitgitgadget@gmail.com> (Julian
-	Maurin via GitGitGadget's message of "Wed, 25 Nov 2026 08:38:06
-	+0000")
-References: <pull.2328.git.1795595886592.gitgitgadget@gmail.com>
-Date: Wed, 25 Nov 2026 09:57:38 -0800
-Message-ID: <xmqqbj7c6bfx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pq5jDE5m
+Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-67dae7d3f7dso7304830d50.2
+        for <git@vger.kernel.org>; Wed, 25 Nov 2026 10:13:27 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795630406; cv=none;
+        d=google.com; s=arc-20260327;
+        b=JgEpEHiy+ZQImGu6bbtsNr59XBvX6XFWCHDvhfIjjTNeKl5l12e0c/7kP5RKJ3ib0v
+         pRVGwI9aRlaT1qGYji2qZiGOFmIMmyTyC4bub8I5ntbXSNS4Jn2B2Cs+pmF0+IxqV+6Y
+         HGLpt+QpdJycwY3cDN9EyOvybLNN2Gxu7EV3XZwhGrehdlE0GGRmaWFX+DdEqQJs6sd1
+         Lnn3ktuP84qw4NhftFu2zhrorKWMxplnHhFzkqYdv75ImwNuMnry32wjE2ccnrDM1uDb
+         qEKmUA4QjUqTpyCB7sNxzWht/WGoHeG5Oj9uoqwpO4bxz2RrGEQSi1vJi/wvbtUiFILm
+         cDbQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=dxTcSuSrCjdvwL/7iEPonQHSAhLbYNvbU0ABS18l6ao=;
+        fh=KB7XS3PUrwsuadSkaPx6sVcrKkMH9pWiqnReHyvCiU4=;
+        b=pUgEjP25dMzMdNXKfAtF11fBeN8t1jr5Py1U7CZ0YnaSX2SDERgaLNzAvXZuX2B5GY
+         C76DAJJ3r2uxg7tWOt27J9N1OakJXcZ62/QiuFa4o6EVQKACS/M63b2nTMcht159Woss
+         sV291KNGxcoLEK5FHwyGWod2W5UtqOPx0YYwpnp0W2vFPhbXmaTfXYUty5QsO+6kDa9R
+         3PSASpjIMjTz/zvPoxUKaARsuWg2aKAOuGY4QwWGo/wlW1wok8lPkh0KH6L3/Dequ9yf
+         W7a9o7uBZjeYmBIYPEk8DmjjBk/Q7nVvbwai83Lepstb0hyjUZFDizsjsXvRumN0JtI/
+         bUCA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795630406; x=1796235206; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=dxTcSuSrCjdvwL/7iEPonQHSAhLbYNvbU0ABS18l6ao=;
+        b=pq5jDE5m+IG1FVLYivIc0T4LLuYARzd6WwfJhen36WvTgdQTc77kBBh5fyUv3rpJ/H
+         x2LWOnQOLNbsTUexKRSTdmILyY0XkfUTqzspyV27OfwuWP5PXr7a8+uc1zhq7ygnyYy4
+         B1Ycjg86fFvl2aUXB3JzvU+Iv+cYkXJxyNkfndyHi6REg+7+yK5Ck17+yFlJzYuk/U15
+         lfkKbc5s9eKiHRx/locz2zwZt5BJf/2Pf32g9H2WzVNk7bcV5N1BP9bn4NMvLD+mhCJa
+         HWAFTE1rluTunaSlZ+2HYGjNONkbVtLURgq/TPkmD8dmDjaAxItC55hPM5ttWcAxJ27i
+         dqkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795630406; x=1796235206;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=dxTcSuSrCjdvwL/7iEPonQHSAhLbYNvbU0ABS18l6ao=;
+        b=nH+pUf71rjQvwC0isn5bzRiLdk5cvgVAh/xFvXAGZKji3sWjettcD0KZFqg1Wb3HJl
+         zUnKwEddZiRJRbHbrZ/2IBlDTZYF5j9HSL5gll6DAdDyDMmxvSrmxJ4/QReppRHEe+7f
+         mP9ItZ9om667g0XSa1N+5TDu3UaeFxjlVdjKQKr0SX4EOgVLBXmq5yVj+jUoR1D8/jGb
+         +HVeoZEtln43DYmyNMiH4RxwR3fv7znwoNsaptr5Ig3C9y9R28+H2PUDzG3T4Q4KDNo3
+         XfYFMhViAV6jsw+P6iWB2fpiH+WLCdALKWuPpNlqlMowtJkBqK5oxvoFHO3AXtou5Fh7
+         0oGQ==
+X-Forwarded-Encrypted: i=1; AL+hErH5fyeysjT15VP8NH8rcl7+v7erMTX87h+D/EyCFIZWxUCXgjdTlknrZavQDBMIXO/BJeQ=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/nwuZybsfQdiALQKg8xeg+xf7AyGi2LG3vB9/dx10MxJasb4Es
+	fIAC5yocBRXvc/iTiPuQZzxd5K+5jIkBYFhkiGGg26DdlYomF3uhVJkAxcMAoL0eJMi2sxDFice
+	qzEhoqulmXuotI1RWkEV/nJtqx31sSVHRwyJGepA=
+X-Gm-Gg: AZFdTZcR//2kU+Bw+AO3DGIntkVTmthc2/gA9iSrMk3YHSmICq3+gInjA3qUOhnGXCu
+	Or295V7IModYoI0HpLdC5V3BsqCSDP7kFC97qqhX9gT7XPDXRJhJ96mj7ZZLKXtKj8EBK93BQ6S
+	XVNRvKJ7S7H5+daKV8gBDSDg+yZOnQ3F7vYcuR45piXgGTmxQWQCiFrDmTF6NkZFw/WWZyYju1D
+	vXW7md2m7FnjEshCK/tuLhvKzI3tlwBk/BjdD/keE0eI9DEcySnlQtja1+WrBqj7bjngK1IMhP+
+	D4CFwZvPN2KAWrWF9a+VN3rOX+Yukq+hqO7vWL5FY8lpzwqV10HLl7WcEcugzXdWxes4vF6MewI
+	e2DYGYY3AyHWH/8EfEtj/mfY4eVPj0/YOjXTzVBlLLwUnBtvh+P9v7IjqdWHkEmqM+DqImNySfh
+	XqkUjzORbOLG8rLd/1ObvaeoJYqeq8kmil0z7UlzCz0J/94hEGMNxYQrp2u9WlIQbtqDDTDjSCb
+	TxFwtAof24ifQg5xGOrIj93lYRzh2m+QMZwWA==
+X-Received: by 2002:a05:690e:484a:b0:67d:b3b0:e03f with SMTP id
+ 956f58d0204a3-67df43f3e19mr4117921d50.48.1795630406118; Wed, 25 Nov 2026
+ 10:13:26 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -127,122 +106,90 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20261105203344.48513-1-okhuomonajayi54@gmail.com>
+ <20261124172146.18330-1-okhuomonajayi54@gmail.com> <20261124172146.18330-3-okhuomonajayi54@gmail.com>
+ <xmqqtsl5g28h.fsf@gitster.g> <CAFpMFfDnfJRt1HGx60esEeC-spfBbr4KKzp9ocLFceAMESx1yg@mail.gmail.com>
+ <CAP8UFD3Pf-0T13OAPO312tm6DdYdmF_-NR6zRyk9-T1h9Qoi=Q@mail.gmail.com>
+In-Reply-To: <CAP8UFD3Pf-0T13OAPO312tm6DdYdmF_-NR6zRyk9-T1h9Qoi=Q@mail.gmail.com>
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Date: Wed, 25 Nov 2026 19:13:14 +0100
+X-Gm-Features: Aa3M54rdQ300diQ645b3SY-6X47dhH5daNPxe_z_aiEzXDKK6OXNxZ751Ne9Ijs
+Message-ID: <CAFpMFfAGzqWS-N4YBtCy6ar2aJm0TzyQtZEvVUozuC8qghBQSA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/5] notes: use the tree's repository when reading notes
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, ps@pks.im, 
+	usmanakinyemi202@gmail.com, siddharthasthana31@gmail.com, 
+	kaartic.sivaraam@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Julian Maurin via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Wed, Nov 25, 2026 at 8:25 AM Christian Couder
+<christian.couder@gmail.com> wrote:
+> It looks like load_subtree() can be reached in other ways, as subtrees
+> are unpacked on demand, like for example:
+> get_note() -> note_tree_find() -> note_tree_search() -> load_subtree()
 
-> From: Julian Maurin <julian.maurin.dev@proton.me>
+Ah, right. I was only looking at the init path and missed that
+note_tree_search() unpacks subtrees lazily, so load_subtree() (and
+add_non_note() under it) gets reached during ordinary lookups too, not
+just from init_notes().
+
+So the cleaner way to put it is yours, the safety comes from the entry
+points, not the individual helpers. The public ones (add_note(),
+remove_note(), get_note()) swap a NULL 't' for &default_notes_tree and
+assert t->initialized before anything downstream runs, and the internal
+format_note() does the same NULL swap and initializes the tree if it
+isn't already. Either way 't' is valid by the time we reach
+note_tree_find()/load_subtree(). copy_note() is the only one that reads
+t->repo without that guard, which is what 3/5 fixes. I'll fold that into
+the 2/5 commit message.
+
+Okhuomon
+
+On Wed, Nov 25, 2026 at 9:25=E2=80=AFAM Christian Couder
+<christian.couder@gmail.com> wrote:
 >
-> "git push --no-thin" to a smart HTTP remote still sends a thin pack.
-> transport-helper.c does not forward the "thin" option to remote
-> helpers, and remote-curl always runs send-pack with --thin.
+> On Wed, Nov 25, 2026 at 7:45=E2=80=AFAM Okhuomon Ajayi
+> <okhuomonajayi54@gmail.com> wrote:
+> >
+> > On Mon, Nov 24, 2026 at 1:34 AM Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> > > But others? note_tree_find() calls note_tree_search() which by itself
+> > > does not touch 't' at all [...] The conversion in this step would cau=
+se
+> > > them to dereference t->repo without checking if t is not NULL or
+> > > t->initialized [...]
+> >
+> > note_tree_find() has a single caller, get_note(). It replaces a NULL 't=
+'
+> > with &default_notes_tree and asserts t->initialized before passing
+> > t->root down, so 't' is already non-NULL and initialized by the time we
+> > read t->repo. note_tree_search() not touching 't' doesn't matter here,
+> > since get_note() has already dereferenced it.
+> >
+> > The other functions this patch converts are safe too, for slightly
+> > different reasons: remove_note() and format_note() guard a NULL 't'
+> > themselves, and add_non_note() and load_subtree() are only reached from
+> > init_notes() (and load_subtree()'s own recursion), where 't' is the tre=
+e
+> > being initialized and so is never NULL. So I believe this step is safe
+> > as it stands.
 >
-> "thin" was left out of the forwarded options of ef08ef9ea0
-> (remote-helpers: Support custom transport options, 2009-10-30) after
-> review noted that --no-thin did nothing on any transport at the time.
-> f7c815c3ee (push: respect --no-thin, 2013-08-12) made it work again,
-> but only for the native transports.
+> It looks like load_subtree() can be reached in other ways, as subtrees
+> are unpacked on demand, like for example:
 >
-> Forward "thin" to helpers and teach remote-curl to honor it. A helper
-> that does not know the option answers "unsupported", which push
-> ignores, so it keeps working as before.
+> get_note() -> note_tree_find() -> note_tree_search() -> load_subtree()
 >
-> Signed-off-by: Julian Maurin <julian.maurin.dev@proton.me>
-> ---
-
-Sounds like a clean fix.
-
->    I ran into this in production, pushing from a shallow, treeless partial
->    clone (--filter=tree:0) to an HTTPS remote. In a shallow repository a
->    thin push reads the tree of every advertised tip it has locally, and
->    each missing tree is lazily fetched from the promisor remote, one fetch
->    per tree. --no-thin avoids that work, but has no effect over HTTP.
-
-Some of the supporting materials under the three-dash line, like the use
-case that benefits from avoiding lazy tree fetches from a shallow,
-treeless partial clone, make the motivation very clear, and may want to
-be included in the commit log message, perhaps in a bit more condensed
-form?  Here is my attempt.
-
-    If one pushes from a shallow, treeless partial clone
-    (--filter=tree:0) to an HTTPS remote, a thin push lazily fetches
-    every advertised tip's missing tree from the promisor one by one,
-    and --no-thin has no effect over HTTP to avoid it.
-
-> diff --git a/Documentation/gitremote-helpers.adoc b/Documentation/gitremote-helpers.adoc
-> index 39cdece16e..8203ef497c 100644
-> --- a/Documentation/gitremote-helpers.adoc
-> +++ b/Documentation/gitremote-helpers.adoc
-> @@ -542,6 +542,10 @@ set by Git if the remote helper has the 'option' capability.
->  	transaction.  If successful, all refs will be updated, or none will.  If the
->  	remote side does not support this capability, the push will fail.
->  
-> +'option thin' {'true'|'false'}::
-> +	When pushing, request the helper to send a thin pack (see
-> +	`--thin` in linkgit:git-pack-objects[1]).
-> +
->  'option object-format true'::
->  	Indicate that the caller wants hash algorithm information
->  	to be passed back from the remote.  This mode is used when fetching
-> diff --git a/remote-curl.c b/remote-curl.c
-> index 2c35dd5240..8309d9d2a4 100644
-> --- a/remote-curl.c
-> +++ b/remote-curl.c
-> @@ -184,6 +184,14 @@ static int set_option(const char *name, size_t namelen, const char *value)
->  		else
->  			return -1;
->  		return 0;
-> +	} else if (!strncmp(name, TRANS_OPT_THIN, namelen)) {
-> +		if (!strcmp(value, "true"))
-> +			options.thin = 1;
-> +		else if (!strcmp(value, "false"))
-> +			options.thin = 0;
-> +		else
-> +			return -1;
-> +		return 0;
-
-The above two hunks match with each other, naturally.
-
-In remote-curl.c:cmd_main(), '.thin' of 'options' defaults to 1 (side
-note: I didn't know that ;-)), and push_git() passes "--thin" to send-pack
-only when '.thin' is set.  Honoring 'true' and 'false' here while
-returning -1 for invalid values matches the surrounding boolean options
-in set_option().
-
-It is an unrelated tangent, but the use of strncmp() with namelen means
-set_option("t", 1, "true") would allow setting 'thin' to 'true'.  Git
-internally always sends the full option name, so it does not cause any
-problem in practice, and it certainly is the right thing for this patch
-to do to imitate the surrounding code.  But we may want to take another
-look at these uses of strncmp() when the dust settles (#leftoverbits).
-
-> diff --git a/transport-helper.c b/transport-helper.c
-> index d5a064d386..6052407b9a 100644
-> --- a/transport-helper.c
-> +++ b/transport-helper.c
-> @@ -275,7 +275,6 @@ static int disconnect_helper(struct transport *transport)
->  static const char *unsupported_options[] = {
->  	TRANS_OPT_UPLOADPACK,
->  	TRANS_OPT_RECEIVEPACK,
-> -	TRANS_OPT_THIN,
->  	TRANS_OPT_KEEP
->  	};
-
-Running 'git grep TRANS_OPT_THIN' tells me that builtin/push.c is the
-only thing that sets TRANS_OPT_THIN via transport_set_option().  We used
-to claim that this was unsupported, but when push asks to use it, we now
-pass it through.
-
-set_helper_option() notices that the boolean_options[] array still has
-this token, and sets 'option thin true' or 'option thin false' depending
-on the value and calls strbuf_set_helper_option() to send it out.
-
-It is a bit surprising that there is absolutely nothing else that needs
-to be added to support the option, but given that this was about
-resurrecting a feature that already exists but was left castrated due to
-a historical mistake, it is an understandable confusion on the reader's
-side ;-)
-
-Looking good.
-
-Thanks.
+> So I think that the real argument why the other functions are safe is
+> that all the public entry points (add_note(), remove_note(),
+> get_note(), etc., and the internal format_note()) are safe as they
+> replace a NULL `t` with `&default_notes_tree` and assert
+> `t->initialized`.
+>
+> copy_note() seems to be the only public function that doesn't do that,
+> which is what Junio found in 3/5.
+>
+> It would be nice if the commit message of 2/5 in v5 briefly explained thi=
+s.
+>
+> Thanks.
