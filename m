@@ -1,90 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.48
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795577031;
-	b=ScI3/GWpRcoUoTf+rRLsi6L/hkaMEZjORvDbQWiM1citlaZajbrwFXU6kUTLOLvNv7Oj
-	 k76ULGssBt6F3gBytqjbKeWiCwFi1177aS2vlxskh6O4MGtNBecUMUDXAzIWkwbcNXaa6
-	 hxBz6m2e2jpB2k+AfM2SOJHv45abJQEGNKDx8URFjId+kw/CDBrw2QsyCkjv7uOFxCjJC
-	 xiYK3e1bqXqWtC/8r5r12W2SAVzKMH7hzA9v9hOuvI6+HEJNW40jrq0mCVMhQfnXHTerX
-	 C0GJqLA0yaLulFA7SBXpXvjzjnLuZvNLDASSss7uzWIoMuXnyoZDTl/7J7N4L1dLyMQ==
+	t=1795577034;
+	b=SgqVQsnRi/onXjGnxBfcU8SQQ8Qhd/zQE/qFFZknMjxrbLDdJuAEDgfW/pchY7tT4Yz6
+	 yXDBjErEw9glu/EO5BQMQBmH1KPIKY6vEXBy2V13XSWqQx1Gf2odQ/9kIWGsMRMPkBhdy
+	 zCese14Bd9rR6350cEgjiNswXQVZ2XB2BeFd5KM7Z+QiCth1IlQG7stlzKCqKI5eKvYkB
+	 +tarKiqpxQE1XuAU8jD7iZgqvA4BTMyT7tsLKP7DEj61Gr4pI7ZwcYIQMAucm4EmUf5Fn
+	 t9dGztD7LST64nxW/Yx5nMDhBp4SMCnXffruwjV9IIktW8dy9ti7QcT5TiOFuLE2Riw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795577031;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795577034;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=8/Ael1UEeuFW957erIv9oJHJMBeHqrihz5R6kIoKTgw=;
-	b=inJ0llpAKqw8ciMehsizLlUEUugEFJ8sHDGpGr3SrrbNy+sHf+4qlTcFrAFr9BudmO8a
-	 plUQFf/Dk+qV6tv938cvkH0kv+kzLRY6rVOfOa/kJET5dk3vm/zLSn3yRc9jAR68vOXAW
-	 TigFIeg6dMclV+qS1BjdSM1En583MOlpels9qY+jFwQtf+VmEKB/khX8/wFpgVGtBwwze
-	 c+l7cNZZX556GKDnBwWMiSJnWwfFoIgBZ92LuMUXnMbjB7UZMexad+4LsWYD6JWj5jv36
-	 /b05Sm5qF/ukJoVuVUIyhasYn55vEc25l0+UrOc+zqt9NMzw7TtSxWG04/M7I9WUiVg==
+	bh=h30mfFIEmhrbOczIszgugPwljcq9J1JiKD1KHrVxbOo=;
+	b=3g5TIW6hDUTC/j7CROad8Os/Np6PZ0RO8qFzKMecBDTWN9dRceE6Izhc8Jw3HGQV8dQ1
+	 G0bm0KEDc1+ugkgpHbaumsXzavRXIocrmHxtlPupqkqcIuHcMimOS2/rz1Mq5E4R+Swjd
+	 /PrgVMaPnRsALAeibn+9CKBh99r96Gu/sqzeJKTvp0W2Ql94E9cWLUei09AghkMCaBcIb
+	 rSypfM5qe4clOtwt97Wrm5T3tB1ZfwRFJwNyvLQ5gs4gujuxPfA1JPWXSZ+k5d4AOgHV2
+	 p66HEL7oe1tTrCgmXMTWZ/owkOA/d7VE0aZqTCMedcCZgI67rAaA2Gmv2+so/0bcFqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cZohv1Xg;
-	arc=none smtp.remote-ip=209.85.210.48
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0RtTyt7K;
+	arc=none smtp.remote-ip=209.85.160.45
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB73606A31E
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 03:23:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6AB73606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2AB606A327
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 03:23:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0C2AB606A327
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cZohv1Xg
-Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-843cf077f10so7245623a34.1
-        for <git@vger.kernel.org>; Tue, 24 Nov 2026 19:23:51 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0RtTyt7K
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-4adae187d94so3603538fac.3
+        for <git@vger.kernel.org>; Tue, 24 Nov 2026 19:23:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795577030; x=1796181830; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795577033; x=1796181833; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=8/Ael1UEeuFW957erIv9oJHJMBeHqrihz5R6kIoKTgw=;
-        b=cZohv1XgP4i4Cbu+KAcYUgH9IC65eU3tRIAiuhjqV66CxkwmTRiKg/Cq1xBog379NU
-         PDJYXm0qPO8ENLIBFUCJbe3LjGqvIVXAEsQkYu8j9pySwasl2cK3y4jpPQojrUluEzwE
-         O24uZDjLaTmYqGfd56tb1U6nIHqyDm3NB3Zwx0TqZdUVRFWFB6YPAbQCYtNIrMNXsxkd
-         jv1pVJeXuEdvJP/QeWVFsiJNdRDDryOjHz3S9UxlG64as+e1HWJdSvs1r3x2W8Wnzt2U
-         cXTVdJKqPmDzlkO2D2CP549M4lJGL8rBSp7rNiZMuPbpk1QHpO+QGr2QPrp3HsctYtm0
-         50dQ==
+        bh=h30mfFIEmhrbOczIszgugPwljcq9J1JiKD1KHrVxbOo=;
+        b=0RtTyt7Ktv9wHvpEmvd3X94/z3C141KC3BuD2Nd6qkrR5RHJkxYpAaKEOPalbkLyNb
+         Agq4SPH4ZnsY7W2wynUUD+HXRVIOfhH9SsDeJsPgcOBRAeDzhiSr9pXlSvmLjYWzOekv
+         wTIX1juD500kZD074hJeVfCuBgwCg7JR0uLpy9rzBoOm8nMz7b+lB9RU126OTkRBQdr+
+         bWYlfP6+rqj2IpISmq+vG3vog1G5UDMmilbVT9tK3SsSifXr48pUsRjJCJgyjP9mPxwL
+         XRdPMo3Z7psbB2poz1d5BnloSMxhihoH8dp4fJPYVdhPT2BOWi2AI2Jq4rbBW+2DLWXg
+         R0KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795577030; x=1796181830;
+        d=1e100.net; s=20260707; t=1795577033; x=1796181833;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=8/Ael1UEeuFW957erIv9oJHJMBeHqrihz5R6kIoKTgw=;
-        b=emAbXywSIDcsVe9PUxv2j1KHaJqtgDJ6ZKfJieayUb+qQtte7IPzP6A+/2e6bbK9JC
-         uArZhMiWHcUJqgr4JSlfBkvNpaYRMIBDYxm4NW51jPqajcPn9vgRVWFl5sjf4QQ3ejHD
-         20Z9cDaiPirMDNxs3krwhO1GWfDxNeJ9S4hqLxu6Mfx18GMZWSlbyShBFmcbYcur7AiD
-         MrFfb5wNeULKyvaCwMNC62byb5gS3tBGzeEclD8jizIDHJIgVQjlUjqixCs/i/ETSHoX
-         ynUWVJu1SB8xnCxgfVMOmpbWY0za5n4VKnbbEccijza4qUp/ni1OkAjCD8izPcdoJKYZ
-         qM9g==
-X-Gm-Message-State: APuU4Z+Nn/EvB8uwq3obmJZnfeb38bGtra2hZl792acl7eoi6Vi/7WoK
-	8kT9TjFu28LjcEW0mNNqeop4mFEOkHKlQTeioz5FsmO7JyAwCPvP6Ac1WU21HWHf
-X-Gm-Gg: AZFdTZe8tdEPm9YVlrfc/qIAhZ37Z/rrEww/x5m+/LK84DP4yZEEzRgMurXBhg/hCV0
-	PzJMDJ6Nk4XST0zRUF9Pk0QdklEYLm3HgTmoRTvfF0wWO5WRDqgHQCti6f70VNl4SI6r86IUcfE
-	WPPCmenWpzMbjd9Zb+Fp3/3KXlJREJhCmQxG70EcI0mi2vOrEE/6VCU9P4IkFVCJ43EoWnqcC63
-	ZyHnRWNO0S8ysjf/pQWKOBDUP+C0qACrVlYga4r5iPZ/qG3Q5B40rAzwlQIPBxp/6OK7Ir+uSf0
-	jnvnBAmHX9zJvepFNfXwzATPDUeebf5je7tf0wbFh0C4dnKmtZttV3f0xvh8p/SKTYkQqaa02Wm
-	DEFm/OLFcX1iwbb+zja9ezafrH9VDL0dwRvpN46CarryqhWUuSGyLbsE3RR1nIB074ce+X9ZRyr
-	omySo9YpP6F8ltwUJrcDEvijAXPX5QiC5ddZlgsaYqcA7z1d4LlHblM3wImsI972r4l1Tq7B8aT
-	cyIAobMbxztWHhpqrTmB8Qxk911oASMVbilpbr8/t8lwcOqUKzjPtwPk07W9tnIp/09sUiG8yox
-	R2o3X1T9EnwDHMubE16LZ2pwdmQbzTUxFQ==
-X-Received: by 2002:a05:6830:917:b0:83c:1efb:6424 with SMTP id 46e09a7af769-863152f905fmr22841859a34.1.1795577030299;
-        Tue, 24 Nov 2026 19:23:50 -0800 (PST)
+        bh=h30mfFIEmhrbOczIszgugPwljcq9J1JiKD1KHrVxbOo=;
+        b=MYD4oxxtJlaYrzvYS0/8iRwLCSl2QuZnZAgGMdTK+UPbp7yFA9HtYat/dg9HsWnXoE
+         YJe3KRS/YR0CgV1mAPdzorMpls10CahTh//nXANWeQBCYtLKFudRhfhzGkFUat4ul8O4
+         cEthUnt4Qqfjeh4l1YuojSzjXGOkCJtkX6MFzFmAzVkbkevlRq4wVvOXjoPukv0AjTcc
+         UCG0rgUkY9crxj82m+bNFjGxF8qNP8IGxUD5u2T/bwjI7F4LZW85D23CpkPX/Afp10mc
+         yJWW/6Td1TglvFHElEP+oitWlwEuEQLmdmLn2SwIgG1b5+sE6xpjucdDt1xyekjhj9fo
+         Ymbg==
+X-Gm-Message-State: APuU4Z+o2GYCWvO+Ghem8lNcN/1h0UzyFx2zW3bbd7hduB1P6PnchZml
+	Kpa6t73VHOOaBxD60glNYNCOlBMfTwl+8TiY7uH0P00TTYdB75lEVCzg5rjLgj82
+X-Gm-Gg: AZFdTZflkqa8U6UUlyytQc7+zW44JxpGd4YeoI1QjUjj59HfvYXO+J9ceZxzYHsBNQ3
+	o3SYe/Hr8/f1jHa3wMl5x7GYWJMEHUPmFeW2X7z2TdOOPXlao96rMADfhvXKTap8LP+sUy+UUBo
+	O55OpBZav0U3oId7LyPsTFGyk+cMItnJ/jEtsio9qP/349x5BmkaNSaqkDwU2nRsQ0veDH0n2U2
+	nqeSAiFaMEAIQIj2MozuakB3FEeLvdJyUZk/6VST6BSusQhIOvMRn8wekWQ6lMw3v3Upn0AZ5KK
+	G647Ci2Nbzq5MPAyjjLEmvqYTXqRr2/+HVUUbWvZXLrTbO0MfKIx1adzJ0bCopesHHggJNp4a+O
+	vfNQuhThBiu1yvc9G0YG/WCD/4LrO1Yrkx+cZA3fUvR/jrjikLNSXyE5pG+Kmojs0SAYjVipcIM
+	x/6Xak5LI6er6Kek1zxoeJ9HQ4xZ3Y8NFLJ71RO9wHiON0P2VcIx6nNSkxvyXkf/BOratkcSSBZ
+	SjYfkBP66qgAb3FuhqwSJJ8guaP2Uklw+My2L5NerOglhQDvN/cmY1ACoQzVCBiqtyHgiOLJyNK
+	0grGxSD34AvA7iUh3+uxg0IOgl/YF6bLpQ==
+X-Received: by 2002:a05:6808:30a3:b0:576:b73b:f26a with SMTP id 5614622812f47-57a0a51921bmr18639368b6e.17.1795577032943;
+        Tue, 24 Nov 2026 19:23:52 -0800 (PST)
 Received: from [127.0.0.1] ([172.169.255.70])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-863168f6d9asm12867383a34.17.2026.11.24.19.23.48
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-57a34763004sm12487407b6e.8.2026.11.24.19.23.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2026 19:23:49 -0800 (PST)
-Message-Id: <7c0fe312f161247a5e7192e214e8677547521a92.1795577024.git.gitgitgadget@gmail.com>
+        Tue, 24 Nov 2026 19:23:51 -0800 (PST)
+Message-Id: <14e015ba240a661d8cf8b6bdbc4d7093bbc42ad3.1795577024.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2317.v2.git.1795577024.gitgitgadget@gmail.com>
 References: <pull.2317.git.1795242633923.gitgitgadget@gmail.com>
 	<pull.2317.v2.git.1795577024.gitgitgadget@gmail.com>
 From: "Wonseok Oh via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 25 Nov 2026 03:23:43 +0000
-Subject: [PATCH v2 1/2] sequencer: clear saved HEAD OID when picking onto an
+Date: Wed, 25 Nov 2026 03:23:44 +0000
+Subject: [PATCH v2 2/2] sequencer: save the null OID in abort-safety on an
  unborn branch
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
@@ -106,73 +106,53 @@ Cc: Phillip Wood <phillip.wood123@gmail.com>,
 
 From: Wonseok Oh <marinelay7@gmail.com>
 
-When picking multiple commits, "git cherry-pick" saves the current HEAD
-in .git/sequencer/head so "--abort" can return to it. An unborn branch
-has no commit to return to, so cherry-pick is expected to save the null
-OID instead. Only then can sequencer_rollback() refuse "--abort" with
-"cannot abort from a branch yet to be born".
+On an unborn branch, .git/sequencer/head holds the null OID, but
+update_abort_safety_file() writes an empty .git/sequencer/abort-safety.
+Write the null OID there as well so both state files represent an
+unborn branch the same way, as older versions of Git expect.
 
-However, sequencer_pick_revisions() does not handle this case. On an
-unborn branch, repo_get_oid() fails to resolve HEAD, and the function
-saves the uninitialized 'oid' to .git/sequencer/head. As a result,
-"--abort" is not guaranteed to refuse the abort as intended (e.g., the
-saved 'oid' may point to a random commit, and "--abort" then moves the
-branch there).
-
-This bug was introduced in 0f974e2124 (cherry-pick: allow to pick to
-unborn branches, 2016-06-06). Before that, picking onto an unborn
-branch was refused.
-
-Clear 'oid' with oidclr() when HEAD cannot be resolved, so that the
-null OID is saved.
-
+Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
 Signed-off-by: Wonseok Oh <marinelay7@gmail.com>
 ---
- sequencer.c                     |  9 ++++++---
- t/t3510-cherry-pick-sequence.sh | 15 +++++++++++++++
- 2 files changed, 21 insertions(+), 3 deletions(-)
+ sequencer.c                     |  7 +++----
+ t/t3510-cherry-pick-sequence.sh | 11 +++++++++++
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 4a1c0e70b8..20bfe00ba3 100644
+index 20bfe00ba3..e0bfc6305a 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -5788,9 +5788,12 @@ int sequencer_pick_revisions(struct repository *r,
- 		goto out;
- 	}
+@@ -644,10 +644,9 @@ static void update_abort_safety_file(void)
+ 	if (!file_exists(git_path_seq_dir()))
+ 		return;
  
--	if (repo_get_oid(r, "HEAD", &oid) && (opts->action == REPLAY_REVERT)) {
--		res = error(_("can't revert as initial commit"));
--		goto out;
-+	if (repo_get_oid(r, "HEAD", &oid)) {
-+		if (opts->action == REPLAY_REVERT) {
-+			res = error(_("can't revert as initial commit"));
-+			goto out;
-+		}
-+		oidclr(&oid, r->hash_algo);
- 	}
+-	if (!repo_get_oid(the_repository, "HEAD", &head))
+-		write_file(git_path_abort_safety_file(), "%s", oid_to_hex(&head));
+-	else
+-		write_file(git_path_abort_safety_file(), "%s", "");
++	if (repo_get_oid(the_repository, "HEAD", &head))
++		oidclr(&head, the_repository->hash_algo);
++	write_file(git_path_abort_safety_file(), "%s", oid_to_hex(&head));
+ }
  
- 	if (save_head(oid_to_hex(&oid))) {
+ static int fast_forward_to(struct repository *r,
 diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-index 9400ddfc45..d52fda1c54 100755
+index d52fda1c54..fb1ce079f8 100755
 --- a/t/t3510-cherry-pick-sequence.sh
 +++ b/t/t3510-cherry-pick-sequence.sh
-@@ -269,6 +269,21 @@ test_expect_success 'allow skipping commit but not abort for a new history' '
- 	test_cmp expect advice
+@@ -284,6 +284,17 @@ test_expect_success 'cannot abort a cherry-pick sequence started on an unborn br
+ 	test_cmp expect actual
  '
  
-+test_expect_success 'cannot abort a cherry-pick sequence started on an unborn branch' '
++test_expect_success 'unborn branch is saved as the null OID in the sequencer state' '
 +	pristine_detach initial &&
-+	git checkout --orphan new_disconnected_seq &&
++	git checkout --orphan new_disconnected_state &&
 +	git reset --hard &&
-+	test_must_fail git cherry-pick initial picked 2>err &&
-+	test_grep "could not apply .* picked" err &&
++	test_must_fail git cherry-pick base..anotherpick 2>err &&
++	test_grep "could not apply .* unrelatedpick" err &&
 +	echo $ZERO_OID >expect &&
 +	test_cmp expect .git/sequencer/head &&
-+	git rev-parse HEAD >expect &&
-+	test_must_fail git cherry-pick --abort 2>err &&
-+	test_grep "cannot abort from a branch yet to be born" err &&
-+	git rev-parse HEAD >actual &&
-+	test_cmp expect actual
++	test_cmp expect .git/sequencer/abort-safety
 +'
 +
  test_expect_success 'allow skipping stopped cherry-pick because of untracked file modifications' '
@@ -180,4 +160,3 @@ index 9400ddfc45..d52fda1c54 100755
  	pristine_detach initial &&
 -- 
 gitgitgadget
-
