@@ -1,89 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.180
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.42
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795632939;
-	b=MTcmnjn5TPZ0guSzG0scGv/yOi+HwL+ykQyop3n56L2o+eDYfUrJs65TSnIbGcCppCZm
-	 7n7wlFebVhzExUweWS1jbk95T53fiyw3utHr00vODedswMeN3p962uHnM50F/SfUJhT0I
-	 A9PSruqgb8QGb57L9BylP4XVuvW08wR23SrcP453Db6Ozc8ggXXhaVETBmNnhSFaqlNto
-	 gahGG74wX6h0FqYwMoCAcddLmXUnGdY8hblyo+HjToWCrm0RpXzACG9SThzlDkL+8DuJ4
-	 iDoCk2qWSdCxW7rC5KklS0jYnRidAz18CDhe5zAWTlwBLN8m6BIuC9sySVhDtMClGVg==
+	t=1795633406;
+	b=KCWbFCdP/M9DDICZXf8d2QX/m1615JxF3QLffrQ+Uzsz2PQrKyERKczDNDw7mRzsjeS8
+	 uHyOdrbNtV1hPfFxIk3ZVAZqJHS7MYRwmE84c9CFZ+gS+eK4Tyifq9X/yZDBW5V3xhwNT
+	 iTimiCqy1+r/hNSHGhrB9yg5TvlsXUMd2xVEFKHxmL95moCVyXO1XxNlmgHann3B7fpn3
+	 Gikykf2PitLX2A3/F7g33VHwCGiKzz/16/sggADa5YZdCi/D9GalO5C8NfLdIgnoSBe5A
+	 R6zjWex6z2+6yVqFlgDpZazjNN4zAAGY1Dyo8SVMwNX+jZgVXnjtrcX6L9/F86Y3sbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795632939;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795633406;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
-	 References:From:Date:Subject:Fcc:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=5mZovQZGpN31BlV+9MF/22gQPa+Lhr/ATGpQVj6z1m4=;
-	b=oagBFZT1Ul8VuDSASL0ZJdeXLeYL5Jg4SpGP5HTjLlrSeY1UKhkv3yf5QXuxtgHk7F5F
-	 DtfwIpmLO4V9hmzaYJF801MIiZPferyg3znGZDGkfPptWixjMTkc9GqoA135LhXGH/Mpc
-	 x7T34qhq8Gda/iDd/tKbBsERnAJ/PTGnVYu1+bRiVX5003jtK+K3tseX3WtsKZRet1/rr
-	 ridLT/NDeOTGjkWoH0g02DZLpvzoewDs/wCA/UvroZXnIlIefQPQ7AuMY1tzprkKPXnTc
-	 nyOuALfwx5UsRO9W34R0NAo7SufYHpxvloaBCkUsIwPBK414OS9/Ut4sAQSNBy7lZzA==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
+	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
+	 Cc;
+	bh=rbWW2ZAGk4cUCYXbtM/R29eew1lnJwfGZLG7lPLsuqk=;
+	b=RYGVqtWwimt4enILmR5c6RrrSn/ng+EQUiZlbf1By9T2UBMknD0AbTmar98+jTo8o+ca
+	 n6lKDt0ADpp9nqMUo+D0kKw687noFBmP++rztmUyJ587ZUak7nghbHtvCvJvzBX9xP5p8
+	 olVUZbI/IeYH0NWQ5sG5A8+YkxOdiq6uTaGbOaM+qvrdX4wmqturPsd1pC7v4yuTzl9pb
+	 QwU8l0PhQuvzFXlLs19TzerIC8GqXsbjNj7heyMWRfnUFzZITKsteXbgxHoJWU8U3ZD6o
+	 AjPIYDqVv2jTzMdKOZSMcEq0tEucqboPPsI4fNbToehPtfmIzR2RRV29ifxqnPH747g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="a6/jtW/C";
-	arc=none smtp.remote-ip=209.85.160.180
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Igp2NGQa;
+	arc=none smtp.remote-ip=209.85.161.42
+Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4C4606A321
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 18:55:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6F4C4606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060E5606A321
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 19:03:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 060E5606A321
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=a6/jtW/C
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-55d3563e50eso41359711cf.0
-        for <git@vger.kernel.org>; Wed, 25 Nov 2026 10:55:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Igp2NGQa
+Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-71ad5f20016so4010768eaf.1
+        for <git@vger.kernel.org>; Wed, 25 Nov 2026 11:03:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795632938; x=1796237738; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795633405; x=1796238205; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=5mZovQZGpN31BlV+9MF/22gQPa+Lhr/ATGpQVj6z1m4=;
-        b=a6/jtW/C541HGY4KKB12A5093vHvMKO2ybD2pNzkbPKHZXE+qhSpJT/SXkN1QM3LxP
-         Ii/G/20+A+0iIFIZYQPSORxwXudOTYMwcTjM7P9MuL3j2eL2h5UI5mLOsOgt5mevugVw
-         76LmimqRm2OpidwwHxcRA1eV7rbgA/huADfg5fqtVDJJZyDRmlDa58Fxz6wW+JSMcw4c
-         Bkel6azcSOJepsQlZm2rgsYwZHWc+jCuz4SRt69e3lJLMdrzOvHQ0J08p7h5dbL74f1J
-         R41kFxdMbFWA6QSZUtqUm5/rqs0H+ejwld46b2pnrWmB8t68iPGkQnVtfZJCbffPeFqk
-         9+oA==
+         :subject:date:from:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=rbWW2ZAGk4cUCYXbtM/R29eew1lnJwfGZLG7lPLsuqk=;
+        b=Igp2NGQak+ELFTs2U8elBRSa6HlLdpNBWlRT+F8XcYT28R7T1e1tRqEXzqODvKLJhs
+         I0WA9LBsAaLg3+ZPsmZ2P/758N6pSO13B+nw6A5hLRfvHVQ+E8tOuBPNIFA3iP8MdSLp
+         zu4Vl6N40YiBeRBPUIUHjb9vImCCJmR+l38WnXv+Pc7T9pn0v351frQM/vx6jrLdR/M9
+         IUJxb8g8R4C0Rk1QWvhIlEEB/OMDtlSj7YEFvJqbRtn4AUNhOT2qCE406gBcPu6KZa/J
+         gfV4IkSOLeRfh46M09/AT9/Unb2s6Iy3BiEqgtOmM1R0FynebZ/+K/D9XIP0kJQ34J6k
+         Dusg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795632938; x=1796237738;
+        d=1e100.net; s=20260707; t=1795633405; x=1796238205;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=5mZovQZGpN31BlV+9MF/22gQPa+Lhr/ATGpQVj6z1m4=;
-        b=aFX6QcphyevwSoX6VyNINAU0Epxfzxd8pvU9JyY+9woDMcjwcgtZGbLSYOyc5pRyDh
-         3+2EUa5egHRk2Rq1ALTj/HiYk0XA59zvjkIoTOLUHRanL71PDYQhvIKC9iJoXBrdU4G0
-         /dc2aSTEfNtjKXFywcW5msS2s5mtYadYQ/0NILlV600Ck8KweMMmyjpBo2Dnptsh4prY
-         1TAOHRmh/cSgQVHu30mjW0THCCXFynDgtVWBRIasXpAQ1wJ6kfV2vJPQ5toiPm/8UtDT
-         ng6pTQO1UvyeG4/RUmaTCHACLMogXqSjVMDxlIdE6mVytfJHTkxV2p6mjSGK9BEDRnjE
-         sIpg==
-X-Gm-Message-State: APuU4Z+YMcoSZ/cBYbhJF6dfANUC3ZpgLcClWX69eMF7v60f7HyR6uRl
-	rfknVZI+yPZ86i+dv2DJi4/JTpSgKVxeVXzgPVqhlggyYTedltfl1baOhpgOqRiq
-X-Gm-Gg: AZFdTZeQJTAtNYlD5+U/hEgxm8BBUo0AKgUqq2H+y0ydgMnTByNtw91kj7snric/i4W
-	1DUUyOOSSh8/Q3yP5qQqPetWmJQgrIERPYgtrA5HGth3VN3oPmjb+pL7mpLousTKZlWgoZbINVl
-	rRh6fdxIu2aJbKAlE7arI6v60g7nbbafLBCcKXry6W83mYrTBfvHVb/MgQ+ly46n0L6MI/WmHsL
-	3QRBnYCNPkdhNIubtjpSCo7+NAdun5m+0v4275DtFCQTqQRx+4MvJ/q2GhzjMbfjebFv1HM8qNc
-	fcdzWsaQ2/+rCiFz969kHz97t3+Yz5vCXrg+yEqqbn+KbPjg3s4sDadgZ1SulBh5OnU6ez7XsnL
-	TCkUhRGEItkxlzXMVTGmJMvNmkgCy3FaIZeOHf+DreevU3TKblO/3sNJuhPQHCWcjv+QpONRSpO
-	2x5Jfdt2RDxsV0I2H6Z4K/HuI57PBX0TZqE1FmoWXrb1qpFXrAv8uXTz1RM10qEyR9hqxoYLYfJ
-	9n99BEKcpn8NLnDAzp0qWcTFd9GBcBO/1BMoX4Ubb0OpmoYUkXU/UvIQ9TbB5/bElxh7blj7RnD
-	AUHAZRgKTny5lZrDyFjckkwlze1tUtaJsQ==
-X-Received: by 2002:a05:622a:1206:b0:55d:2ac6:29ab with SMTP id d75a77b69052e-55d76aa6486mr366661671cf.54.1795632938531;
-        Wed, 25 Nov 2026 10:55:38 -0800 (PST)
-Received: from [127.0.0.1] ([20.228.220.120])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-55d7882e2d1sm162403081cf.14.2026.11.25.10.55.38
+         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=rbWW2ZAGk4cUCYXbtM/R29eew1lnJwfGZLG7lPLsuqk=;
+        b=hv7JrWTig1PtmFLwFPbFKxdy7UY5UxU7afWOA5keFu89pQIvSojmOio4E2b5cYaipV
+         6Yl0Mb84iYzQzaIMvtcf2pvjuNT3hbKCXz08LYaYx754dWA0sVh9J98j/pOWSQbH2R8F
+         qJGH9ZWJsdHjLgcDZv6FG2fMmmCaCUtw5Sv7SSlZQlMKphgNmsp4+VFbo3v7Q+w2Ni2D
+         mCQONhs67vj7klPwJdw6J/NElXCB04ufbmM7F334KaNYOIdXdOb47XRhqEPrYi6mGGdH
+         XBywONWWrDclp+lc97sThT8ClbwfwTUEUhOcJimTILZlsc6Z8cw3cuHpIrGzKzzAHtJb
+         MUmw==
+X-Gm-Message-State: APuU4Z+8+xGbCY9d5xh+5NtMZ1g89QhrdW5r3ZNfXGlAA2RxfTs/NCM5
+	2yPAAFAAXEG1xcVTAY27jW6KGlKBGTrVT/400ffeV5ARliaT8IJIOKQqHYDkP3wA
+X-Gm-Gg: AZFdTZeV2hcgACphU5Y8Uj3AmtkdWA1T1yRt2qF5/H13M7vQW0PbaHZC+hTFn3DAXc0
+	GrfZnUXM8+V6NqZwzjQyQsXXo4TYDwvriiGePfh3nkD1d0hTdhMQx0mhJiuyLIOCJa+cHghFp0n
+	XX4vPyuN+w/BT2UHF4ekT6/m0/b0s85l2uk3kaJg+iXtBi+eCvVtIJkOvTQ5uYzA/HXvOLBVoGK
+	SKNPs0+xkEgUMm6xIfSvJnR5nPwcpjZqXnSP6azyAXnsXbAppky/vTM3ajNZazROzThXmQb+91y
+	dClfePvvTPAz9HUxLVtqmxvx7WZ7P/ADBkEvYMlNcbUUVez8kkncu3cWGbxAWx9WeYVVfk0xBcG
+	abaYggK/9wuoUZJuyKjmGs/qx5Y8ZRajJyjobazF2RZSoZ59GUrzWLrFoPARiHyTN6h1WKtdmsE
+	EGje1apvleC7vlQ8E+5MfWN66BPZ0nxeFo3XV4aUcouH3pFN6rlq2liWFuvxSM1R5QT86FOhiTT
+	CVuedLCstCWq+vts1BWU31iGvuFR713tTxiPvWDfAT98hMSe5eXnIcfGQYls52Cy55jJ9TcS17/
+	emPrOaly7MrInaB1vIGqSZrCIIAznySH1AUdftDvybM7fDGen7XyOrk=
+X-Received: by 2002:a05:6820:a09a:b0:6b7:8415:d790 with SMTP id 006d021491bc7-71b39516d44mr12576496eaf.59.1795633404566;
+        Wed, 25 Nov 2026 11:03:24 -0800 (PST)
+Received: from [127.0.0.1] ([132.196.54.233])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-863168c1bc5sm13019717a34.6.2026.11.25.11.03.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Nov 2026 10:55:38 -0800 (PST)
-Message-Id: <bc1e30f6d05cf3e724a454e4c922a33f34c5a55c.1795632934.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2429.git.git.1795632934.gitgitgadget@gmail.com>
-References: <pull.2429.git.git.1795632934.gitgitgadget@gmail.com>
+        Wed, 25 Nov 2026 11:03:22 -0800 (PST)
+Message-Id: <pull.2463.git.git.1795633401382.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 25 Nov 2026 18:55:34 +0000
-Subject: [PATCH 3/3] remote: reject invalid branch names in add -m
+Date: Wed, 25 Nov 2026 19:03:21 +0000
+Subject: [PATCH] history: squash the commits not in the upstream by default
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -102,56 +99,237 @@ Cc: Harald Nordgren <haraldnordgren@gmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-"git remote add -m" only looked at its argument after the remote had
-been created and fetched from. A bad name such as @{u} therefore got
-as far as a network fetch before failing with "Could not setup
-master", leaving a half configured remote behind.
+"git history squash" with no arguments refuses to run and asks for a
+revision range, even though the commits to squash are usually the ones
+on the current branch that its upstream does not have.
 
-Check the name up front, so the command fails before any remote is
-created.
+The subcommand added in 6fd039c984 (history: add skeleton for squash
+subcommand, 2026-09-08) started out on the list as "git rebase --squash
+[<upstream>]", which folded "@{upstream}..HEAD" when given no argument.
+It moved to "git history" to take any range, and that default was lost
+in the move.
+
+Squash the commits since the branch forked off its upstream, so this
+keeps working after a fetch brings in new upstream commits.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- builtin/remote.c  | 8 ++++++++
- t/t5505-remote.sh | 7 +++++++
- 2 files changed, 15 insertions(+)
+    history: squash the commits not in the upstream by default
+    
+    Make git history squash with no range default to the commits on the
+    current branch that are not in its upstream, like git rebase does.
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index b04cbe70b6..35c6a1f7fd 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -226,6 +226,14 @@ static int add(int argc, const char **argv, const char *prefix,
- 		die(_("specifying branches to track makes sense only with fetch mirrors"));
- 	for (size_t i = 0; i < track.nr; i++)
- 		validate_tracked_branchname(track.items[i].string, mirror);
-+	if (master) {
-+		struct strbuf ref = STRBUF_INIT;
-+
-+		strbuf_addf(&ref, "refs/heads/%s", master);
-+		if (check_refname_format(ref.buf, 0))
-+			die(_("'%s' is not a valid branch name"), master);
-+		strbuf_release(&ref);
-+	}
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2463%2FHaraldNordgren%2Fhistory-squash-default-upstream-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2463/HaraldNordgren/history-squash-default-upstream-v1
+Pull-Request: https://github.com/git/git/pull/2463
+
+ Documentation/git-history.adoc |  8 ++++--
+ builtin/history.c              | 49 ++++++++++++++++++++++++++--------
+ t/t3455-history-squash.sh      | 31 +++++++++++++++++++--
+ 3 files changed, 73 insertions(+), 15 deletions(-)
+
+diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
+index 1fcc30150a..eaf75102d7 100644
+--- a/Documentation/git-history.adoc
++++ b/Documentation/git-history.adoc
+@@ -12,7 +12,7 @@ git history drop <commit> [--dry-run] [--update-refs=(branches|head)] [--empty=(
+ git history fixup <commit> [--dry-run] [--update-refs=(branches|head)] [--reedit-message] [--empty=(drop|keep|abort)] [--[no-]gpg-sign[=<key-id>]]
+ git history reword <commit> [--dry-run] [--update-refs=(branches|head)] [--[no-]gpg-sign[=<key-id>]]
+ git history split <commit> [--dry-run] [--update-refs=(branches|head)] [--[no-]gpg-sign[=<key-id>]] [--] [<pathspec>...]
+-git history squash [--dry-run] [--update-refs=(branches|head)] [--[no-]edit] [--[no-]gpg-sign[=<key-id>]] <revision-range>
++git history squash [--dry-run] [--update-refs=(branches|head)] [--[no-]edit] [--[no-]gpg-sign[=<key-id>]] [<revision-range>]
  
- 	name = argv[0];
- 	url = argv[1];
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 4bf97db6af..867ada059e 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -273,6 +273,13 @@ test_expect_success 'add -t with an invalid branch name' '
- 	test_must_fail git config get remote.badtrack.url
+ DESCRIPTION
+ -----------
+@@ -117,7 +117,7 @@ linkgit:gitglossary[7].
+ It is invalid to select either all or no hunks, as that would lead to
+ one of the commits becoming empty.
+ 
+-`squash <revision-range>`::
++`squash [<revision-range>]`::
+ 	Fold all commits in _<revision-range>_ into the oldest commit of that
+ 	range. The resulting commit keeps the oldest commit's authorship and
+ 	takes the tree of the range's newest commit, so the whole range
+@@ -133,6 +133,10 @@ given, for example `HEAD~3..HEAD ^topic` to additionally exclude what is
+ already on `topic`. Rev-list options may also be given, but any that would
+ change how the range is walked are overridden with a warning.
+ +
++Without _<revision-range>_, all commits on the current branch that are not in
++its upstream are squashed, starting from the merge base of `HEAD` and
++`@{upstream}`.
+++
+ An editor opens pre-filled with the messages of all the folded commits so you
+ can combine them. With `--no-edit`, the oldest commit's message is preserved
+ instead, except that an `amend!` commit targeting it replaces its message.
+diff --git a/builtin/history.c b/builtin/history.c
+index 43ba76f5a1..0e5c5f2cc8 100644
+--- a/builtin/history.c
++++ b/builtin/history.c
+@@ -38,7 +38,7 @@
+ #define GIT_HISTORY_SPLIT_USAGE \
+ 	N_("git history split <commit> [--dry-run] [--update-refs=(branches|head)] [--[no-]gpg-sign[=<key-id>]] [--] [<pathspec>...]")
+ #define GIT_HISTORY_SQUASH_USAGE \
+-	N_("git history squash [--dry-run] [--update-refs=(branches|head)] [--[no-]edit] [--[no-]gpg-sign[=<key-id>]] <revision-range>")
++	N_("git history squash [--dry-run] [--update-refs=(branches|head)] [--[no-]edit] [--[no-]gpg-sign[=<key-id>]] [<revision-range>]")
+ 
+ static void change_data_free(void *util, const char *str UNUSED)
+ {
+@@ -1319,7 +1319,7 @@ static int build_squash_message(struct repository *repo,
+ 				struct strbuf *out);
+ 
+ static int setup_squash_revisions(struct repository *repo,
+-				  int argc, const char **argv,
++				  struct strvec *args,
+ 				  struct rev_info *revs)
+ {
+ 	repo_init_revisions(repo, revs, NULL);
+@@ -1331,9 +1331,9 @@ static int setup_squash_revisions(struct repository *repo,
+ 	revs->limited = 1;
+ 	revs->ancestry_path_implicit_bottoms = 1;
+ 
+-	argc = setup_revisions(argc, argv, revs, NULL);
+-	if (argc > 1)
+-		return error(_("unrecognized argument: %s"), argv[1]);
++	setup_revisions_from_strvec(args, revs, NULL);
++	if (args->nr > 1)
++		return error(_("unrecognized argument: %s"), args->v[1]);
+ 
+ 	if (revs->reverse != 1 || revs->topo_order != 1 ||
+ 	    revs->sort_order != REV_SORT_IN_GRAPH_ORDER ||
+@@ -1372,7 +1372,7 @@ static int setup_squash_revisions(struct repository *repo,
+ static int resolve_squash_range(struct repository *repo,
+ 				bool update_branches,
+ 				bool edit_message,
+-				int argc, const char **argv,
++				struct strvec *args,
+ 				struct commit **oldest_out,
+ 				struct commit **tip_out,
+ 				char **message_out)
+@@ -1387,7 +1387,7 @@ static int resolve_squash_range(struct repository *repo,
+ 	struct ref_array refs = { 0 };
+ 
+ 	subject_data.edit_message = edit_message;
+-	ret = setup_squash_revisions(repo, argc, argv, &revs);
++	ret = setup_squash_revisions(repo, args, &revs);
+ 	if (ret < 0)
+ 		goto out;
+ 
+@@ -1612,6 +1612,28 @@ out:
+ 	return ret;
+ }
+ 
++static int default_squash_range(struct repository *repo, struct strvec *args)
++{
++	struct commit *upstream, *head;
++	struct commit_list *bases = NULL;
++
++	upstream = lookup_commit_reference_by_name("@{upstream}");
++	if (!upstream)
++		return error(_("could not resolve the upstream of HEAD"));
++	head = lookup_commit_reference_by_name("HEAD");
++	if (!head)
++		return error(_("could not resolve HEAD"));
++	if (repo_get_merge_bases(repo, upstream, head, &bases) < 0)
++		return -1;
++
++	strvec_push(args, "squash");
++	for (struct commit_list *b = bases; b; b = b->next)
++		strvec_pushf(args, "^%s", oid_to_hex(&b->item->object.oid));
++	strvec_push(args, "HEAD");
++	commit_list_free(bases);
++	return 0;
++}
++
+ static int cmd_history_squash(int argc,
+ 			      const char **argv,
+ 			      const char *prefix,
+@@ -1636,6 +1658,7 @@ static int cmd_history_squash(int argc,
+ 		OPT_HISTORY_GPG_SIGN(&sign_commit),
+ 		OPT_END(),
+ 	};
++	struct strvec args = STRVEC_INIT;
+ 	struct strbuf reflog_msg = STRBUF_INIT;
+ 	struct commit *oldest, *tip, *rewritten;
+ 	const struct object_id *base_tree_oid, *tip_tree_oid;
+@@ -1647,19 +1670,22 @@ static int cmd_history_squash(int argc,
+ 	argc = parse_options(argc, argv, prefix, options, usage,
+ 			     PARSE_OPT_KEEP_UNKNOWN_OPT | PARSE_OPT_KEEP_ARGV0);
+ 	if (argc < 2) {
+-		ret = error(_("command expects a revision range"));
+-		goto out;
++		ret = default_squash_range(repo, &args);
++		if (ret < 0)
++			goto out;
++	} else {
++		strvec_pushv(&args, argv);
+ 	}
+ 
+ 	if (action == REF_ACTION_DEFAULT)
+ 		action = REF_ACTION_BRANCHES;
+ 
+ 	strbuf_addstr(&reflog_msg, "squash: updating ");
+-	strbuf_join_argv(&reflog_msg, argc - 1, argv + 1, ' ');
++	strbuf_join_argv(&reflog_msg, args.nr - 1, args.v + 1, ' ');
+ 
+ 	ret = resolve_squash_range(repo, action == REF_ACTION_BRANCHES,
+ 				   edit,
+-				   argc, argv, &oldest, &tip,
++				   &args, &oldest, &tip,
+ 				   &message_template);
+ 	if (ret < 0)
+ 		goto out;
+@@ -1693,6 +1719,7 @@ static int cmd_history_squash(int argc,
+ 	ret = 0;
+ 
+ out:
++	strvec_clear(&args);
+ 	strbuf_release(&reflog_msg);
+ 	release_revisions(&revs);
+ 	free(message_template);
+diff --git a/t/t3455-history-squash.sh b/t/t3455-history-squash.sh
+index 237afdfa26..ac33d1cec3 100755
+--- a/t/t3455-history-squash.sh
++++ b/t/t3455-history-squash.sh
+@@ -111,9 +111,36 @@ test_expect_success 'setup linear history touching two files' '
+ 		test_commit three file d
  '
  
-+test_expect_success 'add -m with an invalid branch name' '
-+	echo "fatal: '\''@{u}'\'' is not a valid branch name" >expect &&
-+	test_must_fail git remote add -m "@{u}" badmaster bar 2>actual &&
-+	test_cmp expect actual &&
-+	test_must_fail git config get remote.badmaster.url
+-test_expect_success 'errors on missing range argument' '
++test_expect_success 'errors on missing range argument without an upstream' '
+ 	test_must_fail git history squash 2>err &&
+-	test_grep "expects a revision range" err
++	test_grep "no upstream configured" err
 +'
 +
- test_expect_success 'without subcommand' '
- 	echo origin >expect &&
- 	git -C test remote >actual &&
++test_expect_success 'squashes the commits not in the upstream by default' '
++	test_when_finished "rm -rf upstream downstream" &&
++	git init upstream &&
++	(
++		cd upstream &&
++		test_commit base
++	) &&
++	git clone --single-branch upstream downstream &&
++	(
++		cd upstream &&
++		test_commit upstream-moved
++	) &&
++	(
++		cd downstream &&
++		test_commit one &&
++		test_commit two &&
++		test_commit three &&
++		git fetch &&
++		git history squash --no-edit &&
++		check_log_subjects HEAD <<-\EOF &&
++		one
++		base
++		EOF
++		test_cmp_rev three^{tree} HEAD^{tree}
++	)
+ '
+ 
+ test_expect_success 'errors on an empty range' '
+
+base-commit: 7e34d8174dcda3435d1404c9a30bef46afe6c13e
 -- 
 gitgitgadget
