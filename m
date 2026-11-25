@@ -1,93 +1,125 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.182
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.148
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795628922;
-	b=pA9VzAm+uD84nlgJoXZSz50VTFkG1o3QrG9m/VVFZuQEbrC3q5QJTLK2p7YGM+1OzHyO
-	 M9d60t7EwY8EVrmlWrbp8SgiLzFQDs+eLbZQKYKQHbbdw89Whw+NvgD10wwxblMpSN/fW
-	 MLueM1ZFj9RpKQoMfQoZIFeVZ1TiKRsLkQW8M0fjfDl6CgVMgAyGGDwpiSTRiRxlN3GtW
-	 CoGePDAi2mgE1jWCd3S2XES7YazCayST9Gk6/jm21KXgDky6nYHTRP1kN4/ByDWjQsusP
-	 +f8ZmyI+yTrMbJLV7fdv7JU+f6FjwDccPR/DmKDWCaS9gbJyc7yxAgjS4LtgoJdTxUA==
+	t=1795629034;
+	b=VbZ7hsauCglZASMjZphF+zbsE0SWNTqarbrMYbTXB2lAGWlfquz3dCVymDOJeVjigVBc
+	 /Jd1sLt0Px6306+EdP3reW2CqD/WyZoO9OIS6nz/jGjI6rfG2XZmpOTYQ4DVRKee+kl74
+	 eFvE2hKIVSuL0Jqwmf5lxfo4hywxbjswNSK8qSlTIy4+IObqaetGNCQBTCjksTMGu4fq9
+	 osqf9dUhcLq14mYLVviRAgxj9vsWJisR99Vf2E9fKJto4SuMj1wC0Ud29rmIaADeMRfst
+	 c4plpVr/6bem2GpbqeVp8UGLp8ps/yQyMcC2gS7AyvwE20NbYXrtoxMhL/h4SfO942g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795628922;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
-	 References:From:Date:Subject:Fcc:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=apIqPIrs1bbUqdWzyLQfe+495GbjuNd7S2sAOsvcm7o=;
-	b=HhzwXRYOBjbgm1rcfwNDIz6rSwmAtiaICq1B/JbJYc+vlh09oa28h1aRE1gJt0zuLKiA
-	 Cz4FHy6SYgxgvFIkXa4iNytSbP1kVxkweFrMFn/VbYim4OTT1Kd1y0xCjGzHo2Pvp64YS
-	 COARG0G6/2LMtSGd828Ix8TgLs9tVe13VLyphQr4QnAy1IMsiuvNcpbCzj47+YCfSAq7x
-	 +IFViRktlLmMCE39wQ/tLULJCITv7q1K7cejgTka8zR3k4z4ZV8dLm7uaNghYpx57SOuH
-	 JQC8E6/+gWC0+DRTL0Qp5i/BF03kLvG0x0XZiPPwfsF308o7DEvutIM96ZpdJSa3e7Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795629034;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=iaoKMiFMkuU855iSeO4LesZkNT2tQo23F1/Z8j2VV4k=;
+	b=cAvL/dVLKIig/xkp97MV+/aO7NjYvQ//okVMTypHiZMGvN14OdXlass6VplavcXTJusA
+	 FhELQ9EH/zyHi0GYecQOgEWLojgW2u+NtaThIgvRdqt9ETsQOhFliB/ListuAPF0mJYcv
+	 wW6nGdFh2pHsFs7K4fHs3RR0gFeYo2p9EF+gEgWogWEGSfj3v++wqtGjxBWC1b4dKlOIv
+	 RsZpUgGSZJolJZIOcCr+YxchiUZk3hQGVhGCx3nEfAljl1jX2s3ImtXQwCVfWvYe2KRn4
+	 TKCJp2BumFjzKxHgXAgyTKLkdpuJUTS+1u4mRLMN98L0gNvpUka90ezYV1Q3ODLI3qA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iKwZ6Wec;
-	arc=none smtp.remote-ip=209.85.210.182
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=D2D4+sU3;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b="5Ryc5UE/";
+	arc=none smtp.remote-ip=103.168.172.148
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754EC606A321
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 17:48:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 754EC606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EAA4606A321
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 17:50:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1EAA4606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iKwZ6Wec
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-8b6a88e4341so2679458b3a.1
-        for <git@vger.kernel.org>; Wed, 25 Nov 2026 09:48:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795628922; x=1796233722; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=apIqPIrs1bbUqdWzyLQfe+495GbjuNd7S2sAOsvcm7o=;
-        b=iKwZ6WecschS05W3YJbXZiEkkQX+xiZ5m3LZtZpA3W2qz84ah4XXtNOEuURJbuUkXH
-         GW7HQxw0xYfN54Ao2SCHihwwVwYC4FIa5ESJqeKaU/LiicKx90e9t8bVkcnhq4JTx5Kw
-         e7p97IOwqqjuuhmo6LmYv7mRvFJcLKf6WYL2nMEpsMquNAUgH92t3fTnNCSXcqegwGkO
-         i85PY1fC7oiRMVTA2FF4fxe0rHpcwWXRIwl8/P/xpYXyTPiKOJ8d/LEBTgnNg0p2kkcm
-         EQzVd0gOL/w39t9Ml0eadth/1RjP7nExZV2HWYSPsqKbesbUO+m8iAHVv3+gSVXTFzkI
-         cCIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795628922; x=1796233722;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=apIqPIrs1bbUqdWzyLQfe+495GbjuNd7S2sAOsvcm7o=;
-        b=VP9ThTWhbRFlojND2u/SdMoQpzscVIIm4crN/lgD55GwBrjvxMHk1PX/thMqa7b4B7
-         ABAAVwpAcNWnjzkKBhVSFdmTPh2sBBjk7OT/cnKGg/z083Uc5hwtoxEEeC8krCnjygfq
-         vdMu2+xebcQ5F8sz+4d91f3kcg20OIlatxtLIWxHYEMmWhFfF533U/90+fgUCp4fukSJ
-         p6rI6W6vIGNCQFZ4krPG2x9ca9F4YhBtkbeFqu7sMwKqktP7IEBYR+Kj27j6uj23Y8hP
-         4Gic4zTK9dOsAHRoo6o8j9rJghO7A1AMVhgNkyhrnVt/AxqlpEDqYIo+ZYNUYftuUfs3
-         yBBw==
-X-Gm-Message-State: APuU4Z/pwXW/hD84oKJJ6jlRnM6Poy+vNOG8iPwkaXiGyttVWdVmsIIA
-	CFzIE38RkbXAzhwv25jm9nDK0QjfGXMonrPFkQfY+bmCQ+JZ3lUpBreSBJYzk5cf
-X-Gm-Gg: AZFdTZc+KeO6F3WjUblUxpbwCpiPHAHnmApjmkhE5K9wmJ9cVSKuSEfcuaBkNJhIzXs
-	Rm50MkIimNdxRadKvY7Kh299vIYA3b4qjwbvJL50g6tPNeXvbjO2KnxAmhHM5RhJTifKXQGIDjM
-	hv08NWDATLuiS+TsOY2RAhFxquF5YWyhNPxF6suhwxgto4SvRkS6wtaGc8uAsWCFp6NTZKqtlGZ
-	olbFzu5X67538MEh+5G6Ki+DzWGxW1q+tmQvk8o/ZUdyjx0fMrHIv0f1WvUy5pJPFpYdiD9LJsf
-	G9cYamxfA+ol31JV6maR+13L7VpBj6RQ1zn8h+7EI1ayPHvbxP5sOeazRJNIXzC5pOPwTm72mjC
-	olCeYy0uD60qx6K+a2j3X7tjqmfvaelD4l/8WSYNO27lzOvAmN0xRsp5zTXP5+eAcEjHGpTg/B2
-	ZUM2vtUlHvYL/mQ8GlNoY1ytYcFwyVSHi+WOWgYKlk9hxGewxREapTTfMCOPOoFevGcbv5BQ29e
-	kD0dxJ40NZ/WrAOW2/nKNA38ynsz6GnYNC3v2GdjInoIAIZa9eSfAFi5bxHur1f0p6VR/Lo4+TJ
-	c38xioD9nPBgrK+A52OOA0B0CLkgUXqAMyqn2M74+6LMoyx7dg==
-X-Received: by 2002:a05:6a00:1c97:b0:8b5:7fc8:866f with SMTP id d2e1a72fcca58-8c87d32b004mr15925190b3a.44.1795628921711;
-        Wed, 25 Nov 2026 09:48:41 -0800 (PST)
-Received: from [127.0.0.1] ([51.57.86.68])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8c87285c272sm9604645b3a.19.2026.11.25.09.48.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Nov 2026 09:48:41 -0800 (PST)
-Message-Id: <b6af8c5f9221a4d3033e62ee59419a66e1d54aac.1795628913.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2287.v5.git.1795628913.gitgitgadget@gmail.com>
-References: <pull.2287.git.1793462224.gitgitgadget@gmail.com>
-	<pull.2287.v5.git.1795628913.gitgitgadget@gmail.com>
-From: "Ravi Mistry via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 25 Nov 2026 17:48:33 +0000
-Subject: [PATCH v5 5/5] http: default http.retryAfter to 10 seconds
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=D2D4+sU3;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=5Ryc5UE/
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4D960EC0BC4
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 12:50:33 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Wed, 25 Nov 2026 12:50:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1795629033; x=1795715433; bh=iaoKMiFMku
+	U855iSeO4LesZkNT2tQo23F1/Z8j2VV4k=; b=D2D4+sU3V9gGQ28y5D6W8X1UMO
+	hL67LarRcDDaDY9e+DYqfhf9AiHQ7Fo2HIm1AuqYfpZfSMbP+kmPajAvJy7e19kT
+	tVmzoNuD6Ib60Z8VyXKin20Y/kN7/+9XKGCOJ1Jb1ahkzF8U+sM4ST5lIkNNdCYz
+	UIuejnkZng60Tc/qzmPCnN2wk2SikSCQM8SzC/Ps9A7ue/PPEiVc7w1iTeruxv9K
+	eq1hD658hMi2LEHsfTMZr1EHkfKYpOVNCtMSMxfzVnJt6IepXt1cfR42RgBc8slo
+	18HERq6+rD78GsBpPzdQnCUGhs0o1Zxh6Zx96B9KWX0LdDkO+t3r/ff/YDuQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795629033; x=1795715433; bh=iaoKMiFMkuU855iSeO4LesZkNT2tQo23F1/
+	Z8j2VV4k=; b=5Ryc5UE/fYXYAIOzBWkZj5wUo0TKIW7SzWotuTlp8OPoaAe8FWF
+	oQa6uXH68YNste5qVy/KyDujP9VnKXYaWb5fSD4BoSggX3zLtnXMUWGn3CscziyG
+	F4cP68dRSaC14noh7eDOJzT1gGDtxTgXtk4mkNGcs0tMyi7NJJlu405Fw7QOrDYE
+	m6pToKt+rwvbZuPhHvcwbzi+BV8NlTXrOdIJhxIdomSNn7OiI3l0kHYagah12A70
+	1hl16NU8l6fveoYYEPiXsqFetl1Ca+cV+0SFSAqE2lJ8N054T4KYDBVd4Dhzc1un
+	Xyl+hCParR1j+CMvMQRKEO75wBfPgn3MbAg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795629033; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:NkpLdgLCAdvaphpACegQZDx6sUr+2VNpgMEMLKK4L5pqUbQ
+	NUTUMQY5TwIrmuJy/EhJvbiT5lj8BqNR+5p92FG3kjWrYvNUjil0X9JfwvA4RuCY
+	kr4iuegwzI3FzewzHxHwygQHcrqMXa2pRxb5/B5lWnNIChW2Mhfh+Cs4FflwZPLI
+	29h5HMLxKZU7F/B3qonj48Td5CzIze1TX9G3rRi6IlE/1ZKy8LlMsftHuOhNqTsl
+	ksJR8qbpvcF+iYFIWiDcp7Vpt1fCiaghH3cFc0WCL7rnnLbNNMXEvKdDyQWTDLwH
+	HfUHlOb6np2b5QT9ZqsIzwicrqpbnXDBo4714kg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:pBclWXySV/pgU/sNkLkpQkvLNF24IewgBfxhhtR+Yaw=:iaoKMiFMkuU855iSeO4LesZkNT2tQo23F1/Z8j2VV4k=;
+X-ME-Sender: <xms:6R8Ha32JG4YpgefsML68u7rrdfCW177kRNEcCFvaIh58PiUAN5p3hw>
+    <xme:6R8Ha1LT5IrF8FuMyGp_P5z55V9L3YQLNwSvRpN_eNs_og91_6KIVl31kVz4yP_f-
+    O7T0AA2F2Zl5YVdxWUmK1_dpEnvHDitNcc5rZU8TuD4eQ9m7DZD46k>
+X-ME-Received: <xmr:6R8Ha-Fjbjgs_DUgRZTKdyCJ9mfnaTl1iWOgzIMklUGamHN190Cc7p3lzFV7CcB_YzL3lHgnzcr000ObPAgCQ5VQsQDkhREzl1T6gaE>
+X-ME-Proxy-Cause: dmFkZTEIscm+dPgJrbTeLRCqhFuLQmmKSPPd3nJyEcSpksY1+yW+bgDPBq63gyEhc5BfPG
+    QnTBWVAiguVIxuKqDKVcpp/Rz2najuEROt0JTMQ8htI/2c7vW1RoZNMjhitYeaEPMOPPyx
+    hRjf+cf5K4ndGzZLlCgRn72UrU4+wpmzPIvCUx+JBZLBSFbEzxU1s1I9f9ggSZ9tA+yDmf
+    2VTUpJNuNz4HUKPZBY2h+bzDfy/B1511rnpmoCigT0n30Q9ojth0iI54+rMBUQstQI3yGo
+    D2sYq55xyTNsnrftNRIswphQlzU+WlDTr8pO/24DBeCDub6HbyH9zvf2TAW4ulz2LrcylU
+    KMGZQPtKidyl7AQJQZbgHmhV/Ux3kQXznsPxu9Tkw+dbQdDjOlSAfUqU9HGLH8ZuNvmymO
+    edFS6TGGSiojnQujtQ4YC3n3EO/xT9o56p9aPaIpqz6+G+v4e/NbbMT2gFgB+4AZ04MnSv
+    PWgKfWNvfZ9JNH67eJ286FeSRQ8ib2TFCQb3LphLjFFBIxd8hbF2uE6Plgtmj9i0+1upID
+    ueKcdeZLdAprGt9St+GAlX1Nwa0hjtchFp7xlY54eJ1M+SYKp8uzfgGBsCTiEj9Rnugx/x
+    491qI5wvOaV3CCEV4ZAvultAYQ7U6t+X6AiXhch90pewVItAeUXQtBjCvZ8w
+X-ME-Proxy: <xmx:6R8Ha5XKEdt_ISYz2NbTjbLemh8u-1P2GdsX83sPHZ860s2d1K5sFA>
+    <xmx:6R8Ha-ytL2IS0nc9WKEv4m6pZRRUFHzJkpEFQct5Wa_B0RCLeqQROQ>
+    <xmx:6R8Ha2QT14J9qpKM1Oxs1RB8pkEexRhhHHJUAGx0oyWaTHCKdrOTMg>
+    <xmx:6R8Hayhq8gtqqv8pehWgp7Cg8bLGliSwbB2Tr8u_r4y9DGPaxocpvA>
+    <xmx:6R8Ha6WS3RVma0S-0I5QtN55eK4nMApx-dDSOjSqNVy-V5sY3_SDCtYM>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 25 Nov 2026 12:50:32 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,  ps@pks.im,
+  usmanakinyemi202@gmail.com,  siddharthasthana31@gmail.com,
+  kaartic.sivaraam@gmail.com
+Subject: Re: [PATCH v2 2/5] notes: use the tree's repository when reading notes
+In-Reply-To: <CAFpMFfDnfJRt1HGx60esEeC-spfBbr4KKzp9ocLFceAMESx1yg@mail.gmail.com>
+	(Okhuomon Ajayi's message of "Wed, 25 Nov 2026 07:45:01 +0100")
+References: <20261105203344.48513-1-okhuomonajayi54@gmail.com>
+	<20261124172146.18330-1-okhuomonajayi54@gmail.com>
+	<20261124172146.18330-3-okhuomonajayi54@gmail.com>
+	<xmqqtsl5g28h.fsf@gitster.g>
+	<CAFpMFfDnfJRt1HGx60esEeC-spfBbr4KKzp9ocLFceAMESx1yg@mail.gmail.com>
+Date: Wed, 25 Nov 2026 09:50:31 -0800
+Message-ID: <xmqqqzg86brs.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -97,276 +129,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    "brian m. carlson" <sandals@crustytoothpaste.net>,
-    Ravi Mistry <rmistry@google.com>,
-    Ravi Mistry <rmistry@google.com>
+Content-Type: text/plain
 
-From: Ravi Mistry <rmistry@google.com>
+Okhuomon Ajayi <okhuomonajayi54@gmail.com> writes:
 
-When http.maxRetries is enabled and a server returns HTTP 429 (or an
-opt-in status code via http.retryStatusCodes) without a Retry-After
-header, http.retryAfter currently defaults to 0. That causes Git to
-retry immediately in a tight loop on every attempt, defeating
-exponential backoff and continuing to hammer a rate-limiting server
-right after it asked the client to back off.
+> On Mon, Nov 24, 2026 at 1:34 AM Junio C Hamano <gitster@pobox.com> wrote:
+>> But others? note_tree_find() calls note_tree_search() which by itself
+>> does not touch 't' at all [...] The conversion in this step would cause
+>> them to dereference t->repo without checking if t is not NULL or
+>> t->initialized [...]
+>
+> note_tree_find() has a single caller, get_note(). It replaces a NULL 't'
+> with &default_notes_tree and asserts t->initialized before passing
+> t->root down, so 't' is already non-NULL and initialized by the time we
+> read t->repo. note_tree_search() not touching 't' doesn't matter here,
+> since get_note() has already dereferenced it.
 
-Default http.retryAfter to 10 seconds (backing off as 10s, 20s, 40s,
-..., capped at http.maxRetryTime) so that overloaded Git servers get
-meaningful breathing room while keeping interactive commands reasonably
-responsive. Callers or tests that want immediate retries can still set
-http.retryAfter=0 explicitly.
+OK, I missed the guarantees that these limited number of callers give
+these functions being modified.
 
-Because libcurl's CURLINFO_RETRY_AFTER returns 0 when Retry-After is
-absent or malformed and <= 0 when the server sends "Retry-After: 0" or a
-past HTTP-date, inspect the Retry-After response header via
-curl_easy_header() (enabled by default since libcurl 7.84.0) when
-CURLINFO_RETRY_AFTER <= 0 so that an explicit "Retry-After: 0" or past
-HTTP-date continues to retry immediately rather than falling back to the
-new 10-second default.
+So copy_notes() in [3/5] is the only unsafe conversion we need to
+rework in the next iteration, I guess?
 
-Also drop the word "configured" from the http.maxRetryTime error message
-and config documentation, since http.retryAfter can now exceed a lowered
-http.maxRetryTime even when http.retryAfter was not explicitly set.
-
-Signed-off-by: Ravi Mistry <rmistry@google.com>
----
- Documentation/config/http.adoc | 26 +++++++++---------
- git-curl-compat.h              |  8 ++++++
- http.c                         | 48 +++++++++++++++++++++++++++++++---
- t/t5584-http-429-retry.sh      | 34 +++++++++++++++++++++++-
- 4 files changed, 99 insertions(+), 17 deletions(-)
-
-diff --git a/Documentation/config/http.adoc b/Documentation/config/http.adoc
-index f0fde171e3..59f96351f6 100644
---- a/Documentation/config/http.adoc
-+++ b/Documentation/config/http.adoc
-@@ -332,16 +332,18 @@ http.retryAfter::
- 	set of retryable status codes is configured by
- 	`http.retryStatusCodes`, which includes only HTTP 429 (Too Many
- 	Requests) by default.
--	Defaults to 0, which retries immediately without waiting on every
--	attempt (unless a Retry-After header is present). When set to a
--	positive value and no Retry-After header is present, the first
--	retry waits `http.retryAfter` seconds and the delay doubles on
--	each subsequent retry attempt (`http.retryAfter * 2^(attempt - 1)`),
--	capped at `http.maxRetryTime`. When a Retry-After header is
--	present, its value takes precedence over this setting; however,
--	automatic use of the server-provided `Retry-After` header requires
--	libcurl 7.66.0 or later. On older versions, configure this setting
--	manually to control the retry delay. Can be overridden by the
-+	Defaults to 10. When positive and no Retry-After header is
-+	present, the first retry waits `http.retryAfter` seconds and the
-+	delay doubles on each subsequent retry attempt
-+	(`http.retryAfter * 2^(attempt - 1)`), capped at
-+	`http.maxRetryTime`. Set to 0 to retry immediately without waiting
-+	on every attempt (unless a Retry-After header is present). When a
-+	Retry-After header is present, its value takes precedence over
-+	this setting; however, automatic use of the server-provided
-+	`Retry-After` header requires libcurl 7.66.0 or later (7.84.0 or
-+	later for `Retry-After: 0`). On versions older than 7.66.0,
-+	`Retry-After` headers are ignored and `http.retryAfter` is always
-+	used. Can be overridden by the
- 	`GIT_HTTP_RETRY_AFTER` environment variable.
- 	See also `http.maxRetries`, `http.maxRetryTime`, and
- 	`http.retryStatusCodes`.
-@@ -362,8 +364,8 @@ http.maxRetryTime::
- 	handling a retryable HTTP status code. The set of retryable
- 	status codes is configured by `http.retryStatusCodes`, which
- 	includes only HTTP 429 (Too Many Requests) by default.
--	If the server requests a delay (via Retry-After header) or if the
--	configured `http.retryAfter` value itself exceeds this maximum,
-+	If the server requests a delay (via Retry-After header) or if
-+	`http.retryAfter` itself exceeds this maximum,
- 	Git will fail immediately rather than waiting. Exponentially
- 	backed-off delays computed from `http.retryAfter`, however, are
- 	capped at this maximum rather than causing an immediate failure.
-diff --git a/git-curl-compat.h b/git-curl-compat.h
-index 25678b5dbd..c72a2a766c 100644
---- a/git-curl-compat.h
-+++ b/git-curl-compat.h
-@@ -52,6 +52,14 @@
- #define GIT_CURL_HAVE_CURLINFO_RETRY_AFTER 1
- #endif
- 
-+/**
-+ * curl_easy_header() was added in 7.83.0 and enabled by default in 7.84.0,
-+ * released in June 2022.
-+ */
-+#if LIBCURL_VERSION_NUM >= 0x075400
-+#define GIT_CURL_HAVE_CURL_EASY_HEADER 1
-+#endif
-+
- /**
-  * CURLOPT_PROTOCOLS_STR and CURLOPT_REDIR_PROTOCOLS_STR were added in 7.85.0,
-  * released in August 2022.
-diff --git a/http.c b/http.c
-index f7f4af7a31..1db5f7a69a 100644
---- a/http.c
-+++ b/http.c
-@@ -153,7 +153,7 @@ static char *http_ssl_backend;
- 
- static int http_schannel_check_revoke = 1;
- 
--static long http_retry_after = 0;
-+static long http_retry_after = 10;
- static long http_max_retries = 0;
- static long http_max_retry_time = 300;
- static char *http_retry_status_codes;
-@@ -334,6 +334,37 @@ static void closedown_active_slot(struct active_request_slot *slot)
- 	slot->in_use = 0;
- }
- 
-+#ifdef GIT_CURL_HAVE_CURL_EASY_HEADER
-+static int has_zero_or_past_retry_after(CURL *curl)
-+{
-+	struct curl_header *hdr;
-+	const char *p;
-+
-+	if (curl_easy_header(curl, "Retry-After", 0, CURLH_HEADER, -1,
-+			     &hdr) != CURLHE_OK)
-+		return 0;
-+	if (hdr->amount > 1 &&
-+	    curl_easy_header(curl, "Retry-After", hdr->amount - 1,
-+			     CURLH_HEADER, -1, &hdr) != CURLHE_OK)
-+		return 0;
-+
-+	p = hdr->value;
-+	while (isspace(*p))
-+		p++;
-+	if (!*p)
-+		return 0;
-+	if (curl_getdate(p, NULL) != (time_t)-1)
-+		return 1;
-+	if (*p != '0')
-+		return 0;
-+	while (*p == '0')
-+		p++;
-+	while (isspace(*p))
-+		p++;
-+	return !*p;
-+}
-+#endif
-+
- static void finish_active_slot(struct active_request_slot *slot)
- {
- 	closedown_active_slot(slot);
-@@ -356,8 +387,17 @@ static void finish_active_slot(struct active_request_slot *slot)
- 		{
- 			curl_off_t retry_after;
- 			if (curl_easy_getinfo(slot->curl, CURLINFO_RETRY_AFTER,
--					      &retry_after) == CURLE_OK && retry_after > 0)
--				slot->results->retry_after = (long)retry_after;
-+					      &retry_after) == CURLE_OK) {
-+				if (retry_after > 0)
-+					slot->results->retry_after = (long)retry_after;
-+				else if (retry_after < 0)
-+					slot->results->retry_after = 0;
-+#ifdef GIT_CURL_HAVE_CURL_EASY_HEADER
-+				else if (slot->http_code >= 400 &&
-+					 has_zero_or_past_retry_after(slot->curl))
-+					slot->results->retry_after = 0;
-+#endif
-+			}
- 		}
- #endif
- 	}
-@@ -2460,7 +2500,7 @@ static long handle_rate_limit_retry(long slot_retry_after, size_t attempt)
- 
- 		/* No Retry-After header provided, use configured default */
- 		if (http_retry_after > http_max_retry_time) {
--			error(_("configured http.retryAfter exceeds http.maxRetryTime (%ld > %ld seconds)"),
-+			error(_("http.retryAfter exceeds http.maxRetryTime (%ld > %ld seconds)"),
- 			      http_retry_after, http_max_retry_time);
- 			trace2_data_string("http", the_repository,
- 					"http/429-error", "config-exceeds-max-retry-time");
-diff --git a/t/t5584-http-429-retry.sh b/t/t5584-http-429-retry.sh
-index 79b98fae08..8fc44ad11f 100755
---- a/t/t5584-http-429-retry.sh
-+++ b/t/t5584-http-429-retry.sh
-@@ -8,6 +8,14 @@ test_description='test HTTP 429 Too Many Requests retry logic'
- 
- start_httpd
- 
-+test_lazy_prereq CURL_EASY_HEADER - <<\EOT
-+	build_option libcurl |
-+	awk -F. '
-+		$1 > 7 || ($1 == 7 && $2 >= 84) { ok = 1 }
-+		END { exit !ok }
-+	'
-+EOT
-+
- test_expect_success 'setup test repository' '
- 	test_commit initial &&
- 	git clone --bare . "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
-@@ -53,12 +61,14 @@ test_expect_success 'HTTP 429 with Retry-After is retried and succeeds' '
- 
- test_expect_success 'http.maxRetries=1 retries once and succeeds' '
- 	test_config http.maxRetries 1 &&
-+	test_config http.retryAfter 0 &&
- 	git ls-remote "$HTTPD_URL/http_429/max-retries-one/none/repo.git" >output 2>err &&
- 	test_grep "refs/heads/" output
- '
- 
- test_expect_success 'http.maxRetries=2 fails after 3 failures and succeeds on 2 failures' '
- 	test_config http.maxRetries 2 &&
-+	test_config http.retryAfter 0 &&
- 	test_must_fail git ls-remote "$HTTPD_URL/http_429/max-retries-two-fail-3/none/repo.git" 2>err &&
- 	test_grep "rate limited" err &&
- 	git ls-remote "$HTTPD_URL/http_429/max-retries-two-fail-2/none/repo.git" >output 2>err &&
-@@ -72,6 +82,26 @@ test_expect_success 'Trace2 logs actual CURLINFO_RETRY_AFTER value instead of -1
- 	test_grep "\"key\":\"http/429-retry-after\",\"value\":\"1\"" trace-retry-after.event
- '
- 
-+test_expect_success 'http.retryAfter defaults to 10 seconds when unset' '
-+	test_config http.maxRetries 1 &&
-+	test_config http.maxRetryTime 9 &&
-+	test_must_fail git ls-remote "$HTTPD_URL/http_429/default-retry-after-10/none/repo.git" 2>err &&
-+	test_grep "http.retryAfter exceeds http.maxRetryTime (10 > 9 seconds)" err
-+'
-+
-+test_expect_success CURL_EASY_HEADER 'HTTP 429 with Retry-After: 0 retries immediately' '
-+	test_config http.maxRetries 3 &&
-+	start=$(test-tool date getnanos) &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace-retry-zero.event" \
-+		git ls-remote "$HTTPD_URL/http_429/retry-after-zero/0/repo.git" >output 2>err &&
-+	duration=$(test-tool date getnanos $start) &&
-+	duration_int=${duration%.*} &&
-+	test "$duration_int" -lt 5 &&
-+	test_grep "refs/heads/" output &&
-+	test_grep ! -i "waiting.*retry" err &&
-+	test_grep "\"key\":\"http/429-retry-after\",\"value\":\"0\"" trace-retry-zero.event
-+'
-+
- test_expect_success 'HTTP 429 without Retry-After uses configured default' '
- 	# Enable retries and configure default delay
- 	test_config http.maxRetries 3 &&
-@@ -161,7 +191,7 @@ test_expect_success 'HTTP 429 fails if configured http.retryAfter exceeds http.m
- 	# Should fail quickly (no 100 second wait)
- 	duration_int=${duration%.*} &&
- 	test "$duration_int" -lt 99 &&
--	test_grep "configured http.retryAfter.*exceeds.*http.maxRetryTime" err
-+	test_grep "http.retryAfter.*exceeds.*http.maxRetryTime" err
- '
- 
- test_expect_success 'HTTP 429 with Retry-After HTTP-date format' '
-@@ -361,6 +391,7 @@ test_expect_success 'HTTP 503 honors Retry-After header when present' '
- 
- test_expect_success 'exhausted 502 retries report HTTP 502 error, not rate limited' '
- 	test_config http.maxRetries 2 &&
-+	test_config http.retryAfter 0 &&
- 	test_config http.retryStatusCodes "429,502" &&
- 	test_must_fail git ls-remote "$HTTPD_URL/http_429/exhausted-fail-3-status-502/none/repo.git" 2>err &&
- 	test_grep "The requested URL returned error: 502" err &&
-@@ -369,6 +400,7 @@ test_expect_success 'exhausted 502 retries report HTTP 502 error, not rate limit
- 
- test_expect_success 'GIT_HTTP_RETRY_STATUS_CODES and urlmatch http.<url>.retryStatusCodes' '
- 	test_config http.maxRetries 2 &&
-+	test_config http.retryAfter 0 &&
- 	GIT_HTTP_RETRY_STATUS_CODES="429,502" \
- 		git ls-remote "$HTTPD_URL/http_429/env-status-502/none/repo.git" >output 2>err &&
- 	test_grep "refs/heads/" output &&
--- 
-gitgitgadget
+Thanks.
