@@ -1,84 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.50
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795644186;
-	b=M9fvTkL3K4F5ZWri112o1P3fEXxhgtxGVAKtT6WSN267Q0lCq/4+VwMwa69+6a5DCdIb
-	 F8v93U66+tUqsZ8Bn4VbrRmOzUqQ3Pt5vdZV4xONWM8JhfH7Tm3W5w9DRCxSENxu+8NpL
-	 y0p8msFIED9W8xMwhhbOSreZsO/aHkz5oiaQ9KdDsVGyRXEDT2rosE3pPv/f6ePBE85vI
-	 L6RHXAUCuAoemDfwP+P+lzYKkoOVzvgpQ2Hce78vnpp1pupKBjWU9WESAPP+a/9+VODLe
-	 Z5mPd4WKR3+Iidg6bJ93W5QjXSO6AlUvb0LDOSZ/AK4LaPbALvP4lAh8ZxvNjaIGFgg==
+	t=1795644195;
+	b=vyl+/AKDAu2mtq8hRi1N/g5y7MD96ZnWIpnZMJQlzXwj0J2mqEl2PNlpW5c9khlhAD5B
+	 Ccbjp+UXxQR2cmgLrKxx0ElDIlztj1MigskUvPwPGR8tiPop2wDR+uU8GME8nfT5q7YzC
+	 FFKDysLLYssr8eqDPWNFf06RF/o0BqFzwKtgY7mPidJ0fCRHWKku69SQo1AiaSem7KX/x
+	 fF1WQ76jimDs5mxy6R75pBztv/CtVjYbyEzP0J4O7WRlC9zQMFgq7iCLUMaAQrFg7zuIB
+	 DWKK0CKS73AcvsMBmslz3VcyXRb9XeCcnusOf7Uh+8Q32UOK3sq8mALNc6O0M8uQ36g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795644186;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795644195;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=k2PEMUormEjGD5YRY8k4J8gwbBReidjiqrhQUhyzUWI=;
-	b=A+wI7XGn9/wrR2Bn6bp9Hnb1pEYStAbR/uYvG/SiAJs+Jnkjl0m1j0/lh2BkI5jqjcVT
-	 xVdpXMStVmxjjn7zavOm4wR67T84+YRxGFifNBD42xqmusNnS3egtAyLQK87YSQ9O/79N
-	 QHT9xLQovMtdcXLaue7QcmAGqoZ0r0zOSoA3nRiPZrDER59BI7ZZRru4ZUPAZ/em1BDBK
-	 lSspeCh/bR+xdKGM/387GvHw1XhEPx8Xs0P8kEF0RXgQP7olF1qbi9lhDmDJqPcgoe+wB
-	 xbi1SGpkSXiLQcN8ttFdHKvGpR5ZDnk/idwCM9za37NOZvjEl27/onbQjXjM6OY6ubg==
+	bh=Ca6iqNDuk02EQZpE6y35+KaNUOvoZaNDmqcH3+rsxzE=;
+	b=NEpSccytkfL37zzN+S+UvCTQ4aC5mhAci0Xt9DAZar4GstEf0kyayDbUlj93b42jHkfh
+	 9VfCqR74WJcJCpsXhNzT+5fawOQfXfdQLwqlGPhtZWd8OykJCoEvKhd+dIx81tkdc7Scd
+	 cShXhiH21EQnM98BLvf4fje/rJDZ9H3Bcn663Ke6fvAJXA7tb3RafRvOk2uX6yTC7kk8O
+	 FR0UFJ2KPG6XR3ni8+umvZR2JVkkhnukU4PS7MElKicOPeMlbjgv1Gqs7ik+ovEVOjWbQ
+	 q/eIKUdDRzA/LBFw40feEGr5sVcBUpwfovtGCYvboRZMEIwyxWv18D6Q1jQFa7qWw8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=TWV9qwgV;
-	arc=none smtp.remote-ip=209.85.218.45
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qwQImPzS;
+	arc=none smtp.remote-ip=209.85.218.50
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05088606A31E
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 22:03:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 05088606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41EF606A321
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 22:03:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B41EF606A321
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=TWV9qwgV
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-c5126505cb3so821829066b.0
-        for <git@vger.kernel.org>; Wed, 25 Nov 2026 14:03:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qwQImPzS
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c51c294cef6so13516966b.3
+        for <git@vger.kernel.org>; Wed, 25 Nov 2026 14:03:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795644184; x=1796248984; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795644193; x=1796248993; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=k2PEMUormEjGD5YRY8k4J8gwbBReidjiqrhQUhyzUWI=;
-        b=TWV9qwgV7rx8FkUo70L/zd+xxocDqGe31ENzBVT/LOzr3aduYcujW1IUUMggcBuG4v
-         eZ206LdppScQmgXXIogVgjGaBJvUmz+vKcGI1v/8sB3u49h7F5QnzUbZYubQWTeelvkC
-         7eXK9PtDIq17OQxxaFcxL0X/omCcHO4W3/LZqk/7r4vXm5Ekp8TlgIny/tqzOsqtIP28
-         ZDmGzVivDik4xM7/CUOniy5eBSQ3jNcVibTSfJatZw5M5c9L3gDUeW5FOOhY4fTbgsiY
-         6lUmzp3Ay7LrGV0x/oEoRuLWE23uep9GjlhjAtv0HVxDeY0kZFBtvsixHRjykGYTDKjA
-         GJjQ==
+        bh=Ca6iqNDuk02EQZpE6y35+KaNUOvoZaNDmqcH3+rsxzE=;
+        b=qwQImPzS35vhT9xHHu1o38WWNdhKqYQ4qObXFw6kfNQVj1WU3LaPmFe3hQwf4kXrT4
+         /9ZjON436SdETc4+w6R22NfcYq7OxITwo74MhQdLLpNkn/9S29Rviyol5I9LHng3BcpN
+         Ck5lbgW1hfnpk2hV9v+35EQVk1FH0vAN/+lOiWSsqBQ3ZR2Wk7XuUzj2E0M8ZTFGvzbi
+         fvSJjxv3uk+IDAJwxTDnx35lkjPZGnR8jLXYjjbf4PQA8I52HrAnmYaOkEWCC317fZQN
+         Yrv+xC8aN20zXqrvDay9YzPVGz4xhTqpGbUh+Rw+oLOw0+QuVR7tGcauZPZMVAe0chbS
+         4pkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795644184; x=1796248984;
+        d=1e100.net; s=20260707; t=1795644193; x=1796248993;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=k2PEMUormEjGD5YRY8k4J8gwbBReidjiqrhQUhyzUWI=;
-        b=W8uGMYJBiimcQMIgkasP4zSRKoAp3AJfteIbnC/+wUvTCwCGMzBpXonfp965ks2qBR
-         dTuLk8w+Bb9lqzMezCQtj4omChVQ7DOeul1yei/++SLQMZllWitbB+KtFABuNjETJZQ3
-         QweSeOQpfxTPxC1uRBhJZXJQ+f2EBN3BpXqKkxF+YusIROCMWIP8qbZVCyCiOxzCGCEH
-         4j7n8Q3oYi1GhNgXBA2yF03rD8YzrzK+PBntOAF3NMTXUH4lS4yoUVEUt+E7V7WYZY7x
-         bZFFuI6JIg2340mLfHlymGacjesdy4Kpx9waE3AL9cbEKdJljQa7VFH6LtvmroqChHRb
-         2R3w==
-X-Gm-Message-State: APuU4Z/QxrKJahPZ0dJzyiIs/v3kqNdZvs1Bp6K8YmMWBr3GdTtYiqdB
-	kLUiUbto9oVgkA5K0CFhfOQab2xsZJ6lw6cQ2fH0wkUTdmgEi/XduEI1Q+SOW6tkNzA=
-X-Gm-Gg: AZFdTZc969+K6fY0rBhZDodqXA0sDJxH8ls3Ku37esTwo7lSXkhcuXIeHrV9l4ApeyN
-	NjH6YE/2H6zsjjtqgIxCXbebLtJX6tCoZeoVyt++1YYoOR8kkNXXBlciDp0pMUgVmMKxJD1rG69
-	GyjAJWlOagpazUUAJBkcqzLA85Th1dkktvWslj84Suag/RDIpXjR46KpiEOpAuEvgQXVqxppGFp
-	E57F8xTQZH1hC3ixWvqoq2az0/e/hK4sw9qYY88EMhpgxweQS9CsfN6wOAXkqb7xu9893C9FUz7
-	IUq+76pK9MPn4aOmM5FSLLrPtolfWs1FoFK9L9nvpn3Kb1Py9onHmrauQa15UHNVNRt9Q1BPfCV
-	YEm6vJjAXvVx5uyZlrypzBXDSHhM0UH7cuCb2iz4wZ4OP0GkU0oBtre1RRK6PfUUaVRcu8fyXTH
-	4F/IGkroL8X5mDHXv/2huWNkGEHop2XOQb3HxjZgWyA7N52ytw2uNqqYbk8ebCq8CBbbfmwT/lI
-	wdTvaJ9wChMzG4lX47OeICgvKZYicQgpixBarmGFLuy7VAuW3izNitYI8om+82ALrZnA2XTDU7n
-	w5/zaV7iYiTDjddjdSDjne0RG8OoYBruESBYTeYKxOd+1782HyAiOw9DPd2PlV6eqIQFxThHE0Z
-	lsQYO9Tc/xxY4ahH6CEoTGus79uz1BwyZspDAiMnFSjG4zNQiu8jJDC6Kds7pn48VQJN/JySONJ
-	XwuAkIQlTCY306Omhhq1/QBeX+FILS
-X-Received: by 2002:a17:906:3b04:b0:c29:3c97:c994 with SMTP id a640c23a62f3a-c513ab47f35mr1226084966b.35.1795644184222;
-        Wed, 25 Nov 2026 14:03:04 -0800 (PST)
+        bh=Ca6iqNDuk02EQZpE6y35+KaNUOvoZaNDmqcH3+rsxzE=;
+        b=YxcwRWw+LZVzGU1WIIxq/w9VU3AZgtpX459+cFn1FffSeRayRXYUa4IdLPXvaHJUEA
+         B9Wspw0zYMu9QogxGuP48hZHnG0SQkmNeP8WJYll+FrFJ8pjdXB6CPr16kVclSVGgSYn
+         qrldYApyPmNYOmOJJH1W5hsLyN6Ez+DKH5W76ijwMhpS6NsDtpmelrc1aQpqGHAomLpJ
+         4OC9k7JaQ437CVwbrcsxR2ezeE96ezD7HARn/cL13xGW+fTt44r9Aw1FYPPSmwDYHFif
+         QHuLDQOHJDJrWhNJ7QNbRPXWzMmWTMDR+UCyarxbRIb8MHiMWlYIWnzgTVlgoEXf1e1f
+         s2sg==
+X-Gm-Message-State: APuU4Z8pGZODl6HYO8uST7JR053bqHYRce6L7pcWkhiRl4fBp84JNCvc
+	wLOO9Ir5wxmCp7rAoR2yiNUW55lpUfqf9t/ADrzRZBDtJOvNuBBC69p+o6V1HIwEx1w=
+X-Gm-Gg: AZFdTZdjBCGBTLal8b0Cj1njICtiWr7MA6pl4IM3oMfmyghuqY1s9AtxfCHutvabAN3
+	FJ5+UhouyFBXZzxGXNC7165E26SUG4ydR11uZjQ0r5C1Cm5UsCQ8qkDzTtlZyR8bA7rEVD0tWY2
+	judieUIEXbb9D9fOgxoaF+N4QR2TZAZ+ERUbBi+bUsMBPWTvnq9xSrBPPKAVGNLHeIPVQiCSiup
+	rOmALAxVqz9BunTbge3Dt9yA4VXqF6PJ0BZ1mqCQUgsJyUv8pbHiZ8cuTAP+5fzxg4byDVjGeww
+	Oni3ret9SNXOHnPX82t9wo32fbM5uxvN2dx9p1CvJ0W3KulAsIQRSahDWdK8ieLbI2DF/RTRIU+
+	s4dkXU0jhkQmuHVuCDcxi9pt4MwG4vMy7er7ZyRAVdZH4Gvfh7q0jnOehvS/kMOi4I3t/I5+yo2
+	hx8Q3yToMkWOIxE0J3Bfh44WCZKgLsji0ixjjpKRl+EF038+rz9iTUuSOhTZ8VRJOANE0HtgTYZ
+	1VGhJ64SjXRzqQBdkFlqRLoUuM3daBjAI4InFsMijylCPrjlFwhmVQG5deL59Hvd9TUmNADJ6IP
+	GSW5XZuucmSvJ2h1P7tI/PIhzVpv/2d3EM9LzAnQEP3+7VhYRDWOptaSFKAHMfnSnAYOb2DItGI
+	95JHCNGES44rJm9rjjKTGYSFTANs9nHpxjypzl745KydKeISM568KZnL/9TTJB+cSbz0YVmmNvs
+	ohlVkKlFSveZ5Renzps+s4t/Sqcwbb
+X-Received: by 2002:a17:907:940a:b0:c29:5d41:dfe8 with SMTP id a640c23a62f3a-c513acbb4a8mr1564827366b.43.1795644192922;
+        Wed, 25 Nov 2026 14:03:12 -0800 (PST)
 Received: from localhost.localdomain ([104.28.251.99])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c513aec3c60sm676998366b.50.2026.11.25.14.03.01
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c513aec3c60sm676998366b.50.2026.11.25.14.03.10
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 25 Nov 2026 14:03:03 -0800 (PST)
+        Wed, 25 Nov 2026 14:03:12 -0800 (PST)
 From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
 To: git@vger.kernel.org
 Cc: christian.couder@gmail.com,
@@ -88,9 +88,9 @@ Cc: christian.couder@gmail.com,
 	siddharthasthana31@gmail.com,
 	kaartic.sivaraam@gmail.com,
 	okhuomonajayi54@gmail.com
-Subject: [PATCH v5 5/6] notes: pass the repository to the ref glob helpers
-Date: Wed, 25 Nov 2026 23:02:13 +0100
-Message-ID: <20261125220214.35881-6-okhuomonajayi54@gmail.com>
+Subject: [PATCH v5 6/6] notes: pass the repository to the combine_notes callbacks
+Date: Wed, 25 Nov 2026 23:02:14 +0100
+Message-ID: <20261125220214.35881-7-okhuomonajayi54@gmail.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261125220214.35881-1-okhuomonajayi54@gmail.com>
 References: <20261124172146.18330-1-okhuomonajayi54@gmail.com>
@@ -106,143 +106,182 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-string_list_add_refs_by_glob() and
-string_list_add_refs_from_colon_sep() walk refs in
-the_repository. The caller already knows which repository
-that is.
+combine_notes_concatenate() and combine_notes_cat_sort_uniq() read
+and write note blobs in the_repository, even when the notes tree
+belongs to another repository. The callbacks are only called from
+note_tree_insert(), which has the tree.
 
-Take the repository as their first argument. Callers pass
-the_repository for now.
+Pass the tree's repository to all combine_notes callbacks.
 
 Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
 ---
- notes-utils.c |  6 ++++--
- notes.c       | 21 +++++++++++++--------
- notes.h       |  6 ++++--
- 3 files changed, 21 insertions(+), 12 deletions(-)
+ notes.c | 31 ++++++++++++++++++-------------
+ notes.h | 23 ++++++++++++++---------
+ 2 files changed, 32 insertions(+), 22 deletions(-)
 
-diff --git a/notes-utils.c b/notes-utils.c
-index ea43fedd43..9f70366aa9 100644
---- a/notes-utils.c
-+++ b/notes-utils.c
-@@ -123,7 +123,8 @@ static int notes_rewrite_config(const char *k, const char *v,
- 		/* note that a refs/ prefix is implied in the
- 		 * underlying for_each_glob_ref */
- 		if (starts_with(v, "refs/notes/"))
--			string_list_add_refs_by_glob(c->refs, v);
-+			string_list_add_refs_by_glob(the_repository,
-+						     c->refs, v);
- 		else
- 			warning(_("Refusing to rewrite notes in %s"
- 				" (outside of refs/notes/)"), v);
-@@ -160,7 +161,8 @@ struct notes_rewrite_cfg *init_copy_notes_for_rewrite(const char *cmd)
- 	}
- 	if (rewrite_refs_env) {
- 		c->refs_from_env = 1;
--		string_list_add_refs_from_colon_sep(c->refs, rewrite_refs_env);
-+		string_list_add_refs_from_colon_sep(the_repository, c->refs,
-+						    rewrite_refs_env);
- 	}
- 	repo_config(the_repository, notes_rewrite_config, c);
- 	if (!c->enabled || !c->refs->nr) {
 diff --git a/notes.c b/notes.c
-index 1cdf09c81c..f327652994 100644
+index f327652994..25e5873ac2 100644
 --- a/notes.c
 +++ b/notes.c
-@@ -958,25 +958,27 @@ static int string_list_add_one_ref(const struct reference *ref, void *cb)
- /*
-  * The list argument must have strdup_strings set on it.
-  */
--void string_list_add_refs_by_glob(struct string_list *list, const char *glob)
-+void string_list_add_refs_by_glob(struct repository *r,
-+				  struct string_list *list, const char *glob)
- {
- 	assert(list->strdup_strings);
- 	if (has_glob_specials(glob)) {
- 		struct refs_for_each_ref_options opts = {
- 			.pattern = glob,
- 		};
--		refs_for_each_ref_ext(get_main_ref_store(the_repository),
-+		refs_for_each_ref_ext(get_main_ref_store(r),
- 				      string_list_add_one_ref, list, &opts);
- 	} else {
- 		struct object_id oid;
--		if (repo_get_oid(the_repository, glob, &oid))
-+		if (repo_get_oid(r, glob, &oid))
- 			warning("notes ref %s is invalid", glob);
- 		if (!unsorted_string_list_has_string(list, glob))
- 			string_list_append(list, glob);
- 	}
+@@ -279,7 +279,7 @@ static int note_tree_insert(struct notes_tree *t, struct int_node *tree,
+ 					return 0;
+ 				}
+ 
+-				ret = combine_notes(&l->val_oid,
++				ret = combine_notes(t->repo, &l->val_oid,
+ 						    &entry->val_oid);
+ 				if (!ret && is_null_oid(&l->val_oid))
+ 					note_tree_remove(t, tree, n, entry);
+@@ -816,7 +816,8 @@ static int prune_notes_helper(const struct object_id *object_oid,
+ 	return 0;
  }
  
--void string_list_add_refs_from_colon_sep(struct string_list *list,
-+void string_list_add_refs_from_colon_sep(struct repository *r,
-+					 struct string_list *list,
- 					 const char *globs)
+-int combine_notes_concatenate(struct object_id *cur_oid,
++int combine_notes_concatenate(struct repository *r,
++			      struct object_id *cur_oid,
+ 			      const struct object_id *new_oid)
  {
- 	struct string_list split = STRING_LIST_INIT_NODUP;
-@@ -987,7 +989,7 @@ void string_list_add_refs_from_colon_sep(struct string_list *list,
- 				     STRING_LIST_SPLIT_NONEMPTY);
+ 	char *cur_msg = NULL, *new_msg = NULL, *buf;
+@@ -827,14 +828,14 @@ int combine_notes_concatenate(struct object_id *cur_oid,
  
- 	for (i = 0; i < split.nr; i++)
--		string_list_add_refs_by_glob(list, split.items[i].string);
-+		string_list_add_refs_by_glob(r, list, split.items[i].string);
- 
- 	string_list_clear(&split, 0);
- 	free(globs_copy);
-@@ -1002,7 +1004,8 @@ static int notes_display_config(const char *k, const char *v,
- 	if (*load_refs && !strcmp(k, "notes.displayref")) {
- 		if (!v)
- 			return config_error_nonbool(k);
--		string_list_add_refs_by_glob(&display_notes_refs, v);
-+		string_list_add_refs_by_glob(the_repository,
-+					     &display_notes_refs, v);
+ 	/* read in both note blob objects */
+ 	if (!is_null_oid(new_oid))
+-		new_msg = odb_read_object(the_repository->objects, new_oid,
++		new_msg = odb_read_object(r->objects, new_oid,
+ 					  &new_type, &new_len);
+ 	if (!new_msg || !new_len || new_type != OBJ_BLOB) {
+ 		free(new_msg);
+ 		return 0;
  	}
+ 	if (!is_null_oid(cur_oid))
+-		cur_msg = odb_read_object(the_repository->objects, cur_oid,
++		cur_msg = odb_read_object(r->objects, cur_oid,
+ 					  &cur_type, &cur_len);
+ 	if (!cur_msg || !cur_len || cur_type != OBJ_BLOB) {
+ 		free(cur_msg);
+@@ -858,20 +859,22 @@ int combine_notes_concatenate(struct object_id *cur_oid,
+ 	free(new_msg);
  
+ 	/* create a new blob object from buf */
+-	ret = odb_write_object(the_repository->objects, buf,
++	ret = odb_write_object(r->objects, buf,
+ 			       buf_len, OBJ_BLOB, cur_oid);
+ 	free(buf);
+ 	return ret;
+ }
+ 
+-int combine_notes_overwrite(struct object_id *cur_oid,
++int combine_notes_overwrite(struct repository *r UNUSED,
++			    struct object_id *cur_oid,
+ 			    const struct object_id *new_oid)
+ {
+ 	oidcpy(cur_oid, new_oid);
  	return 0;
-@@ -1133,7 +1136,8 @@ void load_display_notes(struct display_notes_opt *opt)
- 		string_list_append_nodup(&display_notes_refs, default_notes_ref(the_repository));
- 		display_ref_env = getenv(GIT_NOTES_DISPLAY_REF_ENVIRONMENT);
- 		if (display_ref_env) {
--			string_list_add_refs_from_colon_sep(&display_notes_refs,
-+			string_list_add_refs_from_colon_sep(the_repository,
-+							    &display_notes_refs,
- 							    display_ref_env);
- 			load_config_refs = 0;
- 		} else
-@@ -1145,7 +1149,8 @@ void load_display_notes(struct display_notes_opt *opt)
- 	if (opt) {
- 		struct string_list_item *item;
- 		for_each_string_list_item(item, &opt->extra_notes_refs)
--			string_list_add_refs_by_glob(&display_notes_refs,
-+			string_list_add_refs_by_glob(the_repository,
-+						     &display_notes_refs,
- 						     item->string);
- 	}
+ }
  
+-int combine_notes_ignore(struct object_id *cur_oid UNUSED,
++int combine_notes_ignore(struct repository *r UNUSED,
++			 struct object_id *cur_oid UNUSED,
+ 			 const struct object_id *new_oid UNUSED)
+ {
+ 	return 0;
+@@ -881,7 +884,8 @@ int combine_notes_ignore(struct object_id *cur_oid UNUSED,
+  * Add the lines from the named object to list, with trailing
+  * newlines removed.
+  */
+-static int string_list_add_note_lines(struct string_list *list,
++static int string_list_add_note_lines(struct repository *r,
++				      struct string_list *list,
+ 				      const struct object_id *oid)
+ {
+ 	char *data;
+@@ -892,7 +896,7 @@ static int string_list_add_note_lines(struct string_list *list,
+ 		return 0;
+ 
+ 	/* read_sha1_file NUL-terminates */
+-	data = odb_read_object(the_repository->objects, oid, &t, &len);
++	data = odb_read_object(r->objects, oid, &t, &len);
+ 	if (t != OBJ_BLOB || !data || !len) {
+ 		free(data);
+ 		return t != OBJ_BLOB || !data;
+@@ -918,7 +922,8 @@ static int string_list_join_lines_helper(struct string_list_item *item,
+ 	return 0;
+ }
+ 
+-int combine_notes_cat_sort_uniq(struct object_id *cur_oid,
++int combine_notes_cat_sort_uniq(struct repository *r,
++				struct object_id *cur_oid,
+ 				const struct object_id *new_oid)
+ {
+ 	struct string_list sort_uniq_list = STRING_LIST_INIT_DUP;
+@@ -926,9 +931,9 @@ int combine_notes_cat_sort_uniq(struct object_id *cur_oid,
+ 	int ret = 1;
+ 
+ 	/* read both note blob objects into unique_lines */
+-	if (string_list_add_note_lines(&sort_uniq_list, cur_oid))
++	if (string_list_add_note_lines(r, &sort_uniq_list, cur_oid))
+ 		goto out;
+-	if (string_list_add_note_lines(&sort_uniq_list, new_oid))
++	if (string_list_add_note_lines(r, &sort_uniq_list, new_oid))
+ 		goto out;
+ 	string_list_remove_empty_items(&sort_uniq_list, 0);
+ 	string_list_sort_u(&sort_uniq_list, 0);
+@@ -938,7 +943,7 @@ int combine_notes_cat_sort_uniq(struct object_id *cur_oid,
+ 				 string_list_join_lines_helper, &buf))
+ 		goto out;
+ 
+-	ret = odb_write_object(the_repository->objects, buf.buf,
++	ret = odb_write_object(r->objects, buf.buf,
+ 			       buf.len, OBJ_BLOB, cur_oid);
+ 
+ out:
 diff --git a/notes.h b/notes.h
-index f4d1e31cd8..30adf0c197 100644
+index 30adf0c197..3eb73adf54 100644
 --- a/notes.h
 +++ b/notes.h
-@@ -331,14 +331,16 @@ struct notes_tree **notes_tree_load(struct repository *r,
- /*
-  * Add all refs that match 'glob' to the 'list'.
+@@ -13,10 +13,10 @@ struct strbuf;
+  * When adding a new note annotating the same object as an existing note, it is
+  * up to the caller to decide how to combine the two notes. The decision is
+  * made by passing in a function of the following form. The function accepts
+- * two object_ids -- of the existing note and the new note, respectively. The
+- * function then combines the notes in whatever way it sees fit, and writes the
+- * resulting oid into the first argument (cur_oid). A non-zero return
+- * value indicates failure.
++ * the repository the notes live in and two object_ids -- of the existing
++ * note and the new note, respectively. The function then combines the notes
++ * in whatever way it sees fit, and writes the resulting oid into cur_oid.
++ * A non-zero return value indicates failure.
+  *
+  * The two given object_ids shall both be non-NULL and different from each
+  * other. Either of them (but not both) may be == null_oid, which indicates an
+@@ -27,17 +27,22 @@ struct strbuf;
+  * combine_notes_concatenate(), which appends the contents of the new note to
+  * the contents of the existing note.
   */
--void string_list_add_refs_by_glob(struct string_list *list, const char *glob);
-+void string_list_add_refs_by_glob(struct repository *r,
-+				  struct string_list *list, const char *glob);
+-typedef int (*combine_notes_fn)(struct object_id *cur_oid,
++typedef int (*combine_notes_fn)(struct repository *r,
++				struct object_id *cur_oid,
+ 				const struct object_id *new_oid);
+ 
+ /* Common notes combinators */
+-int combine_notes_concatenate(struct object_id *cur_oid,
++int combine_notes_concatenate(struct repository *r,
++			      struct object_id *cur_oid,
+ 			      const struct object_id *new_oid);
+-int combine_notes_overwrite(struct object_id *cur_oid,
++int combine_notes_overwrite(struct repository *r,
++			    struct object_id *cur_oid,
+ 			    const struct object_id *new_oid);
+-int combine_notes_ignore(struct object_id *cur_oid,
++int combine_notes_ignore(struct repository *r,
++			 struct object_id *cur_oid,
+ 			 const struct object_id *new_oid);
+-int combine_notes_cat_sort_uniq(struct object_id *cur_oid,
++int combine_notes_cat_sort_uniq(struct repository *r,
++				struct object_id *cur_oid,
+ 				const struct object_id *new_oid);
  
  /*
-  * Add all refs from a colon-separated glob list 'globs' to the end of
-  * 'list'.  Empty components are ignored.  This helper is used to
-  * parse GIT_NOTES_DISPLAY_REF style environment variables.
-  */
--void string_list_add_refs_from_colon_sep(struct string_list *list,
-+void string_list_add_refs_from_colon_sep(struct repository *r,
-+					 struct string_list *list,
- 					 const char *globs);
- 
- /* Expand inplace a note ref like "foo" or "notes/foo" into "refs/notes/foo" */
 -- 
 2.56.0
 
