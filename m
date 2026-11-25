@@ -1,126 +1,123 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.153
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624061;
-	b=L7EJZlkprwOhSG7fVUZX/TRwEt/cUlizkN2/3b/8bru7owsi3nyq+T9EUQ/PZLSwaDNF
-	 3KuiUHXinnc/mUT8DyhTTC+hUTkqbmdPhReN3mOodZxmg5X5bnT+72YiaahsLDP99Y4Sb
-	 0+COeuaUdejgVvVx8PPa6qJySHZAXozaq9VdXiZn7dnOqcICzqtXjLhwK5PvhMOQCln2a
-	 d9hDXjoHrMLM86DLYs6qSRYgPIzp3X6pOPVyvnp2McHYqhbbzDqgnMF183fDQ02ZxVj/6
-	 f4rYM1OU6L01j+q8pXmpAEy1L+XV5jWLGj9OddUnyv4M42v76a5NLVA7gwuzlVWOKBQ==
+	t=1795625860;
+	b=nTzmWjRjR5MU+3xUPvxlmE/Igl2jf2MufNuKM8VanDXYmQwTn6wt/o6O3obiDypuSvDN
+	 adLhQbDQcT4ns7Ck0kqqDrVgK8aXnJGv18Oj+eoO4ogNFlK8/oKwrSXpV1EFg5R1sAp2B
+	 lf/oJVaG3c8rhaZJHfBN1lqoPP+wla2nUgmDP6ogoZer+evGjmlD2+vQJ6OQkAnSsJaTf
+	 j/cY/oo5BZGtYs6hbs3CYyn62fM19avHq0RYpbKMQjdj5zod1IS9+jDNzR/fFgEgE29np
+	 WhoMINYH7X972euuonu3mNtKwugajMdrqrwbLpGbeeT83mZ9vM9nsp+pXeJQ/AftDiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624061;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625860;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=i7V3z3yAHU8bd12iRL3ed1ewrTMkxv5znPhNMWvOJKQ=;
-	b=Bl1rYI5u8c1K4oj5uyjbGBbH7KJsGlu7OAFyKp+cOgg1ikrgDMVQVSl7ZV2EN9lSlHu+
-	 pXWiyGlssIjlLCbr8mrL9CJhOFheEYRNhu5loklbWfyjcOt8vpj9C7+s7nCPmm35jj44l
-	 TCudxGptcGnbFlxloa94AhPpKBsi4XS9diK0vqcwveXC2l6qXBZK1CPiuNpDQb/lxQhGj
-	 Rtr9W5muj3KUM3MPtPOvN8U681u7mp00UO6UO7AFMr0mhaZkXWbLwGLw9rgQzG0uZeZjQ
-	 VU4msDnO8y+JFzWeOc2VJBRIcg3483YmGTrJYgNhyCTL9xy1dsYoGBaXD0jF99J1jLw==
+	 User-Agent:MIME-Version:Content-Type;
+	bh=ZVGRfuXFcsusUYIaBOuWxmE2e+DzCMQ1Uppv6/Wd2HU=;
+	b=uTDaqhVMh2RrmtbF22rR+g/+v0Zh39aqEU0TW528Og8iM/TvOhlf05vdIASKYiEsmL3E
+	 GcaCyZzI+YaodRnfe7HsyYC6iblUaB/DwTYNVItE6sqKrJGWO53gcB+zbAoocPoYRoeM4
+	 Q+dQX+/hByyrZBi6RVkWJSSAc0O3FuCrvsDHr4hCzs59bg7jSwL1PWY2mbIEigDe5VOPe
+	 1hf7qDby6ADFpxOYmvQmMBCv9wzXBwIQCweTaosqfbhlMVT+cgWaGaIk9sz2/t8yfRYbA
+	 xNp1H8BQ61YrxMncbvcTwXu6HnOW6IKSpkgQbC/0aODLGSqBwh55L7GGHRtxAP+q61A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=EE+ZtzaV;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=b5PKvaQX;
-	arc=none smtp.remote-ip=103.168.172.144
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=L3DFlwJA;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=UHGp4xOJ;
+	arc=none smtp.remote-ip=103.168.172.153
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC14A606A329
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 16:27:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BC14A606A329
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC72606A31E
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 16:57:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7FC72606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=EE+ZtzaV;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=b5PKvaQX
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id AF656EC0B40
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 11:27:39 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=L3DFlwJA;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=UHGp4xOJ
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 925E214003A5
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 11:57:39 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Wed, 25 Nov 2026 11:27:39 -0500
+  by phl-compute-06.internal (MEProxy); Wed, 25 Nov 2026 11:57:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1795624059;
-	 x=1795710459; bh=i7V3z3yAHU8bd12iRL3ed1ewrTMkxv5znPhNMWvOJKQ=; b=
-	EE+ZtzaVwk7fQ5P8mF6duWhTfEQUSeL8F+8oWnAdgnUMsV6+HjDFqXOBWk9WhxpX
-	1wz7/go/YZlr3+6qwEjrOG+2EUt458OtWYE7d+7LsLDMGxsNayJYNyUc9C/4hOXY
-	1zuU9uIIn45XZh5tQjVfyBkwmltxHFPUJCm0/Qm7MQ4Flnz0KArykedyzwEdzrfb
-	ljdPqTPyePMuxP8EQjH8hoD9DHhs7nfBt/hb74wXwEfWUVxWlq/ZqteKddYSTFsB
-	dltXB585ie9j+qOYj1Yshjb9hThaBbgEPHwrroZc0DzjyR81nFMdECLrRDumYphm
-	gC1CUNytMe3xFCmduNlC1Q==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1795625859; x=1795712259; bh=ZVGRfuXFcs
+	usUYIaBOuWxmE2e+DzCMQ1Uppv6/Wd2HU=; b=L3DFlwJAoz+C5hbncOeUVLgwUQ
+	sxuri1lTulBJUglVtsRrwxBQRN8CrblPjP2+Zl14eE1rh5Cd0Ij6ZjUrVHHAILTs
+	R5KBsmEX8FvCrkQZSdHQzg86vcNY7OTrU2b1lezZMSuZW9o4x4QPCbrpZM7dtS4Z
+	1wT9k9K1p4sdbxGZPeqezmMzsHUEmUE7282sNaiddK76/xrEmBfH/2rqud6LxROs
+	ItpBJKEWfR/6OaBsTTVcJgDWcsfxWMMwysTAtVo796uGfI16NtrvBufewMBqN2t7
+	94YgNhncrpAiT21ojiOei9KrmLTh/1CtJ6SxkTuEDMQVbapJEsU+pOfc0JDg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795624059; x=
-	1795710459; bh=i7V3z3yAHU8bd12iRL3ed1ewrTMkxv5znPhNMWvOJKQ=; b=b
-	5PKvaQXKGJsY1o6I+6XDz5hkAmzzjSeWixmGlruleIdcKY3mhvPk/c7qNO6cb5t5
-	mIfvJHWajk+UI39S8iIrHwl5Nz9HUnQBYcVptJ7pzFFgw/0QFjcEqUmyahzFJalW
-	CP3tuwf59l7Od7+0u/HH8W7EdhlKcCtiGjOOYp87gK/ry8szQ9qBVFd1fHLipB3h
-	/03GNz5HwVFoUzEfqlu6RFj2BhvvVmI1VsT3C4yoebRGiE2S5NU7hY2351VMnlHg
-	zZ3IUTgninPGWdEVuQ/QUACVmVtlx5ynUrwJRtgyH67Z0bsy+iVbZLz+uQs24TXB
-	elO81JDkoe8JTcFktq51Q==
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795625859; x=1795712259; bh=ZVGRfuXFcsusUYIaBOuWxmE2e+DzCMQ1Upp
+	v6/Wd2HU=; b=UHGp4xOJbAfMek3nkyqofaNIAwOzBhwmIQdjY6Uv0g9IexM2LcK
+	7dYPQ0sETdqhu5FzGC4vRXKhVHgSeS7p7ZZ+oJJDvp/Esuzz19M1p3RNxdi17OXO
+	nMd/pV/400/JLGIcx/PYXtIddJK59OLJ3hP2CmPz2XFp9EnilezxUrtBOLwQC9AM
+	6xwCNoD3tKVUHH6cVd46AXxnmdNdWpV8UnHU7lQcHwu4QSh/BZ1QuqA+wlwfaGyD
+	02K6l1EY+/ejSxdFiBw25TW6xxU88Xrao9F9ZUkTuI8QYRo7/Oh/kos04frA6M2Z
+	gaTRkgymPzHXwW1urCpReB2RTILfCA49rqA==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795624059; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1795625859; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:G4UycY2zFyGBEwLBZ16hnx1Tw0SH7jOqbgEq5lcPY3DZ4FL
-	4pY78Ty0peU4OOv8XRHU9MtId2TEUt1HwEtLpVYlqfBDFy+a/jY4c2/FbbRiWs1D
-	CDJH0/hf1tpYpQQeWdE03RuIW7xytP6czznTp2h9HGdzTwKZGIvY9rpTGm/uzWu4
-	+YdiKuQKz2uvxqTr4XMfy4I3AfWs1bmFOfHR4Ri+QIzP0T/9uENM221CNqoxg1Vt
-	2CVF0v+hp82zSxDnAGExOE6JvZmB8DnJiyh/8RIlTeo1kVUUtH1A0t8T5wy2HBoK
-	UD3O0joYvzoE3SCzUQ4da+/A22ct0zWgYEsaOkA==;
+	s=fm2:rsa-sha256:mk6fsSVRouiFiXcVzruHC/EbDhIfqlVMW1zlCDeUB8F0u9t
+	G19hd6mDD81TYSgzLef+QuGX/ggW2ZftMG/ZGCPGnPZYeCtjvZgpBkCk+ipAVz7P
+	39cB6SqAC1vlYbFZJZKUkIA3RP21HunsPv/XOfW3OGmMW4wm/w6QtXeLlP+qqYrG
+	ICKn/PDCaKOz5ZPD/WKSNqsKPC9OlHLhW4Dbu7APILin31nqk1a7YQhhSICBc9NP
+	c6aIV/8GE3gB/qxvyLUIczz7bWea7OwQUGy/XaddqFDvoDpjsESOeMH7DumQFL1k
+	wJNsrbFNx+kW5s9NR60UHzOzREaOLQRQy5x8vaA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=13;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to,
-	user-agent;
-Message-Instance: m=1; h=sha256:QQFqV3fpSgvUEWGPlv021IJs5W2d11csPmVr+xPzcFM=:FqctsgcJ1qPMaqt3Rm1nlgKxBOdox2P21AIVKzS3ckk=;
-X-ME-Sender: <xms:ewwHa9Lys_gvv_CfEb3BN2PlleX1L20NYM4_nxSnsRDucl6xKeb25Q>
-    <xme:ewwHawLQjekSt7bLWHo6ocLhw24TcPj7DduQ22NBK0cyKX-6ZfehlPGy-hAyG8WRN
-    N6CQTVeY3I66bIQDKTtWCqsci03-aZLqSGyQhr2pKeWfWxLpJjnqQ>
-X-ME-Received: <xmr:ewwHa6tqBcbgVpytuIWWoVxuYYyEUBJOevt9WI-1OAw5scq9um9cHqKAnVGTTD5XYnRxLm8USAQD9E09aiqZH73PlDr6GQeB8lhrS8M>
-X-ME-Proxy-Cause: dmFkZTEH8o8sjUdmc55tznRNBEtT0CnG4JFlk0p3c6nLupzsINmGG1oKWKEKBNp4d8UOrG
-    YsIXuuxKPmvEPULxR32pVcMER5HsfZQPMZV01ftcdaUZcBqvCA1Ei8XTDLWsyQx1xPUNkA
-    zIrfGneI9C94F3TjwKlQNq5v2hfTuYzv2WTFGdPq7cOvQLPtjEhK1YaYpu811N6dMSSmIA
-    +YkbJ46Woy381WcoalnXg8qfKauWdbwNwqvAV8hfrbxg7f08hWz3uEwOxB6VjiMV0bjV+Z
-    IGN8bspA5Gq9i+RXGPhOsnwbcP1IpgkztLhfjpUcm+SZ2ym3DAwO6QdaQJkAKKu9WNw8sL
-    hZbAqSovVJ/s7hfEvXSsi+fJk7h9WIZEZ9jI2ycypCWZB7y94CIltI7NghaZMkpu177hl8
-    j1DBzyBFdXaaP3polYrNcnifj/Gb7PZPCrAhXvRojLemEr/lmJaP16dbxv8kY5FKWRE2Rm
-    JON4FpnkKxXZobuxv7sqDjURDCo95jSnoNViX02J25l00antWzjNwWam2ZvaJjfmcECusg
-    fosdyZFEpplyaB7t+6KgvtCZNCoFAu8VijZst3MVALoDdXWyDBFC/jhdNTYMoZMgWjr5RH
-    h0njRd1Z2zuCfbhR/NgB8mUEewF0zXKWyJPc39i96opCdCoPRxh3Wlv4lpzg
-X-ME-Proxy: <xmx:ewwHa9Qa6KZW3Sp_tg3SwvW23fa9pq3Kwdmnw6o4x66EO4iFc3dhHQ>
-    <xmx:ewwHawMan9mLp79FiXZ0zclcmbiwobjzHvnjjPTkAFjBFH6NOXRVJg>
-    <xmx:ewwHayYTd30wYi49KImnUBq1YnHFCA2uzvHTxxucDbDzzUaKCMQTuQ>
-    <xmx:ewwHa6xe2olL_r6tVE5f62NOSzXYoYH56nx4zo1ZHytgdp41IRNKxA>
-    <xmx:ewwHazuZT4-Cw7hv469s1zDombsNcyNTlLOhOoacsN1si6YGCGJW5dbZ>
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:0VPo0+zKG9frH9oqVleJLNk55rLidGVI85GaPDZ5swQ=:Tf1zRooEfrPx8YZJsgBYA6h+jZUVRqJqz5Yeo+YbpXs=;
+X-ME-Sender: <xms:gxMHa9q1kY5Rj0pF8AGROwTKgcqHLxzqDwSH7QT-2CfFpZbtf06zNQ>
+    <xme:gxMHawYZ2rSd3AYLOBIcUHgxFJ3XUnVjYgAO-J69cLSBbjbJ_vlT18o6wqgMKJNMJ
+    cWSHSSiq_ALf8zBtFPuPowPyP9uLctsc4x_Zl6EKVs8Ow31JaD5wdQ>
+X-ME-Received: <xmr:gxMHa2UqEMhnMoS7UBx_R1739ihDbbWQ4ucrvPPMm1tAJCY2-RSNMEdDXTo7adYYM3spzu0TQAYy0Rh535qhaTvZvwd5YUw-5-qypac>
+X-ME-Proxy-Cause: dmFkZTEA4OG6fZVOlrn+mSOZFLeJIttgl7br0nCsp2F90oF2sszEirn0LGHBMNi5f0eeER
+    CtuDxLjx8pezqGec3PmvrXek3IuPRLTAaaS6bDqb5iLX8E4r7+ZGPNtS/xYNsN3uHoRWbx
+    UHRRWZiQ0WYC0dU1k3rzCQ/tuu8Z50Rnf7IInuukjxA+WzQ++D6ZE1O7HcGqQIqZh/UsYh
+    izOBtcT9Beszd5STuAq8vhnGV51gvAveYKErxKH3dqhGY7Q66X8uIghZ6BHUI7eGiDfR5B
+    EMItd/3zRTYehV6/u9KzuGTaP+p5qXSK+4XLPp2M2122Ot0+dvFvmd1hkD4GTwAgqJwWqZ
+    w9PZv1HaFvmWfYRtsljC5QTpRkEjFB8eM9xKSeLzgb+fnK462oREo1oMuJuC2unAdyTXf1
+    l8K5M6bitxhmXoMR6xNCLKk+bC4sQzARbavxJkOV92o2HW0X0PtLrGd4Pkx6ARCU7nq75Y
+    wQuZWrGKooMXQtV86IbljSGniUB3aE10uegwSq8W3q4G1hPEic1890Gc0P/tog4RNQk/R5
+    6MIJJNdJzy635+tOgUQkuhslCvQ+X8+Nm+GbNXbrtrWLXIh8uTL+BZ6N3mE4q1CeaZDEvz
+    X4hJ0hlYPK36kw7qHKV8UNxMuzjLqkmJ31f7FiaHRFiq/WdCUstMSZm3GKLA
+X-ME-Proxy: <xmx:gxMHa59BHW7jVQETg7nnjNxHSmz1UjkRW_rzkPXpDO6F7peubYgiFg>
+    <xmx:gxMHa__Oy4qIjzZiteT_GejrSzziHB7tMprLNYHG4HwdxcZMWAmHdQ>
+    <xmx:gxMHa5QYGBXO7UdtbmaNox-eeyVrwbkwMixAqph4CxNXh8gbdZ7iKQ>
+    <xmx:gxMHazfddjBVA5bdI6wAe5-JN0HmwFqzfnBYBWZ5yxZG5KZC0O9e7Q>
+    <xmx:gxMHa_8TUliZS7TRpZNqCbBBlp4B6ezUZ0wvt60Mth-w5ffqtU5hw2K->
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Nov 2026 11:27:39 -0500 (EST)
+ 25 Nov 2026 11:57:39 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?=
- <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
- <jn.avila@free.fr>
-Subject: Re: [PATCH 1/4] doc: apply synopsis style conversion with git-svn
-In-Reply-To: <7d5ab0faa0ac5c2c0c97090ff17999cdcadaad55.1795556940.git.gitgitgadget@gmail.com>
-	(=?utf-8?Q?=22Jean-No=C3=ABl?= Avila via GitGitGadget"'s message of "Tue,
- 24 Nov 2026
-	21:48:57 +0000")
-References: <pull.2324.git.1795556940.gitgitgadget@gmail.com>
-	<7d5ab0faa0ac5c2c0c97090ff17999cdcadaad55.1795556940.git.gitgitgadget@gmail.com>
-Date: Wed, 25 Nov 2026 08:27:38 -0800
-Message-ID: <xmqqv75k98qt.fsf@gitster.g>
+To: "Wonseok Oh via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  Wonseok
+ Oh <wonseok_oh@korea.ac.kr>,  Wonseok Oh <marinelay7@gmail.com>
+Subject: Re: [PATCH v2 1/2] sequencer: clear saved HEAD OID when picking
+ onto an unborn branch
+In-Reply-To: <7c0fe312f161247a5e7192e214e8677547521a92.1795577024.git.gitgitgadget@gmail.com>
+	(Wonseok Oh via GitGitGadget's message of "Wed, 25 Nov 2026 03:23:43
+	+0000")
+References: <pull.2317.git.1795242633923.gitgitgadget@gmail.com>
+	<pull.2317.v2.git.1795577024.gitgitgadget@gmail.com>
+	<7c0fe312f161247a5e7192e214e8677547521a92.1795577024.git.gitgitgadget@gmail.com>
+Date: Wed, 25 Nov 2026 08:57:38 -0800
+Message-ID: <xmqq8q2g97ct.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -131,101 +128,77 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-"Jean-Noël Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"Wonseok Oh via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> -'rebase'::
-> -	This fetches revisions from the SVN parent of the current HEAD
-> +`rebase`::
-> +	Fetch revisions from the SVN parent of the current HEAD
->  	and rebases the current (uncommitted to SVN) work against it.
+> However, sequencer_pick_revisions() does not handle this case. On an
+> unborn branch, repo_get_oid() fails to resolve HEAD, and the function
+> saves the uninitialized 'oid' to .git/sequencer/head. As a result,
+> "--abort" is not guaranteed to refuse the abort as intended (e.g., the
+> saved 'oid' may point to a random commit, and "--abort" then moves the
+> branch there).
 
-Changing "This fetches" to imperative "Fetch" makes the verb on the next
-line disagree ("Fetch ... and rebases").  Changing "rebases" to "rebase"
-fixes that.
+Nicely described.
 
-> -[verse]
-> +[synopsis]
->  config key: svn-remote.<name>.commiturl
->  config key: svn.commiturl (overwrites all svn-remote.<name>.commiturl options)
->  +
+In sequencer_pick_revisions(), an earlier loop over opts->revs->pending
+declares an inner struct object_id oid of its own, so the outer oid can
+either hold arbitrary stack garbage (including an invalid '.algo' member
+passed to oid_to_hex()) or retain the OID of the last commit checked in
+that loop.
 
-The [synopsis] attribute makes the AsciiDoc/Asciidoctor filter highlight
-command tokens inside the block, so prose words like "config", "key:",
-"overwrites", "all", and "options" end up rendered as literal code.
-Elsewhere in this patch you removed [verse] and backtick-quoted the key
-instead, e.g.,
+> diff --git a/sequencer.c b/sequencer.c
+> index 4a1c0e70b8..20bfe00ba3 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -5788,9 +5788,12 @@ int sequencer_pick_revisions(struct repository *r,
+>  		goto out;
+>  	}
+>  
+> -	if (repo_get_oid(r, "HEAD", &oid) && (opts->action == REPLAY_REVERT)) {
+> -		res = error(_("can't revert as initial commit"));
+> -		goto out;
+> +	if (repo_get_oid(r, "HEAD", &oid)) {
+> +		if (opts->action == REPLAY_REVERT) {
+> +			res = error(_("can't revert as initial commit"));
+> +			goto out;
+> +		}
+> +		oidclr(&oid, r->hash_algo);
+>  	}
+>  
+>  	if (save_head(oid_to_hex(&oid))) {
 
-    config key: `svn.rmdir`
+Calling oidclr(&oid, r->hash_algo) initializes both '.hash' and '.algo'
+members, so save_head(oid_to_hex(&oid)) writes the right null OID for
+the repository's hash algorithm.  Later, sequencer_rollback() parses
+.git/sequencer/head and hits its is_null_oid(&oid) check to reject
+"--abort" before touching HEAD.
 
-Doing the same here and in the svn.pushmergeinfo entry under --mergeinfo
-would keep the rendering clean and consistent, wouldn't it?
+> diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
+> index 9400ddfc45..d52fda1c54 100755
+> --- a/t/t3510-cherry-pick-sequence.sh
+> +++ b/t/t3510-cherry-pick-sequence.sh
+> @@ -269,6 +269,21 @@ test_expect_success 'allow skipping commit but not abort for a new history' '
+>  	test_cmp expect advice
+>  '
+>  
+> +test_expect_success 'cannot abort a cherry-pick sequence started on an unborn branch' '
+> +	pristine_detach initial &&
+> +	git checkout --orphan new_disconnected_seq &&
+> +	git reset --hard &&
+> +	test_must_fail git cherry-pick initial picked 2>err &&
+> +	test_grep "could not apply .* picked" err &&
+> +	echo $ZERO_OID >expect &&
+> +	test_cmp expect .git/sequencer/head &&
+> +	git rev-parse HEAD >expect &&
+> +	test_must_fail git cherry-pick --abort 2>err &&
+> +	test_grep "cannot abort from a branch yet to be born" err &&
+> +	git rev-parse HEAD >actual &&
+> +	test_cmp expect actual
+> +'
 
-> --F <filename>;;
-> ---file=<filename>;;
-> -	Take the commit message from the given file. This option
-> +`-F <filename>`;;
-> +`--file=<filename>`;;
-> +	Take the commit message from the file `<filename>`. This option
->  	disables the `--edit` option.
+Checking that "initial" applies cleanly so the sequence stops at
+"picked", validating .git/sequencer/head directly against $ZERO_OID, and
+verifying that HEAD stays put on "--abort" closes the gaps from v1.
 
-A few days ago I was referring somebody else to your earlier series [*]
-and noticed that you would have said _<filename>_ not `<filename>` in
-running text.  I am not quite sure about the differences, but as I
-noticed the use of `<filename>` here,...
-
-	[*] e9a99ef2da (doc: convert git-format-patch synopsis and
-	options to new style, 2026-07-23), appearing as a part of
-	bf6bc2ae42 (Merge branch 'ja/doc-synopsis-style-yet-more',
-	2026-08-11)
-
-> +`-r <arg>`::
-> +`--revision <arg>`::
-> +	Fetch the given revision range for partial/cauterized history.
-> +	Only used with the `fetch` command.
->  +
-> -This allows revision ranges for partial/cauterized history
-> -to be supported.  $NUMBER, $NUMBER1:$NUMBER2 (numeric ranges),
-> -$NUMBER:HEAD, and BASE:$NUMBER are all supported.
-> +`<rev-num>`, `<ref-num-1>:<rev-num-2>` (numeric ranges),
-> +`<rev-num>:HEAD`, and `BASE:<rev-num>` are all supported.
-
-Shouldn't the left hand side of ':' be <rev-num-1> instead of ref-num-1?
-
-> ---authors-prog=<filename>::
-> -	If this option is specified, for each SVN committer name that
-> -	does not exist in the authors file, the given file is executed
-> -	with the committer name as the first argument.  The program is
-> -	expected to return a single line of the form "Name <email>" or
-> +`--authors-prog=<program>`::
-> +	Execute `<program>` for each SVN committer name that
-> +	does not exist in the authors file, with the committer name as the
-> +	first argument.  The program is
-> +	expected to return a single line of the form "Name _<email>_" or
->  	"Name <>", which will be treated as if included in the authors
-
-The reference to author ident "Name _<email>_" or "Name <>" differs from
-the backticked "Name <email>" form used in patch 2/4.  Not clear to me
-which one we want to standardize on.
-
->  	file.
->  +
-> -Due to historical reasons a relative 'filename' is first searched
-> -relative to the current directory for 'init' and 'clone' and relative
-> -to the root of the working tree for 'fetch'. If 'filename' is
-> -not found, it is searched like any other command in '$PATH'.
-> +Due to historical reasons a relative `filename` is first searched
-> +relative to the current directory for `init` and `clone` and relative
-> +to the root of the working tree for `fetch`. If `filename` is
-> +not found, it is searched like any other command in `$PATH`.
-
-The same comment on `<program>` in the first sentence (vs _<program>_).
-
-Because the option parameter was renamed from <filename> to <program>,
-the second paragraph now refers to a filename that is no longer in the
-option header.  SHouldn't it be "a relative _<filename>_ is first ..."?
-
-Thanks.
-
+Looking good.
