@@ -1,100 +1,123 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795569035;
-	b=drg+Cx0d5ZQrFvQ5VaL9/Fj+I0V4NMMNdJ+HQLEBgpeNdBhLy2/aw318hgzJpl9iroXd
-	 YeiiEHoUjv7O0JZWO57ghRH8vtO37n1S3F/kf0eTQg/soElmAYDHFoj2fNNA0p1g44lFP
-	 ZoRbcvckaNN94JgdWfWpgTnPrCeq15Rcl8nrg4sv7Qb3wjCV727hDbgcamTdY/I+bRhdR
-	 Fk/urDZC5e6/f2DUKINUOrL3pD7lZYh+cMlPNEYWb7bL6MCjqObO4JJ5PbeGddCx31yga
-	 ZRd1RDtq5KoXy2P28uk8qff4rAA1CtsokT5ll4ej9VBlt0QZzLbV6ZxXXP7uqyS1STA==
+	t=1795569246;
+	b=TEdX3MX1wqK0NysvxoxhUTTwgNeHSvsAyny7pcuZRt6AkLlfGOCE0nqjRrFDwl6blU2K
+	 6zvy89xGv6IlJpl+woInXhbHFk/LlnqhfJayBTVsY8h8kvYMcmiHMXKuP5tcWdWacyx/P
+	 PXrCtuKKUGwrkDrjoDBmX93/dEhC8Gv6dQAGqro0unG3UB2bdip6c3xebM98mRFKH8jjy
+	 ms5WgVbpqbZRYhDXsUuovlhQTczozDDFsKN2bReURGe5MwCDvVhKiVMmObc0C/jcBXy0O
+	 KFCAETK1G9mhzkxULxTzqIR6OAr0APl8CrKI8fe0nB3rSr0d31Q8DrX4IQoxME6WBGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795569035;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=88QRVxyEDfh9E3p7VDZi7885qfftpfUi6Gp4PVR2VmA=;
-	b=YQpe2W2IvgVAUVzo7bTwscySrasnbkktobIN7TieVAleXg5CmJspRhsytwSm7be8GKEE
-	 7xDcZill7HFlZiV5eyG30t8PHHomIR/ukXlG/Uqgu3N5vHST3b/vzq92sc2YdW/azgRiJ
-	 /kdmIaWwG4Hl87LfpzI7rRmBp1mZMLOFI8di3hqBgLCvDzCFQwhncKgSLoC9smtJun0De
-	 fXSdnobDMis0ywRDf6RyqHs4gbYWHP5oQPOPe32dVQsO71yljv+kWIHEnHzWYn3NMwwQ6
-	 kOcaEmID+tEzLCI2puj/8SQEGpfRNq2UzvqXRyDz6YHm/G+S9FiiyTsfpeW2Kt+K7RQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795569246;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=YMyIjwpLB6YmjMXZqOxxbvju4479AgrmJLr3KakVKEc=;
+	b=RnjoIRsUfSXJ0Wo2SaoRN2bUb4tmFb7pJP3iLO6HwVFCeLdmPUezW1qTnZqpobYdn4gh
+	 1zi/4vf21b9WtxCuHaDvBJbD8qSnAmCwgZj0T5t3ig9x/KYGvvpE1mdZmfbBc2huCqUnB
+	 yGnUejmB5kUMVjnyZR3vImFiAqCoHU8qnTyaSbwvxrzYz/qcWoELplBi59+wRKnS65N5z
+	 UBJih2dBT1mQb+/Wzsg8xMLDMvFaKEE6Q7CgvElfG6J7Lf5H3sTjYrzfRC3+vFXAvfocW
+	 e6WTge+roA0SpT6wcVQVpEdXJDfCMeUFjHCd1jyHapybFhn5gvvO/TP3cd8AP9F0v+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SaImAHTR;
-	arc=none smtp.remote-ip=209.85.128.43
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=TDqBeR6p;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=a7TIouhj;
+	arc=none smtp.remote-ip=202.12.124.153
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8988B606A323
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 01:10:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8988B606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27C4606A31E
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 01:14:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A27C4606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SaImAHTR
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4bb70074ab2so55759255e9.0
-        for <git@vger.kernel.org>; Tue, 24 Nov 2026 17:10:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795569034; x=1796173834; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=88QRVxyEDfh9E3p7VDZi7885qfftpfUi6Gp4PVR2VmA=;
-        b=SaImAHTR2uTHtrC6iRmWGrbnyoQt+G2+891GPnVSkA6iDTjjrcXEwSvSeZ3x1itG8e
-         SL2qVI/mvErfREHWFny7Qf6s+0ph0RhdmdMlwl9SrLTx6FTOpLEKWzcQEWBmhBZY40RM
-         BC6LsFpcIfOROMLgiR3mbCMl9ITpZO3Ho0Wz6yvbpSdx0IpD0eMOWK/GWnpNhT0hF2g5
-         bdMSkgr+8CEIOSgHYoQshoiqgqzP75dVb0mRXbLGCTSITHeSV50rjgol5hSQWavYpR2w
-         pV9b5ZFiF7oN3H0acrNGyamcR3NqLlvrtYkhZKsXU6BZRhSmS9zRdK5y+tbFDKs3o1sW
-         V06w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795569034; x=1796173834;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=88QRVxyEDfh9E3p7VDZi7885qfftpfUi6Gp4PVR2VmA=;
-        b=QAHvhJiKxkbt3mvu2CLkxo8q5WWHyVReKNYtNhnGkiBPOrKM6TAW2ZFKqxsH2wdtfU
-         w1Vp5LWDkcya4+K6Dn84OBEewfmlmW2tu1rneHXUyilN2UdgGUe34gxqJSrJy7drgDmz
-         uGnEl83v2VYlDW5HSx5fcEPKLiXawp/DDtsvtjWHLyDaI+ktAhTgK7zCtS7PGGvmG1pI
-         HxirRdSh104VYbKHFmV9KkD8bHGRouHfTZMRnyPtpyXTEt6ST88ZSnezRqn0afGUP4Ut
-         0OtPuLAthX6ghhDRiPSU+qFXUVxF2XyoF8De4zktRJHsbjBmZ1tk/8l44PEB+91PdUDd
-         vB1Q==
-X-Gm-Message-State: APuU4Z8qcAswXATtjH4hL4/2j/e292b52/llJlZ39cmcYUyuWmkGJRUl
-	WwjIo+8ylSa58n4eLC+LNXedLK04OXdUv6HWB/h0veW7K7ITm4/frhzPVmJxHSm958Q=
-X-Gm-Gg: AZFdTZdwFRtK93LWFG40u2ILBvR2dUMRJxs4wKj97HXJo6/mCjWdhobyLyrdhqkEjfa
-	ldhqFwTT6y94rUt7qFaxhkckdfuK25qed3JtkYpTvh06mkcHEb6tJUNI6OeSeCgx/Cn+NdV7Wlg
-	mRs0mFnrR/MuBxjfeZ55YsySV8TIhHoG0CKJyK6KP3qMT9/HPFG9BhxgKFan2Co5yTSktrPbUT3
-	PcZPueWi197I2JD+w/r2+HdL80keRcNZj581pandq5vhdJjDN4pAZMTHLfM3CrmB9STQdOHaxwg
-	IkU+OW8dqpchomAz2GkM1jMEzCymG2geXOdAxiF7iRuTGrLiafEgQ2gB3KsLs85oypfRihU2v1F
-	N+fto+AzluJqQQn6+Wwy1s9FmHjdgbRJRel6prAgyslWV3D9zRFTCiCV7SjjbRw+B1LsGhE1kcn
-	Z2Jz061NHIngXVLSFX4Sfa5sUw8YAYs1PEnqBaMuDfLn7sAB7/4O65hqpP//Kkt/kAtBhASHwuS
-	14JC37XGSDjGf5w7zud+NRIZU0Qdt7O8vg6B08AbZG7nU/p9owpCCCNsXfUGyBmmHvq3QcEVAB/
-	bjtPiOk0/n6V3YoDnv3Q7c1PdVPcKSl8p5svln+f27HICZ8eaeuurzHBikSC8QpKbq/2Ctlv0Jc
-	45eABTEqVmMG+onaL+QDYjupjoQnJufo=
-X-Received: by 2002:a05:600c:3ba5:b0:4b0:a307:46f8 with SMTP id 5b1f17b1804b1-4bb8880f29bmr372532865e9.10.1795569033833;
-        Tue, 24 Nov 2026 17:10:33 -0800 (PST)
-Received: from HP ([102.0.122.2])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb884b39b6sm435336135e9.12.2026.11.24.17.10.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2026 17:10:33 -0800 (PST)
-From: Tanga Joris <tangajoris@gmail.com>
-To: git@vger.kernel.org
-Cc: siddharthasthana31@gmail.com,
-	phillip.wood@dunelm.org.uk,
-	gitster@pobox.com,
-	jackrawlings2011@gmail.com,
-	christian.couder@gmail.com,
-	kaartic.sivaraam@gmail.com,
-	usmanakinyemi202@gmail.com,
-	Tanga Joris <tangajoris@gmail.com>
-Subject: [Outreachy PATCH v4 2/2] apply: reject new and deleted files that have both names
-Date: Wed, 25 Nov 2026 04:10:02 +0300
-Message-ID: <20261125011002.589285-3-tangajoris@gmail.com>
-X-Mailer: git-send-email 2.56.0.388.g09a996e1ff
-In-Reply-To: <20261125011002.589285-1-tangajoris@gmail.com>
-References: <20261117004348.806694-1-tangajoris@gmail.com>
- <20261125011002.589285-1-tangajoris@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=TDqBeR6p;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=a7TIouhj
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EA7027A05FE
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 20:14:04 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Tue, 24 Nov 2026 20:14:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1795569244; x=1795655644; bh=YMyIjwpLB6
+	YmjMXZqOxxbvju4479AgrmJLr3KakVKEc=; b=TDqBeR6p+uEsLrIEl4k2LqjADC
+	0o2N+lqQYh3l/aVJDDPevsPIxsCgLD4ifiGzRJuGAHMvxjHujMEiLb6XNo4Dntf8
+	bLxYJrWZGD7K+HAoPMGKjenbc8J+dmDEPUiEKcwSHdczvHWAayskKU2u6iISZlDh
+	9Oii9/E9xF14/vL+bbMjyaFHU8pO9WBqO1A/zhRqVj3G2rNzShVU+XY4xpKnKFae
+	xEqhvgveXs8MwDavCtDPmoI16GNOjYLD3zTjga/OKLGAz87wg+SXOgQPyP5yhgjt
+	t7HMNoe238XckEAzorbSL4Njdc+IAklO8OW2Wpu0cO2cDv3oDdVeFeW1e3+g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795569244; x=1795655644; bh=YMyIjwpLB6YmjMXZqOxxbvju4479AgrmJLr
+	3KakVKEc=; b=a7TIouhjDsF//BJb/LnNsuCzbhD+YaTl3lFGX7s3ZhElbMsk35v
+	dmb/5ytbm4zEKBVYFdtQvdK1VQqjmo5boaHQjl2+qwilWrG0ikajZtydJ4/WJ0ox
+	q3F4686m77mS1ZhSCYxog/oOYlt/Y/xLXMektc3DitkxF3iucXxLPw9i9t5Vudqd
+	s1qqMox3gL/DlG93m8IX+YzMXepc++Axu5A6OEdiDMcrwyw8N6lTs+02W9Pq4o+m
+	NH3OCmHOyyqj8hlg9Hr6R/AoEF44tdnmCgKIFV3rtvHEjIi5VxhkJFSiEH+DfHMx
+	jfBmVwIjwetcmQTVYFFyaipvSYdSHRxIOjQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795569244; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:dgBJTTlXypZGSa03DtD/Bzxhxd0rcjaPXhZvNEUWObbAMwL
+	c4j8JKwQ5y161itaHEqsyj10F+S6cm9SSRk23SWAky/I4vTnRJNe7G9z/vz03W/G
+	OB3V/YHRjqh0uR3LZ6TPIh1mmmdYjzJYHJcP7/lNHdfcDR6YzbDahfgrMgYg/1UR
+	EvtQD8JNPskWtTry5zgEfYazv1YIIoCyp1uDNYmnq6yJ58QRvm7ixUWtdbQnMsa5
+	21CaO6ME1FrjyK/Dxd5cisPABonB2y+gdmgz+yBT55Yy2LzUB8RrhtGE/aA+BLBn
+	e6PGRCns0HY60ZSFaIHHoeKnU3znCqAzXA9tT+w==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:lbePyIO7uQNbQbwJoVqCmbx8LjagvmMGQUfBYi3N1gQ=:TFE5QIuNmt/qPMr8nUEtQ8DJzAeWz2g3QSCKIm+iixs=;
+X-ME-Sender: <xms:XDYGa1OkzH2AiL7NuFpwAVp7yuYIb_3QYh1CfhUgVuWHw2-zriRpTg>
+    <xme:XDYGa3CEsXC3TQj_CRs58LUAZI6vwMoE0bVtBGrZVVuNzui3J0TjzgeAcH6f9pjTC
+    1DN12HcNwtihJjplDdPq-mlJuRyjlkdGApoTC1ETFgy1sskhJNH>
+X-ME-Received: <xmr:XDYGa6fBXkPcZZnnVWicR4jQGw7Bj5rPl4wW4ySOMr-7nU2hiYuzSgPCdW0Sy29j59ZmwfFeEiwRd-pXXwxSP48tS9A0GZF_fCC7K7Q>
+X-ME-Proxy-Cause: dmFkZTGm5PgUrLVxo9gt8Zn/5D0rpe+ZbtNu/OEKhqB/WPDqXWXAs6nJFgMQG5s8ztICet
+    P3dFvYrV+3UmpOELrOCUPQ7abgI64P+aX053OYWYwinGdGGSYOGYhWHYfEm9Z6nMbAuNLo
+    B+jqDbbxJo9N4kuFErrRQync0etkch6NNgqJCandf1iYCCu1ZStIUSmpANveFYtOzCUKe5
+    lFIDTPNdmF8bZzthXuwuaIg2vSwzXBlI6pQ9r4Tk+vCuOxdU/4TtjugSRxZS+UGwmfraY/
+    oXwBu9yd5hPbEU/q8LtdsSKif68ALS+j5GVLUcRgwN5DtJg5jE/J59ZxukSDFYI234gYkc
+    JfjJmkVDpNlODnnNSvx1CH7eMrCgAbpOCvRzDpCHLAa0ojlCxwPTNmuuotgq9Ic4RCz+0w
+    i+/XUnOBl0wzkKMj7waoEMbviknl62QIUtZ3t2UsjG4dzD6VgpNjeCSK94W2cj0qxtEEO5
+    3DfT8+1HmTWp2q0vmhDGKswAZFECWUo1b0GLM12JCf54qGCtcUNY4YWJ9ryQwMBEBYrTjV
+    oDWummCNj4X61ZNrd9wtDOHBn5P6wlHcRgRnfODnRmZb6Au6cDTJDpStFXyiOQUrYXu8ZE
+    lPptgIiKvc7gb0638FfhP3yAIAUcLuAyBuKk1q9ksG3QQgGNHedYvYUQANCg
+X-ME-Proxy: <xmx:XDYGa-ObMZ4GaG7b9oU_3Ae2qUy5nynOAJCFZfG3h3HFpboY_Xenew>
+    <xmx:XDYGayLgr6QhNCm-H2fImCsSjjunRagFnxm6agw0nC2HUE7qrTm4yg>
+    <xmx:XDYGa2L4UB4qUBI0j3hIqYLRKYmt1amDvk3ktQ1wYUWwsrPpaZhrVg>
+    <xmx:XDYGa04evSDBWVqf_Cfy6_Cz9PrcaZoYtWv64GSEIZG0Kuj4rqqMYg>
+    <xmx:XDYGa0uynje7rvckI839VrSXqbbVzDz4fsnxiAtobz4ndsBu-WC3v9wP>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Nov 2026 20:14:04 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,  ps@pks.im,
+  usmanakinyemi202@gmail.com,  siddharthasthana31@gmail.com,
+  kaartic.sivaraam@gmail.com
+Subject: Re: [PATCH v2 0/5] notes: start passing the repository through
+ notes.[ch]
+In-Reply-To: <20261124172146.18330-1-okhuomonajayi54@gmail.com> (Okhuomon
+	Ajayi's message of "Tue, 24 Nov 2026 18:21:41 +0100")
+References: <20261105203344.48513-1-okhuomonajayi54@gmail.com>
+	<20261124172146.18330-1-okhuomonajayi54@gmail.com>
+Date: Tue, 24 Nov 2026 17:14:02 -0800
+Message-ID: <xmqqld6hg1b9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,109 +127,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Git writes "new file mode" or "deleted file mode" before the "---"
-and "+++" lines. The "new file mode" line sets is_new. Then
-gitdiff_oldname() leaves old_name empty for "--- /dev/null".
+Okhuomon Ajayi <okhuomonajayi54@gmail.com> writes:
 
-When the "---" line comes first, is_new is still 0. So
-gitdiff_verify_name() takes the name on that line as old_name. For
-"--- /dev/null" this gives "dev/null", because one leading directory
-is stripped. The "new file mode" line then sets is_new. The result is
-a new file that also has an old name. "git apply --check" dies on it,
-on the same assertion in check_preimage(). In the same way,
-"+++ /dev/null" before "deleted file mode" gives a deleted file with
-a new name. "git apply -R" dies on that one.
+> This is a preparatory series. It makes the code in notes.[c,h] and its
+> direct callers work on the repository stored in struct notes_tree instead
+> of the_repository. It deliberately does not convert the whole notes
+> subsystem yet; it does the bulk of the work in notes.[c,h] and leaves the
+> rest for future series.
 
-d70e9c5c8c (apply: check git diffs for mutually exclusive header
-lines, 2017-06-27) made apply report other conflicting header lines,
-instead of leaving them to an assertion. Do the same here. After the
-header is read, reject a new file that has an old name. Reject a
-deleted file that has a new name too. The error names the "---" or
-"+++" line that came before the mode line. It does not print the
-name, because for "/dev/null" that would be "dev/null".
+Framing this as a preparatory series and splitting out the remaining
+work makes the scope very clear.
 
-Git always writes the mode line first, so patches made by Git are not
-affected. A patch with "+++ /dev/null" before "deleted file mode" used
-to apply without -R. It is now rejected too.
+> What is left for future series:
+>  - notes.c: the display-notes code keeps its state in globals, and log,
+>    format-patch, diff-tree and format-rev are given a repository but do
+>    not pass it on. format_note() still falls back to the global
+>    default_notes_tree, and expand_loose_notes_ref() only takes a strbuf.
+>    The hash-size helpers are also still on the global.
+>  - notes-utils.[c,h]: still use the_repository. And the hash-size helpers
+>    still on the global are reached from here, through create_notes_commit()
+>    -> write_notes_tree(), so converting notes-utils is tied to converting
+>    those helpers too.
+>  - notes-merge.[c,h]: still work on the global repository.
 
-Helped-by: Siddharth Asthana <siddharthasthana31@gmail.com>
-Signed-off-by: Tanga Joris <tangajoris@gmail.com>
----
- apply.c                    | 18 ++++++++++++++++++
- t/t4133-apply-filenames.sh | 31 +++++++++++++++++++++++++++++++
- 2 files changed, 49 insertions(+)
+It seems taht notes-cache.c also still uses the_repository in
+notes_cache_match_validity(), notes_cache_write(), notes_cache_get(),
+and notes_cache_put(), even though notes_cache_init() now passes its
+repository parameter to notes_tree_init().
 
-diff --git a/apply.c b/apply.c
-index b28c1401f4..d09ae38dc9 100644
---- a/apply.c
-+++ b/apply.c
-@@ -1467,6 +1467,24 @@ int parse_git_diff_header(struct strbuf *root,
- 			      *linenr);
- 		return -128;
- 	}
-+	if (patch->is_new > 0 && patch->old_name) {
-+		if (patch_input_file)
-+			error(_("git diff header has \"---\" before \"new file mode\" at %s:%d"),
-+			      patch_input_file, patch->extension_linenr);
-+		else
-+			error(_("git diff header has \"---\" before \"new file mode\" (line %d)"),
-+			      patch->extension_linenr);
-+		return -128;
-+	}
-+	if (patch->is_delete > 0 && patch->new_name) {
-+		if (patch_input_file)
-+			error(_("git diff header has \"+++\" before \"deleted file mode\" at %s:%d"),
-+			      patch_input_file, patch->extension_linenr);
-+		else
-+			error(_("git diff header has \"+++\" before \"deleted file mode\" (line %d)"),
-+			      patch->extension_linenr);
-+		return -128;
-+	}
- 	patch->is_toplevel_relative = 1;
- 	return offset;
- }
-diff --git a/t/t4133-apply-filenames.sh b/t/t4133-apply-filenames.sh
-index 73d3bc4e08..953749734b 100755
---- a/t/t4133-apply-filenames.sh
-+++ b/t/t4133-apply-filenames.sh
-@@ -164,4 +164,35 @@ test_expect_success 'reject a "diff --git" line followed by another' '
- 	test_cmp expect g
- '
- 
-+for old in /dev/null a/f
-+do
-+	test_expect_success "reject \"--- $old\" before \"new file mode\"" '
-+		cat >old_before_new.diff <<-EOF &&
-+		diff --git a/f b/f
-+		--- $old
-+		+++ b/f
-+		new file mode 100644
-+		@@ -0,0 +1 @@
-+		+1
-+		EOF
-+		test_must_fail git apply --check old_before_new.diff 2>err &&
-+		test_grep "has \"---\" before \"new file mode\" at old_before_new.diff:4" err
-+	'
-+done
-+
-+test_expect_success 'reject "+++ /dev/null" before "deleted file mode"' '
-+	cat >new_before_delete.diff <<-\EOF &&
-+	diff --git a/f b/f
-+	--- a/f
-+	+++ /dev/null
-+	deleted file mode 100644
-+	@@ -1 +0,0 @@
-+	-1
-+	EOF
-+	test_must_fail git apply --check new_before_delete.diff 2>err &&
-+	test_grep "has \"+++\" before \"deleted file mode\" at new_before_delete.diff:4" err &&
-+	test_must_fail git apply --check -R new_before_delete.diff 2>err &&
-+	test_grep "has \"+++\" before \"deleted file mode\" at new_before_delete.diff:4" err
-+'
-+
- test_done
--- 
-2.43.0
+Apart from the NULL check needed in copy_note() on patch 3, the series
+looks in good shape.
 
