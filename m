@@ -1,125 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795566246;
-	b=rJ710vWMXyVDKlfBdBaBMk0zINqYftmWw6NZ3kierT2HIL+UNedLesXGELkVbaum0+Mt
-	 7dJjm37O9s1cMTRlTDYhqiyu2cvKeSG8X6ws8sw/9UDv5TZJxUqMgHLBft7ViF/K4XkKH
-	 AighdRe8gPNbWrTl0usKMCbgHJQExUp24PfUQMvfCoJ8LFXC79OtYhfgNX0NJeQhDSqBR
-	 NrgZDiBUQPdjxdlvD0UfMn+ooiC2xWhZq6PU+ASfXgsGFS9KKUWBl6dlGmyG/8iwxu/zD
-	 yrgdaDXAOrHwnNT/igvkVkqkarUr6q7eIVvqMo/KT0p2ousk1xgztzGSeYJEEH7ocUg==
+	t=1795566846;
+	b=oUeoiAsAZFT0nWj7grw0FV/2hGIYXfboQ4urrbrAs42FRFKK7wc5th/TfVLqaajjTR3r
+	 cdBNibmg5YYuQwPBMqWZ7WA0IPeoq9Bl/8VO1kxei2MB/fdeeDy8nGADLX49R9loWLcRc
+	 9M98rd90lwEIC5b99YnlTpBB3CTB0l5HU7jXn2POYjbFqByJioaRHoeZTNZpdTOsvhvSn
+	 LvppEF3PrVxVv1ZD/fCWD8vCt363qxFcUBRn5/hM8fuR+7H+T8F0UPkaM80cSRiOXROfD
+	 3lXDCAPBUkh3sxp7e/5rb7Zerv91dAjudslMfV9eYF1xr5D7lercuuPHcK4tVZ9xm4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795566246;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795566846;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=pzNIxl8CbR4BTJYG/irjxwkPc1BSVpBIyAUuErpJrLM=;
-	b=v45WWMD3ALzIsql/sSscddWMm2Ly16SxDMl3KO7MiTWEQ6Pi9n35txHmjdXfWiVVCaiS
-	 CKheo4PxoZWIYRuNiaLb/tL5G3JXiebVRELO1hDCSd53iHbAhSxunttlSpc7Y8y0JooP+
-	 TWpTRLSdXDuhdxCchbgm+DM6aGG8wCN/7VPx6jXIbU96v2ZkqL7fBOmrkGhvBwRJwLZ9D
-	 MGUU4+tcklhHCCczKjxfElHmsddCzC/fmVD43Vj6jZGNSl7OG0AQiJgsLJHlJ6x1umrVf
-	 Hy9gHEqrkM6VcInxerwcUoJDg7C2o2xYZim9zrpKpolKMmtwbr9EykihDiglHFRJ+GA==
+	 User-Agent:MIME-Version:Content-Type;
+	bh=z8RVEGKRA3nZZZ7SEYLWvYrXbs5yhd9EwlNcVpMmzvg=;
+	b=FsbifaxtCsq7lrO2EXyHqVV1ymhtL0xK1tS0N6v1NGyjaQhmol589sSxQiigQN1w8ZeT
+	 jFZPYxBhJXMwV5GZNfurKaDG1WOYKmUT3PXSkZ7hpLYVBIT2FkjgxrBoR5EmWHzMVrivP
+	 CBfHP0JXTfoFRwQj+V/qWX/AGf84vR8Oot+0U2V4FZ0IZEhMKrsWPjrWYtms72L9dZbyr
+	 E7fZfmMI0G5tFGXZRWdHCsJRFnSNSflesCFPU2GQDpjOWYV3lW2VJtfVyJeTbPqhGMf1j
+	 mWnY4+Mg4BqmTGePiRCshWPECQjs0fhAoypISrCtBmJ0oulndJsn146I7RUWkPnsY0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=VkGwAJg7;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Tkqy86kT;
-	arc=none smtp.remote-ip=202.12.124.150
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=m6loWVRx;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=XpNJvo+x;
+	arc=none smtp.remote-ip=202.12.124.153
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32D7606A31E
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 00:24:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B32D7606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B18606A31E
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 00:34:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C3B18606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=VkGwAJg7;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Tkqy86kT
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id D8CAC1D0061A
-	for <git@vger.kernel.org>; Tue, 24 Nov 2026 19:24:04 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 24 Nov 2026 19:24:04 -0500
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=m6loWVRx;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=XpNJvo+x
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2E4A67A05B5
+	for <git@vger.kernel.org>; Tue, 24 Nov 2026 19:34:05 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 24 Nov 2026 19:34:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1795566244;
-	 x=1795652644; bh=pzNIxl8CbR4BTJYG/irjxwkPc1BSVpBIyAUuErpJrLM=; b=
-	VkGwAJg7uwH7/srmu6g7QTTnsf/ujP+SsxwUX18KwLgjS1J6gGRCvrusii0Q963w
-	nF7Kew+qnJ7rfPdRghLOLgVJe8PP62DhTPraNuGpVjvpbz0wqTS/NRvuDSI5/okK
-	8F5JYu2TMASM0/QPDYOvXaebNKpC9cUyeZmPEFocW7HrDkVKMT962O8EvCO42jl0
-	6TPZM6Uvcq4JH0/nCoqiV84O5Z4HMK9lq3KSMm1dSl4TZMFcJBXzpVLwNiPnANeo
-	6XKFUKdYcGwYVB6E820xY9R6Gk17Ob/UIOR/VkKsXuC2/hNECQ61cvd07nsTFuKO
-	nf2nTYoilGlt5VKu4AHAEA==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1795566844; x=1795653244; bh=z8RVEGKRA3
+	nZZZ7SEYLWvYrXbs5yhd9EwlNcVpMmzvg=; b=m6loWVRxB/fOu3DqzAck9SQtAx
+	HyldtPFaawfPSFt0mdIGNu6wCNcUzQXS1QBLFXDKP7uF3+2FaY5YCJuyPl7/OMcU
+	zvjFPsvw23LPzBcRl48moxIk1ZyDd0BL8y2NS9w63kIQYS1HuujlcNgBW21y4W/d
+	1kek9E/0PivXcYGJIF4A9B+0W8GKoU/qVFvkIWzVVk7YP8kfu+Y4pxTskTOBVZFN
+	GjyyVA71mQtBZw+7smBiv0QWqLAcjPeLP7FR0Xt+omeSdqu1YVNabv3uYRPrmtTW
+	JTssiIMaz+iKwJ+Iz543bNoQBqa9z4uhbmE8cdR38tzkojFaZkNhYUMGlhDw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795566244; x=
-	1795652644; bh=pzNIxl8CbR4BTJYG/irjxwkPc1BSVpBIyAUuErpJrLM=; b=T
-	kqy86kTjaCS4e9YEDJs8BEVPnp1MtWh4xckqYcfbWIR9GDrhzlOQYZmiLlyAlTr2
-	Q8hqK7zZYCvF1sPcs62qFmJOCpxw6MTWtlN7N6uVxiMkYTYfUGHQDIbXH1v6UMS+
-	GEeHsto/ZljB3jpbtEA596Lm5+v8gHm/79i2HT8Gv8l0nGkuBHPTnBmUL2QcKB3R
-	yu9I4b65h5S3PHCdpJ+/iqdscuE2xvsNrLUCeSkUtAjFcov7Z8QEQiHMhj8zjWJk
-	EKo+1G2tMNqSqGNXFbAeVBkhA6I7Xcnn4vONrDtvymhui7wgRbxklXsRObv0F2q2
-	ouMZF1UKGM9W42/tOkj0Q==
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795566844; x=1795653244; bh=z8RVEGKRA3nZZZ7SEYLWvYrXbs5yhd9EwlN
+	cVpMmzvg=; b=XpNJvo+xfU02I7eLJZ3v4fJfeiwtDxdQ8gDzBLmrt2yzD5Du/3P
+	OMBWlL5WscFDd6Fc4dCfFekewtYdNuoyytfR89Fij5yk+//4XZ4a2gPQVRtTAyuO
+	RMe4ZwtYD0GgtxEjZ4yb9IdHMSxyhExvcclthqdzCfAHAOR+2CPl2+vB/x07GUgT
+	GR/9qEhC1keYbzt3PzpzQ4U6rzRTy8qRKnDN2u9KFStBH4XzQnaJEacsSH55yvyo
+	VuzwXLfmqzQcZ7JFeyW80vHTlRc0fm/YLmOBW0nFxGYcWfpfEWHDIjnBxQ529tW+
+	CDvgbDTyBwsbHXWzt+G81Ua9l0v4HZ0Dnmg==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795566244; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1795566844; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:RpB+UaqWVJlWiTcpFH2Bu9UZzMEnTj7PWN9cottIUxoDuNV
-	boQVXKlDhxNWcSJdF/aOe1w5uQcbHDdJQPQLLalSpj9GyM3Ywkx+QsKkr1m9gCtV
-	VePjbm8vnds52FmUU6+yetG6KbubrAzDlnheTabI8nYLCFqUxV8CvRIrgcZ537Y+
-	xi9/u0ebF3bPs81fWcIklbuTchY96WEUdnvhr/C5b11VvvFRugpnIrht3PHBeQfy
-	vI2mN2nUQCZ0wznZfBeOMeTs4yS8SkFjjJH/miz0uNOs60GFrP1OdC/jevYdfYXj
-	GkYDEqaV+/mbo/8HxTpmUs8dBOloKN4AVMAxJ7w==;
+	s=fm2:rsa-sha256:nxKXUYrUVdXX45lR5+aG1ReBti74mAfvDBrpiy5aTSovEx9
+	dBcAn+5WorsSa1yrVDMY+fhyudqp2NqU6l0h9bGIqNn/GYujGAxBAs5vJpMbnGVE
+	Ip5Vpt1Q9BRIcUxR69FfZbGFYo6WXlkFXRt228agXqQwJFpybc2fue0sF/x7wSfl
+	L9sjEzEy45cY+foRgflYoNtTFd+VIF1ed27ZB2dyGKsPHT/CqUXVflm0VlpCOY5h
+	ryorenuih+ZitDeL+hv1FrWyp+s8J7CrT6PY0uXJ+5E7CqUCZdwWN52CDC8t3Do5
+	ju/ZS8++yGqyX/Cfq4/r68tqt0dcDkoWJLfxETA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=13;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to,
-	user-agent;
-Message-Instance: m=1; h=sha256:FrusIyxomS0LWg19B1kTtUveYzvrfQnoRcHA/6w13pE=:KYyBKAubiAJz6g+dzJu/je2DBozlFr95VFSorL6x84Y=;
-X-ME-Sender: <xms:pCoGaz5m3-IojBExAFYNFrfufzb-osGCRA3CpCyFLn9E3CXkOIXcRg>
-    <xme:pCoGa_wiT2-xlXKEUoQ7vZ4MpZJP9-gqWZSNs6u7eTjOpHidr2u3mMGmHSj6uadMg
-    gMlszuv8fV_AfJphcrTsEUzusRryNHwZXwY4E0rFJa_wHpVTWM8A_I>
-X-ME-Received: <xmr:pCoGayzggulEW9ho3i20Fy3wenQoFhARBHonue1yUmQaxoZN1ziVVf-qmPcpVkcVSVPj4m7SQ9_SAtjXfFTxGMd1iIJxKYEnFQJErXg>
-X-ME-Proxy-Cause: dmFkZTG4bqujEx47rigbnzzGrSh3npTlyvFS/9UhjNkaduToplbp/YVyE3ObvGbOYGPN+Q
-    prNtOxTvz/z2Cgqyup1tTkKx3I4d1o2NsfumE7MT/rncO9TTMJ++Zr0hfiraiF+efHAXpQ
-    s+iWsNEU4EbCHHVVfC9FxkAoRirPaMadlVxeZzdip5UnBo0NQybduwdf8Eb6zWkBYv6slf
-    q4hOF+cjxPvFURfcCVu056AxwBqXwtrKoM5TPkm+jU30AV+TwErRcdAW5cN76lVxvrZVa3
-    iUICsezICLJcuhGBJbggL1M0zMJ+3HpwpRyL1rUBq1UzLg3FawI02/g9cNi8wHxFPYZstP
-    K+HtKAkFT9IMAOFPgY97/YggKx/plKwpAIPOzP2wxux0M3TELjYN81t8TlalwB98e48RB+
-    DQ82TCeFQ597Kiwx+PdU1TX5nG9yfo+BryN9LNhQZI/22Unbs2y0JPrbddR6P7WqkhI1oh
-    D2Pgn5HpnqCBq92XH3HvC4STNCdNAXJOLl56o406vS8lSnO+vDmX5vzzcYl6VSz1ta4wyM
-    lq1Uzx294i1wXe+TGWTXwXgqxgkf3S5AA8wqU7H1g1uaEyLI8v2zXNYcSRFMx2YyMRTVSk
-    B4P70BL8e13QoLintujLiemFdC/i+4KiqZ0hWaQYofiSZ/Cd7DGJxycQYSFw
-X-ME-Proxy: <xmx:pCoGa_wkUlid31MA99aPSCnQJGq2EBwqqP2Tfmu92anrrEK3j8sVGg>
-    <xmx:pCoGa0bkmT0FEtMadiHvA10rgqwWF8YNYL206MkxqsqZ74DIVeROlg>
-    <xmx:pCoGa4VvIaa_Ae7jlUjUlx3i1S75X3IceygQlcDRKwd82MOYMqwRpw>
-    <xmx:pCoGa6hBQ0HnPgo1ZrGqsfY4ElEAFn2DjjaR2mCSMfzrLxoFr4EWjA>
-    <xmx:pCoGa5Nyj_OITXzdo_D2JmRo_U80kDrZKKdZQOY_huLCiwqCJgKw7iAb>
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:pK/Y/ZigzMqHaxCOZU0LzodQX98MsvBtYEHtENHOpgQ=:cDfq6qNIGHy0ahZaSJOQVwBVAvBWYgqSNfMcqhat1C8=;
+X-ME-Sender: <xms:_CwGa4JdQafpW-0h0CFKzwPmD72EzR4AUoBIJFmLBFPZge5jo7B81w>
+    <xme:_CwGa3OXGG_dGR2simNOT3YoKZ6C7WLFKIvyW0H4Iv2-_70wQ7wCKszRBGjJA2K0S
+    nmG6QGDJyUkhbE66l5p5k4HHFZlTCP53IxAfNV2fWcCTur7qQKiRvw_>
+X-ME-Received: <xmr:_CwGa-6LGlE28AmIewcHk73uvagASGLjlwmDcAN7AKBnEcd4hb-Q0Aw9gk90vjGrC7_a7WhGvrVyUAuynko_uWLhMoAwjD459py579U>
+X-ME-Proxy-Cause: dmFkZTGZeRH2PcUedKYmrM8X89abuoWbY9eatJhIw2q3WYiiAL/II1BOwUT3MoOsFbwZ09
+    XUpJzdY2w5NQ8sdvIuEJ7zdpQSLAHSimuUZz/5DEDyQs0qb/+Z9Mm1ldIC8d89+ottXztQ
+    p+4OBimr/l+Y5wIJObRKgScIfZWnrjnEr08gYqfFojulehAkCdYo8G4HpxmaN8sDmwSPCa
+    AvyCdSQw2Yzns9eibIvwSImrqWevmRC1mW+oc5/IR+TAggnAfwjPf5qixxTN1xrw8M1HfV
+    +24f2Q5QhJOz0d4Q5n9FkBMXvPsb9+Saae5rIm49kCqHuawMkrF7NDPvX+a0dxTLQmv+lC
+    nHMFygbTuxZwxvAjb6DZmZMBYuPJcIaRlILTDRh3fPkQn0Bs3n9XnmQYd2JucGVKIxLO7P
+    HabFRva6Focd/ogxbhvF0KgBtLz2g22TdX+kTlfRlnn9tvMat4D6IgL5WrDyRl6ULR5N7Z
+    AyaHvyAkoObhl0dAOI+Tj/dJXjBhry2rZ7lj6A8MAl7uFDn8Alow5Dtr2uehvI3gsNt5pt
+    wHkBMP08oxe81otF/1WZQGY4bH4Ja8h/YiZsXzm1ayG+SgAxjzLUnHXbVJ8/PzLxG7xh0B
+    18Is2KEdvUXk63AJzdwQnDprlwYtN2w+vazsMZ5gYPKX3m1Z7nFatrJbr3Pw
+X-ME-Proxy: <xmx:_CwGax6GVjqDKNh3kd91lz-RVAO5E0BbfjqB2VUfCx5OPFIlRbkukA>
+    <xmx:_CwGa0GdPGN-RXhyVvtHgexhAeb9On13ZHcggsalS2idzI3p91qV1g>
+    <xmx:_CwGa5VYu-wbXdahGAyI0UOkRZFT81_vTxq-kFgcE8SwRIDHjsbAZA>
+    <xmx:_CwGawXmeX9A0_6FAWomAD9PlhStnst05frLXnHj-VG_F1cZWKOlRg>
+    <xmx:_CwGa8KkJu_ArXL6nd9sYs5gHci83kf5AFPDy224f0uTw301mbb_kFer>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Nov 2026 19:24:04 -0500 (EST)
+ 24 Nov 2026 19:34:04 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Dominik Maier <dmnk@google.com>
-Cc: git@vger.kernel.org,  =?utf-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-  dmnk+artist@google.com
-Subject: Re: [PATCH v2 2/2] archive: defer --add-file stat() until after
- option parsing
-In-Reply-To: <543109b7483191cd26b4f02d8b95a62a940b1dd9.1795543448.git.dmnk@google.com>
-	(Dominik Maier's message of "Tue, 24 Nov 2026 18:05:50 +0000")
-References: <20261119192311.2685319-1-dmnk@google.com>
-	<cover.1795543448.git.dmnk@google.com>
-	<543109b7483191cd26b4f02d8b95a62a940b1dd9.1795543448.git.dmnk@google.com>
-Date: Tue, 24 Nov 2026 16:24:02 -0800
-Message-ID: <xmqq7bi1hi71.fsf@gitster.g>
+To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,  ps@pks.im,
+  usmanakinyemi202@gmail.com,  siddharthasthana31@gmail.com,
+  kaartic.sivaraam@gmail.com
+Subject: Re: [PATCH v2 1/5] notes: store the repository in struct notes_tree
+In-Reply-To: <20261124172146.18330-2-okhuomonajayi54@gmail.com> (Okhuomon
+	Ajayi's message of "Tue, 24 Nov 2026 18:21:42 +0100")
+References: <20261105203344.48513-1-okhuomonajayi54@gmail.com>
+	<20261124172146.18330-1-okhuomonajayi54@gmail.com>
+	<20261124172146.18330-2-okhuomonajayi54@gmail.com>
+Date: Tue, 24 Nov 2026 16:34:02 -0800
+Message-ID: <xmqq33sphhqd.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -130,80 +127,67 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Dominik Maier <dmnk@google.com> writes:
+Okhuomon Ajayi <okhuomonajayi54@gmail.com> writes:
 
-> add_file_cb() calls stat() on each --add-file argument while
-> parse_options() is still running, before parse_archive_args() checks
-> is_remote. When git-upload-archive parses client arguments, it probes
-> the requested path on the server filesystem and reports "File not found"
-> or "Not a regular file" instead of rejecting --add-file with --remote.
+> A notes tree is always read from one repository, but the tree
+> does not record which one. Later code has to fall back to
+> the_repository.
 >
-> Move the stat() and regular-file checks into parse_archive_args() after
-> parse_options() finishes, refusing entries with a NULL content pointer
-> when is_remote is set. This rejects remote --add-file before touching
-> the filesystem, allows a later --no-add-file to cancel an earlier
-> --add-file, and lets --add-virtual-file work with --remote since its
-> content is supplied inline.
->
-> Suggested-by: René Scharfe <l.s.r@web.de>
-> Signed-off-by: Dominik Maier <dmnk@google.com>
-> ---
->  archive.c           | 24 +++++++++++++++++-------
->  t/t5000-tar-tree.sh | 24 ++++++++++++++++++++++++
->  2 files changed, 41 insertions(+), 7 deletions(-)
+> Store the repository on the tree. Rename init_notes() to
+> notes_tree_init() and load_notes_trees() to notes_tree_load(),
+> since every caller changes anyway. notes_tree_init() takes the
+> tree first and the repository second, and saves the repository
+> in t->repo. notes_tree_load() takes the repository first.
+> notes_cache_init() passes the repository it was given. Other
+> callers pass the_repository for now.
 
-This seems to follow René's suggestion cleanly and resolves all three
-issues without touching the filesystem when --remote or --no-add-file is
-used.
+Keeping 't' first in notes_tree_init() and putting 'r' first in
+notes_tree_load() addresses the v1 (or is that v3?) feedback cleanly.
 
-> diff --git a/archive.c b/archive.c
-> index 2348ab12ed..413fc1cd11 100644
-> --- a/archive.c
-> +++ b/archive.c
-> @@ -586,11 +586,8 @@ static int add_file_cb(const struct option *opt, const char *arg, int unset)
->  
->  	if (!strcmp(opt->long_name, "add-file")) {
->  		path = prefix_filename(args->prefix, arg);
-> -		if (stat(path, &info->stat))
-> -			die(_("File not found: %s"), path);
-> -		if (!S_ISREG(info->stat.st_mode))
-> -			die(_("Not a regular file: %s"), path);
-> -		info->content = NULL; /* read the file later */
-> +		memset(&info->stat, 0, sizeof(info->stat));
-> +		info->content = NULL; /* stat and read the file later */
+> @@ -1034,6 +1035,7 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
+>  	t->root = (struct int_node *) xcalloc(1, sizeof(struct int_node));
+>  	t->first_non_note = NULL;
+>  	t->prev_non_note = NULL;
+> +	t->repo = r;
+>  	t->ref = xstrdup(notes_ref);
+>  	t->update_ref = (flags & NOTES_INIT_WRITABLE) ? t->ref : NULL;
+>  	t->combine_notes = combine_notes;
 
-Keeping prefix_filename() in add_file_cb() preserves relative path
-resolution when invoked from a subdirectory, while deferring stat(2).
+Here we set '.repo' before checking NOTES_INIT_EMPTY or calling
+repo_get_oid_treeish() makes sure that even an empty or newly created
+notes tree records its repository, which is OK.  free_notes() already
+zeroes the whole struct on teardown.
 
-> @@ -706,8 +704,20 @@ static int parse_archive_args(int argc, const char **argv,
->  		die(_("the option '%s' requires '%s'"), "--exec", "--remote");
->  	if (output)
->  		die(_("Unexpected option --output"));
-> -	if (is_remote && args->extra_files.nr)
-> -		die(_("options '%s' and '%s' cannot be used together"), "--add-file", "--remote");
-> +	for_each_string_list_item(item, &args->extra_files) {
-> +		const char *path = item->string;
-> +		struct extra_file_info *info = item->util;
-> +
-> +		if (info->content)
-> +			continue;
-> +		if (is_remote)
-> +			die(_("options '%s' and '%s' cannot be used together"),
-> +			    "--add-file", "--remote");
-> +		if (stat(path, &info->stat))
-> +			die(_("File not found: %s"), path);
-> +		if (!S_ISREG(info->stat.st_mode))
-> +			die(_("Not a regular file: %s"), path);
-> +	}
 
-setup_git_directory() is called only after parse_archive_args() returns
-to write_archive(), so the working directory has not changed between
-add_file_cb() and this loop, which means 'path' is correct.  Entries
-added by '--add-virtual-file' always have a non-NULL '.content' from
-xstrdup(), so skipping them here lets '--remote' work without touching
-the server filesystem.
+> @@ -107,8 +108,9 @@ char *default_notes_ref(struct repository *repo);
+>   * Precondition: The notes_tree structure is zeroed (this can be achieved with
+>   * memset(t, 0, sizeof(struct notes_tree)))
+>   */
+> -void init_notes(struct notes_tree *t, const char *notes_ref,
+> -		combine_notes_fn combine_notes, int flags);
+> +void notes_tree_init(struct notes_tree *t, struct repository *r,
+> +		     const char *notes_ref, combine_notes_fn combine_notes,
+> +		     int flags);
 
-Looking good.
+The comment above this declaration seems incomplete; it talks about 't'
+being a notes_tree to be (re)initialized, notes_ref (even though it
+replaces the underscore with a space in the explanation), combine_notes
+function, but not 'flags'.  Now we are adding 'r', so perhaps it is a
+good idea to give a brief explanation for that (just say "the repository
+that this notes_tree belongs to" or something like that)?
+
+> @@ -319,7 +321,8 @@ void format_display_notes(const struct object_id *object_oid,
+>   * Load the notes tree from each ref listed in 'refs'.  The output is
+>   * an array of notes_tree*, terminated by a NULL.
+>   */
+> -struct notes_tree **load_notes_trees(struct string_list *refs, int flags);
+> +struct notes_tree **notes_tree_load(struct repository *r,
+> +				    struct string_list *refs, int flags);
+
+I trust all existing references to old names are converted correctly
+(which should be easy to verify---if not, the result would not compile
+or link).
+
+Looking good, so far.
