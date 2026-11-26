@@ -1,89 +1,123 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.156
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795717521;
-	b=MA3n4eagD8l3MFw9vaIHb2VxgaYBDUPiducCmSyWc0+m0GBWeLja3NdhJ/1yUCa94Qj3
-	 udN0s6Q13yUx2eRH2X7G6Muskyn2NyaW9/ulHOQvAfto+1D75RlLSD9xG7gxsJqALTvor
-	 PqkEZUesYCiTQi00UZe4Rszfa4PWSe0qTzLqdFBFisb8SobeURt7I/Cd8SPV0Yuu23BBJ
-	 MpI94TQG6a07VCWUmuCFZLH266uexULpreB0deibKXlpqqOAbsrtVCYV+bacqMZy7vVoG
-	 5GrH10T8rPVCboOJRDg6A8KkLxfQvWiA77GvqGwxSNWyiqUVNkmsI0MoIN+Xad/zvkg==
+	t=1795717607;
+	b=k2xmJh1qxPHwSwiLaWueVYOjTFzGnrss6vxRwh20GMwG9o4DXT22VOhOi1QyoQgZCRa5
+	 vrqeondXIcoYJUcHHB3eZ/JlQzN0tQmZA+jGQbUkRjUtInYpSUGYr8H2STH0S6XsQTFi3
+	 ReJab1s6cNNncj9iMSieYzGjnKbIW3nDLi2JszNz/sCbPngszxN0dXS/4KfQzDSPHjXqq
+	 8wCQkn7KN4dfzClJ/mNY033O/Xqsyaw1qKL1spRDiu9jAO+idYs51y5/HsNhQI977sNu0
+	 PQW7s9gG2zZLWSr53xlObaX0PzY9ByzZG+cnb/BZ3GkMeXDIea6QSIarrL9k/zOkgcg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795717521;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
-	 Subject:Fcc:Content-Type:Content-Transfer-Encoding:MIME-Version:To:
-	 Cc;
-	bh=NrY0RpF7TGQ8IS0t34KaRpBl1etrq1eEwGszriglgkk=;
-	b=PQ97bzTmPrY6XYtTg2hXfnA3AQXLx+8qdAgGv9qweDuYSeBVPvW4ZEZNUb73GXDuNqjs
-	 yspkHTFgDtvBW8BktZ6x6fQtOcZKCYJ7RVokB3X8y1XiH1R5qpKFcLlLL/VQnLm0wGwtL
-	 whUrNmScZs+8lwBIpk3I96ya0VTUgeWlfQv8FNMioofDuNEbNBdJfIFl32nYh2zbpTo2R
-	 X3Sh+9FTNuM0Ej71PWMuXtyKdJv0GbnrrkXL0QReHpLTP9ke7GW1fC63LIahQPXx86UV4
-	 +S2GjHTK+KcIsYLHjX/JqeIFvTKLOEwdxdDgfyH80Gx40u5EWBBH5lufA9ArVT6rFKQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795717607;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=iBds96tdQcRrE9RJILVk6D6xGMcmX9ZNPsCqq/NCuLI=;
+	b=ObecwiAW2hIc+a+SDUuNW6sJBeRJGoX6zolDd4g/QUtDefFa2NHbrGRmbD8mLVgaBHZF
+	 vwfepwXkogVpM8y851mqlTaiqRn5ukc606t9rfrOFLYjaI71+hi5yltBWHy/3mBFppwGP
+	 Y40lNTbuxaQJ14wzEBWt7Du9BI/rEaQT63V2eSBkhprvsHlDjVJGfd4ReADScygGePm4C
+	 NUpx+cmlKFHztJA7LYmZkmhjgjmeLXtK1eoWxPIo0t6R9HfPokx8m/+q4EThGtXnclYL7
+	 hSF6z4SzVb5ceJ6pM70aWeB8qfH4Z1qptd/WK3SXpIT+huFgkW+hTdFuPR15y0VURvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hZHsghgu;
-	arc=none smtp.remote-ip=209.85.214.176
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=CkPCdwoq;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=OwarJhLq;
+	arc=none smtp.remote-ip=202.12.124.156
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6238606A321
-	for <git@vger.kernel.org>; Thu, 26 Nov 2026 18:25:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A6238606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A60A6606A31C
+	for <git@vger.kernel.org>; Thu, 26 Nov 2026 18:26:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A60A6606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hZHsghgu
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2f03eeda984so40679075ad.2
-        for <git@vger.kernel.org>; Thu, 26 Nov 2026 10:25:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795717520; x=1796322320; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=NrY0RpF7TGQ8IS0t34KaRpBl1etrq1eEwGszriglgkk=;
-        b=hZHsghgudgernlY0EniTSq3sLjLNuiR/36kNaDIZtsglCexhygIk/kWT0uAJDC3Yfm
-         hYViCxQdULu/yrM/q7d3eawVogfhWBEnnc1jEXkwhexRkZ0VNU8fqO9eHAuq4cBUE2kg
-         rD2Wzcagxp71gYEk20EA18TBRmCggiMntdghCbaZY0dHZcS1P7DHI62q7YJMuAyRbbU+
-         cI9kQl31x+QTcUyd+o/m68Vz02ntIRdg9EUPZGY4e12zgMvWiiJAmHQMGXqfrgFvqEhN
-         dQCy1KAeEyT1LkrZCMgbiwS0cwjt088pNgiwpieTWnoZtVzFQzqIdzmyQbVqopA1yWYw
-         DtGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795717520; x=1796322320;
-        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=NrY0RpF7TGQ8IS0t34KaRpBl1etrq1eEwGszriglgkk=;
-        b=hbK8u3FFYMmoaibngVnX6p6s6H8EUh6ae+fKPScpS+UZVu2OHnsxf/B+Kr7pSsXND0
-         8YQMOpW0DhhF2Bn2Fiu5bjcXuUvzfTFX7NFetEEhrdvUlnsu0c3n970t7zG9rM8iQdez
-         jMjoM+Vl7OKW4vML0O84xdk5qWs4URj966/tJp39i83Q7F/dzDypxEGuoUKYg4uCtnEN
-         W7UpXSezYHO9exSmJXFYhv+G3Ojob4CC3WM94ZJ1LHIlohG64o1QPShR+3vepgn59Vj0
-         G0o0sU+lknHTW+SwqFJ/ID8R29lnKEEPVlIzXvO8fE65m1A5168qi3r1nwEoyFMGRz32
-         ylZw==
-X-Gm-Message-State: APuU4Z/yhH4eVLJQajXDunARk/K3gsBhnXXxBL+mc+rKnlhO+pCJL68Q
-	YFBCBBP6ESYy+K6DWKaX2DuHI4mv/aCyLAsIPCx7R68OKB6McdVFYz2oaAiWIA==
-X-Gm-Gg: AZFdTZda3HRWgs8D+X70pIgprIqT9DNGGrCXzfZvtDpY+7rM3qCXpv5Ox/pdNuecMQG
-	nLjhXqt6yT74oTY5wFlP0tbiH1nXXD8pTVsIkNhwpdgPh9UODk3XOy3tVkPDoM815mLGUPnzODF
-	bhkQ5XtsgZzRpsxhM1AiM8w7lvfTAqhFJ3kGk3mmk4eftwdO5VBdA4ppwElY2P5RaO9TLvMHgvk
-	DTqGQNGz8VSiaOnG7ze5+0HlFjf5UsSjeE5iYvPcQ9Un/nNQ9PJJ4wnJCupPNSVunkRcWO2BhF4
-	iDgIlaVlGChNoc7khaxRSThKEptzXPoducNPdyj0gIS0dP2v7eBZ5d+b4C3kRCXaccGpIqu9w4o
-	61IoDRPlmRGu/BJnf+q1bYSTXd5jM6NGHn0G+DW6Lzdy27hnluGhE3mAVfGM5HlZft1Mk60FjEZ
-	7+1U6agnmgIy/NKsIMwWAhFCRng2lEmjCfVNO0FqPeJw2oqwkgKVuC1g1OIc2sE/wq7rFmJCyX7
-	vt90KTiVR5cqnU3Gm0fYPAQd50L+m5Cip1uOT7tVt6BYX72gx33fBs9dNZXhY2tS4yowCtFaqAB
-	K2qQXYxAuYOWoA/3IIpGfsyigSB30b21
-X-Received: by 2002:a17:903:19cb:b0:2ed:2c40:6273 with SMTP id d9443c01a7336-2f03f1c08c5mr223322095ad.40.1795717519797;
-        Thu, 26 Nov 2026 10:25:19 -0800 (PST)
-Received: from [127.0.0.1] ([13.66.168.25])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2f099a4d875sm66759505ad.37.2026.11.26.10.25.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Nov 2026 10:25:18 -0800 (PST)
-Message-Id: <pull.2245.git.1795717517830.gitgitgadget@gmail.com>
-From: "Bhushan Gaikwad via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 26 Nov 2026 18:25:17 +0000
-Subject: [PATCH] worktree: allow sharing root files with linked worktrees
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=CkPCdwoq;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=OwarJhLq
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0007A7A04EB
+	for <git@vger.kernel.org>; Thu, 26 Nov 2026 13:26:45 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Thu, 26 Nov 2026 13:26:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1795717605; x=1795804005; bh=iBds96tdQc
+	RrE9RJILVk6D6xGMcmX9ZNPsCqq/NCuLI=; b=CkPCdwoqTXB/5T3jU5MwkYRA+M
+	lKlk+td5NdDpDzA9o9i6NFxo466YXpA3bFBPoZumI9WkmURdtv4wAKaS1LCChjwG
+	qFaa78PgYoxETvc312NWdeCuJ8CoxMdC3OD+tIuUxoDq6du9wtGTmy9w9O0cQ1ZV
+	7I2yjwSKu7UCm7nZPbA1rX9I5gVxDgTXgDN50PZW17Gs4saJUp9JX4nsDf9yHzAM
+	6nz/DosbWVGqVd5JEhsboUdVcpbrBrqBH0OdoueGP3lgancVhlo7JT5AJIh2AnHJ
+	6S8PybhZ24mI3PLS8o2POtw/06Y9vQtR4ICmrOZkAjkT5ty78+TQ1MRKvLEg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795717605; x=1795804005; bh=iBds96tdQcRrE9RJILVk6D6xGMcmX9ZNPsC
+	qq/NCuLI=; b=OwarJhLqlphBhQixVHslFGi+EMnHjYy21vvhijT77kqSkeL/0fS
+	PK9grby4UPIwimQKQkenYS2g+FvrT7UbPfWj+6tK6aeqzhWLzOdOjvC2mZu2fi8e
+	Z9Qscrgkt4wGYzMDuactwabBA9Z+A0BZA/oqM+GEZr+seKhgfeJZKP0OFXKsjMnb
+	xv4eg31IbD571Y6O1gXtYqNRsOAa/QlONgaKAyIhU6Am6/jUsZfr1Z+7/BrWjzjH
+	U+1qFUFmb/J4ScR+pVVEw83BNW1+PiseqHCiibIdKTBd+Cbruc+DcVlDZxWFh/3O
+	qWgo/ivWTCZ0CgIAIp94reUf6MaotTt7Beg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795717605; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:Mo8o+Wx1fjB6IezaiG5tOATGvwbpytHQJEG9y0LESPZsEJB
+	MtLF33BaDG1iCPHvLudfkAeZA3kQC8mnCiZXi5P0UrodsqDqZvJYVzf57ttaFYaj
+	nIVEkue9intWQ+p3gZl7F1BKnHX7PeWQop1mGT5pQRqDjYctiYLwQ3pRopzSSO3+
+	yClC/aDmtPMtm0YToTgr3cd2WRCqqqHm3x7ohX+bP8wSi5ETcapY96B2635SoYK/
+	3zJoG8OAKIEk5Vw4MS1dkzneSQ+9TaQiLUF+JI82BoXDhv05UtglC5EsYfkX9Coo
+	cDxA90fBrqzuVy58G2nuDkqbE6j2c2hQKSOm8Cw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:dojm65/m/58XsBthFL0c5SRtVfxtAm20Ka6rLOzACHs=:DRlcvu8iRr3DiOxf+fApXr+UqrCyGs9SjDY7JClCk6Q=;
+X-ME-Sender: <xms:5XkIa84VQnLManjh1d_QIgCIsJPQN36CZkQv_Rc0y4V02D6n2n2kmA>
+    <xme:5XkIawJhcMKZSgJAtUl6E5wjlxsMTOkmVxm-DXAy4WYfnBNVdKIEu1BspLOquRf-U
+    0K54kQi10PPDotzWMfdjlwVKvcKFg2fvx8boZ39nKPylAsXbOw0t1Q>
+X-ME-Received: <xmr:5XkIa9v1HNYseWCYCMqXy3C1szop9TF-ozmM4KjwFb_-pL1JPhKxeVnmeykNxdvnuUmx9l6IwP5F0FeKXewoMvTGQOsqdi_TRFbSI04>
+X-ME-Proxy-Cause: dmFkZTFZdleMLZ/bqE17PMdTOKAnVM0m4rD9H/+QElcRKWv9j/kBWKPcSBlYDHstRmEsPk
+    NkXgiGK8bSUdftci/vY5q6frBrAB5rnXVbM8eAS8eMbOk/bc4Jf1j05bZNjvoPDc4YLChw
+    reECXfaSOAnXZdeUV1XIQW6OTfGUj0Bc7cSAT2uG+OjUY1So/duvPrz4mEaa0lAjVpGD8x
+    yHC1waplKUy77wJ0Q8UWx6T4TFr+40KjVHFr0wYrykW2RwkY7j5bfyFmAPltDHQkZXEsRR
+    VooYZ5hIvttD3IsDtpvV2yQDR6aPoqTajXNtIuFs5yPoX+X3hxqeHXGji3LBZ6S3xv6FVG
+    43MeB1jCA3zYyRtg8nScararnA1e7RAN7I3XVHKGspbs0w4Y93RCfadDicAvxJQudHf8rP
+    GQalrj7HreLYUnXKoe69nMzcEdrvoqGVqvrUy8F0FzEAwLeCGtW+Wc5WqGaAUFn7OQuFvi
+    Gk4OJ+SniiM3F+lACwdHcJqgxeZXK+G729lfAr2VbPLl1pavEu5n5Of+/4EeAJ+QUHTCHk
+    CYur9U0Q5skoBYYv12X/19afZPkkmydZQHu3B1ODGHKm3AivWEBHSZHqFqGN7p4VaRXFM8
+    TypWUgFg+10nJrys5dRIhyPEWBFKwQEPfPHStEwLs5W3cbPNNmZnsalxG84Q
+X-ME-Proxy: <xmx:5XkIa3Leyk1X8uT-StPtBjPBddy8H976CzmZfb0dr1O5UTbuMYZYOg>
+    <xmx:5XkIa-_2B5iZVbOMPhljO43rO2xB1mAEPexANJGfOuuao8yOPO0wow>
+    <xmx:5XkIa4w94BtV7NQ7hMRhlvduO5yGbOrCAllw7fFn_h4VOXd8p-plIw>
+    <xmx:5XkIaz5YsO7YZfpL6wg1TdLEVEyskzKccl8mrMiKgL83sbYXAu0b-A>
+    <xmx:5XkIa8_Yvm7CE3pSAV5dHMTaQSsoehdu_qZFJZFGA2tuggPFg_6e48Sd>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 26 Nov 2026 13:26:44 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Ben Knoble <ben.knoble@gmail.com>,  Harald Nordgren via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Harald Nordgren
+ <haraldnordgren@gmail.com>,  nahidhasan141400@gmail.com
+Subject: Re: [PATCH] config: make the suggested "set" command safe to paste
+In-Reply-To: <607d6273-14ba-4005-b038-3778ad2812fe@gmail.com> (Phillip Wood's
+	message of "Thu, 26 Nov 2026 14:56:14 +0000")
+References: <pull.2457.git.git.1795632875345.gitgitgadget@gmail.com>
+	<02A50A47-A048-417E-9D1E-0C12D8FB1476@gmail.com>
+	<607d6273-14ba-4005-b038-3778ad2812fe@gmail.com>
+Date: Thu, 26 Nov 2026 10:26:43 -0800
+Message-ID: <xmqqpkvrmot8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,273 +127,81 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Bhushan Gaikwad <bhushan@alfredscholar.com>
+Content-Type: text/plain
 
-From: Bhushan Gaikwad <bhushan@alfredscholar.com>
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Ignored configuration files such as .env often need to remain identical
-across linked worktrees. Today users must copy them manually or install a
-post-checkout hook, which is easy to forget and can create divergent local
-configuration.
+> sq_quote_buf_pretty() is intended for that use case, so we already have 
+> a central location for that logic.
 
-Add a multi-valued worktree.sharedFile setting. For each configured
-root-level regular file, worktree add creates an absolute symbolic link
-from the new worktree to the primary worktree before running the
-post-checkout hook.
+FWIW, as the inventor of the sq_quote() family of helper functions, I
+did NOT know that we were allowed to futz with what the
+sq_quote_buf_pretty() class of helpers produce without having to worry
+about machine readability and output stability.
 
-Reject nested paths and source symlinks, avoid replacing checkout files,
-and fail cleanly when symbolic links are unavailable.
+That is even though we prominently document them like this:
 
-Signed-off-by: Bhushan Gaikwad <bhushan@alfredscholar.com>
----
-    worktree: allow sharing root files with linked worktrees
+  These should only be used for human-readable output, as sq_dequote()
+  is not smart enough to dequote it.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2245%2Fbhushan%2Fworktree-link-shared-files-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2245/bhushan/worktree-link-shared-files-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2245
+Two things that come to mind are (1) we may need to find a way to make
+it even more prominent, and (2) "smart enough" will become irrelevant
+once we start aiming to cater to the user's shell, as predictability is
+what sq_dequote() is about, and compatibility with different "faviourite
+of the year" shells directly contradicts that goal.
 
- Documentation/config/worktree.adoc | 13 ++++
- builtin/worktree.c                 | 78 ++++++++++++++++++++++++
- t/t2400-worktree-add.sh            | 95 ++++++++++++++++++++++++++++++
- 3 files changed, 186 insertions(+)
+> The output could be prettier though, in particular in would be nice to
+> avoid the redundant pairs of single quotes at the beginning and end of
+> ''\''hello there'\''' so that it produced \''hello there'\'
+> instead. "'hello there'" would be even prettier but would take more
+> work.
 
-diff --git a/Documentation/config/worktree.adoc b/Documentation/config/worktree.adoc
-index 0930183b91..ddd423caea 100644
---- a/Documentation/config/worktree.adoc
-+++ b/Documentation/config/worktree.adoc
-@@ -18,3 +18,16 @@
- Note that setting `worktree.useRelativePaths` to "`true`" implies enabling the
- `extensions.relativeWorktrees` config (see linkgit:git-config[1]),
- thus making it incompatible with older versions of Git.
-+
-+`worktree.sharedFile`::
-+	Specify a file at the root of the primary worktree to create as a
-+	symbolic link in each new linked worktree. This is useful for ignored
-+	configuration files which should be shared by all worktrees. Paths
-+	containing directory separators are rejected. The variable may be
-+	specified more than once to share multiple files.
-++
-+The source must be a regular file, not a symbolic link. Missing or non-regular
-+sources are skipped with a warning. Git does not overwrite a path populated by
-+checkout, and warns instead. Shared files are linked before the `post-checkout`
-+hook runs. The symbolic link uses the absolute source path. Worktree creation
-+fails when symbolic links are disabled.
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 77ecd0f71f..23af5f0beb 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -131,6 +131,7 @@ static int verbose;
- static int guess_remote;
- static int use_relative_paths;
- static timestamp_t expire;
-+static struct string_list shared_files = STRING_LIST_INIT_DUP;
- 
- static int git_worktree_config(const char *var, const char *value,
- 			       const struct config_context *ctx, void *cb)
-@@ -141,6 +142,14 @@ static int git_worktree_config(const char *var, const char *value,
- 	} else if (!strcmp(var, "worktree.userelativepaths")) {
- 		use_relative_paths = git_config_bool(var, value);
- 		return 0;
-+	} else if (!strcmp(var, "worktree.sharedfile")) {
-+		if (!value || is_absolute_path(value) ||
-+		    strchr(value, '/') || strchr(value, '\\') ||
-+		    !verify_path(value, S_IFREG))
-+			return error(_("invalid value for worktree.sharedFile: %s"),
-+				     value ? value : "");
-+		string_list_append(&shared_files, value);
-+		return 0;
- 	}
- 
- 	return git_default_config(var, value, ctx, cb);
-@@ -455,6 +464,73 @@ static void setup_alternate_ref_dir(struct worktree *wt, const char *wt_git_path
- 	strbuf_release(&sb);
- }
- 
-+static int link_shared_files(const char *path)
-+{
-+	struct worktree **worktrees;
-+	struct string_list_item *item;
-+	struct strbuf source = STRBUF_INIT;
-+	struct strbuf destination = STRBUF_INIT;
-+	struct strbuf primary = STRBUF_INIT;
-+	struct strbuf target = STRBUF_INIT;
-+	int ret = 0;
-+
-+	if (!shared_files.nr)
-+		return 0;
-+	if (!repo_has_symlinks(the_repository))
-+		return error(_("worktree.sharedFile requires symbolic link support"));
-+
-+	worktrees = get_worktrees_without_reading_head(the_repository);
-+	if (worktrees[0]->is_bare) {
-+		warning(_("not linking shared files: primary worktree is bare"));
-+		goto done;
-+	}
-+
-+	strbuf_realpath(&primary, worktrees[0]->path, 1);
-+	strbuf_realpath(&target, path, 1);
-+
-+	for_each_string_list_item(item, &shared_files) {
-+		struct stat st;
-+
-+		strbuf_reset(&source);
-+		strbuf_addf(&source, "%s/%s", primary.buf, item->string);
-+		if (lstat(source.buf, &st)) {
-+			warning_errno(_("not linking shared file '%s'"), source.buf);
-+			continue;
-+		}
-+		if (!S_ISREG(st.st_mode)) {
-+			warning(_("not linking shared file '%s': not a regular file"),
-+				source.buf);
-+			continue;
-+		}
-+
-+		strbuf_reset(&destination);
-+		strbuf_addf(&destination, "%s/%s", target.buf, item->string);
-+		if (!lstat(destination.buf, &st)) {
-+			warning(_("not linking shared file '%s': destination already exists"),
-+				item->string);
-+			continue;
-+		} else if (errno != ENOENT) {
-+			ret = error_errno(_("could not inspect shared file destination '%s'"),
-+					  destination.buf);
-+			goto done;
-+		}
-+
-+		if (symlink(source.buf, destination.buf)) {
-+			ret = error_errno(_("could not link shared file '%s'"),
-+					  destination.buf);
-+			goto done;
-+		}
-+	}
-+
-+done:
-+	free_worktrees(worktrees);
-+	strbuf_release(&source);
-+	strbuf_release(&destination);
-+	strbuf_release(&primary);
-+	strbuf_release(&target);
-+	return ret;
-+}
-+
- static int add_worktree(const char *path, const char *refname,
- 			const struct add_opts *opts)
- {
-@@ -591,6 +667,8 @@ static int add_worktree(const char *path, const char *refname,
- 	if (opts->checkout &&
- 	    (ret = checkout_worktree(opts, &child_env)))
- 		goto done;
-+	if ((ret = link_shared_files(path)))
-+		goto done;
- 
- 	is_junk = 0;
- 	FREE_AND_NULL(junk_work_tree);
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index bdcca97633..0aa426bbac 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -1288,4 +1288,99 @@ test_expect_success 'relative worktree sets extension config' '
- 	test_cmp_config -C repo true extensions.relativeworktrees
- '
- 
-+test_expect_success SYMLINKS 'worktree.sharedFile links files from the primary worktree' '
-+	test_when_finished "git worktree remove --force shared-file-wt" &&
-+	echo shared-secret >.env &&
-+	echo local-secret >.env.local &&
-+	test_config worktree.sharedFile .env &&
-+	git config --add worktree.sharedFile .env.local &&
-+	git worktree add --detach shared-file-wt &&
-+	test -L shared-file-wt/.env &&
-+	test -L shared-file-wt/.env.local &&
-+	test "$(readlink shared-file-wt/.env)" = "$(pwd)/.env" &&
-+	test_cmp .env shared-file-wt/.env &&
-+	test_cmp .env.local shared-file-wt/.env.local
-+'
-+
-+test_expect_success SYMLINKS 'worktree.sharedFile uses the primary worktree as source' '
-+	test_when_finished "git worktree remove --force shared-source-wt" &&
-+	test_when_finished "git worktree remove --force existing-shared-source" &&
-+	git worktree add --detach existing-shared-source &&
-+	echo primary >.env &&
-+	echo linked >existing-shared-source/.env &&
-+	test_config worktree.sharedFile .env &&
-+	git -C existing-shared-source worktree add --detach ../shared-source-wt &&
-+	echo primary >expect &&
-+	test_cmp expect shared-source-wt/.env
-+'
-+
-+test_expect_success SYMLINKS 'worktree.sharedFile is available to post-checkout hook' '
-+	test_when_finished "git worktree remove --force shared-hook-wt" &&
-+	test_when_finished "rm -rf .git/hooks" &&
-+	echo hook-secret >.env &&
-+	test_config worktree.sharedFile .env &&
-+	mkdir .git/hooks &&
-+	test_hook post-checkout <<-\EOF &&
-+	cat .env >hook-env
-+	EOF
-+	git worktree add --detach shared-hook-wt &&
-+	test_cmp .env shared-hook-wt/hook-env
-+'
-+
-+test_expect_success SYMLINKS 'worktree.sharedFile rejects paths outside primary worktree' '
-+	test_config worktree.sharedFile ../.env &&
-+	test_must_fail git worktree add --detach invalid-shared-file 2>err &&
-+	test_grep "invalid value for worktree.sharedFile: ../.env" err &&
-+	test_path_is_missing invalid-shared-file
-+'
-+
-+test_expect_success SYMLINKS 'worktree.sharedFile rejects nested paths' '
-+	test_config worktree.sharedFile nested/.env &&
-+	test_must_fail git worktree add --detach nested-shared-file 2>err &&
-+	test_grep "invalid value for worktree.sharedFile: nested/.env" err &&
-+	test_path_is_missing nested-shared-file
-+'
-+
-+test_expect_success SYMLINKS 'worktree.sharedFile does not follow source symlinks' '
-+	test_when_finished "git worktree remove --force symlink-source-wt" &&
-+	test_when_finished "rm -f ../outside-shared-file shared-symlink" &&
-+	echo outside >../outside-shared-file &&
-+	ln -s ../outside-shared-file shared-symlink &&
-+	test_config worktree.sharedFile shared-symlink &&
-+	git worktree add --detach symlink-source-wt 2>err &&
-+	test_grep "not a regular file" err &&
-+	test_path_is_missing symlink-source-wt/shared-symlink
-+'
-+
-+test_expect_success SYMLINKS 'worktree.sharedFile requires symlink support' '
-+	echo shared-secret >.env &&
-+	test_config worktree.sharedFile .env &&
-+	test_config core.symlinks false &&
-+	test_must_fail git worktree add --detach no-symlink-wt 2>err &&
-+	test_grep "worktree.sharedFile requires symbolic link support" err &&
-+	test_path_is_missing no-symlink-wt
-+'
-+
-+test_expect_success SYMLINKS 'worktree.sharedFile works with --no-checkout' '
-+	test_when_finished "git worktree remove --force no-checkout-shared-wt" &&
-+	echo shared-secret >.env &&
-+	test_config worktree.sharedFile .env &&
-+	git worktree add --detach --no-checkout no-checkout-shared-wt &&
-+	test -L no-checkout-shared-wt/.env &&
-+	test_cmp .env no-checkout-shared-wt/.env
-+'
-+
-+test_expect_success SYMLINKS 'worktree.sharedFile does not replace checkout files' '
-+	test_when_finished "git worktree remove --force tracked-shared-file" &&
-+	echo tracked >shared &&
-+	git add shared &&
-+	git commit -m shared-file &&
-+	echo primary-only >shared &&
-+	test_config worktree.sharedFile shared &&
-+	git worktree add --detach tracked-shared-file 2>err &&
-+	test_grep "not linking shared file.*already exists" err &&
-+	test_path_is_file tracked-shared-file/shared &&
-+	test ! -L tracked-shared-file/shared
-+'
-+
- test_done
+Yes, but I am not sure if going _specific_ to a single chosen shell,
+perhaps via user.shellsyntax = (sh|fish|csh|psh|ksh|...), is a good
+direction in general.  There are folks who script in one and interact in
+another shell.
 
-base-commit: c46c1e37724f0478939de636ab8ea5a89086d532
--- 
-gitgitgadget
+And no, going _generic_ to be usable by _any_ shells we care about is a
+direction I do not think we want to go.  If backslash becomes active
+even inside a pair of single quotes in some but not all shells, then we
+must avoid inter-shell ambiguity by not using backslash while inside a
+single-quoted environment, by first closing the currently active single
+quote, giving a double-backslash (assuming that it is universally
+accepted as a single backslash character by everybody), and then going
+back to another single-quoted environment, e.g., "'abc'\\'xyz'", which
+is the familiar ugliness of our sq_quote() output.  That kind of ugly
+output will be needed to be usable by everybody, but then even though it
+may be cut-and-paste-able, will it still be understandable?
+
+My pessimistic but practical side is tempted to say that it is a lost
+cause to aim for cut-and-paste-ready output.  Rather, we may be better
+off if we give output that shows clear boundaries between each
+"parameter" to "commands", and have the user express that in their
+chosen shell.
+
+
+[Footnote]
+
+ * 6fb737be5e ([PATCH] Make sq_expand() available as sq_quote().,
+   2005-07-07) introduced the sq- (stands for single-quote) quote
+   mechanism as an externally available API function.  1fbdab21bb
+   (trace: avoid unnecessary quoting, 2018-01-15) added _pretty() as a
+   "human readable" variant, the first target being the output from
+   tracing.
+
+   The principles laid out there for "pretty" are worth noting:
+
+	Trace output doesn't necessarily need to be shell-compatible,
+	but:
+    
+        - the shell language is a good ballpark for what humans
+          consider readable (well, humans versed in command line
+          tools)
+
+        - the run_command bits can be cut-and-pasted to a shell,
+          and we'll keep that property
+
+        - it covers any cases which would make the output
+          visually ambiguous (e.g., embedded whitespace or quotes)
+
+   My reference to "clear boundaries" is about the third point.
