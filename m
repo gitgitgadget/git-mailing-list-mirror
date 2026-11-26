@@ -1,61 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.10
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.161
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795706795;
-	b=Gux+ILuOCersXQkoPHoAP6Ul5F1Bplg0HhEqi3PBpwHFWnwP34XQlZhc2uZ79/MYJUmo
-	 /PzClTyf4r0E5q0N0sK/62PPHtCiOvbx+4SSvd7qoBa+hH5J+JOpWm2gRlLQov87kxWBq
-	 Uvtc+urjUkG/mmS1xI/CmKLQmfEDJEzRJ2D88bMBh6xKxLjszaSrS8OZBSCbSMgefHEGH
-	 SWmKhbBzpEtc2KvRNGFAhOryOKUb2HhTkp1s2efYQMdJPOVWt1o7kh6v+N8zav5RFseoq
-	 x0d5QJRgGaJ2C5wvxkHQqOFCwEJcYvZADd1q4Vq6+S2yUBQwRbuglZwt/mZbs0Q7IuQ==
+	t=1795707000;
+	b=ju9g8KCCqRJvuB5i3Ab4mtidDuiqApxKxRPVZDI9nCmghGa+63LUBURqv1NqKTaqhJMR
+	 DGPTlGwi/5NR22ZQQcS2wfa+pbAitmOT3X/rMvQa8anu12ZxI3Tghoe6lnPWm2yeFQZXn
+	 eQMEq8waHC/yZ3thoyuYSwQkP3qqtYQpyxsr7B+Zw6g6a8RZ+cV6rztS5QMQ9aHs3bbuI
+	 XKZJ45exKha0WC9q5De+lJzFH89t9EbtigIW9xo+XigMXXgBRhvee+VG9mlZ3XwABsIRs
+	 RT0yEZk8LcGWH4/KkYu3ikguicmeWiRkHorWd/IOZ65Njy7o9kxS1lYTjl+n02ASmWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795706795;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795707000;
 	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:From:To:Cc:Subject:In-Reply-To:
-	 References:Date:Message-ID:MIME-Version:Content-Type;
-	bh=oeiCqOWbmy630n7iF0iTs7x24OCO0l4BW6Nha88ND4Q=;
-	b=JvlzY9t3D1K5OHyAiP+4GEY9Oj8oHwdTFiZSZ6b6OjqxiX0gilddUrW+DkZzkYzU4aRj
-	 kBpzXuikKXIUdpI4+wevVC38CYqEAD1MSwS1itnpRKotmLAlk1BJVXfd3R4dhaenwfa0b
-	 BhIWkJiAh60mzgbW5OCpO2jh+EuJjVLIXiwNgvUIqGYRxQBIK1a42n5CikcTKYAdC0GrJ
-	 pyGvCgwRzLBXUmg/miyY9catk0p2LbWrtOLOXJhik4hlz0JwLNhWNhQdD6QP5x5tuoVZE
-	 VVMu1GTOo1cY7j8TwjA3SUEH8xTRTzixw6q91B/sP7xgP37O+upgfGIKqTuKfO2DVnA==
+	 X-Mizu-Trace-ID:X-Migadu-Flow:From:To:Subject:In-Reply-To:References:
+	 Date:Message-ID:MIME-Version:Content-Type;
+	bh=bmnOybfcb/+bp0mfg2S5wu4jjEjw4U35eszD8RICTe8=;
+	b=c/X8CNQqeAEPNIJY88ehCXKtg8sDQnSEZPoa85uIqhvbqjIHGEpyEuhFA3BHoGD7NOf3
+	 Y7Q37znY8xU7L8NO+kJC0NPpc4X2yOUX5NqHCa2r+ohp3m+C4EryWTpF1TR+pLylolRMl
+	 4XqvSYnzlSxKQ2dvP+/r7Hu2uWfOMb+oygpE6AKTjbmxlHCwB0lVpIH4zhJbO3U+K9iOG
+	 aMVTu/4yerFMoWFTohyC0pA+Sk0vEXWZXZx3s0UuCb6C7P/9cabc1XGV7F17sXhC0HCb5
+	 wmX/yDNGxvtd72GSwRqtfM2+P7aFvtMtk5gKUZ1oAZUrZ8xVvdreIBc67hsiognm5aQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=iotcl.com;
 	spf=fail smtp.mailfrom=iotcl.com;
-	dkim=pass header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=FaK8owQk;
-	arc=none smtp.remote-ip=91.218.175.10
-Received: from mta0.migadu.com (out-10.mta0.migadu.com [91.218.175.10])
+	dkim=pass header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=2EfMtRnS;
+	arc=none smtp.remote-ip=95.215.58.161
+Received: from mta1.migadu.com (out-161.mta1.migadu.com [95.215.58.161])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3747606A31C
-	for <git@vger.kernel.org>; Thu, 26 Nov 2026 15:26:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A3747606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7216606A31E
+	for <git@vger.kernel.org>; Thu, 26 Nov 2026 15:29:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D7216606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=FaK8owQk
+	dkim=pass (1024-bit key, unprotected) header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=2EfMtRnS
 X-Envelope-To: git@vger.kernel.org
-DKIM-Signature: a=rsa-sha256; bh=BDjxWqKaWDHT343Bei+rSam0Da4YFPHolQTx+vOtZzk=;
+DKIM-Signature: a=rsa-sha256; bh=DcW7gHYDQEYo+YIdQMqmqUo5TXt/Ax+ISOownU4IsL8=;
  c=simple/simple; d=iotcl.com;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1795706791; v=1; x=1796311591;
- b=FaK8owQksXeZK6Ft66SG2uGIWhciuHjhLSMSk5FrS6voewxjzdXaSqX9HP2Mcf2QFNUsxFZY
- qyJzKLj2TcqWjeJ166hTTX5QXFiJoPLHu+HRzvSPu6VHGg+BsS4BiEvLDhOS6rTe05csKncnJ2c
- cGYBY9zgWl0i7xSuMMm1mf5g=
+ t=1795706998; v=1; x=1796311798;
+ b=2EfMtRnS4ahPrMKGtq/tQ99d0aDs1jvJEW2V7NaAREVFyrzpULAV/f29S7QNWsgxKQzGGurR
+ PtBfrZZcIE9k8zGONmLNToHc7PkeBcE/n5kb9babtrt62y6+fPXv649SK/dRt4vJkCoDjsr0Sj0
+ yTrfMOQFwNAhdBG6TFQyZAmg=
 X-Envelope-To: git@vger.kernel.org
-Received: by mta12.migadu.com with ESMTPS id c00d546f29ce532c;
-	Thu, 26 Nov 2026 15:26:31 +0000
-X-Mizu-Trace-ID: c00d546f29ce532c
+Received: by mta12.migadu.com with ESMTPS id e65280c0d9ef10d0;
+	Thu, 26 Nov 2026 15:29:57 +0000
+X-Mizu-Trace-ID: e65280c0d9ef10d0
 X-Migadu-Flow: FLOW_OUT
 From: Toon Claes <toon@iotcl.com>
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 6/6] packfile: skip closing packs marked as do-not-close
-In-Reply-To: <xmqqo6belyp1.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: [PATCH 0/6] packfile: some lifecycle improvements
+In-Reply-To: <20261120-pks-packfile-global-statistics-v1-0-19beb83b145f@pks.im>
 References: <20261120-pks-packfile-global-statistics-v1-0-19beb83b145f@pks.im>
- <20261120-pks-packfile-global-statistics-v1-6-19beb83b145f@pks.im>
- <xmqqo6belyp1.fsf@gitster.g>
-Date: Thu, 26 Nov 2026 16:26:24 +0100
-Message-ID: <874id3sjfj.fsf@dev.null.iotcl.com.invalid>
+Date: Thu, 26 Nov 2026 16:29:54 +0100
+Message-ID: <87zeuvr4p9.fsf@dev.null.iotcl.com.invalid>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -67,28 +64,20 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Patrick Steinhardt <ps@pks.im> writes:
+> Hi,
 >
->> When closing a packfile to maintain the maximum number of open packs we
->> completely ignore the `do_not_close` bit. That bit is only set by
->> git-fast-import(1), and as that command allocates its packs manually it
->> wouldn't add those packs to the list of all packfiles, and consequently
->> we won't ever try to close such a packfile via `close_one_pack()`. But
->> that feels like coincidence rather than proper design, and the result is
->> rather fragile.
->>
->> Skip over packfiles marked as do-not-close to reduce the fragility. This
->> should not result in a user-visible change in behaviour.
->
-> Hmph.  If the only user of the bit does not care that this codepath does
-> not honor the bit, perhaps a simpler alternative is to retire the bit
-> that nobody else uses?  Or am I reading the above analysis incorrectly?
+> this small patch series polishes our lifecycle handling of packfiles a
+> bit. The original motivation of this patch series is really only the
+> last patch, which fixes how we handle process-wide limitations. But I
+> took the chance to also polish this subsystem a bit, as a lot of its
+> parts feel rather dated nowadays.
 
-Before this patch, there is one user of this bit: use_pack(). This
-function might open the pack to mmap() it, and close afterward, unless
-do_not_close is set.
+I think at least the fstat() bug Junio pointed out[1] is worth
+addressing.
+
+[1]: <xmqqwlq1lwdp.fsf@gitster.g>
 
 -- 
 Laters,
