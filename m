@@ -1,121 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.148
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795726612;
-	b=wv2/u/l68elAPUHy9GeCPFWuLSL8YDrm3vGwpbDiv+S41gM5BpGWQe7vhmeO1M0WgO7O
-	 7YZksz9LmL1STqTX+DeIKibPVvpHPjXIepqEQ3An5illo3vk8s4UeWfE9PhwuDfgiqrvg
-	 0r6OhYx1V48mkyhmbWzViFY2WU7YD3AMdndPFSt32SJ7j/MXZRdZLOkvQ/QeIu6NTIOpS
-	 4v9VINKdfkpfCgkfRl68N1ObjVgOTYj3u8zwTQi3vp5H2AYQTD3we4N9orJfGThiQ78bp
-	 raWqrrTnPKB+uSXrM5Au9jzZnr8nz2r72fR/rFllgp9jEakdd6xQ2ybHLE1IccfaWjg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795726612;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=N0Y6Qqqz2Sh8DPKtScH7MCzsNZxUAyR4jo0PkavP2sc=;
-	b=jIve8R6EH7nKkfkqzaHRKGyDm4l32xZm4JWSe5VTXDsv/418quYnYQys6RcxHnAeODP0
-	 UKZQomSadv6hxWFA9WCA4mimU83EOaO3qiAcB61d4GEWN7vl4phAg8FfOdz2r9QQk1hXM
-	 GHmYS2ZaVYZ9mys4F52bus7Lo0CbxJs51lCGm0xlhJYzSesPDSEPlT//JO8VYSLCFfsPH
-	 81vPc1Q5P6cv/mDlrQSti2oV+d0DaJYMLD+/LLB/JonZhsW99/XyQ6YYpSH7MAeH68tks
-	 UYWocsYgUrxg9ti5FQaj+daD/pkYDzSmu9GKG+iNhNfPtbLjOxRpbROxTbYmvZJxC3A==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=FclIkhlY;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=hVLw+xqX;
-	arc=none smtp.remote-ip=202.12.124.148
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.175
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795726638;
+	b=G2e0IX1rPMO1Xl9mjilc6mp6g8ZgZLhBRpGrZlTWicQy20V9g1XnImrdEWCHKJm2Ws4Z
+	 KqS9/uGKT9SKE6R4tra2mgYQAuXEutEohOPpYYfvRpi9Ans5B3bsfyMlf5AlI8G1bw25w
+	 erlQFYQKS97PV1A/M6Dfu+m69f8x5ma/ManSiVN1lDHVBgwjmShTfkJvI06XNgahXTA/8
+	 Qxakfl8bQg1HJQdu4g425GLENfb+vYYVtST49FbBrnxsggHhMMTTg5VsF5ylBXS+QjEKK
+	 HBYCSVhIUWok4VFmQWh0vy5kawOEQmRSdg6MF3sCmhMz4TA92sJVuZNr3dWl4wA8xfg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795726638;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=4A10ShFx8OYy7UoPsGItwbG+ErsvMMLmVUzSrm1bv6g=;
+	b=5hwyfdoWjgikbl7DibACKCFxhdSYNLhstz79MG5SoRPXhsuaxdR3qKQcU5yn2etJf8Q1
+	 vibdcdg8FyQFfjgrXAydFkJ87GaWpxO6aE7+wKwm7r/rt6VzLTJJuQAy3C4D5WwMzRCNx
+	 OWCOzu7ewxdmRNwMKwEEAhqoM5JOYbNHUgVzamHJsxYGLr7oyrg+ZKJUxPbtpmc1iFX9T
+	 3cKKL9KXyGbrtdp/qkOZqlcmTTY32dCny3HzXvJsMGCkyPKHzSjhwfJplI0Gt2PzCW79W
+	 Q912vgkCrSqOidgl8VmwIkWsbHootxRMXUYlt/QOatagGPfDBXzy7U8/tVoy07lanlg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VsyFgMx4;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.175
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360C2606A31E
-	for <git@vger.kernel.org>; Thu, 26 Nov 2026 20:56:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 360C2606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4EE606A31C
+	for <git@vger.kernel.org>; Thu, 26 Nov 2026 20:57:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4D4EE606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=FclIkhlY;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=hVLw+xqX
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 51F381D00347
-	for <git@vger.kernel.org>; Thu, 26 Nov 2026 15:56:51 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Thu, 26 Nov 2026 15:56:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795726611; x=1795813011; bh=N0Y6Qqqz2S
-	h8DPKtScH7MCzsNZxUAyR4jo0PkavP2sc=; b=FclIkhlYhIcfy0fVvO8BywTLsL
-	pv3wZ0T7XrE49U8+yCiDtbweif9Vftns3Mk9tAeg5l84aVnMo3uXSkc9PqD7dXOY
-	rvp6JrgcMkkZ8B6g59MviE+KcuxqML/FlNtpVd4pY4Nofkqzt2Kp3GyBFqa2FIhS
-	PgA0qmd1fYcXmww2bkgncXTXycDIuiyWAIMDCj+EMQZLIN2BEMwAph9uUmtqZpAs
-	6AmMqvY6wwZaxhKmWznwU0P8jHyMvYixLhy+1gSmYcdVOwO8p5nm48K1mQ5I2ELq
-	PE/PTUit7PFQZ1kZS6BGgtuo1i2ivOjVREj+R6BOVFFgPpHfX4IhB1mYAs3w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795726611; x=1795813011; bh=N0Y6Qqqz2Sh8DPKtScH7MCzsNZxUAyR4jo0
-	PkavP2sc=; b=hVLw+xqXMOYeOtj6lEEFhG8pg4ptGzrIkHFNOsaTWx3ep5cuciy
-	e4cdFVNygfoqZPiCffzpHMD01kf5fzkbDkG+fH4ItSaeQ3v0SnHAgM/sBX2PJbBN
-	nai5NuHfm980cuUX6EQhZZUIpVfEgNM8D+g2M4Z3cvzYFc1lqye05WnLSD6vDxmc
-	LcZrbOHZh7rTKQnH9WJNOzM7vA6bPEOv23dm99nLB6TdN2wVhx9I1ywGwV+0zdOX
-	JG2C/gDAkaXlnB0xif307kJ4d4nAA4VkE2GtyBWKLdyX2H9bM2TyISN6v9YxsGJT
-	PRMAH3542+8VWkvhu7lz/iDfVGy5bDBn9Lw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795726611; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:hoM0rozO8WM5w/rTarDuRAHJbN5j9Hj0YP6FBI+CgsBxznN
-	dsyM1tBPMDC3o3+IwCGoLBP2l559S1PvgQBj7k6NACq55wCQvNT0FcvfOZ+0NcCY
-	cOf8zDh99eEHkv1B3O/n9HmWmEEgBAJcz1sVTlCfmHuJ+/sH9WKNvgtkP8sWYv+O
-	0/SVrqZWwCW4/6b6CxplX48riGDxDPEe8Hw8ipV3+XnQp9zSgLvuvkkDBjYSYT3d
-	UmHW1D712FRwjvJ0DgXMZwk/Nev/chs3i2EUJv2ZK4hzkreM8n9sAYV2oDG73bI+
-	xeg5nnON+51afRXtYJE1zqsaWmj97mWpYdQOwpg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:64s2PVOD0sb4C/F/5oplXe2Qex1oC7QqTslFjpDEZUQ=:9paNbmMjseXqGykdtq4QapAVccn9t4yFjSkhzitnaPk=;
-X-ME-Sender: <xms:Ep0Ia5cqjyA2-EVI_r0EUgPGS74zdBoQDSYs2kZ8Da7_8Kn94RHpyQ>
-    <xme:Ep0Ia-Gymc3k5nnQRpiVgMsZWxIRD_7Z1aQrxRSTexRo10L75KWvIANgqJxjbj48z
-    3jZ-CQgmJR01pLawWf8c-aW7MmlFSzkI5lsWo1TwSgPLoMNXPtpXA>
-X-ME-Received: <xmr:Ep0Ia63ipUkK07wzzkUjefsiZYC-ccftjIzVyi1FxUutXANkr9QcAyNihl1XBLh_trv-imbeFlJij0oxlvL5dthCoMNC9q2Kj3XDO5o>
-X-ME-Proxy-Cause: dmFkZTGwzr4NcqPAGqDS0z57h181qU8tpuJzfFvEGytWX3dBi3FMnCocCsP7GO6ElFT5k8
-    jW4etrt9dZAq9Wt0tn2sqqJ4j4T0WPfiLeckc9D1ZJL2XWmpQvJrVBk6wEKTg2qmO2DTOP
-    pVqDNictyVnip0mWNlIxroDTVvSY75l6SLqTJSkxJKcw7haQNaEBh0MKl/NVhXVZmIbm92
-    hkyCcvOLtD45iYyUi0GcNPTLDNmWvcrpFnkCToWSF2kTSS7+UHFA/ZqXmCxQeiuNjPi/cT
-    orLAJoSlus0bFYo8wNB9Q+8L8ggf3+M9RGsYiV9gsmxNu5MaOdfF2BOK+I4FS0CP2Y0WJK
-    QRYCFeGzDSBcajekfZK8bFrR+25NwyFYjqS4W1gZ9yVLmLq1wpX8DZwVDv9sB6s9RoLZ1D
-    s0soM2kCajyrf4i/ooOBw3epxzIdZX0Lvm0suGhinDYUVcgYtPlThX0lOlCKmoTQJ7y8A8
-    CZ55DUVFwN1LJ7rfZp603HzHOC4HfdgVawy/udD05rA7dYCKxFBqfEPYeXdHTryGkoxkF9
-    pf5o4IUwJJ/q7AGKvh9W3Fif9lw2+SwNvwWY6KLidlw/QePQtATalovGhMeClhqZnF3u8H
-    lkgbfT/n2lzYu2+rJgeOiRLenpmSgU8gM4h3s/9XTt4ZnXYFXjDNGTuWIB7A
-X-ME-Proxy: <xmx:Ep0Ia-kbZuhcwrmUYSfzJS6q-Jps6MUpnAIiP4HOe4HbloCjXk5rng>
-    <xmx:Ep0Iay_1bq7Ajrau7CrVFEJJdR5X-ir4QgkLXE7G71mlN8PwjkT9VQ>
-    <xmx:Ep0Ia7r41sJTp0amdPrXgzeEWnzokJtV2TPaioIQO8pHIbTfB2AF1A>
-    <xmx:Ep0IazlLsAbXzUEQ3gxztbOavJfv4U9XC7ZOMVspMug2Js6NkDnPJQ>
-    <xmx:E50Ia1GPTMo_hvL6YWTqcMfl-ZINNH_SJmt6brLTyoMEFqbvQKrbJsaq>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Nov 2026 15:56:50 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Kristoffer Haugsbakk
- <code@khaugsbakk.name>
-Subject: Re: [PATCH v2] var: add GIT_COMMENT_STRING
-In-Reply-To: <6e310e0af58cf693819a8d7384c1560e2e342d4b.1795710343.git.phillip.wood@dunelm.org.uk>
-	(Phillip Wood's message of "Thu, 26 Nov 2026 16:25:52 +0000")
-References: <fa8b80af26481e0dc96fd8f80f3c7ba84f60f9d4.1795516651.git.phillip.wood@dunelm.org.uk>
-	<6e310e0af58cf693819a8d7384c1560e2e342d4b.1795710343.git.phillip.wood@dunelm.org.uk>
-Date: Thu, 26 Nov 2026 12:56:49 -0800
-Message-ID: <xmqq5wxjia5q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VsyFgMx4
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-8b0ca1ebc8bso64782917b3.2
+        for <git@vger.kernel.org>; Thu, 26 Nov 2026 12:57:18 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795726637; cv=none;
+        d=google.com; s=arc-20260327;
+        b=SS8icoPU1UNaifxZjXltfsnYM9+L6pqMkpw9rAJ3hYi9mper0kfy6b+czMhh1bHH5f
+         j1fVbBFntH0DjROtXWRrImU2MVtVhxkWH3qESnpw8s9QZKNv0b55LuXICgRo5cgEfmZN
+         fxFRscqUEvBYPjdoD40ixufizUsyNwpKEWtsdCRAlCVcdJ6AVs2EbJPwTVLZnxt7SDtr
+         xiuNySix/C/HmDL1omH9b8kcpdLRMaifrb5Hr5SwQs3l6bHErVPDef1ES4igN1U00/Bq
+         A5Vk1H5pHGpWkd8D6vowRLpek8l/0vrgZT+0Tt6oNuqAx1VxrcdE34z2TrhvrufRdUHQ
+         NAaA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=4A10ShFx8OYy7UoPsGItwbG+ErsvMMLmVUzSrm1bv6g=;
+        fh=zEQd+5l/OBjEyzF6GIR9zxz6BTrbCyvCTKJbHzWgHEc=;
+        b=gPzdVW4i/XyDAVXJKYIlFzmy2BYHLjRU66ekMtlOt9RxNqEnioCDlrPsQccoAZyCNh
+         O83581rJqoxXFdDoBr47Iv9REBYu7E6pWXVNZho2cl7sdLniDESN2DJ8t2+lh6mx9vYH
+         qyhwjQTQs8PtILmJYQbH2GfFV7ZGb+dbeDXdpG7GvwSB6cEqIUZ1ORuBAqN4jvlr2XA0
+         tAS5/vfNzPOoR5BPofACqBUOWCwykd6FmON8FG0vj2Crs9B/no+0//RjbPz32j6aKUpQ
+         Wr0Tt+Ow9bFnJGmQvJed3vV3XZB9xtFe+CNSLMhQG5Rrm2bEDg71BM1NTLkmXsJNL6Aw
+         VbqQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795726637; x=1796331437; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=4A10ShFx8OYy7UoPsGItwbG+ErsvMMLmVUzSrm1bv6g=;
+        b=VsyFgMx4TEOyPHwKUbrOnSuDa+zXXwYHWh43LlgaCVmUXs3aM4ffouaAg+UfB+5Q33
+         aMs+eXnnlzMF2hEjvsy8Rb+oxfS4RTFLONZcCq/bObgD+kKTeEQr8SD87bdnZQvykUIx
+         GIL0t2gsBhqEBLnmknn1LLs4XgpO9N2xzkKh0Xm+0mWBR5HtDvLwWSYyVRHXLqel+Awx
+         TGMuOf7yUDViFLqGoeW7ZxYJr6LtotdVhy2wyriDcqwl74zHpGE0LVbqgTPhOnH6SIq+
+         t/2fKok5fdE4JMB+GNFpWkarbHBd/cr80RTYzjNSt+a8waBAcXaUR3fiLRDtyhYlK5Me
+         IyjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795726637; x=1796331437;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=4A10ShFx8OYy7UoPsGItwbG+ErsvMMLmVUzSrm1bv6g=;
+        b=CCQ+1/t0kJK1rlD1F4u6soPt64KkOZtKp3JndfKvKJ7o9tGTjA85hJdhcyBUm12PBb
+         wCqwlzThe+uMeH9EFlUbDldzxF9TRUWB+7ezGeWUx245YTBufcOL5gZGI5rBI71qxMpR
+         Cha2KK56JcCyBzNSx68FMmMhwR8d0pryMglqJ1tbDvQdxSUAc8uS4r4X1mRECIEsl17d
+         IoZivDwbuC/7ihbl5H5KDLeb+Bn1rTIspE0zdgk+KcXH1O/Ij7FNjM9v/liRzkGN9Pwu
+         0YwuAktHybe13+kCBgb1Fi9eX5qzP/BuJwQ8od83U8dRD0uX7XiCeqFLXMJ9jDQrHixs
+         oomA==
+X-Gm-Message-State: APuU4Z8pEGNpRqxmAGFDcQ3Ngo/LNclj3o48rU8evU6kk1PdprKFyU/i
+	r7L+Rx+iH+6dz+Cewx3rp6+5DTFqgHcu9O+0QzrgFzTnlJvqV83KZNYeSFrMuwB/Ii0vIVLo392
+	aW9IpGG9dxmkYa/hvAUIMU7cDi4zchnI=
+X-Gm-Gg: AZFdTZfTXb7wJZPSYuYl/FsmvMZveXpP3XpMK2evaZlh3Seb0ShQNibfNE4ZHvvRIAO
+	fZ/hA0+5qVirysOfUkrKHTk6p2od+SoCFABxCWI/pJ41IkfHJUm92LQIrcqBt2xrr7vQ2LX5cbQ
+	4byKJ5SqwOYkVsiK+XOt+g9aQx2XVZZHfA11A4TDAGtv2JAqtdc70BwhlwG+mCWc6QmDQBdS8Nt
+	eDA+uc68VVO+tDT+Qf8ElW10DGrFjy8r3eJgMNejLueXYeX+QRTnJnmL9n//IU7j/NURQAo+FVv
+	AI98cMRIQtWDTXP6MkEx/3vuxNcPdGYX0MZHHIo3bkddTHgs/FBDUM/CuCHtlpSoWERz6Z9zZ1I
+	aGin3CE//IaR7UzgMGogNBWfZ80dJvUiYItN6660cAmZo3uBDAs1UzDB+Dbp8nuLQ/jI3UODhEb
+	JaFFOoFjBI4DAssuVrjL7bc1PECAk4i2UlMWVg4QItK6eHhyuiMa/3kkSomvtktHcaoq1EbIWoW
+	tD1gBHGowY+feSB2kI+qCJwdgjJSaCZC75TMEmv
+X-Received: by 2002:a05:690c:e255:10b0:8b5:6584:ae8e with SMTP id
+ 00721157ae682-8b56584b1a7mr24300397b3.6.1795726637255; Thu, 26 Nov 2026
+ 12:57:17 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -125,92 +105,104 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20261124172146.18330-1-okhuomonajayi54@gmail.com>
+ <20261125220214.35881-1-okhuomonajayi54@gmail.com> <20261125220214.35881-4-okhuomonajayi54@gmail.com>
+ <xmqq4id4s1od.fsf@gitster.g>
+In-Reply-To: <xmqq4id4s1od.fsf@gitster.g>
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Date: Thu, 26 Nov 2026 21:57:06 +0100
+X-Gm-Features: Aa3M54r9P3LV8JpYn5CM5Y1bmuooP-2w-ctRhtHtu8nkKyVWA8-0yf_r0hPvbfg
+Message-ID: <CAFpMFfCb-S_RdOo-bzKY2i8T-tZWfVGy4FzQeX=3S6E1Ks6s4Q@mail.gmail.com>
+Subject: Re: [PATCH v5 3/6] notes: use the tree's repository when reading notes
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, ps@pks.im, 
+	usmanakinyemi202@gmail.com, siddharthasthana31@gmail.com, 
+	kaartic.sivaraam@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> "A, B, and C do not check for NULL, and D, E, and F do." [...] step
+> back a bit and give a wider picture [...]
+
+Thanks, that's much clearer. I'll rewrite it along those lines for the
+next round: the wider picture first, then the entry points versus the
+leaf helpers, with copy_note() as the exception.
+
+Thanks for writing it out.
+
+
+
+On Thu, Nov 26, 2026 at 4:37=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> Since commit 9ccf3e9b22 (config: add core.commentString, 2024-03-27)
-> we have two separate config keys that set the comment string used by git
-> when creating template commit messages etc. As that commit notes, when
-> core.commentString is set to a multi-byte string, it can be useful to
-> keep core.commentChar set to a single character for compatibility with
-> older versions of git. That makes it awkward for scripts to determine
-> what the comment string is because they need to do something like
+> Okhuomon Ajayi <okhuomonajayi54@gmail.com> writes:
 >
->     {
->         echo ' #'
->         git config --get-regex '^core.comment(char|string)$'
->     } | sed -n '$s/^[^ ] //p'
-
-Did you mean 
-
-	sed -n '$s/^[^ ]* //p'
-
-to catch both " #" (the fallback) and "core.commentstring //"?
-
-> diff --git a/Documentation/config/core.adoc b/Documentation/config/core.adoc
-> index bdc74d291cc..e348d8895d1 100644
-> --- a/Documentation/config/core.adoc
-> +++ b/Documentation/config/core.adoc
-> @@ -549,7 +549,8 @@ core.commentString::
->  	Commands such as `commit` and `tag` that let you edit
->  	messages consider a line that begins with this character
->  	commented, and removes them after the editor returns
-> -	(default '#').
-> +	(default '#'). Scripts can query the comment string with
-> +	"`git var GIT_COMMENT_STRING`".
-
-Elsewhere in the documentation (such as Documentation/config.adoc and
-Documentation/git-var.adoc), 'git var' invocations in backticks are
-written without surrounding double quotes, so dropping the outer quotes
-here would match the surrounding style.
-
-> diff --git a/builtin/var.c b/builtin/var.c
-> index eb85a985b15..6dc8ec4ba9f 100644
-> --- a/builtin/var.c
-> +++ b/builtin/var.c
-> @@ -188,6 +188,11 @@ static char *hostname(int ident_flag UNUSED)
->  	return xstrdup(buf);
->  }
->  
-> +static char *comment_string(int ident_flag UNUSED)
-> +{
-> +	return xstrdup(comment_line_str);
-> +}
-> +
-
-OK, like other .read() functions like committer(), we return a copy to
-the caller to be consumed by list_vars(), which will free() it
-afterwards.
-
-> diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
-> index 883a45399e2..f228cb5bb6f 100755
-> --- a/t/t0007-git-var.sh
-> +++ b/t/t0007-git-var.sh
-> @@ -434,4 +434,14 @@ test_expect_success 'git var -l lists the identity components' '
->  	test_grep "^GIT_COMMITTER_DATE=" actual
->  '
->  
-> +test_expect_success 'GIT_COMMENT_STRING' '
-> +	git var GIT_COMMENT_STRING >actual &&
-> +	echo "#" >expect &&
-> +	test_cmp expect actual &&
-> +	git -c core.commentChar=: -c core.commentString=%% \
-> +		var GIT_COMMENT_STRING >actual &&
-> +	echo %%>expect &&
-> +	test_cmp expect actual
-> +'
-> +
-
-Checking the default and core.commentString overriding core.commentChar
-looks good.  If you happen to reroll for anything else, testing the
-reverse order (core.commentString followed by core.commentChar) would
-exercise last-one-wins in both directions, though it is certainly not
-necessary on its own.
-
-Looking very good.  Will queue.
-
-Thanks.
-
+> > note_tree_find(), add_non_note(), load_subtree(), remove_note()
+> > and format_note() already have the notes tree, but still read
+> > objects and hash algorithms from the_repository.
+> >
+> > Read them from t->repo, the repository stored on the tree.
+> >
+> > note_tree_find(), add_non_note() and load_subtree() do not check
+> > for a NULL tree themselves. add_note(), remove_note() and
+> > get_note() replace a NULL tree with the default notes tree and
+> > assert that it is initialized before those helpers run.
+> > format_note() does the same NULL swap, and initializes the tree
+> > if it is not already. load_subtree() is also reached when a
+> > lookup unpacks a subtree, which is still after that check.
+> > copy_note() is the one public function that does not do this;
+> > the next patch adds the guard.
+>
+> "A, B, and C do not check for NULL, and D, E, and F do." may not be
+> stating any lies, but such a description gives a very disorganized
+> feeling, as readers are not directly told where you are going with
+> it.  Make it clear where the entry points are, who calls leaf
+> helpers that do not use notes_tree_or_default(), and state that
+> these callers themselves use notes_tree_or_default() to cope with a
+> NULL tree.  Before going there, step back a bit and give a wider
+> picture, i.e., have you done enough to make sure readers understand
+> why notes_tree_or_default() matters in the first place?
+>
+>     In the previous step, we added a '.repo' member to a notes tree
+>     object so that you can tell which repository object you are
+>     working with.  The notes tree objects are passed around in
+>     various call chains, but many functions like note_tree_find() do
+>     not pay attention to '.repo' and instead use hardcoded
+>     the_repository.
+>
+>     There is a catch in the existing API contract around notes tree
+>     objects.  Passing NULL in place of a notes tree object is
+>     allowed, and tells the API to "use the default notes tree
+>     object".  Which means a few things.
+>
+>     - An existing call chain may pass notes tree 't' around, but it
+>       may be NULL.  You cannot blindly dereference 't->repo'.
+>
+>     - High-level API entry points like add_note() may receive NULL
+>       in their 't' parameter, but they replace NULL with a pointer
+>       to the default notes tree object by calling
+>       notes_tree_or_default() upon entry, so after that, the use of
+>       't->repo' is (almost) always safe.
+>
+>     - Helper functions that are only called from these API entry
+>       point functions may not check the NULL-ness of 't', but rely
+>       entirely on their callers to have turned NULL into the default
+>       notes tree object.
+>
+>     Now, X, Y, and Z, as we saw in patch [1/6], are the high-level
+>     entry points that guarantee their notes tree pointer always
+>     points at a valid notes tree.  A, B, and C are helper functions
+>     that can be reached only from X, Y, and Z.  We can replace all
+>     uses of the_repository in these functions with '.repo' safely.
+>
+>     There are some cases where such a replacement is not sufficient.
+>     For example, copy_note(), even though it takes a notes tree
+>     object, does not use 't' itself, so it does not bother calling
+>     notes_tree_or_default() to ensure that 't' is a valid notes tree
+>     object.  In order to replace its reference to the_repository
+>     with '.repo', we would need to do such and such things, which
+>     will be done in later steps.
+>
+> or something like that, perhaps.
