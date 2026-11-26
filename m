@@ -1,100 +1,124 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.149
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795728833;
-	b=a+z53QkxtBjXiHqpkoBHgVc3St3T9OGPyHBtYuZKOhd644EosiMnGhhGt+2qziCqi0Qh
-	 I+3z+5PX28pz29ZlZ0CgzFfe2aSfe+jCjwO2M1dJI7kur8bHqwatYXIml7VbYXtoa2S6k
-	 RAPdtrEpsdIkRcl62ZDQjeluMvB11bphHvYdwjKAAyK3b0nLsgm0Gax09tWSoBsRQ3VD0
-	 G3hsMkiekOg5tx73jXVDGSFLhASs+QgXXxDWKZDxd56yU4j/4daO0NM4PWuYVqMfJ0qkp
-	 0JpGa4rUlKGw1BwItQ1u0uiQSLKCj+6ekG4cSxB6AhPklb4vvSYD4drMU+eCcrWSq+A==
+	t=1795729661;
+	b=18geQYvlegvud/XFxndYwi4miXAeHn6xp5so25JhKiI5k4Zp+FszM+yVYS7PzlAItSpt
+	 A8cOUt90L1BpIGY43VML/HkaS/hHv8h++MRm+5ejpDEVKXGSFzZunWrTq55GL6CxOe6k0
+	 fnpWrtkAPoS3C4B1HO+MxaK3TDeFXbk/EjmPKd9TW0zxKUMfblm4NfHY2ql9bQoLEdZEt
+	 LsPyxKuYElG/E5B5o/51WPhdVJE7Rx3MBnn0g5pf8rIxHbcOUTT5iegQR6E1zKHxuVC1D
+	 n+j6vCQqRSxjk1emX3V2EJm6ZVs6NHfWjTEO/kawgjLMNawoxQI7ohHjHaSZV0ID3Yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795728833;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=Ca6iqNDuk02EQZpE6y35+KaNUOvoZaNDmqcH3+rsxzE=;
-	b=t99XK1mc7ZZ3mkwIHu4B2/ZYw0f7chsPg36g3FmV8NmzTyO5qO+nnGyd0bnJP39GNfZ8
-	 M0YT69GXXZvnoPeRuwGZeQLNlvIiMf/mwvodcKLV0m1TfIDhFkhLQNvahdEH2oCLL1GYs
-	 H49vC1A2CfIedRy9e1Xsq+KbM675IFpGQWjbFNGXRvG8tIXyg/ZPZCYQcYU9KExKv+MGm
-	 CleV6QFWOwGZDaNG5It2NsOmkZdaPmNXdq7bT8LkgZ/v8HD4yhxbltuKJteXe4YjHlwUP
-	 nPkgyq6UASxg3+u1vLZE3O2SVcdTiLw2BeiB4xQrkCaHH6LAZBDmUB464H/TgVtqdrA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795729661;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=2IMqvDSSzB0sp0Ufrl7GA9FJRdrXGpbFm9Bqvr074Nw=;
+	b=ZQcfUkPuHZT/vVOrvme0sT1kCO94/3gYDopY3qDEVTIYTUuEqnmLLNml5lKli0vvS4Pp
+	 XqM0CwqJ+hpnTKu3PleuEo8XoH093VkhREAhiRl1r80QfzwHbI6eA1rDy4heFkwJToH5Z
+	 rAc+WtSgLdadhR8fTzB0ElCLi0JDu8Gtngnep3TlQ8iU+jq+h4G9diT4Af2WdE1GEJtcE
+	 E0uV+WzBeBwpnQHjnFQwyRcKn76KZEPa24YKdUQQSAtr+PWBtJBNhm0g/KYZHWd+i1d/R
+	 kSJN1LyoMR0YxrGeMb8rU+bGg9IIEgvV1DYqQv4hejoYEHvYl6bAstP2FCKw+QlxexA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QJrMq9MQ;
-	arc=none smtp.remote-ip=209.85.218.50
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=fEFtshOR;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=D+IRjKMF;
+	arc=none smtp.remote-ip=202.12.124.149
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1AE606A31E
-	for <git@vger.kernel.org>; Thu, 26 Nov 2026 21:33:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ED1AE606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08252606A31C
+	for <git@vger.kernel.org>; Thu, 26 Nov 2026 21:47:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 08252606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QJrMq9MQ
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c516a1623d0so822177466b.2
-        for <git@vger.kernel.org>; Thu, 26 Nov 2026 13:33:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795728831; x=1796333631; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Ca6iqNDuk02EQZpE6y35+KaNUOvoZaNDmqcH3+rsxzE=;
-        b=QJrMq9MQyKhzWeyxaPXHBPvoTHlkE0z/N1pw2vqhUn8sVZvvM+VTbgZTCP7UEGgOYH
-         xuNtihk2Rysv/Yjpo7dNsve0JTEPYkWpyq/qPGjbwZ2U5f48Sv5f1c/qg4iEU7U8ATiY
-         X7sa98hMAbrunD3ih5tZu+OlwBsYZZzOYGlk8DMkjCzYKPscYYckQkZ6pT8PGsCX0v/7
-         p2L287ckRISMC15AbAZ9O6aFbysMywPSy7iWjpLLQUk7WM2lrQ2XTGhoqHCE1wC4NxjM
-         car1MHDRsX7zSlOgrgJeZq/w2vtx5JurjdPpaPb+IlEhzI4ER4yQzYkwHsWyfOv4VsSR
-         LWNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795728831; x=1796333631;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Ca6iqNDuk02EQZpE6y35+KaNUOvoZaNDmqcH3+rsxzE=;
-        b=ouvLr2okbWawo0LFavlcMQsKvpChSoLYzL3YQIaVXTgtXANL3BG/glnk6CUiCOo6GY
-         GcJshUzDGP2V25J5scqI+sZyJ7IAZA6CEEWDKKeSNS4dM/sSHuLqJSBS9JnztlnYd6gQ
-         am+K1uL4ioocW0KSrDRVE4hHPvyMNGinvZ35arNw/1olXhjvNsXS9SGMrm0atejXqVQ2
-         WBSttZNNXzaVQQY6FhAjcDBmGNvIF/NoT4JW4dWe6z7zHkHb1KkBb5OngDAVCe4uNlFi
-         IvOtUl9QgsA9nrdvo7WMkd7lqCpfp9CiUXSwEsAj2sruCpJEvXx2CG048pf3HI0i/Uqg
-         XHJA==
-X-Gm-Message-State: APuU4Z+/WpgaiajPcswSq0MbwDqtLaR+7hRMmylAuGWWrX0KMmwczzP1
-	D5ZOn8rztOg3aVf7JdUc+9a1+ZWzwdyi2SxPEAYuWrC0rGIwwQG/lNvWEbKxsLRMh4eHhw==
-X-Gm-Gg: AZFdTZe78WLpXQBNSckjkO9WD55MR8Q9teMat89VUsZbPC809e7TIRuHpLWSajzTPWg
-	zvbMT5XTu/+FoKpOR1c63R2wshk8Y4O4pCIWZLekwFbhcIrhUuOBF8yQH5v1Ki73OKvOJP1cw/3
-	/cwUE8keOSTimKRjbkeMsafgGVQ8OPj/ezIg9q00N00wl3fd3feLL3yEDAgESkuBKeiTGhxg/oO
-	pZAqYDe8jqYO2QA/wjLZ6ExGGM6JsjAJYnWb3fQ9O/9Wb8lf6FPFdXCRKz6opGH/ZU4jKryStyZ
-	NJvlOy8o1FymY+s/HPwfqizcaTIIgfFhcRrRwWtXCN7Q136Z+YNYk8j1OxMehrwhXJGqWZtMWaV
-	OrCJxehoAVa1Av4fkyL7J8sML+toQL515v1gBU0dlW4jj11DNmNooEnuyIY5Qx2/pe0FZcjgwlg
-	6+/0627U00ZTe+Z1OmI2WQa9sQs6a+DGp+goZQ+FhsBdcznlftNUIUABBKEP4SQeFMQaqJKgAKY
-	R2LZ93GwjTLBkDa6Ikg3Uz93uKxtZ3K8HSJqBTty2o/bXVZMvQIpDCId9kIfu22cXrDZHhiLbnx
-	r9jUnwgPBLFX5p/L+744zNiQZPJtR32rGXEz3sylnqNZGZRDlbUlzrz2mgc+cuj1b6wYR59Dso8
-	JssNJQ2yntkbs6A84MR7mbeAY5bxFSsfXeG7DuReubm1xJCgF5il7OtPDp3mR29YpST31VWKXmb
-	VwISJr4LKJgxwTPtfKIzcVGz1R/1iX
-X-Received: by 2002:a17:906:7c2:b0:c50:f0fe:438a with SMTP id a640c23a62f3a-c513a5e2526mr1532049466b.8.1795728831089;
-        Thu, 26 Nov 2026 13:33:51 -0800 (PST)
-Received: from localhost.localdomain ([104.28.251.99])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c513b030ed9sm805237066b.86.2026.11.26.13.33.47
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 26 Nov 2026 13:33:49 -0800 (PST)
-From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	ps@pks.im,
-	gitster@pobox.com,
-	usmanakinyemi202@gmail.com,
-	siddharthasthana31@gmail.com,
-	kaartic.sivaraam@gmail.com,
-	okhuomonajayi54@gmail.com
-Subject: [PATCH v6 6/6] notes: pass the repository to the combine_notes callbacks
-Date: Thu, 26 Nov 2026 22:33:06 +0100
-Message-ID: <20261126213306.87466-7-okhuomonajayi54@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261126213306.87466-1-okhuomonajayi54@gmail.com>
-References: <20261124172146.18330-1-okhuomonajayi54@gmail.com>
- <20261126213306.87466-1-okhuomonajayi54@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=fEFtshOR;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=D+IRjKMF
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 30E3D1D003B7
+	for <git@vger.kernel.org>; Thu, 26 Nov 2026 16:47:40 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 26 Nov 2026 16:47:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1795729659; x=1795816059; bh=2IMqvDSSzB
+	0sp0Ufrl7GA9FJRdrXGpbFm9Bqvr074Nw=; b=fEFtshORINobvJ/T+SKZRuHYID
+	WyjbSpZW377rC78/AbH3Vh9Qh0wDG0o1Dgo9VYiM6s44rJBY2gc/MvLa1Iaknkx8
+	3s5SO+sZrfEgDiq0Dpenu8icsH04ORqt7gPbX9JiUL1MLfhuS8LtwLny68MxFW45
+	j0KundlySwJxe2upz5cD1PyqwRK3wvEAxoyS+mtkExsScBc40i5OlJ3dwxJfPN5b
+	TqFG0D96cVxdF28ccuNz8XmIanMGtSz975opYa+kqixGz50y8x63IdvVF4n+jOPn
+	eawv2YfLXb67YsRartEeF5UVZhTlq7+ReYdAg2Q1q2H3rgb5QR7Zh/JJVPEg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795729659; x=1795816059; bh=2IMqvDSSzB0sp0Ufrl7GA9FJRdrXGpbFm9B
+	qvr074Nw=; b=D+IRjKMF3XsXT/YZ1mf1yv733o1+nDqnaHwTBChGTXP8uAZDJS7
+	hGrERIQZ+mhFQTCzd2C+/vIO9mmSW614oobw25/kaQyBkYg6VNkf5MGckiv+0F+O
+	CGsrQAiMZMPubEKdrtnJ7OO7fZYyWUbHvBYz2Ef3ZecbxpAU13A+7bNZbL6+Slfg
+	V9+6V7Qqw9ZXEzf4aWlTPzn66SGxMyIqfnnmBmLmuPtc63vw9w4brMVGZ+mFz5K0
+	Iv81/r8KgBPBwqv6v/UZaLe3NLX/z/QKtMidU4a/wYflEypVhcUpyX1G3XdN4jT8
+	q+1SMHoGPWwCDC9AZjuteqhFE2LiU2l1zMQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795729659; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:QecE/QFtI0Gs+5HF3E7gq/ntmrbt++4AhwPIn+ODT3uIDpB
+	tiRLkOpFJVd9DFnFJ5iLQv9QpiRoL2ZiHVy4un0iFSagueTA8t/Iuvsygkt0QY7x
+	6gKHY8kYROH43Q3t3dye2kky05PwWO8pZIaLtcpyLD9FIyZi/GBb8iHDSnxhT7Td
+	R02h5ocmNjbQOS3Uz+kZsOWfNKgdA46AvEORa+m/fuDExgKGjTwIv87/rvGHE+Vl
+	QXc4L27CdRhkKwztLQaRGCtIt3Eo1MFTjJHBLyEMVXMN0tJN60i5rqYbRDB6Nwa4
+	ydP/omCZ3ifvSalrbYQCY6K46V4BaQ0/ZLW/I9A==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:9qkjwndiZn74kTdPIjH46vfJoio0vkNZzo51pwfS6qQ=:x2WiEdU9XQO8DXRZ5eOrCcKCKubppTxqCt6tyHFP8xs=;
+X-ME-Sender: <xms:-6gIayHW1Wrtoj0fjQkspMTefCXlXkE2yLvbJuZfbLl5xvdcrzxh1g>
+    <xme:-6gIaybNQi7BpUUOn-FCuXKcIDXOYsQO1K1ZaaDp_VMoGT2tQ3EjWTJO8Fj83-igW
+    M1QJajqPS5HPah_FHF766E94N4yeQI0xTQ5b8AA1V0ZeodrPGIj0ck>
+X-ME-Received: <xmr:-6gIayU7Vl2XqTjkbGEkWDRSJ77VkO9AzhsqUtUF4qknRKX1Qm3btLmFsMGBe_RoZGMVZORIVLzuVaSYRvnE023D2wciNFxNxJ9qGWc>
+X-ME-Proxy-Cause: dmFkZTFz/3/Vrso4ZvZ1RihPw8H8WX1+961K6oep+5hmEFGnta8MorJZ7taj62SgnyuYfB
+    AnJdVwevM/an+OgKd1+K2XXYy2VRacxc+ok6ZjUl9ofUOJEt3nul5e2FrxDvfZM8jqIs7S
+    4OLls22Ao2qVsn8tm0FA4wQukTK8PmRWlRixjFG4J3R+9s2jzB4XmnhiV6aLcCY9NlKBm1
+    I4GtsF2IJDwO8/aXTvsvLptudkN7XmVNI77Tn5J3uV+8cVcvNydqix7Ug2N+X2+ABA+QBc
+    6M8Np2lA9Cfy3EZ2wM3PvIyP9+2WPkC3mJuYdRsYiooMYuIn4hWoCPsge0TKC8EPS1x0Hq
+    czcIwLTA+Fl/sHeS79yond5x/3iZ44CkPis75f3lScepNxZgMZ8yQVGuFUuUNtuPI8i/C7
+    iJG6/U7mhu3bDWf8n/y2NYjOT/+5PzR7RXIF4XV5ghqO+qessZ9ytYMeNMTXBTn/KUaeTh
+    HbY788F/liEk6iDgeXm42Q9RCp0diefjsKujvAa9cuvFvjOX5H4r8yYQVe1iz6bm822yjj
+    gzjrUG/VIYqDlgwnPyJ9QfPB/wqKifXYVd78A1M16Dq30TJE56EW8dIvu1sj5iy0LEaHtW
+    3ZttiR1PNhKa9mMg0+FCdXaKo0i8E8F+2LRvu05TyvNxQSS2YkoIk7Hm+eSA
+X-ME-Proxy: <xmx:-6gIa4mK30cPV_SB28ylOIIvWmbKgqlLKBouWieYh6ahV5K-YwT0zw>
+    <xmx:-6gIa9CgLx2VSSG7IfByz9_QduQuLIZSdSYtUL4dnW83TpwepbKAaQ>
+    <xmx:-6gIa3hWOrhT--d9nlBZcPSbVarP4fQ8qfHRWkRVQVzit_2817N22w>
+    <xmx:-6gIa6zx6SNPt4n0h7eda_SoLA19N8cmtIqwKXkpkyzRiYhZ7iawzQ>
+    <xmx:-6gIa43-RtdOcCP6afiTK53G7KcbCOwWAURxqvipi7mY6QS0ud4vdX1E>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 26 Nov 2026 16:47:39 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  "brian m . carlson"
+ <sandals@crustytoothpaste.net>,  Patrick Steinhardt <ps@pks.im>,  Elijah
+ Newren <newren@gmail.com>,  Jeff King <peff@peff.net>,  Johannes
+ Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 07/13] builtin: populate pack index v3 fields when
+ indexing
+In-Reply-To: <20261023072559.3204273-8-christian.couder@gmail.com> (Christian
+	Couder's message of "Fri, 23 Oct 2026 09:25:52 +0200")
+References: <20261023072559.3204273-1-christian.couder@gmail.com>
+	<20261023072559.3204273-8-christian.couder@gmail.com>
+Date: Thu, 26 Nov 2026 13:47:38 -0800
+Message-ID: <xmqq1p87i7t1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,184 +128,89 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-combine_notes_concatenate() and combine_notes_cat_sort_uniq() read
-and write note blobs in the_repository, even when the notes tree
-belongs to another repository. The callbacks are only called from
-note_tree_insert(), which has the tree.
+Christian Couder <christian.couder@gmail.com> writes:
 
-Pass the tree's repository to all combine_notes callbacks.
+> Right now, we have support for writing pack index v3.  However, we need
+> to populate the compatibility object ID in order to write it into the
+> repository.  Let's do so by converting the objects from SHA-256 to SHA-1
+> as part of our indexing process.
 
-Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
----
- notes.c | 31 ++++++++++++++++++-------------
- notes.h | 23 ++++++++++++++---------
- 2 files changed, 32 insertions(+), 22 deletions(-)
+Small wording note.  The code handles both hash_algo-to-compat_hash_algo
+directions symmetrically, not only SHA-256 to SHA-1.
 
-diff --git a/notes.c b/notes.c
-index f327652994..25e5873ac2 100644
---- a/notes.c
-+++ b/notes.c
-@@ -279,7 +279,7 @@ static int note_tree_insert(struct notes_tree *t, struct int_node *tree,
- 					return 0;
- 				}
- 
--				ret = combine_notes(&l->val_oid,
-+				ret = combine_notes(t->repo, &l->val_oid,
- 						    &entry->val_oid);
- 				if (!ret && is_null_oid(&l->val_oid))
- 					note_tree_remove(t, tree, n, entry);
-@@ -816,7 +816,8 @@ static int prune_notes_helper(const struct object_id *object_oid,
- 	return 0;
- }
- 
--int combine_notes_concatenate(struct object_id *cur_oid,
-+int combine_notes_concatenate(struct repository *r,
-+			      struct object_id *cur_oid,
- 			      const struct object_id *new_oid)
- {
- 	char *cur_msg = NULL, *new_msg = NULL, *buf;
-@@ -827,14 +828,14 @@ int combine_notes_concatenate(struct object_id *cur_oid,
- 
- 	/* read in both note blob objects */
- 	if (!is_null_oid(new_oid))
--		new_msg = odb_read_object(the_repository->objects, new_oid,
-+		new_msg = odb_read_object(r->objects, new_oid,
- 					  &new_type, &new_len);
- 	if (!new_msg || !new_len || new_type != OBJ_BLOB) {
- 		free(new_msg);
- 		return 0;
- 	}
- 	if (!is_null_oid(cur_oid))
--		cur_msg = odb_read_object(the_repository->objects, cur_oid,
-+		cur_msg = odb_read_object(r->objects, cur_oid,
- 					  &cur_type, &cur_len);
- 	if (!cur_msg || !cur_len || cur_type != OBJ_BLOB) {
- 		free(cur_msg);
-@@ -858,20 +859,22 @@ int combine_notes_concatenate(struct object_id *cur_oid,
- 	free(new_msg);
- 
- 	/* create a new blob object from buf */
--	ret = odb_write_object(the_repository->objects, buf,
-+	ret = odb_write_object(r->objects, buf,
- 			       buf_len, OBJ_BLOB, cur_oid);
- 	free(buf);
- 	return ret;
- }
- 
--int combine_notes_overwrite(struct object_id *cur_oid,
-+int combine_notes_overwrite(struct repository *r UNUSED,
-+			    struct object_id *cur_oid,
- 			    const struct object_id *new_oid)
- {
- 	oidcpy(cur_oid, new_oid);
- 	return 0;
- }
- 
--int combine_notes_ignore(struct object_id *cur_oid UNUSED,
-+int combine_notes_ignore(struct repository *r UNUSED,
-+			 struct object_id *cur_oid UNUSED,
- 			 const struct object_id *new_oid UNUSED)
- {
- 	return 0;
-@@ -881,7 +884,8 @@ int combine_notes_ignore(struct object_id *cur_oid UNUSED,
-  * Add the lines from the named object to list, with trailing
-  * newlines removed.
-  */
--static int string_list_add_note_lines(struct string_list *list,
-+static int string_list_add_note_lines(struct repository *r,
-+				      struct string_list *list,
- 				      const struct object_id *oid)
- {
- 	char *data;
-@@ -892,7 +896,7 @@ static int string_list_add_note_lines(struct string_list *list,
- 		return 0;
- 
- 	/* read_sha1_file NUL-terminates */
--	data = odb_read_object(the_repository->objects, oid, &t, &len);
-+	data = odb_read_object(r->objects, oid, &t, &len);
- 	if (t != OBJ_BLOB || !data || !len) {
- 		free(data);
- 		return t != OBJ_BLOB || !data;
-@@ -918,7 +922,8 @@ static int string_list_join_lines_helper(struct string_list_item *item,
- 	return 0;
- }
- 
--int combine_notes_cat_sort_uniq(struct object_id *cur_oid,
-+int combine_notes_cat_sort_uniq(struct repository *r,
-+				struct object_id *cur_oid,
- 				const struct object_id *new_oid)
- {
- 	struct string_list sort_uniq_list = STRING_LIST_INIT_DUP;
-@@ -926,9 +931,9 @@ int combine_notes_cat_sort_uniq(struct object_id *cur_oid,
- 	int ret = 1;
- 
- 	/* read both note blob objects into unique_lines */
--	if (string_list_add_note_lines(&sort_uniq_list, cur_oid))
-+	if (string_list_add_note_lines(r, &sort_uniq_list, cur_oid))
- 		goto out;
--	if (string_list_add_note_lines(&sort_uniq_list, new_oid))
-+	if (string_list_add_note_lines(r, &sort_uniq_list, new_oid))
- 		goto out;
- 	string_list_remove_empty_items(&sort_uniq_list, 0);
- 	string_list_sort_u(&sort_uniq_list, 0);
-@@ -938,7 +943,7 @@ int combine_notes_cat_sort_uniq(struct object_id *cur_oid,
- 				 string_list_join_lines_helper, &buf))
- 		goto out;
- 
--	ret = odb_write_object(the_repository->objects, buf.buf,
-+	ret = odb_write_object(r->objects, buf.buf,
- 			       buf.len, OBJ_BLOB, cur_oid);
- 
- out:
-diff --git a/notes.h b/notes.h
-index 30adf0c197..3eb73adf54 100644
---- a/notes.h
-+++ b/notes.h
-@@ -13,10 +13,10 @@ struct strbuf;
-  * When adding a new note annotating the same object as an existing note, it is
-  * up to the caller to decide how to combine the two notes. The decision is
-  * made by passing in a function of the following form. The function accepts
-- * two object_ids -- of the existing note and the new note, respectively. The
-- * function then combines the notes in whatever way it sees fit, and writes the
-- * resulting oid into the first argument (cur_oid). A non-zero return
-- * value indicates failure.
-+ * the repository the notes live in and two object_ids -- of the existing
-+ * note and the new note, respectively. The function then combines the notes
-+ * in whatever way it sees fit, and writes the resulting oid into cur_oid.
-+ * A non-zero return value indicates failure.
-  *
-  * The two given object_ids shall both be non-NULL and different from each
-  * other. Either of them (but not both) may be == null_oid, which indicates an
-@@ -27,17 +27,22 @@ struct strbuf;
-  * combine_notes_concatenate(), which appends the contents of the new note to
-  * the contents of the existing note.
-  */
--typedef int (*combine_notes_fn)(struct object_id *cur_oid,
-+typedef int (*combine_notes_fn)(struct repository *r,
-+				struct object_id *cur_oid,
- 				const struct object_id *new_oid);
- 
- /* Common notes combinators */
--int combine_notes_concatenate(struct object_id *cur_oid,
-+int combine_notes_concatenate(struct repository *r,
-+			      struct object_id *cur_oid,
- 			      const struct object_id *new_oid);
--int combine_notes_overwrite(struct object_id *cur_oid,
-+int combine_notes_overwrite(struct repository *r,
-+			    struct object_id *cur_oid,
- 			    const struct object_id *new_oid);
--int combine_notes_ignore(struct object_id *cur_oid,
-+int combine_notes_ignore(struct repository *r,
-+			 struct object_id *cur_oid,
- 			 const struct object_id *new_oid);
--int combine_notes_cat_sort_uniq(struct object_id *cur_oid,
-+int combine_notes_cat_sort_uniq(struct repository *r,
-+				struct object_id *cur_oid,
- 				const struct object_id *new_oid);
- 
- /*
--- 
-2.56.0
+> @@ -483,8 +493,15 @@ static void *unpack_entry_data(off_t offset, size_t size,
+>  		hdrlen = format_object_header(hdr, sizeof(hdr), type, size);
+>  		git_hash_init(&c, the_hash_algo);
+>  		git_hash_update(&c, hdr, hdrlen);
+> -	} else
+> +		if (compat && compat_oid) {
+> +			git_hash_init(&c_compat, compat);
 
+Doesn't this regress indexing using v2, though?
+
+Here in unpack_entry_data() (called with &obj->idx.compat_oid from
+parse_pack_objects()), and similarly in resolve_delta() when checking
+'if (the_repository->compat_hash_algo)', the conversion runs even when
+opts.version < 3.  Because index-pack cannot yet convert commits or
+trees whose referenced objects appear later in the pack, running an
+ordinary 'git index-pack' writing a v2 index in a compat repository will
+now fail on packs that previously succeeded, even though '.compat_oid'
+is discarded for v2.  Gating compat calculation on 'opts.version >= 3'
+(for example, passing NULL for compat_oid from parse_pack_objects() when
+opts.version < 3, and checking opts.version >= 3 in resolve_delta())
+would avoid regressing v2 indexing.
+
+> @@ -514,13 +533,43 @@ static void *unpack_entry_data(off_t offset, size_t size,
+> ...
+> +			repo_unlock();
+> +			if (ret < 0)
+> +				bad_object(offset, _("could not convert object"));
+> +			hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX,
+> +					   type_name(type),(uintmax_t)outbuf.len) + 1;
+
+A space is missing after a comma, but earlier in unpack_entry_data() we
+already use format_object_header(), which avoids spelling out the
+xsnprintf() format string.  Should this code do the same?
+
+When running 'git index-pack --stdin --fix-thin --index-version=3',
+fix_unresolved_deltas() would append local base objects via
+append_obj_to_pack(), and that helper only populates obj->idx.oid:
+
+    obj = &objects[nr_objects++];
+    ...
+    oidcpy(&obj->idx.oid, oid);
+
+but not the .compat_oid member.
+
+Leaving obj->idx.compat_oid zero-initialized writes null OIDs into the
+v3 index for every appended local base, and with '--strict' two or more
+appended bases collide as duplicate zero OIDs in write_idx_file(), no?
+
+Looking up the local base's compat OID with repo_oid_to_algop() (and
+recording it in the in-memory OID map so subsequent deltas against that
+base can convert) may close this gap, but I am not sure.
+
+> @@ -1847,6 +1850,9 @@ static struct object_entry *create_object_entry(const struct object_id *oid,
+>  
+>  	entry = packlist_alloc(&to_pack, oid);
+>  	entry->hash = hash;
+> +	if (repo_oid_to_algop(the_repository, &entry->idx.oid,
+> +			      the_repository->compat_hash_algo, &entry->idx.compat_oid) < 0)
+> +		die(_("can't map object %s while writing pack"), oid_to_hex(oid));
+
+In builtin/pack-objects.c:create_object_entry(), this unconditionally
+looks up compat OIDs and dies on failure even when pack_to_stdout is set
+(in other words, no '.idx' file is written), pack_idx_opts.version < 3,
+or 'exclude' is non-zero (for preferred_base objects that are never
+written to the pack or index).
+
+In a compat repository where an object still lacks a mapping (such as a
+v2 pack without loose-object-idx, or a thin pack sent over stdout), 'git
+pack-objects --stdout' or v2 repacks will die unnecessarily.  Limiting
+this lookup to 'the_repository->compat_hash_algo && !pack_to_stdout &&
+pack_idx_opts.version >= 3 && !exclude' may avoid that failure, but I am
+not sure if that is sufficient.
+
+Thanks.
