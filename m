@@ -1,125 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.181
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795733894;
-	b=clOASjHXTJTGS7D+zlN7ftSdX5X+WWtfwBYKqR/0oepHaPTupOJ2NkO2qGNpuqk0vKag
-	 u0XX3P2IKm1UgTbHICT1+as9EEkI9vrZjBZVSKBc3f1ksO6qMDOXt6EZYfKnX+C0uqI48
-	 F4ZQrKP0HzuYLao81iuYjTheKI6HtDVB0k1mxp5n4/y90NS15+UK9xjUCxFhYO3H9zVAR
-	 B86QdmetxmLqaTWHNMUPrimu4OF/4iR6NRZTSvSdJcbfO2i3gQRn3ZEL4nybvhGozkcfa
-	 ZPOsVfOosWQ1VLskYz+PKQftvXDHrtiWwbBq76j+3ofB9LkZ3g3Nv1RmcWKOMpJ56ZA==
+	t=1795736702;
+	b=3auzTYaz+vMJpPdoWbGJMy7H5lgQbWbiCsugyRsHhgGP3sAeevZU3AuDBPifSmiK9T9y
+	 trPr2GHW9wafhzJFS9hCueZ8c4ZFBIQgj1Kz+OvILTKdUzi26iQJ8NdnJowLiq3yWqf+F
+	 puLHQtB9zf1J84eBhpED5oPLgbFFAgXagK8gKZbp0o3voTHM+nhjWt6lg7+Yen01Ob7YJ
+	 FhSuI8sFma9B9pIkJ3A9U2kY2Ldvhw+1k/hIvo4cHejzEuEpOAUkTMho98Lke2IQukZgx
+	 HUbF3rupmeAbqZywLCbnvAJW9oHgIxnPZzppqtNSDq0CsMypRUKOCl8zDry4SVFkxLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795733894;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=KR1nbYytN/N4sg8mQDngplm9wn/QnPTzZjYo7gKm5wk=;
-	b=mTX6akgXXGW8/FrPQqTx7iwK0J/CR5/ZghkvSVHjasctE1Fgu88Sl+pQA5IKeYYBH9BO
-	 z9J/T/RmUApC/y2gST/9NMWe+1nbiIF7ccOFn6G2cfBVUiDA9in8lXXuEp6rMw1Yd8mdg
-	 xUlHz20Z8cK1D9hTisxnoGXYrOJFi2X34nVh/yCJD4c2lIjDxJC3z2eoaKeg8s/FZXRGS
-	 A41IsMQeAvEVUwZRBbmzb1YhCEH9uZHlQctNfp/5Qu1GQaP3GMw/i/kq1YNzxraEfKtg5
-	 HdFx/+KibE1eyjg5lrUIQ2P6GZf4rGyunCENW/vvTYKyMBzhp4fFZ8an+A3COxR4Hhw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795736702;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Content-Type:
+	 Content-Transfer-Encoding:Mime-Version:Subject:Message-Id:Date:To:
+	 X-Mailer;
+	bh=oMileMMJ1mlQnYPneaILxfJhRflM0z/3GdDLl2ipYX4=;
+	b=AiKgDKvoJkjnpMfLer5PSaToSCVGfZq7bACRHb+QxbJLl6Tp1CDLEaR1kU0VHzL6eGHb
+	 78+NLIHHqw3y+a5vDWSD3Qjm3Al/zvxUgVdaWhpEfefsxWH2NG1gntnARXQ7lnUaWgXLP
+	 NBOko5I1EJR9/XnwJrR6y96BeU/qMWO0GrPqLNQT08ZE/VfWPcaBu0E/DPCoVx8E5MxPO
+	 GGsOo+5UwLiGB3EFokmLSlCiZkBMh94kDzKhZV+QC5DSTJRP6wN4UW55fnfZfL3m5e6tb
+	 G9TYtzyvdAo7nukHuEQKToyxfXS4lJC5ny93LWsMtJ540SEVsD6CBrTNTMAwwH6/mPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ajuN5aBK;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=RU4fWWTN;
-	arc=none smtp.remote-ip=202.12.124.158
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uINkduwD;
+	arc=none smtp.remote-ip=209.85.215.181
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF7A606A31C
-	for <git@vger.kernel.org>; Thu, 26 Nov 2026 22:58:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8DF7A606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56545606A31C
+	for <git@vger.kernel.org>; Thu, 26 Nov 2026 23:45:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 56545606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=ajuN5aBK;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=RU4fWWTN
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B14817A032A
-	for <git@vger.kernel.org>; Thu, 26 Nov 2026 17:58:12 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Thu, 26 Nov 2026 17:58:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795733892; x=1795820292; bh=KR1nbYytN/
-	N4sg8mQDngplm9wn/QnPTzZjYo7gKm5wk=; b=ajuN5aBKxRbjss2PoEircgScks
-	gPLT5DjdDlgCS/5r9v5hrFvbAEndbZ/QZz4rT+sVIsSTxRMfbHR1Rfrr4x54U3Hx
-	mkaskSbm7SbSp4mYthM843hoVGHzoQnfr3Qe2zAbXrg1ilrmI0Hp6h2v2Jer/L4L
-	HiG601h2FrrGIPO+KYDR3knPRdVU2GLIosQxXLU/I0/Yg+hSx/mI/QBuc5zfhEVe
-	2HE9MBVnBbHZHJjG6hWvcK8nkgXaG7xbak7pInZ8O3+1IOwcw8hvjvahFFFhI7XF
-	CeXVHHDuNRtf9pnrqYJ0/8Srgj+QteGRYHRNJoit8vxOL1SQ5wmaXV+dZR2A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795733892; x=1795820292; bh=KR1nbYytN/N4sg8mQDngplm9wn/QnPTzZjY
-	o7gKm5wk=; b=RU4fWWTNKI+LalFBM/2H/tkGcFJYvmQ+IUMCCu7MiwH0UstCs+f
-	TbLOlEEg2ebQ6Tp2rUwm/UjDfLgkLh996Co+VgpaLXWXFIfSp1trsDJrAuz4MO9m
-	tgDpp4/l1jK3CJThbiYDduSTVftXrB/PWaU8IOIygblX42qEwpjjGtP4XQiBkdIZ
-	8FCpnQdZHfNDub/EeUkOJCghJ8H8e0ZNPj4QnA2+PHZR1GrNJMrTM87t14DHj3Cj
-	Y4OZhOwdh67YdNIgMNEU6cF6xGxz5CGAiny3buBvXh31xwk9CxB0rvGV29CF8Q9a
-	N8jr0wgqVgQxWM5VSSqBQ0va+BoNYmLz0cA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795733892; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:QDFtqcwzllLdfKH9rO9wL6Ux+zdjInUhSKf7O66ODEWEpB5
-	J4vcbvkAzYYnF30E/+5bl0HxhqerfdiqM65akChvPWEykw65CWLy96jX0a7iAMf7
-	fxu7B1OLcsiHqS6BRwbT2V9PvZjzAw9PH+77hPeT/bTxTxIzX2YUStYeaRUr1+G3
-	9a82JVob5FRqmBDeMg5vSo5ooDS/bMqQQ/Q5uAJefZSg+JGqfCBYCXNLymc3/GiL
-	uCogmlTNXjx8++ytdjLx6KgsyiC1HwkGyVDIMAB1GURUg0ZXaXOtJrpIGRxnnuns
-	xRYG47MAe9RN5otEt5y+r0cTT80HHxsR2d5ITFA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:QGzn5YBph1uQ1LOHCSl9CYvdVRExKQb6rKBKhftq+yk=:GpBzTlkxwkAYYkl+jiMQmwE2+YLErQtAFKgT12xBk5c=;
-X-ME-Sender: <xms:g7kIayAQnuFTfnh4mi-5beE3exb48P6ohFOyptAT-X4UedkPb14URg>
-    <xme:g7kIa7mYsj5Mu3ew9DJwkaEvnNP6VBdN2UwTYafCCylewew5VJNpJDGx9sTsE2iaS
-    tVXxAEsGONpZ-gy_OVm3tYqOrInPWpHqmRThxN9xH9XePyY-CL3>
-X-ME-Received: <xmr:g7kIa7z6WfOX8zxydjBeiQYstn08drzWEC2cQ-vMjc1FZGXknNrwAWEsAKvW2gPDA5D83eTKibrs5HS0Taysi3IHVF-ciUZjIwR9c4w>
-X-ME-Proxy-Cause: dmFkZTFpfltFlca5wkZaROt6JdiSYy4fOaWiaEVhTfWDoW7AlqixJQAeAYSXBKbcZh0xxD
-    wNmEqqPGZgzxR1uAxgKnz+WP2AR6dEHHj1jcKMyEN8kVR4fE6FoPfX8uMKtT1CSP1OrS07
-    y5pLQleIcJXwYEXK0GQZX7ivztW7VzfWdyCr3ZACYNdgpwrve5l0vevhwLfmR3Jfil5nfj
-    ODs3bY2cPmhlneRUIAG4cSEEwo2Er4w/DKy4R7/fNl59PYdvY4FVTeirnoM4sjS6+Sy6nO
-    CuYIkTP4F/bGS0d2VHhq8P1+81UGH+JzaURIRRI6qSRDgTGO/+YGyk55KA4LKju8lR3dkA
-    NfQc68LRlzL+BlBzAZPMXt1Qjw5D+VhlytTvlp+/XRWN2FWyeR0iXyMWNVB4keY4a87ZIL
-    asfVJnOH1pEH9kfyHDUJA1p3BtjX4Mm06AESs03pJGTv5CU8VRj+pNXyTZ7SEOPt71M9ws
-    7B1lfaVFp6Z3tQys79F/fDN9URoSN+6TnbhPbzTiUcs6OArr42q214Yzp05eCfPK2SjvNj
-    Qkylc0tGCdH+/A75bAU5RGT6la0xpCHitQYbwrSIhX7wL02RwXO5UYbAp0kgr3hfati9PR
-    iPaXQbLHfejGIpj9X643YGURbh6wClbfUvcJDOb/6uLNW87PiKYLZZAXtfSw
-X-ME-Proxy: <xmx:hLkIa9THzRboUVagwsSAI3hHk8tPM3qiHlqz4twxm6evXGLenhuaZQ>
-    <xmx:hLkIa78b1c5KGDsLysqnyCt45R-jxiJ7jmlTMW36FGqZtoIOmI7m2A>
-    <xmx:hLkIaztodp7UnVqFNPZaQPCFXwK4WZhKjmroRpD9QDSbXIwVmRGP1g>
-    <xmx:hLkIa7OzNp1ntHuG9uKlzlL97QdoiYR4pNZe2C_srdZrIbuUMXiXeA>
-    <xmx:hLkIa1O_LypwoDhMSFPxpmAGApO-7SpsYuaokUBwkuXJP9jmJETW3Ta6>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Nov 2026 17:58:11 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Christian Couder <christian.couder@gmail.com>,  git@vger.kernel.org,
-  Patrick Steinhardt <ps@pks.im>,  Elijah Newren <newren@gmail.com>,  Jeff
- King <peff@peff.net>,  Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 07/13] builtin: populate pack index v3 fields when
- indexing
-In-Reply-To: <awiyY0v5pUnWm-Gd@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Thu, 26 Nov 2026 22:27:47 +0000")
-References: <20261023072559.3204273-1-christian.couder@gmail.com>
-	<20261023072559.3204273-8-christian.couder@gmail.com>
-	<xmqq1p87i7t1.fsf@gitster.g>
-	<awiyY0v5pUnWm-Gd@fruit.crustytoothpaste.net>
-Date: Thu, 26 Nov 2026 14:58:10 -0800
-Message-ID: <xmqqv75jgpz1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uINkduwD
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-cde0daf3a2aso3243301a12.3
+        for <git@vger.kernel.org>; Thu, 26 Nov 2026 15:45:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795736702; x=1796341502; darn=vger.kernel.org;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :content-type:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=oMileMMJ1mlQnYPneaILxfJhRflM0z/3GdDLl2ipYX4=;
+        b=uINkduwDDFkbj19jCn6rp5/btTk8Q9SZaYxSZSGNbGImxX+N1rpwkMXRbll0XIiIUQ
+         9hDKetEm7i9APpO4KXmHWnICAfvvw1218wzz9Xog/J2Ld0vy2trWp0TU19szub4dR1DH
+         WJ5+T6hKu99EUcQwTRZNcdAK7Ia1H8ZW+8pKibgHebiiSb2InfjX1r2iEkGXBY4t6pB6
+         1NwcWGDvVBqLSJztYURqsJDrAHO5WdtkMI3pPoUYAhbi1NVrwwDsTaMbikgJB+X+1/sr
+         g60k6D03Ee2OL9psnphm7P7quEfgLid2Cm8roHx+ZOiQUOkk/rgzqXeEQoBuCHW4jUGK
+         sYYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795736702; x=1796341502;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :content-type:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=oMileMMJ1mlQnYPneaILxfJhRflM0z/3GdDLl2ipYX4=;
+        b=2k1xFJHbon8y02xE7c70PJoGtiQ/mNcMwwoRQbUxJJVB5DARlIi55aeS7AcsyOoaKy
+         zoaVKGuZ3KV8B9ziXRZXYbDXLpeeHVLjG8ELTk1h8K40jkPX/DHeGZMG69MQjvmuBA7u
+         wY3rnT+rYzpumhR/JCiCV+0uwptUZ6lG/cerOzHz03/0Sh1f63F1HNIoxbIN37p2buFS
+         6ZBNZLGXNbupZZhzctCjBjmAXABakxGZQry1DxgubltxC+UoxywjTxzoIzgwypWAsKKd
+         wKJM0XzAQ+T1TAdrE3kaO03CpzwRf1U+ndwKOlwJE8MKBFMwzrRLK4TT2RvTuQODpUYY
+         D24w==
+X-Gm-Message-State: APuU4Z/5hdjx8tMNPr3phvJg1IlDSeYoq31qmkZREHFTiJmu53IfszN1
+	GiRgchq+1HIZQf81c2YPZuJdETku0hOwbcopm0HGwNipIgfaetC+f/DRJvptK1agTQQ=
+X-Gm-Gg: AZFdTZesaxfo8Z8LLMiuaf8hpOVKjNmZnh1hD4uueKsB8A+j7egFQyAc6ek+fqw3yoh
+	WEsMd6yx4kI/xduK/KPIG0knodlu7keOgB7xFT1cxUMUXDMqdSKcOyS90AIAWFLlzcRzivDL0cS
+	RZnxZCCRrvrpjPwpm9080wGjyigln66S+qHZFXFET1aSzr+iah7tTFZ3NCreMI2I3+kl3WWZfg0
+	cQ5+1w1V8jL53l6M/V+hPSLLwy7wMlWfeU0YVy6cwaJV08SsSqWI20IzW3aRF4tTrHxISwGEfXz
+	HB1gHxceSDzmZ9gRRxgjWYDYoZTfjnp8oK+65uM7TtR8YikiAPsSSNDtkg7r0LW9kJsp/qxMpFa
+	Pg/aJ4rvMMmzfvU6uC+9O5t0dNQTyJ5Gtw1tYYd3CyCNXBW1PeKuQ4u2BsPA3T6jlV4Wt9BCuPh
+	sRtS0oAAZTPWq2ppOK407wdFl7V8ho9xP4vInCEKVPFzXWJS4SdC35ULOWLneFTmYtvyBmpMhhd
+	UNGYR8WEdlEzq6n1RllmSwSkPsvKhjMeHxVp6WEcj6UdKBSoEhmRS1r/XeBRn2LjU87xyQuwyWo
+	q/MUZt6R8/SPvYm5PnDz04zcHZzIsRC2F9pdAEABDpaX1DJUi9wWm87JYA8=
+X-Received: by 2002:a17:90b:224e:b0:3a0:d265:3647 with SMTP id 98e67ed59e1d1-3b41c7d6084mr20176356a91.8.1795736701501;
+        Thu, 26 Nov 2026 15:45:01 -0800 (PST)
+Received: from smtpclient.apple ([110.235.218.2])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b48b41928esm25071530a91.9.2026.11.26.15.45.00
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 26 Nov 2026 15:45:01 -0800 (PST)
+From: Hamdan <hamdankhubaib959@gmail.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -128,13 +90,89 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.100.1.1.12\))
+Subject: [RFC] git task: grouping commits into named units of work
+Message-Id: <0AB3AB52-1F14-4C72-ABE8-46B635F463CE@gmail.com>
+Date: Fri, 27 Nov 2026 05:14:44 +0530
+To: git@vger.kernel.org
+X-Mailer: Apple Mail (2.3901.100.1.1.12)
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Hi all,
 
-> I believe a later patch in the series will force v3 when there's a
-> compatibility algorithm in use.  This is much like SHA-256 bundles
-> always use bundle v3 since v2 can't express the hash algorithm in use.
+I'd like to share an early idea and hear whether it makes sense for Git.
 
-That makes sense.  Thanks for a clarification.
+The idea
+
+Most of the time, developers (and now AI coding agents) work in discrete =
+tasks: adding a payment gateway to an existing app, building a versioned =
+update system, and so on. While doing a task, we commit periodically as =
+we hit milestones, so the work stays saved and traceable.
+
+Today, if you want those commits to read as one unit later, you usually =
+create a branch or worktree, commit there, then bring it back into main =
+with a rebase, a merge, or a pull request. In a commit graph it looks =
+like this: the branch splits off at commit 187, runs through to 247, and =
+merges back into main at 248.
+
+What I'm proposing is a native Task primitive that gives you the =
+grouping without the branching:
+
+    git task start "add payment gateway"
+    git commit ...
+    git commit ...
+    git task done
+
+A task is a box around a unit of work. You can stay on main the whole =
+time. When you look at history later, commits 187 to 247 show up as one =
+task that you can collapse or expand, like a collapsible list, so it's =
+clear what was built there.
+
+Why it matters
+
+- Readability: on large codebases, history reads as a list of tasks =
+instead of a flat stream of commits.
+
+- Lower friction: for beginners, small tasks, small teams, and =
+early-stage startups, "start a task, commit, finish the task" is simpler =
+than creating branches, switching context, rebasing, merging, and =
+managing merge commits or PR overhead.
+
+- Agents: an AI agent can open a task, checkpoint freely inside it, and =
+the whole task can be reviewed or reverted as one unit.
+
+Single-branch and multi-branch tasks
+
+A task doesn't have to be tied to one branch. It can live:
+
+- on a single branch, e.g. a feature built directly on main, even if =
+unrelated commits land in between;
+
+- across several branches, e.g. a fix on main that is also cherry-picked =
+to two release branches, or a feature with a backend part and a frontend =
+part on different branches. Four commits on four branches, one task.
+
+To support both, a task would be identified by an ID stored in each =
+commit (a trailer such as "Task: payment-gateway"), not by a commit =
+range. That ID survives rebase and cherry-pick, so Git could answer =
+"which commits belong to this task?" and "which branches has it landed =
+on?"
+
+What this isn't
+
+This doesn't replace branches. Branches give isolation: your unfinished =
+work doesn't affect anyone until you merge it. Tasks only give grouping. =
+Larger teams that need review before code lands would still use branches =
+and PRs, and tasks could work alongside them.
+
+I know related things exist: --no-ff merges read back with =
+--first-parent, commit trailers, GitButler's virtual branches, and =
+Jujutsu's change IDs. My feeling is that none of them make "this is one =
+task" a simple, first-class concept.
+
+This is an early concept, and I'm not sure it beats branches in every =
+case, but I think keeping the mental model this simple is worth =
+exploring. I'm happy to build a prototype first if that's the preferred =
+path.
+
+Thanks,
+Hamdan Khubaib (GitCoder052023)=
