@@ -1,61 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.101
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.163
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795702419;
-	b=32ruCzG+MclLnJv9zSdC2wtwyKbECYTzlpczWLTacOGiryJNpnh39FCOjvyYINuEiCEs
-	 QanO5vn8jZDVUCByX/WQ/cBop611IjngtklrQoGqoYQEkmXa6qwJIq19EtL3CGnJmUiI9
-	 ZGkmm2sUxgQn40au5QAMenYY1b6lTyeC9hoGltHqDxpZC39/BHGlnbGZR7LemzVg7LY3g
-	 NDfFSJwJMwKJ6k/YHvLpfBu2fRCYZv4XaEvAlyNDY8nRgoYvJSD2N2oc7QAnsRtatShyD
-	 KiUyRu82+NYHrSOWng1PmxJUPqc487idrSxY63opR0o7sR9QsR2qik0uqZxktVxsr3w==
+	t=1795702521;
+	b=CGSs9/wuK1okzYAeyacJ2mgEQboE/w9R9YkQlkL5Pq6FzatlBad2bui76t5V2IiGrLdh
+	 rCUA39sU99XzQyR/AWKfj9bvbGAZz1BWjsAfhILv9FGoQWYjh+HJx5O0qw15f+M5f2QTj
+	 xAkP52JpGIsk7rk0S+1hCyVxHQIKaqqHwLH60tnYFcrl8haF/P1VcyN+EqyzOx8cj6BHc
+	 lCMmeXbUNRSIYV3pXTbl3ZOEG0YHC14efMr7Daaa1IAi/frujqLyrMK4BhQEmj+z6k431
+	 XKiipSmeHiQmXEUMjZqTSzzfRd9ShaIZzeV+M3JHYEdJaqs5dKXusiSSAmJnkCDQIRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795702419;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795702521;
 	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:From:To:Cc:Subject:In-Reply-To:
-	 References:Date:Message-ID:MIME-Version:Content-Type;
-	bh=stA894KUFOejjkamNlesZS7I7AhadCSuhzhSmQ2+Hbs=;
-	b=nGnoLO4QGLg1BixvgAnueJtIcig9992Rbk1FCGxl57Gi36MOuudnIXo8o0Pr3mTN+/6v
-	 tXVCbTf5GWqLk8wUKoR6PZ9GAvjuhhhxNpqsQ5Y75bUDVrWuU/lMInPmzrmIy44E5Itli
-	 sQW2AN0648HutpOFm3RwzA6agkLVF1tcaQKIoy27r7r/1SfSBIPhSZ3EoDmKceviyuIqK
-	 w1h6HapKBQKb3y4j9d4HNz/fj/F8ZF9wyBQEv2k4D4tqW4IX/eV5jEcbG+d+qYxap3X4T
-	 WgjWbVIv7QGxzUwKu91DiQroM3woy2p5ivYinlaMpuNZLpu+WQWjGA8qIdYat64aDqQ==
+	 X-Mizu-Trace-ID:X-Migadu-Flow:From:To:Subject:In-Reply-To:References:
+	 Date:Message-ID:MIME-Version:Content-Type;
+	bh=EyD9D0oCjcpzFwxqXYaAIqsw5abC1O+kX+qs0u+PCCc=;
+	b=3xZ6VWhSupgzcxOMqJikKUdGZ5shl2j0UwvtKCJEWstU6nvrOo2ZA1oTVhGJsGHKbA9a
+	 S4hRklJQJ8QVQbUEa7RG7EqSVObl3ym6URYAl/+fLjq1sSp/7454rtBcnrUB/aAbjvYdQ
+	 cFTk1KjaquBOaPWHunPxBmn+u7F/8C/1ajUrLUKxiF56LOD+URrcai4ciUQqpXnIu6tfP
+	 JZFr94ZkYzPT9voGPhp1c4LN63Hm9VFfn1tONQJjpzUroSltFb7R0oBfcwLG9PfNPhWHQ
+	 z6Gj1E8QnuiIiiXgRQJ2GxYT6IrcsC9O3T5VaWd6vNwAo3QQR0NjyjI50Pb3XWgUW1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=iotcl.com;
 	spf=fail smtp.mailfrom=iotcl.com;
-	dkim=pass header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=Nt20DaSb;
-	arc=none smtp.remote-ip=95.215.58.101
-Received: from mta1.migadu.com (out-101.mta1.migadu.com [95.215.58.101])
+	dkim=pass header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=x+H1VmAK;
+	arc=none smtp.remote-ip=95.215.58.163
+Received: from mta1.migadu.com (out-163.mta1.migadu.com [95.215.58.163])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7A5606A31C
-	for <git@vger.kernel.org>; Thu, 26 Nov 2026 14:13:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6B7A5606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86E9606A31E
+	for <git@vger.kernel.org>; Thu, 26 Nov 2026 14:15:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C86E9606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=Nt20DaSb
+	dkim=pass (1024-bit key, unprotected) header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=x+H1VmAK
 X-Envelope-To: git@vger.kernel.org
-DKIM-Signature: a=rsa-sha256; bh=A5dAvABrqOzBUJFlSqkrHeqsoTgygbXFXn68qg2y6vQ=;
+DKIM-Signature: a=rsa-sha256; bh=du65nxhyipW9Ycct6hIhLt/iO7a0D4AGFToF4wtsCp8=;
  c=simple/simple; d=iotcl.com;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1795702415; v=1; x=1796307215;
- b=Nt20DaSbumu+Rpb30jADAXboRW4arGf4ejPe983kH/meq3LIPkgbg/wwsCYvzIR2T1t9/4xp
- 80mJgpTvXyRwGspy2JPwVz1S6G7sSXm8eevhgricQsMECx3kDpPlDaUnyvM7Hhby7wlwoMnGffj
- OI3Lh0MZAukLLzduy3IOwLdc=
+ t=1795702518; v=1; x=1796307318;
+ b=x+H1VmAKRkk4AYa8Df36I7VzuDtHu1Yy1bedX8QXZ7hrVEn+H6/pj+4DaRp3Ib5ff6naF8IO
+ ihbQ+RlkdtPf2pheaKdItJjP5of4kSg7VCO1JTUKSD06Ow6e0To2zQBjDB8AfQsiV3yJAcC/X0+
+ 6rQWVwPUvGV/2nC7lzm4RZRE=
 X-Envelope-To: git@vger.kernel.org
-Received: by mta10.migadu.com with ESMTPS id ff9102e50b2d6c5e;
-	Thu, 26 Nov 2026 14:13:34 +0000
-X-Mizu-Trace-ID: ff9102e50b2d6c5e
+Received: by mta11.migadu.com with ESMTPS id 00d95735579bfdcd;
+	Thu, 26 Nov 2026 14:15:18 +0000
+X-Mizu-Trace-ID: 00d95735579bfdcd
 X-Migadu-Flow: FLOW_OUT
 From: Toon Claes <toon@iotcl.com>
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/6] packfile: introduce function to free a packfile
-In-Reply-To: <xmqqecc9ncc4.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: [PATCH 1/6] builtin/fast-import: stop reporting packfile
+ statistics
+In-Reply-To: <20261120-pks-packfile-global-statistics-v1-1-19beb83b145f@pks.im>
 References: <20261120-pks-packfile-global-statistics-v1-0-19beb83b145f@pks.im>
- <20261120-pks-packfile-global-statistics-v1-4-19beb83b145f@pks.im>
- <xmqqecc9ncc4.fsf@gitster.g>
-Date: Thu, 26 Nov 2026 15:13:23 +0100
-Message-ID: <87ik1jsmt8.fsf@dev.null.iotcl.com.invalid>
+ <20261120-pks-packfile-global-statistics-v1-1-19beb83b145f@pks.im>
+Date: Thu, 26 Nov 2026 15:15:12 +0100
+Message-ID: <87fqwnsmq7.fsf@dev.null.iotcl.com.invalid>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -67,48 +66,62 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Patrick Steinhardt <ps@pks.im> writes:
+> By default, git-fast-import(1) prints a bunch of statistics about all
+> kinds of internal details of Git. This includes for example how many
+> objects have been allocated, the number of refs processed, or the amount
+> of memory that was allocated.
 >
->> We have a bunch of callsites that want to free a packfile, which
->> requires them to first close it followed by a call to free(3p). This
->> feels rather leaky as an abstraction.
->>
->> Introduce `packfile_free()` to handle this properly. This function will
->> also be extended in a subsequent patch to maintain a list of all packs.
+> Reporting this kind information is highly questionable, doubly so as it
+> is done by default, as a user really shoudln't have to worry about such
+> internal implementation details. For some of the above metrics it could
+> be argued though that it's indeed interesting to learn about the number
+> of objects processed to get a rough sense of what git-fast-import(1) has
+> done. But for other kind of information that's not the case, as it is
+> without a doubt purely internal implementation details.
 >
-> OK.
+> One of these reported implementation details is our packfile statistics.
+> These include information on the system's page size, the number of packs
+> that were opened, the number of calls to mmap(3) and how many pack
+> windows were created. Reporting that kind of information, and that even
+> by default, is just completely uncalled for. This information may be
+> useful to a developer, but a user really shouldn't have to care about
+> any of this.
 >
->> +void packfile_free(struct packed_git *p)
->> +{
->> +	packfile_close(p);
->> +	free(p);
->> +}
+> More importantly though, with pluggable object databases we shouldn't
+> assume that we're using packfiles in the first place anymore. The
+> current implementation of git-fast-import(1) still does, but we will
+> convert it to use transactions sooner rather than later.
 >
-> It seems that we have three kinds of free()-like functions in our
-> system.
+> Let's just unceremoniously drop reporting packfile information to the
+> user. If anyone complains (which I highly doubt), then we may consider
+> reintroducing this as trace2 data. The same is arguably true for many of
+> the other reported statistics. But for now I care about the packfile
+> subsystem, only, and hence those are left as-is.
 >
->  - Ones that make it the responsibility of the caller not to pass NULL
->    (this one falls into this category).
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  Documentation/git-fast-import.adoc |  5 ++---
+>  builtin/fast-import.c              |  4 +---
+>  packfile.c                         | 36 ------------------------------------
+>  packfile.h                         |  2 --
+>  4 files changed, 3 insertions(+), 44 deletions(-)
 >
->  - Ones that allows the caller to pass NULL.
->
->  - Ones that not just frees, but clears the pointer the caller has to
->    prevent future headaches coming from use-after-free (the caller must
->    pass a pointer to the pointer pointing at the resource being freed).
->
-> It seems all the callsites never passes NULL to this function, so this
-> is fine as-is, but I wonder if we want to move it to the second category
-> by guarding against NULL, making it behave similar to free(NULL)?
+> diff --git a/Documentation/git-fast-import.adoc b/Documentation/git-fast-import.adoc
+> index 5201e493345..6afe14b650c 100644
+> --- a/Documentation/git-fast-import.adoc
+> +++ b/Documentation/git-fast-import.adoc
+> @@ -48,9 +48,8 @@ OPTIONS
+>  
+>  --stats::
+>  	Display some basic statistics about the objects fast-import has
+> -	created, the packfiles they were stored into, and the
+> -	memory used by fast-import during this run.  Showing this output
+> -	is currently the default, but can be disabled with --quiet.
+> +	created, and the memory used by fast-import during this run.  Showing
 
-Yeah, I was wondering about that as well, because there are a few
-callsites doing `if (X) _free(X);`. Having the _free() function
-NULL-safe would simplify them.
-
-For what it's worth, the pattern isn't described in CodingGuidelines, so
-technically speaking it's fine. But I wouldn't mind extending the
-guidelines to adopt the second kind.
+Tiniest of nits: No comma needed here.
 
 -- 
 Laters,
