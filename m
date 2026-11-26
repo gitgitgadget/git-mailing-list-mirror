@@ -1,89 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.23
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705657;
-	b=N9e7vBTtMuA9PMQuoY/MFiuVgjx/YyeDpOy32bhxdpmDX1QTyQYkwPpEi5mazV03p0Lw
-	 vKjegolyOYTgntBSRLatNDe50e1wFsca+8PQTloFHTV5qHphi0hvYIpIVaSd9ypSnHr/l
-	 QKFURz1v0+vH23Xof9686HK9zEQ+zfF64WdJ2S+lydcjRjQ5LcDoHcm11Mu0sXv1PHhOd
-	 uMbZdUhYt9rfXphgwP075hs08ABFk74DXwu8OxF9r/wuBFhDl0JxTb4nV//TqLNVabOWX
-	 ObxAmpboGegOxEJ8wTRdDWcU5Bev1QSUc2nDANM66ho94uYu9BJeLRI2bpE/jsICBiQ==
+	t=1795705869;
+	b=onM+y+IUhYRYtXuMJHfqke1PS1oindaTvZzPZlv30ZFSFewHWp0/WWHpU2LrPe5e3463
+	 WOdHpxlAX1s42C1njFEwV2SJtbWMgahrY3Xcrs+0Yj1cfqHzqF3ki5rcSk5QF9mAw1A1K
+	 TWJ3Vrdl5Fe9oV89w9gfdkJHdFXJEPutYeDjgtKlCLDa9mThEDSNBHunMC132oh1RzlQh
+	 QaXQhArhH5NdL8N4c7Mw3VWsE34AeRqdAiemeg0aSlMK1KAEek2/KUxK3wOD8YZOqMLI5
+	 LpwNwBZ+e6UChcPGYbQVdgwJSU5SBAUL+tUFIr4O6YlcWeEksbfPZMfyJKUDpKD3g/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705657;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:Cc:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=gPKYxexrLO4Xkz7H30pHIeaMq9h6qxFfs8jsn34NhIY=;
-	b=Rod7S/EUiW9ffX2fNAtSAsLefLGUQLjW7jS9Wv1hNK06dpkuIDWiYTm+99veNn377qYE
-	 yeeOA21Fjm3AkZ6uOU0FJXERftUBgioxQoWx3Z3F05CaJkiyiQ88xrS1wqSQCf4DWgTMT
-	 EiYbQvllT413uFr/L17bSmMzGl4eSNimxDqMnOZ69/uo1siOEMrPQsQLvBF1Fn4Vay5m8
-	 7E3qL2uWfLlpNjkoVycma4J4lCTUOIEJqaJ1W6Pt8GDNyaqvhgdfmYnNJsKnUE5uEomb0
-	 dqUnIBCGYsvBKEj4Gjw8/9d7LShrwRPSR/lwa00A8x3YTWpba2meMJ0XvH2pcNeLPRA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705869;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:From:To:Subject:In-Reply-To:References:
+	 Date:Message-ID:MIME-Version:Content-Type;
+	bh=u+47wqnW/+GCzfXP/PleYmJJIe6pU/DGBPXkD3lT2/c=;
+	b=Xg9FaRwETCwKLy68Er2lucPbtXkJOvgSqYvdNN6PPO3JCETf4rUrpF30b3ff3OqIpuVL
+	 CAPH3iPJT+pW0DuHDGvZ+Hf9778CbLypjjCYdEFMGwgxA3F+P9nqG1qDpytpw0KFp3Wlv
+	 wsFCwu7YZEKTp9rZOU5wodRwkFQ/XiI0qyYZ9sFm2u9qX7HwaOAcSzGPnTUoq7XCn2FMC
+	 lgzFMchBru9qSxJ1SgN8mUTcoZPEMLPG1VEGY7KkeTfaDDHmam31gAMtKJn2NWHj4zssE
+	 YEg13U6hPnYQzkT0KqBRMKriP7t5sYPuGM5xKTzz9pnXKW7gNZT0AwQ5CCPapQBovZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="DYaXe9i/";
-	arc=none smtp.remote-ip=209.85.221.54
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	dmarc=pass header.from=iotcl.com;
+	spf=fail smtp.mailfrom=iotcl.com;
+	dkim=pass header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=DK7571L2;
+	arc=none smtp.remote-ip=91.218.175.23
+Received: from mta0.migadu.com (out-23.mta0.migadu.com [91.218.175.23])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC981606A31C
-	for <git@vger.kernel.org>; Thu, 26 Nov 2026 15:07:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BC981606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF17606A31C
+	for <git@vger.kernel.org>; Thu, 26 Nov 2026 15:11:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8DF17606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DYaXe9i/
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-4ac08f4a0b2so5051423f8f.3
-        for <git@vger.kernel.org>; Thu, 26 Nov 2026 07:07:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795705655; x=1796310455; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=gPKYxexrLO4Xkz7H30pHIeaMq9h6qxFfs8jsn34NhIY=;
-        b=DYaXe9i/Uo0CsgGLaOl9bdNkYllMKXdEztPP3fuFysRyGfallZkYf4AOxYNuxUnm3f
-         hGLwU+hM21Ht80zC78EFekVx+h/02hcDiMGuc4hnJtU+2CnnNt/I3qUnmYSYfHkbVgDt
-         weHWh/rvKOim+usqfvIltpCARst0+xYtF1LmWKYUaPvVuDFjzhXPEiWaScX5oUjEXXFZ
-         q8f0weXekXfJZv0RKTAzq/Nk0k8lwUDrm8XQtkEXSYQz0x0KIFMpM2sRZSzJp5HqkSsF
-         UFi8/Ex0+TRr5MP8CJ2uvXGsLcq++vh77quYpdTrXitGD3Ip8JmOS0c3oUwGE5fkOlfl
-         CsoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795705655; x=1796310455;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=gPKYxexrLO4Xkz7H30pHIeaMq9h6qxFfs8jsn34NhIY=;
-        b=nmywrLvPQv0vMYE9JUZ/qruc2t1U8NpUS0NiN6DinEWI0AZAlDMEDJ9KjZ7SV2D7YC
-         1nyY2z5jeGm94tx/zSZpFeT3yqJssSOdZMrR5RpUquo9CxEycN6MNsdEi/FpBKHK2/si
-         wIUyeFm2hAf5rwTCenEj2ajTHIc0GmsBMW4hVHF0JWx0er66N8Lp2MUpsu1N5RuQbXUn
-         mI1wyIGPM0OVdm5sBUPYSk+DMs8V4hNl3LXhkYi+6hldYdO5Cpsy94YnLWKnUieK2XCp
-         ILuFHHPaV5gcqFCRkRUj4/TzvVHZthpygkJ1XHksIos4SyaUJ0W1hpgujP0QxQJ0KqDl
-         qmhw==
-X-Forwarded-Encrypted: i=1; AL+hErHw2EwNZ7k4xUk9+x/n0Owg3s+ES6g6vmJ5hDzAGKG0P37l5RNnW1eomGHrwlmAPUEZdXQ=@vger.kernel.org
-X-Gm-Message-State: APuU4Z8IzIF0jv42aB62Ijo9vuAULWyIn3DdkTSqcixZo1wmNegxtWci
-	3Oxs1J1359YgDQSqPh2h5pmuioeXsfub83OQH/48wvZDbRKSnjYm1MHm
-X-Gm-Gg: AZFdTZd7T7baBGvDb/H8z9be2SrhjmBdZgzT6Isx6dY1RMeTEpzOActk2nviSNLKIaN
-	bhfm81BzJtBwySL0XaZF2JFR6r3e7hJHiZ0PgsiumJnMUnBqeF95HI8ALKvr0sjX+iqegJ1/Gzn
-	AyCrDXfMnel6n6Wfbfr32peUPJ87uN7zQAAmj+6a6oC7C6InQqy1oPYUHozQnDDsE1UhQ/lrrk+
-	bzl+b/s1Dfs7X7loChRFyADde3rLErePO58Ae/T9p4/5fI3r4WOLptch3GJtEvNpD4U3OucMqJH
-	/1l4bmWqcF7OZzzHcwr8/en9l0snGNjwtWGvZ2LsRA5Zpi9C21SWaxV8I96BNt7N64khJXaEveb
-	Wv98j77RnIIF2wVOeLoMm+7JcJqVAoDurB4Ywp0P/aGEtOMHtDMhgz1KB0QfVfW+7rGRAhJeG+L
-	rXKbepsanWaHJnDlNgDrHjFEOonwHaVxteg3SBTAQe1flB0I8SNtnzgwI4zWbwhB0f6PO9dqLWS
-	I6kvLlA1+j8Ss+Fk/9ePVVhtbFwsDu4+1r5s8r4uVt8ndKojNtEtQyfn+Drx4QAsMp2hbSPMHGv
-	C36IkamYpxXkCk5X6zp/PHr3hJ//fYDSkY3iuOVsQXGABeQyZjgiCat+1r70YHSiBHeLsJ9yESn
-	vvvp2N5Q=
-X-Received: by 2002:a05:6000:2082:b0:4aa:ba0f:c24 with SMTP id ffacd0b85a97d-4abb3956754mr42004560f8f.40.1795705654934;
-        Thu, 26 Nov 2026 07:07:34 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab6ae2dcf9sm40652229f8f.32.2026.11.26.07.07.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Nov 2026 07:07:34 -0800 (PST)
-Message-ID: <6a4e6ee3-cdeb-4766-ae3d-088a322ab015@gmail.com>
-Date: Thu, 26 Nov 2026 15:07:30 +0000
+	dkim=pass (1024-bit key, unprotected) header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=DK7571L2
+X-Envelope-To: git@vger.kernel.org
+DKIM-Signature: a=rsa-sha256; bh=EBBSUvW9R/WLVIRk5hUzM0BGf9SmmFaQDWhR51L6bgM=;
+ c=simple/simple; d=iotcl.com;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1795705866; v=1; x=1796310666;
+ b=DK7571L2V0MBc1DbcOIvncuHWlutgOw2fBBjDz5TtVae9T3cXrb86FxcdVmo4mNOdB+yrZsn
+ 6/bzhvT2EcxiEpA4QvPgNGdee4xom7lrCY0z3EWcNrLznraMnZlnxiZpmZ5mZgpb9vCwZr8wdNZ
+ 4ubh5JovcYXtiXCnSuEZ6KEw=
+X-Envelope-To: git@vger.kernel.org
+Received: by mta10.migadu.com with ESMTPS id fb53149992ad3d0e;
+	Thu, 26 Nov 2026 15:11:06 +0000
+X-Mizu-Trace-ID: fb53149992ad3d0e
+X-Migadu-Flow: FLOW_OUT
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: [PATCH 5/6] packfile: maintain process-wide limits globally
+In-Reply-To: <20261120-pks-packfile-global-statistics-v1-5-19beb83b145f@pks.im>
+References: <20261120-pks-packfile-global-statistics-v1-0-19beb83b145f@pks.im>
+ <20261120-pks-packfile-global-statistics-v1-5-19beb83b145f@pks.im>
+Date: Thu, 26 Nov 2026 16:11:02 +0100
+Message-ID: <877bhzsk55.fsf@dev.null.iotcl.com.invalid>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -93,85 +63,145 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 0/3] commit: allow -m/-F/-c/-C for all --fixup variants
-To: erik88 <erik88@gmail.com>, phillip.wood@dunelm.org.uk
-Cc: Erik Cervin-Edin <erik@cervined.in>, git@vger.kernel.org,
- gitster@pobox.com
-References: <cover.1790082176.git.erik@cervined.in>
- <cover.1795562078.git.erik@cervined.in>
- <bfb8aad3-7cab-4394-a16c-be743562eced@gmail.com> <awfzGjPqQaaCSRd8@vader>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <awfzGjPqQaaCSRd8@vader>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Erik
+Patrick Steinhardt <ps@pks.im> writes:
 
-On 26/11/2026 09:17, erik88 wrote:
-> On 25/11/26 14:37, Phillip Wood wrote:
- >>
->> I'm happy with everything apart from
->>
->>      Plain --fixup never opens an editor, so -c there behaves like -C.
->>
->> in patch 3. It would be much nicer if we didn't change the meaning of "-c"
->> when it is combined with "--fixup". Users who do not want to edit the
->> message can use "-C". I've not looked at how easy it would be to fix that.
->> If it turns out to be tricky then I'm happy to merge this as is and leave it
->> as #leftoverbits.
-> 
-> That's fair. I suspect nobody will use plain --fixup with -c but it's
-> inconsistent if all of a sudden it means -C just because the --fixup is
-> plain. What should work under v4s patch 3 is --fixup -c --edit, but
-> forcing that is a bit weird.
-> 
->> I've not looked at how easy it would be to fix that.
-> 
-> Looks easy enough, -c sets edit_message in cmd_commit()
-> 
->      OPT_STRING('c', "reedit-message", &edit_message, N_("commit"),
->      N_("reuse and edit message from specified commit")),
-> 
-> so it's already set when we reach
-> 
->      if (fixup_message) {
-> 
-> in parse_and_validate_options(), and we could probably change
-> 
->        } else {
->          fixup_commit = fixup_message;
->          fixup_prefix = "fixup";
->          use_editor = 0;
->        }
-> 
-> to
-> 
->        } else {
->          fixup_commit = fixup_message;
->          fixup_prefix = "fixup";
->          if (!edit_message)
->            use_editor = 0;
->        }
+> Our packfile subsystem has two limits that are supposed to apply
+> globally across all open packfiles:
+>
+>   - `pack_max_fds` is the maximum number of open file descriptors for
+>     packfiles. When we exceed that limit, we close least-recently-used
+>     packs until we're below it again.
+>
+>   - "core.packedGitLimit" is the maximum number of packfile data that
+>     may be mapped into memory. When we exceed that limit, we close the
+>     least-recently-used windows into our packfiles.
+>
+> Those limits are supposed to be process-wide, so even across multiple
+> repositories. But our current implementation will only consider
+> packfiles from a given repository or object database, which may not even
+> have any packfiles open when the logic kicks in. Furthermore, the logic
+> assumes that we're using the "files" backend and thus unconditionally
+> downcasts the object database's backend to it.
+>
+> Introduce a global list of all packfiles. This list is completely
+> independent of the owning repository or object database, and it is
+> agnostic of the actual object database backend that's in use. Use it to
+> maintain the above two limits.
 
-Oh, that's easier than I feared it might be
+Isn't it a list of "all **open** packfiles"? I find the variable name
+`all_packfiles` a bit confusing.
 
-> I can reroll with something like that if that seems better.
-> 
-> Given that the rest of the series tries to get rid of some of the
-> somewhat arbitrary restrictions on which options can be interchanged with
-> the other ones, it doesn't make much sense to me to introduce a new
-> "by the way, if you use -c with --fixup we'll assume you meant -C"
-> caveat.
-> 
-> To me it makes sense to keep the meaning of -c consistent.
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  packfile.c | 29 +++++++++++++----------------
+>  1 file changed, 13 insertions(+), 16 deletions(-)
+>
+> diff --git a/packfile.c b/packfile.c
+> index 077b0395a79..0d5647c74c8 100644
+> --- a/packfile.c
+> +++ b/packfile.c
+> @@ -35,6 +35,7 @@ char *odb_pack_name(struct repository *r, struct strbuf *buf,
+>  	return buf->buf;
+>  }
+>  
+> +static struct packfile_list all_packfiles;
+>  static unsigned int pack_used_ctr;
+>  static unsigned int pack_open_fds;
+>  static unsigned int pack_max_fds;
+> @@ -195,6 +196,7 @@ static struct packed_git *packfile_new(struct repository *r, int extra)
+>  	memset(p, 0, sizeof(*p));
+>  	p->pack_fd = -1;
+>  	p->repo = r;
+> +	packfile_list_append(&all_packfiles, p, 1);
+>  	return p;
+>  }
+>  
+> @@ -243,17 +245,14 @@ static void scan_windows(struct packed_git *p,
+>  	}
+>  }
+>  
+> -static int unuse_one_window(struct object_database *odb)
+> +static int unuse_one_window(void)
 
-I agree that keeping the meaning of -c consistent would be preferable if 
-you're happy to re-roll
+I agree with Junio this signature is better, but now it requires people
+to look at the code to understand it unuses the least-recent-used
+window. Would it make sense to rename these to `unuse_one_lru_window()`,
+and `close_one_lru_pack()`?
 
-Thanks
+>  {
+> -	struct odb_source_files *files = odb_source_files_downcast(odb->source);
+>  	struct packfile_list_entry *e;
+>  	struct packed_git *lru_p = NULL;
+>  	struct pack_window *lru_w = NULL, *lru_l = NULL;
+>  
+> -	for (struct odb_files_dir *dir = files->dirs; dir; dir = dir->next) {
+> -		for (e = dir->packed->packs.head; e; e = e->next)
+> -			scan_windows(e->pack, &lru_p, &lru_w, &lru_l);
+> -	}
+> +	for (e = all_packfiles.head; e; e = e->next)
+> +		scan_windows(e->pack, &lru_p, &lru_w, &lru_l);
+>  
+>  	if (lru_p) {
+>  		munmap(lru_w->base, lru_w->len);
+> @@ -407,20 +406,17 @@ static void find_lru_pack(struct packed_git *p, struct packed_git **lru_p, struc
+>  	*accept_windows_inuse = has_windows_inuse;
+>  }
+>  
+> -static int close_one_pack(struct repository *r)
+> +static int close_one_pack(void)
+>  {
+> -	struct odb_source_files *files = odb_source_files_downcast(r->objects->source);
+>  	struct packfile_list_entry *e;
+>  	struct packed_git *lru_p = NULL;
+>  	struct pack_window *mru_w = NULL;
+>  	int accept_windows_inuse = 1;
+>  
+> -	for (struct odb_files_dir *dir = files->dirs; dir; dir = dir->next) {
+> -		for (e = dir->packed->packs.head; e; e = e->next) {
+> -			if (e->pack->pack_fd == -1)
+> -				continue;
+> -			find_lru_pack(e->pack, &lru_p, &mru_w, &accept_windows_inuse);
+> -		}
+> +	for (e = all_packfiles.head; e; e = e->next) {
+> +		if (e->pack->pack_fd == -1)
+> +			continue;
+> +		find_lru_pack(e->pack, &lru_p, &mru_w, &accept_windows_inuse);
+>  	}
+>  
+>  	if (lru_p)
+> @@ -505,7 +501,7 @@ static int packfile_open_pack(struct packed_git *p)
+>  			pack_max_fds = 1;
+>  	}
+>  
+> -	while (pack_max_fds <= pack_open_fds && close_one_pack(p->repo))
+> +	while (pack_max_fds <= pack_open_fds && close_one_pack())
+>  		; /* nothing */
+>  
+>  	p->pack_fd = git_open(p->pack_name);
+> @@ -649,7 +645,7 @@ unsigned char *use_pack(struct packed_git *p,
+>  			pack_mapped += win->len;
+>  
+>  			while (settings->packed_git_limit < pack_mapped &&
+> -			       unuse_one_window(p->repo->objects))
+> +			       unuse_one_window())
+>  				; /* nothing */
+>  			win->base = xmmap_gently(NULL, win->len,
+>  				PROT_READ, MAP_PRIVATE,
+> @@ -754,6 +750,7 @@ struct packed_git *packfile_from_idx(struct repository *r, const char *path,
+>  
+>  void packfile_free(struct packed_git *p)
+>  {
+> +	packfile_list_remove(&all_packfiles, p);
+>  	packfile_close(p);
+>  	free(p);
+>  }
+>
+> -- 
+> 2.56.1.831.g720f3f5937.dirty
+>
 
-Phillip
-
+-- 
+Laters,
+Toon
