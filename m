@@ -1,122 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.167.52
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795677461;
-	b=NP+/aXQ8CxCo3nlFHapBAQIPgTU8reTPkwm6kuC1AnR65RxNtDScpEEXVscJEULDkGKM
-	 3xc6nJvlYYMOectOLC6thfkyWCqlEmaMTIcaOzIr5c86zcrO+EeQZNgnBkBUX6iN62LUI
-	 YqikxnunYHlAV8qS2oWRjsH+0msitaqMYxtxq2VgbfoF1nvN5lRQ+j+p45g9WL0XD7AND
-	 /0zRbL2XL/2+7zapw+ZuYnRkq5uy1NW22PAGsPUxOvkqk9H1ELnJ+u9rYU7mVuiUbFybH
-	 I/n4pReuxs3o3y3AgzAOgha+blvfFzi2a7kckg4dHKTy2WV9rC8ppu/Zi9WL+ASz2OA==
+	t=1795684660;
+	b=ozBKPN1VADFuqc53i8HtjivtSmDVWwapUWVaCD3vGQ8WxZSr1OzvT5Y8OsLs62yJSLpf
+	 qeAnP0YdDI59NyIgfahHe7jH3qt/DfjEsxlfHdfrTN/phqYBTlnqwMTf0yUQPzDOncoR6
+	 En/pdacfBYReHCauRJy7yteHnW4TK+ucDexyDjsXadU2dP5nB+ppE6RhLSOhcYaNMX+RF
+	 tbdDKxJiBnjWetDzzOTtp65slIXZwx8Zm7FtSBJWlmuYrUD+LX+xTIn1Zrs/6g6T250mZ
+	 ZKkWq9pjzFKHZ0cvQFjAOrYXAGSyNxpVMfowZEGLi6sepsZGheueYHkBJcMzuDksSOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795677461;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=+mc7AXfU43t/f08zR8R9HcdWLRtNAn6P9sVG6BobC/A=;
-	b=TOx4xTDw3IhD6YNKrRZk9QHcGxpfwm0KG9brXJiAQiGzxrYJfjX/+nuHKhxCAXfZ+PT8
-	 KrbJHe9ggv62H/b9IJhkkQFqtvYguDuwRNiVUrHfrK7j5N34zKdYWs1j7g3i5mfbt6WQv
-	 B7e8FPexwGeRNUMgKsHo8zqc5VV/ipYM758L1yCWeRF/pdnxaFGRxidCzCsLaigGFZUi8
-	 GhRolMSG5+4oznGS/qxbzqOnQRO3NAnUsJHzDqvFeMV5W86n7UqadpKA+ZylbS/EXrBwE
-	 KzR5hSSRFgPo4KLGyLYK1eBUUeTbyDEJYqntpTpfPUDnqtG2NSexTorkos8jXCkO0iA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795684660;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=i23uJrRSktJT77iIktAQylNdrIkp7GXj1YOunSc7oRk=;
+	b=4Hili3FiFobTi3t6Tl9sNHmZ6Gk1RXk+moM4mzO4v3F9f3L4gnDqvv6vq5punVSoFOwz
+	 JaAy3oI+u5yUnhqZpk19JVhMRny01mtqSKzq/mgqSBlmwwqPuRXj/obg8WBCyzA/LM0u9
+	 7ZSXfwBfrnhPjvDGDWvZoEAwQy6nYQ1Yv2hfs8XRQRwC2hDc26aSkhC4IZDKQuN2t1luY
+	 YmxFEW72co/FWf7a8Gd5IVUHA4Oqq4nItTw2I3BPNontHBl5nxY8d14t1/2HnGbgfZeF8
+	 8FJMQPaXeEvltAmx8E9kEfMkJXdYi5Al/plquXgvn7snBi4rYllDszVxWf/xVhlBDQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=SJzdwC08;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=dlavYBOQ;
-	arc=none smtp.remote-ip=103.168.172.155
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iQYoNkQk;
+	arc=none smtp.remote-ip=209.85.167.52
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91947606A31C
-	for <git@vger.kernel.org>; Thu, 26 Nov 2026 07:17:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 91947606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801A7606A31C
+	for <git@vger.kernel.org>; Thu, 26 Nov 2026 09:17:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 801A7606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=SJzdwC08;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=dlavYBOQ
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AC819140026E
-	for <git@vger.kernel.org>; Thu, 26 Nov 2026 02:17:39 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 26 Nov 2026 02:17:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795677459; x=1795763859; bh=+mc7AXfU43
-	t/f08zR8R9HcdWLRtNAn6P9sVG6BobC/A=; b=SJzdwC08IKY+ZD7ECaS6lKrABd
-	BVchvoPgAdGFxfwEhffHcu20Eh1LnlkWIXIRSLKmQce/5GZfmyAchwXS1xkMCoHA
-	+LFd3X+pljLKabxadcngm0D6dOZ+ZyfDc9WR2kFTmWC5y0AdjOuCK7CS15QyJoI6
-	SKbCZi8lx2+iIPAV0xxClHka8c8RD9Bm8SiAC1iFIPlKQ4j9E3TSo3RQ59jaD/+d
-	6f0d5rEHA7Jcyy4V8BI5NxlcbNe0wQUHOkEDrXYVW8mJmvoCJETgdID6Gbm6NjmL
-	WnqgAKooyMyg+YZK9o7eWZ0CKfHToEdww9GB27JWuDy1aSfrF+WO3lhRThRA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795677459; x=1795763859; bh=+mc7AXfU43t/f08zR8R9HcdWLRtNAn6P9sV
-	G6BobC/A=; b=dlavYBOQpCTHdXQVhyJJ7WOeAI8K1ZuXYGUmpEAtZRLuXL9Cn91
-	WtVbei5KUlwbDvE0JwKdEqWB5HQbXF6l6FK2VYyeCAl6Buh47W97qt/+9ADRZkDP
-	/+f0fKL5D/YDNgzKZJAqTp6AGFRz7SRoAKSxAh4lJRQPH53C4w3/C66QejY4ipba
-	Zq5/qLO9ncRyTtZ8qGyh80GPoe7ia4E6piQ3SEeCPbNOeDNxSlphdJbUpgylT/K3
-	ZwM7qgLChV7wJPaMsD7WIQhrPihDmeHkHIgidRIZye1v0Czdhcnp29bRmzt6SxC0
-	l+LgWAUyKzMpQf1FOBVEYZaAWI+v/Gh6S4A==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795677459; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:KDhxYYpyNd0zQxlBtWjnHmEQtI/mhEIwJ8aTeyQB5ENvAtc
-	rBDXzPODhQ0TgBcSuFLx/ZPrHfYKVnhi71lpQmy55ytcEWxzUmWjJiumvFZ7B+n1
-	Hb/nROpgaiJTvvYqZmWxtywzmt3EQxriWNgcUmDxI7BaMk1qfkBG7X9NdRwqN6hV
-	53FUPnwixKI0+Noi1D+dmnt3lmdq1mMtS0BX9d4DlDcRCBY3NqNCq+0KOBB5jNzk
-	qeSIp6jo9MPhAzhd7WEBoO/seLFBvbb8EuyEmD4SAAm1PBbZRF4i541xKn1q/mSN
-	JrSOoDZ52lQRgTCYyXqTdPO1dxxZ/YPuukB9COw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:igaAhjbjFkIdl7wKbwz9DhnA4lemFPhNnNDLVAMtNQ8=:uurNrr1my4n/gGjRB6Mjdju9v1c84ZEZ0NsoObTpEgY=;
-X-ME-Sender: <xms:E90Ha6YlRtTpiISGJsiM2viKzBpBeV1dQfRDYnWWPjOch9f5X-6HDw>
-    <xme:E90HaxFtKghLXMJe6elVQ7bmgvgUzvzAQfjwSuzQgvLKV2NJ67dKH-cPwTj-LeGT7
-    _Jft0w4qNRo4JT0pgTj4sf1EGATJGkEcJ0s7tY4mlMJXjLRPwmQmN8>
-X-ME-Received: <xmr:E90Ha-wQfSpegO2u_Nv8Wy6v0fWCxKbDtY1WmveBQu-KqmKBF7czas9zmjUXoZTP1IYJ5AdjwgsRFdrLeDBr7GwFiYstNawKygo18Q0>
-X-ME-Proxy-Cause: dmFkZTEydCKSiy7R5Up3WsYcjVoTEIcXl0xYOQUvL0a3owI3N3+xnLTTULeeT9rW0VzYNB
-    /o6gJjfgp7HDSsvi5e6SEFa3MxZi1qkCyC6HOv5GcvXPaPlGBQKAQs45UrjsaN2Z65U7bq
-    wmw82FYUsMrI8l7cZbrQhdZjM6V73UeTCDxC6SM93yBh79LY/m4gmfZtMQf3S9aBNiSCTi
-    zywfWUKjECTcQtEvRLvUMYXs51dNGnEL6qiFzmkvXJaS/P21jaQcwIqIUp7ZAGfkD3EZlZ
-    xotm6OBh7sn6tSWOIy5Hel6VDDFKMHErF4Ay6eGBwJBvD5AFCChlXl1cjHDSOEmpWcI2cW
-    IJ9kwKjK2KzIYZDMePj7+AwvaK0bTxyUhUUEOhDYOvcz7QX8WJAOWjGh42YDQ5J98pUPoA
-    u6CWWbX8PIZ3/qIRIeaJ5W+wf2THN07jDamEWIujKP5NaI4CbtyfHtJXrPXsjat5eTzGva
-    ej6x9uI/wtYTQLt51ktwYk/mcBEnIbmMvRXnOftf/GLCC0ASnUA8cFpPIuAoPWgClUODyi
-    bK98J3hPCF3ovywf5ueyR6DyUSr7xnS9y9ckkqY0dHWgkInAorC5Q0ghRajDxLHuOVw8Fx
-    ab5UTjYKSIAa76CKe0wfmZozpf8rm1KM72vF6tGcbRqa8Tiba4nn6NoeuNnw
-X-ME-Proxy: <xmx:E90Hazms8ZnTD9ZLE4WWbEJPSbitSnDW646I0gTgEWLeB12UgzO2vA>
-    <xmx:E90Ha3lZo0XwwoCx_sqcR7czSbnISfXe1LXV-odf4LHBOuvwQkL33Q>
-    <xmx:E90Ha1ztq2GuhLn904H4-45QN_Of3L1p5SwpfNSj69R33jeeVXkaBg>
-    <xmx:E90Ha8ouTbQK6smv-Om71aY99FU_0cAJa5K_fjddihnUBY-EtulRBg>
-    <xmx:E90Ha6mjw58y4FaQ7tw6HYfEAACWfBGzVMa99vat9s4D4nlO5IJdAHtB>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Nov 2026 02:17:39 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Dominik Maier <dmnk@google.com>
-Cc: git@vger.kernel.org,  Caspar Duregger <caspar.duregger@gmail.com>,
-  Pablo Sabater <pabloosabaterr@gmail.com>,  dmnk+artist@google.com
-Subject: Re: [PATCH v2] graph: do not fuse merge parents with the column to
- their left
-In-Reply-To: <20261124180557.70212-1-dmnk@google.com> (Dominik Maier's message
-	of "Tue, 24 Nov 2026 18:05:57 +0000")
-References: <20261119192247.2671852-1-dmnk@google.com>
-	<20261124180557.70212-1-dmnk@google.com>
-Date: Wed, 25 Nov 2026 23:17:38 -0800
-Message-ID: <xmqqy0agnjsd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iQYoNkQk
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5c102ad8420so3678126e87.1
+        for <git@vger.kernel.org>; Thu, 26 Nov 2026 01:17:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795684658; x=1796289458; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=i23uJrRSktJT77iIktAQylNdrIkp7GXj1YOunSc7oRk=;
+        b=iQYoNkQkPWMrJEENijaqGmg8mhiz+pzpQ/mmqAVVtB0KXXlYm20EjeIcBDBvnrbVUD
+         W3UlolDTRkHBXGCkBl83yZyQ3zuTajAOxhhTL6QZj5J8wl8ps0EtjHeeHrrg8WPikF96
+         7XWd2mySmba7p3BABXvLVN3OFyn6X0cZQMu3dRi4oUmnqmkal0EQvxzaqFvlDgGHCj5d
+         7G1a5l/qBo5+UQbUXDna+B19vuqwXmYBVZ5qzFG0vvTNnPskdKPxZQOD7Ih8Je9/3K3a
+         TW9kBukoZD5TqBtM36nfmT+1mwrzGE5Pqvh73Pww8yzA3RuGWCt1ZIawnYs3IZpVwnlB
+         MTag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795684658; x=1796289458;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=i23uJrRSktJT77iIktAQylNdrIkp7GXj1YOunSc7oRk=;
+        b=pmUxH2+PKx99Rgxdu66thR5nNAcNhYq56bGBItvLkKinaOA5/03FxBFcAQn0CQXUfA
+         44EF6OrzKlKZ06RF/GASIjnkZNC5gFPQC5AdIE+V+l1HXu5vuiIKJ6gzrCdvax8wzc1x
+         193kX5bSzEgPlf34wltSAzX5OWcsxvT6X/LZe9uw+CplnlYBGDxWZ+sPxDn81fy3NX5L
+         dT4yxZTxWLQFtiRS25KeEjRCTeopSN/LvxgN0PHIdKkeRgYTYbdlhSlg/Rt7u3gyNMvk
+         xovsokqqAuAVVKgqHTVU1RioVud/tkkRgLgSPnhkU01H9aKZpnm+9dkfBbaGFzJ6nbnp
+         rxIQ==
+X-Forwarded-Encrypted: i=1; AL+hErFE63tsaEVa+lqzgwG0qZawuuljDX48r1SQ1bgAMJlyqr7SKNTiGkEXV7WoqN1mtcZXRfY=@vger.kernel.org
+X-Gm-Message-State: APuU4Z8G8fULOyE8STm52SClYX1/wHRgVNfm9xllXdjuShFzGim9VndF
+	Fcn1vOcyksf2FWe/dxnbf7+IZ3EViiKoU7QsRPsRdVvxmo+M2iIBj8TS
+X-Gm-Gg: AZFdTZdKXXKcPIK5ht2c479ILOzc9P8iCnLPTusEqNQbeltwQpZbonMu6Y2bXa33pa2
+	BQ7mcyrwjzoptKlMlgFuwwUW6Q8xQB8a69bgo2TxMmgRgcRX77jlpGiCCqE1auxJtmfwhvSnh9z
+	vPOXX2eWA+DVv7XhBQmtwINr4SJnmIbJzXfnHRzf5XEvm5tTSRXbOowAu1vXaecf+OUiomz2t7T
+	9IHDAatwW4e7MUqB3cCCviI/YuPq9voVmuDqfl0N8CZvOWQX63aigqzuO1Mz7rshr+0FLb8QfHQ
+	vMaRMYHy8WjPlvlilwdVC7z7S281160t5vSHYs7hoO9ak+1iUzwR2eOJlUADe5DYrZX3VGLGGDi
+	o9qBJozaZO/bD+gi7QFMHPMSvAPxeqeXL4vXCzIQFbozvpH6qL9dgh9sb5U4SEEOr/LxGBydkCw
+	QkTerRpWSPWhBtMvSfiwkmstY4zB2JWYf6mn2uhH8ShtnFUhXV3O3ZB9UUT6dMs4KAVD4EssgAI
+	fmzXqRAaA+mv1kySMQjoN814vA3HJ41x8UB6Uu0HDhrYj4UG4bmVrdqIZgKGteiUSHRgNB5BR3B
+	as/7WUPxSAHbFpzZCnOe5+LBAH0HzcE4EsyTv/ZGLdnZ4f726hCIn5K+b6c6YS5gqFU3JuPmpTP
+	I/PRngrjNcD1WltO715U3ARKpugU8kX0Kp1H2zdFt/5xsDQ==
+X-Received: by 2002:a05:6512:6d0:b0:5c1:5bcc:befc with SMTP id 2adb3069b0e04-5c1bc7fb293mr5762420e87.38.1795684658121;
+        Thu, 26 Nov 2026 01:17:38 -0800 (PST)
+Received: from localhost ([2001:2043:be0a:d700:bd32:e7e3:cfbd:5b51])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5c1bcff86c4sm5030520e87.22.2026.11.26.01.17.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Nov 2026 01:17:37 -0800 (PST)
+Date: Thu, 26 Nov 2026 10:17:37 +0100
+From: erik88 <erik88@gmail.com>
+To: phillip.wood@dunelm.org.uk
+Cc: Erik Cervin-Edin <erik@cervined.in>, git@vger.kernel.org, 
+	gitster@pobox.com
+Subject: Re: [PATCH v4 0/3] commit: allow -m/-F/-c/-C for all --fixup variants
+Message-ID: <awfzGjPqQaaCSRd8@vader>
+References: <cover.1790082176.git.erik@cervined.in>
+ <cover.1795562078.git.erik@cervined.in>
+ <bfb8aad3-7cab-4394-a16c-be743562eced@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,49 +99,80 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <bfb8aad3-7cab-4394-a16c-be743562eced@gmail.com>
 
-Dominik Maier <dmnk@google.com> writes:
+On 25/11/26 14:37, Phillip Wood wrote:
+> Hi Erik
+> 
+> On 24/11/2026 23:32, Erik Cervin-Edin wrote:
+> > Changes since v3:
+> > 
+> >    * New 1/3 refactors prepare_to_commit() to write the --fixup subject
+> >      in a block before the message-source chain, as --squash already
+> >      does.  On v3 1/2 Phillip found it unfortunate that the -m and -F
+> >      arms had to be guarded with "!fixup_message" while the fixup arm
+> >      duplicated their work [1] and I agree.
+> > 
+> >      Originally, I wanted to avoid a refactor -- but the guards were
+> >      getting nasty, and a refactor is the proper fix.  It turned out not
+> >      to be that difficult and I think it makes the series land cleaner.
+> > 
+> >      With the subject written up front, the -m and -F arms serve every
+> >      --fixup variant unchanged, and the fixup arm is left with only the
+> >      amend case.
+> 
+> This change looks good and makes the second patch much nicer. I'm happy with
+> everything apart from
+> 
+>     Plain --fixup never opens an editor, so -c there behaves like -C.
+> 
+> in patch 3. It would be much nicer if we didn't change the meaning of "-c"
+> when it is combined with "--fixup". Users who do not want to edit the
+> message can use "-C". I've not looked at how easy it would be to fix that.
+> If it turns out to be tricky then I'm happy to merge this as is and leave it
+> as #leftoverbits.
 
-> When a merge is skewed to the left and its second parent is the column
-> right next to it, the edge to that parent is lost:
->
-> 	| | * M                | | *   M
-> 	| |/|\                 | |/|\
-> 	|/| |         =>       |/|/ /
-> 	| | * C                | | * C
+That's fair. I suspect nobody will use plain --fixup with -c but it's
+inconsistent if all of a sudden it means -C just because the --fixup is
+plain. What should work under v4s patch 3 is --fixup -c --edit, but
+forcing that is a bit weird.
 
-Having this diagram makes the visual breakage much easier to follow than
-in v1.
+> I've not looked at how easy it would be to fix that.
 
-This only happens for merges with at least three parents, correct?
-Because a two-parent left-skewed merge sets '.edges_added' to 0 and
-skips the shortcut altogether.  If that is the case, it might be worth
-saying in the commit log message.
+Looks easy enough, -c sets edit_message in cmd_commit()
 
-The diagram already makes that clear enough in context.
+    OPT_STRING('c', "reedit-message", &edit_message, N_("commit"),
+    N_("reuse and edit message from specified commit")),
 
-> Only take the shortcut for existing non-parent columns (idx < 0), which
-> is the case it was written for.
+so it's already set when we reach
 
-Small wording nit here.
+    if (fixup_message) {
 
-In graph_update_columns(), calling graph_insert_into_new_columns() with
-(idx == -1) happens for existing columns passing past the merge, and
-when the shortcut triggers, that existing column actually matches the
-merge's final parent.
+in parse_and_validate_options(), and we could probably change
 
-Instead of saying "existing non-parent columns (idx < 0)", phrasing
-"existing columns passing past the merge (idx < 0)" may be more exact,
-though the code change itself is completely clear.
+      } else {
+        fixup_commit = fixup_message;
+        fixup_prefix = "fixup";
+        use_editor = 0;
+      }
 
-Looking at the two callers of graph_insert_into_new_columns() (both are
-in graph_update_columns()) confirms why idx < 0 is the correct guard to
-add to fix the issue.
+to
 
-Let's queue this and mark the topic as ready for 'next'.
+      } else {
+        fixup_commit = fixup_message;
+        fixup_prefix = "fixup";
+        if (!edit_message)
+          use_editor = 0;
+      }
 
-> Helped-by: Caspar Duregger <caspar.duregger@gmail.com>
-> Signed-off-by: Dominik Maier <dmnk@google.com>
+I can reroll with something like that if that seems better.
 
-Thanks, both of you.
+Given that the rest of the series tries to get rid of some of the
+somewhat arbitrary restrictions on which options can be interchanged with
+the other ones, it doesn't make much sense to me to introduce a new
+"by the way, if you use -c with --fixup we'll assume you meant -C"
+caveat.
+
+To me it makes sense to keep the meaning of -c consistent.
