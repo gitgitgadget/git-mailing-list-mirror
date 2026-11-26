@@ -1,124 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.151
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795661261;
-	b=ZdpgiDjnDFuF7W+8DTW4vZx95VaRIPGVMYwAYva2ABZCWNrfA6DTGGYa1Zg4G5agFU4c
-	 2SrPaGh5BKWulkZbmHqoa5R8NxqYPCs0kCT138SlDzRgqDtr52N6SsYLnSSjTJKYM7Fwy
-	 d38rO2BqxkMnHjw8LCdCFZs43+lMa+PzrQBouGOcDmL2gzI6cRKDOFcNJkM3eR6BlQjRx
-	 9cMXwC1D22+s5Q1Scuz4Ct9nolLeqXY79QLC6mkew3tCptRWemevhfDwBJYKGb1xW9Nec
-	 zEaVdrW1fy06zsSHcALPBbYHuw8k9reooE88Io1ac9gRCJdD2Y92e085KeK/kDul/1Q==
+	t=1795661861;
+	b=VaRyXpz6+nIutuiU3uUEecRTs1cA04D646Ren3ZsaCSjn7B0WQCOmXYHjCdG8GWJBJbZ
+	 1Gm4I/ViycVUy4M3hK1rIFCG4XRfsoAeq7imRVj+qwUgurQw81VAPGJPl+ma4HXnQla0i
+	 QWnd+LT7qYWkXVk98+Lqr7+P4wytA6jeWmVylGH8nZ1+jyOF9I4OJC3pG3YNBC8PsRI4V
+	 J+9GsdMWW4zpz9uuscAHlLYr3PDAiORSL8tu8hlFk+RZyD4AyIOKy2MuMax/BxSrdVxF0
+	 UO/ecn3WWkkUuLGzZvUtErbsQMBvwCv0O98Qf5s+5O7V93JHVQPrLDreLE6IJr3ig6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795661261;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795661861;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=iXISHs6Vh9tBZY/4NLU+OGjTLBg4ec6BdWxoGFxkY+Q=;
-	b=xP6G/mMtWB+6FQnDDVa43kegc0PN2rKG6XdAgrDpNQr/+MlcqOKoRTw6PukijIgTrHci
-	 n3eReuLDQVuauckcZu9kEkZjnczxmD5ZMV2zpmoHhVLY8JVIEpr3KTbT7wbf/lz1f5H70
-	 oi7x+2b18T7Ry6KnjSBqPyEm/GHVN2egyzZxvcYRqs33R0buknxgxyLXaLiqnMn5XzIci
-	 +IgJiez0WaoaW+MI4wNN+ze2szImGAqnrhdQKOlyFwNhTYTrxWSxktUXOB2PqmT3r6qi7
-	 VMSDrwlA6bHSKUu5/aybys+sEFanzQ9cY6CNlL6mlH3d3isf2YO/dcMFcuAxnMwPY+Q==
+	bh=VhvOSTafLu/Dst5ospwRXnsCds2Xg+QCAlopEs1qifs=;
+	b=VpBSKLy1vXoQn+Jl3q3m7GQ7acU2GbZmIoAjvk4D4g6RSh4yXvvMdwFDFtmVt7zviRvN
+	 UzPZ1NGVjWMTH/q0Vpw1dbJuE+Zb6SUx7BXETttlTXW8b1uAnw35PXdQkc//c0jAHILkZ
+	 CwJ6uyt6t1uj/RGG54KTkT/iCVjhRo3j/mTNhIVOyYgVx692VNvhQmlFrwk6tqhczSPtb
+	 GKOEzWvDXOt+XDfFXqRyE0Y5FXRhPK+7I9IBRjDiBs/wok/EE2003rRwQwZTYEdxS5ksx
+	 yOpD9W/7LZTg5uM9P8TTLDxPcTgXsd9ZLbUcNjNZ6oOmEh5cxZBcSaeFYOYWKi73z6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b="BRxIaY/M";
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=NMCHxljM;
-	arc=none smtp.remote-ip=202.12.124.153
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=LD+9GvHG;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ycReuWsK;
+	arc=none smtp.remote-ip=202.12.124.151
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6AE606A31E
-	for <git@vger.kernel.org>; Thu, 26 Nov 2026 02:47:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DB6AE606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9816F606A31E
+	for <git@vger.kernel.org>; Thu, 26 Nov 2026 02:57:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9816F606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=BRxIaY/M;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=NMCHxljM
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0E6B67A0528
-	for <git@vger.kernel.org>; Wed, 25 Nov 2026 21:47:40 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=LD+9GvHG;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ycReuWsK
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id EF56A1D00554
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 21:57:39 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 25 Nov 2026 21:47:40 -0500
+  by phl-compute-10.internal (MEProxy); Wed, 25 Nov 2026 21:57:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795661259; x=1795747659; bh=iXISHs6Vh9
-	tBZY/4NLU+OGjTLBg4ec6BdWxoGFxkY+Q=; b=BRxIaY/M/fzgcWouwdGsPfHREZ
-	L/R0p0ryMv/p53cchxVNHIkdd21q6te8+p8nlZabwiCkTNAAe7/jUrKceGZ+yXTf
-	wIiIQjmPmp9UbN5PQoL+BdbSTqmjg5IuFzXGLg8m8wy4aajbX8XoaWAplEKEUpGr
-	6/q6wmy71b54xuScIb0GDoKYMG7410pyuW/Hhq5nyhdQFH49K5ZETnlvN8l2zeHj
-	S2mmwtvdzWyHA5qV1AdgaC4Y/gKibjciK6g8FUzOkSMzx/9vfxwdM+MOV0GvoHyq
-	CPpVdE4ApDgqKYcFGJbIcEx5KcXsERnqRt9VyBQ9s3WYBfAC2p3v+yz7B1nQ==
+	:subject:to:to; s=fm2; t=1795661859; x=1795748259; bh=VhvOSTafLu
+	/Dst5ospwRXnsCds2Xg+QCAlopEs1qifs=; b=LD+9GvHGVAUyhl4iAZxcV2/rU6
+	KpQ/OsrKs0KpIoorIKikedLdSClw5gTpd+VZR+YmuXTTp9FQLyIfMqb1D6lNtUYJ
+	R2R+kDPxH9TJ6IW0bMjPWxmm6U60TG8Wgw2THqkQTk0uHtOTr7ztAEaenMVfDFn7
+	gSYat2jokheTNiBaBwl7x32i7pEEoft/Y/X3WoeBO118vH3QLJgOLN2yfBtmNlQM
+	CjOXBLPo+kShKDVOuzveqw6SlE7a2FaKKSOXmDFSreceMhEORrB0gz925XnBCbPM
+	R3pN7utxITOkHrr2GXhuT5Pok+b3WQX0TBlW5/99q/Et4ZJYPYUMniq/Yd8A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795661259; x=1795747659; bh=iXISHs6Vh9tBZY/4NLU+OGjTLBg4ec6BdWx
-	oGFxkY+Q=; b=NMCHxljMUdV72wQMSXgspBrpJmhc5s0AZyaBFIFjmdiCKGYoqsY
-	J7dj1X9bBT+b8gB/EU0UeUo6EZFmB3Cta96IuRz4u3wSzKCwafwG3ASZeYNXofCG
-	y22nY9xiE2osetJiYi/6heo94H/ccB7czUgIhGakXT/is7aMhi8FnVOqbzIZ1g2J
-	A6/sAy/bXiYpBcMThhrLsYGv5WiFSId4zR+hhLyZj2qfVcAtaaFxnqgIABNkYns7
-	Lin5Yi3MP2xJi8PXJdHobEjAvF0jh8kOlJQXmAetFNAD7eFRDqRcVk3zgpmWWtCa
-	mk41aoo34y4zOS67oavI1Wu5USA4xa8XB8Q==
+	1795661859; x=1795748259; bh=VhvOSTafLu/Dst5ospwRXnsCds2Xg+QCAlo
+	pEs1qifs=; b=ycReuWsK0FIU+QRnyjovvZtxHyP4EtHiUHpsvHE41c/oTeBl6Fi
+	KBBunqo7gaxQjnisy8CD5f1aRY+N6zYPa3oROVWIszJeKFLmsybZ3/eYjreWwGW9
+	En06tymaVevkxJ32MbCOJTQwxWYLaLTubEjSFLupJZFf7RkFdzGAmmQkK3hYPaJG
+	gxJ0JRmgksQ0nFhpntMHwY7fhHeTldcm+TU3K0FJ1nm0Sn0sNd9ImYvVN9xu6aQh
+	3YxZnXz8EAUdVS4EZbAYyrESFc0YvQDm9lYJagI+UJXHG92k2sUZBBH9/J0mj2aX
+	5slsInVHNnvouIgd+qkK69CQYAcmUwcBzgQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795661259; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1795661859; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:MZ3R9wtKzxhcQkzc3FMf02Mf2VQ4IHsbGTwGLj+sDCYWYNh
-	5kl+DDuexJOsF3U2pjcsjt4hHcWGTjKN1R6f8uZFj9+4Dc2KlxJfJkW84nVbuMvX
-	ZGpw0c+d78wrDh9ksdZzhqbPgmBCf4u8UVW10FdB6dNQBtSuz9wT0Epw0C2ufOh7
-	nqBBx6xUASpDmrPnB/yAK6jlcwL2L4kxwA28ukVBCbrEzuO9YbEOpcMCa0ZRvnaF
-	rvLFtYimjrmBUclpX4tFbQpBD8GevX424rsF0PxOVD5PQaK9o7BtLc9e17NUft+t
-	6ttIL+oJDKuWq8Zte1x594IVbXZXgke+m9HaG3g==;
+	s=fm2:rsa-sha256:Dzha9+E3C/2NqnTKigpOneKxuOfk18RpsZJIeAJX5zBeL1S
+	wdWvZHImECwehjKWi3iPE+3F0iX/tjBkWazorlO0X2mIgZKm5oHLxdYN+AANvLJy
+	B1Qc43gYD9CoUPgptt9xX/OUAFfr/tdjX6RzxET9XIb+7ouStlycEPY17Xe8pt+6
+	4N6UE2tXBez/wvVSORpR5GW6IXJh0iwfxGUVAerU/G6CWZ3sGdzyHoeSsQEOuOz/
+	Fbf720TJDfKn3tB8zzXhtCg6RbDWA0KyCHhi6airb9LvLlPnWiRDz5HMajDQ4OLj
+	dmwe+qpC/cgDJXPxVxBQUXfJN7R3txKe8CEr9uA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:xXeGNinY0pQOTH1emOyE/X/qfEC15K5e1WEtJzIVehQ=:kZ6SojhnXWvIOviN6kDafld8lxT0j4GHI6ILO0OM0Zw=;
-X-ME-Sender: <xms:y50Ha1ZykstFpzybHBzF60XpI8syBsKIcndOe3ujDJP5oT6DnObanQ>
-    <xme:y50Ha7ftxMk5FLsFpJ7lePJZbVCkwzxhS6XbG7E84VSd6hx5H4v2lLt0S8yBhMr-d
-    3M25acfXtiNMr5bMjBD8iIkujTnyLEhrketZFe8GfmUzfRBgUysBfA>
-X-ME-Received: <xmr:y50Ha-JerEAk2j7_hI-3hpQW34HJFLlluLHXx2LNpsA4-cQZpG7s5HZkJSpt_TGD-x5mZUCkySL0NF2yep2Dljayx3W3COalApQroYg>
-X-ME-Proxy-Cause: dmFkZTEc01yjq6ee5VIt1zUOS+w6QBWZLwYTpFpRSjYuTslsuGbiz12/0MnyZdqJSOroaU
-    6caYFwbscrzWNgKAZR16jy9XeH5D1ZpUM22vGjBB05PF4I5/ZgZLxeaObCu4qzOdHxQZk9
-    quW+LnWAiptR8BT2IWGdQtDFq0Tm3Jj6hV8vLxyJ3tfFavEge1DT2fHkOIecEvWvf4Mk4/
-    xUkMNF8IwOUoZ/jnrFqHUCdD7DByJFaQ7fKpebDtG34mgm7ByQxaCGCAFNMWNwvtxj3LzJ
-    XupO2IyFoxklOk2eLenL2mFlrt0x+G4Ydl6JULBzQVMDmmqQAIVHMs9Q44+9HYaqKBV2d7
-    wg5kpMmUQImoJ5TGM5KqKQpRoIRuZYOUTE9Yz6iFuXp0Vsj9JQxP59N70cX5OzksAlIp2m
-    nw8uxEnYlMSnhjHhQMKm+ri3vsakqZPJB2HnTsbyE5MENomhJYRvn359321eBYZqedUh0Z
-    9p6TQZc73H845Y9tHbf99VYy6/FQbpctVmhhJ5k8hBARtG5H0psKxdUKOZH/Tlhpwjn8XO
-    GSo1fytOWaegzfP7sw6eUtPD6+DkJ6+Pj0poczm3LldfDrkT5sLtSj0lFjoe1Hpw11Rzmu
-    Whu0VhoD5UhqjRtBcVHbcwony/EZXQybd7Eh3WEh4R6YAuiokTGnQlSNrB3g
-X-ME-Proxy: <xmx:y50HawKQ5E-TGJWDKSqMmdrEEZt3vAGxJuwsjAfmcM8dNWBuamODuQ>
-    <xmx:y50Ha1WryQNvf4mx5ihhl-jum7dOLHCHOirFq79eXqhsXUO7B8js6w>
-    <xmx:y50HaxlP4FUtDHuyRD3Vssu9zhaAlgsX_WR1bZlb7rCWamk_92QwAg>
-    <xmx:y50Hazl0YTOGXFNrgDPihwsZRxW0CYgy9ZyZw2ohA797b8lWmr3OpQ>
-    <xmx:y50Ha9EDR4EA9FrTWUfixjX0_2Ph2700lhUwWycwXdkt2_UQ9LTw86ja>
+Message-Instance: m=1; h=sha256:QcwIdhepp/IneVAM+Mz7RDMMOjG697KXZQSdGokNxiE=:c+ZXJjDt0yWRQLexyK/lWDwS8bVnxisVkEUfxxCoKoM=;
+X-ME-Sender: <xms:I6AHa-qtJjX1pInMGLOgtA-2pzxbTo5C7net84G81JVQKIEgO2K-5Q>
+    <xme:I6AHa7tD2S-QMfH0PAUDF2JoNcFvgbd5jsNdrcDSbROiH0XCbsx440xkp1fSMS2_s
+    2XVYlH9Ge2oh6dcFjfZE2JNXWalv2OPQLW1Z4m3Jgh-Uh4J82CpV9I>
+X-ME-Received: <xmr:I6AHa5aWTMC2OTkNEHGmdSQZ0jo2R-JJWFx9jS1_4AcwZMe7JhaoR2TZlntQ6vOFKyDuXK9ySHAbJQ7BtnEmw24cmJkcYdEaTUkHjCw>
+X-ME-Proxy-Cause: dmFkZTF0diSLva/n/0uL4cZPWCs3OLAMytR3rI9CRDm4CdEUNQUoOug5EkQfVgao3n//Rm
+    xPEO2eUAwRrQ05znyGjgVTV4Vt+VHvPQ9lVkEJkw+HeGcAZSQd+37sp3aTwzJPN1ISeyiG
+    zlOvOUU590zZ3h9IFkw+HyeEU0x2h4NG1UFMhnXhzf/z7vXk23U2L+0U4ctWRR/2nFV/GM
+    wAK5dMVvF0DPcIXnUmfkevKbO/DRfA9FGMs95NOrdpaJAkNg0JZ7QVpcCwAYCmfzrxLyxv
+    CmdzMWAiJRv2GfNUKBDh8D8OlbmjsbRdGfCvnk0LP7Qxqp9lgpAmSUNn4xDxveqn6zzKrt
+    LLXNszRTccoGK3gkhefFU9bzVSfJc4yfAtlFp8ZkZEgIwLsYaxTJY0u834TtmNKDxChL/X
+    WS/9LXINQFWKIxGg7W/M0xxdh19LCarulocftWORN+1eiqGAGbAg9nk0MV3mtdrfB8ByTU
+    +qCoU/DIbqy947s+FAuyWNlLm0K/K5CI129VMjh7PdYVMYl1YPZeKNtepdd7OjvFvKhWQ2
+    qmFMIjpLClqMi+NFM8iYFpPwcBUmGue1cWnbp7+ceWgECFvtNW9G5Me4grqY5G3NhQlAKe
+    MwZoCLELIVyVtoDssRDXq5mDQUaGMYA88U/JorYZ5XIgyD0hFogZlf2IlQ9A
+X-ME-Proxy: <xmx:I6AHa6b_FwswdsCltTauJq7JYBRc_jHmYKxOD_pUhIP3BoFtHQSV_w>
+    <xmx:I6AHaymMLRK2yoitBA8xwpLySfdfa8m91_qXwZ0-yWbSdfBAYvRLEg>
+    <xmx:I6AHa12B1U2v1eJGaxJso94-Bl5voaiYmho2v5van4ETaX5-Q5UQKA>
+    <xmx:I6AHay3zoGBzjQrr6V0faMX1I1StmDHhnTMVVp31_fZvsFMGPDZIMA>
+    <xmx:I6AHa9-HPNpTHLV-C3Moorwyqo5xBpzVfFH1WP_UT7Fz-5AaclIklUip>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Nov 2026 21:47:39 -0500 (EST)
+ 25 Nov 2026 21:57:39 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  "D. Ben
- Knoble" <ben.knoble@gmail.com>,  Matt Hunter <m@lfurio.us>,  Kristoffer
- Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Harald Nordgren
- <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v16 2/7] fetch: let --refmap apply to configured refspecs
-In-Reply-To: <72c288a81ece231434d3e4fa870cce714c9942da.1795633584.git.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Wed, 25 Nov 2026
-	19:06:19 +0000")
-References: <pull.2412.git.git.1789829246437.gitgitgadget@gmail.com>
-	<pull.2412.v16.git.git.1795633584.gitgitgadget@gmail.com>
-	<72c288a81ece231434d3e4fa870cce714c9942da.1795633584.git.gitgitgadget@gmail.com>
-Date: Wed, 25 Nov 2026 18:47:38 -0800
-Message-ID: <xmqqld6gs3zp.fsf@gitster.g>
+To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,  ps@pks.im,
+  usmanakinyemi202@gmail.com,  siddharthasthana31@gmail.com,
+  kaartic.sivaraam@gmail.com
+Subject: Re: [PATCH v5 1/6] notes: add notes_tree_or_default()
+In-Reply-To: <20261125220214.35881-2-okhuomonajayi54@gmail.com> (Okhuomon
+	Ajayi's message of "Wed, 25 Nov 2026 23:02:09 +0100")
+References: <20261124172146.18330-1-okhuomonajayi54@gmail.com>
+	<20261125220214.35881-1-okhuomonajayi54@gmail.com>
+	<20261125220214.35881-2-okhuomonajayi54@gmail.com>
+Date: Wed, 25 Nov 2026 18:57:38 -0800
+Message-ID: <xmqqh5h4s3j1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -131,31 +129,50 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Okhuomon Ajayi <okhuomonajayi54@gmail.com> writes:
 
-> Tags are followed when the fetched refs end up stored somewhere, so
-> --refmap="" follows none.
-> ...
-> +		if (refmap.nr) {
-> +			drop_destinations(ref_map);
-> +			map_refs_without_dst(ref_map, &refmap, &oref_tail);
-> +			if (orefs)
-> +				*autotags = 1;
-> +		}
+> Several notes entry points repeat the same check: a NULL tree
+> means the default notes tree, and the tree must already be
+> initialized.
+>
+> Use one helper for that check. notes_tree_init() asserts that
+> the tree is not yet initialized, free_notes() only frees what is
+> there, and format_note() initializes the tree when it is not, so
+> those three keep their own checks.
 
-Is "if (orefs)" here enough to tell whether anything was actually mapped
-for storage?  Because get_fetch_map() still appends entries with
-peer_ref == NULL when a refmap item has no destination, a non-empty
-orefs does not necessarily mean fetched refs end up stored anywhere, no?
+At this point in the series, the initialization function is still called
+init_notes(), as the rename to notes_tree_init() happens in the next
+patch.
 
-A refmap entry without a colon or with an empty right-hand side (such as
-"--refmap=refs/heads/main" or "--refmap=refs/heads/main:") likewise
-creates an orefs entry with peer_ref == NULL and triggers tag following
-without storing any ref.  Only setting "*autotags = 1" when some entry
-in orefs has a non-NULL peer_ref (or skipping refmap items without a
-non-empty dst in map_refs_without_dst()) would make "--refmap=" and
-destinationless refmap items behave as documented, I guess?
+> diff --git a/notes.c b/notes.c
+> index ec9c2cb150..a73a51e1a0 100644
+> --- a/notes.c
+> +++ b/notes.c
+> @@ -1140,14 +1140,20 @@ void load_display_notes(struct display_notes_opt *opt)
+>  	string_list_clear(&display_notes_refs, 0);
+>  }
+>  
+> +static struct notes_tree *notes_tree_or_default(struct notes_tree *t)
+> +{
+> +	if (!t)
+> +		t = &default_notes_tree;
+> +	assert(t->initialized);
+> +	return t;
+> +}
+> +
+>  int add_note(struct notes_tree *t, const struct object_id *object_oid,
+>  		const struct object_id *note_oid, combine_notes_fn combine_notes)
+>  {
+>  	struct leaf_node *l;
+>  
+> -	if (!t)
+> -		t = &default_notes_tree;
+> -	assert(t->initialized);
+> +	t = notes_tree_or_default(t);
 
-We would want to have tests to cover such cases, as apparently the ones
-in this patch did not catch such a corner case?
+I somehow thought you would leave assert() outside the helper, which
+might give us a better abstraction in the longer term, but I do not mind
+either way.
 
+As a way to prepare for making copy_note() safer in a later step,
+keeping this step a pure refactoring makes sense.
