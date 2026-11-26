@@ -1,122 +1,69 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=130.232.247.4
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795722991;
-	b=5kxyY8nGD7TbiHB+XTjnC4iSPonJ0ZUn12LE6R9wbA6+5ZlvVIt3wbjhmqt95isDoj68
-	 lDgirC6J0YdT8BVHqa2Pi5tXt4nCtcpBNR1fDlxwCGIqz0nE+VCIn1otFA78K+FPFIgjR
-	 H9zcyFGBFIeQU1IRstcsgCZ3BgwpZ7vNAwbQqHWJvDv7TC1N4pEkr3OZ82GyzGGEu+iJo
-	 6P80vU0E9nZgpXZ8HgEJxxqJaziu7UDI+VV0klHCkPi+I49tfsE+BAZNzE/Il8dvMn1OS
-	 IxtrbZo7h5fQrBKhJcx7/24jxsw+gJoh1I+KjpvmSsjTy9ZhCJaEfKvV1Xo91H9oZnw==
+	t=1795723886;
+	b=kbfBwHqIY7vgna71o94Qq9xiRDbTrxIg1UcjjbTrt1/b/qCGwut5yK5TT0WHlUztodui
+	 /hQ06AplxpNhPhelSskHO44pzvntvUqLkbfgLNKvTnSf/ycz95h9seShSKfps5gx8fncB
+	 ac9YXqq35tpGOqJB9cvS4INrP5GsRLWomX5JQIeeOREwX5iN5ztU8LuQy52HW9ECgs/jY
+	 oVERJ+N66+7l8WsKtHqQ1zkoDI1iX7YRfdenfVoWnxavZQ04vU8JOSErimNHvp+epiEsX
+	 bXSwuXqAv62+jeQ5wK9BrzBTWBgcvKNya2u/D4J0kA7l2Xj2ZblFBJbBCS/a/MNA+QA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795722991;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=Ix27d5S/XEsa1ehrk3IsLffKtdJ+4MngpE0kzowosFk=;
-	b=FEqvB78SSG6VolRqtN09ZZev0sBYs5gyAo5FwrXJhV5prO5lNHLcQ8aYW1g89BCUnNEN
-	 Nn+iPHxSk6oAIpqPAj3QhMx6WOr5Jh57pJAVlFsFe7sCovA5+ZBNV9UtRNLrv+sGt6gt0
-	 1rfaluvNer+8S4BCtXiyLPbb8y0ImrwUPFEdigh5OF7zBT1BwU1GR9a71CCbjZSm6QB0s
-	 UGz6jh2hl2lAdmEMIM23LwuojT797DVWxljDst7IezuKZFaNHm6+/1NnWy2GXUBNOU4bV
-	 QnESeF2TYx6w14fMh5TxR9SRzGw6DZjQt98u6U3oo48kuGCsXejTR9ptFnlAl/i825Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795723886;
+	h=DMARC-Filter:Received:Received:Received:Received:From:To:CC:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding:Content-Type:X-Originating-IP:
+	 X-ClientProxiedBy:X-FEAS-BEC-Info:X-FEAS-Client-IP:
+	 X-FE-Last-Public-Client-IP:X-FE-Policy-ID:X-FE-Hostname:
+	 DKIM-Signature;
+	bh=l19WTAwpU80nnI3t56F/bOd2JTfrdr+vEB6kJUm2TKU=;
+	b=Ss7/DsUz4kqH4hGqiXOXi9Be/QpM8+4Ct3qKT77NtWb04Salwfo45SY/r87YcA5UYZtR
+	 lD6S7UtS8ZSuvVUwuT87yoWhhM9yoQAp0ARv1A58TWYPwY8UJIO1r0tA+GobiV1hvuTW8
+	 UM0I13xi5ufGmK2DTbA27emjY80JCSL8i0+r+2yBCVitgDoHJupFDDBcKjpurQSdE1ZPp
+	 orUOOHnPo1mrNPvpfRkBJZPnEPpa5OVfkgbZnoYv+zGXHjzPoX5g1ekR6/R7m8BtHKE8U
+	 DAxhyAzwtsDBpbLvstlmua/biDRKQyM2Pm9rYRkL/2C8ZYziM11zE7fTWMn6pXjv+6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=cbhR7zx2;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=rXnA5cyu;
-	arc=none smtp.remote-ip=202.12.124.148
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	dmarc=pass header.from=utu.fi;
+	spf=pass smtp.mailfrom=utu.fi;
+	dkim=pass header.d=utu.fi header.i=@utu.fi header.a=rsa-sha256 header.s=out-utu-v3 header.b=dNf+hQXg;
+	arc=none smtp.remote-ip=130.232.247.4
+Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BDC4606A31E
-	for <git@vger.kernel.org>; Thu, 26 Nov 2026 19:56:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6BDC4606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25641606A335
+	for <git@vger.kernel.org>; Thu, 26 Nov 2026 20:11:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 25641606A335
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=cbhR7zx2;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=rXnA5cyu
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id BD1611D0046F
-	for <git@vger.kernel.org>; Thu, 26 Nov 2026 14:56:30 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 26 Nov 2026 14:56:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795722990; x=1795809390; bh=Ix27d5S/XE
-	sa1ehrk3IsLffKtdJ+4MngpE0kzowosFk=; b=cbhR7zx2qhWuo6Tvej29eCck1J
-	xdvQO38Nb+xsBhAbWk30qsogbjRA2/+Gpfw95e2lfRdn4tbQVBcaQwp9rwQrLQJ8
-	n9BlfAlIJ5BqCkdtJjGZ82tn1gmZqhPJV70Fv4z+QrhCzZ/+IrhfIKro/ND5yWe0
-	mze5erdlOAm3Ycq+JZ+/B+wUwubl5JqWegTw6qNLdTbJoR+wn6jxcM2AvXwG0087
-	DFFXUqpznLDFCoYAIdJGKOXL2qt21cE9W13pLA0PSB/YFHNU8VrRLM3/rFjCUUUg
-	hQ97zMt57DeZGshylr+Isu6+cwbeVmli++5p2hu6dQcCJptQ5+Qv+MgoNFjw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795722990; x=1795809390; bh=Ix27d5S/XEsa1ehrk3IsLffKtdJ+4MngpE0
-	kzowosFk=; b=rXnA5cyuKETO+q9DNSyxEMfSh045zSPjWBcvoZqZxjqtiAEHvut
-	dvwCWITzdBj8SWf6DmO/UPp0IdsHQfok62FwHm7ALS5aEsLP6ps5kxQv2EuXNwPx
-	zfnq/NeM43+cX6OkLAgQqWs2MXHRtBN+ShBwNvmOwLSokZ084GDAGqo8buEpNqBh
-	KGq2DhXmGQg1kfY74GV6zvLDP3FcQ4CjoxS1y6jXiV/8STO6U8cit5HKTo9sge57
-	ScJIT7WTv1oobq8tdDDU110421teYpTuLi9LWCf+eWUGs2xia2tKMGYCoxErB69m
-	Re8SXzmiEJnTh5HBaf9MQ3QzKhTtIIoNe2w==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795722990; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:WAr/b7X/ILNixHvLfclgXinEeHJ1cTJM9rLB1SnrQDS+hqW
-	wv6MV6zkRuM0tq5H4EZq2hxPhF9wQYNkSglcCsfO+BHOLWLdN4OIXxrkMAqGuV8m
-	8yNHFxeHtVHKWEJu4Ru4KXhENzkCXIfEuwGhPXvwpTOjfl7/pflarJ4acgkIfUkC
-	5bsNW4TY8BeUxfVJO+/EOVBafQsoEWonU4EoTbDvHq7av46R+bM+2qOVWlesic/M
-	spDuj++H7j7dR+4C6Wl/dc63YClhQsRQHK5m57XoyGGwBAWQRin012Xh8U0HZM4C
-	/uaH8RWslh388rEfnddhu9mu6e8vWRygVPFPm4Q==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:DTdS5W0VPN1ouJglrECCjTcvWxgWSnxnkegtIyru/xk=:jl+T+xxCOyBhdqd90gP/hRJP2Ks25X8oKI/T/w45jAA=;
-X-ME-Sender: <xms:7o4Ia3jmXmnaChBwCsls6QaGFczMSrkVHpBANhZS1z86hVdmnj949g>
-    <xme:7o4Ia7CxRgo8bnbOMrUAiF_4nRDlgwZyZjtajzusyDRRrRoSgIxpcqnO3vYefVzr7
-    M_EykO7CALlVBC03-PCpId8Eqc4RkPm02FC8Ewpv83mGomuRUMiO4g>
-X-ME-Received: <xmr:7o4Ia8HV578g-GWykS9lhlaQIzV0fJKlgEMfXcKNPVd3Le6mgrCsSqJ7HrOMtDxFY5GYk80aDgtDJZLXQr9cKLyee48KbBdUm1B9Be4>
-X-ME-Proxy-Cause: dmFkZTFzzAeTXC5NeqLUWIHoB3u3KHU5THMXNE1jkyJCWnxP7aYIzY/i4d6Qo0owyqbyNo
-    G+mZdlm0u7e4D/9JmpuZ7BVFWmnTRQ+eoXfdMk+6sYsWB+7sjK/5mFKuHr9V2WIjDoTVAO
-    cV+MehwNXQTM6ORkW8Kz3k8tXvMUFf7nYjNBEF3kH3l4cVpHGD6vM4RBNDaAwPXSzFb4Sm
-    yyjmXRFkFu2L2Jl6KSa3piQWO24WFEJo0OKpVjBpPDf4LuOwI2MXLNjYRMKn7MXkwd7wwk
-    cY6VBnItl7TBq5q1vkW96IxqVdygBZUvrpH6D+wyEm5wsX0ueT4X2NAm44Ld6zQQJnkUfX
-    cUxTbr8cPecoS8iQ0HnNttD++xPs/fnpkd++hPvm7vkfKFgQF527+zRbbpiLr367WKj2Fi
-    YFCkeeg+cr/pcjbhyGi69YJfZ+yj7KRPN1n4NY44pipaw9aKcpv2uSAidNrVzzjv6PV/n0
-    5wuaEi3aJJ9DBfCsYGLN6/W0zrmH/QsSDwfkYSuCocCuO8WvXk+q+46JwWBMM7DFvbmuDw
-    K6bM2TMZjr/9l0aJcGNqILmo5Igp4Hjd+We6W4TWsZoUiIsMpq3Mwf6NDmpLAvgix0cU6e
-    WLbcJvtAjDAyNhMtywnXE0fJdV/zqyxq9U3D/gXCgKLTclD28YrIwyp6H50w
-X-ME-Proxy: <xmx:7o4IazJ3zUSJEY_ChtXPZUz674nUjY0bCqsuB4P80nahdjifflOTGw>
-    <xmx:7o4Iawni689qnw0obkT2JER84bqd6XroysGXJfWvbk7r4It-FgrayQ>
-    <xmx:7o4Ia7ShZfES-5HA25HvZ4XvCJcY3XS7QLsZm5yO1ke_0zginujAzw>
-    <xmx:7o4IayKlaMntm_WsU-fb0M53VF9UZGuAFj6KjQdIJ-6W4bQ4zX3z4g>
-    <xmx:7o4Ia8Cwoe6zDm4QJ3V37L6H1OE3svJGqMnEYfAsZDQm44I-haG3l7XF>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Nov 2026 14:56:29 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH 6/6] packfile: skip closing packs marked as do-not-close
-In-Reply-To: <874id3sjfj.fsf@dev.null.iotcl.com.invalid> (Toon Claes's message
-	of "Thu, 26 Nov 2026 16:26:24 +0100")
-References: <20261120-pks-packfile-global-statistics-v1-0-19beb83b145f@pks.im>
-	<20261120-pks-packfile-global-statistics-v1-6-19beb83b145f@pks.im>
-	<xmqqo6belyp1.fsf@gitster.g>
-	<874id3sjfj.fsf@dev.null.iotcl.com.invalid>
-Date: Thu, 26 Nov 2026 11:56:28 -0800
-Message-ID: <xmqqzeuvicyb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=utu.fi header.i=@utu.fi header.a=rsa-sha256 header.s=out-utu-v3 header.b=dNf+hQXg
+Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
+	by fortymile.utu.fi  with ESMTPS id 6AQKBBsO024205-6AQKBBsQ024205
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Thu, 26 Nov 2026 22:11:11 +0200
+Received: from ex19-06.utu.fi ([130.232.247.46])
+	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <taahol@utu.fi>)
+	id 1xWfoF-00CmMt-Dj;
+	Thu, 26 Nov 2026 22:11:11 +0200
+Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.57; Thu, 26 Nov
+ 2026 22:11:11 +0200
+Received: from localhost (localhost [local])
+	by localhost (OpenSMTPD) with ESMTPA id 34572c5c;
+	Thu, 26 Nov 2026 20:11:10 +0000 (UTC)
+From: Tuomas Ahola <taahol@utu.fi>
+To: <git@vger.kernel.org>
+CC: Junio C Hamano <gitster@pobox.com>, Julia Evans <julia@jvns.ca>, Tuomas
+ Ahola <taahol@utu.fi>
+Subject: [PATCH v4 2/2] lint-docs: ensure command-list.txt lists all guides
+Date: Thu, 26 Nov 2026 22:11:10 +0200
+Message-ID: <20261126201110.9046-3-taahol@utu.fi>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20261126201110.9046-1-taahol@utu.fi>
+References: <20260909052501.8448-1-taahol@utu.fi>
+ <20261126201110.9046-1-taahol@utu.fi>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -126,39 +73,103 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
+X-ClientProxiedBy: ex19-09.utu.fi (130.232.247.49) To ex19-06.utu.fi
+ (130.232.247.46)
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhZW0gCHQQBCSgCHgYbRgsJSFhI
+ WkhZXEhZW1hGWltaRlpYX0ZcX0hQSFhIWEhbSFhIWEhYSFlRSA8BHCgeDw0aRgMNGgYNBEYHGg9IWEhZX0gPARwbHA0aKBgHCgcQRgsHBUhYSFlbSAIdBAEJKAIeBhtG
+ CwlIWA==
+X-FEAS-Client-IP: 130.232.207.47
+X-FE-Last-Public-Client-IP: 130.232.207.47
+X-FE-Policy-ID: 3:5:2:SYSTEM
+X-FE-Hostname: fortymile.utu.fi
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
+ h=from:to:cc:subject:date:message-id:references:mime-version:content-type;
+ bh=l19WTAwpU80nnI3t56F/bOd2JTfrdr+vEB6kJUm2TKU=;
+ b=dNf+hQXgkX8PXzcJp15WlhIJW371g+8Xwwo9pF446nPPyyit+6H9hS3RcXvh1wua3A2rCzmeyV7v
+	Gm/ccjDZrUj3+86b4FJm7xCPph8qUxO5+dwLz3GMUzZQS12Hx49fqeioCYR1GH81FP+HnMGdYzpk
+	nz3I4WIDglMbXb5FcyfKb7dmYVfxA4rTejZmtzBQe94f/AzGf9uP1d01sZsEYGbBbdIxVsImdnFx
+	CJgP5+him0Ss4Nbl8X7TKrSyIq7ASWB4JlwxCCmUnQK/R7Huq72nSsMbo3gwTn6WlN8fLvpCSeBW
+	OsFVbiDGly1Ky2ZbbC9auwXgBQIxAhq1ZznG7w==
 
-Toon Claes <toon@iotcl.com> writes:
+Since 2135e1ad70 (command-list.txt: add missing 'gitcredentials' and
+'gitremote-helpers', 2020-08-05) there has been a comment in
+Documentation/Makefile reminding developers to add new guides also to
+command-list.txt.  However, there is no linter script to enforce that.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Patrick Steinhardt <ps@pks.im> writes:
->>
->>> When closing a packfile to maintain the maximum number of open packs we
->>> completely ignore the `do_not_close` bit. That bit is only set by
->>> git-fast-import(1), and as that command allocates its packs manually it
->>> wouldn't add those packs to the list of all packfiles, and consequently
->>> we won't ever try to close such a packfile via `close_one_pack()`. But
->>> that feels like coincidence rather than proper design, and the result is
->>> rather fragile.
->>>
->>> Skip over packfiles marked as do-not-close to reduce the fragility. This
->>> should not result in a user-visible change in behaviour.
->>
->> Hmph.  If the only user of the bit does not care that this codepath does
->> not honor the bit, perhaps a simpler alternative is to retire the bit
->> that nobody else uses?  Or am I reading the above analysis incorrectly?
->
-> Before this patch, there is one user of this bit: use_pack(). This
-> function might open the pack to mmap() it, and close afterward, unless
-> do_not_close is set.
+Adapt Documentation/lint-manpages.sh to fill that role.  Extract
+MAN5_TXT and MAN7_TXT from the docs Makefile and check command-list.txt
+against them.  Exempt gitweb.conf(5) and gittutorial-2(7) from the
+new linter routine as deliberate omissions.
 
-Yes, use_pack() may pay attention to it.
+Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+---
+ Documentation/lint-manpages.sh | 29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
-But my point was that use_pack() may pay attention to the bit, but the
-bit is set only by a caller that does not do use_pack() at all and
-managed the packfiles itself, if I read the description correctly.
+diff --git a/Documentation/lint-manpages.sh b/Documentation/lint-manpages.sh
+index a0ea572382..87a652bd22 100755
+--- a/Documentation/lint-manpages.sh
++++ b/Documentation/lint-manpages.sh
+@@ -1,21 +1,27 @@
+ #!/bin/sh
+ 
+ extract_variable () {
+-	(
+-		cat ../Makefile
+-		cat <<EOF
++	file="$1"
++	directory="$(dirname "$file")"
++	shift
++	for i in "$@"
++	do
++		(
++			cat "$file"
++			cat <<EOF
+ print_variable:
+ 	@\$(foreach b,\$($1),echo XXX \$(b:\$X=) YYY;)
+ EOF
+-	) |
+-	make -C .. -f - print_variable 2>/dev/null |
+-	sed -n -e 's/.*XXX \(.*\) YYY.*/\1/p'
++		) |
++		make -C "$directory" -f - print_variable 2>/dev/null |
++		sed -n -e 's/.*XXX \(.*\) YYY.*/\1/p'
++	done
+ }
+ 
+ check_missing_docs () (
+ 	ret=0
+ 
+-	for v in $ALL_COMMANDS
++	for v in $ALL_COMMANDS $MAN_GUIDES
+ 	do
+ 		case "$v" in
+ 		git-merge-octopus) continue;;
+@@ -29,6 +35,8 @@ check_missing_docs () (
+ 		git-stage) continue;;
+ 		git-legacy-*) continue;;
+ 		git-?*--?* ) continue ;;
++		gittutorial-2) continue ;;
++		gitweb.conf) continue ;;
+ 		esac
+ 
+ 		if ! test -f "$v.adoc"
+@@ -84,9 +92,10 @@ check_extraneous_docs () {
+ 	)
+ }
+ 
+-BUILT_INS="$(extract_variable BUILT_INS)"
+-ALL_COMMANDS="$(extract_variable ALL_COMMANDS)"
+-EXCLUDED_PROGRAMS="$(extract_variable EXCLUDED_PROGRAMS)"
++BUILT_INS="$(extract_variable ../Makefile BUILT_INS)"
++ALL_COMMANDS="$(extract_variable ../Makefile ALL_COMMANDS)"
++EXCLUDED_PROGRAMS="$(extract_variable ../Makefile EXCLUDED_PROGRAMS)"
++MAN_GUIDES="$(extract_variable Makefile MAN5_TXT MAN7_TXT | sed -e 's/\.adoc//')"
+ 
+ findings=$(
+ 	if ! check_missing_docs
+-- 
+ta/command-list-guides-sync-lint
 
-So isn't it an obvious and simpler alternative solution to remove the
-code from use_pack() to pay attention to this bit, remove the bit from
-the interface, and tell fast-import that the bit no longer exists?
