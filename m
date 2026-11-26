@@ -1,91 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.169
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.182
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795694295;
-	b=EgdZH/3Hfe9DXqfuQXrojfdbafRCYypXhT035myrLGlgN+WsLQjn1/oG6+ItLI8TWuuV
-	 dKpRQPt/w4xNIfYNHohtorsoWZf9J7yPW6jq+ZZOveQUYePyp4aMl1ucH3S7dJLN0LCbt
-	 aRT0FcKzeMfJ4gK69oonBSpxYNxuJqnwzDv4VKcE0tfIJPQZYV8+XLQnApIMoBwwkeF15
-	 zL/iIPQO1npg7Q9y7uHgEChz9Gk9b1H25NVaU3f4n2gDOVBsvLqt/DCJWqUVyc+/3zTce
-	 Bsfv7OgxTtrhvSGIMdX4BL61yt1Ex35+fmISlrgCRmVTOOrYTh/DteGFDP42Vg75x7Q==
+	t=1795694298;
+	b=3f6fH82Olt+leAYTevrsEzC9nq+X6nVyRP/MiXxUuWHBVM66icFqKffhmFBX3gczCKOg
+	 8+Q7bdIigwypM1XACwc7cDFo+/YdPo8IArit7AB8yQqlsayNl+9BLHdC2gxzQJpSdJ5Pe
+	 iIGhc3j+fiIjwh0JDg/o5w+DHOzRgiEwJvTte8XLDwyWWYraXr7eUtwVGiwXKNOdwjL6e
+	 MvPbpgLSa1eNyxkm2ovevvxewOUjIO68+Z2V7WwXqh97fKcWaofvDnMVj0KA4eP1Kfl1r
+	 dLZuueCQaQijjtGMuH167tC0TDmGOf/I3BZcLJfNWc2tvBOurBD9bUI2XgIlu0A+PwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795694295;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795694298;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=uL3hkZoND+sXWMMe1nbA2pvpSGU/ObvvjhiBJdMJoXs=;
-	b=APxq46cjVXfZ8sXmv6hciXazofVqhOWFcJubQcNf6uGVXXB9URFbCvwZIaZNarovCyVQ
-	 oVbV7ZYZjq8ur4vpfg1QRkF8Sx70Pzvw3goAfUnLBktax1IPgXvljhFJjW4VU0evbZQ2q
-	 2uZ2IHPw0WhcGsHjs+qbEb1ltTedl2NspkHxNVDv+2gnW2X1YE0ovkLvM+kl/dLunDJHd
-	 Th3iZ0E2vHygo0/gKoEg6HyQasvgr4k+prF//QYfsbaLCKLUf3dFn+XNC/9YAp85CNtlq
-	 Jl+OAdWU76g6NCkiJ+xTlpL2R6MdnXIfqnLJ69nUf/8RnpfTgCELUybJfWAqlyV87Vw==
+	bh=kBxV8Fm+wGNMmpkRMnbzIPCp5mO5+bgDQOoXhQn3NMk=;
+	b=cNxjKgb6iIEuFETRWalsNO8iZr9OWtJnVedZHk8iOH5pCRZ+NzTXW0OAJFxW3KMk8c5D
+	 se+73HM0kpeoOKkyeDSRJcj3qcPHxrNJ6JqOE6uGhnRJY0EVY9X5mBRNFBUOF1cxDGcQL
+	 t5ODUaam4RugD/w2RrQ2oktECgNFIYHqJwUOFRn4tFv8ykPM6RLhWK7CiYIyN3jxSgo6z
+	 A5dR7LoxWcZvOo9ATZWVFJRfQyzfc73/RkEAHa2u7oodiZqwBOoQtlzN0FThLkTo46nEL
+	 X/ozug8K+00fNbPMGbutKSZO4S6lyMYqqB5aKY2AEOkX80bN9fkRB8AdMKRZab8Cxbw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VkNU2hCj;
-	arc=none smtp.remote-ip=74.125.82.169
-Received: from mail-dy1-f169.google.com (mail-dy1-f169.google.com [74.125.82.169])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="cDsy3/Ni";
+	arc=none smtp.remote-ip=74.125.82.182
+Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 785E1606A32A
-	for <git@vger.kernel.org>; Thu, 26 Nov 2026 11:58:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 785E1606A32A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282A0606A326
+	for <git@vger.kernel.org>; Thu, 26 Nov 2026 11:58:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 282A0606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=VkNU2hCj
-Received: by mail-dy1-f169.google.com with SMTP id 5a478bee46e88-38190551625so13476177eec.1
-        for <git@vger.kernel.org>; Thu, 26 Nov 2026 03:58:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cDsy3/Ni
+Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-38190551625so13476241eec.1
+        for <git@vger.kernel.org>; Thu, 26 Nov 2026 03:58:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795694295; x=1796299095; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795694297; x=1796299097; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=uL3hkZoND+sXWMMe1nbA2pvpSGU/ObvvjhiBJdMJoXs=;
-        b=VkNU2hCjlIFuSGlovmKqZrognugxLDIbD/cjckFIBY9O3piKa+6OYpQUjA/MspRuyS
-         2Qu+T2tH6D1V5h+9XEe2RDzPM1HNP1uh7ttSwym646XDnv4l5UvOa9D1v5Xxh/EeY13n
-         xvwdsoZ7NR6V63JoMJ7UlMA0cqjzX5+JExeC6csgydsMEuySGdQlLN2outujtOCO56hG
-         KO3jP3eqvbiVa5EyYE1+5pgi4e4arvqHInjDzb56udv6XUpXzNv50UiP78/zlv86/MHz
-         IvOGaCCMfN2mOkGfOzefBpIBNuujMmQ7taYyOwQDcrpEAyrz72jy9MoZCm7P2tSnFLo0
-         qzkQ==
+        bh=kBxV8Fm+wGNMmpkRMnbzIPCp5mO5+bgDQOoXhQn3NMk=;
+        b=cDsy3/NiSWvecPCW+/pvsWfXLz/0yyHH0YSBm38CRN6rVNLpd/EBevo70WyAxMwt+R
+         rexzE2h2JReysRTyvmLkjFIix7OI2cr9TYFf+F0sVhdCuNiSFvsyolOvwYdKQTA6EwBE
+         jB0xGq6R7JwrapunYPy6eiIlTehnV4RN5nFXZcF5UAepnbi3Y7VtCSEXeDavn/f7nMy+
+         mcVWmyDuezNr7xmxVI0AO+viSGTPo3VVnfv750fq0kalkjVEME9opxCnh3ubtJRTpYx9
+         EYrNklAdqVSvAG07MMUrk1HtMztnw8e5A1JuwrwBLi8VBeSHRbPMAK3CpNRBTFzuCeeh
+         xPQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795694295; x=1796299095;
+        d=1e100.net; s=20260707; t=1795694297; x=1796299097;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=uL3hkZoND+sXWMMe1nbA2pvpSGU/ObvvjhiBJdMJoXs=;
-        b=uSKPtctfxZSDfj53aXjEGiBTkcgJQuT8qgD4PKblEgAJa6nrWBYaigVe1Qeq8ZNwbb
-         YgpS1qvRp+YncOAI4uYLkECq3Bx8IbsSgtKdn8AfQ05J/8YcQ+dgwXHOxMj1eWMZwiCK
-         ry4lZc30bo7Rlm2UQTvn5cir5mrKHA8c/jyFi/8GhbS6lh2jIETSH5buy/eTPPFb59y4
-         fGfCtSVcP0R0GjUfhgjDMzWbusZyZW6l2xQ4DGGoJjQNbxrDPRt2Aq1oq4e2y0Z15S4H
-         W8uIbVKfkKy4sM4labNW6VKc6Hs6boXxIprZ4ZElrieyeo3ILW1g95CipYErrZ4uNSZ3
-         NdSw==
-X-Gm-Message-State: APuU4Z87WSrwn1jqCRL9Qkt17UiOt3QU3RcaGYnb6RpMs3HjWx4Kgtue
-	gAgAW0PVwpNVrdfw8ddgpsDj3nD06G5Qclauz0sL9yC9Rk/SNmKOcBW3/UCatEF4
-X-Gm-Gg: AZFdTZchFZzhS1DJxg11PcAOvH2FFry04RNA+wrIEu/kOlaGFOrPi/ljzn81or77kia
-	7Vmzk60NxVBK0mYlUBTECjCFN5VdRwfp5WJdJy4fQ7EQPtVgfnei5tQPHYGYlKBl/rMn6sVjcqg
-	auGdG/S6xHT9yN541IIgq95SwDxy5g9I9HXqMuljdoYway0WeA6CYDGgm9fKG93RM5QdvlA691A
-	E9K4RiP0My1P4FEj+7CE0cCyT2n8NbfeZa+l639HipoPP4nSlOtFQeL4df8MW5SFowCdlifGKp8
-	sLbKjZTbXs9Hd62PTAbuJ5n6Ti8UxhmfikdNkFqUf/djaenq56E0d8JJJPf7cp/TxKqz3PGzhw7
-	wTROpMQINRJ66duIRp3OIomFNTu5mzmK+Yd2ClhafV0XEyFvxVdF00lM7Q03ZI4B1iUMSQS72Is
-	BEqvRGM5+pPujvkFcYpBPfKY5VS1le8HWXbQ8pjHjwULMrDA+tG2HbuXly9AuN45LFoLQGtOHDW
-	u5E1vbtB87EVIe3Tj2J9HmS3YYLBYkQY5uQMKB+p0vKkpdXJhtaNZSI5I8KSpbUfOB7wwY18yYm
-	GjOUZWtoQJ0UzFe2N+Tk945NqOmJy/Xb6YaLSgWPK8+3pRlyA+ELxHfPIXyZt2hzM6vXkXw5qGm
-	q7nZtkponId9HAskRo3BJDVYWE1+MKP9RFlNR2JgroG0=
-X-Received: by 2002:a05:7301:6192:10b0:386:a7f2:88e2 with SMTP id 5a478bee46e88-386a7f28967mr14149056eec.23.1795694294482;
-        Thu, 26 Nov 2026 03:58:14 -0800 (PST)
+        bh=kBxV8Fm+wGNMmpkRMnbzIPCp5mO5+bgDQOoXhQn3NMk=;
+        b=YfQSW4Bb/sfoYTIu7VmAF3sK+cg3Y+0s1sVq36Ky8TOdNpYDjciXdukwHermdxseBZ
+         d2aK8AWSyUlhb1PLWGoq0z92ytAYTcYrlllllyz8BtXC6G5rpDFrl/UwKK4YBvq6iZCV
+         xfk6XUFz8jw9WhdB3IXa0WO+f873aSqFzbdSRebfq8uY4z+COtfnOKsMiys9QAfyrjfs
+         8tzR9RbOwyIKJOg6ILBdOB8oKWXm1fvL38u4g7ZPFzDQeY1FnkzMPVPhCRTmMJpOPeHW
+         eTJYbUMUmkdyk8n6LcwacSuaLID8QLcCFaWTWCDym6TAYd8IXvAH9Tm/WABKR52ZPgI6
+         3dbQ==
+X-Gm-Message-State: APuU4Z/szIjxfu7OcFKCXXlBDmPNSmOUnNgIjKQs/1V6JeM1kXlmc4Ae
+	/f0hcyTtGUhaIA9fzlYZzvfCS93d9SolxKwomJY1XDQdo8zNMIHfZPbpH/G83VUi
+X-Gm-Gg: AZFdTZcJmVMUyA04i8ZOirLAom8+Ews/YNPrGY15Y5l4nFFnz+OiL5wtspSmcTPhy7f
+	h0Bw6jy4/fnC92nbOfbqojlMBP3E8JuiKnNj9MOMo8kMFcK8iio89pSdVFTLJ9dRYTwlZVabMTw
+	VDaT1IGPMVavHNdBx8j2lXf6gYFxtLLOmaWkmx5bmBkD6rEWBannSpDsj1o5iXZFyhpNbTYIzUq
+	AD/nuTJ+creOxrQ+hjUBQRt1JAbOXlarZHq+fWITqtcrnv3DjMkHjeu3LxbudKF5mruXuR1kEP6
+	MR8nSxI1Z2aNUtFoFc/2Zas2IxzUp9K6bt6eF8/hWS9aEgvK7+TM6VaHYDS5mQNLLNAoEChNlum
+	2Z7A7mPihz+PGxIb0TsZ4JY0eIUw/R+wDTmWBMnAhDQmTCQvxWEahYGOWfDqy0LnNEPbuU/j8qk
+	En3lAiN4CWJEGczg/wRhkjFokWbASMSRp1p7RoG50GRAJ4/s1KNfaK6C/TZtQkKl9iya8Mwdzdk
+	2aSLjbDq76hNpy19nK98cSjic63UYHBwRLOQhteX7VhaFBCnclhYxoeZxQF+wrBPvZK4ZKGhgfZ
+	jaAwEND8z711Sg6sNdoHbH4HlvzcPiM8nrpQO6xsJfqAsl7mMp7+bHNfeMSxlLht1b97tY2xQie
+	nSVSNSB6xVL/huj+m8zBCs1A=
+X-Received: by 2002:a05:693c:65d0:b0:386:b7d0:adb3 with SMTP id 5a478bee46e88-386b7d0aef3mr10469703eec.30.1795694297177;
+        Thu, 26 Nov 2026 03:58:17 -0800 (PST)
 Received: from localhost.localdomain ([103.25.231.125])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-386aa203267sm33614470eec.0.2026.11.26.03.58.12
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-386aa203267sm33614470eec.0.2026.11.26.03.58.14
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 26 Nov 2026 03:58:14 -0800 (PST)
+        Thu, 26 Nov 2026 03:58:16 -0800 (PST)
 From: Aniket Gupta <aniketgupta3001@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Derrick Stolee <stolee@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v5 2/3] remote: name the original URL when relative_url() fails
-Date: Thu, 26 Nov 2026 17:28:02 +0530
-Message-ID: <20261126115803.30015-3-aniketgupta3001@gmail.com>
+Subject: [PATCH v5 3/3] bundle-uri: do not die on unresolvable relative URIs
+Date: Thu, 26 Nov 2026 17:28:03 +0530
+Message-ID: <20261126115803.30015-4-aniketgupta3001@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261126115803.30015-1-aniketgupta3001@gmail.com>
 References: <20261105152842.566318-1-aniketgupta3001@gmail.com>
@@ -101,56 +101,115 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When relative_url() cannot resolve a URL, its error message does not
-name the URL it was given but what is left of it after some "../"
-components have already been stripped off. With a base URL of "./a/b"
-and too many "../", it says:
+A bundle list, either advertised by a server or given to "git clone
+--bundle-uri", may contain relative URIs. They are resolved with
+relative_url(), which calls die() when there are more "../" components
+than the base can absorb, so one bad entry aborts the whole clone.
 
-    cannot strip one component off url '.'
+Resolve them with relative_url_gently() instead. When that fails,
+bundle_list_update() reports the problem as an error, drops the bundle,
+which has no URI to use, and stops parsing the list. Dropping it keeps
+the clone from complaining a second time that the bundle has no URI.
 
-which does not help a user to tell what is wrong with the URL.
+What happens then depends on where the list came from. For a list
+advertised by a server, the bundles before the bad entry are still
+used and the ones after it are not. A list given to "--bundle-uri" is
+read from a file and rejected as a whole. In both cases the clone
+carries on and fetches what is missing from the remote.
 
-Name the URL that was passed in instead.
+This resolves the TODO in t5750, so update the test to match.
 
 Signed-off-by: Aniket Gupta <aniketgupta3001@gmail.com>
 ---
- remote.c              | 2 +-
- t/t0060-path-utils.sh | 9 +++++++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ bundle-uri.c                | 13 ++++++++++++-
+ t/t5558-clone-bundle-uri.sh | 16 ++++++++++++++++
+ t/t5750-bundle-uri-parse.sh | 15 +++++++--------
+ 3 files changed, 35 insertions(+), 9 deletions(-)
 
-diff --git a/remote.c b/remote.c
-index 3bca10364e..25e607abf2 100644
---- a/remote.c
-+++ b/remote.c
-@@ -3183,7 +3183,7 @@ char *relative_url_gently(const char *remote_url, const char *url,
- 			if (chopped < 0) {
- 				strbuf_addf(err,
- 					    _("cannot strip one component off url '%s'"),
--					    remoteurl);
-+					    remote_url);
- 				free(remoteurl);
- 				strbuf_release(&sb);
- 				return NULL;
-diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-index 56faf5fe73..0d16b2c884 100755
---- a/t/t0060-path-utils.sh
-+++ b/t/t0060-path-utils.sh
-@@ -394,6 +394,15 @@ test_submodule_relative_url "../" "$(pwd)/addtest" "../repo" "$(pwd)/repo"
- test_submodule_relative_url "../" "foo/bar" "../submodule" "../foo/submodule"
- test_submodule_relative_url "../" "foo" "../submodule" "../submodule"
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 41c817eefb..3b54622532 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -214,11 +214,22 @@ static int bundle_list_update(const char *key, const char *value,
+ 	strbuf_release(&id);
  
-+test_expect_success 'relative_url() names the URL it was given when it fails' '
-+	cat >expect <<-\EOF &&
-+	fatal: cannot strip one component off url '\''https://host.example/a'\''
-+	EOF
-+	test_must_fail test-tool submodule resolve-relative-url "" \
-+		"https://host.example/a" ../../../../../../x 2>actual &&
-+	test_cmp expect actual
+ 	if (!strcmp(subkey, "uri")) {
++		struct strbuf err = STRBUF_INIT;
++
+ 		if (!value)
+ 			return config_error_nonbool(key);
+ 		if (bundle->uri)
+ 			return -1;
+-		bundle->uri = relative_url(list->baseURI, value, NULL);
++		bundle->uri = relative_url_gently(list->baseURI, value, NULL,
++						  &err);
++		if (!bundle->uri) {
++			error("%s", err.buf);
++			strbuf_release(&err);
++			hashmap_remove(&list->bundles, &bundle->ent, NULL);
++			clear_remote_bundle_info(bundle, NULL);
++			free(bundle);
++			return -1;
++		}
+ 		return 0;
+ 	}
+ 
+diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
+index e86ed7d30c..e7a3e17775 100755
+--- a/t/t5558-clone-bundle-uri.sh
++++ b/t/t5558-clone-bundle-uri.sh
+@@ -1351,6 +1351,22 @@ test_expect_success 'bundles advertised with empty URI' '
+ 	test_grep ! "expected packfile" err
+ '
+ 
++test_expect_success 'bundles advertised with unresolvable relative URI' '
++	git clone --no-local --mirror clone-from \
++		"$HTTPD_DOCUMENT_ROOT_PATH/bad-relative-uri.git" &&
++	git -C "$HTTPD_DOCUMENT_ROOT_PATH/bad-relative-uri.git" config uploadpack.advertiseBundleURIs true &&
++	git -C "$HTTPD_DOCUMENT_ROOT_PATH/bad-relative-uri.git" config bundle.version 1 &&
++	git -C "$HTTPD_DOCUMENT_ROOT_PATH/bad-relative-uri.git" config bundle.mode all &&
++	git -C "$HTTPD_DOCUMENT_ROOT_PATH/bad-relative-uri.git" config bundle.bundle-1.uri ../../../../../../../../bundle.bdl &&
++	git -C "$HTTPD_DOCUMENT_ROOT_PATH/bad-relative-uri.git" config bundle.bundle-1.creationToken 1 &&
++
++	git -c transfer.bundleURI=true clone \
++		"$HTTPD_URL/smart/bad-relative-uri.git" target-bad-relative-uri 2>err &&
++	test_grep "cannot strip one component off url" err &&
++	test_grep ! "has no uri" err &&
++	git -C target-bad-relative-uri fsck
 +'
 +
- test_submodule_relative_url "(null)" "../foo/bar" "../sub/a/b/c" "../foo/sub/a/b/c"
- test_submodule_relative_url "(null)" "../foo/bar" "../sub/a/b/c/" "../foo/sub/a/b/c"
- test_submodule_relative_url "(null)" "../foo/bar/" "../sub/a/b/c" "../foo/sub/a/b/c"
+ # Do not add tests here unless they use the HTTP server, as they will
+ # not run unless the HTTP dependencies exist.
+ 
+diff --git a/t/t5750-bundle-uri-parse.sh b/t/t5750-bundle-uri-parse.sh
+index a91c1b428d..02b9b38c19 100755
+--- a/t/t5750-bundle-uri-parse.sh
++++ b/t/t5750-bundle-uri-parse.sh
+@@ -68,17 +68,16 @@ test_expect_success 'bundle_uri_parse_line(): relative URIs and parent paths' '
+ 		uri = <uri>/bundle.bdl
+ 	[bundle "two"]
+ 		uri = bundle.bdl
+-	[bundle "three"]
+-		uri = <uri>/../bundle.bdl
+ 	EOF
+ 
+-	# TODO: We would prefer if parsing a bundle list would not cause
+-	# a die() and instead would give a warning and allow the rest of
+-	# a Git command to continue. This test_must_fail is necessary for
+-	# now until the interface for relative_url() allows for reporting
+-	# an error instead of die()ing.
++	cat >err.expect <<-\EOF &&
++	error: cannot strip one component off url '\''<uri>'\''
++	error: bad line: '\''bundle.three.uri=../../bundle.bdl'\''
++	EOF
++
+ 	test_must_fail test-tool bundle-uri parse-key-values in >actual 2>err &&
+-	test_grep "fatal: cannot strip one component off url" err
++	test_cmp err.expect err &&
++	test_cmp_config_output expect actual
+ '
+ 
+ test_expect_success 'bundle_uri_parse_line() parsing edge cases: empty key or value' '
 -- 
 2.54.0 (Apple Git-157)
 
