@@ -1,86 +1,123 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.155
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795664233;
-	b=lPqquLPxz+CTwV6xrqYa/FO3/pv6F846z/CeBvNeccLMAcQaNtJLpfRvzPgHeKy+a/IT
-	 YcvVotl1sXB8/va7z1YN99LoOaJ93a1Mn0g/k5a5wITX4/3OnlFWdrWFzIDSmzKR+yM7w
-	 C2fr9LrJ0w56GU70aCol2nlYgBH0hbos/Xooe0GGk+A9s67oGIS3Q+2n8cDCubQAW1gOd
-	 BjvIPZFptU0Dgix4i6x1vXRo3N7cOxi9MTknIF50EGlFV7PAcMs/qbk+8xMgqtu100LtK
-	 5EUbLoWxVOO7f5UpzQI/UIieooxJ/BTogWH0yfnuMduTtXbQXO8Z6jHwvppV0LuB8rA==
+	t=1795664261;
+	b=djZWfH7am4nraf8Mq9FUhs1xfkRNSPo1+HIvTjmQagmBGs3QHIqTXcZbgWm+EP/nGge1
+	 89H809l5jXZNeoSha3Wp+awLYccGTDkCg4HXp1XNxCpOroV8v8EJ8HAu9B1o7C9vsfQZu
+	 QE2B3SEv079tR8ipgAE8MSdlj5FEal1ihTx/zCg7lgvpn6ae60Wg7yn+Mnqve43J20ky8
+	 7XuTVzie3pF3ZdugxA8pQuh4viEZqmXqrcCa/CKQKQTRHmA5zP5BA5CB/z+v9SfnA/ogu
+	 i1YR5NOMSp4BAYoVN0VqFxuju1NuFx3iOSrD5XZSJcznxBxhC6dEKCyo1Cl6NJg8qLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795664233;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:From:Date:
-	 Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Fcc:To:
-	 Cc;
-	bh=8qleeaWKekMxamKIDlM1jdn5vXsj7qpdBMf0R7PMTik=;
-	b=WZWDbO9piVl0Iu8TQC6z5bOXlH+eKICM/xTSI0Gd+wsDnx9U12MHiznCreUb2X44hGEI
-	 eYSUTz9LvGZ0WzEZtPGzHYifL2wDIkXF42ZKNgZQqVGvpwZzRr6aDQLmleoi/ppgZAgeJ
-	 lHuyZ2l+3RWFabT2fI/Nl0oZkw8nsCmabGGOfSIGkdQpM2SLrTbtp/PQfG2Y4ex4gU0Xj
-	 Ert6HdK1ygAfdWNqMC70w+pve39KpbeONb3SttOJEOReN4qBN2ue1LJatsxp75R7pRWXZ
-	 a8ma4iHKcm1U2yJVHOQJf7WnYlyzjfQLarBWpHSUEnn4BBrzYqABp6gtqvRPLlN/Mxw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795664261;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=x0jAjT410dV8GCQiCDUiYZrMveqVDBHz+Dur0WOaIYM=;
+	b=VJftsQM5V37R0tQ30F7KJil3znMgqb/11Rnjz231AhP9h8T3kY26239/+EsnEbZpGBO1
+	 VouIY2MgAYJ3snqJChy945PaUb9/uc7xbH1nU8RrK5nkn09bM3bY3df4xIYfFJnReaZUY
+	 PH4zJSRDXZ/HgeEJwVQjwXhOtTfO7T1SPohmtww85e6gfd2PHEv9N6AvSxL0jp3LLccng
+	 Eo4DmLYvSrbatODgm4PgfVvgc/kBBRP3h4Lf+XlIUm8FJC/q3jHXj9gKO6r2Bp6YA37PL
+	 Ml6v2NrQ0Mo9wTFJb3oo2xRk9TYI8+cFe3YNa8HRZ/FbX0ByikmOKN3lRYad3zCVMwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=RdVZ+5ST;
-	arc=none smtp.remote-ip=74.125.82.54
-Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=OoaVDjOP;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=WUV1yBwW;
+	arc=none smtp.remote-ip=202.12.124.155
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1D3606A31E
-	for <git@vger.kernel.org>; Thu, 26 Nov 2026 03:37:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3A1D3606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ACC9606A31E
+	for <git@vger.kernel.org>; Thu, 26 Nov 2026 03:37:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9ACC9606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=RdVZ+5ST
-Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-18818daa3e7so3776614c88.0
-        for <git@vger.kernel.org>; Wed, 25 Nov 2026 19:37:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795664232; x=1796269032; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:content-type:mime-version
-         :subject:date:from:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=8qleeaWKekMxamKIDlM1jdn5vXsj7qpdBMf0R7PMTik=;
-        b=RdVZ+5STozmSt3szKkDCTJjmrz99uaHaSWi0a0bhMv7O5lY37nT9NgW8AaxGK+5Mpz
-         2UznWswo8SQW3BdVpLWfjt0YJ0WpEPIL80DUICTq9q0HzLZUt2554XqUh0emmlGgfQ3i
-         8OjkS56lwzMTFAsrZ2KtE1jlR5bG0YaHvIepfQkjqLJZgtxpHf/W7I62o5EW4xG5f3KY
-         z2MyEhaqxiqoE2FKYzwJE3bDhNIxD6u5LhFccgJPlGVexUb1UOjPWPOcuU3YHglRJsuc
-         HHJOKNQ9y/D+T49qrp1nzsoDUN6C5xeenjALchsJ2eWtckBwnWmTui8qFJ5qg7E07Q7P
-         wX3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795664232; x=1796269032;
-        h=cc:to:fcc:content-transfer-encoding:content-type:mime-version
-         :subject:date:from:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=8qleeaWKekMxamKIDlM1jdn5vXsj7qpdBMf0R7PMTik=;
-        b=LkO7vpwWb+Yw8hMZuxLcp0sJu3VbZw1J7ovF4gHb2flNkVui67J75CaFxpbj7DytQq
-         xO0/PuRq84J+Aq1a/pDeJ6EarZqHatv9GWTJYM2TvWfQPhGeWxaDXT0UudcyXpwnkfD9
-         TeaZmvAOM+WGKSTkJMW9N8QkCWfi6mnYsAFTYjAaOIuXJRyITbNUa4m1SpNgitqpNl4y
-         UAMq8GINqx/EPTGpmlb+TFSb9IVzC9Lms/yMwun2dGOCThuETFQE4qG7nNIYE+UZGJ3N
-         /c7fnoddG5DddjxEWy8Qn1LoacBD5YcUQVMFZcq2Kl0M9zT63ka11M08OtaiSG79yD7g
-         uWXw==
-X-Gm-Message-State: APuU4Z89wQw4smo1RG4bb44hZSD4WtiJrHo5GAPvVYdCXRnXFf5TL8oS
-	Cq1C2SksKn+MxzgOlQmIgF+m36XjtXh6kPK1GoVqcoSVLbuZhD8NQp1N8gy2nQ==
-X-Gm-Gg: AZFdTZdnjH2GSEdEKaOd5zgc6PLOswcXqq2ZnW+CdVy/uSAGcm2ATVn2e0IO0LYwP6X
-	VrIx1ntcuOyZuZh4BB/S676/tStA4pAF9KZwhtircYjsEe33vvWMQwMynNJwyLBQ1YmUABelJMT
-	zgihQ4rdm8YUOs+mchMhD87+ZxBH+YYICMOtIO3DWPnaxFF+2ZcxQxxjLtzND50puhK2kplj768
-	Wk2jVB2E2IwYxaMB5wjWUqZzuZZprYQjBBpgPXwLGdgXxr/7kj6Ei3XQmY9YuQ3Ynnt/SwsOh0M
-	uEzTQ6DJLGixx7paTitwUrdnZXvKZS6rZn3tJumX3oB+5xwzS04XNEINEOqCfwEB1BllE3EAQAx
-	/uu1N9S80tt3asyYORf+7ZTxcHaHP+trBBttV5zJh6eg5npsK9GeHd2lADy9hL5fznZMB2JFDZC
-	b5WTiM0oQZBQpaeJov5i7PqqnsYmD9ZlGX7dYvh6m9Ju4byv1yOCuQ3s0esROped1cmwg9Vxywy
-	5Dr6STuqy+rbmtfQ6BiRuonphOfTfPOQRhkBruFUgWxn8oXpM8euaFIrKOXSuVaiiKWRntwA7+Q
-	oBb2VDg0Dyf7zjg4wXf8CPaDUPtK4qiM0rZnFUAYaGnspbGxqiN8
-X-Received: by 2002:a05:701b:2810:b0:159:f192:5290 with SMTP id a92af1059eb24-1b5524b591cmr18098660c88.13.1795664232036;
-        Wed, 25 Nov 2026 19:37:12 -0800 (PST)
-Received: from [127.0.0.1] ([20.163.93.145])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b5567ffa8csm54052619c88.7.2026.11.25.19.37.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Nov 2026 19:37:11 -0800 (PST)
-Message-Id: <pull.2330.git.1795664230820.gitgitgadget@gmail.com>
-From: "Onur =?UTF-8?Q?G=C3=BCnd=C3=BCz?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 26 Nov 2026 03:37:10 +0000
-Subject: [PATCH] blame: free the suspects slab at scoreboard teardown
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=OoaVDjOP;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=WUV1yBwW
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id F2BEC7A05B3
+	for <git@vger.kernel.org>; Wed, 25 Nov 2026 22:37:39 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Wed, 25 Nov 2026 22:37:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1795664259; x=1795750659; bh=x0jAjT410d
+	V8GCQiCDUiYZrMveqVDBHz+Dur0WOaIYM=; b=OoaVDjOP9s4Q5QWQTAV+c/kZ+e
+	y5ZSL4NNtux3BT8Yk1RIiOk9VnCcFOvFHDPDsbmZbVndAZwXPquvDBAZJmrcaOsF
+	SEXlEcweqd7uUiJ0EKPnRVL+YJk9Rl/1DvB2HKj1li2o+GQVsg8Te36qv3HQ1Ed5
+	jiW3h36ihHl0f01JkTQ9eaC4ZK2XcUG/KjEw+hgHie9HjbQ47gYVmSfeAjbHnteL
+	l73nJv67jCcCgGkFAgtX6U9RWu7la4QMNODrLySLo+SA+kuoCoBeWVWuT+9K1UUp
+	ZEtrdoUs+omTXsOZmVVAx1nR9uiPOF1AMHMFBgF9qL2OaW1nE1TjyBJH+NYA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795664259; x=1795750659; bh=x0jAjT410dV8GCQiCDUiYZrMveqVDBHz+Du
+	r0WOaIYM=; b=WUV1yBwWXXkUdXGb2LrM8pNKsocO1h10aSJ65O51wHHfkxwx5gz
+	oJJtFVcHYOv4wNzh0y4fcLryjqQ/bbKWnYmZvDwbLFT5+M1hMcB04n2j7gE0SGTo
+	dEwYiiRPgX+ND7zzhY8HCXzqcxgPnl0T8AMyVfmltsTFoF7uzlrI9SMcJs7JmnUk
+	fSAOsTbnIEmNZom/94OemG/QB9KXt3effnbs5aMfavHOMnCynKcFbv+rh7d9vcmi
+	YB6lfIU+nY18EnzGYYjLbZ3COiQhjX+JAIGdyQotFZwBM4UVc5paMFTxvvw+yg/9
+	srPbWgvTIEZKft3/HwLQdqISPl5RdVg288Q==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795664259; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:fA2L2fH5jyVii8VC3RjeffNRv711CSAZM4g3pUAcmuoGihN
+	74SsCS6hZXDr0/kH91SB/rJNEQnzeqBjCk6JzbPoGT+b762VVuKtTGu2uivyazpa
+	rndR9HjSqp+ey+7n0XAriDL9sShMDSa8SVqB8xV9AkqybmtwxR9JUtU0mHhISjLr
+	Dg9Sts+qsDRL3jVa998U4G6xbDSH6kctnsiSIwm8m1u4RLyIYaA0BVd3AuBcyLEp
+	uNyzwVb57tVSuPuOKOgccw+WTWWUY5ENxxXXj/qKORWcTcn/CJ0Ik2HrYT7B3Goj
+	UDP7lOT42QVW99n2H5CeH5TTusbgEVxgQMtxTfw==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:nMMuff45vzsv4sxWt2Y7FkWr8bOp/uk9FFBqzpY2CDQ=:IPhV8VbWl0d2uEBX9PWJ7DE9P2XfSSnKU3oG2tkfeT8=;
+X-ME-Sender: <xms:g6kHa8iQipnVKh8ssizazOOBecJPe-xISbxu-KJlNV0pvecIyvdf0A>
+    <xme:g6kHa0FQ3FRvn6o_OiPIyqYGRwcRgxnq9ZFWlJBjJpVezPG9F5gkkAM4GQGGNKluW
+    HMYKKBE7I-Gf6dOtldBpWejRch6A7w-U2bvfSciLELx-fsBId4l1TU>
+X-ME-Received: <xmr:g6kHa6RPYf-SrdzIIBjRY8nGSh8NwLhpd0odF5LNXQzHT9SCIFEBWOmA2Y-uspgEwp-rLKORsryvYXwayVIoW3_-likKJxM7IGVqvrA>
+X-ME-Proxy-Cause: dmFkZTGkmWRn/D4at7fEoiALks2NKTVbuyc9aIspb+v9Wy7iKTiumHGtI5b8WxHc7BLd8E
+    +13fS3XeTBil1PZvI6keqsKv4hnL5QL0hMkJh69aU6Vwd6VdtyYDBuFc9FcucB6NZSr+pM
+    +Gmn7snwLJdoy+qiAn4qDlVxLANnYrqxrG9WOh494bcnJ53yll7ddU5MSYk3szfnVNHIpm
+    yzGQyn7jT7ngEL6fGZaVPc/f10/wOx8n6I62YbOGDytI1EGRy76vWeGES47u4xxK6nu3VX
+    DBgS0ZHJsO2CCc1JyLcGvqOanNciSkDqsaW2OyMdTSvka5a/fXGevm+fyzV4ub//04STfj
+    dEl/POdJdgKJIyhNmvOQlh0v50GsghekMOyYocpLRk2SPOHjaby7Vl/NkuasbZWsWHTXeG
+    K1d0AgbN4GhMz/BBW+d16AlBVNlW+z3BO3RFNnVeVyUsM1BW+A82c19JkEocLJ3p3lF2RX
+    T6orQbbMObuPT20XElYB+U9dDWMfa7poLEoEeIWdmKgzPKIK8QUvJzhDKiCS6Sr76oQUe0
+    U81ejjVa/FY1/Gw1adyN/iu3erfp79dnjQRupFIls2z4bZDnsqjuoTfzpcKl8LJPJfRaBx
+    f2eT1lo/deG3zSeF+w81NHWJ/xuodtWeVU+Mbo6Fjk3LsjwKQ1jLqo0qif5Q
+X-ME-Proxy: <xmx:g6kHa5xeFULgcMsDERwIQ98K0AhgvUTD_ZFpcz4ffrE8JXwXeyyT0Q>
+    <xmx:g6kHa-f-J_6c-g6n1Np_CxBer54Kc3x1OYr6qehtkpk3vgc-HxeHqg>
+    <xmx:g6kHa0MQt1WvirPA916Y7tCuOI1WYjOxWrbkMtjVNflLB6Z6-Y0stA>
+    <xmx:g6kHaxtvFZLFBQD-Ryyrp58I6w9lhgsQ7rbt5yvmIJVuWE_TIhpeQg>
+    <xmx:g6kHa1glSmHyP1wa8Ym7hy2ikHAAOlG5yWRlHpTHW51TbQxUO3K7yDPq>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 25 Nov 2026 22:37:39 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,  ps@pks.im,
+  usmanakinyemi202@gmail.com,  siddharthasthana31@gmail.com,
+  kaartic.sivaraam@gmail.com
+Subject: Re: [PATCH v5 3/6] notes: use the tree's repository when reading notes
+In-Reply-To: <20261125220214.35881-4-okhuomonajayi54@gmail.com> (Okhuomon
+	Ajayi's message of "Wed, 25 Nov 2026 23:02:11 +0100")
+References: <20261124172146.18330-1-okhuomonajayi54@gmail.com>
+	<20261125220214.35881-1-okhuomonajayi54@gmail.com>
+	<20261125220214.35881-4-okhuomonajayi54@gmail.com>
+Date: Wed, 25 Nov 2026 19:37:38 -0800
+Message-ID: <xmqq4id4s1od.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -90,175 +127,74 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: Onur =?UTF-8?Q?G=C3=BCnd=C3=BCz?= <ogunduz@gmail.com>,
-    =?UTF-8?q?Onur=20G=C3=BCnd=C3=BCz?= <ogunduz@gmail.com>
+Content-Type: text/plain
 
-From: =?UTF-8?q?Onur=20G=C3=BCnd=C3=BCz?= <ogunduz@gmail.com>
+Okhuomon Ajayi <okhuomonajayi54@gmail.com> writes:
 
-setup_scoreboard() initializes the file-static suspects slab each
-time it runs, but cleanup_scoreboard() doesn't free the slab. A
-second setup overwrites the pointer to the previous slab and leaks
-its allocations.
+> note_tree_find(), add_non_note(), load_subtree(), remove_note()
+> and format_note() already have the notes tree, but still read
+> objects and hash algorithms from the_repository.
+>
+> Read them from t->repo, the repository stored on the tree.
+>
+> note_tree_find(), add_non_note() and load_subtree() do not check
+> for a NULL tree themselves. add_note(), remove_note() and
+> get_note() replace a NULL tree with the default notes tree and
+> assert that it is initialized before those helpers run.
+> format_note() does the same NULL swap, and initializes the tree
+> if it is not already. load_subtree() is also reached when a
+> lookup unpacks a subtree, which is still after that check.
+> copy_note() is the one public function that does not do this;
+> the next patch adds the guard.
 
-Clear the slab during cleanup. Each final blame entry holds a
-reference to its origin, so release those references first:
-blame_origin_decref() uses the slab to unlink an origin when its
-reference count reaches zero.
+"A, B, and C do not check for NULL, and D, E, and F do." may not be
+stating any lies, but such a description gives a very disorganized
+feeling, as readers are not directly told where you are going with
+it.  Make it clear where the entry points are, who calls leaf
+helpers that do not use notes_tree_or_default(), and state that
+these callers themselves use notes_tree_or_default() to cope with a
+NULL tree.  Before going there, step back a bit and give a wider
+picture, i.e., have you done enough to make sure readers understand
+why notes_tree_or_default() matters in the first place?
 
-Add a regression test that sets up and cleans up two scoreboards
-in one process. Without the fix, LeakSanitizer reports a leaked
-slab; with the fix the test passes for both files and reftable.
+    In the previous step, we added a '.repo' member to a notes tree
+    object so that you can tell which repository object you are
+    working with.  The notes tree objects are passed around in
+    various call chains, but many functions like note_tree_find() do
+    not pay attention to '.repo' and instead use hardcoded
+    the_repository.
 
-Signed-off-by: Onur Gündüz <ogunduz@gmail.com>
----
-    blame: free the suspects slab at scoreboard teardown
+    There is a catch in the existing API contract around notes tree
+    objects.  Passing NULL in place of a notes tree object is
+    allowed, and tells the API to "use the default notes tree
+    object".  Which means a few things.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2330%2Ftetsuo%2Fsubmit%2Fblame-lifetime-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2330/tetsuo/submit/blame-lifetime-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2330
+    - An existing call chain may pass notes tree 't' around, but it
+      may be NULL.  You cannot blindly dereference 't->repo'.
 
- blame.c                     |  1 +
- blame.h                     |  1 +
- builtin/blame.c             |  1 +
- t/helper/test-repository.c  | 34 +++++++++++++++++++++++++++++++++-
- t/meson.build               |  1 +
- t/t8016-blame-scoreboard.sh | 12 ++++++++++++
- 6 files changed, 49 insertions(+), 1 deletion(-)
- create mode 100755 t/t8016-blame-scoreboard.sh
+    - High-level API entry points like add_note() may receive NULL
+      in their 't' parameter, but they replace NULL with a pointer
+      to the default notes tree object by calling
+      notes_tree_or_default() upon entry, so after that, the use of
+      't->repo' is (almost) always safe.
 
-diff --git a/blame.c b/blame.c
-index 126e232416..61e1a45650 100644
---- a/blame.c
-+++ b/blame.c
-@@ -2935,6 +2935,7 @@ void setup_blame_bloom_data(struct blame_scoreboard *sb)
- 
- void cleanup_scoreboard(struct blame_scoreboard *sb)
- {
-+	clear_blame_suspects(&blame_suspects);
- 	free(sb->lineno);
- 	free(sb->final_buf);
- 	clear_prio_queue(&sb->commits);
-diff --git a/blame.h b/blame.h
-index 3b34be0e5c..75a910bb67 100644
---- a/blame.h
-+++ b/blame.h
-@@ -180,6 +180,7 @@ void init_scoreboard(struct blame_scoreboard *sb);
- void setup_scoreboard(struct blame_scoreboard *sb,
- 		      struct blame_origin **orig);
- void setup_blame_bloom_data(struct blame_scoreboard *sb);
-+/* Release all entry and caller references to origins before clearing the slab. */
- void cleanup_scoreboard(struct blame_scoreboard *sb);
- 
- struct blame_entry *blame_entry_prepend(struct blame_entry *head,
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 48d5251c6d..332795d18f 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -1323,6 +1323,7 @@ parse_done:
- cleanup:
- 	for (ent = sb.ent; ent; ) {
- 		struct blame_entry *e = ent->next;
-+		blame_origin_decref(ent->suspect);
- 		free(ent);
- 		ent = e;
- 	}
-diff --git a/t/helper/test-repository.c b/t/helper/test-repository.c
-index 9ba94cdffa..245253efbd 100644
---- a/t/helper/test-repository.c
-+++ b/t/helper/test-repository.c
-@@ -1,12 +1,14 @@
- #define USE_THE_REPOSITORY_VARIABLE
- 
- #include "test-tool.h"
-+#include "blame.h"
- #include "commit-graph.h"
- #include "commit.h"
- #include "environment.h"
- #include "hex.h"
- #include "object.h"
- #include "repository.h"
-+#include "revision.h"
- #include "setup.h"
- #include "tree.h"
- 
-@@ -65,11 +67,41 @@ static void test_get_commit_tree_in_graph(const char *gitdir,
- 	repo_clear(&r);
- }
- 
-+static void test_blame_scoreboard(const char *path)
-+{
-+	struct repository *repo = the_repository;
-+
-+	setup_git_directory(repo);
-+	/* A second setup exposes leaks left by the first scoreboard. */
-+	for (int i = 0; i < 2; i++) {
-+		const char *args[] = { "blame", "HEAD", NULL };
-+		struct blame_scoreboard sb;
-+		struct blame_origin *origin;
-+		struct rev_info revs;
-+
-+		repo_init_revisions(repo, &revs, NULL);
-+		setup_revisions(ARRAY_SIZE(args) - 1, args, &revs, NULL);
-+		init_scoreboard(&sb);
-+		sb.repo = repo;
-+		sb.revs = &revs;
-+		sb.path = path;
-+		setup_scoreboard(&sb, &origin);
-+		blame_origin_decref(origin);
-+		cleanup_scoreboard(&sb);
-+		release_revisions(&revs);
-+	}
-+	repo_clear(repo);
-+}
-+
- int cmd__repository(int argc, const char **argv)
- {
- 	if (argc < 2)
- 		die("must have at least 2 arguments");
--	if (!strcmp(argv[1], "parse_commit_in_graph")) {
-+	if (!strcmp(argv[1], "blame-scoreboard")) {
-+		if (argc != 3)
-+			die("usage: test-tool repository blame-scoreboard <path>");
-+		test_blame_scoreboard(argv[2]);
-+	} else if (!strcmp(argv[1], "parse_commit_in_graph")) {
- 		struct object_id oid;
- 		if (argc < 5)
- 			die("not enough arguments");
-diff --git a/t/meson.build b/t/meson.build
-index 3ca7b27104..6188a0c4bc 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -993,6 +993,7 @@ integration_tests = [
-   't8013-blame-ignore-revs.sh',
-   't8014-blame-ignore-fuzzy.sh',
-   't8015-blame-diff-algorithm.sh',
-+  't8016-blame-scoreboard.sh',
-   't8020-last-modified.sh',
-   't9001-send-email.sh',
-   't9002-column.sh',
-diff --git a/t/t8016-blame-scoreboard.sh b/t/t8016-blame-scoreboard.sh
-new file mode 100755
-index 0000000000..bc7f85c468
---- /dev/null
-+++ b/t/t8016-blame-scoreboard.sh
-@@ -0,0 +1,12 @@
-+#!/bin/sh
-+
-+test_description='blame scoreboard teardown'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'set up and tear down two scoreboards in one process' '
-+	test_commit one file &&
-+	test-tool repository blame-scoreboard file
-+'
-+
-+test_done
+    - Helper functions that are only called from these API entry
+      point functions may not check the NULL-ness of 't', but rely
+      entirely on their callers to have turned NULL into the default
+      notes tree object.
 
-base-commit: 03b41523c576f26ad34085378717a0c1b287470f
--- 
-gitgitgadget
+    Now, X, Y, and Z, as we saw in patch [1/6], are the high-level
+    entry points that guarantee their notes tree pointer always
+    points at a valid notes tree.  A, B, and C are helper functions
+    that can be reached only from X, Y, and Z.  We can replace all
+    uses of the_repository in these functions with '.repo' safely.
+
+    There are some cases where such a replacement is not sufficient.
+    For example, copy_note(), even though it takes a notes tree
+    object, does not use 't' itself, so it does not bother calling
+    notes_tree_or_default() to ensure that 't' is a valid notes tree
+    object.  In order to replace its reference to the_repository
+    with '.repo', we would need to do such and such things, which
+    will be done in later steps.
+
+or something like that, perhaps.
