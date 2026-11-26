@@ -1,88 +1,61 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.10
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795706050;
-	b=BkwRhzOy1UCeCYkz/IotNBruVP3Ovxc3kdRE4JwGMTsTn64h8Qn3cESVD+AXT4lF6MhL
-	 5wEQ6ylNn/GraJ0zq/HvGDBaVuLkUl9XVisL+j9jdwgrQkWXdcK7BP0eisU1Y/KRHZnbR
-	 iNsiwzAcR4el4nIPRlIjIIz2lX8bMCeTiEjD8mLoV1Kqw71o55erjZsH3lVu0BNrupw7n
-	 Q+c3NeJ+sOyCA41zCBrZb6dsq69jBu9tjKciNzzHAXoazGsbkCBvGY8fCB671qP0a3wh6
-	 s1XloJj/OFkiygFmsSQR++c85jYpZD23U07XThoXM1LQghktXKSkH6cW9gn7qvsrOQA==
+	t=1795706795;
+	b=Gux+ILuOCersXQkoPHoAP6Ul5F1Bplg0HhEqi3PBpwHFWnwP34XQlZhc2uZ79/MYJUmo
+	 /PzClTyf4r0E5q0N0sK/62PPHtCiOvbx+4SSvd7qoBa+hH5J+JOpWm2gRlLQov87kxWBq
+	 Uvtc+urjUkG/mmS1xI/CmKLQmfEDJEzRJ2D88bMBh6xKxLjszaSrS8OZBSCbSMgefHEGH
+	 SWmKhbBzpEtc2KvRNGFAhOryOKUb2HhTkp1s2efYQMdJPOVWt1o7kh6v+N8zav5RFseoq
+	 x0d5QJRgGaJ2C5wvxkHQqOFCwEJcYvZADd1q4Vq6+S2yUBQwRbuglZwt/mZbs0Q7IuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795706050;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Reply-To:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=alJmzUhNvNxQUwaA9PNv3u2FZzQFMRVn0Zt9o0V2YcE=;
-	b=q9AueTH5LUjAVSz01dVBjYotZ2H/jJcDnm7X1insiRTqChoEEraqtVgHY+nrviLyy+XZ
-	 7/UexXzWyVtisBiNEID2gOI4Te/CMvb8r/QmbE2BxgnVHCYhEYlJrVt4f3dC1hqdnE92m
-	 X8EVuNqL0yj88QUbXQFamn6n3oJg+Yz6C8gDzidEityifGV73/6ygMF8sfKu60xypcEiS
-	 qeI/flyVGVxp3MsI8CTUFpbUJ5q1cQfYkQAxzQzMC9XhnL7CE/31mCqLbf0MxDrt1IhNb
-	 JHF/IEZAUfT34eJZT60mhTHw4eEoSjMA5l2Rw2hnah/PkX8fLYF3sZQ8xxKYCNgv18Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795706795;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:MIME-Version:Content-Type;
+	bh=oeiCqOWbmy630n7iF0iTs7x24OCO0l4BW6Nha88ND4Q=;
+	b=JvlzY9t3D1K5OHyAiP+4GEY9Oj8oHwdTFiZSZ6b6OjqxiX0gilddUrW+DkZzkYzU4aRj
+	 kBpzXuikKXIUdpI4+wevVC38CYqEAD1MSwS1itnpRKotmLAlk1BJVXfd3R4dhaenwfa0b
+	 BhIWkJiAh60mzgbW5OCpO2jh+EuJjVLIXiwNgvUIqGYRxQBIK1a42n5CikcTKYAdC0GrJ
+	 pyGvCgwRzLBXUmg/miyY9catk0p2LbWrtOLOXJhik4hlz0JwLNhWNhQdD6QP5x5tuoVZE
+	 VVMu1GTOo1cY7j8TwjA3SUEH8xTRTzixw6q91B/sP7xgP37O+upgfGIKqTuKfO2DVnA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BU3B1yKe;
-	arc=none smtp.remote-ip=209.85.221.44
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	dmarc=pass header.from=iotcl.com;
+	spf=fail smtp.mailfrom=iotcl.com;
+	dkim=pass header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=FaK8owQk;
+	arc=none smtp.remote-ip=91.218.175.10
+Received: from mta0.migadu.com (out-10.mta0.migadu.com [91.218.175.10])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C18A606A327
-	for <git@vger.kernel.org>; Thu, 26 Nov 2026 15:14:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0C18A606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3747606A31C
+	for <git@vger.kernel.org>; Thu, 26 Nov 2026 15:26:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A3747606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BU3B1yKe
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-4ac109a8a12so4219184f8f.3
-        for <git@vger.kernel.org>; Thu, 26 Nov 2026 07:14:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795706048; x=1796310848; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=alJmzUhNvNxQUwaA9PNv3u2FZzQFMRVn0Zt9o0V2YcE=;
-        b=BU3B1yKeOVW5hD6mguUcWO+vXypIkx6JMNRzdxmGz/1ZmE6W8w9/OV7eaCG9CDDiLa
-         GzgFE8lbC2zN89DQa/gPbCR1s1D2JqUzRhL5rHNvebnOT0eIZ095HfZPMk/9D5LtQgag
-         xkuRCR6MjI4uRZ5MYEgBf1odxNlb8EToPyTlheGtdTHm9cp2bwL2Gm9XrIG+f1zlKQRB
-         exgSgG9wxbYLQvWXCB2sWiZxHuyl0RblKdtw/tJpHF1tCPopWpFAp6Loob6ICIIpS8Er
-         jUAmAFyl99At/srQasOHXcT1jgO5HNgkyuEv77svLqUwqSW/g8JETE20tTjrNTLb3qxi
-         9nhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795706048; x=1796310848;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=alJmzUhNvNxQUwaA9PNv3u2FZzQFMRVn0Zt9o0V2YcE=;
-        b=0iNkebsMWP+03Zo1gMdpAPI+9vItttwTcXx5ast7SKN34Cn5K2QzOXMPHg+P3nlPhe
-         9uWV1mK4s4N4DYOAzajGHN8PxUaUxUeC2Cvx4piHL/pwsLV6XysrY5+epeA2VsZCE0jZ
-         aNYCczsKbArs8Ryw9ep/eq69idebLiC8Yq/Bz6XnbuA00mUyDmb4s3DpP+7n67Pu7itZ
-         gZWyxKIuAX0Vq714B8nOTCkfyrBdyYfCQT/4fgGfKtcfrKlIFpCWaypIQW9YqqLzE7KF
-         KkBQpdAywSMpJbTpBKPImUV+mFa5to9qW4UFfvs2Rv62FCoj2eIo78K3fhINSAT/8ffL
-         nigA==
-X-Gm-Message-State: APuU4Z9MRk0XCv739I5Y2j1XCvDF7H5xr9nSpO9IZDYjlZtxhLDBw1Up
-	I0rRWf0L/XlVrlk6hXH0X49dpW2EfVX/+Qpd9/ZErVKgmF/T5rUbUetG
-X-Gm-Gg: AZFdTZfFBOm6uE9ORZEv0K0af/nXTvEMSSZxbE7TgPvXs2LApjTc4wno9p+t74Z9UQb
-	XNyVT7HgDzGEEnW5AvVrmVpi2JL5IApLGecBntqexm60qTSa73RW69dZQuJSNaNRI01cZzba0bs
-	FvbCUlrcjWrUYJQuXAkfKTS7PRr3VuPaTWD7rDSXbezUzIZTwNhEJ9zlPbTOcSKXDtM08yil5o9
-	OrquY2CYkvs62t6iydjbbGY87XdInImgTCtpnvC0EIC7uj1BvpS1SAEodyCgiiCrhQcQXT7I+7p
-	YzhLMEC7q2FNhJcsRIqxsltRuKb2xQ0Pm++OiwSj4C0UteFxZhS3VqT1bAjNoQFt9ySfK4tDIER
-	tmunxCZzXaKDeV+JQpmI5i4VXGFfjNZAYYVCk/uiw/GXVjLKgdElQfNldA3YEUbMOjUOb3tnSK5
-	CKSWCezpQIC10JlAUsYuxQzJnKeYwFBwVoo2SHFm6o1dg95kVaBUiq4+5tjMThRbE6PlGh6S2O0
-	s2EB4fSIsXaV8OMFHKIcc/IxYu3koJziYe4MSV3V/mZSUHBYtzocAhWVs6kef2yCjEkc2EGLI92
-	888rxX91DGn78X0VkqhAgiymiRVysar2rhcLJ2TALB1Vbola7T7ytg2tz3ujTNAvia04Btmjow+
-	8ZUnKDugR3R/qD9eqCbThI7qLOEtV
-X-Received: by 2002:a05:6000:41c9:b0:48d:fdd0:6ce8 with SMTP id ffacd0b85a97d-4abaab633bcmr41204240f8f.3.1795706048320;
-        Thu, 26 Nov 2026 07:14:08 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab6b205443sm43387545f8f.39.2026.11.26.07.14.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Nov 2026 07:14:07 -0800 (PST)
-Message-ID: <88b50b11-6eb1-47a0-b5d6-9183d977e871@gmail.com>
-Date: Thu, 26 Nov 2026 15:14:03 +0000
+	dkim=pass (1024-bit key, unprotected) header.d=iotcl.com header.i=@iotcl.com header.a=rsa-sha256 header.s=key1 header.b=FaK8owQk
+X-Envelope-To: git@vger.kernel.org
+DKIM-Signature: a=rsa-sha256; bh=BDjxWqKaWDHT343Bei+rSam0Da4YFPHolQTx+vOtZzk=;
+ c=simple/simple; d=iotcl.com;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1795706791; v=1; x=1796311591;
+ b=FaK8owQksXeZK6Ft66SG2uGIWhciuHjhLSMSk5FrS6voewxjzdXaSqX9HP2Mcf2QFNUsxFZY
+ qyJzKLj2TcqWjeJ166hTTX5QXFiJoPLHu+HRzvSPu6VHGg+BsS4BiEvLDhOS6rTe05csKncnJ2c
+ cGYBY9zgWl0i7xSuMMm1mf5g=
+X-Envelope-To: git@vger.kernel.org
+Received: by mta12.migadu.com with ESMTPS id c00d546f29ce532c;
+	Thu, 26 Nov 2026 15:26:31 +0000
+X-Mizu-Trace-ID: c00d546f29ce532c
+X-Migadu-Flow: FLOW_OUT
+From: Toon Claes <toon@iotcl.com>
+To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 6/6] packfile: skip closing packs marked as do-not-close
+In-Reply-To: <xmqqo6belyp1.fsf@gitster.g>
+References: <20261120-pks-packfile-global-statistics-v1-0-19beb83b145f@pks.im>
+ <20261120-pks-packfile-global-statistics-v1-6-19beb83b145f@pks.im>
+ <xmqqo6belyp1.fsf@gitster.g>
+Date: Thu, 26 Nov 2026 16:26:24 +0100
+Message-ID: <874id3sjfj.fsf@dev.null.iotcl.com.invalid>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,49 +65,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 3/5] wrapper: avoid byte-count overflow in
- write_in_full()
-To: Junio C Hamano <gitster@pobox.com>,
- Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
- Harald Nordgren <haraldnordgren@gmail.com>,
- Simon Richter <Simon.Richter@hogyros.de>,
- Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.2253.git.1791958171.gitgitgadget@gmail.com>
- <pull.2253.v3.git.1795640149.gitgitgadget@gmail.com>
- <f38c7e71337632f2e86ef5716e90c776c491b762.1795640149.git.gitgitgadget@gmail.com>
- <xmqq33sowk11.fsf@gitster.g>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqq33sowk11.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 25/11/2026 23:47, Junio C Hamano wrote:
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Patrick Steinhardt <ps@pks.im> writes:
+>
+>> When closing a packfile to maintain the maximum number of open packs we
+>> completely ignore the `do_not_close` bit. That bit is only set by
+>> git-fast-import(1), and as that command allocates its packs manually it
+>> wouldn't add those packs to the list of all packfiles, and consequently
+>> we won't ever try to close such a packfile via `close_one_pack()`. But
+>> that feels like coincidence rather than proper design, and the result is
+>> rather fragile.
 >>
->> Accumulating the output count in `write_in_full()` can overflow because
->> it counts via a `ssize_t` variable which can overflow for valid `size_t`
->> sizes passed as input.
->>
->> Since this function either completes the requested count or fails,
->> callers already know how many bytes were written on success. Let's just
->> return status instead, so the total transfer size need not fit in
->> `ssize_t`.
-> 
-> This is a great simplification.
+>> Skip over packfiles marked as do-not-close to reduce the fragility. This
+>> should not result in a user-visible change in behaviour.
+>
+> Hmph.  If the only user of the bit does not care that this codepath does
+> not honor the bit, perhaps a simpler alternative is to retire the bit
+> that nobody else uses?  Or am I reading the above analysis incorrectly?
 
-Yes, it's a much nicer api
+Before this patch, there is one user of this bit: use_pack(). This
+function might open the pack to mmap() it, and close afterward, unless
+do_not_close is set.
 
-> I didn't check what is *not* touched by the patch, trusting your LLM did
-> the heavylifting for you ;-).
-When I reviewed the last round, I grepped for '= *write_in_full' and 
-'return write_in_full'. This round fixes all the issues I found with that.
-
-Thanks
-
-Phillip
+-- 
+Laters,
+Toon
