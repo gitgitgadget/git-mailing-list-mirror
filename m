@@ -1,111 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.178
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795813405;
-	b=j6G9Ec16ZcG45tBPOvJdih8BmqZorvuAe8t4ZrpseXpiqmlMi2JBb6z/1h8xreP6En61
-	 ML23IXorRK3rx2b9S5I5HN5DaDReVB607zPyYWJgNjgKTCcnBjX3tHjcs13oTS9z26txt
-	 d94Fqdzr09D5N0aygRop4olxf1BCEjXQcdY9gApNjn9YHSOd71YCM4+qGqH3VN/Ig9qJ4
-	 1Tju+mmSjJB/MjRZljO8bDHcc6bfLiARWk6pUv2uuu3ZMO8l8xoy8gm6ZUWaX8NczHZj1
-	 QX88QqY43UxYv4n5c/DXtQSchhmgJHcm7tIBrfqHYr+95eCTz5vY9CMcM3zpIhOazhg==
+	t=1795814856;
+	b=0MKHuwGlMbG8i+dsC9lsk9OFWEvFO405d0ZgmqKFWTvCfJTzQ7Fr4IciI2HV48Nzca52
+	 yfOpV5l90hB0CLULiOawWxfF7CN6doQ38YUSTJGT5ITH4oor4ZyijYEeAHnYlSUDkvzTs
+	 Vk3nEaPj1tnFE18PqQlVsU3iP5uxUZ+0nK9V/7/iwqza2BkIuygmNZFhPf9Se2sKmvnOi
+	 GGqVoQQUjYUUNp4z6GNMevdnj/atzGEHewaHX+IAEF+c8jF6YlJj1sZ9vbVWOzgQ51dQB
+	 XTtjzCJ070hrp2+TYBRdtMKWiVA7CuFrjUZ0H4ySUIxPZspv/7/6g21LAQNZWfV81LA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795813405;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
-	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
-	 References:Subject:Content-Type:Content-Transfer-Encoding;
-	bh=NXRIFxIKt7m73XoofSePpxNtVYY+8ZwHW9Kp6bVDJN8=;
-	b=xV6PdK7nlwMWdUbQApP0Xyj/p0/jNMriuTTXmuOfAg7bQXCqmMXNrmbuKsLoenMjcXjh
-	 QknRjk2aAfZq451CZituQphE5Fa/n/Bj6Rxf1OyYzRSEy4Y+lCoxNW26Bn65LyW5bY/7h
-	 p4ZN0lh+fEYb8QIQviTpBVr/4u7EsqJAlzpaKsWK3evbRJs2T0YIDvnqojr3y5zNv/EXW
-	 c9rdKkRYPQ9ghqjP1g5u6/0toYhTsDKeJsB9pZQV3SuDrvlQx1MXkdcx2Irp1PykaG/BU
-	 0mIruMeeOFbWQefuKlnyCNf2mKN/8VgfNKXl54eKSRP+wQR/MyNbSax6T44q5wpIHHA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795814856;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=wKiUc3g9fFGczQ7W2YHA93qjXsB/nnE9dp4dRzSMoIE=;
+	b=xNgQlPYTjPKBQb3yoI3GEdWEeBwtHLP/jsYBQYXmFcsluvDcld8CLFZRB5rqyxP7no2c
+	 egc47xOkJjJUCYAx9zmZx5+ZECOvpc/wQxgexxCA9DxySl+TsBwaoyaVe7LB4lOi/3NNI
+	 hRXokn81d9Mdw60EnDzDlQ1YWiM8zW8RnDyoACDYNCdJlcASCklbh0i9cPc31Hv1arMV0
+	 Qi1EGiqMdJqPMMbghm3dH6u4HNgnQpwcdsRtQhgV4/kRDcuvp2426pKfCn8Qm39bj8tWF
+	 ZdVek3WBKRbPo+gPeUf6O3txghO8cBETFMxkPQhuv+kYplWZxZGUqTdtWrKzdBXJB7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=fastmail.com;
-	spf=pass smtp.mailfrom=fastmail.com;
-	dkim=pass header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm3 header.b="kl/0PzvQ";
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=xkf7u48D;
-	arc=none smtp.remote-ip=202.12.124.148
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SKSnWOtm;
+	arc=none smtp.remote-ip=74.125.82.178
+Received: from mail-dy1-f178.google.com (mail-dy1-f178.google.com [74.125.82.178])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB4E1606A31C
-	for <git@vger.kernel.org>; Fri, 27 Nov 2026 21:03:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DB4E1606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31946606A31C
+	for <git@vger.kernel.org>; Fri, 27 Nov 2026 21:27:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 31946606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=fastmail.com header.i=@fastmail.com header.a=rsa-sha256 header.s=fm3 header.b=kl/0PzvQ;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=xkf7u48D
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0DE671D003A9
-	for <git@vger.kernel.org>; Fri, 27 Nov 2026 16:03:23 -0500 (EST)
-Received: from ams-imap-15 ([10.64.2.35])
-  by ams-compute-01.internal (MEProxy); Fri, 27 Nov 2026 16:03:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1795813401;
-	 x=1795899801; bh=NXRIFxIKt7m73XoofSePpxNtVYY+8ZwHW9Kp6bVDJN8=; b=
-	kl/0PzvQ5n9jxv0rYcAuiQmQ79rekGzLt6tUOYHAcDlgjtgNWwHz5q165pmTsaH9
-	T1m2IZjaB+1zke9JcDWcNasLWkcPXdQZmHJbm2+AdLApeVIiOLgutukXA++l0CiT
-	IddN9/3AQXVcLKot7gI8skB95Nm1JkDV0D2ca8VeMeHtSN5U3rP6FCSnqj3V4DaI
-	J/ajzVPpzYW2H6JkeFEaFdBnUOn2L1iAzYDqxubYyFNRa30rNzVeunk2wsqNbz3V
-	8Wia+5U/xXtbgy/CgsfV4/JCUGTcb75AKVuegzDG/yBiKnQ8FguO50lVVq6LndSc
-	YMEPRXsj6eoHEyP9kAGJZQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795813401; x=
-	1795899801; bh=NXRIFxIKt7m73XoofSePpxNtVYY+8ZwHW9Kp6bVDJN8=; b=x
-	kf7u48DG1biK1DqqNzjItgwVI/x8XDiRaYRexFkuwZ4FHqbfYd6yT146lELapgBY
-	A1u6yvM15kyo+SiYTIVl7RTblPm7Gr2eXLlfgM2UP3rmBqbIxIFAolIicB5eiji/
-	BnnxrFNewtXnW12mbrVRG4Xzh6B3jgOYnhCz2+mA7/F8VP4htfuOHZDeEm7FA6Gr
-	rgvSbpF3RSUZOwXfaAnHZSLSlrk3QgRJTLp8KDUyLcn1AlF9wBZRaDQnhpiUSLA/
-	Gzfb0z9oUA+X5tvOMBHOihdkRwdZH4ZcrKmwlT1ym+eC5QQ2YKLWbfmt5nY13Ju1
-	dy+e1pr+ovgu2cLBzfPfQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=fastmail.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795813401; d=fastmail.com;
-	mf=PGtyaXN0b2ZmZXJoYXVnc2Jha2tAZmFzdG1haWwuY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm3:rsa-sha256:UhQ9V8fkUzg3KaPhq6H8kvZ7HAgq9ie9Yx5ezn9BdCgS6YM
-	D4cUI+4iFVY/PJlvPbW0ODLqlrI8b+xhhusC41nBfYMOHHZGhmJB84bAnzbNJeHa
-	0XtemT48tqn6/gDBK5XLcnBzs/aEMou++3tbWULPAEL4caqlTzjNVUp93Tu0d+Ml
-	lYnKAKS/ZtQZUj6oHPM9E2n0DUFNi7zxsDiclNVN/OxyhQfvXXvFk+H2J3GrWPT3
-	ILHcKJl4xlBkoA513nGPkKSQIPfs0pvwWfrDn9awdft/JzEGWuv3hFnWSnhOHLwK
-	+Fy1VfxzCKBKagS4haQDsWADlc1sMSyocZBmH6A==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
-	from,in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:iw0VNBnfUfD3M/Svt2hM4MuzG0Dr1Q+3Wxzh33jgNc8=:Hywv+7Outgq1NZ3VJHiOTDXvCGTYgTUUA2vGTrETfJo=;
-X-ME-Sender: <xms:FvAJa0XOsCFi8DsM2GYDbfsRq9jUJx_Lk6CvehCzJ8mEKpkRZVpIBYM>
-    <xme:FvAJazalxAoPxD-ccQf1JUXkVzn5q3buu1LIl-lWo1RMuugZFb9nsPaV5rhsG-ge2
-    GfcB7sdX3ymNMClSE1GDy-bAqjY7icqcFutc8_HuxPtNpwL0lSg88QJ>
-X-ME-Proxy-Cause: dmFkZTEQ1eI9EHF3Z0+vxbcCx5JOc5FJBdCl2l/mBfmo6UYvx8gu5rLz+eotAaKXY1WnZ3
-    KFFiCFo2LwDatxWaQ4cOT1nJtw90bmBN5g4dGQ9w4wIIYScLBUMl6LFHdHYWfaRwmhbcqc
-    u9Pcr/0NyiU4ycaHR/CjMDxjN/iKhilCJJ3W77WxRTELPIxLV8s3SjdErdGhfdxE5C9VdA
-    fza/3zN9VG0tgripr97r/NHnnRegssVnfij3r0XACpbCXSwrx5UcI5LX4ingO/XplNp3NY
-    cIOwTR1MJBWGPhqq39axSB0kuQAwpmkz2LJfI3HbYErI2sXUk8i0ikPd7W9Zd6tuAPzgIn
-    rZhYseWkJhgN99hYBl+GxaZibne2pgnqxq4Pm/GuJlgHgPF6WZRHk8h8bpy8bCX2R5JlX4
-    xCC4eeCtxPFTIXolrQzaTLSCd/RM8knho7H4tBeWJQpznOJ7oqJlNcYHIHVZ2CsLl9gViZ
-    tMaGCquIanARXB91EITRrpvkchyWyMPYIdZM6xiNl1S4HJyAAfXHLD/s0SLHtJ6SFDhNVP
-    yQgEBNc30qA/YIGarxZWfb++kkscQhYkFu53374dWqSNEO0gFi9CSz75nsKNEg5utzNrg/
-    VNJad1Cn81KnUQimwdmQs+eGzywR2ntdLPy+bE3BVt3uVCxR1t/vuNpMVUdg
-X-ME-Proxy: <xmx:GPAJazitiLlIC2az1-zdPWP8ppsAW33hW8YF-afc4CoOwUYPXrToQA>
-    <xmx:GPAJa5dGs7dWv2BVZkJ9sM-swb4baLjZR9SY9ih7anZayXSRKMpm9Q>
-    <xmx:GPAJayoGi5wEcOIDTDd6F1rWexQdUo8Kc5UC44wGr39BywOCn4UnOA>
-    <xmx:GPAJa2BvXjFcfhdRculh314g6dD2SqUdr9nikyePIEAd4KvyH3STAQ>
-    <xmx:GfAJa6gYIC4-lk6XiCJKLr3zvrpYD_rgk6jDeliwiZ3A6VwUi8PCdoE7>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 918DD22C00A0; Fri, 27 Nov 2026 16:03:18 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=SKSnWOtm
+Received: by mail-dy1-f178.google.com with SMTP id 5a478bee46e88-38644aedba1so13228695eec.0
+        for <git@vger.kernel.org>; Fri, 27 Nov 2026 13:27:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795814855; x=1796419655; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=wKiUc3g9fFGczQ7W2YHA93qjXsB/nnE9dp4dRzSMoIE=;
+        b=SKSnWOtmNqu8dT3PDV/wvICnU8Ez9F6AHnbthYXguG1gVWeEtdJ+fik7OmrovAYYOh
+         +N/I4+K6SyDnAp/9Bp57VH2StbjQ9sgzYU+1fPJrCvxOyFdQcvc0lQw7KHgCGGzNPHyG
+         M3cvdDVikqyqpTOvWEwLijB4lEmkrU7GislurSLyAFXgld1CRawO2yxGbxFKbqvuh8pd
+         nk1uaNPF8zZ8pv7yjH7jWymppV4GsbWnuhOEMBZZK/G2v4Q/GEO0oG6aUxOyL2JQjEHI
+         zrM5Mn7329pJFRDt4HM1qUkcFEuJbF5UVSve+gdDASPCos6InKGE3Sw+b5i5EvggG9Rv
+         ZN/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795814855; x=1796419655;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=wKiUc3g9fFGczQ7W2YHA93qjXsB/nnE9dp4dRzSMoIE=;
+        b=Pm4WJK+cPW1V4Yc8Z2klEUJzrJZ6Rmbs9bdNsqLGkV/uKE+lBD0fK8CBZOw0JZbjaM
+         RfHzogo2w9jpHMXBWPDctKDXsvx6YlOeanG9FWw0yRHgrX4FsDnoyVjT2BGwZub/CYXP
+         BWXXnFmV7L/xdkR+lUnBZmXNaSbv/dfsG4Gg2+INLKDHtCRgJAD/8fek9iMAZIIajG42
+         KHO2ko3iXBK/FphWZhjest9/vWIN8q1M+H2B7WRJS6Ks9jGRmczHmi5ECSGB2WSryMQw
+         1g32xQlAFMJGJMEkPhtwrf8TxRV8SqTD4tk12w64YjibNBdeOzMUPvfmM0I48pWoqPDg
+         zcPA==
+X-Gm-Message-State: APuU4Z8Dd1G4gPJYOJt2O7yFBC/XkhVFv+DLdrkTWuNQqG25Uvq7rkVA
+	uiSCqkj1F9RDg4U2XDjmi1dofNgUfhtzylorS4bcx7d6Z3EDZ9R6g78DcYsoLn4/
+X-Gm-Gg: AZFdTZemr51TCCY1t8mn7x6KQKxs3Z5RSiXR/0zGSxRGrbqdW4lkOmuPaQVZeLljoUX
+	dvpeKEzzvCFLqs29vZz+0PuVJPYp8pKvJWILtMysPeYTDfDmtY9guTeZWEppoIEc9IuRioUhPdn
+	GT+yD34irwGxFLHf7xSRA7IMuzwXu5sZoF9+WrAMAmGjjmb24BnZnnFSgdoIGY0gEyGiSBg2Ca9
+	LZRlo6QijL++HngLA+Krp0fLM2EY0K42j5NU+tH1Wmk/hM3Yh8q4dUVoWp/sYNa51DmKqZUxqyz
+	iGqUTiMd1rsdiNRw4SJVL3mNuQ0kJbvS9PAUc0VjZIxsA0YpumBCusB+APwvqEtpsfjO1QenZgV
+	FpAnA/yChAjNdXRt8LXhFrMtI4T4icRTcAMuvbjqO83jK4wLo7zeFwLPI++ZzjHsi1zOcQTcIUv
+	eBxxutf+PP9MiRYXcnbtbjXqmkeKdDBCk6qHxZJwQsVjW1Hs5XyD6pE0dXTmGp9ApsxlaW3x646
+	CWfOJP2EBK2R+TT5aJgcoiZd0bEtJu/MsvKHjfo4n8pOw3Bx59MWdtY8kIElWCNkz13fxDqvUch
+	oJ3pzqMAEna0pEEU4pqyIRlTSr6FkWM=
+X-Received: by 2002:a05:701b:2608:b0:1b2:6eef:3f32 with SMTP id a92af1059eb24-1b5568f1322mr21098881c88.37.1795814854971;
+        Fri, 27 Nov 2026 13:27:34 -0800 (PST)
+Received: from [127.0.0.1] ([20.169.116.17])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b556829d31sm97615654c88.9.2026.11.27.13.27.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Nov 2026 13:27:34 -0800 (PST)
+Message-Id: <pull.2509.v3.git.git.1795814853.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2509.git.git.1795774880142.gitgitgadget@gmail.com>
+References: <pull.2509.git.git.1795774880142.gitgitgadget@gmail.com>
+From: "Alessio Attilio via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 27 Nov 2026 21:27:31 +0000
+Subject: [PATCH v3 0/2] status: report when submodule URLs are out of sync
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -115,42 +96,297 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-ThreadId: AeJYkkWRInug
-Date: Fri, 27 Nov 2026 22:02:57 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, "Tuomas Ahola" <taahol@utu.fi>
-Cc: git@vger.kernel.org, "Julia Evans" <julia@jvns.ca>
-Message-Id: <faf10eb1-bb8f-47f0-960c-d54c6fad01d8@app.fastmail.com>
-In-Reply-To: <xmqq33sme4u5.fsf@gitster.g>
-References: <20260909052501.8448-1-taahol@utu.fi>
- <20261126201110.9046-1-taahol@utu.fi> <20261126201110.9046-2-taahol@utu.fi>
- <xmqq33sme4u5.fsf@gitster.g>
-Subject: Re: [PATCH v4 1/2] command-list.txt: add gitformat-loose(5) and gitpacking(7)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Alessio Attilio <attilio.alessio@protonmail.com>
 
-On Fri, Nov 27, 2026, at 15:17, Junio C Hamano wrote:
-> Tuomas Ahola <taahol@utu.fi> writes:
->>[snip]
->> That leaves only gitweb.conf(5) which could be added to
->> 'userinterfaces'.  However, the manual would then appear
->> as "web.conf" in `git help -a` which is just confusing.
->> So, perhaps we are better off by leaving it out.
->
->[snip]
->
-> By the way, plain single quotes 'git help -a' instead of backticks are
-> preferred in the commit messages.  Nobody passes these proposed log
-> messages through AsciiDoc or Markdown processors, and they are supposed
-> to be pure text.
+When a submodule URL changes in .gitmodules, the corresponding URL in the
+superproject's .git/config may keep pointing at the old location. This
+series makes git status warn about that mismatch and suggest git submodule
+sync.
 
-I use backticks in commit messags for my own personal work just because
-I prefer the look. So it=E2=80=99s not for some markup language. And in =
-that
-sense using `, ', or " are all equally pseudo-markup.
+The warning resolves relative URLs as git submodule sync does. It also
+suppresses the warning when the populated submodule has a custom remote URL
+that a sync would overwrite.
 
-The only time I actively dislike no quoting at all is when the code part
-is a simple and commonplace word and the context makes the sentence read
-weird enough for me to do a double take.
+The series is split into:
 
->[snip]
+ 1. submodule: move URL helpers to submodule.c
+ 2. submodule: make URL resolution repository-aware
+ 3. status: warn about stale submodule URLs
+
+Changes since v2:
+
+ * Keep the helper relocation in a preparatory commit.
+ * Move repository-aware URL resolution into its own commit.
+ * Keep test output inside its fixture directory.
+
+Closes gitgitgadget/git#565
+
+Alessio Attilio (2):
+  submodule: prepare URL helpers for reuse
+  status: warn about stale submodule URLs
+
+ Documentation/git-status.adoc |   6 ++
+ builtin/commit.c              |   1 +
+ builtin/submodule--helper.c   |  63 +++---------------
+ submodule.c                   |  45 +++++++++++++
+ submodule.h                   |   3 +
+ t/t7508-status.sh             |  84 ++++++++++++++++++++++++
+ wt-status.c                   | 120 ++++++++++++++++++++++++++++++++++
+ wt-status.h                   |   1 +
+ 8 files changed, 270 insertions(+), 53 deletions(-)
+
+
+base-commit: acba8bf9753134d9bde89f94369f775838a8c5fe
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2509%2Fkairosci%2Ftopic%2Fstatus-submodule-url-sync-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2509/kairosci/topic/status-submodule-url-sync-v3
+Pull-Request: https://github.com/git/git/pull/2509
+
+Range-diff vs v2:
+
+ 1:  4cd0ab7e9b ! 1:  fc300295ff submodule: prepare URL helpers for reuse
+     @@ submodule.c: int is_submodule_active(struct repository *repo, const char *path)
+       	return is_tree_submodule_active(repo, null_oid(the_hash_algo), path);
+       }
+       
+     -+char *resolve_submodule_url(struct repository *repo, const char *url,
+     ++char *resolve_submodule_url(struct repository *repo, const char *rel_url,
+      +			    const char *up_path, int quiet)
+      +{
+     -+	const char *remote = repo_default_remote(repo);
+      +	char *remoteurl, *resolved_url;
+     ++	const char *remote = repo_default_remote(repo);
+      +	struct strbuf remotesb = STRBUF_INIT;
+      +
+      +	strbuf_addf(&remotesb, "remote.%s.url", remote);
+     @@ submodule.c: int is_submodule_active(struct repository *repo, const char *path)
+      +				remotesb.buf);
+      +		remoteurl = xgetcwd();
+      +	}
+     -+	resolved_url = relative_url(remoteurl, url, up_path);
+     ++	resolved_url = relative_url(remoteurl, rel_url, up_path);
+      +
+      +	free(remoteurl);
+      +	strbuf_release(&remotesb);
+ 2:  b0dd21100c ! 2:  9dc6283075 status: warn about stale submodule URLs
+     @@ Commit message
+          in git status so users can run git submodule sync before a later
+          submodule operation uses the outdated URL.
+      
+     -    Resolve relative URLs using the same paths as git submodule sync.
+     -    Avoid warning when the submodule remote indicates a local
+     -    customization that sync would overwrite.
+     +    The check considers three URLs: the .gitmodules URL resolved against
+     +    the superproject's default remote, the cached submodule.<name>.url, and
+     +    the submodule's default remote URL. The first two determine whether the
+     +    cached URL is stale. If they differ, compare the submodule remote with
+     +    the old and new URLs as sync would write them. Warn only when that
+     +    remote matches either URL; a different URL or multiple URLs indicate a
+     +    local customization that sync would otherwise overwrite.
+     +
+     +    Resolve relative URLs using the same paths as git submodule sync, and
+     +    do not resolve the already-resolved cached URL a second time. Emit the
+     +    warning on standard error for long, short, and porcelain status output,
+     +    limited to submodules matched by the pathspec. Do not emit it when
+     +    --ignore-submodules is given or when the wt-status machinery is used by
+     +    another command.
+      
+          Signed-off-by: Alessio Attilio <attilio.alessio@protonmail.com>
+      
+     + ## Documentation/git-status.adoc ##
+     +@@ Documentation/git-status.adoc: are what you _would_ commit by running `git commit`; the second and
+     + third are what you _could_ commit by running `git add` before running
+     + `git commit`.
+     + 
+     ++When a submodule's URL in `.gitmodules` differs from the URL cached in
+     ++`.git/config`, `git status` warns that `git submodule sync` can update the
+     ++cached URL. The warning is written to standard error in all output formats.
+     ++It is limited to submodules matched by the pathspec, and is suppressed when
+     ++`--ignore-submodules` is specified.
+     ++
+     + OPTIONS
+     + -------
+     + 
+     +
+     + ## builtin/commit.c ##
+     +@@ builtin/commit.c: struct repository *repo UNUSED)
+     + 
+     + 	s.ignore_submodule_arg = ignore_submodule_arg;
+     + 	s.status_format = status_format;
+     ++	s.check_submodule_urls = 1;
+     + 	s.verbose = verbose;
+     + 	if (no_renames != -1)
+     + 		s.detect_rename = !no_renames;
+     +
+       ## submodule.c ##
+     -@@ submodule.c: char *resolve_submodule_url(struct repository *repo, const char *url,
+     +@@ submodule.c: char *resolve_submodule_url(struct repository *repo, const char *rel_url,
+     + 			    const char *up_path, int quiet)
+     + {
+       	char *remoteurl, *resolved_url;
+     +-	const char *remote = repo_default_remote(repo);
+     ++	const char *remote;
+       	struct strbuf remotesb = STRBUF_INIT;
+       
+     -+	if (!starts_with_dot_dot_slash(url) && !starts_with_dot_slash(url))
+     -+		return xstrdup(url);
+     ++	if (!starts_with_dot_dot_slash(rel_url) && !starts_with_dot_slash(rel_url))
+     ++		return xstrdup(rel_url);
+      +
+     ++	remote = repo_default_remote(repo);
+       	strbuf_addf(&remotesb, "remote.%s.url", remote);
+       	if (repo_config_get_string(repo, remotesb.buf, &remoteurl)) {
+       		if (!quiet)
+     @@ t/t7508-status.sh: test_expect_success 'setup status submodule summary' '
+      +	git -C url-test/super config -f .gitmodules submodule.module.url \
+      +		"$PWD/url-test/updated-source" &&
+      +	git -C url-test/super status --porcelain >url-test/actual 2>url-test/err &&
+     ++	test_grep "module.*different URL" url-test/err &&
+     ++	git -C url-test/super status --short >url-test/actual 2>url-test/err &&
+     ++	test_grep "module.*different URL" url-test/err &&
+     ++	git -C url-test/super status --porcelain=v2 >url-test/actual 2>url-test/err &&
+     ++	test_grep "module.*different URL" url-test/err &&
+     ++	git -C url-test/super status --ignore-submodules >url-test/actual 2>url-test/err &&
+      +	test_must_be_empty url-test/err &&
+     ++	git -C url-test/super status -- .gitmodules >url-test/actual 2>url-test/err &&
+     ++	test_must_be_empty url-test/err &&
+     ++	git -C url-test/super status -- module >url-test/actual 2>url-test/err &&
+     ++	test_grep "module.*different URL" url-test/err &&
+      +	git -C url-test/super status >url-test/actual 2>url-test/err &&
+      +	test_grep "module.*different URL" url-test/err &&
+      +	test_grep "git submodule sync" url-test/err &&
+     @@ t/t7508-status.sh: test_expect_success 'setup status submodule summary' '
+      +	git -C url-test/super status >url-test/actual 2>url-test/err &&
+      +	test_grep "module.*different URL" url-test/err
+      +'
+     ++
+     ++test_expect_success 'status compares relative submodule URLs only once' '
+     ++	test_when_finished "rm -rf url-test" &&
+     ++	test_create_repo url-test/relative-source &&
+     ++	test_commit -C url-test/relative-source initial &&
+     ++	test_create_repo url-test/relative-super &&
+     ++	git -C url-test/relative-super -c protocol.file.allow=always \
+     ++		submodule add "$PWD/url-test/relative-source" module &&
+     ++	git -C url-test/relative-super commit -m "add submodule" &&
+     ++	git -C url-test/relative-super remote add origin ../a/b &&
+     ++	git -C url-test/relative-super config -f .gitmodules \
+     ++		submodule.module.url ../mod1 &&
+     ++	git -C url-test/relative-super submodule sync &&
+     ++	git -C url-test/relative-super status >url-test/actual 2>url-test/err &&
+     ++	test_must_be_empty url-test/err &&
+     ++	git -C url-test/relative-super config -f .gitmodules \
+     ++		submodule.module.url ../mod2 &&
+     ++	git -C url-test/relative-super status >url-test/actual 2>url-test/err &&
+     ++	test_grep "module.*different URL" url-test/err
+     ++'
+      +
+       test_expect_success 'status submodule summary is disabled by default' '
+       	cat >expect <<EOF &&
+     @@ wt-status.c
+       
+       #include "git-compat-util.h"
+       #include "advice.h"
+     ++#include "abspath.h"
+      +#include "config.h"
+       #include "wt-status.h"
+       #include "object.h"
+     @@ wt-status.c
+       #include "remote.h"
+       #include "refs.h"
+       #include "submodule.h"
+     ++#include "url.h"
+      +#include "submodule-config.h"
+       #include "column.h"
+       #include "read-cache.h"
+     @@ wt-status.c: static void wt_porcelain_v2_print(struct wt_status *s)
+      +	remote = repo_default_remote(&subrepo);
+      +
+      +	key = xstrfmt("remote.%s.url", remote);
+     -+	if (!repo_config_get_value_multi(&subrepo, key, &remote_urls) &&
+     ++	if (!repo_config_get_string_multi(&subrepo, key, &remote_urls) &&
+      +	    remote_urls->nr == 1) {
+      +		remote_url = remote_urls->items[0].string;
+      +		up_path = get_submodule_up_path(path);
+     -+		config_remote_url = resolve_submodule_url(repo, config_url,
+     -+							  up_path, 1);
+     ++		/*
+     ++		 * sync_submodule() stores a relative URL in the superproject's
+     ++		 * config without the submodule path prefix, but adds that prefix
+     ++		 * when storing the URL in the submodule's remote configuration.
+     ++		 */
+     ++		if (url_is_local_not_ssh(config_url) && !is_absolute_path(config_url)) {
+     ++			struct strbuf sb = STRBUF_INIT;
+     ++
+     ++			strbuf_addstr(&sb, up_path);
+     ++			strbuf_addstr(&sb, config_url);
+     ++			config_remote_url = strbuf_detach(&sb, NULL);
+     ++		} else {
+     ++			config_remote_url = xstrdup(config_url);
+     ++		}
+      +		gitmodules_remote_url = resolve_submodule_url(repo, gitmodules_url,
+      +							      up_path, 1);
+      +		/*
+     @@ wt-status.c: static void wt_porcelain_v2_print(struct wt_status *s)
+      +{
+      +	int i;
+      +
+     -+	if (s->status_format != STATUS_FORMAT_LONG &&
+     -+	    s->status_format != STATUS_FORMAT_NONE)
+     ++	if (!s->check_submodule_urls || s->ignore_submodule_arg)
+      +		return;
+      +
+      +	if (is_gitmodules_unmerged(s->repo->index))
+     @@ wt-status.c: static void wt_porcelain_v2_print(struct wt_status *s)
+      +	for (i = 0; i < s->repo->index->cache_nr; i++) {
+      +		struct cache_entry *ce = s->repo->index->cache[i];
+      +		const struct submodule *sub;
+     -+		const char *config_url;
+     ++		char *config_url;
+      +		char *key, *gitmodules_url;
+      +
+     -+		if (ce_stage(ce) || !S_ISGITLINK(ce->ce_mode))
+     ++		if (ce_stage(ce) || !S_ISGITLINK(ce->ce_mode) ||
+     ++		    !ce_path_match(s->repo->index, ce, &s->pathspec, NULL))
+      +			continue;
+      +
+      +		sub = submodule_from_path(s->repo, null_oid(s->repo->hash_algo),
+     @@ wt-status.c: static void wt_porcelain_v2_print(struct wt_status *s)
+      +			continue;
+      +
+      +		key = xstrfmt("submodule.%s.url", sub->name);
+     -+		if (repo_config_get_value(s->repo, key, &config_url)) {
+     ++		if (repo_config_get_string(s->repo, key, &config_url)) {
+      +			free(key);
+      +			continue;
+      +		}
+     @@ wt-status.c: static void wt_porcelain_v2_print(struct wt_status *s)
+      +				  "than in .gitmodules\n"
+      +				  "  run 'git submodule sync' to update it"), ce->name);
+      +
+     ++		free(config_url);
+      +		free(gitmodules_url);
+      +	}
+      +}
+      +
+       void wt_status_print(struct wt_status *s)
+       {
+     -+	wt_status_check_submodule_urls(s);
+     ++	if (s->check_submodule_urls)
+     ++		wt_status_check_submodule_urls(s);
+      +
+       	trace2_data_intmax("status", s->repo, "count/changed", s->change.nr);
+       	trace2_data_intmax("status", s->repo, "count/untracked",
+       			   s->untracked.nr);
+     +
+     + ## wt-status.h ##
+     +@@ wt-status.h: struct wt_status {
+     + 	unsigned colopts;
+     + 	int null_termination;
+     + 	int commit_template;
+     ++	int check_submodule_urls;
+     + 	int show_branch;
+     + 	int show_stash;
+     + 	int hints;
+
+-- 
+gitgitgadget
