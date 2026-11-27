@@ -1,120 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.146
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795758828;
-	b=rAhGYMBOy5cjIDccwA8HmVXTE2cvaG5LJWKSDRqjYxiDZG6Dh/BiTq9FPa1aIN0jDqUS
-	 BZP11FgjGL58eNwUhLEkfvbB0L3weHeNLSLEXPnGaxtgJ1Z4PnHDqIK9FDHGn2+JSsnpm
-	 783StohjEwSMMT/OH1pFS0YDrwLSNn29nkH9RNwi1oEpEQipeLEC+iUtt5egnlv8dOIM3
-	 9FsYNPepnaFv34ptWnToku47SNQgYBqHuais52UK3hCY4LT5C24QvYgUugmm1TWrJOU1J
-	 g9xFLjpZtSo+ets/RiPFTmM6fUPJGHZoH7TbCa0TxzPF1nPj/tpuyUyC0R/v2VXq+Jg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795758828;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=AAYYHy7nJ4onHa0uH8QJbeyuzFvQtFkC+mAYklrm/oA=;
-	b=YbqHz8dMMZCEiIv+ZJdNIDCV5T8bf740z7uGkBAXdkFgAph/7uq8Idf3hUjbgoHmNP5b
-	 P1EwNxLw++EUdDK2sAW3PHbnos/V7FhrrUakeDC+AQPbq+HIsClD9Pu5g1fzw+Zd0yPgu
-	 zGtIDoxNzt5ckELsdBGxMeTw0Kd8WQ9mreggzcz5gHu2cVtO7quuASPMckKwCFAn40UKI
-	 qUNk0pla9CrUpHgWlzJ5hpRFicpF4mdyIu08ZKyxNnIdN5jZckGK8oS7NGqcysOWArgUT
-	 MS5ryWaU2F1x44Yr41SuG4L3tJJy+pdU9CTMhfbxfZQ8K+j8yl+2HTTKJ9BO3LZSa9g==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b="nl6Hxl/t";
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=40gXm3Fz;
-	arc=none smtp.remote-ip=103.168.172.146
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.53
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795759574;
+	b=vYBKm5acxCS54aSJDzsl2guJRP8PrzZhDW1G/TPdlpHmsQHZL+18/N02Oj7asxQhGbH3
+	 +4TY35CFCvlCcH6B9rSTuecbaIp8mGXzBsOn5uYZ6O0smI1aRbLG5FGYIG24EhUGUOqlz
+	 HLk8dVmWwpVubpwsrzWys7dfZe39UeZZVLVvmJXU9E6df6PWI746nIzO6nSkj5PLQeOK3
+	 1x0vtzn+6MpWZ+Eq5xYMLBYbN59zMGHa4+rZxUe911n1dV6BZ3aurf7uljB+B30R51OtO
+	 +D9RiVfaYMgX7zeAFtqfGUE9ld3ycs7C1lemMo1SzxUWgO973KXwuXxwv+WiMPSZJ6w==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795759574;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=MbYoT7KQY4UzFEVC933i7Z1fV6EeAwPt6xNe+N74urI=;
+	b=MFzparbDdgJPdA6WhnGmAVEC5k36ugwJuuZ3H1apCXojX3r61HnY2JWSnUP9sjPcQv4h
+	 TemmQfueg2NqMin9tMTKvaxCQzBQrSdw9mWYvVDQ0VkSO9Guvjd5Ng4AXlS5l93blxvLN
+	 r3tjpXZFWwxMfWngsitJXodH+NHDJlG6iWqj1EVRYhfYnXrc3mg+UFvji45SeVru/1XBy
+	 dpGmGeIOIpwH4ar+GpKGr3zDrdJHi5Mm9oOglDzrrL2/YuThlm2Tf/EuegLRrlVno+6Fn
+	 PpcUy0nArFhv9qW+qNGc5bQKzgjV6VfQLagC9+cNdI6MHaP3ng6Gv8RmJkEHKzlF+yQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=aajIjjm2;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.53
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE5B606A31E
-	for <git@vger.kernel.org>; Fri, 27 Nov 2026 05:53:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7FE5B606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05A6606A31C
+	for <git@vger.kernel.org>; Fri, 27 Nov 2026 06:06:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F05A6606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=nl6Hxl/t;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=40gXm3Fz
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9F4F8EC08AE
-	for <git@vger.kernel.org>; Fri, 27 Nov 2026 00:53:46 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 27 Nov 2026 00:53:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795758826; x=1795845226; bh=AAYYHy7nJ4
-	onHa0uH8QJbeyuzFvQtFkC+mAYklrm/oA=; b=nl6Hxl/tR80poM8LLNqB5yjMJt
-	3U/cQ4VUPHZWLgG5I6roEipxwg3P+LoTv2LfGQ0HjaTSAuxp9FwYGjndcm2jRy6y
-	dBr4mVKe7j141gvRqSmiyizMmdvf2/OYqoHhOCSR1pqdu6lhHr5+BN4CSJ9NZIyK
-	mJff+yxMs/82u80+HuGrA+qPv9sMyCfewBhyFC/MFBn6yDFx0jiJLwfsnQQcQwVz
-	xo2My5/wmKB+4jTyRGhKZtbuhs3y7OzUy7E2r0ZUj3fX/EKZJDdIhhbj2LkeJXym
-	kNE/6YMN/Wn+h+FF44lVfmTM/G1KsGInHO5fPsftpOkyYZD/laJng1IcUcAg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795758826; x=1795845226; bh=AAYYHy7nJ4onHa0uH8QJbeyuzFvQtFkC+mA
-	Yklrm/oA=; b=40gXm3FzlLv1s4Tqcu4qmHqFgsx2wgEd0sXTZ2ZJcAHAi521Etb
-	AIFXahcrPLTPFwQ1eS9QWCFqfAFOwYjB6t6URmIO3AYi7Jk9lVIrAKIrqUjGe9JM
-	7lUyDOQpKc0HzqWm7U2ojxp64oJcVP9NX2bsyUG5lY8DwTGWA1vzkO8JpgyLQM99
-	1rbOAxh6kCJ4YiVJIyy0V+6lcK+GHUZ7JVGHE45i5uPkPX+7y/Uav/sTpCwQQZSe
-	5rPudlnM7uyFNvaPa394G4lu8jp5Fmff7k8Nks1KF+KAfWcrQnT2AUNH5VDmwR0C
-	xw/aQ0h4EyeIG3JVphVEfjC78qVhR9EzyJA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795758826; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:nthdt9gKoGof5sEBL6JMHUN957vajuvnsyet1XA0ByRQHB8
-	qK6MyOJE5N77JlVvtaAcvqUrC5pHlZ7icXGSwsRs57/fo3g0yXVtC+Yj51l7fCFz
-	Z7k6qW7nceKyYZ0AefxVnibjncwlW++xLGX3Pg3bHaa+BttbQWVwloTyDEys2NnJ
-	Mptdbi5Uv5dCmeVTHLPMMcrytxHs5I0W4ivCI02sBSbxIEHkfxRxFk4wYVjSAM5p
-	2elMEV+bgtjlQjokVTaCoaXw3+h7EHTbBRk+akygRnfezRmdirxyGzZvifBkuSh+
-	hg6a4NRq9RHbFdW9VpKXGnBp8Pk341+EMN+1e1Q==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:WzhPE1e1S1XCvt8+RiY00MVejrAYZOwP+6O0i2yobRQ=:r1QOYZ0YyDhXPe1e8nccEUoQ+uc+Bzh7cHiflJxWOsE=;
-X-ME-Sender: <xms:6hoJa71TguLlojPQYjCSRGjDUisbhrbVXev5mE4aGbhVa1E-f_zHdA>
-    <xme:6hoJaxE2JATLc0xdUamiE9Zsr-W421O4kZw7CzQ28ZNzl5jbiQXH-LvWVtVNUSjkV
-    JVofN7VihlVTW6ojv2zeRdD8XT3a3Gl5MpscxZSA9Lzk_7N-4O1_z4>
-X-ME-Received: <xmr:6hoJaw5ZlE_bCa_Lj0RIdJpK41AgXLlwuO1En0b4_NDK9dDrMfmDJ70qF6YOBwAD71uSRmbElwrsBHQdCl-Nm_HD_LlY1ZWncinQl4M>
-X-ME-Proxy-Cause: dmFkZTFYkalCSy+n8GGERunDy3VcQijcq0LUknWAeMH+AV+NkUXDVo5e6v5m6T//sU4TS5
-    zjTliR+wGhu5PIeEzWyqpqeriGVYQPumSQDjCxJVfy9+VUOZn/xLAiRXVQFGxBhqc7TCU/
-    zC9b5+hF47BHoFOafcXAdwZn2JGXntUVMsgxacJVVozGySXHyX/lbVCWdkDNN7c0P23qPg
-    M3Vg9iX2whr254HfRAM5VxyFBrnxUGofe/RuvlsKTAV2dNyMD4VWUISDv1gsy+i/Dnstrv
-    buiGTVt85KUawCBfZxEdRvDE/pHyUgabS/t5lISfxesz6AKNLh0YZ4DQgToOyens610DcK
-    ioeesGdtHNPPAk2nSvgx2ObmwiIDsS8yKGAGmIQuBMtSWHN5Sspb49uOiPUnRSlU1LBwvQ
-    nfPdZ6vXRcnJUYeW3hIu+3rYnsSuavhhbIpsMhJldvSiiobbIRaShvwqqRBkxudAf8THsl
-    tmRJSAHWR9rxG3Efllcmyad/lxhO0tFwbjrhXHCrm6SVIqlzErpIIllWYmvlobmQqY1Y6B
-    lCEr6dg8ZDOWJwPlcSC8xctlIcPqCAKqnFc/qFmURAWxPNUrebPt1Bo8UPE1PWDSZO8Z43
-    w86dR80Wc1rRYKqCwsMWJDyu12nV3ggjqhjzZC6QNRCRdlGKVuzp4HAIpAQQ
-X-ME-Proxy: <xmx:6hoJa_uMNEBmxvd5KKkV3LM67Yl3MbY6TM3yC8sq8Jw9akGnNBL2XQ>
-    <xmx:6hoJa56-rtsHznbibf7hpIYtO8pMk5_2k8tLciIRx4Sgrrm80Wu4eA>
-    <xmx:6hoJayVr55QL_Kj6sBvL_KEBUMP9fWghfhNVFnK7d6nvGCUzUs1l0g>
-    <xmx:6hoJaz_w0rSozkr6RbW8Q7GHHBYZNLysSOm53xgYBFzP0dN295c_qA>
-    <xmx:6hoJa8Yc7u8pS2LlkXPO91x9ziDZcn6xvFPYbEHtHF-CHU1jqWNJnZin>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Nov 2026 00:53:46 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Nahid Hasan via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Nahid Hasan <nahidhasan141400@gmail.com>
-Subject: Re: [PATCH v2] push: shell-quote names in suggested push commands
-In-Reply-To: <pull.2336.v2.git.1795747717319.gitgitgadget@gmail.com> (Nahid
-	Hasan via GitGitGadget's message of "Fri, 27 Nov 2026 02:48:37 +0000")
-References: <pull.2336.git.1795686173178.gitgitgadget@gmail.com>
-	<pull.2336.v2.git.1795747717319.gitgitgadget@gmail.com>
-Date: Thu, 26 Nov 2026 21:53:44 -0800
-Message-ID: <xmqq7bhyes5z.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=aajIjjm2
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5be4fea434bso7577667e87.1
+        for <git@vger.kernel.org>; Thu, 26 Nov 2026 22:06:13 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795759572; cv=none;
+        d=google.com; s=arc-20260327;
+        b=oDjNL8A51N+VTFdz0/qtM/WW5JQycct/EvJM2m0IOSWohQWF518pZN7tL6N4VK3nvE
+         2sKU4HV5WuCoUTpb48G5YMEkacITlik5KpZ/GdNC0euAYLNNqhtcLX+2EqKQ6Ml4cWa1
+         s+hi5oG0YfqeGEKZQ0Xt7HG9VSBVdc7W2YiXWpeB74Ekx6Ot3XOoaMlECwSTNTknkQct
+         4hW9u9PHteNF2lmV+0KWKkTd0xFKo5V2MKxcAcyZ7kHSs3Dbjz3SolDqrnok9WB9j5F7
+         youHFzICPPuurJLV0j6Pv1atdhw5TjSztF5UrfY0KzwXxtqu5Z0oi0eONQdKAFOHaXkT
+         ZjMg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=MbYoT7KQY4UzFEVC933i7Z1fV6EeAwPt6xNe+N74urI=;
+        fh=psBW2Knbj406zdabrElMwsX9K8L5dCF8+x5DCZujN00=;
+        b=XR7BZiGdglOXYxGaeAdsp0QkqHKllq7VxnisDCP3DJVnXGqT7GNcO3JY6siBKewGFH
+         swCCpHI6fsbulsAlRxG8kcu6++Sp05ERXoK4UVO/1W2GA+5Aq14MdMY5XxE6Cuc45jn0
+         eB16kiBXOBU1v61JTNP8cyBKCe/DHlw1HoJhfc101NYYJMR1AaBX/94NbMsyWzLZ7y6t
+         Id/LNM1bkt7qw9EVvMgfCHQ1svq0fUEXdYkPp7rDhV3WULpn23Efpc2JVsaVjFR5Fg/8
+         RUbfZfS4ZP+B6BmLGp2GcsNdOko3IF8aUv9ZYMV3XIsNesRHjB6mXeVMn1G5q3cMtii9
+         CH6Q==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795759572; x=1796364372; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=MbYoT7KQY4UzFEVC933i7Z1fV6EeAwPt6xNe+N74urI=;
+        b=aajIjjm2wG5+BLUpH1hPmMn87zieI7WenzLShBAueZc12L5nGz72VOqK2EvoGPW/ml
+         XBwHyTipfgpCzAP6GTsa6GrfuDwfK6TZqBsPgwVQpkl6CZsQa0X3vT3CT+Bj0RdVpkDP
+         fEaRWgxlwjZfTozNGAlu6/2uSbF42oIZmzSJHH4wiO86ozjO/xSG6rRt5LO7a/yIvo8q
+         v/A9MLj6JVkSeZiJ+E/iRSLNM0We1E4Og9/7wPSMk0XpPuFpH8D8NptZuvf+mlR2tvy9
+         YVHPiqR/7c6Sv4Uk6dam2gqBceBCnAFAu/j8PYHdSW8tDcNFc/99gOFXVBmEDxK9+2aU
+         MREA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795759572; x=1796364372;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=MbYoT7KQY4UzFEVC933i7Z1fV6EeAwPt6xNe+N74urI=;
+        b=is5VT48WcrWMOjdj5h0rJK5r1LYlO5yObPKa6CAp7Cz/RlL5ZSTUHZXgIP0qEKCj44
+         TyuUO+3tKGAWnIMZBCf5f8vNB2yp/ptZSUvPB6xSivAeHhAg7FmVut3ovAXeznGJYPX6
+         zldWsOkwpU/Z12EjeqOrpHUjGTHlRJf3D+ys1xe6JaUtEIw6KcKqEA38Gd+SsTvgHCj0
+         PANxRZ1XEPrHdLTM3atxGJcnOUNnPRGn3WroBWLlRJBlCGfLz/QvROk+vxQOvxOp09C0
+         ETxS1mtInlKe9AlrIvF75ZKiwJ6InPfA9ImXpmZPOsdVNeEbTXRQVSd47awa1qRkS/2M
+         Q5wg==
+X-Forwarded-Encrypted: i=1; AL+hErFy1zmPLOxIFahFE23S1D73EK41EbH6gK01LX2PPlRAjLMsASzkm/ZsvhR9lgw4nktgptU=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+FECoJfRaNTcVcqwDww/yi7gmnvn76A829Hc+4GbNRnIfMUZI2
+	Vz8qKf69boz9h0zkHhvn/DLKQoYHLViX8YjxKLbEhgrN7z0/wGJlnrkwJmF5m+kkqCTtxph4icb
+	u6RPGkdtedjMWxOTDwrqV/AMY+azAgCA=
+X-Gm-Gg: AZFdTZczlfXpQK6MCUzVa7BEa7YpEIVhK75VX/h5K2+CtNT5g4od3yXo/YGdKbPipKH
+	i+x+Z+lBBdsjtORys5YIP53sxIwuvov9ucZT4cA8jTpsJ1YL4SMswuIgLtjMxZfLvfbdFgEmtbo
+	0KLPGXjBeguXIt3gNtmM0ScnMjz4v7wzr++XjRDonZn5YwusKsc+n19eMr+m2d5XyHmczKoNCi5
+	JAh5MxrOVhYOhzBj6Tg2+l88Yum0Q5Yip7J9cNoYXxwOpEYXz2O1dVWDLZJ5lYLf1B//1cprtFe
+	lc1aOgxR3swPNh9mjbw6dJlt24gXu7huVIgYNKaQecnPGCFEhTXoknuYJgRUmPtrL2y702Z6aKk
+	5qaq5zHTvNb7guWsYppL8OvtZ5ZCPYkdMrMw2/g==
+X-Received: by 2002:a05:6512:3087:b0:5bf:f6c1:430c with SMTP id
+ 2adb3069b0e04-5c1b7bc999dmr5970686e87.8.1795759571825; Thu, 26 Nov 2026
+ 22:06:11 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -124,92 +104,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2336.git.1795686173178.gitgitgadget@gmail.com>
+ <pull.2336.v2.git.1795747717319.gitgitgadget@gmail.com> <xmqq7bhyes5z.fsf@gitster.g>
+In-Reply-To: <xmqq7bhyes5z.fsf@gitster.g>
+From: Nahid hasan Sagor <nahidhasan141400@gmail.com>
+Date: Fri, 27 Nov 2026 12:06:00 +0600
+X-Gm-Features: Aa3M54p6ZggUmJ-R4U1ia0SelCNtWvZnTUW3cF_wA9PV17W4tyYKyVlioJQMtjs
+Message-ID: <CABQNq+==P8khE+=C-0xF0mrBi1VRpMnd=KmUoqYL8BNMsFp+Dg@mail.gmail.com>
+Subject: Re: [PATCH v2] push: shell-quote names in suggested push commands
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Nahid Hasan via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Nahid Hasan via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> Format the remote, branch, and ref names in the suggested `git push`
-> commands in `builtin/push.c` with `sq_quote_buf_pretty()` so names
-> that need quoting are wrapped in single quotes while plain names stay
-> bare. A HEAD:<dst> refspec is quoted as one shell word, and the
-> detached-HEAD hint in setup_default_push_refspecs() quotes the remote
-> name as well.
-
-This iteration cleanly addresses the points raised on v1.  A tiny
-formatting nit in the proposed log message is the mix of backticked
-tokens like `sq_quote_buf_pretty()` alongside bare ones like HEAD:<dst>
-and setup_default_push_refspecs().  We prefer a basic single quotes, as
-nobody passes the commit log messages through AsciiDoc or Markdown
-processor.  These are plain text.
-
->  builtin/push.c           | 48 +++++++++++++++----
->  t/t5523-push-upstream.sh |  8 ++++
->  t/t5528-push-default.sh  | 17 +++++++
->  t/t5529-push-errors.sh   | 99 ++++++++++++++++++++++++++++++++++++++++
->  4 files changed, 164 insertions(+), 8 deletions(-)
+On Fri, Nov 27, 2026 at 11:53=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
 >
-> diff --git a/builtin/push.c b/builtin/push.c
-> index 2377b5af55..3908f5f532 100644
-> ...
-> @@ -173,18 +177,26 @@ static NORETURN void die_push_simple(struct branch *branch,
->  				 "won't match the local branch, see option "
->  				 "'simple' of branch.autoSetupMerge\n"
->  				 "in 'git help config'.\n");
-> +
-> +	/*
-> +	 * Quote for copy-paste into a POSIX shell. Ordinary names stay
-> +	 * bare; metacharacters are wrapped in single quotes.
-> +	 */
-> +	strbuf_addf(&refspec, "HEAD:%s", short_upstream);
-> +	sq_quote_buf_pretty(&quoted_remote, remote->name);
-> +	sq_quote_buf_pretty(&quoted_refspec, refspec.buf);
->  	die(_("The upstream branch of your current branch does not match\n"
->  	      "the name of your current branch.  To push to the upstream branch\n"
->  	      "on the remote, use\n"
->  	      "\n"
-> -	      "    git push %s HEAD:%s\n"
-> +	      "    git push %s %s\n"
+> "Nahid Hasan via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> This iteration cleanly addresses the points raised on v1.  A tiny
+> formatting nit in the proposed log message is the mix of backticked
+> tokens like `sq_quote_buf_pretty()` alongside bare ones like HEAD:<dst>
+> and setup_default_push_refspecs().  We prefer a basic single quotes, as
+> nobody passes the commit log messages through AsciiDoc or Markdown
+> processor.  These are plain text.
+>
 
-Before this change, die_push_simple() interpolated short_upstream
-directly into "HEAD:%s", so metacharacters in either the remote name or
-the upstream branch name broke copy-pasted commands.  Quoting the whole
-"HEAD:%s" string with sq_quote_buf_pretty() keeps plain refspecs like
-HEAD:other-name bare (since ':' is in ok_punct[] inside quote.c) while
-turning metacharacter cases into a single shell word such as
-'HEAD:upstream&name'.
+Thank you very much for the review and for pointing out the formatting
+consistency in the commit message. Using single quotes throughout
+('git push', 'builtin/push.c', 'sq_quote_buf_pretty()', 'HEAD:<dst>',
+and 'setup_default_push_refspecs()') makes complete sense for plain-text
+logs.
 
-> @@ -249,8 +270,12 @@ static void setup_default_push_refspecs(int *flags, struct remote *remote)
->  	}
->  
->  	branch = branch_get(NULL);
-> -	if (!branch)
-> -		die(_(message_detached_head_die), remote->name);
-> +	if (!branch) {
-> +		struct strbuf quoted_remote = STRBUF_INIT;
-> +
-> +		sq_quote_buf_pretty(&quoted_remote, remote->name);
-> +		die(_(message_detached_head_die), quoted_remote.buf);
-> +	}
+I will wait to see if any other review comments come in before sending
+v3 or please let me know
+whenever you would like me to send v3 with this log message update.
 
-Covering the detached HEAD advice alongside get_upstream_ref() and
-die_if_repo_looks_like_ref() catches all four places in builtin/push.c
-where a suggested "git push" command formats a remote, branch, or ref
-name.
-
-> +test_expect_success 'no-upstream advice quotes a branch name with metacharacters' '
-> +	test_when_finished "git branch -D \"branch&name\"" &&
-> +	test_when_finished "git checkout main" &&
-> +	git checkout -b "branch&name" &&
-> +	test_must_fail git push upstream 2>stderr &&
-> +	test_grep "git push --set-upstream upstream ${SQ}branch&name${SQ}" stderr
-> +'
-
-test_when_finished handlers stack and are run in LIFO order, so we try
-going back to 'main' first and then remove the funnily named branch,
-which makes sense.
-
-The new tests in t5523, t5528, and t5529 exercise both ordinary and
-metacharacter names across all four paths and check POSIX word
-splitting with shell_split().
-
-Looking good.
+Thank you again for your time and guidance.
