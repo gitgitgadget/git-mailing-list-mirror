@@ -1,100 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.44
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795755854;
-	b=ursGSp094bkLBYng3bGZC5IPv1Vr0NBB0fc6zBksRcZ/zaZu0ECX+tDLEveznhaRQ81s
-	 SnYzuMNIopd7PBCnT69wbv23vlqIPIrY9LD4yz4bobLrqjL9pgyBHP6YPlA0pErcOQT+i
-	 rpvcnS7cMmnugIU6MLwX9UlRD5LmXcMhde5+zggGlVBuxXpXWKcP87BmoHoyB0CvQ8+Um
-	 S3hL1+oR0x5tnVOqmv/dmvdE8WLSlbafu8EL203QVr2qSzjP9uWgQjM/gN0m3aIHiSR/n
-	 v2F7sfzR41o/8lgdzkbtSyUKrSxGEDZh+8Z/Fs2zGCk/5lXM1YkzUPvEnaOoSzDE0LA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795755854;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=CPmrgKVB/hFXmmDMAIpb3Udfn0tYQkjwvrxGrSFYyBs=;
-	b=nGY28ZKmQ4FZDDng8xlcKW5fYRIndCjUQ/4Jbmf9F5kDEI9JszOMfHtfBAlHAUVVc0T/
-	 jmorj7qxOe6PCrQkfm5mHf3sz0muRjiwkbldT3DuYT0SIY0kW4Ty3cQz/z9gNosFHCgSC
-	 mm164VtLi90BNuxpUL9op+raiFPGmxN5c1NN8s4kQh8/m4r0swQ1pJ/uqNxlgyFebGqKg
-	 5NugiGDvxmbAkGsVhkujT3Q5/SmoiPE2L0Q7eIEPz8Kg1VGk49WPhdAc+paTa8HaNVKYa
-	 POJtB18GhLhz/3OJ+5FncrmgbaNS+M5rD9R+MDXLpXBiwlwNPOU3+RomJFpI9nYGVuw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=taBWj9ks;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.44
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.146
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795756785;
+	b=AuU/WVyo/K2513G1QoO4NQevsXKnrJq0X99kXu4ZzG/0wizjHi2+brEIg1/nf2kz0Z4U
+	 kalTuQY36yG64ekbofRElc9YsJzeXNPWfgE2XGDj43JrUFvOO9MwqckXCQPWXjQP7KzRQ
+	 pyvEBrYGC31lq0THa3edpNarj7R98HM1nkOA6tME0V0YR9T/ECe/edNjm18TbJ7mUwpX1
+	 vTPdkaHQPZHojmOAegmUHf7EhmHhwT5dT2HULv+ca5CQQgJWvX3c7miBobHkhGnj7nYAY
+	 E82OCOqyeW9EFkQFfhiIJsdIaAeZwJiOZtj01AXAasUcmCtY8shx3zwMgRQrfLPmkfA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795756785;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=C7cIUOw4OzzfS0vcd0aY/qI6fUGnZyaP1zt1G2x9s/0=;
+	b=uYziy7ayMgED7n0o1wS4qZHAba4buy49KoGf8pkPq12iUzwFHZ4y65v54MJYw6IpKwUm
+	 V8As4ohjie5O91KB6UjYg/MaH9jSQeQaDy4E1HNgERkSuXMmt9Z5o3b3/JBZrQBocIMPs
+	 LG+UmANa7bR6dLjee76uvEr7skRGEMlviGRZN0u1APgpiRLPauEfPMnVBAiaxF5aDFcrH
+	 a0LrDPvUduEwND5TGRLIbplt1jue/RsOm3zA72tBmHNRbsi6qN+MFTP93IqdEOPjdRxJm
+	 +ZvlusFTuVb4K1ZGyoDCW/TgWQlCLuUipIHFSMUn9jWIRXHwz39I/mgKCl7T2PNM4Zw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b="nWCAE/Cn";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=tPw5WqUe;
+	arc=none smtp.remote-ip=103.168.172.146
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2BEF606A31C
-	for <git@vger.kernel.org>; Fri, 27 Nov 2026 05:04:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E2BEF606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9158606A336
+	for <git@vger.kernel.org>; Fri, 27 Nov 2026 05:19:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C9158606A336
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=taBWj9ks
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-91c1f548f87so102230716d6.2
-        for <git@vger.kernel.org>; Thu, 26 Nov 2026 21:04:13 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795755853; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ZEYttrw/NEX94IgHzDb22c4om3hgxmkd0BvlpKXSsZXP94It/LhvOEh5Hb1F+JwsRm
-         nuvLjRwcFcmlD4HUjzkQzYXuBskufMfaOpk8GC3UKzbhCieGRDkriFH0iCzla7xM35Ud
-         uFBiw8k1bHQKYSqrDKm8z3kcAYIuCgzVU4UDFEIUCPNSm5J4vQJzHFZ46I1w+kr9sbCj
-         Ouxy9eRbF+tDCTiPysiVk6EywqyEgLWI4oZqitVTpPUSWbi4Vz156ccjT1nitOQ6lx5g
-         bi18J8vvYnqzVEDTfagsFFlIn9SpYcbPsPyne+l1g0tNn7unWlSL5MilLnQIh1JJluuy
-         a0XQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=CPmrgKVB/hFXmmDMAIpb3Udfn0tYQkjwvrxGrSFYyBs=;
-        fh=6HILABBcUpB6pi/G3nLkNo88znwOx4lWVOxvHj4y9KM=;
-        b=X5+7S0sP2hPPgFBlB3Nf1cS5/vs7Kux4Zk7FNVBEvA5zon2kkb8xVhtgJ5AenMCqzS
-         SlgydhK2X/j1jhQXGfKS9Ar7K8xA1Yn9uWCpyJaAZShhrMwfJTchBMePweN7/0d7mfrA
-         /ppG/d2WVxMbb4dmpfg0ypLBUAM9Lr1d4TD/697iRcoGrMMwLOqf7nQFlvos81zBcGqm
-         j5cdaYGeFcKShKZICiu9Rugw77daMdJj2Q5demYftqvhcoeRezsdi2m3TJlzcGZ+5jVW
-         sSgahuld6J6ADlxJzfhbyY+IRaY0UOQab//fbReF0gh9R5rEr1e/DRPjj8e9GC71rXmC
-         NZ2w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795755853; x=1796360653; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=CPmrgKVB/hFXmmDMAIpb3Udfn0tYQkjwvrxGrSFYyBs=;
-        b=taBWj9ksOjVZRKP5Ku1JsKZegTQT1MHet1HLTr4tLMgvsPoWvRe7/UNavFZmN5KWD2
-         yI8p5qr1VXNSHLaMaAvxT8899CzNXuaRNc2l//H7EreItHh4pndVWzstuXFsaRnAOYuR
-         bDPBFbCZqyckyb8FogwZqZkJ8ahJzWqmb45+ES/BVHO8rde1H7CxNC54Ax1Ovf2LflWB
-         hZ9w667bH1gjCypDQPl6pIi8SEy8lK2Ec4I2nIfZ0SihRYNoibG+1E9WMEJnpOpoysm7
-         pLSNF/aRY/lK7ned0x2iECNEwBO22TKsYIaEn+IA9FCP+UTan7qPLH9616gqHB6F1Z+N
-         63ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795755853; x=1796360653;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=CPmrgKVB/hFXmmDMAIpb3Udfn0tYQkjwvrxGrSFYyBs=;
-        b=KFiA4YVECioiIbz+R1lB5WiwhCUsmj+ir7ae+md7oX4sKDsBNgZCsJij+Dl20FVBqX
-         SmzkAAVG4C6zYJfuoDEld1QEAzhrgY4Z9KrFb6iPIjL6BHK8pMEjVxQicQ60amBVYbkb
-         DZL7QnJ901UahTu7Virl00JM0ZPClZimfTEPH6RSWn0/YqUsu01AtWo3NVyAwnnh3upz
-         koFrwZWPJVUyiTzIFgoYijtzKrlEVjQ1/2KOylvqp350vOiUe/dT9Iam2mF+dwpUYgA5
-         NGxnRIzovoxb6WcnL3jHOFLTNVnaZENrhTPZI0lZXhTakaMPcqIhAAQIXqp/ubX6fs0W
-         xIrg==
-X-Forwarded-Encrypted: i=1; AL+hErEN4le32/TGuF0RIViem2YFrqWiiDt/d7NP0zQKOhLbaEPYFk4/S3VCSytHPjHQOUzPBpU=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/kAAfrQ/UchK5WFbmctVLKpYlPCpfyssjdJU/9Ol7jMLeIrozU
-	kKW0rgO8ftuymaLpMqBjAcKVT96ksrSuX0dnbQi1qo3Jdqdk0rwPWqwsQtHJaxMQ88cKXdYYOsY
-	xVz2O2eMWhuMeGMjLBLyTk8729L6mXTTV2n3T
-X-Gm-Gg: AZFdTZfaODjVVZtTsVlPK1/df0wOVwEPB4NNGJ4xpZyRVBNO1k5oqVJoIxtIvtNbN8N
-	EcvxnanL2I/JBVbVE2kzQXJ8VTufOeQYi8uWFTmcQn4dgyC3rsVP67JGhHMZN75UAeGYbfFi/h0
-	KkuCs5jwC58DK0QpCUF6oqZa1wwX5FudvmxDZYFerkkn6qYHq3I1qzJITDSvAwu+iI8gaSRmhVN
-	/8POdR5reweXCfa16bBgFRhhNTg1oVxK69UrWKS3NV/jZpMVkHBvbJsngDYibmEyA+9Kzjr6ShG
-	pzGtZLYbVtbEWRmLKBm+vbN2YZqcph2Xshft/g1yfQ1p9E3MgezbFnxTy9m+Dc9/VFAmE2jNswY
-	GazqEZ4fpxnBqT0dcMUP3IV3TUn3Zfax6kS4IIH37K6X6B8FwcLkskR0W1oOvajCePmoYJA==
-X-Received: by 2002:a05:6214:4902:b0:921:35a6:1a87 with SMTP id
- 6a1803df08f44-92135a630fdmr446098606d6.38.1795755852866; Thu, 26 Nov 2026
- 21:04:12 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=nWCAE/Cn;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=tPw5WqUe
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id A9CC7EC0A32
+	for <git@vger.kernel.org>; Fri, 27 Nov 2026 00:19:43 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Fri, 27 Nov 2026 00:19:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1795756783; x=1795843183; bh=C7cIUOw4Oz
+	zfS0vcd0aY/qI6fUGnZyaP1zt1G2x9s/0=; b=nWCAE/Cnd6cGwqQi9BQhCSocLo
+	OvD7CvcL8PBPgP/degOkLvFzTi011soyJz+t1bAbb25Y8vQlk5aTUta9jfgnVMCY
+	9NFP51TO7T89ZEXehOhH2thF/Me0NDqcYkmw3zqZe/JVMKvxY9ZE2hQTLEQXc963
+	gKOfFbs5jxfsv9lmtQf7j0U54j/3r3258NGFcgqjaCyD6vY45LKnlVYOhOVX+1CG
+	oAJRU8mcMUKANzFuOIbxCGpQV/jePsF+mMpUGrvjyVAimgVfKh6ckNWQvFG2CY5L
+	UUkwGdByXciWZIckp44A7x6upZIKw3s7TncdGxUsDgFnaGbxyEcF27hPIlsA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795756783; x=1795843183; bh=C7cIUOw4OzzfS0vcd0aY/qI6fUGnZyaP1zt
+	1G2x9s/0=; b=tPw5WqUeWswxsAJLPiGBuZGkGy6azaQt8UPfpMPe5Rfd53zbNYT
+	z8NNt29BB723Hdz5ld2z5Zn5axvcUNplTUBbN/1uPo3oiCkXCAudvsXT4kA562SZ
+	nIyEl+qGOWCOGIDhYG8L5nHjcu7wFI1TBRl0zEzyiEgaBt/lpIaJmll1OjnRLUXM
+	HUcvA+6hoXuUaoJeopAAmlv7nCfSlp3hDOmelHIU6+O2ZoPGGoExB7fQoOue5ule
+	nIat1oq3ugaBbokXHcmEOjpGf0Qx0KGQA/VBbydsKcwUDo2myk2kxWLRbWc0CVM/
+	CWk+GETc3q/ihGu8bBRdtP3xLFwh9eDPiUg==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795756783; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:l6gbdsSCNg6iIFqMms61oIwldWH5tJGH1ZIWi2dv8lfwuMU
+	cWuMesCCj3xUEcaTOem2Dr0XF56+lZksvlAGL0fQ/60h0DBaXMnabdn0vKQbDTJO
+	GlDMJfFWFj6bb2cjZmgd4mse0iWijHb0q5QPF4DHyqMPcX5sjkb/wCGWafoJctxI
+	TGdS8tV/tFIU2NeiistxDeqaMMS8Qp7424uHdrL1ks+Cklm13ZgilqKXeGLJKBNy
+	/oZp4mLfRAoku4SeB6OBtkJHOWkFF0aL7A+FuypIbzSgJswkqp4VwhVpbsBOkw8Q
+	6PRUQyHMGb57sNHyulY60S4eTd/CHIYVfg0Hpow==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:mjPJIyT0C4ja07bO7jvPLchJV8dOJeQoKSkRV6Pd3VI=:3PXGE1FgvXFGuAJ1C0RM1kzNUkxCvLcNyDAO8fYWnuQ=;
+X-ME-Sender: <xms:7xIJa8WkiQFFK8BDae9gp85VM1mswzr4w-oGvCEBe0AhvY97GUvU-A>
+    <xme:7xIJa3nmbnB-zXO4nd3q-1vjwg-CtlV3YaO0a26-BvdvvBLLcQEQzbqBT6RDjRhA3
+    YBFI7oIa0z83c9rdDZGoNdyAtA-DpLGkevgas-PBqk6NYCBXn03CQ>
+X-ME-Received: <xmr:7xIJa1blvlX52XBXZn2amMPIHZxhuGb20iw5m4Le8lBWEZtzW3JgioVX7v28QZLV2cGsffRUW_X5MKbMemHxZPXF5i9eGcEbA6f0t0s>
+X-ME-Proxy-Cause: dmFkZTGpZ1oBG9Q/KE19cMxF8+393YEuhzmlbCsdTAa8bRdsibRAHgazkU/bPQYKSz272z
+    tfxpSSo9VvX7J3L3j0vzbRtz+jjDTtO//ZOxm64s+Fb/ZI3XJ05M7sXPsVXEldqR1U9VCY
+    B1XPP5EMeFDDTcdeJ7TMpYao39ZsBB6wwswp6rjwTSJS/Uq6KREomr+VHrJD3RjcAypvJa
+    T+nuYP2Wjv7fXxHWWSuvpIdUzroGCnqXOUT0C3rI6kavwNyhg1ynyVTcOVEmCzLTP94llm
+    CvzhMMp7jp+yhJnDpatCpHZaTpDXViL0KbKjipZp8u5i6POapQ7wVRSM7gEHsieB/Bp0UU
+    Ic1PjCWS07mmXFYAANJ/Xeiq0QaqJIHdx/3MWqRoTo0D9WjhletTfG5+miQVNk0kqh5Kdb
+    Cq5/KKNW0+vcd5LLIWrhOhz25agvS8JnS1JEvQB3YaYEvqH5xEppuEkb9f28pGBHFwkMcf
+    mMTBeg6kWZZsbBudK6e32NgoVYTSJspC+CrD2pS0PPilNiG66bJQ3OHG4uhop5pzWz+Rw2
+    OB++qHZmWazovsiPexBddnKMEoolBvnK1yWutCXk64V46zgFFBPMx6sdLWSo+D4vQ9U4bk
+    pFPmOfWBGSHmXMv21oXanaX/I7+mAyAzpz1UgD/sVZX/e50ZFnRxzQydZ6QA
+X-ME-Proxy: <xmx:7xIJa6P3utz0eOp7pyFR8I3ScMAUNzlu0zCGMoRDkKGZIdlSlzD55g>
+    <xmx:7xIJayYYnUccUjfjNhwPn4JJffRi3ThdWPJPm0xajRKbHW0nY8VAog>
+    <xmx:7xIJaw26MydARpbaUi9-U6kOYc_LvaQUgzj15fDC-1ZurLnfbU_QEA>
+    <xmx:7xIJawf5FHyD-8eZsp6a7Vukwi8e6gq9LtWYtQjaEBLO4MCqVPcAHQ>
+    <xmx:7xIJaw7T35bEt_chBGsKPLYhusqVtDzjbF48o7385yerJuqnS95T6O6v>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 27 Nov 2026 00:19:43 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Nahid hasan Sagor <nahidhasan141400@gmail.com>
+Cc: Nahid Hasan via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v2] push: shell-quote names in suggested push commands
+In-Reply-To: <CABQNq+mBfq5cPL7W31EcWPNJqb+3tfYRpyec4sRb4iD9oPYCbg@mail.gmail.com>
+	(Nahid hasan Sagor's message of "Fri, 27 Nov 2026 08:52:36 +0600")
+References: <pull.2336.git.1795686173178.gitgitgadget@gmail.com>
+	<pull.2336.v2.git.1795747717319.gitgitgadget@gmail.com>
+	<CABQNq+mBfq5cPL7W31EcWPNJqb+3tfYRpyec4sRb4iD9oPYCbg@mail.gmail.com>
+Date: Thu, 26 Nov 2026 21:19:41 -0800
+Message-ID: <xmqqmrquetqq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,107 +125,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2306.git.1794484985.gitgitgadget@gmail.com>
- <pull.2306.v2.git.1795273853.gitgitgadget@gmail.com> <435ca42ec99d0eed613621186306cb68def30e6c.1795273853.git.gitgitgadget@gmail.com>
- <xmqq4id6qakd.fsf@gitster.g>
-In-Reply-To: <xmqq4id6qakd.fsf@gitster.g>
-From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
-Date: Fri, 27 Nov 2026 14:04:01 +0900
-X-Gm-Features: Aa3M54pbmFBZ3UtUFS7lZrOOHfvOPRJ3DMJswPTgW00fCCYqrr3smTmhcIeot4o
-Message-ID: <CAF5D8-ve1dtYWUMDeiYYa0FpDOv3c=V4MAS49Awy4e-9iZy-xA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] submodule: make submodule.<name>.gitdir relative
- for worktrees
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Yoichi NAKAYAMA via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Nov 25, 2026 at 4:44=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
-> >
-> > For a linked worktree, always keep `submodule.<name>.gitdir` relative
-> > to ensure it continues to work when the worktree is moved along with
-> > the main worktree. (This benefit also requires
-> > worktree.useRelativePaths to be set to true.)
->
-> Perhaps state the status quo first for future readers, that
-> repo_git_path_append() produces an absolute path for linked worktrees
-> unless relative paths are enabled.  This change applies to the main
-> worktree as well whenever worktree_git_path() returns an absolute path
-> (such as when GIT_DIR is absolute), right?  That may be worth noting
-> here, too.
+Nahid hasan Sagor <nahidhasan141400@gmail.com> writes:
 
-I'll update the commit message body as follows:
+> Hi Junio,
+>
+> Thanks for the thorough review. I have just sent v2 addressing all of
+> your points:
+>
+> - Dropped the trailing clause from the commit.
+> - Quoted the entire "HEAD:<short_upstream>" refspec in die_push_simple().
+> - Removed the "die() does not return" notes from the comments.
+> - Quoted remote->name in setup_default_push_refspecs() for
+> message_detached_head_die[].
+> - Simplified the test_when_finished cleanup in t5523-push-upstream.sh
+> and removed the redundant single-branch test.
+>
+> Thanks,
+> MD Nahid Hasan Sagor
 
-  Currently, repo_git_path_append() can produce an absolute path
-  even when worktree.useRelativePaths is enabled, such as when
-  running in a linked worktree or when GIT_DIR is set to an
-  absolute path. As a result, `submodule.<name>.gitdir` can be
-  stored as an absolute path.
+It is not considered good manners to send a new iteration before
+first finishing the discussion on the reviews you received on your
+previous iteration.  You respond to reviews, saying "I will fix this
+point", "I think this one is fine as-is because...", and so forth,
+wait for responses to your response, and eventually come to an
+agreement with those in the discussion, so both sides know what the
+next iteration should look like before you start working on it.
 
-  Always store `submodule.<name>.gitdir` as a relative path to ensure
-  that it continues to work when the worktree is moved along with the
-  main worktree. (This benefit also requires worktree.useRelativePaths
-  to be set to true.)
-
-
-> > diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> > index 461b682d0d..c3b3a2865f 100644
-> > --- a/builtin/submodule--helper.c
-> > +++ b/builtin/submodule--helper.c
-> > @@ -507,50 +508,63 @@
-> > ...
-> > +     modules_dir =3D worktree_git_path(wt, "modules/");
-> > +     if (is_absolute_path(modules_dir)) {
-> > +             modules_dir =3D relative_path(modules_dir, wt->path, &tmp=
-);
-> > +     } else {
-> > +             strbuf_addstr(&tmp, modules_dir);
-> > +             modules_dir =3D tmp.buf;
-> >       }
->
-> Copying 'modules_dir' in the 'else' branch avoids overwriting the static
-> buffer from worktree_git_path(), and converting the early returns in the
-> later cases 2.X to 'goto cleanup' nicely plugs pre-existing strbuf
-> leaks.
->
-> However, doesn't the 'if (is_absolute_path(modules_dir))' branch still
-> have the same static-buffer hazard?  As documented above relative_path()
-> in path.c:
->
->     The strbuf may or may not be used, so do not assume it contains the
->     returned path.
->
-> When 'wt->path' is a directory prefix of 'modules_dir' (for instance, in
-> the main worktree with GIT_DIR=3D/abs/repo/.git GIT_WORK_TREE=3D/abs/repo=
-),
-> relative_path() advances 'in' (initialized from modules_dir we gave) and
-> returns a pointer directly into worktree_git_path()'s 4-slot ring buffer
-> without touching 'tmp'.  Once patch 3 calls worktree_git_path(wt,
-> "config.worktree") inside validate_and_set_submodule_gitdir(), four
-> consecutive failures across Case 1, 2.1, 2.2, and 2.3 (e.g., if
-> config.worktree is locked or unwritable) will wrap that 4-slot buffer
-> and overwrite 'modules_dir' while create_default_gitdir_config() is
-> still using it, no?
->
-> Unconditionally owning the copy in 'modules_dir' (or 'tmp') closes that
-> hole cleanly:
->
->         const char *raw =3D worktree_git_path(wt, "modules/");
->         char *modules_dir =3D xstrdup(is_absolute_path(raw) ?
->                                     relative_path(raw, wt->path, &tmp) : =
-raw);
->
-> Of course, if we go that route, freeing 'modules_dir' under 'cleanup:'
-> would become necessary.
-
-You're right. I hadn't accounted for cases where `relative_path` doesn't
-use `strbuf`. I'll fix it so that it performs a copy at the beginning.
-
-Thanks,
---=20
-Yoichi NAKAYAMA
+Only after finishing all of that do you prepare and send a new
+iteration.
