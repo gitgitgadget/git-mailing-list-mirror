@@ -1,88 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.47
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795797775;
-	b=zy4BKIq0na8U/KSP2dTvRhUDkMcz6xI+h4vM6weF2w8lLj8sySMNhqO1mBgZeZNsTrxY
-	 xu8IqFf7hP7OStjGCgSqJurVr3rSH1XigcH+lZisftNPIcCAx074Q/CgFUgcKcpwcuhAC
-	 pOuDz4gjQOu1PGMR6lTO3FLMBzYrAvT3UuP/CdaE1yLr5YZSu93CYPrTnMOeDOHiiH1ih
-	 rAUzZQxIwvHQpYYXXbKjPBEeWz+r6tLhk+KpQcFTj54v1iIFxkKxrHEKNUa8OBoElf/e+
-	 nY4+lza6rE1bsPMQWN0q+prC2icfSmjMd1u+n+RTeh52R7R+EqKtJmCNzAN5WBuQa0Q==
+	t=1795798487;
+	b=YdSx/pnNFeNdcAxcRtR208J79TpZNUD6b9aajpACQnzTpkodjEvvEI4ZVZIV/MviBYIH
+	 +SxaLvAJspVmm1cIspa8wrWBejTnkOtlGqj3U5xaVUEPolbeR9C1VZlcUCuAiYFzkAJQ+
+	 JCgpJM3LQvIt0io3KeaNZ+FjxXaAYuZdeIyElveiomFGOWNUKADxTU5qqrUFWlok/Sdct
+	 arf92nZ6a+QFrYvQHP/eVzT4xOVgUqKqf64tkbbK4PIpU5Pti7/LsE5bcj4pibL5H83ev
+	 sjNCOtMeJhJDHfRbKyVZw9/KIRfpsunN+dkxExy8vCGCqhv+TDr128OL+oNUpuWAH0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795797775;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795798487;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Reply-To:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:Reply-To:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=UreNwihSM0bmRjyF4LIQSlBXp8gZoNRQaM901ln5iJU=;
-	b=gd06/z7aOvnqR5SAO/GwdUnOL9MhO+ODfteeh5eZeaAzt3FhflMqY1J6AmrRAiqkfqY+
-	 bD3AbzExv4dWaJ9UXujbFa+ruDbvOefdC8fcOQhyz+7wzfwd69Hooz6ge31+H8N0P8/z/
-	 X1SWH8oIF6YLDp8ROfYd1TJQPsy8r1yfdAsWbe4Kh08vFy/IlaP9/rFSZmFunCwErtNqD
-	 TGpwctp4jJRTcnDwnL3nhq2l6BZasaQDsy9w1pTZM/LVFVV8KE37sAstGVBxN78vp5guR
-	 md93cvf9p6GMq2eBQPx1aSGDwrUIiMK/RUyakiR1J3mYNsrouKbm7m+lv8B96Wxteyg==
+	bh=zUbMg1uBKciYtUd5AvNOS51PwQFRURpwVRO5YAVFj0I=;
+	b=2t8pnnpIOsMOa5vOHIb6r4O6qvToDQa5UqR5jGNddwbKjRwGuZAO5ckJF3YuseYQ5SHr
+	 gVGECG33+TCx2Bvdo335tDzC0s7Y2zNVPZrNzC5CjEIAo6D0zXGgVHUcjY2o5oMzvXGlc
+	 tEd6oVoRYLTL/VbonjEyzB0wzfrXhl9faF2aUZ//dqCcjw8TrHmMDQ69qqCHG80xkd3sM
+	 9jaW954qETQZuugGgWEeni/2PtajkbkvuHagvGg19vGhE0zuDcc5vhSxq9riRzWin3JMA
+	 W61ezoN0V6nDht+3Mx73fQe1rypbDTnF3uOzSXXMMmDzK8rOo4qp3tc+Umm3waKFlWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=eFDcCi0z;
-	arc=none smtp.remote-ip=209.85.221.50
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=oztVsHll;
+	arc=none smtp.remote-ip=209.85.221.47
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C38606A32E
-	for <git@vger.kernel.org>; Fri, 27 Nov 2026 16:42:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D1C38606A32E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA95606A31F
+	for <git@vger.kernel.org>; Fri, 27 Nov 2026 16:54:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8CA95606A31F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=eFDcCi0z
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-48dee593f18so7808591f8f.3
-        for <git@vger.kernel.org>; Fri, 27 Nov 2026 08:42:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=oztVsHll
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-4a34ffd3e39so4578624f8f.0
+        for <git@vger.kernel.org>; Fri, 27 Nov 2026 08:54:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795797771; x=1796402571; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=UreNwihSM0bmRjyF4LIQSlBXp8gZoNRQaM901ln5iJU=;
-        b=eFDcCi0zgnuvBydEzb2HaB6PRroNKxS4cBcNDGS+3zj3BWolZzrAWtyrHkOSOEtHUU
-         KkXw7DML1Hn02o8u0/prdhlz/S8jgSVch70uGUQGcPDHfhoD5ZLaCWdNy8oJqjl60cH3
-         GFRfj+VxlmjKX+mhlHtwfxiDWTiDRe/HS5eknhQ29hxLTy5LRWBa5HsikleGddU5gOWR
-         cUklw5InbmHFZMSM2Ht0dHMAa9sQp4mKsvSW/XgLESlY7BC7V1tW+21NXroPe0O0wh41
-         XIBB8peMZvKkoSjrpRbP7cVeXhCVxzr9LF4+HImp4fhGKuwB5d0P8CdhiM97V7uXN9RP
-         0OPg==
+        d=gmail.com; s=20260707; t=1795798485; x=1796403285; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:mime-version:reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=zUbMg1uBKciYtUd5AvNOS51PwQFRURpwVRO5YAVFj0I=;
+        b=oztVsHllYTxkOkwxMxYknrEz3nPPnRlDccG5I6+i6O8MCEnhyix0psIvJNDIpwe02q
+         VKqjjaZbqcws30sl1dK5D0c6sP/ZXOhSJSBR7RRdAptCHfhafB3xeqMOw/7qif8ZYTC1
+         VxZQ/EBcdHvPzTmijjGjjHRSOGcmfN4cWkmWJVCPZLK3GUsAmlJV8hPRTo1wHS3uUUop
+         6kMTx1H8MF3Nc2U4I3GO+e/Dg/6D+10NjyJsyGG1b/Ijnf0GyCNaT8nxltEV2Ny6ziZ5
+         2+079TUz9DumtDkjvEw0Sz3xX1ZXBHKBjQVTi8RXP7GoaKWbhvnP8pexZVeuubBMUsdB
+         4wSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795797771; x=1796402571;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=UreNwihSM0bmRjyF4LIQSlBXp8gZoNRQaM901ln5iJU=;
-        b=sRLoj4msZrQ7dqTc/N5rjDZUfU1rXZF+CMs9IR7S12hg8X8Sp6d833wffdye/x8syu
-         9JDGVfO8WI2RB/dQFD16u9CxddDUe2yQm2laIKF4HH9B++qF8YziER0o1HbOhcgf7uJY
-         0s1Dd1R2tw1YTiDLZjhvEbjyzbE0D2VqxTP1pa1uFe+6RrkHe7rwokIxhaemwxalno8f
-         z5iNRqx/ADGorcQYEh+sPuXr0/XPI55Oq1cGyid+LZ4r2s0VC1Af7OjdS7McQvGJrkOP
-         7W6locKjgsVGDbrXdhfzwQfmuAApDVAwE+DZ9gh/EOM5IV72sPl+w4O8I26zaGtQLDLm
-         dIxA==
-X-Gm-Message-State: APuU4Z+rPKQXDjPjMB0clnRUHD7028S8vNE/1HIISTUCZsQECthjCEAZ
-	Bfu1F+udLIi/aUw+jCaygpSdQeKjfJyG6y9fR7L5qsfzMywMjievYAdu
-X-Gm-Gg: AZFdTZemMVBYDY3FixS0kftbD829Uma4cRgoktEPJukP224NcCl5yxKgJXT8hQ7QYMu
-	h1Yoe54bvolcrCQzVsGA8IsZRrme8QDLsPVPqdTGu6vKEVSekAj8wXTpD1mH4/xObiTMrusm9ZD
-	s/ssuNDM8+qkMtOq66XhGU89d1CTSAQUKvHu+uiJiYAtKsQun00tGPDEyzqHxrwduRNieJPpHTe
-	JfJtWqWyZtdBNreNqc1TqYq+JfCZuEhFo5hVd6klM8ofmHU/FZYu9TaYu2UEWwpdICvpGMF9KtF
-	ZyYqhrw86sqGTqvpUeCJzhOlAThun2uBWrUxoiJhvwPbwL0S+ZeVGPg+Waj+wRoNxXeveKxLMJA
-	Ynygv3TN0Gw6YaahZwErXo2DG7YROTpAZaOowjjAWDTBt+J1UfCKGIYJf0h4QSACdiCHOQn4355
-	YpId7nUsASKK9m/U08o64d3Rh4NjpT+AO6Q8cZZKu4csqhdoMRWHuIa+irN9tNYD751ThtJSOpN
-	W2cgJP/uqYjJG4C1nOtnYot88dyx11yOIgGg9vgG8qc+si8BGYdJdjNYMh84RQtqU0KGxTroN+Y
-	xjPjtScd3Nra3WgTB4WD8Xc9OA++E7djsD1g2qFuj6Yo1Z0tO1U8uKadrnvsuyu+0FkRDg3PXKH
-	QJbwcrmn/dpvKv6qSSCEZlMMZdcT1
-X-Received: by 2002:a05:6000:491a:b0:4ac:37ff:140b with SMTP id ffacd0b85a97d-4ac37ff143amr45242008f8f.25.1795797770839;
-        Fri, 27 Nov 2026 08:42:50 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab65cb41f4sm46520838f8f.7.2026.11.27.08.42.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Nov 2026 08:42:50 -0800 (PST)
-Message-ID: <95b44801-8c10-4d1e-bb41-c5ba3ee13695@gmail.com>
-Date: Fri, 27 Nov 2026 16:42:49 +0000
+        d=1e100.net; s=20260707; t=1795798485; x=1796403285;
+        h=content-transfer-encoding:content-type:mime-version:reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=zUbMg1uBKciYtUd5AvNOS51PwQFRURpwVRO5YAVFj0I=;
+        b=S+IIKZPLYjC+dF/8hbEphJ4Fu+edZ6vKgPMbMMOOKyeCqMpH/zdBYzKlEWZNnEqzTg
+         XT6upLcQqdewT8IA/w9JYrEhSfgoSWf7Svfiflt/1MqTiW+xlbZBfQgoWIQYhI5jegzv
+         weC7uvTS+7KoIt1DVfbK+tYUWRQEV4kXuIZldMpVsUVRQrblN6bH3VSrmh15JVvs1Kt8
+         swg7Ua5Di3RhRxOrxSTW8twNCXMcU3SVq9JmAcVKI/mLWNqHt8F9AIfxrzsX+hZ2/Xty
+         U5l73/Qmkeg8crL7PPYZoLT07QPK5m4N/8U53b8dd4SNbCUPXW66a212+YKmPS6UIL3J
+         PKKw==
+X-Gm-Message-State: APuU4Z/85OltrmLZEHKvZAigD2M2keoCGEHsCV66s0y6Ymg56NYoeRcm
+	yYHQYOjvzDZNdZPLY3ttqZf8FCqG5G2MUJcucAyzbXckKm1TZKMiXP6OYFtb/w==
+X-Gm-Gg: AZFdTZdZDEmf0jNXNJG3t/nL9E14V2gDhSPSpV3ABXTGAGTrUT7M8OswyVhaRkBo3UU
+	/M64VlgBgsaFUCUjsJNrr71xiZSbnVQ+ESs+iK/5kxpsVaVWcAGGdMgoNoQ81D3iGncwTgATQxu
+	MnWPNofwuxQNjNGisGkeU7JKTAp2PxnHS99D+KRfT9eugEQYFVMUQ/XZ8S4tbdJIFeKASArvul2
+	9AqgUTV8/bMxdIkjQrh3fbIbCihl2VFQAxpl24/G4ywUiziOZfAC5abmtW8qdlTfyK65PRj7z+B
+	NNnpejSdZIA8RiorEcDR8xnhNkPxfFyoQl126Mki2pF2/UXj1cfR+ps0Uw0WmXrr+7anHCYIVHY
+	nPwPTUy4vvKWv04igod74GdJfDIXhlfCgBvC0/e5gKtKgOyAJjp9DZ57oen0ZvA19KkwCocsz5m
+	GbML6bvLed4wYOmABN/FP5dyGurBnZv53hGGP5qUZg7Ev3NgAsppcz13JJGs2rLPUylZN+y0KMb
+	sATzruvl2ChWQz75/ZJPzdGROPPIpgtR045qiAY6xWIf/xxU30LTpBhKgpFSAS2N4/3V1E6gpce
+	XDlfd3fCz/oFAScnTw/iTykGlyIe8yZhMYc4VF0Gta+dg0Hk4irItw==
+X-Received: by 2002:adf:e010:0:10b0:4a7:518f:bea6 with SMTP id ffacd0b85a97d-4abb3a4d2b1mr35901195f8f.28.1795798484521;
+        Fri, 27 Nov 2026 08:54:44 -0800 (PST)
+Received: from berwick ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab6c4353d6sm46440606f8f.56.2026.11.27.08.54.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Nov 2026 08:54:44 -0800 (PST)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: git@vger.kernel.org
+Cc: Ben Knoble <ben.knoble@gmail.com>,
+	Harald Nordgren <haraldnordgren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	MD Nahid Hasan Sagor <nahidhasan141400@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: [RFC PATCH] quote: make sq_quote_buf_pretty() prettier
+Date: Fri, 27 Nov 2026 16:54:27 +0000
+Message-ID: <ee7de58093c69fbbab686a68b5b781bc60d90a2b.1795798429.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.56.1.576.g0cfbda1d5c7.dirty
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -92,106 +98,160 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2] var: add GIT_COMMENT_STRING
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
- Kristoffer Haugsbakk <code@khaugsbakk.name>
-References: <fa8b80af26481e0dc96fd8f80f3c7ba84f60f9d4.1795516651.git.phillip.wood@dunelm.org.uk>
- <6e310e0af58cf693819a8d7384c1560e2e342d4b.1795710343.git.phillip.wood@dunelm.org.uk>
- <xmqq5wxjia5q.fsf@gitster.g>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqq5wxjia5q.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 26/11/2026 20:56, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> what the comment string is because they need to do something like
->>
->>      {
->>          echo ' #'
->>          git config --get-regex '^core.comment(char|string)$'
->>      } | sed -n '$s/^[^ ] //p'
-> 
-> Did you mean
-> 
-> 	sed -n '$s/^[^ ]* //p'
-> 
-> to catch both " #" (the fallback) and "core.commentstring //"?
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Well spotted (though I did say "something like" :-/)
+The output of sq_quote_buf_pretty() is intended for human consumption
+and as such it tries to avoid unnecessary quoting. However, it
+is over enthusiastic about adding quotes to multibyte strings and
+strings containing '~', '{' or '}'. It also adds unnecessary pairs
+of empty quotes when a string starts or ends with a single quote. Fix
+this by using a dedicated quoting routine that tries to avoid adding
+unnecessary quotes, rather than reusing sq_quote_buf(). Tilde is only
+quoted if it is the first character. Braces are only quoted if there is
+a mismatch between the number of opening and closing braces, or they
+contain a comma or a character that needs quoting. Sections between
+backslash escapes are only quoted if they contain characters that need
+to be quoted. The table below shows the change in output for various
+inputs. The aim is to make the output more readable without changing
+the meaning of the quoted output were it to be evaluated by the shell.
 
->> diff --git a/Documentation/config/core.adoc b/Documentation/config/core.adoc
->> index bdc74d291cc..e348d8895d1 100644
->> --- a/Documentation/config/core.adoc
->> +++ b/Documentation/config/core.adoc
->> @@ -549,7 +549,8 @@ core.commentString::
->>   	Commands such as `commit` and `tag` that let you edit
->>   	messages consider a line that begins with this character
->>   	commented, and removes them after the editor returns
->> -	(default '#').
->> +	(default '#'). Scripts can query the comment string with
->> +	"`git var GIT_COMMENT_STRING`".
-> 
-> Elsewhere in the documentation (such as Documentation/config.adoc and
-> Documentation/git-var.adoc), 'git var' invocations in backticks are
-> written without surrounding double quotes, so dropping the outer quotes
-> here would match the surrounding style.
+We could further improve the readability by dropping support for csh
+which requires that '!' is backslash escaped. It is not clear to me how
+widely used csh is these days, none of the big three BSD distributions
+seem to have used it as the default shell for a number of years.
 
-I change it to match the existing style
+Text		Current output		New output
+danger!		'danger'\!''		danger\!
+'look out!'	''\''look out'\!''\'''	\''look out'\!\'
+Dvořák		'Dvořák'		Dvořák
+HEAD~3		'HEAD~3'		HEAD~3
+HEAD@{1}	'HEAD@{1}'		HEAD@{1}
+HEAD^{/,}	'HEAD^{/,}'		'HEAD^{/,}'
 
-Thanks
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+Following on from the discussion at [1] this tries to improve the
+readability of the output without changing which shells we support
+which is a bigger change that requires more thought and discussion. If
+we do decide to go the route of per-shell quoting the changes here
+will be useful for supporting POSIX shells.
 
-Phillip
+There aren't any tests yet, though I have tested it manually
+by looking at the trace output from commands like
 
->> diff --git a/builtin/var.c b/builtin/var.c
->> index eb85a985b15..6dc8ec4ba9f 100644
->> --- a/builtin/var.c
->> +++ b/builtin/var.c
->> @@ -188,6 +188,11 @@ static char *hostname(int ident_flag UNUSED)
->>   	return xstrdup(buf);
->>   }
->>   
->> +static char *comment_string(int ident_flag UNUSED)
->> +{
->> +	return xstrdup(comment_line_str);
->> +}
->> +
-> 
-> OK, like other .read() functions like committer(), we return a copy to
-> the caller to be consumed by list_vars(), which will free() it
-> afterwards.
-> 
->> diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
->> index 883a45399e2..f228cb5bb6f 100755
->> --- a/t/t0007-git-var.sh
->> +++ b/t/t0007-git-var.sh
->> @@ -434,4 +434,14 @@ test_expect_success 'git var -l lists the identity components' '
->>   	test_grep "^GIT_COMMITTER_DATE=" actual
->>   '
->>   
->> +test_expect_success 'GIT_COMMENT_STRING' '
->> +	git var GIT_COMMENT_STRING >actual &&
->> +	echo "#" >expect &&
->> +	test_cmp expect actual &&
->> +	git -c core.commentChar=: -c core.commentString=%% \
->> +		var GIT_COMMENT_STRING >actual &&
->> +	echo %%>expect &&
->> +	test_cmp expect actual
->> +'
->> +
-> 
-> Checking the default and core.commentString overriding core.commentChar
-> looks good.  If you happen to reroll for anything else, testing the
-> reverse order (core.commentString followed by core.commentChar) would
-> exercise last-one-wins in both directions, though it is certainly not
-> necessary on its own.
-> 
-> Looking very good.  Will queue.
-> 
-> Thanks.
+   GIT_TRACE=1 git -c alias.z='log -1 HEAD~1' z
+
+I'll add some tests if there is interest in this patch. On that subject,
+does anyone know how to easily write table driven unit tests in clar
+with a separate test for each input?
+
+[1] https://lore.kernel.org/git/02A50A47-A048-417E-9D1E-0C12D8FB1476@gmail.com
+
+base-commit: 77904e546de3bd940621092ecec47a88d0cede5d
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fsq-quote-prettier%2Frfc-v1
+View-Changes-At: https://github.com/phillipwood/git/compare/77904e546...ee7de5809
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/sq-quote-prettier/rfc-v1
+
+ quote.c | 73 +++++++++++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 63 insertions(+), 10 deletions(-)
+
+diff --git a/quote.c b/quote.c
+index 235fac8e470..dfd379a102f 100644
+--- a/quote.c
++++ b/quote.c
+@@ -47,26 +47,79 @@ void sq_quote_buf(struct strbuf *dst, const char *src)
+ 	free(to_free);
+ }
+ 
++static bool needs_sq_quote(char c, unsigned brace)
++{
++	if (isalnum(c) || (unsigned char)c > 0x7f)
++		return false;
++
++	switch (c) {
++	case ',':
++		return brace > 0; /* Prevent brace expansion */
++	case '}':
++		return !brace; /* Quote unpaired '}' */
++	case '~':
++	case '+':
++	case '-':
++	case '.':
++	case '/':
++	case ':':
++	case '=':
++	case '@':
++	case '_':
++	case '^':
++		return false;
++	default:
++		return true;
++	}
++}
++
+ void sq_quote_buf_pretty(struct strbuf *dst, const char *src)
+ {
+-	static const char ok_punct[] = "+,-./:=@_^";
+-	const char *p;
++	const char *p = src, *q;
++	bool quote_it = false;
++	unsigned brace = 0;
+ 
+ 	/* Avoid losing a zero-length string by adding '' */
+-	if (!*src) {
++	if (!*p) {
+ 		strbuf_addstr(dst, "''");
+ 		return;
+ 	}
+ 
+-	for (p = src; *p; p++) {
+-		if (!isalnum(*p) && !strchr(ok_punct, *p)) {
+-			sq_quote_buf(dst, src);
+-			return;
+-		}
++	/* '~' is only special if it is the first character */
++	if (*p == '~') {
++		quote_it = true;
++		p++;
+ 	}
+ 
+-	/* if we get here, we did not need quoting */
+-	strbuf_addstr(dst, src);
++	for (q = p; *q; q++) {
++		if (need_bs_quote(*q)) {
++			if (brace)
++				quote_it = true;
++			if (quote_it)
++				strbuf_addch(dst, '\'');
++			strbuf_add(dst, p, q - p);
++			p = q + 1;
++			if (quote_it)
++				strbuf_addch(dst, '\'');
++			strbuf_addch(dst, '\\');
++			strbuf_addch(dst, *q);
++			if (!brace)
++				quote_it = false;
++		} else if (*q == '{') {
++			brace++;
++		} else if (*q == '}' && brace) {
++			brace--;
++		} else if (!quote_it && needs_sq_quote(*q, brace)) {
++			quote_it = true;
++		}
++	}
++	if (brace && !quote_it)
++		quote_it = true; /* Quote unpaired '{' */
++	if (quote_it)
++		strbuf_addch(dst, '\'');
++	strbuf_add(dst, p, q - p);
++	if (quote_it)
++		strbuf_addch(dst, '\'');
+ }
+ 
+ void sq_quotef(struct strbuf *dst, const char *fmt, ...)
+-- 
+2.56.1.576.g0cfbda1d5c7.dirty
 
