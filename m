@@ -1,121 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.167.174
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795792061;
-	b=1VtLA0+9ozTo8nyIauw+OvwGZf/gJjceGJoX5c8F7HHnbSzpUz2YB7H1wb+5p76Tu+kM
-	 zrUA6nXqlp/3LVGjNFrhqkFkYqsVZQZE9NOvy7x3Ppzoz8MZMng+6usBnIEuDspuZ6vHA
-	 DPnM2y94aGebty2RocK34xWpBKfxHsZiNMpTmzt4lfYr/Yz0wCzV8/imgtWp8SMFQ+zYw
-	 uk7jQP/mZPKOocp9nhdfMk0zAXHFBXOdyuuAB5LYbXbg7zzkYFMleRN6ODcuN8sGCEqur
-	 oQTN+WFrnL0utsGQieE12sNjcDgLNN+sLval28DNxAv6zyXneEyrQUgJgpScZ5mkxGw==
+	t=1795796165;
+	b=y1c8SjdO8WH6o1w8ADlTpGItxH3KSuFtLWE7zUAnspWofEmZ5C1TAM4FFdjtyt1gx19Y
+	 kU9vILL41ZCV+H2OqI7M8uFQpcY8vzLbJS4DXlYFK0kclFh4vKrvrzypHQI3D+HQBPLVA
+	 bHVsXLwrOFFU3BYmQcnCsvwgQ92CwBwBAmwoDGJ/QamuuwzEszQJ/AuRSbRPaYQvfLbwl
+	 eGSQ6iWtrU3Ey15hUSRFr4sH/8EtBvGI53Akn8uT6N9iMjLB599JGyuaOosHjRbTquPgr
+	 wsGOXIgXqYmRsQ9v2sq6SaOMmae67nEqADWdyQpdJzvXl+GbWyq1FYlXaloGkYId1zA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795792061;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=IApPpva+GWvTBi0HbuEXLnRUm1/kCbGG3Q3dyk7JY7Y=;
-	b=nqGtgzFPX4CTmErtUw3lUbb2V0tmZewTkiLgaxUY7y2j2Fi90XLN2h9pySn7rxTCD8tk
-	 3XUYD84UNqz4oFmsynqYbN2iZxG5nWRFq9Efb2vYoGK6w5sQ5JcF76T374yJ9gAXkXSz9
-	 X5LV1axSGPX9rz4WSI89adV9lz4crr2kvNoXC2QClvjw3jhlEj4DoPkNN6O0IGMd+3NFC
-	 /66mXqnbAeYSuzmpBWTM4nHl9A4Jcz0+4DySZqgbK74VA43XdjCiZTPO6WH2g+GhySoGY
-	 BitTIGNPrywTSKv91tCtXoYljTUKOsFLDjik3BUzynjfKH+kXCzj9Qo5ywPPjbM8RVg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795796165;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
+	 References:From:Date:Subject:Fcc:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:To:Cc;
+	bh=Di1G4pjg8jUUCJfvctXL3Wt7AsBWn1BfFNXjsrfLO9M=;
+	b=sSSr3LOIYxuFo1198Etl1BANUYs6hdmMbb1lmKkS5fFG+4eLEpmkXNxORukibokNZ3B4
+	 BkT3fQjkJYylgdWWYDy+rZ7jKTYO226o1YMB9AlXS7eA9H1V7TNXXtaOofr7r7/hv2GqY
+	 JyEiyDYFAX3A6S1X+stUnQ40RjE4hkvUk6pvPLTJwU0rgmCDSBxlVURBf7WZTmdQ9fCRp
+	 QtPeRqg2fVIOgD6tuhCUC3uSz1gA/jFeH5sMbAFP0aVny3XiUciwDPMhZdl+bt/jEB/CT
+	 Beuh8F0SjIelLESsSejBZkC4xoY8ZNoLb7kaXarAyHTOi9DQR/IM8urps9gmkca3Rrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=WDAbatAS;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=kytOqgiY;
-	arc=none smtp.remote-ip=103.168.172.145
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CfI8kYT6;
+	arc=none smtp.remote-ip=209.85.167.174
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5D1606A31C
-	for <git@vger.kernel.org>; Fri, 27 Nov 2026 15:07:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BF5D1606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737E2606A31E
+	for <git@vger.kernel.org>; Fri, 27 Nov 2026 16:16:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 737E2606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=WDAbatAS;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=kytOqgiY
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id EAE41EC0B1D
-	for <git@vger.kernel.org>; Fri, 27 Nov 2026 10:07:39 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Fri, 27 Nov 2026 10:07:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795792059; x=1795878459; bh=IApPpva+GW
-	vTBi0HbuEXLnRUm1/kCbGG3Q3dyk7JY7Y=; b=WDAbatASUMzWEvNfwX53X87zgb
-	5ihh850aI+kTNUrTqgHlqjtiPa2mxFKV+oNEVGQjzcxZES0gir/6J6zzVtZHD/OF
-	ccoioZgN1yG6E3ywNTVQZ8/O0lsPLM2vx1GDCp9wVtbrsABl57eF47yOrW8VFEn+
-	tNag2sv8fIt0uVfmhpZY08XntXIDedxlFJv6Qs7fiEA1qOtZXsRJwxdOzYiyOA4P
-	Em/wV3x58yfylLVoSOru5jzLoPsRE2PIf1dNaJX5I6b5h/3SCA/4ZXyOoRmCUUU0
-	0uZQuawwa5rlec5bGfxV3o3KdryyJAWs2IA+By0Bs16L2GbOxeVlf4BwrV2g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795792059; x=1795878459; bh=IApPpva+GWvTBi0HbuEXLnRUm1/kCbGG3Q3
-	dyk7JY7Y=; b=kytOqgiYGYND3qQqi0Dn6G7PIaYF7cHOcOp3enHfPeRAvXQ2f5/
-	28MEFPH0pfn+c3VJxzkA/HeU32o+K6IKIVvss9qE2rpmxWkeZekTibXE90rL7mcd
-	RiES9AT6RCFbBI614w1QxGz3ELG/Wz7Xoef8pqUiyXRv02zo3Z/hplU31fGdP2eE
-	US1aOMuKLtfJZckJY3AooO7rlTqFPp2BZZWvuwbOTzzYEaouR64dkP3YtQyiLpun
-	wYOWYxAg5jW7Oo+Na/3ghKqLwEXWE1ekSX/IHlzANqoacuD2D5JgA0gtSnUXNvhL
-	8Y46A4IqVmpQijtje70/Z8OWXPNOR1X2kIw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795792059; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:GX1d922marFU+fwhAPzb6Y6plAS7L5S4P+rDxWewhvFPyUB
-	rPE1PtIFALKIe8roDhOWPqWBDIQbOh+Noa5UuxkPZOJvcCkg0244eNQ1Gy545JxZ
-	JVuHYUCv50AtT6jiPZSOkuGJW2m33LPvB+o0FPNsB34wqPCgEfAhAqbQGnFRcXWD
-	47hkQtG+k+TTm0929NYv18RdlLer25oqBDm9H1Rao5FzxCXNq9RF01XylLuhtgZJ
-	4a0Gz/FzD6oKBZ1S+JthkDoE+0VAzhnW1EzpfSuUQRtfISa3fSkkOYyuR50Mj20I
-	/rPf5MvgIvkIIvuifAYOzdHD86OWwCqoki55Adg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:jlZW9Xsv/+yS2yGBVUoSMko7xGMttajVAXJDMjv78XA=:5A17Sujj1xW3aFd0PZlkpOK3UqhopDG21q+UVzR2R5Y=;
-X-ME-Sender: <xms:u5wJaz0_KlHsRThvHF4K52YHsgrxE_9_TBBB-OTnHapqLGPy_-o6gQ>
-    <xme:u5wJa5F7OBlfoHcZpmdpMmPUwH_2aP6TKIPxxI8qI_A8gfVO3PP_07cVNGlO3gInW
-    5WjpdS-S_JVpMcgBDkv-HS5ZRuKlXZ7viz9huTYawGxeDXa6qt-hIg>
-X-ME-Received: <xmr:u5wJa47wppEDVam7KHya2dFhcWmTmcOsN3ILJURJmV3l-B7ZcGQRKi60qux0NC_J2idBGfNdz03_wMNO1KGlD4dtdjoAw2x-a8M4FWE>
-X-ME-Proxy-Cause: dmFkZTFUfdulX2SnLOZmIZv+aIQcKzGzVprZMHjwuRmd6ITJLmm29qFNiWIGTLQ4/xCfMV
-    xI+jSiB5NdjQOS0xQxM/sTSlS35GOyE0SIPGT388TCugCB1co8SY5yeLc8dQOac1HCIaJF
-    ZTOShGLfS7pbcEW2tdf0aVnHNiXiiwrDAHxtGdtxw/DxICMg8Vke3N+Ax8q8pOH4zyWg9z
-    aUZbPYT9hlgBJDT4MDGoQJplRkPLjeIhY/t70/IDvExnQ64iCJ9ZPHlycnEbeC0vqnNF23
-    yvm4xWza2fWIifrz5o6+w9XdHqOaOkr/MrSpwfnR2sni5YNrvCmxfAHzmuCImua0BsK/Yi
-    GOF8Aht45nWXUFSJRcqIPw059TtVEZTntD2fojW2q2zzv0NjXIjctDYu9FHQy+2ixoHXys
-    ftWbVwg7zthb7t8FaZlTJl/GircrhfcT94yFvYzHMuQvm2BKr8IEBAwyaQZ2k0nXx5ED3N
-    XqyfnsKNjOSCHtJFhln6/wZjF4xV4s2lGfhNtvo57FNW8fifB1e2WcGNjos8Iftrdgc9Gw
-    7zhgTNEcI2CTjulpF65I4yJtK1PSfJPFLF37wc+XvcxV6w2bXe6pSMuIFSifY+4jHrmxXp
-    3rJ2zx4UwpSuHWdfBrqa2otjgCjsD3A418yjvCfdWeA4Z6UUH+kyeqpJpEpQ
-X-ME-Proxy: <xmx:u5wJa3sOPMDP0TiZuc5r2mA20M3GXsIJY8Rttv7Biyo-bt8JcrWT_Q>
-    <xmx:u5wJax7iOX95fAA3PfoWK_7SxgEQkA_WC-NLHBUigtkGoj4oC7YgAA>
-    <xmx:u5wJa6WICvO0_riDkpsG_fXgHwyYZO2AWZU5oCUeeejwd-arTR4Ncw>
-    <xmx:u5wJa79_R4ir4CvRJhX82nfHgRt9x_1fFY2lylgUcb6igkZIhyOXAA>
-    <xmx:u5wJax9N4LaozgmkOFLRIgqP9Ot0Z0yI8Q9m1xPGGkUYTTDjt6wBCdOy>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Nov 2026 10:07:39 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tuomas Ahola <taahol@utu.fi>
-Cc: <git@vger.kernel.org>,  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH v4 2/2] lint-docs: ensure command-list.txt lists all guides
-In-Reply-To: <20261126201110.9046-3-taahol@utu.fi> (Tuomas Ahola's message of
-	"Thu, 26 Nov 2026 22:11:10 +0200")
-References: <20260909052501.8448-1-taahol@utu.fi>
-	<20261126201110.9046-1-taahol@utu.fi>
-	<20261126201110.9046-3-taahol@utu.fi>
-Date: Fri, 27 Nov 2026 07:07:38 -0800
-Message-ID: <xmqqy0aecnyd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CfI8kYT6
+Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-57e4bd7fb1eso1609933b6e.0
+        for <git@vger.kernel.org>; Fri, 27 Nov 2026 08:16:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795796164; x=1796400964; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Di1G4pjg8jUUCJfvctXL3Wt7AsBWn1BfFNXjsrfLO9M=;
+        b=CfI8kYT60Zjn7vkgyJKdRak1Regm1s0kz1QFhnwk9DWXypyZAZB+tSYKnva0/T2/TI
+         3h71fWmo5JftttSbxHdnlr+l3s3WA6Z18WgG01H0CsKcTYLiIZheXe4kJ3gvcNKVAOJP
+         Vcz97BUnY2n3XGOMPh1cQDkkOL/vT8xa/xilsT4U75oIuGPFOSV+1UT6HCmNWNMw7lYv
+         O664hjfySFFU1TsX5yGdWoAstNJjMlOOPtngwKYbVrNAqxqv3VW5kqH5HoawmjdGMwaE
+         D3vqZtDO263z4DHxWPmzUE4Uyx3Ojto8r+WazyW/vnTqVuVhDES+KHp9c16D4uTwP/PV
+         MUZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795796164; x=1796400964;
+        h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
+         :subject:date:from:references:in-reply-to:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Di1G4pjg8jUUCJfvctXL3Wt7AsBWn1BfFNXjsrfLO9M=;
+        b=GxlNksjOlWhJ29DBXUvQYtznqVJJ4GjPe7cU7Xor6KLlbW/Jf7h+KtsPHm6+sy6vld
+         Zv0IsLFnI6VJcsF8iFSTMKTx+9h52qviJHvNpBcKECbAblNiAzLaR3zvFxWuBh2D2rz1
+         tTpgRyP6msqJ0LIivjcju08i1drPuW0w4Yb+xYpryl//7kPoL4QyBdaXiBMRi/ncrbL7
+         pVjz218YYycpbfnTKeZFsrfLETZyQw+gVwY8WUooFJufihleXIARLL5A10oQeqSmuwnF
+         PJ3IxGYX8xn/qwUW4IAgetJrWcbQ0GS14ERKjqKjiwyeHyDcgeHzkSAxgZ2gj4m7UH2M
+         +6xQ==
+X-Gm-Message-State: APuU4Z9XGW9bEXfbZzEh0zqFI+abnUvcBcEBjNyr35rETMaASQ4xcnLW
+	Sq9YnbakbphLJBCsXSFCuO+slhM5lza61yIyKw97uTeFw8IifkDWgT4ux4Wzkg==
+X-Gm-Gg: AZFdTZcePPeoBGXbFdHSrF5mGEFQ9PGjC58vFjifaVSCNG83RSXeuT49o6XXSZjwetg
+	gg2dOhl3It9TWjkCQs/apNWJ33kwuaP9XCzYmSHWUqDV3FvdJG0mcXXis7feR8Ppo56YOkjY0aA
+	bv5gwIwlcBx5GCyzlIsTJsNCSgjH0IO/c4yBz7Sb7SD1di5mUTigMY0kRNcohf09aXjVCugk2AN
+	G1l40LEqdN/yqxHgjyu0K1YIlZp5ESTrqTXdO8ysK5zNXv76LDEdt+qZOeX0uh5OEZ5SNulwVxe
+	NTidsQrZeQXRoW+agLT6fICsOx1eGCgjiJsVrvcDkTnmU7GsJjb6daRDtWRTYggSA+HOf89DNgr
+	sMPQAW99YmxT6Nnq680d/mN/ipvjtIZuQ9xtmPXxvTDFZNexHdu9piNhYTV/b6jTL2nvVA1NiGV
+	Q6Gn5mU8C21+s8cok9OTZCBdNrLZhD2lKsdA8bFYMc5hWnl3QzdNZ7poEs8uDsi2mYFqHIm1F7n
+	n9JPBaplyfkc3DzMrQHND8nhaOMPEtTmYfuwVI89BnfS8o1MkYmUKrneL3r6ELvDnZAbBA5G0Qq
+	394mVf910rPXx1ec4IWfrVOhWXnkPhREOg==
+X-Received: by 2002:a05:6808:1a10:b0:564:48f3:dfa8 with SMTP id 5614622812f47-57a0a111c93mr27641277b6e.11.1795796164222;
+        Fri, 27 Nov 2026 08:16:04 -0800 (PST)
+Received: from [127.0.0.1] ([40.124.101.213])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4bd044fc4besm19610317fac.7.2026.11.27.08.16.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Nov 2026 08:16:03 -0800 (PST)
+Message-Id: <pull.2509.v2.git.git.1795796162.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2509.git.git.1795774880142.gitgitgadget@gmail.com>
+References: <pull.2509.git.git.1795774880142.gitgitgadget@gmail.com>
+From: "Alessio Attilio via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 27 Nov 2026 16:16:00 +0000
+Subject: [PATCH v2 0/2] status: report when submodule URLs are out of sync
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -125,154 +96,277 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Alessio Attilio <attilio.alessio@protonmail.com>
 
-Tuomas Ahola <taahol@utu.fi> writes:
+When a submodule URL changes in .gitmodules, the corresponding URL in the
+superproject's .git/config may keep pointing at the old location. This
+series makes git status warn about that mismatch and suggest git submodule
+sync.
 
-> diff --git a/Documentation/lint-manpages.sh b/Documentation/lint-manpages.sh
-> index a0ea572382..87a652bd22 100755
-> --- a/Documentation/lint-manpages.sh
-> +++ b/Documentation/lint-manpages.sh
-> @@ -1,21 +1,27 @@
->  #!/bin/sh
->  
->  extract_variable () {
-> -	(
-> -		cat ../Makefile
-> -		cat <<EOF
-> +	file="$1"
-> +	directory="$(dirname "$file")"
-> +	shift
+The warning resolves relative URLs as git submodule sync does. It also
+suppresses the warning when the populated submodule has a custom remote URL
+that a sync would overwrite.
 
-The first argument to the function becomes $file and then is used to
-compute $directory; and we shift it out and loop over the remaining
-arguments.
+The series is split into:
 
-> +	for i in "$@"
-> +	do
-> +		(
-> +			cat "$file"
-> +			cat <<EOF
->  print_variable:
->  	@\$(foreach b,\$($1),echo XXX \$(b:\$X=) YYY;)
->  EOF
+ 1. submodule: prepare URL helpers for reuse
+ 2. status: warn about stale submodule URLs
 
-The fact that this patch does not touch these three lines gives a strong
-smell, especially the reference to "$1", which was part of a single
-addition to the target Makefile to ask what value an arbitrary single
-variable has, dating back to 2dd100c513 (Makefile: extract script to
-lint missing/extraneous manpages, 2024-06-06).  Now that you are looping
-over a list of variable names in "$@" using "for i in ...", shouldn't it
-refer to "$i" instead?
+Changes since v1:
 
-Because 'for i in "$@"' does not alter the positional parameters, "$1"
-inside the heredoc stays bound to the first variable name on every
-iteration.  When the script later runs
+ * Move the URL helper extraction into a preparatory commit.
+ * Clarify the comparison between the cached URL, .gitmodules, and the
+   populated submodule's remote URL.
+ * Keep test output inside its fixture directory.
 
-    MAN_GUIDES="$(extract_variable Makefile MAN5_TXT MAN7_TXT |
-                  sed -e 's/\.adoc//')"
+Closes gitgitgadget/git#565
 
-extract_variable() invokes make twice with $(MAN5_TXT) both times
-and never evaluates $(MAN7_TXT).  None of the section 7 guides
-(including gitpacking and gittutorial-2) are ever visited by
-check_missing_docs() because of this, I suspect.  Have you tried
-introducing discrepancies to section 7 entries and seeing if your
-version detects them?
+Alessio Attilio (2):
+  submodule: prepare URL helpers for reuse
+  status: warn about stale submodule URLs
 
-Even better, instead of running make multiple times, use something like
-this (warning: totally untested)
+ builtin/submodule--helper.c |  63 ++++------------------
+ submodule.c                 |  44 +++++++++++++++
+ submodule.h                 |   3 ++
+ t/t7508-status.sh           |  54 +++++++++++++++++++
+ wt-status.c                 | 104 ++++++++++++++++++++++++++++++++++++
+ 5 files changed, 215 insertions(+), 53 deletions(-)
 
-    vars="$*"
-    (
-            cat "$file"
-            sed -e "s/^|//" <<-EOF
-            |print_variable:
-            |	@\$(foreach b,\$(foreach v,$vars,\$(\$(v))),echo XXX \$(b:\$X=) YYY;)
-    EOF
-    ) |
-    make -C "$directory" -f - print_variable 2>/dev/null |
-    sed -n -e 's/.*XXX \(.*\) YYY.*/\1/p
 
-perhaps?
+base-commit: acba8bf9753134d9bde89f94369f775838a8c5fe
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2509%2Fkairosci%2Ftopic%2Fstatus-submodule-url-sync-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2509/kairosci/topic/status-submodule-url-sync-v2
+Pull-Request: https://github.com/git/git/pull/2509
 
-Unlike "make -f -" that feeds the top-level Makefile,
-Documentation/Makefile has a conditional include of "doc.dep" unless we
-are running "make clean".  And doc.dep has a rule that depends on
-$(docdep_prereqs), which includes cmd-list.made.
+Range-diff vs v1:
 
-Does that mean running lint-manpages.sh in a clean tree causes us to
-build doc.dep while it attempts to extract MAN5_TXT and MAN7_TXT and/or
-fails the build altogether (we cannot see, due to "2>/dev/null" in the
-above script, the error message)?  Have you tried?
+ 1:  528258ee95 ! 1:  4cd0ab7e9b status: warn about stale submodule URLs
+     @@ Metadata
+      Author: Alessio Attilio <attilio.alessio@protonmail.com>
+      
+       ## Commit message ##
+     -    status: warn about stale submodule URLs
+     +    submodule: prepare URL helpers for reuse
+      
+     -    When a submodule URL changes in .gitmodules, the URL cached in
+     -    .git/config can keep pointing at the old remote. That leaves users
+     -    with no indication that later submodule operations may use a
+     -    repository different from the one the project declares.
+     +    Move the relative submodule URL resolver and the helper that computes
+     +    the path back to the superproject from builtin/submodule--helper.c to
+     +    submodule.c so they can be shared with git status.
+      
+     -    Warn in git status so users can find and sync stale configuration
+     -    before it causes a confusing fetch or update. Resolve relative URLs
+     -    like git submodule sync does, and leave customized submodule remotes
+     -    alone.
+     +    Pass the repository explicitly to the resolver instead of relying on
+     +    the_repository, and update existing callers to use the shared helpers.
+      
+          Signed-off-by: Alessio Attilio <attilio.alessio@protonmail.com>
+      
+     @@ submodule.c: int is_submodule_active(struct repository *repo, const char *path)
+      +	char *remoteurl, *resolved_url;
+      +	struct strbuf remotesb = STRBUF_INIT;
+      +
+     -+	if (!starts_with_dot_dot_slash(url) && !starts_with_dot_slash(url))
+     -+		return xstrdup(url);
+     -+
+      +	strbuf_addf(&remotesb, "remote.%s.url", remote);
+      +	if (repo_config_get_string(repo, remotesb.buf, &remoteurl)) {
+      +		if (!quiet)
+     @@ submodule.h: int is_tree_submodule_active(struct repository *repo,
+       /*
+        * Determine if a submodule has been populated at a given 'path' by checking if
+        * the <path>/.git resolves to a valid git repository.
+     -
+     - ## t/t7508-status.sh ##
+     -@@ t/t7508-status.sh: test_expect_success 'setup status submodule summary' '
+     - 	git add sm
+     - '
+     - 
+     -+test_expect_success 'status reports submodule URL mismatch' '
+     -+	test_when_finished "rm -rf url-test" &&
+     -+	test_when_finished "rm -f actual err" &&
+     -+	test_create_repo url-test/source &&
+     -+	test_commit -C url-test/source initial &&
+     -+	test_create_repo url-test/super &&
+     -+	git -C url-test/super -c protocol.file.allow=always \
+     -+		submodule add "$PWD/url-test/source" module &&
+     -+	git -C url-test/super commit -m "add submodule" &&
+     -+	git -C url-test/super status >actual 2>err &&
+     -+	test_must_be_empty err &&
+     -+	git -C url-test/super config -f .gitmodules submodule.module.url \
+     -+		"$PWD/url-test/updated-source" &&
+     -+	git -C url-test/super status --porcelain >actual 2>err &&
+     -+	test_must_be_empty err &&
+     -+	git -C url-test/super status >actual 2>err &&
+     -+	test_grep "module.*different URL" err &&
+     -+	test_grep "git submodule sync" err &&
+     -+	git -C url-test/super submodule sync &&
+     -+	git -C url-test/super status >actual 2>err &&
+     -+	test_must_be_empty err &&
+     -+	git -C url-test/super remote add origin ../source-parent &&
+     -+	git -C url-test/super config -f .gitmodules submodule.module.url \
+     -+		../relative-source &&
+     -+	git -C url-test/super status >actual 2>err &&
+     -+	test_grep "module.*different URL" err &&
+     -+	git -C url-test/super submodule sync &&
+     -+	git -C url-test/super status >actual 2>err &&
+     -+	test_must_be_empty err &&
+     -+	git -C url-test/super config -f .gitmodules submodule.module.url \
+     -+		../another-relative-source &&
+     -+	git -C url-test/super status >actual 2>err &&
+     -+	test_grep "module.*different URL" err &&
+     -+	git -C url-test/super submodule sync &&
+     -+	git -C url-test/super status >actual 2>err &&
+     -+	test_must_be_empty err &&
+     -+	git -C url-test/super/module config remote.origin.url \
+     -+		"$PWD/url-test/fork" &&
+     -+	git -C url-test/super config -f .gitmodules submodule.module.url \
+     -+		../fork-source &&
+     -+	git -C url-test/super status >actual 2>err &&
+     -+	test_must_be_empty err &&
+     -+	git -C url-test/super/module config --add remote.origin.url \
+     -+		"$PWD/url-test/another-fork" &&
+     -+	git -C url-test/super config -f .gitmodules submodule.module.url \
+     -+		../another-fork-source &&
+     -+	git -C url-test/super status >actual 2>err &&
+     -+	test_must_be_empty err &&
+     -+	git -C url-test/super/module config --unset-all remote.origin.url &&
+     -+	git -C url-test/super config --add submodule.module.url \
+     -+		"$PWD/url-test/another-configured-source" &&
+     -+	git -C url-test/super status >actual 2>err &&
+     -+	test_grep "module.*different URL" err
+     -+'
+     -+
+     - test_expect_success 'status submodule summary is disabled by default' '
+     - 	cat >expect <<EOF &&
+     - On branch main
+     -
+     - ## wt-status.c ##
+     -@@
+     - 
+     - #include "git-compat-util.h"
+     - #include "advice.h"
+     -+#include "config.h"
+     - #include "wt-status.h"
+     - #include "object.h"
+     - #include "dir.h"
+     -@@
+     - #include "remote.h"
+     - #include "refs.h"
+     - #include "submodule.h"
+     -+#include "submodule-config.h"
+     - #include "column.h"
+     - #include "read-cache.h"
+     - #include "setup.h"
+     -@@ wt-status.c: static void wt_porcelain_v2_print(struct wt_status *s)
+     - 	}
+     - }
+     - 
+     -+static int submodule_has_custom_remote_url(struct repository *repo,
+     -+					  const char *path,
+     -+					  const char *url,
+     -+					  const char *configured_url)
+     -+{
+     -+	struct repository subrepo = { 0 };
+     -+	const struct string_list *remote_urls = NULL;
+     -+	const char *remote;
+     -+	const char *remote_url;
+     -+	char *key, *up_path, *old_url, *new_url;
+     -+	int error_code, ret = 0;
+     -+
+     -+	if (!is_submodule_populated_gently(path, &error_code))
+     -+		return 0;
+     -+
+     -+	if (repo_submodule_init(&subrepo, repo, path,
+     -+				null_oid(repo->hash_algo)) < 0) {
+     -+		repo_clear(&subrepo);
+     -+		return 0;
+     -+	}
+     -+
+     -+	remote = repo_default_remote(&subrepo);
+     -+
+     -+	key = xstrfmt("remote.%s.url", remote);
+     -+	if (!repo_config_get_value_multi(&subrepo, key, &remote_urls) &&
+     -+	    remote_urls->nr == 1) {
+     -+		remote_url = remote_urls->items[0].string;
+     -+		up_path = get_submodule_up_path(path);
+     -+		old_url = resolve_submodule_url(repo, configured_url, up_path, 1);
+     -+		new_url = resolve_submodule_url(repo, url, up_path, 1);
+     -+		ret = strcmp(remote_url, old_url) != 0 &&
+     -+			strcmp(remote_url, new_url) != 0;
+     -+		free(new_url);
+     -+		free(old_url);
+     -+		free(up_path);
+     -+	} else {
+     -+		/*
+     -+		 * Multiple URLs are a local customization; sync would replace
+     -+		 * them all with a single URL.
+     -+		 */
+     -+		ret = remote_urls && remote_urls->nr > 1;
+     -+	}
+     -+	free(key);
+     -+	repo_clear(&subrepo);
+     -+
+     -+	return ret;
+     -+}
+     -+
+     -+static void wt_status_check_submodule_urls(struct wt_status *s)
+     -+{
+     -+	int i;
+     -+
+     -+	if (s->status_format != STATUS_FORMAT_LONG &&
+     -+	    s->status_format != STATUS_FORMAT_NONE)
+     -+		return;
+     -+
+     -+	if (is_gitmodules_unmerged(s->repo->index))
+     -+		return;
+     -+
+     -+	for (i = 0; i < s->repo->index->cache_nr; i++) {
+     -+		struct cache_entry *ce = s->repo->index->cache[i];
+     -+		const struct submodule *sub;
+     -+		const char *configured_url;
+     -+		char *key, *expected_url;
+     -+
+     -+		if (ce_stage(ce) || !S_ISGITLINK(ce->ce_mode))
+     -+			continue;
+     -+
+     -+		sub = submodule_from_path(s->repo, null_oid(s->repo->hash_algo),
+     -+					  ce->name);
+     -+		if (!sub || !sub->url || !is_submodule_active(s->repo, ce->name))
+     -+			continue;
+     -+
+     -+		key = xstrfmt("submodule.%s.url", sub->name);
+     -+		if (repo_config_get_value(s->repo, key, &configured_url)) {
+     -+			free(key);
+     -+			continue;
+     -+		}
+     -+		free(key);
+     -+
+     -+		expected_url = resolve_submodule_url(s->repo, sub->url, NULL, 1);
+     -+		if (strcmp(configured_url, expected_url) &&
+     -+		    !submodule_has_custom_remote_url(s->repo, ce->name,
+     -+						     expected_url,
+     -+						     configured_url))
+     -+			warning(_("submodule '%s' has a different URL in .git/config "
+     -+				  "than in .gitmodules\n"
+     -+				  "  run 'git submodule sync' to update it"), ce->name);
+     -+
+     -+		free(expected_url);
+     -+	}
+     -+}
+     -+
+     - void wt_status_print(struct wt_status *s)
+     - {
+     -+	wt_status_check_submodule_urls(s);
+     -+
+     - 	trace2_data_intmax("status", s->repo, "count/changed", s->change.nr);
+     - 	trace2_data_intmax("status", s->repo, "count/untracked",
+     - 			   s->untracked.nr);
+ -:  ---------- > 2:  b0dd21100c status: warn about stale submodule URLs
 
-It might be less error-prone than the above gymnastics to add a new
-print-guides target to Documentation/Makefile, next to where it defines
-the print-man1 target, imitating how the print-man1 target does its
-thing.
-
-> -	) |
-> -	make -C .. -f - print_variable 2>/dev/null |
-> -	sed -n -e 's/.*XXX \(.*\) YYY.*/\1/p'
-> +		) |
-> +		make -C "$directory" -f - print_variable 2>/dev/null |
-> +		sed -n -e 's/.*XXX \(.*\) YYY.*/\1/p'
-> +	done
->  }
->  
->  check_missing_docs () (
->  	ret=0
->  
-> -	for v in $ALL_COMMANDS
-> +	for v in $ALL_COMMANDS $MAN_GUIDES
->  	do
->  		case "$v" in
->  		git-merge-octopus) continue;;
-> @@ -29,6 +35,8 @@ check_missing_docs () (
->  		git-stage) continue;;
->  		git-legacy-*) continue;;
->  		git-?*--?* ) continue ;;
-> +		gittutorial-2) continue ;;
-> +		gitweb.conf) continue ;;
->  		esac
-
-Placing gittutorial-2 and gitweb.conf in the top case statement
-skips the "test -f $v.adoc" check as well as the command-list.txt
-lookup.
-
-Moving those two arms down into the inner 'case "$v" in git) ...'
-block would exempt them from command-list.txt while still catching a
-stale entry in MAN5_TXT or MAN7_TXT whose '.adoc' file disappeared.
-I do not know which is more appropriate for these two entries.
-
->  
->  		if ! test -f "$v.adoc"
-> @@ -84,9 +92,10 @@ check_extraneous_docs () {
->  	)
->  }
->  
-> -BUILT_INS="$(extract_variable BUILT_INS)"
-> -ALL_COMMANDS="$(extract_variable ALL_COMMANDS)"
-> -EXCLUDED_PROGRAMS="$(extract_variable EXCLUDED_PROGRAMS)"
-> +BUILT_INS="$(extract_variable ../Makefile BUILT_INS)"
-> +ALL_COMMANDS="$(extract_variable ../Makefile ALL_COMMANDS)"
-> +EXCLUDED_PROGRAMS="$(extract_variable ../Makefile EXCLUDED_PROGRAMS)"
-
-Note that all three above read variables from somebody else; running
-an extra "make" process might be warranted.  But ...
-
-> +MAN_GUIDES="$(extract_variable Makefile MAN5_TXT MAN7_TXT | sed -e 's/\.adoc//')"
-
-... here, you are asking for the values of variables that are defined in
-*this* Makefile.  Why can't you inspect $(MAN5_TXT) and $(MAN7_TXT)
-yourself, e.g.,
-
-	MAN_GUIDES=$(patsubst %.adoc,%,$(MAN5_TXT) $(MAN7_TXT))
-
-or something?
-
-It might mean that almost all the things I discussed in this review,
-including all the changes to the extract_variable() procedure or the
-addition of the print-guides target, were unnecessary.  It is great
-if we have to worry about fewer things going wrong ;-).
-
-Thanks.
+-- 
+gitgitgadget
