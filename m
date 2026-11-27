@@ -1,121 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.153
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795805057;
-	b=CwAHgEzC8nmsUJsTxP2eDmF9Lsx2J8jyeSTN15HLT/j2fZUQ0S1It9asn7QXbQ1VRp2j
-	 OsEpe7Wyy82FeRmvPgPTFxpvmlTJ3t1EfevCbsNjeRrUYT7yWsd35ZzzOFkw4/4Y/klc2
-	 ncXCoDIK/FTwpjEyy35OhN5G3abN5Ktqidp79OCIhVbScCQP4gDEbwxFEequXfuW1+W7Z
-	 bEWMf83zCPVEKlf5F5vrfr+xC5hIcq7vbdoAs8+z92IFfG0dQU/lLIdXNmW/CSRr/gRoJ
-	 Wr4+zklwM/VysqQRM6a9BNyekBvqxmdBVFBbva9VKOvGyyuNo9oAyyX1E2k2xzSiORA==
+	t=1795806821;
+	b=H+WV82rtIByjmZaulMmGH2LmbppMEK53B2MmonuniW/L8qFDajQEhl+o6dQpQiyVHWu8
+	 14zMmhN/MDSxih5DrdNOGv270sMc6eXXjuLVFJKDYeA2wig/7MOjo45QhiyxvNGA9hFrW
+	 w84UBm9eqsZqWLS5KCR/ixV9h/PL6208ooiNTEciCBzaqapEPd2+/Y66UB6Wtci8eU0gB
+	 zynzmSEUn7h7CydAEbTXDreMf/RShQksoRNLLAeRwACMxJLFMcSOVZcrRWd/YK5UeT+Oa
+	 vzrB4RmIYW35QWircHmoUlvV4GQTQus8pI5P15CMOXXp9TOIW/6KnsTkkIgoDFr8ZiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795805057;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795806821;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
 	 User-Agent:MIME-Version:Content-Type;
-	bh=n+SpxTdl/5m6H3oT4rJP3h6ByYbRra3T8OArQf5Hjno=;
-	b=IGMgnfDY8EapalWVRoGqWDAGKvpoC6xLrDilsNaRQUeWY2RIig226+renhY3bpyUP2Wq
-	 8wMFGPTvVFn+VSWQq8cKy/VzlF+FoKpOx3bZ2nPa9Ajzih9hx5HOysDCWFw+D5ZIalu4Q
-	 MN9YJ7AUEMqBmFGPnIJ4BYO3rdAmLmcnFMcEhFVTcZ2OPFTgylQ3lAF/YGULZIv9ahFUy
-	 nh7VbUOAfoximqjS0OnthHPqRKI8UlYhSHFuJFksb9ckW0eV/6PcMqLDqXmexTssnW1tT
-	 oNALX7bpNd0nCQ9jMdcR/wVC1oXKlPejV8oNtvDMfDAdneUKE6vgD9gIpiWQNPQ0FEQ==
+	bh=KBJHiTGjVhkKDkyVOAPdLtPbL4WT15RohjZBObIQmW8=;
+	b=g23t2UB5aIjxtbvyOqsDqLIrl1KF6ZGb55x8cZCdjemm9chHJVWbwFechOKou0vu1quF
+	 cF4OBR42yXgalBXij/PFmHAzfrifBCeuujz37ZACfW3GTWIjISudcXp6b93zf6g/K9V7G
+	 DOqMlg5BtqaaBsa0hh0xZlIIXiVaOltQHcUdM2J2v9E8owc7SwDVxYl3/h5/eG0JIPd77
+	 /FlyWrynpITMp6Fw2727TWAmoxSAM14cfwIbf72QB4GBKVG1MJr4Dz4vLFA2P8QFfg7UW
+	 lOi+Y8MApAAlltmZb4s3SVDZ/+QP07T95jUuYKk+8OK9F1EJFGBhkEyv6LAF8NwS9xA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=RNPcVX33;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=1E8VOJU4;
-	arc=none smtp.remote-ip=103.168.172.146
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=Z2VITFkb;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ZJ3Ijibx;
+	arc=none smtp.remote-ip=103.168.172.153
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7AB606A31E
-	for <git@vger.kernel.org>; Fri, 27 Nov 2026 18:44:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6B7AB606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1D2606A31E
+	for <git@vger.kernel.org>; Fri, 27 Nov 2026 19:13:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6A1D2606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=RNPcVX33;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=1E8VOJU4
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 92EDBEC0C30
-	for <git@vger.kernel.org>; Fri, 27 Nov 2026 13:44:16 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 27 Nov 2026 13:44:16 -0500
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=Z2VITFkb;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ZJ3Ijibx
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8169B140036B
+	for <git@vger.kernel.org>; Fri, 27 Nov 2026 14:13:39 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Fri, 27 Nov 2026 14:13:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795805056; x=1795891456; bh=n+SpxTdl/5
-	m6H3oT4rJP3h6ByYbRra3T8OArQf5Hjno=; b=RNPcVX331LKw6T8f7E9M/hp5bc
-	z8XXqy3QYEIQD1xLABCksL+PCbzjnCVZwx3PQcgYSpf0LaSz53BZujVpKA2tVJAq
-	zGZGp9uJValK4eWrTZHN3rgCR7h3ftEgtT5UP4HPQ6rBwEQm5dzjpghywN3Da8cG
-	CnUPb4Vz/+Y2yAlqKy4T/AB+IiJAAoO9Vj076J3yhQ6DKWDNMiSh5PmWenNWJpQr
-	yP24uSdzkMs0Elb6K8imnUGj2QiRxCmQjoRi7paZdJoME8JlVeyFrsO05/5dTfhY
-	HQJZv6OfV4Tv6jhkFVyY2KNF9zvQ7RFmyHYoB32ZUcey52JDfDz3n4gBHPJw==
+	:subject:to:to; s=fm2; t=1795806819; x=1795893219; bh=KBJHiTGjVh
+	kKDkyVOAPdLtPbL4WT15RohjZBObIQmW8=; b=Z2VITFkbU7krT411gImv+Edewv
+	GMmAW6AGHCDyolx3XZVR40XywU2TC8Prf1usFCabbQpCqFP8DYRVIcQRMD+GJPdm
+	kjRvuGupgmu7NyKI5tOvnZxhSZEEsfyu3vWp+MrkTEw0wwARdZUl+d3n/xiA2I6o
+	vwY9Vpag6dm0eYqAkcvF8ZV5qcuRhJH6St+xDyipi4S1cRV7AbKHPeJlbAi/i2SW
+	pU1UKb3tUngBDq4BrMt/zIW9kxnV91w77V6XG4DguYSj8/++lkfHkVAeT3vly3YM
+	Cu5Z2ayabU6l2wOmAG4HenoCyCXpb0Q2q3h11K4VSqf5KP6qVSD2vOiE+CGw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795805056; x=1795891456; bh=n+SpxTdl/5m6H3oT4rJP3h6ByYbRra3T8OA
-	rQf5Hjno=; b=1E8VOJU44c4ADgw0lysBeGaGr/4Cf0TYlN66cfRX4qYSky6JrH2
-	DYGp7iUbQ+UcMpSmVLfwxUuk95HzC2D49pX+Q1G0exB2qMi6FCaBMtPy+KQjH8pZ
-	6Dy2X2h4JeupE6gvHubUdA6LTMM862K2FZP1kN6WxM78c70PI2cpz3lBxmXIMmgI
-	YsEg58fy+TYNtqH8gnm791fdQDSB7D+dgAVudD47zBdNf6qd4cM1DZUFVffSKieF
-	fWsdiTKuGHAYPg8GBPdaISDb4EDdzkypmAXYBea4pmgLaBF081JjFYCrAfjsr+xs
-	hrZ6eC+lZcHbdjecxhyFI5gshg83nJV9PIQ==
+	1795806819; x=1795893219; bh=KBJHiTGjVhkKDkyVOAPdLtPbL4WT15RohjZ
+	BObIQmW8=; b=ZJ3IjibxzZc7bCiUI5jzI4WB+MrVNepHYmZz6k5ItjKHHeBsTA0
+	djpa9GfhMBuHAcLbtxu59Zpud5EtYxn/0Ad80VcMmIm1szJxAqHPywDPM4YGT+iU
+	GFa+4dyqkjyl51UHERQc1BjRS3EGYCSe5ZDg4u3nhB0LToZBA7ZIQ8URN9sGo67h
+	UyWex1SlwFYDOIQkvdldM9Sd/u8wBujvkaZc5YRETZspf/ikReEaN5URfbY1087Y
+	bOKFI2tAa14pD8v227iuSJ9k0a3cFlliHd9qMdy6Q5M0VE9XtvNdKvCwS9HreYdS
+	y5Ar6JU4HFBSwmST5O0W9Akf/aQiMAT+Aew==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795805056; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1795806819; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:WSg7zCzeFWI0zddE88kKxRPzbrkE6NbhpgTvlVYfxh8pOUL
-	8AbIElzYOnOI/rOFI9L3Oi3evIXvMyxWJtCCokiE6ENuIQHLrw5Lt4JYr4W03Eok
-	9QFPnDQU2b8oycb0rkCHytKkWX5km/3wgcwApYmDBLL7CH4QPWG+L3aJtpICBH4i
-	xI3dgpPPMaXfKBFavGIf1XsdXFMtGn02eqgMJzdNiG4uFgR8wfGA5aghQHgVwj1V
-	uU/7aWk13Sy7ut6ACVeSPraN7dx15ws7vZZIf6GxP9/cVa3rYCqsJDEZWdyeLllv
-	gCd9vz9lGCC+DJ5gnYMIRk9iHC115ftGeT5pUAQ==;
+	s=fm2:rsa-sha256:VSktpnLKJGqwPDCXIF+RFVPHWN2MCRuFbZUGjEW+rYfaS2H
+	N04VohGTGsaPF58RuE3K5Q3XP7Cwg3l0Ahl9gEfDGZX2//3dW5yjVz4o/zvhhY67
+	LeXUGClmkQA5vRyvTosVDdB1jlsGoSBx50IYkelz1PVuP35pcS4i2QIuSZu+rCrO
+	mfiip5sgazPSk9qPNxSY03WIYYBfq2pRnvIaqX1eiJrWz38OH8jf+ajPZoHv6WYV
+	63oWW8Ea7mtSC986WNUIXEhrzxLmf17YCSZdYt1s4KW3LpuRXafHL/qLZmnvKZhx
+	+u2ZhIugWV0f+6dB48HznTc+87p+K6LCk3vjhIA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
 	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:vlgjJVrsK82Ufs/lNPAvbalXvvs3ek3lyt8is7S23+c=:PQJ69it/3j01kDCvl7Tz/2zz1nOL7hRF4dY5gwaUKo4=;
-X-ME-Sender: <xms:gM8Jaw6TERyNEDGG4vRux5gYc3djXiAxZXUs2t0Y99WI2LtYpTkSog>
-    <xme:gM8Ja4wXr421MacppaMfdSYjWhsc7aRAdWLspFAKDwdby7c19E-K6olRgF4Mw9PSa
-    lWltnphJ7QaipohXurLL0wLaNt_H-A7bP7vS_iYbVZ9HXo3M74Ze6w>
-X-ME-Received: <xmr:gM8Ja3xh12LbKtJLz2phqjXjsZBufSJZEzkbJiDlFY0b1MpOsZGnkQWWrF-vJ8M0VW7C7qaBQG0gL45wE7x7H14EKrR4sAnYfliGJjQ>
-X-ME-Proxy-Cause: dmFkZTGiBDW+fAx+U59m5UQ2pXFU3/OHsrGYeLCbU8Z75vx3g178cTEKT70I3Np/P1noFK
-    FcsdsBR0k8iHONUOJxYbQyEpokZg6T95/eRHCglkD3shWOna8d4P8wf/Pd21FLNg035JzA
-    zu1+h6C8W/hCpZbZW1PbsBwkNkZ9VOa3ZTaY9FUJDkrnfqc/U5a6BgWIbK9sbsvY4ZXgSm
-    tEP+dYfwZgv6insy2tJcLyakfMIEWd8YPnlDcasYqeuUQ278MuFCgua6D1ON4S78GwcjvD
-    uI6oa34yNnduGhKfPzHLLdpw7ZgBq66Saumg8O7pmdbZod8FVXhkkVQj+zKt2UMqbrEXIk
-    0Sd+kJR3e2iUlRRWKCuLQj5yYxYLSUWRjHMEaaIywOSETjphzs/wLiF+7FycYqbMKVVFzP
-    VV3Im9w0wk/stvmzm7BvN2yN4hYPfBjVGBJyRJXMBwdLl7WgjF9LuqSPDE09E5dP+oqODq
-    ZTvn292JFdfWFrk+dkHGrPsqiA4HFge/JJprgelDA0BQ2GZlgyfcIiUlyU6PtfOjeTIkjO
-    2ZPFw32FIbo1l+rCYzeaHLOiJtiZ9iL/Of/WfO/Ex7M5WdBND+m0JwCtkoKSVzpTgmDqlz
-    cTWY66k1VF5KgXUf2lb/eTOZJPRy86CUs18P3ioj1H3zMw2MadXcHTpd/b0Q
-X-ME-Proxy: <xmx:gM8JawwUO4Pu11kLrfDqyMiN-jHpDIAglUM5_zLtAKI0CvrXGtatgA>
-    <xmx:gM8JaxYOUAzFmUyOkDWmK_SKy3XNKo1PBCAr773c4BtUAf_SdXiORw>
-    <xmx:gM8JaxUdAj92XE0zVS9NDR_Cv8TUkHthGvMrrwzejXbuKz0ZfNiveg>
-    <xmx:gM8Ja_iHnBXnygGkgjzSZU7KOUMCPk0bDaKZirxeu98ofO5rjpbrHQ>
-    <xmx:gM8JazvgKt0CU-xiJRaSwVZdABS7Zh6JRNF6H0h_vmCvIPNbSK5UIpBY>
+Message-Instance: m=1; h=sha256:Z0uzL2HUbC1+5LcMCsxAA03oCM0mCz58jLS6Spj4zCM=:Xs0f+OSH5Bsu3GxJWsnwCVmS3dKW/4ufchbSrUxzrlA=;
+X-ME-Sender: <xms:Y9YJa22dN0Y0cSZl4oMt6nKBob_OQX9lzo6glkb9cAhOJVPL7HEuVA>
+    <xme:Y9YJawG2yOboacWCdS_plx_6LvHMbQeWsWUEBY-pd9eB8bnL1q8Ci-C7zlEYQ9QRt
+    2YACOB3zgZuBGEsLDl1sVI1oCBWHHM5EU5gk681wyv2Hti81AR6pA>
+X-ME-Received: <xmr:Y9YJaz5y0KuwylUvs6Lq_plGAS2RLwI4OHMOqVW31l6gLAEpCoieA7vnlzEFZzYI96LVfhMz57XU9iqpqrWqahXMVBBerwa9flxwpKg>
+X-ME-Proxy-Cause: dmFkZTEXmMjNSRB22vUnDriLiMKrjh7arvhBxvyAdLe8oruvlEwbbP2Oeq3FwrpWIE+gWM
+    shLnXyONCdbebQRpdTgi7TSigla1sEJVSeqYh2EGr59ZCkAu1HNS/ZKnkTja7ET3LAle97
+    i30KdhDufeaYFW7sphsBjyCa1XPIMkzLIgX/ju+l7T+cikVtUXGk0YnjPNw4DK6bdvIum/
+    R9Ny+FG4zDucrs/p7TZbmVFaOtSFSMP8QipODUaN5TLhqQkP1ACfa2tUHpNsAwTzPwfhfR
+    0/4hhKODHi5kNUMei6N5Xe0Ebzzss/rybuRWYgyTHVR6eeyRqwCsq4H+ffKA8SvNz9d8tV
+    XakiyEEqn6NLlVvYH7rix4AsPooRLy/intihNsgJXdf40HsS0ojMKmxXmnf7sjBa1OvFJm
+    MviA2CUhpjjjU71g2QyqGpN7gurGm7QSbHh0Ut3+YzQN3u+oCUD1xfV9zlvHcuoGtGOBXq
+    nzTQ57+J6JTTW6Y1REdgSd9yrnsMZDxPg/w580u0iASSBmWGFzee/4peye/FDWH1bWYt/P
+    2CCmnjXfFbY1DoQ+2/l0AlzJAJguZeXcmt0PDpC+ck3bIWyfp4ODX1OV9aRFN7hXvAGPRV
+    T4RSV1ykHXhNCAUuVtvi9td5Bv09YStYJ5pcBA6Tma7H4NZVCI8I1B5GbagQ
+X-ME-Proxy: <xmx:Y9YJa2tmrFwrscgCZCd6-qW8iM_EyIouEayjgfdwqvi8TIKVwBWt-A>
+    <xmx:Y9YJa07zUDuLscNc2jzxGoyxu-EbgklTC9ijD0r30h0G35QpO5H3-w>
+    <xmx:Y9YJaxX6jTr_RQ1g767yRUaiX5_uXPAqqO4j3pYx0JAo6KmA8poLlg>
+    <xmx:Y9YJa29sacaSQPD5xfQ--P3txrla63SBcOYhVR9VFgu_GhKRvRVcbg>
+    <xmx:Y9YJa08ZB8CuZJkEmrfcs5VUDIvFywkOR2gEHJCqPJ6YOU-LoJNRLE0T>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Nov 2026 13:44:15 -0500 (EST)
+ 27 Nov 2026 14:13:38 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Xing Xin" <bupt_xingxin@163.com>
-Cc: "blanet via GitGitGadget" <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  "Xing Xin" <xingxin.xx@bytedance.com>
-Subject: Re: [PATCH] read-cache: hash the shared index even with index.skipHash
-In-Reply-To: <5dfa732c.94b8.1a21d16a974.Coremail.bupt_xingxin@163.com> (Xing
-	Xin's message of "Fri, 27 Nov 2026 20:59:14 +0800 (CST)")
-References: <pull.2337.git.1795701443098.gitgitgadget@gmail.com>
-	<xmqqld6fjt55.fsf@gitster.g>
-	<5dfa732c.94b8.1a21d16a974.Coremail.bupt_xingxin@163.com>
-Date: Fri, 27 Nov 2026 10:44:14 -0800
-Message-ID: <xmqqwlpy8681.fsf@gitster.g>
+To: Tuomas Ahola <taahol@utu.fi>
+Cc: <git@vger.kernel.org>,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH v4 2/2] lint-docs: ensure command-list.txt lists all guides
+In-Reply-To: <20261127174223.Yr6v-%taahol@utu.fi> (Tuomas Ahola's message of
+	"Fri, 27 Nov 2026 19:42:23 +0200")
+References: <20260909052501.8448-1-taahol@utu.fi>
+	<20261126201110.9046-1-taahol@utu.fi>
+	<20261126201110.9046-3-taahol@utu.fi> <xmqqy0aecnyd.fsf@gitster.g>
+	<20261127174223.Yr6v-%taahol@utu.fi>
+Date: Fri, 27 Nov 2026 11:13:37 -0800
+Message-ID: <xmqqse0m84v2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -128,44 +128,23 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Xing Xin" <bupt_xingxin@163.com> writes:
+Tuomas Ahola <taahol@utu.fi> writes:
 
->> the most from skipHash?  And this patch is breaking the skipHash feature
->> for the use case that would benefit the most.  And not hashing the index
->> files that are not bases would not save as much, since they are expected
->> to be much smaller.
->
-> Per write, yes.  But what skipHash saves is the hashing done on each
-> write, and the shared index is only written when it is rewritten,
-> which the split index is designed to make rare.  The frequent writes
-> are of the small split index, where, as you say, there is little to
-> save.
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index b574ca2044..0ef57503a9 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -532,8 +532,8 @@ $(LINT_DOCS_DOC_STYLE): .build/lint-docs/doc-style/%.ok: %.adoc
+>  .PHONY: lint-docs-doc-style
+>  lint-docs-doc-style: $(LINT_DOCS_DOC_STYLE)
+>  
+> -lint-docs-manpages:
+> -	$(QUIET_GEN)./lint-manpages.sh
+> +lint-docs-manpages: $(MAN5_TXT) $(MAN7_TXT)
+> +	$(QUIET_GEN)./lint-manpages.sh $(patsubst %.adoc,%,$(MAN5_TXT) $(MAN7_TXT))
 
-That is a very good justification to give in the proposed commit log
-message and also in the documentation (the behaviour may already be
-documented in this initial version of the patch, but the reason why the
-base index ignores the skipHash configuration deserves a mention, too).
-
->  - index.skipHash is only ever a configuration variable: it is either
->    implied by feature.manyFiles, or set as index.skipHash, by the user
->    or by Scalar, which writes index.skipHash=true into the repository
->    configuration and resets it on "scalar reconfigure".
->
->  - The split index is enabled by core.splitIndex, which neither a
->    feature.* setting nor Scalar sets, or by "git update-index
->    --split-index", which stays in effect while core.splitIndex is
->    unset.
->
-> When both are set in the configuration, there is no telling which one
-> the user cares about more.
-
-Isn't that mostly a defect of Scalar?  Such a tool that configures the
-repository without close supervision by the user should be responsible
-for ensuring that the resulting set of configuration variables gives a
-coherent story of what the user wants.
-
-But by going the route of your patch, we no longer have to worry about
-these two features conflicting, so I would say it is a good direction to
-go.
+Yes, exactly.  Then extract_variable does not have to change, as it only
+is used to read from the top-level Makefile.  Perhaps this patch will
+shrink quite a lot.
 
 Thanks.
