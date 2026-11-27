@@ -1,86 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.51
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795800220;
-	b=mjcVZZUjsLVt229DKNzj2BkTcngPBT6EaPS+x9nCLZSjBGAmglpDjEZgUTpmqCFdwj0X
-	 J8KMuaxvL9L/f/NhJkefzqEcz2yrTLxlLttZzw6bnyIXmgy+9SX2/TFjr537t61g3c19s
-	 AcTsbjsOzmU385E4PuWcEkeWJDDz1KOQ04Kb56TH19MkjN6Xm7+qxRMtTS+XPJho9ugjr
-	 94+0YPM8otnXJAn7PhiF9XEJQ1pvukdh0YTkr43aGlk6vB20bU/90E5AoROKbwTyJtq1N
-	 MSTLQUywiSrbiWkbv5yv6bE89X145ZdGrlLhIq4DvqVOGmcMOBALqGVKPMNZWtH3Vgw==
+	t=1795800780;
+	b=lXVQRlmAwch+RRzGjkMEOSegY7eSVCJBRBC9YuN4CFQr22eWaBtje0bWugQQFVjK2JTI
+	 TMim+F3t5IKLkPSTZRyl/6TlBTQoEXHLnPd9fDIgSQ3Hgq5QXEnMTBs5fmrfiY/tkYtgT
+	 7ZCgA8IZY374VThYLFjlmdqHcIVKIcQBT8VdhVxpmP7itQYonZdD9blVrEiUL2CD8up7J
+	 x4yvZBIUD0LSIqJ3n9cxM09AhqBy+GzPxTCvzMebqFnqueW0fFkk2cIk80IOkqLkIaoSx
+	 dYzJiqmsJwt4jRtQUVgQLs4SxFM5eC0kPojLu1FWmAtzKwvE1970J9niBEik6YVOVkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795800220;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795800780;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
-	 X-B4-Tracking:X-Change-ID:In-Reply-To:References:To:Cc:X-Mailer;
-	bh=RSi9/QvpTwzIT7LK/YzJNQ8FbngV0ezBn+sIOpwnnpE=;
-	b=En5+bN4AJL6fZBQ2CXHA7vIwwjfaI6TD54vcGe89W4cSmjTsERPdduLNey85Md2HxtUI
-	 iQVAU1c5OOo8FK1GgnTEfb+Qcz9QziDynJFKl2HxWMyWx1aDWo/CnLsU3O34uaTME5GPf
-	 Al4/QBsdHSJCTYWOj5FfS7odwwycHFKKWn6WX4MA4vvRJfsaqTUmnIWVS0U1gm+Cg/afg
-	 rW3J35xERhNJgrQmuZ050Fq2eeKyMaLwB/uHzgfK7GJb7TWHpGQBTj9QMgSKdUCr0QXbD
-	 99Ss6VGVBKXy7spkkL/O1Q/vExzhXAYgzfms1VfFuoAh2A6JA6AP6tFQePSeLmwe1Pw==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=UxvsbRDQoKwm1eeaTGnKsDKmPB0xQT5/8mcXqoI67O4=;
+	b=PjasicbRZ/XgVqycIm/2S2/r6/3ZA2hmb69UvHQDsvuO7qmrT6GbC20y09vvMKG3vU6A
+	 h8w2HSUnUmRIAPqAEaItUChulkUQgWE26kxkO6Nk9ZwO5FEsL5iiUpUB84UonkOsm6srq
+	 vAZzarWL7wWvCVaq2NVumcTFTFu1fA9IUexMiqZESnx2vYHNxQw4L44mCb21FphsGyK13
+	 3HNnd04KyzEYN1TuLotzBQ1zAyHZ4KAZ47An5p9U+DjJi8hQ8uvVX7cX8uMmIvyi6Ls44
+	 OtHnJB590OIk92uSmz+busBcrexVhz3n8n6E6iQINdpctZ3pjgQdZT+LabrmxXs2S1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=mLo1GMa3;
-	arc=none smtp.remote-ip=74.125.82.49
-Received: from mail-dl1-f49.google.com (mail-dl1-f49.google.com [74.125.82.49])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=bD9MSAMt;
+	arc=none smtp.remote-ip=74.125.82.51
+Received: from mail-dl1-f51.google.com (mail-dl1-f51.google.com [74.125.82.51])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE40F606A31C
-	for <git@vger.kernel.org>; Fri, 27 Nov 2026 17:23:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BE40F606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E35606A31C
+	for <git@vger.kernel.org>; Fri, 27 Nov 2026 17:32:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D8E35606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=mLo1GMa3
-Received: by mail-dl1-f49.google.com with SMTP id a92af1059eb24-1a2761c69fbso12148787c88.0
-        for <git@vger.kernel.org>; Fri, 27 Nov 2026 09:23:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=bD9MSAMt
+Received: by mail-dl1-f51.google.com with SMTP id a92af1059eb24-1aefd1bf74aso4707221c88.1
+        for <git@vger.kernel.org>; Fri, 27 Nov 2026 09:32:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795800219; x=1796405019; darn=vger.kernel.org;
-        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+        d=gmail.com; s=20260707; t=1795800779; x=1796405579; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=RSi9/QvpTwzIT7LK/YzJNQ8FbngV0ezBn+sIOpwnnpE=;
-        b=mLo1GMa3+1ae/AlzL2/+HJvpuVZqM9nQRGV77a1xV5kM/f11EBse0Z7CxYqqHBOHkE
-         6EmEG+EZ85OoSQpX/182wdQhwypUwZW2ckXwU8Eu91L/MPyZsti+rZfo9nr65veYzQt8
-         bkcpWwWafa3yGXCIuqyZ5kOUmWdtoGUx/Vy6vgB821lqck5p+kJlMXlH8SwoHo8WHuVC
-         ljYX1qF62maPq1cnG8AMT47eUvnjCm7HjqajISSwVRYr9ZcL/FXA5IXZ9h20s+n4+wwO
-         2XovHez3l2fckhWR5uWh3GaJNrEXiTyEJ7pvi2ooFQB1koA/TKFkOU7yCtemSbANGk8y
-         Equg==
+        bh=UxvsbRDQoKwm1eeaTGnKsDKmPB0xQT5/8mcXqoI67O4=;
+        b=bD9MSAMt5B8a0E4DAhKrKt6haX1hg1j+nm7yzS/y7kzINpo+WPl6uJOINyAvN+KZwx
+         OxDRKiYWsHareSZUfNb20J3G+Mlv+bOcUwwdQVSiyOxdwcaOoTFGTKeooX4Io8gbh/uD
+         1+H7Bp/3fJLd2kRR9OEarSH9we1Y32fEtoQXA+9hi4SFrpay3k2ReHZiufRNQl8FD96P
+         S6USQr2GMMx9efLcJwEwZ7DODL5Y3lV+hbJmgj0p3TDaUpa0kWJ2jk0ynM/Ukzg7qg1c
+         njnoDtcwj+J5TPgrjYwTbnBxsTVaSnhxHk8CAzm9hEWLxv8FUE8zRLj8pW2yxHVlL7yV
+         aENg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795800219; x=1796405019;
-        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=RSi9/QvpTwzIT7LK/YzJNQ8FbngV0ezBn+sIOpwnnpE=;
-        b=Rn+yxKCiAvAZSJODSu6IRtpMEBT9M7vQ3kA8Ul0kX33zX2+y03zSPljnYobxA0hX+M
-         ffv2Q/pJeCD+cFk0x5VsHmPD23Fo9LcAWZVGEmAR2RNxc0MoBNneDJayWyxzAT4b2oWN
-         NyO+qRiZU/cyCABbMeipe3XZHhR++49BgbU3d2m8mRMJcvrMdappZKeEF9gpA4sEuCKZ
-         myznrUOvC3X4dDyH8PY2inyoItjrg7YpXc+OKQW4162LVuYFz/Rf3I6NpatVA249iocu
-         5eBGzkiIpQTJ+KVMKTJAgDufIqKdtUdNsc81LHka0qUGL8gxizi3Gln6ljjH7WhmA2+Z
-         I1/A==
-X-Gm-Message-State: APuU4Z/tqugWIo5KtZuKSewLNV0n9n51ze6YeEPzFrFdSoBr2ZNzS19H
-	LSDFpfItFBdEF7RCaHsNzCi0wuDuCv9br8pvDn1/G3uNyEHbGM3RQwGKKFSmAA==
-X-Gm-Gg: AZFdTZcX1Z/gtHeUz2k7ngjV4ZeqmVUM0dBzlx5ULAPT0LDN4c+ncwVtaWNvZ6N0lVG
-	qBxgZTrTzcbLYyAC9RApqHcxnIdTmHze1AK8EepKZ2hAxmwXuw3cgTaYwm57G5O+TCkjylC6Fms
-	l+UO2CsigD5yDSD81BbzmuUthZo1h95fNh11sEQQ0qCdiLXurG9cw0qCDYjIB0zuM+CyUBc/3/s
-	tN3vQT5w2/bJEztP9inJJGyfOUdf+/jV9yAiHmW5uFwapg1VHhNo1GDEs7VYZ9fIhdthPbJpNzm
-	LLz43aX4Ti3zpNEKpUbIKBv0m2o1sIYYzGlXwzBCzAdPq1ozLQ0gYv+KutolqHmkGX5qmDdKzZj
-	NkV7onoew+sXBHns3U8B5zTyusZfsmUWlKQi+XAJ+Ym3+zSScZkpoW2UqRYrtOkms1+nx7IP3N+
-	Td+Lc3rf21IGSzXioWqO3Dee7PHEfGppz1V7DGwJwF/sbT5Ts5UHA/2KFo1krvQqZhHGCUOgXmV
-	NJOmJr63bg1AjPYhKcF7LopwzTpBLSoNd4/wsDxFIcNiAkV+SNM+SE9BJ3DskPfCx9HY2TlvFKq
-	zkO7F8C/jY7sewdp0FCo3g066MM2xQkjC5b3x8I=
-X-Received: by 2002:a05:693c:87cc:20b0:358:3426:d601 with SMTP id 5a478bee46e88-3856c0d0961mr25411570eec.2.1795800218414;
-        Fri, 27 Nov 2026 09:23:38 -0800 (PST)
-Received: from [127.0.1.1] ([2406:7400:12b:ed80:b0d1:a550:950a:606f])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-38567cafec4sm84086600eec.26.2026.11.27.09.23.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Nov 2026 09:23:38 -0800 (PST)
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Date: Fri, 27 Nov 2026 22:53:15 +0530
-Subject: [PATCH v3] test-lib: run EXPENSIVE tests one at a time
+        d=1e100.net; s=20260707; t=1795800779; x=1796405579;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=UxvsbRDQoKwm1eeaTGnKsDKmPB0xQT5/8mcXqoI67O4=;
+        b=i+q1eW/OLBxzIepxOYnY8DqLoHZ2oWBL6lyj8LVbd7NboJeip4hnNWvR1+E0MTdeuw
+         B+QVMfLtJ1zWpRtrqU8sauNnTyDOlshJRZvlpq542HNXVQ9/j2rKLWkeVggs2xhkA5o+
+         ltesUyaqs3DdDUjQN6YrDzC30vnBKDnZ3rtNTBINqSCke9XT9P6RD8jKZ6ffYpgKQ840
+         OmKgSimHgZc3+c8XVLCWlSzwasKgtPHIYglTINe21VL6KCOHxaUnbTGMhAzZaQ6S7g6m
+         lla3W81ydx2arVUFycRTKXiPd3lXwfSy4ZmwWioPdP0rKLVtoXYfzKudD0q1BYBNcDiR
+         zcOA==
+X-Gm-Message-State: APuU4Z8TL1o0Z3BIwapPshImiRdR+fKw4g7c4Z3fE5YpVtAJ1ykMzDLp
+	B6mwkHmRbxtKsLcl2oY4ukVTLa/7PB7KVZ3DSrF29ASdzMCsyjdeH6MnLIbQmNkUZz0=
+X-Gm-Gg: AZFdTZc8SbF8JMesFTSPrWmk+rjdz10p6VFLINWYYoyMzIebmH6sWuPY9FX8+bzLYc0
+	pM764nEOcohVUKAMvyGDyOc6sr1zEProK+NSkzPzDgMcXJEs4294nlWsPoCsoQ2n0N5HcT1L2zc
+	4VF/lGK0I8WLX0EIgcZzYMvy96Ma8SST0SWR74wrvg+0PyHuFFuDqxxdHfnm7dO/FjnCEGOAjrj
+	oJgx0J6ZIWN+/jSmaK8OeCTEEKwSFGSR282xpbak7pBkopHbusJ/ezXnhyz0B6cAACorrBv9/Yd
+	3oHJ8w8bQzAabJjhSS/fYz0OQd8dH1vC6ad8hnKD7yyNYeSw9FZQQt2l/OMUWOdUIIqlZUudwES
+	u8of/wIKK9yZLqUDvSNofEMR56N5p0vUzFs+vLp9sT8bW1XvF9wRFmVaMRUZrQba6WrIw525liB
+	m8erH635VdPfaczKK2KzGlZ2bDOqU72vnkp0/vEeW14RIFMiqk6x91c/rQnXhJ+TSjgTQ9S0+OY
+	I3IVQw0t6hDfEz9D5JC3l90F6GJQ/bhJgC0pKDXeFwCzbs4ys8IRAHmm+lLCuQ8E83YrCDTgS9h
+	QihemElXP1DjFDUphCM3Krx8bwf82uzR1T2c93bOaJCpcQvSwRxkLR+/IBW3Y2yBYtJml8/iBsi
+	N6B11DmG+it38vS1q14ew
+X-Received: by 2002:a05:7022:f90b:b0:1b2:6d4d:9d8a with SMTP id a92af1059eb24-1b56f36d5fbmr15994249c88.2.1795800778645;
+        Fri, 27 Nov 2026 09:32:58 -0800 (PST)
+Received: from localhost.localdomain ([223.190.84.94])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b55681301asm58548162c88.8.2026.11.27.09.32.55
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 27 Nov 2026 09:32:58 -0800 (PST)
+From: Aniket Gupta <aniketgupta3001@gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Toon Claes <toon@iotcl.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Nikita Bobko <nikita@nbobko.com>
+Subject: [PATCH v2] history: refuse to rewrite branches used by other worktrees
+Date: Fri, 27 Nov 2026 23:02:52 +0530
+Message-ID: <20261127173252.7794-1-aniketgupta3001@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20261123103911.98860-1-aniketgupta3001@gmail.com>
+References: <20261123103911.98860-1-aniketgupta3001@gmail.com>
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -90,382 +100,577 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261127-ks-ci-long-test-hang-fix-v3-1-91b2aac82a1c@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAIO8CWsC/42NzQ7CIBAGX6Xh7BqgtT+efA/jocLSom0xgETT9
- N2FGhMvJh5n8+3MTBxajY7ss5lYDNppM0XINxkRfTt1CFpGJpzykjFWwdWB0DCYqQOPzkMagdI
- PoLTGiitZUFGS+H6zGM+r+nh6s7ufLyh88qVFr5039rm2A0u7T6b5nQkMGBQ7wZVSpWwUPXRjq
- 4etMCNJmcD/FfEoyivKmKB1XlP5LVqW5QVLpRwKGwEAAA==
-X-Change-ID: 20261117-ks-ci-long-test-hang-fix-008e72fd40c6
-In-Reply-To: <20261119-ks-ci-long-test-hang-fix-v1-1-45c2fff6d9f0@gmail.com>
-References: <20261119-ks-ci-long-test-hang-fix-v1-1-45c2fff6d9f0@gmail.com>
-To: Git mailing list <git@vger.kernel.org>
-Cc: Harald Nordgren <haraldnordgren@gmail.com>, 
- Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-X-Mailer: b4 0.16.0
+Content-Transfer-Encoding: 8bit
 
-Recently, we've acquired quite a few expensive tests in our test suite.
-For instance, these commits add several tests that require
-multi-gigabytes of memory:
+By default "git history" rewrites every local branch that descends from
+the commit it changes. If another worktree has such a branch checked
+out, the branch moves but the index and working tree of that worktree
+stay behind, so it shows the rewrite as staged changes. If the current
+worktree is in the middle of rebasing the branch, "git rebase
+--continue" later fails because the branch is not where the rebase
+expects it.
 
-  - 89048b48fb (t1600-index: add expensive tests for over-long
-    tree paths, 2026-10-16) added tests to t1600
+"git branch -f" refuses to move such branches and "git rebase
+--update-refs" skips them. Do the same here: before replaying anything
+look for local branches that contain the commit and are used by a
+worktree and refuse to go on if there is one. Use branch_checked_out()
+so that a branch that is being rebased or bisected, in any worktree,
+counts as used. Updating clean worktrees would be another way, but
+refusing is simpler. Refuse with --dry-run as well because it will show
+what a real run will do.
 
-  - 288266c11d (xdiff: use size_t for merge buffer size computations,
-    2026-10-16) added tests to t4300
+The branch that the current worktree has checked out is fine, since the
+command already takes care of the index and working tree of that
+worktree: "drop" updates them, "reword", "split" and "squash" keep the
+tree of the tip, and "fixup" takes the staged changes. A bare repository
+has no such worktree, and branch_checked_out() records only one worktree
+per branch, so ask the other worktrees whether they use the branch
+instead of skipping it by name. --update-refs=head refuses in the same
+cases.
 
-  - 55c54fd375 (apply: reject binary patches greater than MAX_APPLY_SIZE,
-    2026-03-25) added tests to t4141
+Refuse to rewrite HEAD while a rebase is in progress, with either
+--update-refs mode, since "git rebase --abort" would throw the result
+away.
 
-We also have the memory hungry 5GB filtered hash-object test in t1007.
+Mention --update-refs=head, which leaves the other branches alone, with
+the existing advice.historyUpdateRefs hint.
 
-When GIT_TEST_LONG is set, "prove --jobs" happily runs several of these
-at once. On the 16GB GitLab CI runners this exhausts memory: the
-sanitizer jobs have been hanging in t1007 until they hit the job
-timeout ever since the new EXPENSIVE tests in t1600 started running
-alongside it. Running the two under a 16GB memory cap reproduces it,
-with the t1007 git process getting OOM-killed.
-
-GitHub CI runners are no exception and observe the same behaviour.
-
-Take a lock shared by all test scripts around each EXPENSIVE test, so
-only one of them runs at a time. Cheap tests in the same scripts keep
-running in parallel. Only the expensive ones wait for each other.
-
-The lock is a file in TEST_RESULTS_DIR holding its owner's PID. A
-script writes its PID to a file of its own and hard links it into place
-with ln(1). Like mkdir(1), that is atomic and fails if the lock exists,
-but the lock never exists without its owner recorded in it.
-
-The lock is released after the test and its cleanup finish, and from
-the EXIT trap. A lock whose owner is gone was left by a killed script,
-and a waiter removes it after re-reading it, so that a lock another
-waiter has just taken is left alone. Two waiters clearing the same
-stale lock at once may let two expensive tests run together, which is
-rare and better than hanging. If the lock cannot be created although
-nobody holds it, e.g. without hard link support, the test runs anyway.
-
-Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Reported-by: Toon Claes <toon@iotcl.com>
+Reported-by: Nikita Bobko <nikita@nbobko.com>
+Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+Signed-off-by: Aniket Gupta <aniketgupta3001@gmail.com>
 ---
-In recent times, we've been noticing the sanitizer jobs (linux-leaks,
-linux-reftable-leaks, linux-asan-ubsan) hang and fail with timeout in
-our GitLab CI runners. On some digging, it turns out that this is
-because of multiple memory hungry tests running in parallel.
-
-So, I thought of suggesting this patch to serialize the expensive tests
-at least to avoid the putting the CI runners under memory pressure.
-
-The GitHub CI runners also observed the same behaviour.
-
-Both CI runners are happy with this change.
-
-GitHub: https://github.com/sivaraam/git/actions/runs/43281285339
-GitLab: https://gitlab.com/gitlab-org/git/-/pipelines/3079929506
----
-Changes in v3:
-- Fixed issues in the commit message as pointed out by Junio.
-- Fixed a race, pointed out in review, where a waiter could remove a
-  lock another script had just taken, letting two EXPENSIVE tests run
-  at once. A waiter now re-reads the owner and only removes the lock
-  if it still names the same dead process.
-- Fixed a deadlock where a script killed between creating the lock and
-  recording its PID left a lock that nobody would ever remove. The lock
-  is now a hard link to a file that already holds the PID, so it never
-  exists without an owner.
-- A lock that names the waiter's own PID (left by a dead holder whose
-  PID was reused) is now treated as stale instead of waited on forever.
-- If the lock cannot be created although nobody holds it (no hard
-  links, read-only or full disk), the test runs without it instead of
-  waiting forever.
-- Rewrote the lock part of the commit message for the new scheme.
-- Link to v2: https://patch.msgid.link/20261119-ks-ci-long-test-hang-fix-v2-1-37011c08380d@gmail.com
-
 Changes in v2:
-- Corrected commit messages as per Patrick's suggestions
-- Tweaked the shell function comment to avoid mentioning 'prove --jobs'
-- Made the owner and waiting variables local within acquire_expensive_lock_
-- Link to v1: https://patch.msgid.link/20261119-ks-ci-long-test-hang-fix-v1-1-45c2fff6d9f0@gmail.com
 
-Range-diff vs. v2
-1:  7152a81bdc ! 1:  fd87caa359 test-lib: run EXPENSIVE tests one at a time
-    @@ Commit message
-         For instance, these commits add several tests that require
-         multi-gigabytes of memory:
-     
-    -      - 9048b48fb (t1600-index: add expensive tests for over-long
-    +      - 89048b48fb (t1600-index: add expensive tests for over-long
-             tree paths, 2026-10-16) added tests to t1600
-     
-           - 288266c11d (xdiff: use size_t for merge buffer size computations,
-             2026-10-16) added tests to t4300
-     
-           - 55c54fd375 (apply: reject binary patches greater than MAX_APPLY_SIZE,
-    -        2026-03-25), added tests to t4141
-    +        2026-03-25) added tests to t4141
-     
-         We also have the memory hungry 5GB filtered hash-object test in t1007.
-     
-    @@ Commit message
-         GitHub CI runners are no exception and observe the same behaviour.
-     
-         Take a lock shared by all test scripts around each EXPENSIVE test, so
-    -    only one of them runs at a time. The lock is a directory in
-    -    TEST_RESULTS_DIR, created with mkdir(1) like the existing valgrind
-    -    symlink lock. It records the holder's PID so that a lock left behind by
-    -    a script that was killed with SIGKILL gets taken over by the next
-    -    waiter. It is released after the test and its cleanup finish, and from
-    -    the EXIT trap when a script dies or is interrupted while holding it.
-    +    only one of them runs at a time. Cheap tests in the same scripts keep
-    +    running in parallel. Only the expensive ones wait for each other.
-     
-    -    Cheap tests in the same scripts keep running in parallel. Only the
-    -    expensive ones wait for each other.
-    +    The lock is a file in TEST_RESULTS_DIR holding its owner's PID. A
-    +    script writes its PID to a file of its own and hard links it into place
-    +    with ln(1). Like mkdir(1), that is atomic and fails if the lock exists,
-    +    but the lock never exists without its owner recorded in it.
-    +
-    +    The lock is released after the test and its cleanup finish, and from
-    +    the EXIT trap. A lock whose owner is gone was left by a killed script,
-    +    and a waiter removes it after re-reading it, so that a lock another
-    +    waiter has just taken is left alone. Two waiters clearing the same
-    +    stale lock at once may let two expensive tests run together, which is
-    +    rare and better than hanging. If the lock cannot be created although
-    +    nobody holds it, e.g. without hard link support, the test runs anyway.
-     
-         Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-     
-    @@ t/README: appropriately before running "make". Short options can be bundled, i.e
-      	This causes additional long-running tests to be run (where
-     -	available), for more exhaustive testing.
-     +	available), for more exhaustive testing. These tests can use a
-    -+	lot of memory and disk, so only one of them runs at a time, even
-    ++	lot of memory, so only one of them runs at a time, even
-     +	when several test scripts run in parallel (e.g. "prove --jobs").
-    ++	They take turns through a lock file, "expensive.lock" in the
-    ++	test-results directory. A lock left behind by a killed test
-    ++	script is cleared by the next one that needs it. If the lock
-    ++	cannot be created at all, the test runs anyway.
-      
-      -r::
-      --run=<test-selector>::
-    @@ t/test-lib.sh: die () {
-      	# ctrl-C, i.e. when 'test_done' is not invoked at all.
-      	test_atexit_handler || code=$?
-     +	release_expensive_lock_
-    ++	test -z "$expensive_lock_" || rm -f "$expensive_lock_.$$"
-      	if test -n "$GIT_EXIT_OK"
-      	then
-      		exit $code
-    @@ t/test-lib.sh: fail_117 () {
-      	return 117
-      }
-      
-    -+# EXPENSIVE tests may need many gigabytes of memory or disk, so two of
-    -+# them running at the same time can exhaust the machine.
-    ++# EXPENSIVE tests may need many gigabytes of memory, so two of them
-    ++# running at the same time can exhaust the machine.
-     +#
-     +# Allow only one at a time across all test scripts that share
-     +# this TEST_OUTPUT_DIRECTORY.
-    @@ t/test-lib.sh: fail_117 () {
-     +have_expensive_lock_=
-     +
-     +acquire_expensive_lock_ () {
-    -+	local owner waited=
-    ++	local owner waited= tmp="$expensive_lock_.$$" misses=0
-     +	mkdir -p "$TEST_RESULTS_DIR" || return 1
-    -+	while ! mkdir "$expensive_lock_" 2>/dev/null
-    ++	# The lock is a hard link to a file that already holds our PID, so
-    ++	# it never exists without its owner recorded in it. Remove any
-    ++	# $tmp left by a dead process with our PID first: it may still be
-    ++	# linked to that process's lock, which writing to it would empty.
-    ++	rm -f "$tmp"
-    ++	echo $$ >"$tmp" || return 1
-    ++	while ! ln "$tmp" "$expensive_lock_" 2>/dev/null
-     +	do
-    -+		owner=$(cat "$expensive_lock_/pid" 2>/dev/null)
-    -+		if test -n "$owner" && ! kill -0 "$owner" 2>/dev/null
-    ++		if ! test -f "$expensive_lock_"
-    ++		then
-    ++			# Nobody holds the lock, yet we cannot create it (no
-    ++			# hard links, disk full, ...). Retry in case it was
-    ++			# just released, then run anyway rather than wait
-    ++			# forever.
-    ++			misses=$((misses + 1))
-    ++			test $misses -lt 3 && continue
-    ++			say >&3 "cannot take the EXPENSIVE lock, running anyway"
-    ++			rm -f "$tmp"
-    ++			return 0
-    ++		fi
-    ++		misses=0
-    ++		owner=$(cat "$expensive_lock_" 2>/dev/null)
-    ++		# A lock carrying our own PID was left by a dead holder whose
-    ++		# PID we were given again; we know we do not hold it.
-    ++		if test -n "$owner" &&
-    ++		   { test "$owner" = $$ || ! kill -0 "$owner" 2>/dev/null; }
-     +		then
-     +			# The holder was killed without releasing the lock.
-    -+			rm -rf "$expensive_lock_"
-    ++			#
-    ++			# Another waiter may have taken it over since we
-    ++			# looked, so only remove it if it is still the same.
-    ++			if test "$(cat "$expensive_lock_" 2>/dev/null)" = "$owner"
-    ++			then
-    ++				rm -f "$expensive_lock_"
-    ++			fi
-     +			continue
-     +		fi
-     +		if test -z "$waited"
-    @@ t/test-lib.sh: fail_117 () {
-     +		fi
-     +		sleep 1
-     +	done
-    -+	echo $$ >"$expensive_lock_/pid"
-     +	have_expensive_lock_=t
-    ++	rm -f "$tmp"
-     +}
-     +
-     +release_expensive_lock_ () {
-     +	test -n "$have_expensive_lock_" || return 0
-    -+	rm -rf "$expensive_lock_"
-    ++	rm -f "$expensive_lock_"
-     +	have_expensive_lock_=
-     +}
-     +
----
- t/README      |  8 ++++++-
- t/test-lib.sh | 74 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 81 insertions(+), 1 deletion(-)
+ - Check the branch of the current worktree against the other
+   worktrees instead of skipping it by name. This fixes a bare
+   repository and a branch that two worktrees have checked out (Junio,
+   Phillip).
+ - Find the branches with the decorations of the revision walk instead
+   of a second walk (Phillip).
+ - Refuse to rewrite HEAD while a rebase is in progress (Phillip).
+ - Reword the log message and advice.adoc.
 
-diff --git a/t/README b/t/README
-index fd7e8504b5..824783acfa 100644
---- a/t/README
-+++ b/t/README
-@@ -117,7 +117,13 @@ appropriately before running "make". Short options can be bundled, i.e.
- -l::
- --long-tests::
- 	This causes additional long-running tests to be run (where
--	available), for more exhaustive testing.
-+	available), for more exhaustive testing. These tests can use a
-+	lot of memory, so only one of them runs at a time, even
-+	when several test scripts run in parallel (e.g. "prove --jobs").
-+	They take turns through a lock file, "expensive.lock" in the
-+	test-results directory. A lock left behind by a killed test
-+	script is cleared by the next one that needs it. If the lock
-+	cannot be created at all, the test runs anyway.
+ Documentation/config/advice.adoc |   7 +-
+ Documentation/git-history.adoc   |   7 +
+ builtin/history.c                | 144 ++++++++++++++++-
+ t/t3450-history.sh               | 265 +++++++++++++++++++++++++++++++
+ 4 files changed, 413 insertions(+), 10 deletions(-)
+
+diff --git a/Documentation/config/advice.adoc b/Documentation/config/advice.adoc
+index 3d91c90eda..65f3ff0e02 100644
+--- a/Documentation/config/advice.adoc
++++ b/Documentation/config/advice.adoc
+@@ -60,9 +60,10 @@ all advice messages.
+ 		Shown when the user tries to delete a not fully merged
+ 		branch without the force option set.
+ 	historyUpdateRefs::
+-		Shown when `git history squash` refuses because a local branch
+-		cannot be rewritten as a descendant of the squashed commit, to
+-		tell the user about `--update-refs=head`.
++		Shown when `git history` refuses to run because a local branch is
++		used by another worktree, or, for `squash`, because it cannot be
++		rewritten as a descendant of the squashed commit, to tell the
++		user about `--update-refs=head`.
+ 	ignoredHook::
+ 		Shown when a hook is ignored because the hook is not
+ 		set as executable.
+diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
+index 1fcc30150a..243817d28a 100644
+--- a/Documentation/git-history.adoc
++++ b/Documentation/git-history.adoc
+@@ -215,6 +215,13 @@ empty.
+ 	`branches`, all local branches that point to commits which are
+ 	descendants of the original commit will be rewritten. With `head`, only
+ 	the current `HEAD` reference will be rewritten. Defaults to `branches`.
+++
++A branch that is used by another worktree, or that the current worktree is
++in the middle of rebasing or bisecting, cannot be rewritten, as the index and
++working tree of that worktree would not match the rewritten branch. With
++`branches` the command refuses in that case, so use `head` to rewrite only
++the current branch. The command refuses to rewrite `HEAD` while a rebase
++is in progress in the current worktree.
  
- -r::
- --run=<test-selector>::
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index c56654b7c5..916ec2d7d1 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -784,6 +784,8 @@ die () {
- 	# test script run with '--immediate' fails, or when the user hits
- 	# ctrl-C, i.e. when 'test_done' is not invoked at all.
- 	test_atexit_handler || code=$?
-+	release_expensive_lock_
-+	test -z "$expensive_lock_" || rm -f "$expensive_lock_.$$"
- 	if test -n "$GIT_EXIT_OK"
- 	then
- 		exit $code
-@@ -1089,6 +1091,71 @@ fail_117 () {
- 	return 117
+ EXAMPLES
+ --------
+diff --git a/builtin/history.c b/builtin/history.c
+index 43ba76f5a1..d0a3287c1d 100644
+--- a/builtin/history.c
++++ b/builtin/history.c
+@@ -2,6 +2,7 @@
+ 
+ #include "builtin.h"
+ #include "advice.h"
++#include "branch.h"
+ #include "cache-tree.h"
+ #include "commit.h"
+ #include "commit-reach.h"
+@@ -11,6 +12,7 @@
+ #include "gettext.h"
+ #include "hex.h"
+ #include "lockfile.h"
++#include "log-tree.h"
+ #include "merge-ort.h"
+ #include "oidmap.h"
+ #include "parse-options.h"
+@@ -27,6 +29,7 @@
+ #include "tree.h"
+ #include "tree-walk.h"
+ #include "unpack-trees.h"
++#include "worktree.h"
+ #include "wt-status.h"
+ 
+ #define GIT_HISTORY_DROP_USAGE \
+@@ -260,15 +263,100 @@ static int parse_ref_action(const struct option *opt, const char *value, int uns
+ 	return 0;
  }
  
-+# EXPENSIVE tests may need many gigabytes of memory, so two of them
-+# running at the same time can exhaust the machine.
-+#
-+# Allow only one at a time across all test scripts that share
-+# this TEST_OUTPUT_DIRECTORY.
-+expensive_lock_="$TEST_RESULTS_DIR/expensive.lock"
-+have_expensive_lock_=
+-static int revwalk_contains_merges(struct repository *repo,
+-				   const struct strvec *revwalk_args)
++/*
++ * Return the path of the worktree that uses "refname", if rewriting it would
++ * leave the index and working tree of that worktree behind. The branch that
++ * the current worktree has checked out is fine, unless another worktree has
++ * it checked out as well.
++ */
++static char *branch_used_elsewhere(struct repository *repo,
++				   const char *refname,
++				   const char *head_target)
++{
++	char *path = NULL;
 +
-+acquire_expensive_lock_ () {
-+	local owner waited= tmp="$expensive_lock_.$$" misses=0
-+	mkdir -p "$TEST_RESULTS_DIR" || return 1
-+	# The lock is a hard link to a file that already holds our PID, so
-+	# it never exists without its owner recorded in it. Remove any
-+	# $tmp left by a dead process with our PID first: it may still be
-+	# linked to that process's lock, which writing to it would empty.
-+	rm -f "$tmp"
-+	echo $$ >"$tmp" || return 1
-+	while ! ln "$tmp" "$expensive_lock_" 2>/dev/null
-+	do
-+		if ! test -f "$expensive_lock_"
-+		then
-+			# Nobody holds the lock, yet we cannot create it (no
-+			# hard links, disk full, ...). Retry in case it was
-+			# just released, then run anyway rather than wait
-+			# forever.
-+			misses=$((misses + 1))
-+			test $misses -lt 3 && continue
-+			say >&3 "cannot take the EXPENSIVE lock, running anyway"
-+			rm -f "$tmp"
-+			return 0
-+		fi
-+		misses=0
-+		owner=$(cat "$expensive_lock_" 2>/dev/null)
-+		# A lock carrying our own PID was left by a dead holder whose
-+		# PID we were given again; we know we do not hold it.
-+		if test -n "$owner" &&
-+		   { test "$owner" = $$ || ! kill -0 "$owner" 2>/dev/null; }
-+		then
-+			# The holder was killed without releasing the lock.
-+			#
-+			# Another waiter may have taken it over since we
-+			# looked, so only remove it if it is still the same.
-+			if test "$(cat "$expensive_lock_" 2>/dev/null)" = "$owner"
-+			then
-+				rm -f "$expensive_lock_"
-+			fi
-+			continue
-+		fi
-+		if test -z "$waited"
-+		then
-+			say >&3 "waiting for another EXPENSIVE test to finish"
-+			waited=t
-+		fi
-+		sleep 1
-+	done
-+	have_expensive_lock_=t
-+	rm -f "$tmp"
++	if (head_target && !strcmp(refname, head_target)) {
++		struct worktree **worktrees = get_worktrees(repo);
++
++		for (int i = 0; worktrees[i]; i++) {
++			if (!worktrees[i]->is_current &&
++			    is_shared_symref(worktrees[i], "HEAD", refname)) {
++				path = xstrdup(worktrees[i]->path);
++				break;
++			}
++		}
++		free_worktrees(worktrees);
++	} else {
++		const char *checked_out = branch_checked_out(refname);
++
++		if (checked_out)
++			path = xstrdup(checked_out);
++	}
++
++	return path;
 +}
 +
-+release_expensive_lock_ () {
-+	test -n "$have_expensive_lock_" || return 0
-+	rm -f "$expensive_lock_"
-+	have_expensive_lock_=
++/* "git rebase --abort" would throw away a rewrite of the detached HEAD. */
++static bool rebase_in_progress(struct repository *repo)
++{
++	struct worktree **worktrees = get_worktrees(repo);
++	struct wt_status_state state = { 0 };
++	bool ret = false;
++
++	for (int i = 0; worktrees[i]; i++) {
++		if (worktrees[i]->is_current) {
++			wt_status_check_rebase(worktrees[i], &state);
++			ret = state.rebase_in_progress ||
++			      state.rebase_interactive_in_progress;
++			break;
++		}
++	}
++
++	wt_status_state_free_buffers(&state);
++	free_worktrees(worktrees);
++	return ret;
 +}
 +
- test_run_ () {
- 	test_cleanup=:
- 	expecting_failure=$2
-@@ -1103,6 +1170,12 @@ test_run_ () {
- 		fi
- 	fi
++static void collect_used_branches(struct repository *repo,
++				  const struct commit *commit,
++				  const char *head_target,
++				  struct string_list *used,
++				  bool *rewrites_head)
+ {
++	const struct name_decoration *decoration;
++
++	for (decoration = get_name_decoration(&commit->object);
++	     decoration;
++	     decoration = decoration->next) {
++		char *path;
++
++		if (decoration->type == DECORATION_REF_HEAD)
++			*rewrites_head = true;
++		if (decoration->type != DECORATION_REF_LOCAL)
++			continue;
++		path = branch_used_elsewhere(repo, decoration->name, head_target);
++		if (path)
++			string_list_append(used, decoration->name)->util = path;
++	}
++}
++
++static int validate_revwalk(struct repository *repo,
++			    enum ref_action action,
++			    struct commit *original,
++			    const struct strvec *revwalk_args)
++{
++	struct string_list used = STRING_LIST_INIT_DUP;
+ 	struct strvec args = STRVEC_INIT;
+ 	struct rev_info revs;
++	struct commit *commit;
++	bool rewrites_head = action == REF_ACTION_HEAD;
++	char *head_target;
+ 	int ret;
  
-+	case ",$test_prereq," in
-+	*,EXPENSIVE,*)
-+		acquire_expensive_lock_
-+		;;
-+	esac
++	head_target = refs_resolve_refdup(get_main_ref_store(repo), "HEAD",
++					  0, NULL, NULL);
 +
- 	setup_malloc_check
- 	test_eval_ "$1"
- 	eval_ret=$?
-@@ -1115,6 +1188,7 @@ test_run_ () {
- 		test_eval_ "$test_cleanup"
- 		teardown_malloc_check
- 	fi
-+	release_expensive_lock_
- 	if test "$verbose" = "t" && test -n "$HARNESS_ACTIVE"
- 	then
- 		echo ""
-
----
-base-commit: acba8bf9753134d9bde89f94369f775838a8c5fe
-change-id: 20261117-ks-ci-long-test-hang-fix-008e72fd40c6
+ 	strvec_pushv(&args, revwalk_args->v);
+-	strvec_push(&args, "--min-parents=2");
+ 
+ 	repo_init_revisions(repo, &revs, NULL);
+ 
+@@ -281,17 +369,59 @@ static int revwalk_contains_merges(struct repository *repo,
+ 		goto out;
+ 	}
+ 
+-	if (get_revision(&revs)) {
+-		ret = error(_("replaying merge commits is not supported yet!"));
++	if (action == REF_ACTION_BRANCHES)
++		collect_used_branches(repo, original, head_target, &used,
++				      &rewrites_head);
++
++	while ((commit = get_revision(&revs))) {
++		if (commit->parents && commit->parents->next) {
++			ret = error(_("replaying merge commits is not supported yet!"));
++			goto out;
++		}
++		if (action == REF_ACTION_BRANCHES)
++			collect_used_branches(repo, commit, head_target, &used,
++					      &rewrites_head);
++	}
++
++	if (action == REF_ACTION_HEAD && head_target &&
++	    starts_with(head_target, "refs/heads/")) {
++		char *path = branch_used_elsewhere(repo, head_target, head_target);
++		if (path)
++			string_list_append(&used, head_target)->util = path;
++	}
++
++	if (used.nr) {
++		string_list_sort(&used);
++		for (size_t i = 0; i < used.nr; i++) {
++			const char *branch;
++
++			if (!skip_prefix(used.items[i].string, "refs/heads/", &branch))
++				BUG("branch decoration without refs/heads/ prefix");
++			error(_("cannot rewrite branch '%s' used by worktree at '%s'"),
++			      branch, (const char *)used.items[i].util);
++		}
++		if (action == REF_ACTION_BRANCHES)
++			advise_if_enabled(ADVICE_HISTORY_UPDATE_REFS,
++					  _("Use --update-refs=head to rewrite only "
++					    "the current branch and leave such branches "
++					    "untouched."));
++		ret = -1;
++		goto out;
++	}
++
++	if (rewrites_head && rebase_in_progress(repo)) {
++		ret = error(_("cannot rewrite HEAD while a rebase is in progress"));
+ 		goto out;
+ 	}
+ 
+-	reset_revision_walk();
+ 	ret = 0;
+ 
+ out:
++	reset_revision_walk();
+ 	release_revisions(&revs);
++	string_list_clear(&used, 1);
+ 	strvec_clear(&args);
++	free(head_target);
+ 	return ret;
+ }
+ 
+@@ -354,7 +484,7 @@ static int setup_revwalk(struct repository *repo,
+ 		strvec_push(&args, "HEAD");
+ 	}
+ 
+-	ret = revwalk_contains_merges(repo, &args);
++	ret = validate_revwalk(repo, action, original, &args);
+ 	if (ret < 0)
+ 		goto out;
+ 
+diff --git a/t/t3450-history.sh b/t/t3450-history.sh
+index f513463b92..03bd375ef8 100755
+--- a/t/t3450-history.sh
++++ b/t/t3450-history.sh
+@@ -14,4 +14,269 @@ test_expect_success 'raises an error with unknown argument' '
+ 	test_grep "unknown subcommand: .garbage." err
+ '
+ 
++test_expect_success 'refuses to rewrite a branch checked out in another worktree' '
++	test_when_finished "rm -rf repo wt" &&
++	git init repo --initial-branch=main &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++		test_commit third &&
++		git worktree add ../wt -b other &&
++
++		git refs list >refs-expect &&
++		test_must_fail git history drop second 2>err &&
++		test_grep "^error: cannot rewrite branch .other. used by worktree at .*wt" err &&
++		test_grep "^hint: .* --update-refs=head" err &&
++		test_grep ! "branch .main." err &&
++		test_must_fail git history drop --dry-run second >out 2>err &&
++		test_grep "^error: cannot rewrite branch .other. used by worktree at" err &&
++		test_must_be_empty out &&
++		git refs list >refs-actual &&
++		test_cmp refs-expect refs-actual
++	)
++'
++
++test_expect_success 'advice.historyUpdateRefs silences the hint for checked out branches' '
++	test_when_finished "rm -rf repo wt" &&
++	git init repo --initial-branch=main &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++		test_commit third &&
++		git worktree add ../wt -b other &&
++
++		test_must_fail git -c advice.historyUpdateRefs=false \
++			history drop second 2>err &&
++		test_grep "^error: cannot rewrite branch .other. used by worktree at" err &&
++		test_grep ! "hint:" err
++	)
++'
++
++test_expect_success '--update-refs=head leaves branches of other worktrees alone' '
++	test_when_finished "rm -rf repo wt" &&
++	git init repo --initial-branch=main &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++		test_commit third &&
++		git worktree add ../wt -b other &&
++		git rev-parse other >other-expect &&
++
++		git history drop --update-refs=head second &&
++
++		git rev-parse other >other-actual &&
++		test_cmp other-expect other-actual &&
++		git log --format=%s main >actual &&
++		test_write_lines third first >expect &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'rewrites the branch of the current worktree' '
++	test_when_finished "rm -rf repo wt" &&
++	git init repo --initial-branch=main &&
++	(
++		cd repo &&
++		test_commit first &&
++		git worktree add ../wt -b other &&
++		test_commit -C ../wt second &&
++		test_commit -C ../wt third &&
++
++		git -C ../wt history drop second &&
++
++		git log --format=%s other >actual &&
++		test_write_lines third first >expect &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'refuses to rewrite a branch that is being rebased' '
++	test_when_finished "rm -rf repo" &&
++	git init repo --initial-branch=main &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++		test_commit third &&
++		test_must_fail git rebase -x false first &&
++
++		git refs list >refs-expect &&
++		test_must_fail git history drop second 2>err &&
++		test_grep "^error: cannot rewrite branch .main. used by worktree at" err &&
++		git refs list >refs-actual &&
++		test_cmp refs-expect refs-actual &&
++
++		git rebase --abort
++	)
++'
++
++test_expect_success 'refuses to rewrite a branch that is being bisected' '
++	test_when_finished "rm -rf repo wt" &&
++	git init repo --initial-branch=main &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++		test_commit third &&
++		git worktree add ../wt -b other &&
++		git -C ../wt bisect start HEAD first &&
++
++		test_must_fail git history drop second 2>err &&
++		test_grep "^error: cannot rewrite branch .other. used by worktree at" err
++	)
++'
++
++test_expect_success 'refuses to rewrite HEAD while a rebase is in progress' '
++	test_when_finished "rm -rf repo" &&
++	git init repo --initial-branch=main &&
++	(
++		cd repo &&
++		test_commit base &&
++		git checkout -b topic &&
++		test_commit topic-one &&
++		test_commit topic-two &&
++		git checkout main &&
++		test_commit main-new &&
++		git checkout topic &&
++		git rev-parse topic >orig &&
++		test_must_fail git rebase -x false main &&
++		git rev-parse HEAD >head-expect &&
++
++		test_must_fail git history drop HEAD~1 2>err &&
++		test_grep "^error: cannot rewrite HEAD while a rebase is in progress" err &&
++		test_must_fail git history drop --update-refs=head HEAD 2>err &&
++		test_grep "^error: cannot rewrite HEAD while a rebase is in progress" err &&
++		git rev-parse HEAD >head-actual &&
++		test_cmp head-expect head-actual &&
++
++		git rebase --abort &&
++		git rev-parse topic >actual &&
++		test_cmp orig actual
++	)
++'
++
++test_expect_success 'rewrites commits unrelated to HEAD while a rebase is in progress' '
++	test_when_finished "rm -rf repo" &&
++	git init repo --initial-branch=main &&
++	(
++		cd repo &&
++		test_commit base &&
++		git checkout -b other &&
++		test_commit other-one &&
++		test_commit other-two &&
++		git checkout -b topic base &&
++		test_commit topic-one &&
++		git checkout main &&
++		test_commit main-new &&
++		git checkout topic &&
++		test_must_fail git rebase -x false main &&
++		git rev-parse HEAD >head-expect &&
++
++		git history drop other-one &&
++		git log --format=%s other >actual &&
++		test_write_lines other-two base >expect &&
++		test_cmp expect actual &&
++		git rev-parse HEAD >head-actual &&
++		test_cmp head-expect head-actual &&
++		git rebase --abort
++	)
++'
++
++test_expect_success 'refuses to rewrite the branch a bare repository names in HEAD when a worktree uses it' '
++	test_when_finished "rm -rf repo repo.git wt" &&
++	git init repo --initial-branch=main &&
++	test_commit -C repo first &&
++	test_commit -C repo second &&
++	test_commit -C repo third &&
++	git clone --bare repo repo.git &&
++	git -C repo.git worktree add ../wt main &&
++
++	git -C repo.git refs list >refs-expect &&
++	test_must_fail git -C repo.git history drop second 2>err &&
++	test_grep "^error: cannot rewrite branch .main. used by worktree at .*wt" err &&
++	test_must_fail git -C repo.git history drop --update-refs=head second 2>err &&
++	test_grep "^error: cannot rewrite branch .main. used by worktree at .*wt" err &&
++	git -C repo.git refs list >refs-actual &&
++	test_cmp refs-expect refs-actual
++'
++
++test_expect_success 'refuses to rewrite a branch that two worktrees have checked out' '
++	test_when_finished "rm -rf repo wt" &&
++	git init repo --initial-branch=main &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++		test_commit third &&
++		git worktree add --force ../wt main &&
++
++		git refs list >refs-expect &&
++		test_must_fail git history drop second 2>err &&
++		test_grep "^error: cannot rewrite branch .main. used by worktree at .*wt" err &&
++		test_must_fail git -C ../wt history drop second 2>err &&
++		test_grep "^error: cannot rewrite branch .main. used by worktree at .*repo" err &&
++		test_must_fail git history drop --update-refs=head second 2>err &&
++		test_grep "^error: cannot rewrite branch .main. used by worktree at .*wt" err &&
++		test_grep ! "^hint:" err &&
++		git refs list >refs-actual &&
++		test_cmp refs-expect refs-actual
++	)
++'
++
++test_expect_success 'refuses to rewrite the commit that a branch of another worktree points at' '
++	test_when_finished "rm -rf repo wt" &&
++	git init repo --initial-branch=main &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++		test_commit third &&
++		git worktree add ../wt -b other second &&
++
++		git refs list >refs-expect &&
++		test_must_fail git history reword second 2>err &&
++		test_grep "^error: cannot rewrite branch .other. used by worktree at .*wt" err &&
++		test_grep ! "branch .main." err &&
++		git refs list >refs-actual &&
++		test_cmp refs-expect refs-actual
++	)
++'
++
++test_expect_success 'every subcommand refuses before it does anything' '
++	test_when_finished "rm -rf repo wt" &&
++	git init repo --initial-branch=main &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++		test_commit third &&
++		test_commit fourth &&
++		git worktree add ../wt -b other &&
++		echo changed >first.t &&
++		git add first.t &&
++		write_script fail-editor <<-\EOF &&
++		>editor-ran
++		exit 1
++		EOF
++		test_set_editor "$(pwd)/fail-editor" &&
++
++		git refs list >refs-expect &&
++		git diff --cached >index-expect &&
++		for cmd in "drop second" "reword second" "split second" \
++			   "fixup second" "squash first..third"
++		do
++			test_must_fail git history $cmd </dev/null 2>err &&
++			test_grep "^error: cannot rewrite branch .other. used by worktree at" err &&
++			test_path_is_missing editor-ran &&
++			git refs list >refs-actual &&
++			test_cmp refs-expect refs-actual &&
++			git diff --cached >index-actual &&
++			test_cmp index-expect index-actual || return 1
++		done
++	)
++'
++
+ test_done
+-- 
+2.54.0 (Apple Git-157)
 
