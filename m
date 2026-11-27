@@ -1,94 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.52
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795798487;
-	b=YdSx/pnNFeNdcAxcRtR208J79TpZNUD6b9aajpACQnzTpkodjEvvEI4ZVZIV/MviBYIH
-	 +SxaLvAJspVmm1cIspa8wrWBejTnkOtlGqj3U5xaVUEPolbeR9C1VZlcUCuAiYFzkAJQ+
-	 JCgpJM3LQvIt0io3KeaNZ+FjxXaAYuZdeIyElveiomFGOWNUKADxTU5qqrUFWlok/Sdct
-	 arf92nZ6a+QFrYvQHP/eVzT4xOVgUqKqf64tkbbK4PIpU5Pti7/LsE5bcj4pibL5H83ev
-	 sjNCOtMeJhJDHfRbKyVZw9/KIRfpsunN+dkxExy8vCGCqhv+TDr128OL+oNUpuWAH0Q==
+	t=1795798506;
+	b=um6XdS6/X8w3zqkfxcrh8WLFf7nYUr4GdMbBn06jkM0QEitOpkhlQu+0ISeDxJzbhx4s
+	 ROTT8dznBmNeGK/wKpOIUiU3gyi34pww6pozkLCSSyjQybK7JE4YVCGJHcH5m+l9g+oK7
+	 byY/CbyfIhjkQsr5lhEUOdW2Pb7V7nd6rU+ergZfVbGC64fvzJMsLxg+kGKIo4+S9ho1P
+	 4F7/A7lC0ajVS9x51/cRSvFfvRWMNSlLcjmO522eXooRK1fQMg5dhSRZpgubFyN0RhLDo
+	 k0Li7FBkoy5+q8IVsj/RqUsXj7cErTGq22Pguzmyt73JERPpUuIS6JziGE2jmb2iSpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795798487;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795798506;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:Reply-To:MIME-Version:Content-Type:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Reply-To:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=zUbMg1uBKciYtUd5AvNOS51PwQFRURpwVRO5YAVFj0I=;
-	b=2t8pnnpIOsMOa5vOHIb6r4O6qvToDQa5UqR5jGNddwbKjRwGuZAO5ckJF3YuseYQ5SHr
-	 gVGECG33+TCx2Bvdo335tDzC0s7Y2zNVPZrNzC5CjEIAo6D0zXGgVHUcjY2o5oMzvXGlc
-	 tEd6oVoRYLTL/VbonjEyzB0wzfrXhl9faF2aUZ//dqCcjw8TrHmMDQ69qqCHG80xkd3sM
-	 9jaW954qETQZuugGgWEeni/2PtajkbkvuHagvGg19vGhE0zuDcc5vhSxq9riRzWin3JMA
-	 W61ezoN0V6nDht+3Mx73fQe1rypbDTnF3uOzSXXMMmDzK8rOo4qp3tc+Umm3waKFlWw==
+	bh=BbxoI1u6NTuvjxEu6ln3H9+luXGOlIm+jPN6D89jWcg=;
+	b=4cKl9eGGtur5EoeDj9kflgQALz5Xs7feYHcKlsl+rPGAavlXx9m2Txudf8ABVASI7Xus
+	 lYA7lqMoB/8fpZ7/qZmGug11U/0eJkkhYx4qV2DkWrT6IESQSeDF3TB8TD2/gaJ5FeoHN
+	 V74r5HcZVJQLMiBp/nE+lDu5CuvCVznqgUZCaYNmqJIsNtidtJMQhECqIsbru0qL5TkTJ
+	 DQKZ9EohLqX5IDl9ad8IHhuCTKcgNSl7hvo8+EEO+58RFaQUR2M89lzD9tiwdhqm0T3DZ
+	 pXZKHOzUfUoThb/SKfaVTcfmXJp7X0NySl/bf4szRSzEuk6H+A7qyyf64jFQiLn71GQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=oztVsHll;
-	arc=none smtp.remote-ip=209.85.221.47
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=E4O8vNU2;
+	arc=none smtp.remote-ip=209.85.221.52
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA95606A31F
-	for <git@vger.kernel.org>; Fri, 27 Nov 2026 16:54:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8CA95606A31F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69604606A31C
+	for <git@vger.kernel.org>; Fri, 27 Nov 2026 16:55:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 69604606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=oztVsHll
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-4a34ffd3e39so4578624f8f.0
-        for <git@vger.kernel.org>; Fri, 27 Nov 2026 08:54:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=E4O8vNU2
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-49465892f7bso6101649f8f.1
+        for <git@vger.kernel.org>; Fri, 27 Nov 2026 08:55:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795798485; x=1796403285; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=zUbMg1uBKciYtUd5AvNOS51PwQFRURpwVRO5YAVFj0I=;
-        b=oztVsHllYTxkOkwxMxYknrEz3nPPnRlDccG5I6+i6O8MCEnhyix0psIvJNDIpwe02q
-         VKqjjaZbqcws30sl1dK5D0c6sP/ZXOhSJSBR7RRdAptCHfhafB3xeqMOw/7qif8ZYTC1
-         VxZQ/EBcdHvPzTmijjGjjHRSOGcmfN4cWkmWJVCPZLK3GUsAmlJV8hPRTo1wHS3uUUop
-         6kMTx1H8MF3Nc2U4I3GO+e/Dg/6D+10NjyJsyGG1b/Ijnf0GyCNaT8nxltEV2Ny6ziZ5
-         2+079TUz9DumtDkjvEw0Sz3xX1ZXBHKBjQVTi8RXP7GoaKWbhvnP8pexZVeuubBMUsdB
-         4wSg==
+        d=gmail.com; s=20260707; t=1795798505; x=1796403305; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=BbxoI1u6NTuvjxEu6ln3H9+luXGOlIm+jPN6D89jWcg=;
+        b=E4O8vNU26GtwGCdyzjOKHbvZwsOUJzHMZ2uIyvGHD/6vYC9aNv0lYdQSTg+UUv8GI2
+         s8ZOyekELpCkp2jV9J1iJ8Gm+4H4h/AhpyUgbhWpk9YUJsE7uBlb+Kc7PowAitZfdATG
+         FEBhNI6DAsmPiokrCzuT1rhUMAScNGHx0gVBTObxzK18aU10SHPQluLyCv4Zr5Qh4YuD
+         reWu8ia5fqp6I51fze5A1YEPcXRcT/IIlV9McC4FGvI3LDkOppRWV/JHiygj5mg2by20
+         gO7SoOvI3ncaEbqMx8JFM97UUGVuopOSu7Z7vpkAnGh5QEqJsa2OFCOyWrS+6TsJ/eBd
+         T++w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795798485; x=1796403285;
-        h=content-transfer-encoding:content-type:mime-version:reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=zUbMg1uBKciYtUd5AvNOS51PwQFRURpwVRO5YAVFj0I=;
-        b=S+IIKZPLYjC+dF/8hbEphJ4Fu+edZ6vKgPMbMMOOKyeCqMpH/zdBYzKlEWZNnEqzTg
-         XT6upLcQqdewT8IA/w9JYrEhSfgoSWf7Svfiflt/1MqTiW+xlbZBfQgoWIQYhI5jegzv
-         weC7uvTS+7KoIt1DVfbK+tYUWRQEV4kXuIZldMpVsUVRQrblN6bH3VSrmh15JVvs1Kt8
-         swg7Ua5Di3RhRxOrxSTW8twNCXMcU3SVq9JmAcVKI/mLWNqHt8F9AIfxrzsX+hZ2/Xty
-         U5l73/Qmkeg8crL7PPYZoLT07QPK5m4N/8U53b8dd4SNbCUPXW66a212+YKmPS6UIL3J
-         PKKw==
-X-Gm-Message-State: APuU4Z/85OltrmLZEHKvZAigD2M2keoCGEHsCV66s0y6Ymg56NYoeRcm
-	yYHQYOjvzDZNdZPLY3ttqZf8FCqG5G2MUJcucAyzbXckKm1TZKMiXP6OYFtb/w==
-X-Gm-Gg: AZFdTZdZDEmf0jNXNJG3t/nL9E14V2gDhSPSpV3ABXTGAGTrUT7M8OswyVhaRkBo3UU
-	/M64VlgBgsaFUCUjsJNrr71xiZSbnVQ+ESs+iK/5kxpsVaVWcAGGdMgoNoQ81D3iGncwTgATQxu
-	MnWPNofwuxQNjNGisGkeU7JKTAp2PxnHS99D+KRfT9eugEQYFVMUQ/XZ8S4tbdJIFeKASArvul2
-	9AqgUTV8/bMxdIkjQrh3fbIbCihl2VFQAxpl24/G4ywUiziOZfAC5abmtW8qdlTfyK65PRj7z+B
-	NNnpejSdZIA8RiorEcDR8xnhNkPxfFyoQl126Mki2pF2/UXj1cfR+ps0Uw0WmXrr+7anHCYIVHY
-	nPwPTUy4vvKWv04igod74GdJfDIXhlfCgBvC0/e5gKtKgOyAJjp9DZ57oen0ZvA19KkwCocsz5m
-	GbML6bvLed4wYOmABN/FP5dyGurBnZv53hGGP5qUZg7Ev3NgAsppcz13JJGs2rLPUylZN+y0KMb
-	sATzruvl2ChWQz75/ZJPzdGROPPIpgtR045qiAY6xWIf/xxU30LTpBhKgpFSAS2N4/3V1E6gpce
-	XDlfd3fCz/oFAScnTw/iTykGlyIe8yZhMYc4VF0Gta+dg0Hk4irItw==
-X-Received: by 2002:adf:e010:0:10b0:4a7:518f:bea6 with SMTP id ffacd0b85a97d-4abb3a4d2b1mr35901195f8f.28.1795798484521;
-        Fri, 27 Nov 2026 08:54:44 -0800 (PST)
-Received: from berwick ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab6c4353d6sm46440606f8f.56.2026.11.27.08.54.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Nov 2026 08:54:44 -0800 (PST)
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: git@vger.kernel.org
-Cc: Ben Knoble <ben.knoble@gmail.com>,
-	Harald Nordgren <haraldnordgren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	MD Nahid Hasan Sagor <nahidhasan141400@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [RFC PATCH] quote: make sq_quote_buf_pretty() prettier
-Date: Fri, 27 Nov 2026 16:54:27 +0000
-Message-ID: <ee7de58093c69fbbab686a68b5b781bc60d90a2b.1795798429.git.phillip.wood@dunelm.org.uk>
-X-Mailer: git-send-email 2.56.1.576.g0cfbda1d5c7.dirty
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+        d=1e100.net; s=20260707; t=1795798505; x=1796403305;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=BbxoI1u6NTuvjxEu6ln3H9+luXGOlIm+jPN6D89jWcg=;
+        b=o0XU0NrlCqPYDvsGH8hav8vLbJc0ri1RgltuPYUK7f1P1Vd0nKNvhpzBHMDSf8Dwj5
+         r3aSKvOpNbmUmHWw0lDX1U357o8Au6KRFrFj4h2DYOB6hb3sTAyfY/jeOSsbwZXWEUWH
+         iq5413FM6MljZ4CvkOt+5F77i4Bu5vQRtdZxV17LTe3XLX7N6bZF+dv9+M4sZrdBWXBd
+         Ysl5xge6O5QSmtv9jO8ma6UQw7wfYmqW0hTuTHZP6vuiDxgVvpHoTvfckOMCB7um2lXu
+         tO7Po3CNesOJTmez47ljgQjY25jb9t1klyo3fWJjYaRzzsKGGPP+gHvoHn9sP6H50ZeD
+         3xNQ==
+X-Forwarded-Encrypted: i=1; AL+hErF8fMzQcuIOnvqEg0JkAbrzXFQfC+do1h6m2oAfFqFM4lKkaPdPwPARZvcWhQ0tf7svEfs=@vger.kernel.org
+X-Gm-Message-State: APuU4Z8vaNFQK6KCrPp2q0QKjFdl3nj2ZUIuimjocWIcN1I17WSFGp19
+	ZoxR09tPS+pYJlkLfJQjOWO3WVuL1//Ah1EYaQyiVzrXiSE3drNQ5wi9
+X-Gm-Gg: AZFdTZdBrsExN8RgrQyrJ0n+GUtuOLIXNmX0SMmA4Z3FPM9ywhV9PEM7biLne+wzbS1
+	MvW2+Rbwgp6ZRqzoNRV3J0jIAFXnL4haFnep1Rhi6pg0/Kam3Ggmrdwh0WG9gg0EH/LmOv5syga
+	dCNS+cjWYNTHAnSq31bEvQ0XEPfylhc1PYq7kALHSBg/R9XL2/vVfSSp2c3VwCsrQG/ayF4vn5Y
+	Ik11MCnI4vy6qB0Ix3POCs6JNzL7q6/+zSBzu/ZB2MYNKt1KLsvbAad6l54lgulmQ8BE/t1AAa6
+	oymHXnKtdw0wYkmeEoHMtxk+FLhWTeCcZN3C2Of7vZNRf/iXVN1Wt/sdnfeTbRnmgitg7iAGE3/
+	Df7GallSNBXJ16aBh0m97iPaI91w7lynZ4BYzkWsm5j5RJdGLzm6fZtksdT8lpMmH3ywtU4HX7B
+	gim3qAQ+yKuKWOl3wfISIFTfIwWX5M4hG0FI5KWLgDA8manLcgisM4FKWFCZoLy010D1oXgysyk
+	Aottoyx0OmtYxJiyqRJpzP7jmosuc8SP8wqZMKb/bahFMGmfwUQcfOW2X3D+DvVtuEBgOMc5kFT
+	7eS1N8I3cAGGrcOBor2jlQ+xJhsXAe0JAsL262+KdV+6kra4BMjSfDvuXSTqZO9Ywm3GneSch7s
+	EANyQGi4=
+X-Received: by 2002:a5d:4dcc:0:b0:493:d5f0:4e68 with SMTP id ffacd0b85a97d-4abb45c819bmr39000900f8f.36.1795798504745;
+        Fri, 27 Nov 2026 08:55:04 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f? ([2a0a:ef40:724:6601:f3ff:aebc:61f8:d91f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab6bb989b3sm48155389f8f.51.2026.11.27.08.55.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Nov 2026 08:55:04 -0800 (PST)
+Message-ID: <a112473f-32d9-4fe0-8497-782e8fab8bf7@gmail.com>
+Date: Fri, 27 Nov 2026 16:55:03 +0000
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -98,160 +93,133 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] config: make the suggested "set" command safe to paste
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ben Knoble <ben.knoble@gmail.com>,
+ Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>,
+ nahidhasan141400@gmail.com
+References: <pull.2457.git.git.1795632875345.gitgitgadget@gmail.com>
+ <02A50A47-A048-417E-9D1E-0C12D8FB1476@gmail.com>
+ <607d6273-14ba-4005-b038-3778ad2812fe@gmail.com> <xmqqpkvrmot8.fsf@gitster.g>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqpkvrmot8.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On 26/11/2026 18:26, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> sq_quote_buf_pretty() is intended for that use case, so we already have
+>> a central location for that logic.
+> 
+> FWIW, as the inventor of the sq_quote() family of helper functions, I
+> did NOT know that we were allowed to futz with what the
+> sq_quote_buf_pretty() class of helpers produce without having to worry
+> about machine readability and output stability.
+> 
+> That is even though we prominently document them like this:
+> 
+>    These should only be used for human-readable output, as sq_dequote()
+>    is not smart enough to dequote it.
+> 
+> Two things that come to mind are (1) we may need to find a way to make
+> it even more prominent, and (2) "smart enough" will become irrelevant
+> once we start aiming to cater to the user's shell, as predictability is
+> what sq_dequote() is about, and compatibility with different "faviourite
+> of the year" shells directly contradicts that goal.
 
-The output of sq_quote_buf_pretty() is intended for human consumption
-and as such it tries to avoid unnecessary quoting. However, it
-is over enthusiastic about adding quotes to multibyte strings and
-strings containing '~', '{' or '}'. It also adds unnecessary pairs
-of empty quotes when a string starts or ends with a single quote. Fix
-this by using a dedicated quoting routine that tries to avoid adding
-unnecessary quotes, rather than reusing sq_quote_buf(). Tilde is only
-quoted if it is the first character. Braces are only quoted if there is
-a mismatch between the number of opening and closing braces, or they
-contain a comma or a character that needs quoting. Sections between
-backslash escapes are only quoted if they contain characters that need
-to be quoted. The table below shows the change in output for various
-inputs. The aim is to make the output more readable without changing
-the meaning of the quoted output were it to be evaluated by the shell.
+I hadn't realized sq_quote_buf_pretty() was used in the tracing output. 
+While we might get away with tweaking the quoting in the tracing output 
+slightly, I don't think we want it to depend on the user's choice of 
+shell. So if we decide we want to support more shells, we should 
+probably introduce a new function for that.
 
-We could further improve the readability by dropping support for csh
-which requires that '!' is backslash escaped. It is not clear to me how
-widely used csh is these days, none of the big three BSD distributions
-seem to have used it as the default shell for a number of years.
+>> The output could be prettier though, in particular in would be nice to
+>> avoid the redundant pairs of single quotes at the beginning and end of
+>> ''\''hello there'\''' so that it produced \''hello there'\'
+>> instead. "'hello there'" would be even prettier but would take more
+>> work.
+> 
+> Yes, but I am not sure if going _specific_ to a single chosen shell,
+> perhaps via user.shellsyntax = (sh|fish|csh|psh|ksh|...), is a good
+> direction in general.  There are folks who script in one and interact in
+> another shell.
 
-Text		Current output		New output
-danger!		'danger'\!''		danger\!
-'look out!'	''\''look out'\!''\'''	\''look out'\!\'
-Dvořák		'Dvořák'		Dvořák
-HEAD~3		'HEAD~3'		HEAD~3
-HEAD@{1}	'HEAD@{1}'		HEAD@{1}
-HEAD^{/,}	'HEAD^{/,}'		'HEAD^{/,}'
+The paragraph quoted above was taking about improving the readability of 
+the quoted output by removing redundant quotes, not tailoring the output 
+to a specific shell.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
-Following on from the discussion at [1] this tries to improve the
-readability of the output without changing which shells we support
-which is a bigger change that requires more thought and discussion. If
-we do decide to go the route of per-shell quoting the changes here
-will be useful for supporting POSIX shells.
+I'm one of the people who uses different interactive and scripting 
+shells. Personally I'd be content with git always quoting in the style 
+of my interactive shell. If the git makes a suggestion based on a bad 
+input that I passed to my script then I'd want to quoted for my 
+interactive shell, not the shell that the script is written in. If I'm 
+debugging a script, I can always tweak the config setting if I need to.
 
-There aren't any tests yet, though I have tested it manually
-by looking at the trace output from commands like
+> And no, going _generic_ to be usable by _any_ shells we care about is a
+> direction I do not think we want to go.  If backslash becomes active
+> even inside a pair of single quotes in some but not all shells, then we
+> must avoid inter-shell ambiguity by not using backslash while inside a
+> single-quoted environment, by first closing the currently active single
+> quote, giving a double-backslash (assuming that it is universally
+> accepted as a single backslash character by everybody), and then going
+> back to another single-quoted environment, e.g., "'abc'\\'xyz'", which
+> is the familiar ugliness of our sq_quote() output.  That kind of ugly
+> output will be needed to be usable by everybody, but then even though it
+> may be cut-and-paste-able, will it still be understandable?
 
-   GIT_TRACE=1 git -c alias.z='log -1 HEAD~1' z
+I agree it is ugly and we're already doing it for '!' to accommodate 
+csh. To support fish we would not need to unconditionally backslash 
+escape backslashes -- our current quoting is almost always correct for 
+fish -- we'd only need to do it when a backslash is followed by another 
+backslash or a single quote. For the latter we're already creating ugly 
+"'\''" output so I don't think that accommodating fish would change our 
+current output most of the time. Having said that it is not possible to 
+support shells whose quoting rules wildly differ from POSIX simply by 
+tweaking the current output. If we want to support something like 
+powershell we'll need a way of configuring the output.
 
-I'll add some tests if there is interest in this patch. On that subject,
-does anyone know how to easily write table driven unit tests in clar
-with a separate test for each input?
+> My pessimistic but practical side is tempted to say that it is a lost
+> cause to aim for cut-and-paste-ready output.  Rather, we may be better
+> off if we give output that shows clear boundaries between each
+> "parameter" to "commands", and have the user express that in their
+> chosen shell.
 
-[1] https://lore.kernel.org/git/02A50A47-A048-417E-9D1E-0C12D8FB1476@gmail.com
+That is certainly simpler and if we abandon any pretense at shell 
+compatibility we can avoid the ugly "'\''" by enclosing each argument in 
+"'" and backslash escaping "'" and "\" within each quoted argument. I do 
+think it is convenient to be able to cut-and-paste the output though. 
+Thanks for the footnote below, that was interesting reading.
 
-base-commit: 77904e546de3bd940621092ecec47a88d0cede5d
-Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fsq-quote-prettier%2Frfc-v1
-View-Changes-At: https://github.com/phillipwood/git/compare/77904e546...ee7de5809
-Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/sq-quote-prettier/rfc-v1
+Phillip
 
- quote.c | 73 +++++++++++++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 63 insertions(+), 10 deletions(-)
-
-diff --git a/quote.c b/quote.c
-index 235fac8e470..dfd379a102f 100644
---- a/quote.c
-+++ b/quote.c
-@@ -47,26 +47,79 @@ void sq_quote_buf(struct strbuf *dst, const char *src)
- 	free(to_free);
- }
- 
-+static bool needs_sq_quote(char c, unsigned brace)
-+{
-+	if (isalnum(c) || (unsigned char)c > 0x7f)
-+		return false;
-+
-+	switch (c) {
-+	case ',':
-+		return brace > 0; /* Prevent brace expansion */
-+	case '}':
-+		return !brace; /* Quote unpaired '}' */
-+	case '~':
-+	case '+':
-+	case '-':
-+	case '.':
-+	case '/':
-+	case ':':
-+	case '=':
-+	case '@':
-+	case '_':
-+	case '^':
-+		return false;
-+	default:
-+		return true;
-+	}
-+}
-+
- void sq_quote_buf_pretty(struct strbuf *dst, const char *src)
- {
--	static const char ok_punct[] = "+,-./:=@_^";
--	const char *p;
-+	const char *p = src, *q;
-+	bool quote_it = false;
-+	unsigned brace = 0;
- 
- 	/* Avoid losing a zero-length string by adding '' */
--	if (!*src) {
-+	if (!*p) {
- 		strbuf_addstr(dst, "''");
- 		return;
- 	}
- 
--	for (p = src; *p; p++) {
--		if (!isalnum(*p) && !strchr(ok_punct, *p)) {
--			sq_quote_buf(dst, src);
--			return;
--		}
-+	/* '~' is only special if it is the first character */
-+	if (*p == '~') {
-+		quote_it = true;
-+		p++;
- 	}
- 
--	/* if we get here, we did not need quoting */
--	strbuf_addstr(dst, src);
-+	for (q = p; *q; q++) {
-+		if (need_bs_quote(*q)) {
-+			if (brace)
-+				quote_it = true;
-+			if (quote_it)
-+				strbuf_addch(dst, '\'');
-+			strbuf_add(dst, p, q - p);
-+			p = q + 1;
-+			if (quote_it)
-+				strbuf_addch(dst, '\'');
-+			strbuf_addch(dst, '\\');
-+			strbuf_addch(dst, *q);
-+			if (!brace)
-+				quote_it = false;
-+		} else if (*q == '{') {
-+			brace++;
-+		} else if (*q == '}' && brace) {
-+			brace--;
-+		} else if (!quote_it && needs_sq_quote(*q, brace)) {
-+			quote_it = true;
-+		}
-+	}
-+	if (brace && !quote_it)
-+		quote_it = true; /* Quote unpaired '{' */
-+	if (quote_it)
-+		strbuf_addch(dst, '\'');
-+	strbuf_add(dst, p, q - p);
-+	if (quote_it)
-+		strbuf_addch(dst, '\'');
- }
- 
- void sq_quotef(struct strbuf *dst, const char *fmt, ...)
--- 
-2.56.1.576.g0cfbda1d5c7.dirty
+> [Footnote]
+> 
+>   * 6fb737be5e ([PATCH] Make sq_expand() available as sq_quote().,
+>     2005-07-07) introduced the sq- (stands for single-quote) quote
+>     mechanism as an externally available API function.  1fbdab21bb
+>     (trace: avoid unnecessary quoting, 2018-01-15) added _pretty() as a
+>     "human readable" variant, the first target being the output from
+>     tracing.
+> 
+>     The principles laid out there for "pretty" are worth noting:
+> 
+> 	Trace output doesn't necessarily need to be shell-compatible,
+> 	but:
+>      
+>          - the shell language is a good ballpark for what humans
+>            consider readable (well, humans versed in command line
+>            tools)
+> 
+>          - the run_command bits can be cut-and-pasted to a shell,
+>            and we'll keep that property
+> 
+>          - it covers any cases which would make the output
+>            visually ambiguous (e.g., embedded whitespace or quotes)
+> 
+>     My reference to "clear boundaries" is about the third point.
 
