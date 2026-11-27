@@ -1,90 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.177
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.173
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795814857;
-	b=44ysrcuJozPRKnpzHeWZ15Z0f45nEQq/tFHf/HBFBL+5p/IKPt0Q8a+HzN6s1mU9W2gE
-	 C9xrO1zmubrXYcGNHVkHshyHc6To+x0xaLvnL1jZFMXUS5125mFog5TIbYsiLvBXlHQZC
-	 6htWPNMtwJ7e7MD6xxU3DJHPth0X/psyyiCXOo5qzkXaxcQD1hjhaWfzrMyQ2LZs5ksuj
-	 CzMfD70CEKyG06xOnpAy5Y/ZFNCEcLvyUC+lf8fR4M26Ty4jiZ80Ws8xNJoSNuwqkrr8/
-	 obsgJ12HkxchYKJJYcCdRSCD7iUkTLapyxSIcoySGrl5gqtRLZpuXFnIliLXMDcJVHQ==
+	t=1795814859;
+	b=o58H/nZ8OeSTjP6+wmCi/SJN/adfxmcnb4r6pXQ/g0VpyCktRO32ecB+B8yUhulO0aF0
+	 tSqqau6W4WmK385AJSjuh8fwO/67VtOh5tuNhOTh697eCTSW939njSPyNYvp6r1enP59D
+	 w99NsxdxIbmS+l5/yVqo+uJCn4n0544m4urQDlYRYm7egh+PZSqqYO/A+9mdSQJN3jL/p
+	 Zem4q0XMhdWhKz2g3zvrgPbtToh+SLtx/Ps5LGKJYfe0eNIraQ+s15d7X8jCDEZKcz6ml
+	 yIq3bvuRIpuguoDhwKv99efSFRMvvCN5PCYCXbDL0tz7c076e4zJUzI5LqB1SpypyRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795814857;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795814859;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-Id:In-Reply-To:
 	 References:From:Date:Subject:Fcc:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version:To:Cc;
-	bh=0/dUK912G2QNzQci61XJd4pulyMLltpAdgKeN7EECOY=;
-	b=ES8ms3i+rjpuF5v/Z+8ea6Vd0en4gDzrg1oWBBAhlEBxUpTGe39LagnKbPpsNKV4ghY5
-	 W0kJez0AmfwdFcVXljNQ+DEQDl7fZ2OtuGOMVXJ85Zl97HImphbaN9je3Md0vHPavIwaV
-	 VblTcu1syaw1888qCQ0zsMtYOCWqNMCo6WTi0KHT1xs1+nb3XmKV5Rks945P3vRqKHHJK
-	 o6Okfo0a/VTsn1sAGs/q4hnBjsynirKpJIpu6Ao3nKy1l65i9yjykVfgHZWVYUFcdpUbo
-	 EdfmNSTiOI5QD4ZKYoJZV2VamKtS3TY+hgvkZLL5v9/feRtzPY+j/r+g+CxRyoyxmmA==
+	bh=XZJA2Z61KGA1qRXjnpmFFQlBkdzHnfaUye0Shxf2y3s=;
+	b=rVnyqldvy633Qj2lWi3v5qXeor+TdLC+EMFsa+kPbSwrOeMxieYV+8mWvKJaxAIntFal
+	 G8tSTDgt7sT5tS80G5s4i6ndi6s2TJD3WVT55e0p6bU/10yCDDTutmOfVL1mUqPA/m3be
+	 87stq3EfavSuTK8ETHS9EN0Zszpv6C5jGoyAvhNEDM+BJkE5nU7cUjVh+VR2wbgF1mbYK
+	 pImt0bpB/SQy79BNSQE7mwg0NEhWxx+gkcwolHhgEe+Qi2OA1YwOABXha3Ajwenzj7fif
+	 mjoWEb0DpwwmFgIp/LkHIWoGU8PHLF2LOy+didAozwHAsiQv5k31zQJOkIrn9Lv0CLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=apybqtqw;
-	arc=none smtp.remote-ip=74.125.82.177
-Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dR5sBv9k;
+	arc=none smtp.remote-ip=74.125.82.173
+Received: from mail-dy1-f173.google.com (mail-dy1-f173.google.com [74.125.82.173])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28DF6606A324
-	for <git@vger.kernel.org>; Fri, 27 Nov 2026 21:27:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 28DF6606A324
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91DE5606A335
+	for <git@vger.kernel.org>; Fri, 27 Nov 2026 21:27:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 91DE5606A335
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=apybqtqw
-Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-380c28f9e35so9342640eec.1
-        for <git@vger.kernel.org>; Fri, 27 Nov 2026 13:27:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dR5sBv9k
+Received: by mail-dy1-f173.google.com with SMTP id 5a478bee46e88-386cf1041cdso5889470eec.0
+        for <git@vger.kernel.org>; Fri, 27 Nov 2026 13:27:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795814856; x=1796419656; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795814858; x=1796419658; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=0/dUK912G2QNzQci61XJd4pulyMLltpAdgKeN7EECOY=;
-        b=apybqtqwT7uLZNZpCsTTnsaa+wPceoQoZWZYeov7vmyh0I5Y88R5tEdveDpf4Kap1P
-         7cZzmx9WiMN0BxEbSQf4Q9/aI9BlgmItZDNC1j6Y8aLARNLH3YIVo9DYrTdUd3hczASi
-         FCCDSmCScFXxy3TR8m099V2Uu9iQfbt1XXyetdVsgtLjPdQNyCldp1+Es/+hMIRoCAph
-         RxAoqPfLUIBWIhQXsds5AtbEo9auh8n9FQgHEtYZABChQ57iL9O/ugdw6sFexPNBKAcp
-         MPs21QdrN/8n1kjIoXPG5pXz9FSbZakkJbo7W4ucXfOpWKxRyG/lfkUg+DUmXGGK5/n/
-         6qGQ==
+        bh=XZJA2Z61KGA1qRXjnpmFFQlBkdzHnfaUye0Shxf2y3s=;
+        b=dR5sBv9k3YYLJAHOrcf1uqFpOE4g70uveAXVYqYhSpz9lURHC2/xZbTMYrNL+N2ToV
+         KShbwjoF6fYdL1eS1p12oaZCE3osuh8tMvn4bMxjNAQhIVvEdYnOgiMxrhWH4l4tRtNl
+         gW3QTttTx70lLrPT1twPRprCXewWa3KJzB90u/0HPuqsdSK8PZFeoAOvGSRPEl2VOOKC
+         DhtkoI+Bynf29s5GXO1Dw1zYDAuRs6WbudYlAr57J5qz+UFqQgN6WfDpXritt3jHve4b
+         gX1NrgaRo1bmOoKIvxdn0vTPj058Dcc9Xv83njK8np2Nt7SVVj6m3b8qScNTMFmus+XX
+         x33Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795814856; x=1796419656;
+        d=1e100.net; s=20260707; t=1795814858; x=1796419658;
         h=cc:to:mime-version:content-transfer-encoding:content-type:fcc
          :subject:date:from:references:in-reply-to:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=0/dUK912G2QNzQci61XJd4pulyMLltpAdgKeN7EECOY=;
-        b=BiCh0/N0Kk8IffLHXYz1DXxuSkwhuGtxbLx6oRHcn0P/x2p+zY1OUoiMY5E3RHBoND
-         OaqYlRTEZjELkU6Nybt82ZuPsQggy9b91Ks529I/9oAElTf2GkNgAng0W50Q5ljp3DaP
-         FeQI8c8PPkDJEOnMuI8mrjzAVlTFSEzV0fgURv0GEdTy4803xr7dOqKKBoPP2Kqn9EZX
-         qnF96qZtwE6VwwR2rVqktMbI9PKR4lD9dJm+mIdwY/l5a34fRjmgX+NWukVWuIM/1Dyv
-         zyZirheficm7tr0JVsKFq3mwnHPICt1mJGZ4Uk4eJqk2Ek9kavWMbitu3hphnRW8cHiz
-         Elnw==
-X-Gm-Message-State: APuU4Z/n36X6IFlqn0AIAe1Zir3+SRatnb1MEEDEajcHB7JsxQ9qh0cw
-	A+3CsrX8Nm0SbdWwqjMjfaJzUMGM6An6aYn9pMtwUuWC9M8Z7H7fnjwrtdlP+7uh
-X-Gm-Gg: AZFdTZfsCEI80i6/RHzV6DgH9G/QI1ysMaZXCaYKiCFIjWCAhx9qjrgQoQooSVP3UMu
-	K24tOCWzgVLbTYxXxGnWZ3nrANw2BLJJ1AwTQV0+CXXZD8sgnss3mGEQvLbTcyLjylxNypppFTr
-	ziDBWa85xaC+alVdkrmVso/ah/scq7iFSEeQy3Yc4HX9w+7Ou3UGTBMu9nHoo5XMQVZRDKMYjnY
-	5KohQouByjFP1REsJiSccUTk4rPX9afvvyFqumffZnVRhlHO2vzOx2dw47NeDPDUNeihQLoUcIz
-	EcuPl2wLUXQvSBFBgRzANYS2fJe/96YgCOK9oJD5Umh8uDJ6F0vj5/xhb+B145P5WOplwy+6EuF
-	NgTu0eAUYxr2rZagInC6BVXoWInHfFc37wjMxn4era/ef7d9/J8WbeACtRYfwt60+XZeE2SuEnH
-	lOZNs+McXXgkNMoMr1JiX2Yf8dPT+7yR/yeVXuGNOasjL7/LNwD+L6cWX9ErOCUGtei+5D7Ba27
-	K3FFxsz3NfKxKUCsfMZuOvxcVrOvQ4f7ADiKs9KFQNotPrq2viGCuT6YuXnv0QjkSvM0eGCQ11i
-	a8sz6mAKAvw0LXAzRSI2k6YJKcmHrAxCfvbykWLyi0BdDjUFjQlB
-X-Received: by 2002:a05:7300:7b26:b0:36c:dd3b:a3e4 with SMTP id 5a478bee46e88-3856f25f8f2mr28426305eec.3.1795814856168;
-        Fri, 27 Nov 2026 13:27:36 -0800 (PST)
+        bh=XZJA2Z61KGA1qRXjnpmFFQlBkdzHnfaUye0Shxf2y3s=;
+        b=FZwixops+QdT1uZY1Q6nddRTo9rq1ed0kQYKrZSiIlqAIY1eQxvg4m40rg9mtlLOMP
+         kwIvErJR7tBx642NkwkQmLC3CXaCswzUnEG4z7vsGaB2YH5JxjIa/HJMwKmmDhM013wX
+         MYNR5lvI519ZyMY7VYGyGxxj0iLf8babS3G6YWqCuQI1MxfRyHMe0nhTGezXTy5xhmyW
+         1mKyifXIwoMSnpbSddb/ir1rpeuwRX5AWGDCfEjkwr/t1OhDADSPeWYitoywo8+JtNi9
+         lwmS7LWOw635irlcITNhqV+7KhSZTzxUjXanF2Ym5Jlsbv9dgWjORLiCmZWBEqRZWqD+
+         K6FQ==
+X-Gm-Message-State: APuU4Z+CzqqL8ZBHqXxRIutSWwODsiqz/YKEf6Bp3oq/atwNyvqJiASO
+	ZeBb3bEO2fb3wb6OzX9CMDuHFh+m7oolTRHfb4ETAlMTraNFNQvKMWPukcmaa0r8
+X-Gm-Gg: AZFdTZfihKoPQ6zDVueXNzRC2bdLKX5kF6bz6BwQMZAGt9J6Vgr2WSQmFur1wzyHbRv
+	EYq0OUS28QrpQUKArG9+AENdAtK/YUPtj/yDpYMbnci1J9qmV9tn9PFNTTNMvySOnndRfvhRyZv
+	YBzCDad9MSSLkR5gGdEV+L7IGeYbgcg78yHp4wMoOkpCxdsiTijTTKaS5fz0KH5xxwvJ+KR06IJ
+	R+BjVV4RqMwGszXe/FzwC72Re7gCiyQTHcTjW18chGRhZLuFuDJA8+Sv9acjWYGcY0EuuqBgbhX
+	Ec4CqU0Y/YEomTgPsAhdZj2yNk6weQNmnkZvXu4QdGmqjGXqRaCaLQHF+sHC0NHGuV/gzMZGevs
+	aRgokZ/cgi6TEVFShPdia9OGy7T93yRzJ25QM1AMLxJWZdvgmKuUNgAx8EUMkKBIlyOEl0rjw/k
+	T5wIDHFzZ0GsPxhn0HjQvvhNSAXx0SI+xIEfD6mEN8KdLafRrPP9PJE81WtWjfK0CqWR6zo2LRc
+	DkKVbqjlT5XHRKcej4dCJliuplnlVAd8ddO422stsNHY41wTaHQCqRQ1szNFMceNqxo9JtM66KM
+	7klvK5A2VivienSaHfmtFZkmUT+++cI=
+X-Received: by 2002:a05:7301:6083:b0:386:a01f:a36b with SMTP id 5a478bee46e88-386a01fa8d8mr30538755eec.35.1795814857394;
+        Fri, 27 Nov 2026 13:27:37 -0800 (PST)
 Received: from [127.0.0.1] ([20.169.116.17])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-385f68bc0adsm70746309eec.13.2026.11.27.13.27.35
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-386aa203267sm44113063eec.0.2026.11.27.13.27.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Nov 2026 13:27:35 -0800 (PST)
-Message-Id: <fc300295ffaef49b592307a90ac3e58bb803b7ca.1795814853.git.gitgitgadget@gmail.com>
+        Fri, 27 Nov 2026 13:27:36 -0800 (PST)
+Message-Id: <9dc62830755b06ca2a95d307dd0b593d2a77c536.1795814853.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2509.v3.git.git.1795814853.gitgitgadget@gmail.com>
 References: <pull.2509.git.git.1795774880142.gitgitgadget@gmail.com>
 	<pull.2509.v3.git.git.1795814853.gitgitgadget@gmail.com>
 From: "Alessio Attilio via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 27 Nov 2026 21:27:32 +0000
-Subject: [PATCH v3 1/2] submodule: prepare URL helpers for reuse
+Date: Fri, 27 Nov 2026 21:27:33 +0000
+Subject: [PATCH v3 2/2] status: warn about stale submodule URLs
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -103,203 +103,337 @@ Cc: Alessio Attilio <attilio.alessio@protonmail.com>,
 
 From: Alessio Attilio <attilio.alessio@protonmail.com>
 
-Move the relative submodule URL resolver and the helper that computes
-the path back to the superproject from builtin/submodule--helper.c to
-submodule.c so they can be shared with git status.
+When a submodule URL changes in .gitmodules, the cached
+submodule.<name>.url in the superproject config can stay stale. Warn
+in git status so users can run git submodule sync before a later
+submodule operation uses the outdated URL.
 
-Pass the repository explicitly to the resolver instead of relying on
-the_repository, and update existing callers to use the shared helpers.
+The check considers three URLs: the .gitmodules URL resolved against
+the superproject's default remote, the cached submodule.<name>.url, and
+the submodule's default remote URL. The first two determine whether the
+cached URL is stale. If they differ, compare the submodule remote with
+the old and new URLs as sync would write them. Warn only when that
+remote matches either URL; a different URL or multiple URLs indicate a
+local customization that sync would otherwise overwrite.
+
+Resolve relative URLs using the same paths as git submodule sync, and
+do not resolve the already-resolved cached URL a second time. Emit the
+warning on standard error for long, short, and porcelain status output,
+limited to submodules matched by the pathspec. Do not emit it when
+--ignore-submodules is given or when the wt-status machinery is used by
+another command.
 
 Signed-off-by: Alessio Attilio <attilio.alessio@protonmail.com>
 ---
- builtin/submodule--helper.c | 63 ++++++-------------------------------
- submodule.c                 | 41 ++++++++++++++++++++++++
- submodule.h                 |  3 ++
- 3 files changed, 54 insertions(+), 53 deletions(-)
+ Documentation/git-status.adoc |   6 ++
+ builtin/commit.c              |   1 +
+ submodule.c                   |   6 +-
+ t/t7508-status.sh             |  84 ++++++++++++++++++++++++
+ wt-status.c                   | 120 ++++++++++++++++++++++++++++++++++
+ wt-status.h                   |   1 +
+ 6 files changed, 217 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 461b682d0d..5f293d9dfd 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -46,35 +46,6 @@
- typedef void (*each_submodule_fn)(const struct cache_entry *list_item,
- 				  void *cb_data);
+diff --git a/Documentation/git-status.adoc b/Documentation/git-status.adoc
+index 9acca52bfb..1e0831a98e 100644
+--- a/Documentation/git-status.adoc
++++ b/Documentation/git-status.adoc
+@@ -22,6 +22,12 @@ are what you _would_ commit by running `git commit`; the second and
+ third are what you _could_ commit by running `git add` before running
+ `git commit`.
  
--static char *get_default_remote(void)
--{
--	return xstrdup(repo_default_remote(the_repository));
--}
--
--static char *resolve_relative_url(const char *rel_url, const char *up_path, int quiet)
--{
--	char *remoteurl, *resolved_url;
--	char *remote = get_default_remote();
--	struct strbuf remotesb = STRBUF_INIT;
--
--	strbuf_addf(&remotesb, "remote.%s.url", remote);
--	if (repo_config_get_string(the_repository, remotesb.buf, &remoteurl)) {
--		if (!quiet)
--			warning(_("could not look up configuration '%s'. "
--				  "Assuming this repository is its own "
--				  "authoritative upstream."),
--				remotesb.buf);
--		remoteurl = xgetcwd();
--	}
--	resolved_url = relative_url(remoteurl, rel_url, up_path);
--
--	free(remote);
--	free(remoteurl);
--	strbuf_release(&remotesb);
--
--	return resolved_url;
--}
--
- static int get_default_remote_submodule(const char *module_path, char **default_remote)
- {
- 	const struct submodule *sub;
-@@ -92,7 +63,7 @@ static int get_default_remote_submodule(const char *module_path, char **default_
- 		    starts_with_dot_slash(url)) {
- 			char *oldurl = url;
++When a submodule's URL in `.gitmodules` differs from the URL cached in
++`.git/config`, `git status` warns that `git submodule sync` can update the
++cached URL. The warning is written to standard error in all output formats.
++It is limited to submodules matched by the pathspec, and is suppressed when
++`--ignore-submodules` is specified.
++
+ OPTIONS
+ -------
  
--			url = resolve_relative_url(oldurl, NULL, 1);
-+			url = resolve_submodule_url(the_repository, oldurl, NULL, 1);
- 			free(oldurl);
- 		}
- 	}
-@@ -290,23 +261,6 @@ static void module_list_active(struct module_list *list)
- 	*list = active_modules;
- }
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 36e47e18ed..577b097aa0 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1636,6 +1636,7 @@ struct repository *repo UNUSED)
  
--static char *get_up_path(const char *path)
--{
--	struct strbuf sb = STRBUF_INIT;
--
--	strbuf_addstrings(&sb, "../", count_slashes(path));
--
--	/*
--	 * Check if 'path' ends with slash or not
--	 * for having the same output for dir/sub_dir
--	 * and dir/sub_dir/
--	 */
--	if (!is_dir_sep(path[strlen(path) - 1]))
--		strbuf_addstr(&sb, "../");
--
--	return strbuf_detach(&sb, NULL);
--}
--
- static void for_each_listed_submodule(const struct module_list *list,
- 				      each_submodule_fn fn, void *cb_data)
- {
-@@ -623,7 +577,7 @@ static void init_submodule(const char *path, const char *prefix,
- 		    starts_with_dot_slash(url)) {
- 			char *oldurl = url;
- 
--			url = resolve_relative_url(oldurl, NULL, 0);
-+			url = resolve_submodule_url(the_repository, oldurl, NULL, 0);
- 			free(oldurl);
- 		}
- 
-@@ -1453,10 +1407,12 @@ static void sync_submodule(const char *path, const char *prefix,
- 	if (sub && sub->url) {
- 		if (starts_with_dot_dot_slash(sub->url) ||
- 		    starts_with_dot_slash(sub->url)) {
--			char *up_path = get_up_path(path);
-+			char *up_path = get_submodule_up_path(path);
- 
--			sub_origin_url = resolve_relative_url(sub->url, up_path, 1);
--			super_config_url = resolve_relative_url(sub->url, NULL, 1);
-+			sub_origin_url = resolve_submodule_url(the_repository, sub->url,
-+							      up_path, 1);
-+			super_config_url = resolve_submodule_url(the_repository,
-+								 sub->url, NULL, 1);
- 			free(up_path);
- 		} else {
- 			sub_origin_url = xstrdup(sub->url);
-@@ -2334,7 +2290,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
- 	if (repo_config_get_string_tmp(the_repository, sb.buf, &url)) {
- 		if (sub->url && (starts_with_dot_slash(sub->url) ||
- 				 starts_with_dot_dot_slash(sub->url))) {
--			url = resolve_relative_url(sub->url, NULL, 0);
-+			url = resolve_submodule_url(the_repository, sub->url, NULL, 0);
- 			need_free_url = 1;
- 		} else
- 			url = sub->url;
-@@ -3761,7 +3717,8 @@ static int module_add(int argc, const char **argv, const char *prefix,
- 			      "of the working tree"));
- 
- 		/* dereference source url relative to parent's url */
--		to_free = resolve_relative_url(add_data.repo, NULL, 1);
-+		to_free = resolve_submodule_url(the_repository, add_data.repo,
-+						NULL, 1);
- 		add_data.realrepo = to_free;
- 	} else if (is_dir_sep(add_data.repo[0]) || strchr(add_data.repo, ':')) {
- 		add_data.realrepo = add_data.repo;
+ 	s.ignore_submodule_arg = ignore_submodule_arg;
+ 	s.status_format = status_format;
++	s.check_submodule_urls = 1;
+ 	s.verbose = verbose;
+ 	if (no_renames != -1)
+ 		s.detect_rename = !no_renames;
 diff --git a/submodule.c b/submodule.c
-index a74d1925aa..3eab799f1f 100644
+index 3eab799f1f..24775b21b7 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -292,6 +292,47 @@ int is_submodule_active(struct repository *repo, const char *path)
- 	return is_tree_submodule_active(repo, null_oid(the_hash_algo), path);
+@@ -296,9 +296,13 @@ char *resolve_submodule_url(struct repository *repo, const char *rel_url,
+ 			    const char *up_path, int quiet)
+ {
+ 	char *remoteurl, *resolved_url;
+-	const char *remote = repo_default_remote(repo);
++	const char *remote;
+ 	struct strbuf remotesb = STRBUF_INIT;
+ 
++	if (!starts_with_dot_dot_slash(rel_url) && !starts_with_dot_slash(rel_url))
++		return xstrdup(rel_url);
++
++	remote = repo_default_remote(repo);
+ 	strbuf_addf(&remotesb, "remote.%s.url", remote);
+ 	if (repo_config_get_string(repo, remotesb.buf, &remoteurl)) {
+ 		if (!quiet)
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index e10c961268..830217b4a5 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -921,6 +921,90 @@ test_expect_success 'setup status submodule summary' '
+ 	git add sm
+ '
+ 
++test_expect_success 'status reports submodule URL mismatch' '
++	test_when_finished "rm -rf url-test" &&
++	test_create_repo url-test/source &&
++	test_commit -C url-test/source initial &&
++	test_create_repo url-test/super &&
++	git -C url-test/super -c protocol.file.allow=always \
++		submodule add "$PWD/url-test/source" module &&
++	git -C url-test/super commit -m "add submodule" &&
++	git -C url-test/super status >url-test/actual 2>url-test/err &&
++	test_must_be_empty url-test/err &&
++	git -C url-test/super config -f .gitmodules submodule.module.url \
++		"$PWD/url-test/updated-source" &&
++	git -C url-test/super status --porcelain >url-test/actual 2>url-test/err &&
++	test_grep "module.*different URL" url-test/err &&
++	git -C url-test/super status --short >url-test/actual 2>url-test/err &&
++	test_grep "module.*different URL" url-test/err &&
++	git -C url-test/super status --porcelain=v2 >url-test/actual 2>url-test/err &&
++	test_grep "module.*different URL" url-test/err &&
++	git -C url-test/super status --ignore-submodules >url-test/actual 2>url-test/err &&
++	test_must_be_empty url-test/err &&
++	git -C url-test/super status -- .gitmodules >url-test/actual 2>url-test/err &&
++	test_must_be_empty url-test/err &&
++	git -C url-test/super status -- module >url-test/actual 2>url-test/err &&
++	test_grep "module.*different URL" url-test/err &&
++	git -C url-test/super status >url-test/actual 2>url-test/err &&
++	test_grep "module.*different URL" url-test/err &&
++	test_grep "git submodule sync" url-test/err &&
++	git -C url-test/super submodule sync &&
++	git -C url-test/super status >url-test/actual 2>url-test/err &&
++	test_must_be_empty url-test/err &&
++	git -C url-test/super remote add origin ../source-parent &&
++	git -C url-test/super config -f .gitmodules submodule.module.url \
++		../relative-source &&
++	git -C url-test/super status >url-test/actual 2>url-test/err &&
++	test_grep "module.*different URL" url-test/err &&
++	git -C url-test/super submodule sync &&
++	git -C url-test/super status >url-test/actual 2>url-test/err &&
++	test_must_be_empty url-test/err &&
++	git -C url-test/super config -f .gitmodules submodule.module.url \
++		../another-relative-source &&
++	git -C url-test/super status >url-test/actual 2>url-test/err &&
++	test_grep "module.*different URL" url-test/err &&
++	git -C url-test/super submodule sync &&
++	git -C url-test/super status >url-test/actual 2>url-test/err &&
++	test_must_be_empty url-test/err &&
++	git -C url-test/super/module config remote.origin.url \
++		"$PWD/url-test/fork" &&
++	git -C url-test/super config -f .gitmodules submodule.module.url \
++		../fork-source &&
++	git -C url-test/super status >url-test/actual 2>url-test/err &&
++	test_must_be_empty url-test/err &&
++	git -C url-test/super/module config --add remote.origin.url \
++		"$PWD/url-test/another-fork" &&
++	git -C url-test/super config -f .gitmodules submodule.module.url \
++		../another-fork-source &&
++	git -C url-test/super status >url-test/actual 2>url-test/err &&
++	test_must_be_empty url-test/err &&
++	git -C url-test/super/module config --unset-all remote.origin.url &&
++	git -C url-test/super config --add submodule.module.url \
++		"$PWD/url-test/another-configured-source" &&
++	git -C url-test/super status >url-test/actual 2>url-test/err &&
++	test_grep "module.*different URL" url-test/err
++'
++
++test_expect_success 'status compares relative submodule URLs only once' '
++	test_when_finished "rm -rf url-test" &&
++	test_create_repo url-test/relative-source &&
++	test_commit -C url-test/relative-source initial &&
++	test_create_repo url-test/relative-super &&
++	git -C url-test/relative-super -c protocol.file.allow=always \
++		submodule add "$PWD/url-test/relative-source" module &&
++	git -C url-test/relative-super commit -m "add submodule" &&
++	git -C url-test/relative-super remote add origin ../a/b &&
++	git -C url-test/relative-super config -f .gitmodules \
++		submodule.module.url ../mod1 &&
++	git -C url-test/relative-super submodule sync &&
++	git -C url-test/relative-super status >url-test/actual 2>url-test/err &&
++	test_must_be_empty url-test/err &&
++	git -C url-test/relative-super config -f .gitmodules \
++		submodule.module.url ../mod2 &&
++	git -C url-test/relative-super status >url-test/actual 2>url-test/err &&
++	test_grep "module.*different URL" url-test/err
++'
++
+ test_expect_success 'status submodule summary is disabled by default' '
+ 	cat >expect <<EOF &&
+ On branch main
+diff --git a/wt-status.c b/wt-status.c
+index 238bb48643..5bcbe634df 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -3,6 +3,8 @@
+ 
+ #include "git-compat-util.h"
+ #include "advice.h"
++#include "abspath.h"
++#include "config.h"
+ #include "wt-status.h"
+ #include "object.h"
+ #include "dir.h"
+@@ -23,6 +25,8 @@
+ #include "remote.h"
+ #include "refs.h"
+ #include "submodule.h"
++#include "url.h"
++#include "submodule-config.h"
+ #include "column.h"
+ #include "read-cache.h"
+ #include "setup.h"
+@@ -2692,8 +2696,124 @@ static void wt_porcelain_v2_print(struct wt_status *s)
+ 	}
  }
  
-+char *resolve_submodule_url(struct repository *repo, const char *rel_url,
-+			    const char *up_path, int quiet)
++static int submodule_has_custom_remote_url(struct repository *repo,
++					  const char *path,
++					  const char *gitmodules_url,
++					  const char *config_url)
 +{
-+	char *remoteurl, *resolved_url;
-+	const char *remote = repo_default_remote(repo);
-+	struct strbuf remotesb = STRBUF_INIT;
++	struct repository subrepo = { 0 };
++	const struct string_list *remote_urls = NULL;
++	const char *remote;
++	const char *remote_url;
++	char *key, *up_path, *config_remote_url, *gitmodules_remote_url;
++	int error_code, ret = 0;
 +
-+	strbuf_addf(&remotesb, "remote.%s.url", remote);
-+	if (repo_config_get_string(repo, remotesb.buf, &remoteurl)) {
-+		if (!quiet)
-+			warning(_("could not look up configuration '%s'. "
-+				  "Assuming this repository is its own "
-+				  "authoritative upstream."),
-+				remotesb.buf);
-+		remoteurl = xgetcwd();
++	if (!is_submodule_populated_gently(path, &error_code))
++		return 0;
++
++	if (repo_submodule_init(&subrepo, repo, path,
++				null_oid(repo->hash_algo)) < 0) {
++		repo_clear(&subrepo);
++		return 0;
 +	}
-+	resolved_url = relative_url(remoteurl, rel_url, up_path);
 +
-+	free(remoteurl);
-+	strbuf_release(&remotesb);
++	remote = repo_default_remote(&subrepo);
 +
-+	return resolved_url;
++	key = xstrfmt("remote.%s.url", remote);
++	if (!repo_config_get_string_multi(&subrepo, key, &remote_urls) &&
++	    remote_urls->nr == 1) {
++		remote_url = remote_urls->items[0].string;
++		up_path = get_submodule_up_path(path);
++		/*
++		 * sync_submodule() stores a relative URL in the superproject's
++		 * config without the submodule path prefix, but adds that prefix
++		 * when storing the URL in the submodule's remote configuration.
++		 */
++		if (url_is_local_not_ssh(config_url) && !is_absolute_path(config_url)) {
++			struct strbuf sb = STRBUF_INIT;
++
++			strbuf_addstr(&sb, up_path);
++			strbuf_addstr(&sb, config_url);
++			config_remote_url = strbuf_detach(&sb, NULL);
++		} else {
++			config_remote_url = xstrdup(config_url);
++		}
++		gitmodules_remote_url = resolve_submodule_url(repo, gitmodules_url,
++							      up_path, 1);
++		/*
++		 * The submodule's remote URL may be a local fork. If it matches
++		 * neither the old cached URL nor the new .gitmodules URL, leave it
++		 * alone; syncing would overwrite that customization.
++		 */
++		ret = strcmp(remote_url, config_remote_url) != 0 &&
++			strcmp(remote_url, gitmodules_remote_url) != 0;
++		free(gitmodules_remote_url);
++		free(config_remote_url);
++		free(up_path);
++	} else {
++		/*
++		 * Multiple URLs are a local customization; sync would replace
++		 * them all with a single URL.
++		 */
++		ret = remote_urls && remote_urls->nr > 1;
++	}
++	free(key);
++	repo_clear(&subrepo);
++
++	return ret;
 +}
 +
-+char *get_submodule_up_path(const char *path)
++static void wt_status_check_submodule_urls(struct wt_status *s)
 +{
-+	struct strbuf sb = STRBUF_INIT;
++	int i;
 +
-+	strbuf_addstrings(&sb, "../", count_slashes(path));
++	if (!s->check_submodule_urls || s->ignore_submodule_arg)
++		return;
 +
-+	/*
-+	 * Check if 'path' ends with slash or not
-+	 * for having the same output for dir/sub_dir
-+	 * and dir/sub_dir/
-+	 */
-+	if (!is_dir_sep(path[strlen(path) - 1]))
-+		strbuf_addstr(&sb, "../");
++	if (is_gitmodules_unmerged(s->repo->index))
++		return;
 +
-+	return strbuf_detach(&sb, NULL);
++	for (i = 0; i < s->repo->index->cache_nr; i++) {
++		struct cache_entry *ce = s->repo->index->cache[i];
++		const struct submodule *sub;
++		char *config_url;
++		char *key, *gitmodules_url;
++
++		if (ce_stage(ce) || !S_ISGITLINK(ce->ce_mode) ||
++		    !ce_path_match(s->repo->index, ce, &s->pathspec, NULL))
++			continue;
++
++		sub = submodule_from_path(s->repo, null_oid(s->repo->hash_algo),
++					  ce->name);
++		if (!sub || !sub->url || !is_submodule_active(s->repo, ce->name))
++			continue;
++
++		key = xstrfmt("submodule.%s.url", sub->name);
++		if (repo_config_get_string(s->repo, key, &config_url)) {
++			free(key);
++			continue;
++		}
++		free(key);
++
++		gitmodules_url = resolve_submodule_url(s->repo, sub->url, NULL, 1);
++		if (strcmp(config_url, gitmodules_url) &&
++		    !submodule_has_custom_remote_url(s->repo, ce->name,
++						     sub->url,
++						     config_url))
++			warning(_("submodule '%s' has a different URL in .git/config "
++				  "than in .gitmodules\n"
++				  "  run 'git submodule sync' to update it"), ce->name);
++
++		free(config_url);
++		free(gitmodules_url);
++	}
 +}
 +
- int is_submodule_populated_gently(const char *path, int *return_error_code)
+ void wt_status_print(struct wt_status *s)
  {
- 	int ret = 0;
-diff --git a/submodule.h b/submodule.h
-index 1a465a1208..2028f272c4 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -62,6 +62,9 @@ int is_tree_submodule_active(struct repository *repo,
- 			     const struct object_id *treeish_name,
- 			     const char *path);
- int is_submodule_active(struct repository *repo, const char *path);
-+char *resolve_submodule_url(struct repository *repo, const char *url,
-+			    const char *up_path, int quiet);
-+char *get_submodule_up_path(const char *path);
- /*
-  * Determine if a submodule has been populated at a given 'path' by checking if
-  * the <path>/.git resolves to a valid git repository.
++	if (s->check_submodule_urls)
++		wt_status_check_submodule_urls(s);
++
+ 	trace2_data_intmax("status", s->repo, "count/changed", s->change.nr);
+ 	trace2_data_intmax("status", s->repo, "count/untracked",
+ 			   s->untracked.nr);
+diff --git a/wt-status.h b/wt-status.h
+index e9fe32e98c..45eeb8b558 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -123,6 +123,7 @@ struct wt_status {
+ 	unsigned colopts;
+ 	int null_termination;
+ 	int commit_template;
++	int check_submodule_urls;
+ 	int show_branch;
+ 	int show_stash;
+ 	int hints;
 -- 
 gitgitgadget
-
