@@ -1,121 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=109.224.244.28
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795811482;
-	b=Jbkq8l+TtzryjMHxUpZI/Ow5Tg4I4L2GSFDDsJ1xWP/GwmX6RYDEz7jpufBxGiAQbgsm
-	 JTIT7hclvHXcKYdYsYpxMotNdeh3DZRVx7nB+8NTQSZlWFc512PhFKvzoldtjE5V5rMJM
-	 sboumclTrPdEyyEdHeFW8WBA0a7UwatHPN8X+rSkjlOWjnq612LRMt1tK0NKyytRXnqxe
-	 BN/tGHNVw3Ol6/mn7INYFWyeKlLKQjocv3rEPscF14akLXcEuDztMRKakf3JrcpdeltWP
-	 MWlRRH8G88ijkYtcyJQY6mEJt11YF3cIYCdkym3hdqGqeJDBau9EDah+zjO4kR8srvg==
+	t=1795811736;
+	b=mk3G1PsH2bpL+yHvWAAz8r8eMVV3jEeqX5SP79OJYdBqJKNMKey+dpgsT4TCNK1IUgqf
+	 5c0I5rsHvX4MA89qAZ70Fmt5rU4cuBxJIDgAoeQ1josqg82GzJ3Pd34zyaRpIC/WkMuVv
+	 Arx2zt3tFIOw3Y9JVizOmMjKMqefw/b8h593Umv5rY5uioFvu4rOby+6Oq+NB0CNumx/O
+	 2a1cswjtA23+M87rL9/sKy6OHgT8O/NCxeZQgzN9SqTtDc1MbfhbHommr8WKl5ju9NBxa
+	 awBN5Seh25PPqImypold+8UZg33KG9hQrGP+gx+pbZci/ilM/qcTlodEKHPaRfH8zpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795811482;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=1KQCHeftpQlIZ/8ymJ2fcypbCVgErcHW688qocNWfLs=;
-	b=hLppdSqgmY9+fFtwUlvJilH5oxnqU1rbF6cpO19kbURQZaOqFDEFq28X3Swz2yU8Jcfh
-	 dmbT9cswFMzBUxlKglh+iU8tKypO52igCKZo+qbf4pxd9LCezAJDlmadmz91/HWaUoGD1
-	 +9mZuPMVNBh9QBJDoaSdAVcpszLBeR2BPR0V26gGg7C/8gqxwCbaOskG2KdmApMRIvcIL
-	 sSECxfu1FKMjvAMZqSTF4YuwEGpAh5VVIvSSTFOSuuOr97Ll+kgBZusHeM3qz+bKVeDO1
-	 FF7eu8S7cpZnVnYoAueVO87gMZp9FsQOIwjX3hb+hdSEDg/NreUhiLp2JRsNQBjHd2Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795811736;
+	h=DMARC-Filter:DKIM-Signature:Date:To:From:Cc:Subject:Message-ID:
+	 In-Reply-To:References:Feedback-ID:X-Pm-Message-ID:MIME-Version:
+	 Content-Type;
+	bh=TXwxFAMU5OtWrhxu77LZ8lneNlqF4KvR8+ICCwW4xnA=;
+	b=BIt2kJCb8K4kOX/HlFMF3xze2DaFpzwVnNjgXa0Sr4FOkDSXAb81QXjjwZgTClU+L9tS
+	 brLv03grkj7QUtA5Wtad///nOZaU1LQhM8KTmV0rRpjheAdOnJc/GF9D8f+g1nvJpj7ka
+	 6aUVvH1QqKu9PFwpjSw5oemsXjnrVd7dzWLc0xVrpA3oUUsAHuIbaWWwr+S4XQGhEtiMc
+	 GnzXWMBLgTs7NxL0SZmkpgOGteQZGdFuWL+Z5h8rwmHD+ujsID6Std/6NghB2joMPJQZw
+	 2QfTZQZXtdYWOUcwSfK0/c3sDU5QfvVoPEc6akYQuypiCnh0f2cjNmB0yMUmIJR2F4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=f69uRr+C;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=bPtMbwCQ;
-	arc=none smtp.remote-ip=103.168.172.144
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	dmarc=pass header.from=protonmail.com;
+	spf=pass smtp.mailfrom=protonmail.com;
+	dkim=pass header.d=protonmail.com header.i=@protonmail.com header.a=rsa-sha256 header.s=protonmail3 header.b=aJBaHDId;
+	arc=none smtp.remote-ip=109.224.244.28
+Received: from mail-24428.protonmail.ch (mail-24428.protonmail.ch [109.224.244.28])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B409606A31F
-	for <git@vger.kernel.org>; Fri, 27 Nov 2026 20:31:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2B409606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E314606A31C
+	for <git@vger.kernel.org>; Fri, 27 Nov 2026 20:35:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1E314606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=f69uRr+C;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=bPtMbwCQ
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 278C4EC0AF5
-	for <git@vger.kernel.org>; Fri, 27 Nov 2026 15:31:20 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Fri, 27 Nov 2026 15:31:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795811480; x=1795897880; bh=1KQCHeftpQ
-	lIZ/8ymJ2fcypbCVgErcHW688qocNWfLs=; b=f69uRr+CDoE/uGdsqGAXo2B/PE
-	JG/LEjI5oy3AhzYYG47OO3H5GXTwuXGPEiAxvWhOoQgppVSbCEV8m7RQhYg6cmtq
-	6tNvBalvt+cgKaDN2qKhvY+iSssUCWzk4fQcT/swXEaOXe5LcUO0MO1erJgpWkFP
-	iEBZQwWeMEphAeNiJk1uPwdJfrOHXI0jw3My/hWeaYvxtLbt6zmG8WiaEFSkJ9d0
-	A9MwpGipY86IS6l5IkdygTJMANUukmYaC5htylJYwsLtJzINsuHR4aJ8N6WxCzvN
-	vOxkbkzQU7gvPta/olTjw9MqF8WwjjCoFOMjJfFSi6bSJ24L5rwG0eHBB+qg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795811480; x=1795897880; bh=1KQCHeftpQlIZ/8ymJ2fcypbCVgErcHW688
-	qocNWfLs=; b=bPtMbwCQdA6xccPZokVyISyrg8DDYJtUWrCIBmiG+YBGi0m0ug/
-	SnWXt5GUXdVdlxkwP7EjtqJ9CXAf5cyM6e9SeMT3g1NFFowTux5V6OCQ9qZFrwsE
-	fG/9UovPVVuXS6kvl18A/dsFWr3UgxQ+jGC2ji+LmeyWqN79kxuBQ7t5tJ3ctR8R
-	OiGNENwuLHHwErucacFbHe1D6gvW8RVlnAPwTohOywx/mrQBTP8UHGGF58d8cOp3
-	By1Bj0OJGJ+hrtit1ynGlUKAfbqX/eBkE7E7cik7IVrWqMqc1+EB/sfNNj57msHT
-	NIVapp592Ar13jF+0ZR+0Nb0vUQ9uEnnomg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795811480; d=pobox.com;
-	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
-	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:IxfJJc6XoymEpwX4EZJqWPsSOKSoCxe04CUYCq2bwvKRsFk
-	gnwwe0R64V2tS0f7DlnLp/8t36LgIgFe1ZQ/TszS5D7CbRbIbcDCG5J5LTHK6c7V
-	vQsYiBSCqUJVIMwYOorFK1SVqE3fnB1S1zl3YXL1pijgmWNpifAnWQ3mRQ9v3vUx
-	86kbyzOWTbOqryvoeEYtKa9PRwNM3o4if/vsK5FX/K3vklKRIfANSqnCut8tMvL/
-	QDc0UhU79Z7MV/83oM1yYmEAp0C/LvOurfsYzk+n4h5hor+Fr0cpy7c78IIFsHhF
-	xrWHGeKeB+Tk5TTg3vatrskXePsMPP5jcVryIWg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:nfe/zryJXehCvtgSluEWEhQzZ3iXebh+qj7xHUOPuWc=:1TrPR8iafVKXwNhtUzqs3XlD07MUD6WezjTExab/mUw=;
-X-ME-Sender: <xms:mOgJazs8OpgDnOGAKZhS35_40DVyhMAUxZGnz0tt7DjB07IT9xeU9Q>
-    <xme:mOgJa4LovcpYm7rIDBEY9FcBxj6ovSq4Yf_-lk1cng__VJ7DxlAqLxya44lBOKxvK
-    WM-_FerHLIbkVFRN_9P99-pf4F0qh-c0gwQ0fdFqYLThm0Z2xldY8M>
-X-ME-Received: <xmr:mOgJawkmXE7-8gn4DYJGbMKMGk8Ct5Rupx_Eh8RrzvWMDEHFdZQB_TP0KCju6enG1ZvwKbjCqpivyqp8mS6qqJ3v7tGZ7qDEv7QDUU0>
-X-ME-Proxy-Cause: dmFkZTFrgDTeeeniZxsrciEm+oCjy3ejHO5+ERLkvDBvATFZJFpKpLSZKh+VQPrwpJ62IG
-    J7yLPp4hK44q5CiQdj6ySEP2190SRhkA+I7s8t4cZKG1mJSqHbxuUruOulreB3MHdYcgFt
-    wKxQB671LG0IPMH/yE32NZ+o6bKV/Qgd+5p+XF7jDIDWwjyPWMJOWEUMbWupVUkz8IdfNU
-    d1YY/nUSRS0zcGpTkoSFjArTwJOqlDnpeOQAiFV8wRJXFlBWGbX5s5yKrwG+RHK18jBer3
-    on+Ip7dAN5zC569ZrOsmfPtj/jBMPWZA4wc0blJfBoJ5sCuqSYHg0kHyRGKrJC6wrdr4kI
-    ej7Gd59z/q91+CBslZ1uRxtxUC93MggvnXEhNZtDUeKzlMP8UEEoiAKaSHCKN8WPbTQbHT
-    fGODueRHLsrv0E0f0TWFIj+nLT87I279DczSNcDbonOQAUR38pA8396qxX2izLveiZZFvK
-    UNvIAGDItuRVhKdL3JhwEUsjLyR/lN1rt6SsSsO6FMPkNhtksFpBqEPQqj7+Ybk8KHgTUo
-    9fhXqYYq7n1LK5KnXzHCj/TYocOU9a7u8nv0AtsAETLxrw/eAys+YHynf9oPoYObmNKwea
-    dSJ1dQrUAFI04EqQlpO23m4tNf/yhHPm/mHlUd2u/eDgrBHoksazytgmUNTg
-X-ME-Proxy: <xmx:mOgJa5K3oemyp_i-MFjAUdqMmN5LoAn9jORt8O4uQ7AydUNyRSBEAQ>
-    <xmx:mOgJa14k1gH1LTx8YqAv0I1quSNsqCxy9iHlQv68IS3sCLR38BG4Xw>
-    <xmx:mOgJa90OssZMyaZK31YzNHePXQcPVgKzZPDrNEMhOVoPY1eqg-aqBg>
-    <xmx:mOgJa7dY7_rdNnGK0tncIiF9fs2t9qiMj2rf8W4yFXNYYKgthCvWlw>
-    <xmx:mOgJawSq9zZDGUQvmS6OMjBFqwlcETNlfM1umv37vqA8GdPv6v2uwZeY>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Nov 2026 15:31:19 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org,  Ben Knoble <ben.knoble@gmail.com>,  Harald
- Nordgren <haraldnordgren@gmail.com>,  MD Nahid Hasan Sagor
- <nahidhasan141400@gmail.com>
-Subject: Re: [RFC PATCH] quote: make sq_quote_buf_pretty() prettier
-In-Reply-To: <ee7de58093c69fbbab686a68b5b781bc60d90a2b.1795798429.git.phillip.wood@dunelm.org.uk>
-	(Phillip Wood's message of "Fri, 27 Nov 2026 16:54:27 +0000")
-References: <ee7de58093c69fbbab686a68b5b781bc60d90a2b.1795798429.git.phillip.wood@dunelm.org.uk>
-Date: Fri, 27 Nov 2026 12:31:18 -0800
-Message-ID: <xmqq7bhy819l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=protonmail.com header.i=@protonmail.com header.a=rsa-sha256 header.s=protonmail3 header.b=aJBaHDId
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1795811732; x=1796070932;
+	bh=TXwxFAMU5OtWrhxu77LZ8lneNlqF4KvR8+ICCwW4xnA=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=aJBaHDId1UgdsbWVawyAJnja0LHs0gUa6gPHtnpPMsRwUmVFmRGQ7weWsKnvgFU0z
+	 7hSXszZqqWLq9Y6aB61UlIn0IWHa9IPZPk22Tp2kKk3vgINHbTIhLFS1wvRf+tR4KE
+	 g7/8tL4M9aLHDCyigsnGiwAqVW6/YYbUAVeXw1DF5JG5dX5wOvnmFzSbchj+2lzdKd
+	 FiKcAYo+VuYVgAAyMUGmiJ/QsQAyUmxYqvUqxWt2PnBHtXg0CpmCRf/69ONoXZmflq
+	 sZb1jZkr42lHpGHthV4xbgSYDVP1WsTs1aFXAH0SbtyeqrYoNCR3dOke+7b9Uh0C/h
+	 /P9f+B2L1WTFg==
+Date: Fri, 27 Nov 2026 20:35:29 +0000
+To: Junio C Hamano <gitster@pobox.com>
+From: ATTILIO ALESSIO <attilio.alessio@protonmail.com>
+Cc: Alessio Attilio via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] status: warn about stale submodule URLs
+Message-ID: <OMY1zvJHIGS8yvryfUhct_Q4HkqQNP3QJ0ezjSIY6F5k_L5UpMLJ0B31C5LUjJwglnYlccCCh1WVqawRDXMUQXPX9FgsxWFwrcS5HUGaZ_4=@protonmail.com>
+In-Reply-To: <xmqqecc69maa.fsf@gitster.g>
+References: <pull.2509.git.git.1795774880142.gitgitgadget@gmail.com> <pull.2509.v2.git.git.1795796162.gitgitgadget@gmail.com> <b0dd21100ccfe4411ccc1237fdb7ddedb66075e8.1795796162.git.gitgitgadget@gmail.com> <xmqqecc69maa.fsf@gitster.g>
+Feedback-ID: 158305026:user:proton
+X-Pm-Message-ID: eba015aec0ce117b7d41316cbfe54a3e8f2ca76a
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -125,59 +64,106 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------7b718d8737d262fb4d77f58b4d67d297ffc9dda5a9e99302f08017bf093a4a2d"; charset=utf-8
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------7b718d8737d262fb4d77f58b4d67d297ffc9dda5a9e99302f08017bf093a4a2d
+Content-Type: multipart/mixed;boundary=---------------------fe6a74c625c7648773990770c1dbf7f8
 
-> +static bool needs_sq_quote(char c, unsigned brace)
-> +{
-> +	if (isalnum(c) || (unsigned char)c > 0x7f)
-> +		return false;
-> +
-> +	switch (c) {
-> +	case ',':
-> +		return brace > 0; /* Prevent brace expansion */
+-----------------------fe6a74c625c7648773990770c1dbf7f8
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;charset=utf-8
 
-Web search tells me that bash, zsh, and ksh93 expands sequence
-expressions such as "{1..5}" or "{a..z}" without any comma in the pair
-of braces.  Because '.' returns false unconditionally here and no other
-check triggers quoting for "..", sq_quote_buf_pretty() leaves "{1..5}"
-unquoted, which expands to five arguments if pasted into those shells.
+"Junio C Hamano" <gitster@pobox.com> writes:
 
->  void sq_quote_buf_pretty(struct strbuf *dst, const char *src)
->  {
-> -	static const char ok_punct[] = "+,-./:=@_^";
-> -	const char *p;
-> +	const char *p = src, *q;
-> +	bool quote_it = false;
-> +	unsigned brace = 0;
->  
->  	/* Avoid losing a zero-length string by adding '' */
-> -	if (!*src) {
-> +	if (!*p) {
->  		strbuf_addstr(dst, "''");
->  		return;
->  	}
->  
-> -	for (p = src; *p; p++) {
-> -		if (!isalnum(*p) && !strchr(ok_punct, *p)) {
-> -			sq_quote_buf(dst, src);
-> -			return;
-> -		}
-> +	/* '~' is only special if it is the first character */
-> +	if (*p == '~') {
-> +		quote_it = true;
-> +		p++;
->  	}
+> It would help to explain in the proposed log message why three URLs are
+> compared and under what condition, and which status formats emit the
+> warning.
 
-As noticed by Nahid already, this loses the leading '~'.  Also, do we
-want to do something to this corner case?
+Will do.  I will explain in the commit message why the three URLs are
+compared, under what condition the warning triggers, and which status
+formats emit it.
 
-    $ echo P=A:~/B:C
-    P=A:/home/gitster/B:C
+> Perhaps move the unnecessary call to repo_default_remote() after this
+> early return, before the first use of 'remote'?
 
-i.e., bash and friends seem to expand ~ that is not at the beginning of
-value when the whole thing looks like a variable assignment.  Without
-"P=" at front, this does not seem to expand.
+Good catch.  I will move repo_default_remote() below the early return
+for non-relative URLs.
 
-Thanks.
+> Perhaps use repo_config_get_string_multi() instead?  I do not know what
+> error behavior you are aiming for here, but the 'string' variant would
+> barf on an entry like '[remote "origin"] url' (valueless true), which
+> would give you NULL in the '.string' member.
+
+Agreed.  I will switch to the *_get_string*() helpers (or guard against
+valueless entries) so we never pass NULL to strcmp().
+
+> In order to match what sync_submodule() does, 'gitmodules_remote_url'
+> should be computed from the raw 'sub->url', not from 'gitmodules_url',
+> no?  For 'config_remote_url', we do not want to run relative_url() again
+> on 'config_url', I think.  You only need to prepend 'up_path', or
+> something, no?
+
+You are right: the values passed to submodule_has_custom_remote_url()
+have already been resolved once, so resolving them again produces wrong
+paths when the superproject's own remote URL is relative.  I will
+rework this to resolve the raw .gitmodules URL and prepend up_path to
+the cached config URL, matching git submodule sync.
+
+> Instead of excluding individual cases (like "commit or history can call
+> and .commit_template or .nowarn may be set by them"), can we make sure
+> we call the extra check only when "git status" is calling the wt-status
+> machinery to prevent it?
+
+Yes, gating the check so it runs only when invoked from git status is
+much cleaner and avoids leaking warnings into commit templates.
+
+> - Should "git status <pathspec>" limit its check to submodules under
+>    the given directory?
+>
+> - Should "git status --ignore-submodules" bypass the new check
+>    altogether?
+>
+> - Should "git status -s" and "git status --porcelain" detect the
+>    misconfiguration like the normal "git status"?
+>
+> My tentative answers to the above are all "yes", but the design needs to
+> be discussed, the choices justified, and the result documented in both
+> the proposed commit log message and in the "git status --help"
+> documentation.
+
+I agree with "yes" on all three:
+
+- Respecting <pathspec> keeps the warning scoped to the paths the user
+  asked about.
+- Respecting --ignore-submodules matches user expectations when they
+  explicitly ask status to ignore submodule state.
+- Emitting the warning on stderr in -s and --porcelain modes ensures
+  users and scripts still get the diagnostic without affecting machine-
+  readable stdout output.
+
+I will update the implementation, tests, commit message, and git-status
+documentation accordingly for the next reroll.
+
+Thanks,
+Alessio
+-----------------------fe6a74c625c7648773990770c1dbf7f8--
+
+--------7b718d8737d262fb4d77f58b4d67d297ffc9dda5a9e99302f08017bf093a4a2d
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wrsEARYKAG0FgmsJ6YAJEChTxUkNXp/XRRQAAAAAABwAIHNhbHRAbm90YXRp
+b25zLm9wZW5wZ3Bqcy5vcmdvhgHjiHGWx4QW7UfUmmvZcS9qo9zzEEtcw5vk
+bSJsTxYhBFac0FsKMyEPbw2vTShTxUkNXp/XAADktQEAqCBhgbM12pvGAj3m
+gOihWOX/J3ansVxo01zBcv6W/B8A/2zUBXgRx6BImdCYfbWAmnYIOqYPnroo
+RTDT93Mi5W4N
+=BFG3
+-----END PGP SIGNATURE-----
+
+
+--------7b718d8737d262fb4d77f58b4d67d297ffc9dda5a9e99302f08017bf093a4a2d--
+
