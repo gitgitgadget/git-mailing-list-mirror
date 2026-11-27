@@ -1,100 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.44
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795748072;
-	b=feMXZ2dqY198LG8wBX87nl/SCesI7GldcPXEXBn1+IGoBV8mCiXtj5w4ilwQ8zvAFkFE
-	 neAkxhrh2hE+LnJjla4qPyZjXUb93kiUUaC1cdmo76k+C8O/V37H7yTOZ1KIfUSHNWMQI
-	 vlMH1t6ltsPs9Dw5mI80mMsLKPU04tne4ku5Mp8XX/tAN8tS1C1bF6sU5EvVq8nAUG3xa
-	 QUoqzCI5l5VfO7gxMstUHGnOOXsbxgJq2VXZFZeWh0qGgdDVGIz+UdqphkPyIbopZu2ve
-	 FcsrWNSdRHi3skpWPATwAu11sI7Gq2S8pRHj7o8LjU/yuyWu5TxIWTWe4Tn5+Lq6/Xw==
+	t=1795755854;
+	b=ursGSp094bkLBYng3bGZC5IPv1Vr0NBB0fc6zBksRcZ/zaZu0ECX+tDLEveznhaRQ81s
+	 SnYzuMNIopd7PBCnT69wbv23vlqIPIrY9LD4yz4bobLrqjL9pgyBHP6YPlA0pErcOQT+i
+	 rpvcnS7cMmnugIU6MLwX9UlRD5LmXcMhde5+zggGlVBuxXpXWKcP87BmoHoyB0CvQ8+Um
+	 S3hL1+oR0x5tnVOqmv/dmvdE8WLSlbafu8EL203QVr2qSzjP9uWgQjM/gN0m3aIHiSR/n
+	 v2F7sfzR41o/8lgdzkbtSyUKrSxGEDZh+8Z/Fs2zGCk/5lXM1YkzUPvEnaOoSzDE0LA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795748072;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795755854;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
 	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
 	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=4owlNY2jeQQlcd99IPuP83WmCKOR7OIUV0v+6wdfRWM=;
-	b=S8spFKXrgxAIncYLf3hRHOTXrYuHlHcvLARRaCb9K2RJqmOlY5PN8WRUF/ElvLng+wM4
-	 GrhycnsYDbkLFoSISN849O/DlLWRPK6zKOgEPpFol3DWfJEV+IzYHMrghgGqbZhkts7cm
-	 Qh2W9FevwV0EdliRO0CEJEinG/0riQEu390yxgW4VdgmoHjyAchlWmhyBytSI7zXlzLnU
-	 FRF/YcPsCTQU2F5quNEQ4jh+jafBwEudMLkfwqvBjPz9+XISHFkUbxUaD7Yo0anBkG9H3
-	 HEAc8NfU+io/SInjGGwSU2ujvaB19VKdvrqighZtNsAD/Ja/TOCYnLsofunatQ+zotg==
+	bh=CPmrgKVB/hFXmmDMAIpb3Udfn0tYQkjwvrxGrSFYyBs=;
+	b=nGY28ZKmQ4FZDDng8xlcKW5fYRIndCjUQ/4Jbmf9F5kDEI9JszOMfHtfBAlHAUVVc0T/
+	 jmorj7qxOe6PCrQkfm5mHf3sz0muRjiwkbldT3DuYT0SIY0kW4Ty3cQz/z9gNosFHCgSC
+	 mm164VtLi90BNuxpUL9op+raiFPGmxN5c1NN8s4kQh8/m4r0swQ1pJ/uqNxlgyFebGqKg
+	 5NugiGDvxmbAkGsVhkujT3Q5/SmoiPE2L0Q7eIEPz8Kg1VGk49WPhdAc+paTa8HaNVKYa
+	 POJtB18GhLhz/3OJ+5FncrmgbaNS+M5rD9R+MDXLpXBiwlwNPOU3+RomJFpI9nYGVuw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=LG5CFc5L;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.50
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=taBWj9ks;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.44
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED65606A31C
-	for <git@vger.kernel.org>; Fri, 27 Nov 2026 02:54:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5ED65606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2BEF606A31C
+	for <git@vger.kernel.org>; Fri, 27 Nov 2026 05:04:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E2BEF606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=LG5CFc5L
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5be3d5927ceso9560072e87.3
-        for <git@vger.kernel.org>; Thu, 26 Nov 2026 18:54:32 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795748070; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=taBWj9ks
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-91c1f548f87so102230716d6.2
+        for <git@vger.kernel.org>; Thu, 26 Nov 2026 21:04:13 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795755853; cv=none;
         d=google.com; s=arc-20260327;
-        b=OH6bQHcbClxURm3DrvSNADzZxtM9AWwT/9ARCfxfh+kTohJr3uZRLjCSJZULJA8MvR
-         admlB+mAfz6IR7xUc/dmtQ1Rts2LmXvgBM1Udq5PqN2ORHdTao3+VI/NNrtJFkW4jknM
-         PXkGpakJ0jV5dIKD9GHNCTJk5bY1+YHeZLbn/u6VCQLy1tqgWcVNDRe1OTPwi/zNJhwc
-         prLtJVINMXeXn/0yTYplvzyNRa8zNA3vm/SjbVvLDR7tKS9upnhJI7M3SWe6p4FWYx7N
-         J4Lhj7ef1h5Y5UAJp6rSH7LU9LiGOSa8sqQeIwj/L2h48s/ZrzQy30DDViq0AUjQ6uRi
-         Vi3A==
+        b=ZEYttrw/NEX94IgHzDb22c4om3hgxmkd0BvlpKXSsZXP94It/LhvOEh5Hb1F+JwsRm
+         nuvLjRwcFcmlD4HUjzkQzYXuBskufMfaOpk8GC3UKzbhCieGRDkriFH0iCzla7xM35Ud
+         uFBiw8k1bHQKYSqrDKm8z3kcAYIuCgzVU4UDFEIUCPNSm5J4vQJzHFZ46I1w+kr9sbCj
+         Ouxy9eRbF+tDCTiPysiVk6EywqyEgLWI4oZqitVTpPUSWbi4Vz156ccjT1nitOQ6lx5g
+         bi18J8vvYnqzVEDTfagsFFlIn9SpYcbPsPyne+l1g0tNn7unWlSL5MilLnQIh1JJluuy
+         a0XQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=4owlNY2jeQQlcd99IPuP83WmCKOR7OIUV0v+6wdfRWM=;
-        fh=6EbkXYcINwJ2EdSFa4UDrVJU+oDX0YdDtokAu2NDog4=;
-        b=hpMMjO2hTqrWgyBEr/XCa6X64vbOBuHUKpnAoiLgH5eBb8/hfVV0Pg+RX4qWqKibFl
-         2HIwmeUubL0jIeRqvQReD6Ppuij2GfBTKkXRW59PZPOTYOXIXJJ+BrBiasCgL/cThoB4
-         5j+jHQ1+nDO4vngxAi0o5b+ELSTMGzNr6DLOV9TESHb827RvYUs7xAMT8MLYcOZmdE9S
-         Bx4vYYgZaEiwvb4ITQ+ikXNzdfKQosNZiAMNIjFPt8w2wjr/8BfLZ2dpwcVPuZNBfd9G
-         0u7nn3/MiFjkCN36zNevyCHK7M2lWcOL4JOaecwuxeA42I7QTt+xbW778L79peTzRa+D
-         0tJA==;
+        bh=CPmrgKVB/hFXmmDMAIpb3Udfn0tYQkjwvrxGrSFYyBs=;
+        fh=6HILABBcUpB6pi/G3nLkNo88znwOx4lWVOxvHj4y9KM=;
+        b=X5+7S0sP2hPPgFBlB3Nf1cS5/vs7Kux4Zk7FNVBEvA5zon2kkb8xVhtgJ5AenMCqzS
+         SlgydhK2X/j1jhQXGfKS9Ar7K8xA1Yn9uWCpyJaAZShhrMwfJTchBMePweN7/0d7mfrA
+         /ppG/d2WVxMbb4dmpfg0ypLBUAM9Lr1d4TD/697iRcoGrMMwLOqf7nQFlvos81zBcGqm
+         j5cdaYGeFcKShKZICiu9Rugw77daMdJj2Q5demYftqvhcoeRezsdi2m3TJlzcGZ+5jVW
+         sSgahuld6J6ADlxJzfhbyY+IRaY0UOQab//fbReF0gh9R5rEr1e/DRPjj8e9GC71rXmC
+         NZ2w==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795748070; x=1796352870; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795755853; x=1796360653; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=4owlNY2jeQQlcd99IPuP83WmCKOR7OIUV0v+6wdfRWM=;
-        b=LG5CFc5Lg5YdHJCWTEiW9E8mOok2ETOAnAVvlaLt2QybtXHJHENWhwu4OZM3U5mUci
-         Lhn5+QALqpEQXLex8OXccFe4Fh5Z4HtFHXJ4r0QadCdi4SDVtXkO0bgwhwzEYnqbOamu
-         9qQqAGN68JzBEp/KEptRBLqNG/K/oKaWdVB5DFJgDVCDE3FzjtcxTVAHnNRGsCl/98BO
-         HqNUfj7mJYwNmpjSLJx1xpOXZmIdKB5puuc1BBs6n6uc6BapMy/zbJfMgvVysV2WaHsY
-         HdoQo+NCdhf5IxdqAA4RZewIqivlOSJzoUzCmr4KcM/gOTBsfsZYOyfTJDzV/320p/23
-         J5MA==
+        bh=CPmrgKVB/hFXmmDMAIpb3Udfn0tYQkjwvrxGrSFYyBs=;
+        b=taBWj9ksOjVZRKP5Ku1JsKZegTQT1MHet1HLTr4tLMgvsPoWvRe7/UNavFZmN5KWD2
+         yI8p5qr1VXNSHLaMaAvxT8899CzNXuaRNc2l//H7EreItHh4pndVWzstuXFsaRnAOYuR
+         bDPBFbCZqyckyb8FogwZqZkJ8ahJzWqmb45+ES/BVHO8rde1H7CxNC54Ax1Ovf2LflWB
+         hZ9w667bH1gjCypDQPl6pIi8SEy8lK2Ec4I2nIfZ0SihRYNoibG+1E9WMEJnpOpoysm7
+         pLSNF/aRY/lK7ned0x2iECNEwBO22TKsYIaEn+IA9FCP+UTan7qPLH9616gqHB6F1Z+N
+         63ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795748070; x=1796352870;
+        d=1e100.net; s=20260707; t=1795755853; x=1796360653;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=4owlNY2jeQQlcd99IPuP83WmCKOR7OIUV0v+6wdfRWM=;
-        b=xdzye/K1b4AoNIy96duL/OuRePs+O5mA6tGxVC6TRtk7KfhMj/ERn4Jx4rVBuXCk1/
-         MwMNON2cOpQFdOvDGPxfbUV3tKja3m+upvsG1Hg+xNEKKF553HIjvzyLhrBFXD0ygwxN
-         xPCEfPpaqLNfZ3Ydrhlnuo/noQM2pS5zHh7xq5rbXa14KwllMw3OaY4uQt/eR0S82uwD
-         ZBJhNdfJ5SY5cNw8RFncQINk+n79eHSx7ZLceIDZWOrCJU9NgcmdwnTaagRZjavyIVbx
-         CuFadUm+a5DnChjfdYhx2aYFWKVDGmZwAb4r/oz+gt3ez2bLaGo3Pv6+ZemePuw9bK4T
-         W0BQ==
-X-Forwarded-Encrypted: i=1; AL+hErFlAMB89dYflrJoBThLzOKwDxZpFQbSoHN3QSWLSAA2pCnO3d6Nm9Wl+7embTdiITc2Ngw=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/YzBo9FysVN4zsRDtqYyB4e3yJL90Jsx3ZZsSxBPlq5w5PvH/X
-	cDzl4j6m7JgSSUyYneXW9XkYBXuy+VIsvTPO2IVMn1GPr9zz/v1DkV0JcBuLrOjgL4COV8k+zU1
-	Y7B6kNEKGvfWGk5penGieqTpAAh6P2zHNA09JXp8=
-X-Gm-Gg: AZFdTZe2LY7CUs4Rj/XpVoR/R+79UP/4rlb/4gcmMvbzN84vwKPq31AHweU6WMj96r0
-	whOn9ZbzWPrTlH2uTxZGK5HTCb56YsoQyeGZyWPPV5WOQnqo4kJkYddzGJTIdqppOf58FVi6xmh
-	qDCtW3kGTf893R0QpG1iGj95pK5ZgAlUYHVOU+P7EhMOxhpQPfryMsXXFwQrR9IQ338wusfbgbo
-	GhJenvLCrD3+b8LLuTGCjSiero8D3t23hXYKS6/GrFOCkomW9VwEmnc9jeESilvr4qO8vDaMuz7
-	a+kUemafri+f7pdRLrm6pRzwVUX5GDBPPDrOOLhce6LPQ6T4DYxUMdE+w8plZxuu0hOyNp11DuD
-	5/n5vI7aKcg6xQy72KRuR769WoXaVa8hQPFw7lQ==
-X-Received: by 2002:a05:6512:31c3:b0:5bf:aee8:7b4f with SMTP id
- 2adb3069b0e04-5c1bc80fefcmr6874095e87.27.1795748070213; Thu, 26 Nov 2026
- 18:54:30 -0800 (PST)
+        bh=CPmrgKVB/hFXmmDMAIpb3Udfn0tYQkjwvrxGrSFYyBs=;
+        b=KFiA4YVECioiIbz+R1lB5WiwhCUsmj+ir7ae+md7oX4sKDsBNgZCsJij+Dl20FVBqX
+         SmzkAAVG4C6zYJfuoDEld1QEAzhrgY4Z9KrFb6iPIjL6BHK8pMEjVxQicQ60amBVYbkb
+         DZL7QnJ901UahTu7Virl00JM0ZPClZimfTEPH6RSWn0/YqUsu01AtWo3NVyAwnnh3upz
+         koFrwZWPJVUyiTzIFgoYijtzKrlEVjQ1/2KOylvqp350vOiUe/dT9Iam2mF+dwpUYgA5
+         NGxnRIzovoxb6WcnL3jHOFLTNVnaZENrhTPZI0lZXhTakaMPcqIhAAQIXqp/ubX6fs0W
+         xIrg==
+X-Forwarded-Encrypted: i=1; AL+hErEN4le32/TGuF0RIViem2YFrqWiiDt/d7NP0zQKOhLbaEPYFk4/S3VCSytHPjHQOUzPBpU=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/kAAfrQ/UchK5WFbmctVLKpYlPCpfyssjdJU/9Ol7jMLeIrozU
+	kKW0rgO8ftuymaLpMqBjAcKVT96ksrSuX0dnbQi1qo3Jdqdk0rwPWqwsQtHJaxMQ88cKXdYYOsY
+	xVz2O2eMWhuMeGMjLBLyTk8729L6mXTTV2n3T
+X-Gm-Gg: AZFdTZfaODjVVZtTsVlPK1/df0wOVwEPB4NNGJ4xpZyRVBNO1k5oqVJoIxtIvtNbN8N
+	EcvxnanL2I/JBVbVE2kzQXJ8VTufOeQYi8uWFTmcQn4dgyC3rsVP67JGhHMZN75UAeGYbfFi/h0
+	KkuCs5jwC58DK0QpCUF6oqZa1wwX5FudvmxDZYFerkkn6qYHq3I1qzJITDSvAwu+iI8gaSRmhVN
+	/8POdR5reweXCfa16bBgFRhhNTg1oVxK69UrWKS3NV/jZpMVkHBvbJsngDYibmEyA+9Kzjr6ShG
+	pzGtZLYbVtbEWRmLKBm+vbN2YZqcph2Xshft/g1yfQ1p9E3MgezbFnxTy9m+Dc9/VFAmE2jNswY
+	GazqEZ4fpxnBqT0dcMUP3IV3TUn3Zfax6kS4IIH37K6X6B8FwcLkskR0W1oOvajCePmoYJA==
+X-Received: by 2002:a05:6214:4902:b0:921:35a6:1a87 with SMTP id
+ 6a1803df08f44-92135a630fdmr446098606d6.38.1795755852866; Thu, 26 Nov 2026
+ 21:04:12 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -104,178 +104,107 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <pull.2336.git.1795686173178.gitgitgadget@gmail.com> <xmqq7bhzl8i2.fsf@gitster.g>
-In-Reply-To: <xmqq7bhzl8i2.fsf@gitster.g>
-From: Nahid hasan Sagor <nahidhasan141400@gmail.com>
-Date: Fri, 27 Nov 2026 08:54:18 +0600
-X-Gm-Features: Aa3M54pqQBt5lGmFpJuGUEEBUMgejBvpUjlMhoJpwhyK8TQ6tplQnT309pMeMDI
-Message-ID: <CABQNq+=YsQxGLwFQggx9bY9bWw9vOR5hFs2WaF7UfWoievt17A@mail.gmail.com>
-Subject: Re: [PATCH] push: shell-quote names in suggested push commands
+References: <pull.2306.git.1794484985.gitgitgadget@gmail.com>
+ <pull.2306.v2.git.1795273853.gitgitgadget@gmail.com> <435ca42ec99d0eed613621186306cb68def30e6c.1795273853.git.gitgitgadget@gmail.com>
+ <xmqq4id6qakd.fsf@gitster.g>
+In-Reply-To: <xmqq4id6qakd.fsf@gitster.g>
+From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+Date: Fri, 27 Nov 2026 14:04:01 +0900
+X-Gm-Features: Aa3M54pbmFBZ3UtUFS7lZrOOHfvOPRJ3DMJswPTgW00fCCYqrr3smTmhcIeot4o
+Message-ID: <CAF5D8-ve1dtYWUMDeiYYa0FpDOv3c=V4MAS49Awy4e-9iZy-xA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] submodule: make submodule.<name>.gitdir relative
+ for worktrees
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Nahid Hasan via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: Yoichi NAKAYAMA via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Junio,
-
-Thanks for the thorough review. I have just sent v2 addressing all of
-your points:
-
-- Dropped the trailing clause from the commit.
-- Quoted the entire "HEAD:<short_upstream>" refspec in die_push_simple().
-- Removed the "die() does not return" notes from the comments.
-- Quoted remote->name in setup_default_push_refspecs() for
-message_detached_head_die[].
-- Simplified the test_when_finished cleanup in t5523-push-upstream.sh
-and removed the redundant single-branch test.
-
-Thanks,
-MD Nahid Hasan Sagor
-
-On Fri, Nov 27, 2026 at 1:04=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+On Wed, Nov 25, 2026 at 4:44=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
 wrote:
 >
-> "Nahid Hasan via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> > Format the remote, branch, and ref names in the suggested `git push`
-> > commands in `builtin/push.c` with `sq_quote_buf_pretty()` so names
-> > that need quoting are wrapped in single quotes while plain names stay
-> > bare, and add tests for each hint.
+> > From: Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+> >
+> > For a linked worktree, always keep `submodule.<name>.gitdir` relative
+> > to ensure it continues to work when the worktree is moved along with
+> > the main worktree. (This benefit also requires
+> > worktree.useRelativePaths to be set to true.)
 >
-> Drop ", and add tests for each hint" from the proposed log message, as
-> tests are expected with a fix like this.  Reviewers will notice and
-> nudge you to add the tests if you don't anyway ;-)
->
-> Quoting suggested commands for copy-paste into a POSIX shell is a nice
-> improvement, and sq_quote_buf_pretty() is the right helper for it so
-> ordinary names stay uncluttered.
->
-> > diff --git a/builtin/push.c b/builtin/push.c
-> > index 2377b5af55..a28138fcba 100644
-> > --- a/builtin/push.c
-> > +++ b/builtin/push.c
+> Perhaps state the status quo first for future readers, that
+> repo_git_path_append() produces an absolute path for linked worktrees
+> unless relative paths are enabled.  This change applies to the main
+> worktree as well whenever worktree_git_path() returns an absolute path
+> (such as when GIT_DIR is absolute), right?  That may be worth noting
+> here, too.
+
+I'll update the commit message body as follows:
+
+  Currently, repo_git_path_append() can produce an absolute path
+  even when worktree.useRelativePaths is enabled, such as when
+  running in a linked worktree or when GIT_DIR is set to an
+  absolute path. As a result, `submodule.<name>.gitdir` can be
+  stored as an absolute path.
+
+  Always store `submodule.<name>.gitdir` as a relative path to ensure
+  that it continues to work when the worktree is moved along with the
+  main worktree. (This benefit also requires worktree.useRelativePaths
+  to be set to true.)
+
+
+> > diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> > index 461b682d0d..c3b3a2865f 100644
+> > --- a/builtin/submodule--helper.c
+> > +++ b/builtin/submodule--helper.c
+> > @@ -507,50 +508,63 @@
 > > ...
-> > +     /*
-> > +      * Quote for copy-paste into a POSIX shell. Ordinary names stay
-> > +      * bare; metacharacters are wrapped in single quotes. die() does
-> > +      * not return, so these buffers are intentionally not released.
-> > +      */
-> > +     sq_quote_buf_pretty(&quoted_remote, remote->name);
-> > +     sq_quote_buf_pretty(&quoted_upstream, short_upstream);
+> > +     modules_dir =3D worktree_git_path(wt, "modules/");
+> > +     if (is_absolute_path(modules_dir)) {
+> > +             modules_dir =3D relative_path(modules_dir, wt->path, &tmp=
+);
+> > +     } else {
+> > +             strbuf_addstr(&tmp, modules_dir);
+> > +             modules_dir =3D tmp.buf;
+> >       }
 >
-> In die_push_simple(), the first suggested command formats the refspec as
-> "HEAD:%s", and you are feeding short_upstream to the '%s'.
+> Copying 'modules_dir' in the 'else' branch avoids overwriting the static
+> buffer from worktree_git_path(), and converting the early returns in the
+> later cases 2.X to 'goto cleanup' nicely plugs pre-existing strbuf
+> leaks.
 >
-> When short_upstream contains metacharacters, sq_quote_buf_pretty() wraps
-> it in single quotes, yielding e.g. [1], but it is just as ugly as [2].
-> Wouldn't you rather want to see [3]?
+> However, doesn't the 'if (is_absolute_path(modules_dir))' branch still
+> have the same static-buffer hazard?  As documented above relative_path()
+> in path.c:
 >
->         [1]     HEAD:'upstream&name'
->         [2]     HEAD:upstream\&name
->         [3]     'HEAD:upstream&name'
+>     The strbuf may or may not be used, so do not assume it contains the
+>     returned path.
 >
-> All of them would be parsed by POSIX shells as a single argument, so it
-> is not wrong per se, but since you are not using the basic sq_quote()
-> and instead chose to use the _pretty variant for prettiness, you may
-> care.
+> When 'wt->path' is a directory prefix of 'modules_dir' (for instance, in
+> the main worktree with GIT_DIR=3D/abs/repo/.git GIT_WORK_TREE=3D/abs/repo=
+),
+> relative_path() advances 'in' (initialized from modules_dir we gave) and
+> returns a pointer directly into worktree_git_path()'s 4-slot ring buffer
+> without touching 'tmp'.  Once patch 3 calls worktree_git_path(wt,
+> "config.worktree") inside validate_and_set_submodule_gitdir(), four
+> consecutive failures across Case 1, 2.1, 2.2, and 2.3 (e.g., if
+> config.worktree is locked or unwritable) will wrap that 4-slot buffer
+> and overwrite 'modules_dir' while create_default_gitdir_config() is
+> still using it, no?
 >
-> > @@ -211,14 +225,21 @@ static const char *get_upstream_ref(int flags, st=
-ruct branch *branch, const char
-> >                                          "upstream, see 'push.autoSetup=
-Remote' "
-> >                                          "in 'git help config'.\n");
-> >               }
-> > +             /*
-> > +              * The prose keeps the raw branch name. Only the
-> > +              * copy-pasteable command is shell-quoted. die() does
-> > +              * not return, so these buffers are not released.
-> > +              */
+> Unconditionally owning the copy in 'modules_dir' (or 'tmp') closes that
+> hole cleanly:
 >
-> Good reasoning.  Common to the previous hunk, I do not think "die() does
-> not return, ..." should be here.  We are not writing a programming
-> tutorial for Git developers here.
+>         const char *raw =3D worktree_git_path(wt, "modules/");
+>         char *modules_dir =3D xstrdup(is_absolute_path(raw) ?
+>                                     relative_path(raw, wt->path, &tmp) : =
+raw);
 >
-> Move the suggestion ("you can leave resources used to call die()
-> unreleased, and that is not a leak.") somewhere in the Documentation/
-> hierarchy, perhaps in MyFirstContribution?
->
-> There is one more suggested "git push" command in builtin/push.c that
-> this patch missed.  The message_detached_head_die[] template is used in
-> setup_default_push_refspecs(), which reads like this:
->
->     static const char message_detached_head_die[] =3D
->             N_("You are not currently on a branch.\n"
->                ...
->                "    git push %s HEAD:<name-of-remote-branch>\n");
->             ...
->             branch =3D branch_get(NULL);
->             if (!branch)
->                     die(_(message_detached_head_die), remote->name);
->
-> If a user is on a detached HEAD and pushes to a "weird&remote",
-> remote->name needs quoting.  The user of course needs to be careful to
-> replace <name-of-remote-branch> with an appropriate name themselves, but
-> it is quite plausible that they will cut and paste up to the colon that
-> appears after "HEAD" and then type the name themselves.
->
-> > diff --git a/t/t5523-push-upstream.sh b/t/t5523-push-upstream.sh
-> > index 22d3e1162c..484565d7cb 100755
-> > --- a/t/t5523-push-upstream.sh
-> > +++ b/t/t5523-push-upstream.sh
-> > @@ -134,4 +134,12 @@ test_expect_success TTY 'quiet push -u' '
-> >       test_must_be_empty output
-> >  '
-> >
-> > +test_expect_success 'no-upstream advice quotes a branch name with meta=
-characters' '
-> > +     test_when_finished "git checkout main" &&
-> > +     git checkout -b "branch&name" &&
->
-> Two when_finished handlers running "checkout main" (above and below
-> here) look somewhat strange.  You of course want the handler defined
-> before running this checkout, and ...
->
-> > +     test_when_finished "git checkout main && git branch -D \"branch&n=
-ame\"" &&
-> > +     test_must_fail git push upstream 2>stderr &&
-> > +     test_grep "git push --set-upstream upstream ${SQ}branch&name${SQ}=
-" stderr
-> > +'
->
-> ... you want to get rid of that funnily named branch before you complete
-> this test, and in order to get rid of the funnily named branch, you have
-> to be on a branch other than that, so it is understandable that it gets
-> tempting to write "git checkout main &&" in front, but what happens if
-> that checkout fails for some reason?  You'll leave the funnily named
-> branch behind.
->
-> > diff --git a/t/t5529-push-errors.sh b/t/t5529-push-errors.sh
-> > index 5f8aa1ed19..8f4705cae6 100755
-> > --- a/t/t5529-push-errors.sh
-> > +++ b/t/t5529-push-errors.sh
-> > @@ -67,6 +67,11 @@ test_expect_success 'suggest <remote> <branch> when =
-the branch has slashes' '
-> >       test_grep "hint: Did you mean to use: git push origin feature/x?"=
- stderr
-> >  '
-> >
-> > +test_expect_success 'suggest quoted branch when the slipped name needs=
- shell quoting' '
-> > +     test_must_fail git push "origin/branch&name" 2>stderr &&
-> > +     test_grep "hint: Did you mean to use: git push origin ${SQ}branch=
-&name${SQ}?" stderr
-> > +'
-> > +
->
-> Isn't this fully covered later in the same file by the new 'slash-slip
-> advice quotes remote and ref metacharacters' test, which checks both
-> remote and ref quoting along with shell_split()?  Perhaps drop this one?
->
-> > +test_expect_success 'slash-slip advice quotes remote and ref metachara=
-cters' '
-> > +     git remote add "weird&remote" remote.git &&
-> > +     test_when_finished "git remote remove \"weird&remote\"" &&
-> > + ...
-> > +     test_must_fail git push "origin/feat;id" 2>stderr &&
-> > +     test_grep -F "hint: Did you mean to use: git push origin ${SQ}fea=
-t;id${SQ}?" stderr &&
+> Of course, if we go that route, freeing 'modules_dir' under 'cleanup:'
+> would become necessary.
+
+You're right. I hadn't accounted for cases where `relative_path` doesn't
+use `strbuf`. I'll fix it so that it performs a copy at the beginning.
+
+Thanks,
+--=20
+Yoichi NAKAYAMA
