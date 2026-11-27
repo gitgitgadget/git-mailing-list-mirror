@@ -1,60 +1,121 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=109.224.244.28
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.148
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795811736;
-	b=mk3G1PsH2bpL+yHvWAAz8r8eMVV3jEeqX5SP79OJYdBqJKNMKey+dpgsT4TCNK1IUgqf
-	 5c0I5rsHvX4MA89qAZ70Fmt5rU4cuBxJIDgAoeQ1josqg82GzJ3Pd34zyaRpIC/WkMuVv
-	 Arx2zt3tFIOw3Y9JVizOmMjKMqefw/b8h593Umv5rY5uioFvu4rOby+6Oq+NB0CNumx/O
-	 2a1cswjtA23+M87rL9/sKy6OHgT8O/NCxeZQgzN9SqTtDc1MbfhbHommr8WKl5ju9NBxa
-	 awBN5Seh25PPqImypold+8UZg33KG9hQrGP+gx+pbZci/ilM/qcTlodEKHPaRfH8zpw==
+	t=1795812388;
+	b=LH2LuZoXsn1gSyNr9qbymaTPti4ivfOWS1oeG9/DjcHucNEZbBitpfmRB42IHG08HART
+	 AFu9TIa37z6qFiTN0bz20hRRZWRdAaej8kQmRqchZMw1h9L3W6p+mtlMIbT2caxKbWcoz
+	 1pIXrchiEmD7QGHvFDfah1td+f6vpj5wMEn4zz9iyz/YUp/OuOP0MnyOvYjrb5TKyDVde
+	 8zSQJ9IuTnJkySkbscOi5JqEhOu9NBbpVGHoMresq6PbfyUg7E5EMsTaD3lc1slIZC129
+	 8sAt5JK/OcHIOF/jhV4Ob6PCvfSmYfVGMh+LrpleiBMOColK9DXSdlub2+j0xutQhsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795811736;
-	h=DMARC-Filter:DKIM-Signature:Date:To:From:Cc:Subject:Message-ID:
-	 In-Reply-To:References:Feedback-ID:X-Pm-Message-ID:MIME-Version:
-	 Content-Type;
-	bh=TXwxFAMU5OtWrhxu77LZ8lneNlqF4KvR8+ICCwW4xnA=;
-	b=BIt2kJCb8K4kOX/HlFMF3xze2DaFpzwVnNjgXa0Sr4FOkDSXAb81QXjjwZgTClU+L9tS
-	 brLv03grkj7QUtA5Wtad///nOZaU1LQhM8KTmV0rRpjheAdOnJc/GF9D8f+g1nvJpj7ka
-	 6aUVvH1QqKu9PFwpjSw5oemsXjnrVd7dzWLc0xVrpA3oUUsAHuIbaWWwr+S4XQGhEtiMc
-	 GnzXWMBLgTs7NxL0SZmkpgOGteQZGdFuWL+Z5h8rwmHD+ujsID6Std/6NghB2joMPJQZw
-	 2QfTZQZXtdYWOUcwSfK0/c3sDU5QfvVoPEc6akYQuypiCnh0f2cjNmB0yMUmIJR2F4g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795812388;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 User-Agent:MIME-Version:Content-Type;
+	bh=w5XYJsS5vbbAydTfLNMUBsM9dZBNhzRy65jvofQdLu8=;
+	b=aT8j2+xLQM3NPxVJUYQ3pdSHFyc1P60NMU6lwQhgnnu/xxAMEc1urHQZZYMXNtGBtJBY
+	 uHN9b4AQBHAKJ8QQQa2pKFMPWiMjFFoN+c/XLbHOIFLItPrB+FolghOriA834EnwmFiTI
+	 rQwxDxwoUgSpaY47tWyDtKhahMq5Ok+PCvlhI/WluFcOaNgGKeelYd4rx4Gt/XmFqC/ry
+	 jnWVGbTsIX61gpw5Q6OwlMYx7KeCTjHq7BASMcNBJXSaY9jQnC8E6Z5fI1XcjzU847imZ
+	 Q+jFiGD0mecH+JyGiAcX88Yo5/rFQ5qFsqL8ezdyX0uaG2h6cgsWAPYVnEiReMEyjRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=protonmail.com;
-	spf=pass smtp.mailfrom=protonmail.com;
-	dkim=pass header.d=protonmail.com header.i=@protonmail.com header.a=rsa-sha256 header.s=protonmail3 header.b=aJBaHDId;
-	arc=none smtp.remote-ip=109.224.244.28
-Received: from mail-24428.protonmail.ch (mail-24428.protonmail.ch [109.224.244.28])
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=eQ5IBXzz;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=1xfMrta3;
+	arc=none smtp.remote-ip=103.168.172.148
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E314606A31C
-	for <git@vger.kernel.org>; Fri, 27 Nov 2026 20:35:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1E314606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503D4606A31C
+	for <git@vger.kernel.org>; Fri, 27 Nov 2026 20:46:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 503D4606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=protonmail.com header.i=@protonmail.com header.a=rsa-sha256 header.s=protonmail3 header.b=aJBaHDId
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1795811732; x=1796070932;
-	bh=TXwxFAMU5OtWrhxu77LZ8lneNlqF4KvR8+ICCwW4xnA=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=aJBaHDId1UgdsbWVawyAJnja0LHs0gUa6gPHtnpPMsRwUmVFmRGQ7weWsKnvgFU0z
-	 7hSXszZqqWLq9Y6aB61UlIn0IWHa9IPZPk22Tp2kKk3vgINHbTIhLFS1wvRf+tR4KE
-	 g7/8tL4M9aLHDCyigsnGiwAqVW6/YYbUAVeXw1DF5JG5dX5wOvnmFzSbchj+2lzdKd
-	 FiKcAYo+VuYVgAAyMUGmiJ/QsQAyUmxYqvUqxWt2PnBHtXg0CpmCRf/69ONoXZmflq
-	 sZb1jZkr42lHpGHthV4xbgSYDVP1WsTs1aFXAH0SbtyeqrYoNCR3dOke+7b9Uh0C/h
-	 /P9f+B2L1WTFg==
-Date: Fri, 27 Nov 2026 20:35:29 +0000
-To: Junio C Hamano <gitster@pobox.com>
-From: ATTILIO ALESSIO <attilio.alessio@protonmail.com>
-Cc: Alessio Attilio via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] status: warn about stale submodule URLs
-Message-ID: <OMY1zvJHIGS8yvryfUhct_Q4HkqQNP3QJ0ezjSIY6F5k_L5UpMLJ0B31C5LUjJwglnYlccCCh1WVqawRDXMUQXPX9FgsxWFwrcS5HUGaZ_4=@protonmail.com>
-In-Reply-To: <xmqqecc69maa.fsf@gitster.g>
-References: <pull.2509.git.git.1795774880142.gitgitgadget@gmail.com> <pull.2509.v2.git.git.1795796162.gitgitgadget@gmail.com> <b0dd21100ccfe4411ccc1237fdb7ddedb66075e8.1795796162.git.gitgitgadget@gmail.com> <xmqqecc69maa.fsf@gitster.g>
-Feedback-ID: 158305026:user:proton
-X-Pm-Message-ID: eba015aec0ce117b7d41316cbfe54a3e8f2ca76a
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=eQ5IBXzz;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=1xfMrta3
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7E057EC0B76
+	for <git@vger.kernel.org>; Fri, 27 Nov 2026 15:46:27 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Fri, 27 Nov 2026 15:46:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1795812387; x=1795898787; bh=w5XYJsS5vb
+	bAydTfLNMUBsM9dZBNhzRy65jvofQdLu8=; b=eQ5IBXzzgyk0jMxKcAdy1mKCA2
+	bUraqsj6IyOk+I1j95gj+yBpApkhA3P3a0O3PCgCSVDcVgYT7zDV2oB2O59yOivL
+	icYjw8dalfwTeBkK0r0u2o/6uSI/YygddvJDqjPPrPCRhuZ+OFhucZuwplHLKVG/
+	HgY7cV0BTPNj5Bv1m0jV3emDB5eCwSrDre/MUGcCveorn3xBCFy7a0yR5r9GMZTf
+	arpjbbXZB78PnnarJIL0g++rDHOEn9ey5RIk9D2u8GzLH/827UL7YzpxcA0JjDwq
+	y1cH5RvXaIQ/l5JdWT31rvHFPRTn/lbHU9A73Xpi2CB/9YUq05aza4/4ijFA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1795812387; x=1795898787; bh=w5XYJsS5vbbAydTfLNMUBsM9dZBNhzRy65j
+	vofQdLu8=; b=1xfMrta3hMivd8tmwu7zhQ4FrpFJ/DvtEomPbNvN8utTsT4gbcN
+	nJE/F5bSZwezJVSxHn8ISjafcntH3u2hRjX3CBLA1lDybEB5vc1w2b7l6UtKUTAC
+	3LCaM7p1yZF1SVLaJnSGB0fJt1C6VpBUv8/ffGsGmDtdGqGVYMM4eQ57QPB470XY
+	BppqFwSVhC/so0Efkrt4vNFDECGhxoC4COXO0mpK4XEBhkowFiFVAA7P2mkl2Q29
+	luv+KIKOvXTUwLQhyjLyLZM5qS92xgWdnOzPqqX1b7eY671Ipwu6jTTWr9qLW2oa
+	8Zuq53ZR2pGF0d75BdrL0XbGjq/HoVLfJXw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795812387; d=pobox.com;
+	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
+	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
+	s=fm2:rsa-sha256:ehQ1y1Lxm+M37kVHrrVU/NU/MRXxGNFKObki7G1F1SI4/XG
+	6sBrf6eQ1G+8iuVbr22i3+db9bYes/zbYO78jipuL5Hnhl9HP7d0Nr3043/ue9nN
+	ne5QQ3idcbaQhcLZr0ZFi7UI37xzjrSZqc3gqBtemraUBv+5kvvAFU8W5SslU1Bw
+	f/ttiqaZ7Vi4djnHehIBDV6XZXDMF2rOl9yHQlXkCnReDdv4I5tDCcT857jfiB1G
+	bLWFCi00QqkHUJcdY2X0doHsyjzZJ6XKRyemsxM95HzmgWhfht8M+TkKIAgTAE+M
+	oVi03tX2oeChIv2q+EOVfgJPuSnQG2iOSCznl2w==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=12;
+	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:tR3SNEDds94IjIGucYkAbb694lkX6LBreDL+mvVHQeQ=:PgRV5yFgnqb3JT0jswnAnMA1jFuKWFPp9ypXUtrD54c=;
+X-ME-Sender: <xms:I-wJa1_1ftRRsQbP-PiM1x2MQXz7pAPgFdwFCfE6XtRUqMipIRkuYw>
+    <xme:I-wJawuURIO2NeBtqwvfZ6KKm2s3C9iL8z7liAOn97yDQwmh9YrpTrIpeJQVCu8nC
+    hwQ52ert2s3iXtBsMGjhmCz_pItPIyeJl_FApbjd6ZuX3oW32--hvo>
+X-ME-Received: <xmr:I-wJa4D4QvMnvrxxKlQrMye3nm16yFycchILq3LCPVDm_Puvbb9WbhHnNcESF_ywmXOJ0ozRSFkNXAHef6gDI0z8tgBvQMFnK9yxQMc>
+X-ME-Proxy-Cause: dmFkZTFGHoqp+qToA1FpIDOLTrmWhp/mjoWxuzt3dvevcNO2nyofBgm1jkKe6rmR2UonQr
+    N6lNAD34l0sI6QXNpykUcuvxVQA5qyeWb82v1sPrKAXd9hj9cTMMr0XSe8ZX827GhE9cB4
+    ehQLVsarOYDarDruZIDEOQBQXy/h52Ymria/yo8RwVf6tmxJhTDti1YJFOgyf/y2iO+nC6
+    jYEHc7HswcAVdvDtvHy1NyaHUXxBHEPpBDs6SUCmUr4j88C8/0PWzNJGwEHB60RwijcQbx
+    hAQ9g6Ch8MwLn7COtZlvzBgYNoY213v2Jzo8nY1UrUVosmhbtTtyS/l3tGJjuFmr/hd5by
+    tItY3xgHLAadxUd6ezrHpfvjpqA3A7eGEXi/SgsIbK+kdXZ+YVt3PyJocpiX48926RAJG9
+    +TxzDE4mGzG8MnTc8eRnkhhUdkcvmm/izBJ26V/GmZgujFejbaA9qVMSES0gmwNcFsxNaf
+    Ru7veOEmL2jIodAELW1JDjcoEX/pS3/EnNp3jHYAMazbVjik6zdOC6wUHz5qcHgQO+Yvyt
+    S2Ij/agjPyidriRWrQyv3iE0CWoFoPS1A/Vw35izEQIOtCFu4J3pGjeDHY/VA481ntGF+x
+    +CgondYRncgsEeYavrkJwweYmADJbX8qgYHwsjpHdPZ3SC6H02hGQIcb0KMQ
+X-ME-Proxy: <xmx:I-wJa4Xc5q1shdRODV0Xcv3QDKb139Fg4cWTtA6TzMwHLDSRngpCpg>
+    <xmx:I-wJa2CYSMMg0Gynl9ZFiOlIAEo_oESd8spTxTfQmfuBrVdlWrQ3oQ>
+    <xmx:I-wJa79u5WVIepaZWs-ZafMonyNgpeEQP9C8-M_KXYqGW5clL7pT-Q>
+    <xmx:I-wJa9HULsbwMiM8APVrek6WxNdLpMq6eWVpCqukfsOi9VDyJjhRgw>
+    <xmx:I-wJa7i-oZk9rTNLCX6WhQnEuiI__zZ8BK3OuCOJKlvRHiCCIA_dDXbz>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 27 Nov 2026 15:46:27 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: Git mailing list <git@vger.kernel.org>,  Harald Nordgren
+ <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v3] test-lib: run EXPENSIVE tests one at a time
+In-Reply-To: <20261127-ks-ci-long-test-hang-fix-v3-1-91b2aac82a1c@gmail.com>
+	(Kaartic Sivaraam's message of "Fri, 27 Nov 2026 22:53:15 +0530")
+References: <20261119-ks-ci-long-test-hang-fix-v1-1-45c2fff6d9f0@gmail.com>
+	<20261127-ks-ci-long-test-hang-fix-v3-1-91b2aac82a1c@gmail.com>
+Date: Fri, 27 Nov 2026 12:46:25 -0800
+Message-ID: <xmqqpkvq6lzy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -64,106 +125,91 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------7b718d8737d262fb4d77f58b4d67d297ffc9dda5a9e99302f08017bf093a4a2d"; charset=utf-8
+Content-Type: text/plain
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------7b718d8737d262fb4d77f58b4d67d297ffc9dda5a9e99302f08017bf093a4a2d
-Content-Type: multipart/mixed;boundary=---------------------fe6a74c625c7648773990770c1dbf7f8
+Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
 
------------------------fe6a74c625c7648773990770c1dbf7f8
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
+> Recently, we've acquired quite a few expensive tests in our test suite.
+> For instance, these commits add several tests that require
+> multi-gigabytes of memory:
 
-"Junio C Hamano" <gitster@pobox.com> writes:
+Either "multi-gigabyte" or "multiple gigabytes"?
 
-> It would help to explain in the proposed log message why three URLs are
-> compared and under what condition, and which status formats emit the
-> warning.
+> GitHub CI runners are no exception and observe the same behaviour.
 
-Will do.  I will explain in the commit message why the three URLs are
-compared, under what condition the warning triggers, and which status
-formats emit it.
+Pedantic.  You "observe" that runners "experience/suffer from/trigger".
+They do not observe themselves ;-).
 
-> Perhaps move the unnecessary call to repo_default_remote() after this
-> early return, before the first use of 'remote'?
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index c56654b7c5..916ec2d7d1 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -784,6 +784,8 @@ die () {
+>  	# test script run with '--immediate' fails, or when the user hits
+>  	# ctrl-C, i.e. when 'test_done' is not invoked at all.
+>  	test_atexit_handler || code=$?
+> +	release_expensive_lock_
+> +	test -z "$expensive_lock_" || rm -f "$expensive_lock_.$$"
 
-Good catch.  I will move repo_default_remote() below the early return
-for non-relative URLs.
+Minor ordering observation.  Because "trap die EXIT" is registered right
+after die(), well before fail_117() where release_expensive_lock_() is
+defined, an early failure while sourcing test-lib-functions.sh under set
+-e would enter die() while release_expensive_lock_() is still undefined.
 
-> Perhaps use repo_config_get_string_multi() instead?  I do not know what
-> error behavior you are aiming for here, but the 'string' variant would
-> barf on an entry like '[remote "origin"] url' (valueless true), which
-> would give you NULL in the '.string' member.
+I notice that "$expensive_lock_" already has a test -z guard here, and
+that would help avoid such issues to some degree.  Defining the lock
+variables and helpers above die() (or guarding the call) would close
+that small window.
 
-Agreed.  I will switch to the *_get_string*() helpers (or guard against
-valueless entries) so we never pass NULL to strcmp().
+> +acquire_expensive_lock_ () {
+> +	local owner waited= tmp="$expensive_lock_.$$" misses=0
+> +	mkdir -p "$TEST_RESULTS_DIR" || return 1
+> +	# The lock is a hard link to a file that already holds our PID, so
+> +	# it never exists without its owner recorded in it. Remove any
+> +	# $tmp left by a dead process with our PID first: it may still be
+> +	# linked to that process's lock, which writing to it would empty.
+> +	rm -f "$tmp"
+> +	echo $$ >"$tmp" || return 1
 
-> In order to match what sync_submodule() does, 'gitmodules_remote_url'
-> should be computed from the raw 'sub->url', not from 'gitmodules_url',
-> no?  For 'config_remote_url', we do not want to run relative_url() again
-> on 'config_url', I think.  You only need to prepend 'up_path', or
-> something, no?
+This pre-cleanup and hard-link scheme is neat.  Removing any leftover
+"$tmp" before writing "$$" keeps us from truncating the inode of a stale
+lock still hard-linked to an old "$tmp" from a recycled PID, and
+hard-linking after writing "$$" guarantees $expensive_lock_ never exists
+empty.
 
-You are right: the values passed to submodule_has_custom_remote_url()
-have already been resolved once, so resolving them again produces wrong
-paths when the superproject's own remote URL is relative.  I will
-rework this to resolve the raw .gitmodules URL and prepend up_path to
-the cached config URL, matching git submodule sync.
+One minor consistency note.  When ln(1) fails three times with no lock
+present, acquire_expensive_lock_() prints "cannot take the EXPENSIVE
+lock, running anyway" to FD 3, removes "$tmp", and returns 0.
 
-> Instead of excluding individual cases (like "commit or history can call
-> and .commit_template or .nowarn may be set by them"), can we make sure
-> we call the extra check only when "git status" is calling the wt-status
-> machinery to prevent it?
+If mkdir or redirecting to "$tmp" fails instead (say, a read-only
+TEST_RESULTS_DIR or a full disk), it returns 1 silently and leaves an
+empty "$tmp" behind on write failure until die() runs.  Because
+test_run_() ignores the return value, the test still runs anyway as
+documented, though sharing the same cleanup, message, and return 0 would
+keep all fallback paths consistent.
 
-Yes, gating the check so it runs only when invoked from git status is
-much cleaner and avoids leaking warnings into commit templates.
+> @@ -1103,6 +1170,12 @@ test_run_ () {
+>  		fi
+>  	fi
+>  
+> +	case ",$test_prereq," in
+> +	*,EXPENSIVE,*)
+> +		acquire_expensive_lock_
+> +		;;
+> +	esac
 
-> - Should "git status <pathspec>" limit its check to submodules under
->    the given directory?
->
-> - Should "git status --ignore-submodules" bypass the new check
->    altogether?
->
-> - Should "git status -s" and "git status --porcelain" detect the
->    misconfiguration like the normal "git status"?
->
-> My tentative answers to the above are all "yes", but the design needs to
-> be discussed, the choices justified, and the result documented in both
-> the proposed commit log message and in the "git status --help"
-> documentation.
+Because test_expect_success() and test_expect_failure() call test_skip()
+first, skipped tests never enter test_run_(), and the chainlint dry-run
+above this block runs before we take the lock.  Placing the lock around
+test_eval_() and outside its set -x block also keeps the polling loop
+out of -x trace logs under CI --verbose-log -x, while still releasing
+the lock before _error_exit() on --immediate failures.
 
-I agree with "yes" on all three:
+Optional thought.  A small subtest in t/t0000-basic.sh seeding a stale
+expensive.lock with a dead PID or "$$" and checking that it is cleared
+and released (including under --immediate) could give quick regression
+coverage without any sleep delay.
 
-- Respecting <pathspec> keeps the warning scoped to the paths the user
-  asked about.
-- Respecting --ignore-submodules matches user expectations when they
-  explicitly ask status to ignore submodule state.
-- Emitting the warning on stderr in -s and --porcelain modes ensures
-  users and scripts still get the diagnostic without affecting machine-
-  readable stdout output.
+Overall this is clean and well thought out.
 
-I will update the implementation, tests, commit message, and git-status
-documentation accordingly for the next reroll.
-
-Thanks,
-Alessio
------------------------fe6a74c625c7648773990770c1dbf7f8--
-
---------7b718d8737d262fb4d77f58b4d67d297ffc9dda5a9e99302f08017bf093a4a2d
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wrsEARYKAG0FgmsJ6YAJEChTxUkNXp/XRRQAAAAAABwAIHNhbHRAbm90YXRp
-b25zLm9wZW5wZ3Bqcy5vcmdvhgHjiHGWx4QW7UfUmmvZcS9qo9zzEEtcw5vk
-bSJsTxYhBFac0FsKMyEPbw2vTShTxUkNXp/XAADktQEAqCBhgbM12pvGAj3m
-gOihWOX/J3ansVxo01zBcv6W/B8A/2zUBXgRx6BImdCYfbWAmnYIOqYPnroo
-RTDT93Mi5W4N
-=BFG3
------END PGP SIGNATURE-----
-
-
---------7b718d8737d262fb4d77f58b4d67d297ffc9dda5a9e99302f08017bf093a4a2d--
-
+Very nice.
