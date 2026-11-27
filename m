@@ -1,61 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=117.135.210.4
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795784382;
-	b=D8YoXkZSh/V+i4XuF5ZAnXqG18GToO3onFWVfqLHFNTH8GdLv8jMuj+xt4/C4cm/WIzU
-	 XXrl0iYlDR3BvCEMF2QMrXvgXrpV966OxOMlPt90eXTdq29QX2EjSfodshUgJp/4e8aTz
-	 vHzfFK6lDgri141Is8nkIv6PQexohMIUgHyZAZc0U8Yk+cngcMiv1m47hvnsLnkRyP/uo
-	 l37SYCYBvH7LP3jB5JRPqBkPQHE4LCpI4ryG4mdOYvRanNPzLf6porxD5V1F7RfgWj1jx
-	 ps5e/l8tyl5NbPuCKpXXoWFCybX9FTLy1v1VBejLkxPecJXrCvrwOGQm2z+gqhaMWUg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795784382;
-	h=DMARC-Filter:DKIM-Signature:Date:From:To:Cc:Subject:X-Priority:
-	 X-Mailer:In-Reply-To:References:X-NTES-SC:Content-Transfer-Encoding:
-	 Content-Type:MIME-Version:Message-ID:X-Coremail-Locale:X-CM-TRANSID:
-	 X-CM-SenderInfo:X-Coremail-Antispam;
-	bh=0N5nNbNvUBfacYHTY8G3kbtsAxr5nwxKfsxWw4LuyrQ=;
-	b=KvY5NU1V8InIfAW9J3gmH4La2Oy0AV5UT3ACp6chorBh2fkIsd7BDSs8cu8rd0YliR8x
-	 gyNFVOai/viI7ZKpBdNVPGvBmqHr8s814nVoi6f8C5ZQsYsFwQU3C0P8SkmPKRcZ5B7pf
-	 Etl6ksbWyiEjNxrLXAjmy7FyknWGLjwu9XmRe/7rsFb+KFe7O9cvK/CPwotImJz3yrdms
-	 2NGPw+Rkm6zpHuEYCaVC0Z0wdmvvtZjgxgq+9TC++pC2/H4K5cbnd3VolAh2IaiPSgv03
-	 ZkDlHYo34mnutQssdETVi0uHAYdrsH0VTUQllnHR5XhxqAOohDQiWkXXLBkveDLrX/g==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=163.com;
-	spf=pass smtp.mailfrom=163.com;
-	dkim=pass header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=DJMkFt1A;
-	arc=none smtp.remote-ip=117.135.210.4
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.4])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.44
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795785205;
+	b=oKQasv3SomnKE2REq4wyPNK20HkZUbDNRBzStLxTbzFX2nddqEUAAzm5OHSAX6PzwSqW
+	 S+da1lc9y393LWgRPVI160UtEV4zzwmL8HgTrM4EarvdTtVsjpyOM61ajY2pC2iQI5Ku1
+	 +A11DBmNOM1XlE05vaVpPGACNktqpB9Os6U/Nbgb4MlT6zmEIevPOM1t03fBOGvHP5T5z
+	 ATMsdljrOJiJyw04sach5O1O65c4mXidv3UvZayS1ii+CxjuN6opR+0RTwEfxYdwT2GIR
+	 +9iRlLUQ/zT87DQOktYPkpCAZhQFRZJNWWScPStZXkCJIM0xUMRNDFhQf3sHMpvFv+Q==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795785205;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=YMEJFbUdPL02vJWxG5ohVroPI8YNXVt3AkF+A9HIgjU=;
+	b=zXn9VUfdZZoOsbYq3u3x6UAt12Sn7+8+G6qOAr5nt2tdkWdb0OnzH9gJH98DWUwXEV1M
+	 Ppa5s9jyZ44IgSUQJTmZq7TxuNhBCFl8KkbWgZrbM8QP3WNncXo4hJeh8XiIwjdZBY5Nq
+	 +EX3HGMx5tV9crjTxOj/BzJHJXuto3fxe5zNJg6CWyRV9Sg9w2IRrTTZkUkyA9fvpDSMc
+	 nrqPcR8ra0Ob/Setj3R39o6Pzb5/Xtf1yWKO/e3Q1oBdITLMPQop9pJ95pT71C94lZqw5
+	 Gx+fVTeKafrzekhMwMk/cY5S/c4dqFpQ0CaGfaDTNh3mD5+XeZlgd8XUDOMhBLZuIpg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BTcNxxfF;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.44
+Received: from mail-dl1-f44.google.com (mail-dl1-f44.google.com [74.125.82.44])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81021606A31C
-	for <git@vger.kernel.org>; Fri, 27 Nov 2026 12:59:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 81021606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74161606A31E
+	for <git@vger.kernel.org>; Fri, 27 Nov 2026 13:13:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 74161606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=DJMkFt1A
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=0N5nNbNvUBfacYHTY8G3kbtsAxr5nwxKfsxWw4LuyrQ=; b=D
-	JMkFt1ArProDpC+pyimuN3mB8aUEONl6/q4S4jxvye5TUsvAym4N9LFLB2y33izp
-	0s3h2JVtR56RwCISXpWaDfhgm3J9UOwUjNCRXrIbwJV8H14BiLB0Nq5vtWs5srtl
-	kHqru5+MnbMnWtlmN+Rfiz8Ptl45+qBcdzvNBX0n1g=
-Date: Fri, 27 Nov 2026 20:59:14 +0800 (CST)
-From: "Xing Xin" <bupt_xingxin@163.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "blanet via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kernel.org,
-	"Xing Xin" <xingxin.xx@bytedance.com>
-Subject: Re:Re: [PATCH] read-cache: hash the shared index even with
- index.skipHash
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2023.4-cmXT build
- 20260511(2e539873) Copyright (c) 2002-2026 www.mailtech.cn 163com
-In-Reply-To: <xmqqld6fjt55.fsf@gitster.g>
-References: <pull.2337.git.1795701443098.gitgitgadget@gmail.com>
- <xmqqld6fjt55.fsf@gitster.g>
-X-NTES-SC: AL_Qu2SB/uTu0su4iGdY+kfmU4Xg+42Xsa1uf4n3oNUPJ94jArp2ysnRV1FOmLV6+asGQKigAm3TyZg6sllYblhQ6glis9WFxyBGBErjyU3/ICQow==
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BTcNxxfF
+Received: by mail-dl1-f44.google.com with SMTP id a92af1059eb24-14394530ec6so2079490c88.1
+        for <git@vger.kernel.org>; Fri, 27 Nov 2026 05:13:25 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795785204; cv=none;
+        d=google.com; s=arc-20260327;
+        b=buGld1QLNnVQQRIgArkM9iXFVADEXOJPyfAhOVAvC6vSQ1BAG5kYs/nsES+5jWNH/o
+         ad2h7oNnWqj9F8xjvQkI+zHFDS60ObPDdjzb9ZlM32efBs2qrOegIl27pRsLs5nbpwzK
+         8FKLdbndSoC7hRwk3tp+KF12iEwA/H7kfvtXM2rC6O0x95ihoiJqNb6wr7RWiD3qQoGC
+         hWp6G54W/1DbPrVJXUZz78bMuiIgsYEEOyEouNgRF2lyi0MFRhF9RZPTrBxOSmu8tzuL
+         ylbYEZJhhJgGwLFfZr6AEoNWHBec512KU4LxRLu1YTsdIRLSMmkgTpPdTbtWlB8bdggx
+         QC9Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=YMEJFbUdPL02vJWxG5ohVroPI8YNXVt3AkF+A9HIgjU=;
+        fh=hR6g0PZj4gmk5O1buRcj0bk98L5Fb/wLh+fT4UKaQ6o=;
+        b=iDP1e1ZhWKIIdjEJA4b+iaMy4YBtqDvnqhguHRwPXyZDDKswDJHKBLi6fKVD+0JnRa
+         TGiE4xhGyfMn5J8NPIwVbzvzxUM8GGoGRosEPdnIQtchbJnqz12+Id49IxTtbMDGI7If
+         VTlGW1247RwCqCTDXdGJ+FHtNglOHXxRmn/iolanwNx1QDx0LHI9HB/LJLAL2QBMKQl/
+         VKB4e/DHCeBUHqeYTvuS3e6gB6kfzxG9c3Nm4/TnvAQdrrnAgBAvExZVSIqkEzs57vSF
+         NyxmfAeEfVoD6nQsAjhJ2G7du6N8dkkYrxsyCMjuEXneqvL/p9O2QpKYcTP1JFnxAmFy
+         Huiw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795785204; x=1796390004; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=YMEJFbUdPL02vJWxG5ohVroPI8YNXVt3AkF+A9HIgjU=;
+        b=BTcNxxfF8zZ6eplOtlGML4SGEGn0cMr3gtOgkHiE4ALx7A0kcfQ/Cr9DTOMErCgWbH
+         EqIwHkFnS6lG4/eJMf/4BjhqsaixtUfsk/IdX5LJtJezWoj/4mgGH91iRQdicBahsSss
+         DAjUyPaNKvI4DtYbXCn5lHUaOQMSphgANl2XqunS4V2a41nBnqFam5RlNnWlrmOndUql
+         6E57vqNfALGQ5yPaCae5ZkMwfqpVX7IotYkQGpNNG6EKnVpuXMIn5Nti06Luffr2SWSx
+         YQcLri7KgyEMSQqnheKJ77KIOscqKzqiC+kgWhACvz4RWxFNOn6sBAczkvNw1mCpzJXR
+         sKeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795785204; x=1796390004;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=YMEJFbUdPL02vJWxG5ohVroPI8YNXVt3AkF+A9HIgjU=;
+        b=ZH8RzEOvlpO+IzwCfXhBTnL3tYsZemkjeu89aDlZSQt0BOvm+JgK53qvsKT4qTeJEQ
+         O8DqPTUuj/ppgD76ca9u6pfgCQj4sDzt0m/ubbrpoCdw0lezLlPF773EfCz9Kl/K8qvk
+         3FWBhfUZnTR7FwyrH2/tHEOxl26EeqBJlg6Kl0obxX194oV+CByBCA43WGc4QXPTGXz5
+         X9eoAIiM08b+JsGNZH6hupjFfGwXyGtXjHmlAdvaq6M09+Q0CwSjaE6D3wiOfzzGsbD3
+         LBWGI494WnHEMMJTiTBX8OXeGvq1/qfJCl+R1327w+8IGTYBCf6L9xpnoawK8RNEIKyK
+         PcwA==
+X-Gm-Message-State: APuU4Z8yGytvCiQj33sXsSPean71NX1lQUw7Le2GclLhbIjGMiR4KbWf
+	oWvgGFMemg8n5NaGCpzDGaZGZfdofbCjR7GIqJGQi4EBybWcz1i0uq9Mlxa8/jLl4f+5iEI/8yn
+	GE2ISUEVn9y8u5aTUB6WBVsbSDf3WlWM=
+X-Gm-Gg: AZFdTZcRiWyQSyY2JIidu6raHVs1TJ5+3xNcbvD8QRHeTmbgiw8maCL8vqlquvh2dbW
+	3PCTxDgNYTng3oZmhLG2CHUaW7sdyQDJ3BEigXw4W1obQ41un2FBIYcIyfQ+qDZ9Jj1SotbQojo
+	EDzX3rqD9yLA5+Kf4ciw+qobh230jtucIa+OOX4dBR1wFnvxA8B3QDja52tUUN4BQCE//DPlZ/7
+	OBYq+1Z1659xvdsA8funjbO2GEuHYfrDKOqo61IueHy3M/ibcH/skE/Cz3VXcn0cCtr93LuYhh6
+	OVEBJ7HH9gpYE6t2WfJD9yGjaN4cDmc+J8ZwdluDij/wz6uNdbXwlGf5+QYba1pkGUu/eLRhpBy
+	inVrrmn46qigSMTaYAImuvQkFkSqsOlW5Lhxbl/gucwwHzKFgub6TVrBP4UYduneZIOvVzwMD+g
+	kXFCha3rKeB19Et+iwpKlPfL8PjI2rshKte85LCve90HU4U23X11IHeHWIzQbJkoggCrDIux2fL
+	TCCag5Mvn/3DklYmAtjRFZo
+X-Received: by 2002:a05:7022:ea8a:b0:1b5:3819:f8a with SMTP id
+ a92af1059eb24-1b5569050demr23732285c88.38.1795785204482; Fri, 27 Nov 2026
+ 05:13:24 -0800 (PST)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -65,133 +105,63 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Message-ID: <5dfa732c.94b8.1a21d16a974.Coremail.bupt_xingxin@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:eSgvCgD3t0ajfglr66J3AA--.1226W
-X-CM-SenderInfo: xexs3sp0lqw5llq6il2tof0z/xtbCzQPkUmsJfqP2pQAA3U
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+References: <20261124172146.18330-1-okhuomonajayi54@gmail.com>
+ <20261126213306.87466-1-okhuomonajayi54@gmail.com> <20261126213306.87466-4-okhuomonajayi54@gmail.com>
+In-Reply-To: <20261126213306.87466-4-okhuomonajayi54@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 27 Nov 2026 14:13:12 +0100
+X-Gm-Features: Aa3M54qYAklVqkncj1zKIQ6hrBDVb6wNQs82IYEH_CurS5yJnzGLjc9FH-7vMFM
+Message-ID: <CAP8UFD3qNBYUhm2zyqQLp_Vv8mawekTs_Bk7E4U1T9Nr3gxfLA@mail.gmail.com>
+Subject: Re: [PATCH v6 3/6] notes: use the tree's repository when reading notes
+To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im, gitster@pobox.com, 
+	usmanakinyemi202@gmail.com, siddharthasthana31@gmail.com, 
+	kaartic.sivaraam@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-QXQgMjAyNi0xMS0yNyAwMzoyMToyNiwgIkp1bmlvIEMgSGFtYW5vIiA8Z2l0c3RlckBwb2JveC5j
-b20+IHdyb3RlOgoKPiBJdCBpcyBjb3JyZWN0IHRvIHBvaW50IG91dCB0aGF0IHRoZSB0d28gImZl
-YXR1cmVzIiwgc2tpcEhhc2ggYW5kCj4gc3BsaXRJbmRleCwgYXJlIGluY29tcGF0aWJsZS4gIFdp
-dGggc2tpcEhhc2gsIHNwbGl0SW5kZXggd2lsbCBub3QKPiBjb3JyZWN0bHkgd29yay4gIFdlIGNh
-biBzYXkgc2tpcEhhc2ggYnJlYWtzIHNwbGl0SW5kZXguCj4KPiBCdXQgZG9lcyB0aGlzIGNoYW5n
-ZSB0byBfZm9yY2VfIHRoZSBiYXNlIGluZGV4IGZpbGVzIHRvIGJlIGhhc2hlZCwKPiBhZ2FpbnN0
-IHRoZSB1c2VyJ3Mgd2lzaCBleHByZXNzZWQgYnkgc2tpcEhhc2gsIHRha2UgdXMgaW4gYSBiZXR0
-ZXIKPiBkaXJlY3Rpb24sIEkgaGF2ZSB0byB3b25kZXI/ICBXaXRoIHRoaXMgY2hhbmdlLCBza2lw
-SGFzaCdzIHByb21pc2UgdG8KPiBpbXByb3ZlIHBlcmZvcm1hbmNlIGlzIG5vdCBrZXB0LiAgV2Ug
-Y2FuIHNheSBzcGxpdEluZGV4IGJyZWFrcyBza2lwSGFzaC4KCllvdSBhcmUgcmlnaHQsIGFuZCB0
-aGUgbG9nIG1lc3NhZ2Ugb3ZlcnN0YXRlcyB0aGUgY2FzZSB3aGVuIGl0IHNheXMKdGhhdCB0aGlz
-ICJrZWVwcyBtb3N0IG9mIHRoZSBiZW5lZml0Ii4gIEFzIHRoZSBudW1iZXJzIGJlbG93IHNob3cs
-CnRoZSBzcGxpdCBpbmRleCBmaWxlIGlzIHNtYWxsIGVub3VnaCB0aGF0IHNraXBwaW5nIGl0cyBo
-YXNoIHNhdmVzCm5leHQgdG8gbm90aGluZywgc28gd2l0aCB0aGlzIHBhdGNoIGluZGV4LnNraXBI
-YXNoIGhhcyBsaXR0bGUgZWZmZWN0Cm9uY2UgYSBzcGxpdCBpbmRleCBpcyBpbiB1c2UuCgpUaGF0
-IHNhaWQsIEkgZG8gbm90IHRoaW5rIGJvdGggY2FuIGJlIGtlcHQgd2l0aG91dCBjaGFuZ2luZyB0
-aGUgaW5kZXgKZm9ybWF0LiAgUmVhZGVycyBkaWUoKSB1bmxlc3MgdGhlICJsaW5rIiBleHRlbnNp
-b24gbmFtZXMgdGhlIHRyYWlsaW5nCmhhc2ggb2YgdGhlIHNoYXJlZCBpbmRleCwgYW5kIGEgdHJh
-aWxlciB0aGF0IGlzIG5laXRoZXIgbnVsbCBub3IgdGhlCnJlYWwgaGFzaCBtYWtlcyAiZ2l0IGZz
-Y2siIGZhaWwuICBTbyBhIHNoYXJlZCBpbmRleCB3cml0dGVuIHdpdGhvdXQKaXRzIGhhc2ggY2Fu
-IG9ubHkgYmUgY2FsbGVkIHNoYXJlZGluZGV4LjxudWxsIE9JRD4sIHdoaWNoIGlzIGV4YWN0bHkK
-d2hhdCBnb2VzIHdyb25nIHRvZGF5LiAgT25lIG9mIHRoZSB0d28gaGFzIHRvIGdpdmUuCgo+IFN0
-ZXBwaW5nIGJhY2sgYSBiaXQsIGlzbid0IHRoZSBleHBlY3RhdGlvbiBvZiBzcGxpdEluZGV4IHRo
-YXQgdGhlc2UKPiBpbmNyZW1lbnRhbCBtb2RpZmljYXRpb25zIGhlbGQgaW4gbm9uLWJhc2UgaW5k
-ZXggZmlsZXMgYXJlIHJlbGF0aXZlbHkKPiBzbWFsbCwgdGhhbmtzIHRvIHRoZSBidWxrIG9mIGRh
-dGEgdGhhdCB0aGUgYmFzZSBpbmRleCBmaWxlIGhvbGRzCj4gY292ZXJpbmcgYWxtb3N0IGV2ZXJ5
-dGhpbmcgaW4gdGhlIHJlcG9zaXRvcnk/ICBJbiBvdGhlciB3b3JkcywgaXNuJ3QgdGhlCj4gdXNl
-IG9mIHNwbGl0SW5kZXggYSBzdHJvbmcgc2lnbiB0aGF0IHRoZSBiYXNlIGluZGV4IGZpbGUgd291
-bGQgYmVuZWZpdAo+IHRoZSBtb3N0IGZyb20gc2tpcEhhc2g/ICBBbmQgdGhpcyBwYXRjaCBpcyBi
-cmVha2luZyB0aGUgc2tpcEhhc2ggZmVhdHVyZQo+IGZvciB0aGUgdXNlIGNhc2UgdGhhdCB3b3Vs
-ZCBiZW5lZml0IHRoZSBtb3N0LiAgQW5kIG5vdCBoYXNoaW5nIHRoZSBpbmRleAo+IGZpbGVzIHRo
-YXQgYXJlIG5vdCBiYXNlcyB3b3VsZCBub3Qgc2F2ZSBhcyBtdWNoLCBzaW5jZSB0aGV5IGFyZSBl
-eHBlY3RlZAo+IHRvIGJlIG11Y2ggc21hbGxlci4KClBlciB3cml0ZSwgeWVzLiAgQnV0IHdoYXQg
-c2tpcEhhc2ggc2F2ZXMgaXMgdGhlIGhhc2hpbmcgZG9uZSBvbiBlYWNoCndyaXRlLCBhbmQgdGhl
-IHNoYXJlZCBpbmRleCBpcyBvbmx5IHdyaXR0ZW4gd2hlbiBpdCBpcyByZXdyaXR0ZW4sCndoaWNo
-IHRoZSBzcGxpdCBpbmRleCBpcyBkZXNpZ25lZCB0byBtYWtlIHJhcmUuICBUaGUgZnJlcXVlbnQg
-d3JpdGVzCmFyZSBvZiB0aGUgc21hbGwgc3BsaXQgaW5kZXgsIHdoZXJlLCBhcyB5b3Ugc2F5LCB0
-aGVyZSBpcyBsaXR0bGUgdG8Kc2F2ZS4KCj4gSSB3b25kZXIgaWYgZ29pbmcgaW4gdGhlIG90aGVy
-IGRpcmVjdGlvbiwgaS5lLiwgd2hlbiBib3RoIGFyZSBlbmFibGVkLAo+IGRpc2FibGluZyBzcGxp
-dEluZGV4IGFuZCB3b3JraW5nIG9ubHkgb24gdGhlIGJhc2UgaGFzaCwgd291bGQgYmUgYW4KPiBh
-bHRlcm5hdGl2ZSB0aGF0IGlzIGVxdWFsbHkgdmlhYmxlIGFzIHRoaXMgY2hhbmdlPyAgQm90aCB3
-aWxsICpicmVhayoKPiB0aGUgcHJvbWlzZSBvZiBvbmUgZmVhdHVyZSBzbyB0aGF0IHRoZSByZXN1
-bHQgY2FuIGxpdmUgd2l0aCB0aGUgb3RoZXIKPiBmZWF0dXJlLiAgV2hhdCBhcmUgdGhlIHByb3Mg
-YW5kIGNvbnMgYmV0d2VlbiB0aGVtPwoKSSBzZWUgdGhyZWUgd2F5cyB0byByZXNvbHZlIGl0IHdo
-ZW4gYm90aCBhcmUgc2V0OgoKICAxLiBkaXNhYmxlIHRoZSBzcGxpdCBpbmRleCBhbmQga2VlcCBz
-a2lwSGFzaCAoeW91ciBzdWdnZXN0aW9uKSwKICAyLiBrZWVwIHRoZSBzcGxpdCBpbmRleCBhbmQg
-aWdub3JlIGluZGV4LnNraXBIYXNoIHdoaWxlIGl0IGlzIGluCiAgICAgdXNlLAogIDMuIGtlZXAg
-Ym90aCwgYnV0IGFsd2F5cyBoYXNoIHRoZSBzaGFyZWQgaW5kZXggKHRoaXMgcGF0Y2gpLgoKVG8g
-Y29tcGFyZSB0aGVtLCBJIG1lYXN1cmVkIGEgcmVwb3NpdG9yeSB3aXRoIDEwMGsgZmlsZXMgaW4g
-MSwwMDAKZGlyZWN0b3JpZXMsIGluZGV4IHY0ICg3LjBNQikgd2l0aCB0aGUgdW50cmFja2VkIGNh
-Y2hlIGVuYWJsZWQsIHNvCnRoYXQgdGhlIHNwbGl0IGluZGV4IGNhcnJpZXMgdGhlIGNhY2hlLXRy
-ZWUgYW5kIHVudHJhY2tlZCBjYWNoZQpleHRlbnNpb25zIGFzIGl0IHdvdWxkIGluIHByYWN0aWNl
-LiAgRWFjaCByb3VuZCBjaGFuZ2VzIEsgZmlsZXMgYW5kCnJ1bnMgImdpdCBhZGQgLXUiLCAiZ2l0
-IGNvbW1pdCIsICJnaXQgc3RhdHVzIiAoYWZ0ZXIgdG91Y2hpbmcgdGhlCmZpbGVzKSwgYW5kICJn
-aXQgY2hlY2tvdXQgSEVBRH4xIiBhbmQgYmFjay4gIDEgYW5kIDIgYXJlIGVtdWxhdGVkIGJ5CnR1
-cm5pbmcgdGhlIG90aGVyIHNldHRpbmcgb2ZmLiAgVGhlIHRpbWVzIGFyZSB0aGUgaW5kZXggd3Jp
-dGUgYW5kCnJlYWQgcmVnaW9ucyBmcm9tIHRyYWNlMiwgbWVkaWFuIG9mIDcgcnVucywgYXZlcmFn
-ZWQgb3ZlciBhZGQsIGNvbW1pdAphbmQgc3RhdHVzIChBcHBsZSBNNCBQcm8sIFNIQTFEQyk6Cgog
-ICAgICAgICAgICAgICAgICAgICAgICAgIGluZGV4IHdyaXRlIChtcykgICAgIGluZGV4ICAgIC5n
-aXQvaW5kZXgKICAgICAgICAgICAgICAgICAgICAgICAgSz0xICAgSz0xMDAgIEs9MTAwMDAgICBy
-ZWFkICAgICBLPTEgLyBLPTEwMDAwCiAgbmVpdGhlciAgICAgICAgICAgICAgMTguMyAgIDE1LjIg
-ICAgMTUuNSAgICAgMyBtcyAgICAgNy4wIC8gNy4wIE1CCiAgMTogc2tpcEhhc2ggb25seSAgICAg
-IDYuMSAgICA2LjAgICAgIDYuMSAgICAgMyBtcyAgICAgNy4wIC8gNy4wIE1CCiAgMjogc3BsaXRJ
-bmRleCBvbmx5ICAgIDAuNCAgICAwLjQgICAgIDEuOSAgICAgMyBtcyAgICAwLjA3IC8gMC43NSBN
-QgogIDM6IGJvdGgsIHRoaXMgcGF0Y2ggICAwLjMgICAgMC4zICAgICAwLjkgICAgIDMgbXMgICAg
-MC4wNyAvIDAuNzUgTUIKClJld3JpdGluZyB0aGUgd2hvbGUgaW5kZXggdGFrZXMgMTUtMjBtcyB3
-aXRoIG5laXRoZXIgZmVhdHVyZSBhbmQgNm1zCndpdGggc2tpcEhhc2g7IHJld3JpdGluZyB0aGUg
-c2hhcmVkIGluZGV4IHRha2VzIDE1LTIybXMgd2l0aCAyIG9yIDMsCmFzIGJvdGggaGFzaCBpdC4g
-IFRoZSBjaGVja291dCByb3VuZCB0cmlwLCB3aGljaCB3cml0ZXMgdGhlIGluZGV4CnR3aWNlLCBz
-aG93cyB0aGUgc2FtZSBwYXR0ZXJuLgoKIC0gVGhlIHdyaXRlIHRpbWUgaGFyZGx5IGRlcGVuZHMg
-b24gSzogd2l0aG91dCBhIHNwbGl0IGluZGV4IGV2ZXJ5CiAgIHdyaXRlIGNvdmVycyBhbGwgZW50
-cmllcywgYW5kIHdpdGggb25lIHRoZSBzcGxpdCBpbmRleCBzdGF5cyBzbWFsbAogICAoMC43NU1C
-IGF0IEs9MTAwMDApLiAgTm8gSyB1cCB0byAxMDAwMCAoMTAlIG9mIHRoZSBlbnRyaWVzKSBtYWRl
-IDIKICAgb3IgMyByZXdyaXRlIHRoZSBzaGFyZWQgaW5kZXg7IHRoYXQgdGFrZXMgbmV3IG9yIHJl
-LWNyZWF0ZWQgZW50cmllcwogICBiZXlvbmQgc3BsaXRJbmRleC5tYXhQZXJjZW50Q2hhbmdlICgy
-MCUgYnkgZGVmYXVsdCksIGUuZy4gd2hlbgogICBjaGVja2luZyBvdXQgYSBkaXN0YW50IGJyYW5j
-aC4KCiAtIDEgY3V0cyBlYWNoIHdyaXRlIGZyb20gfjE1LTE4bXMgdG8gfjZtcy4gIDIgY3V0cyBp
-dCB0byB1bmRlciAybXMsCiAgIGJ1dCBwYXlzIH4xMC0xNW1zIG1vcmUgdGhhbiAxIHdoZW5ldmVy
-IGl0IHJld3JpdGVzIHRoZSBzaGFyZWQKICAgaW5kZXgsIHNvIGl0IGNvbWVzIG91dCBhaGVhZCB1
-bmxlc3MgYWJvdXQgb25lIHdyaXRlIGluIHRocmVlIGRvZXMKICAgc28uCgogLSAzIGRpZmZlcnMg
-ZnJvbSAyIG9ubHkgaW4gaGFzaGluZyAuZ2l0L2luZGV4LCB3aGljaCBjb3N0cyB+MC4xbXMKICAg
-Zm9yIDAuMDdNQiBhbmQgfjFtcyBmb3IgMC43NU1CIGhlcmUuICBUaGF0IGlzIGFsbCBpbmRleC5z
-a2lwSGFzaAogICBjYW4gc3RpbGwgc2F2ZSB3aXRoIGEgc3BsaXQgaW5kZXguCgogLSBUaGUgaW5k
-ZXggcmVhZCB0aW1lIGlzIHRoZSBzYW1lIH4zbXMgaW4gYWxsIGZvdXIuCgogLSBBdCB0aGlzIHNp
-emUsIGFsbCBvZiB0aGlzIGlzIHNtYWxsIG5leHQgdG8gdGhlIHJ1biB0aW1lcyBvZiB0aGUKICAg
-Y29tbWFuZHMgKDExMG1zIHRvIDMuOHMpLCB3aGljaCBhcmUgZG9taW5hdGVkIGJ5IHRoZSB3b3Jr
-IG9uIHRoZQogICBmaWxlcyB0aGVtc2VsdmVzLCBhbmQgdGhlIGRpZmZlcmVuY2VzIHRoZXJlIGFy
-ZSBtb3N0bHkgd2l0aGluIHRoZQogICBub2lzZS4KClBlcmZvcm1hbmNlIGFzaWRlLCB0aGUgdHdv
-IHNldHRpbmdzIGRvIG5vdCBjb21lIGZyb20gc3ltbWV0cmljCnBsYWNlcywgd2hpY2ggbWF0dGVy
-cyBmb3IgMToKCiAtIGluZGV4LnNraXBIYXNoIGlzIG9ubHkgZXZlciBhIGNvbmZpZ3VyYXRpb24g
-dmFyaWFibGU6IGl0IGlzIGVpdGhlcgogICBpbXBsaWVkIGJ5IGZlYXR1cmUubWFueUZpbGVzLCBv
-ciBzZXQgYXMgaW5kZXguc2tpcEhhc2gsIGJ5IHRoZSB1c2VyCiAgIG9yIGJ5IFNjYWxhciwgd2hp
-Y2ggd3JpdGVzIGluZGV4LnNraXBIYXNoPXRydWUgaW50byB0aGUgcmVwb3NpdG9yeQogICBjb25m
-aWd1cmF0aW9uIGFuZCByZXNldHMgaXQgb24gInNjYWxhciByZWNvbmZpZ3VyZSIuCgogLSBUaGUg
-c3BsaXQgaW5kZXggaXMgZW5hYmxlZCBieSBjb3JlLnNwbGl0SW5kZXgsIHdoaWNoIG5laXRoZXIg
-YQogICBmZWF0dXJlLiogc2V0dGluZyBub3IgU2NhbGFyIHNldHMsIG9yIGJ5ICJnaXQgdXBkYXRl
-LWluZGV4CiAgIC0tc3BsaXQtaW5kZXgiLCB3aGljaCBzdGF5cyBpbiBlZmZlY3Qgd2hpbGUgY29y
-ZS5zcGxpdEluZGV4IGlzCiAgIHVuc2V0LgoKV2hlbiBib3RoIGFyZSBzZXQgaW4gdGhlIGNvbmZp
-Z3VyYXRpb24sIHRoZXJlIGlzIG5vIHRlbGxpbmcgd2hpY2ggb25lCnRoZSB1c2VyIGNhcmVzIGFi
-b3V0IG1vcmUuICBCdXQgMSB3b3VsZCBsZXQgYSBkZWZhdWx0IGltcGxpZWQgYnkKZmVhdHVyZS5t
-YW55RmlsZXMgb3ZlcnJpZGUgYW4gZXhwbGljaXQgY29yZS5zcGxpdEluZGV4LCBhbHRob3VnaApm
-ZWF0dXJlLiogaXMgZG9jdW1lbnRlZCB0byBvbmx5IGNoYW5nZSBkZWZhdWx0cy4gIEZvciAiZ2l0
-CnVwZGF0ZS1pbmRleCAtLXNwbGl0LWluZGV4IiwgMSB3b3VsZCBlaXRoZXIgaGF2ZSB0byBsZXQg
-YQpjb25maWd1cmF0aW9uIHZhcmlhYmxlIG92ZXJyaWRlIGEgY29tbWFuZCBsaW5lIG9wdGlvbiwg
-d2hlcmVhcyB0b2RheQp0aGUgb3B0aW9uIHN0aWxsIHRha2VzIGVmZmVjdCwgd2l0aCBhIHdhcm5p
-bmcsIHdoZW4gY29yZS5zcGxpdEluZGV4CmlzIGZhbHNlLCBvciBob25vciB0aGUgb3B0aW9uIGZv
-ciB0aGF0IHdyaXRlLCB3aGljaCBuZWVkcyB0aGUgY2hhbmdlCmluIHRoaXMgcGF0Y2ggYW55d2F5
-LiAgQW5kIGluIGEgU2NhbGFyIGVubGlzdG1lbnQsIGNvcmUuc3BsaXRJbmRleAp3b3VsZCBvbmx5
-IHdvcmsgYWZ0ZXIgc2V0dGluZyBpbmRleC5za2lwSGFzaD1mYWxzZSwgYW5kIHdvdWxkIHN0b3AK
-d29ya2luZyBhZ2FpbiBhdCB0aGUgbmV4dCAic2NhbGFyIHJlY29uZmlndXJlIi4gIFRoZXJlIGlz
-IGFsc28KcHJlY2VkZW50IGZvciB0aGUgc3BsaXQgaW5kZXggdGFraW5nIHByaW9yaXR5OiB0aGUg
-c3BhcnNlIGluZGV4IGlzCm5vdCB3cml0dGVuIHdoaWxlIGEgc3BsaXQgaW5kZXggaXMgaW4gdXNl
-IChzZWUKaXNfc3BhcnNlX2luZGV4X2FsbG93ZWQoKSkuCgpCZXR3ZWVuIDIgYW5kIDMgdGhlIHBl
-cmZvcm1hbmNlIGlzIHByYWN0aWNhbGx5IHRoZSBzYW1lLCBzbyBpdCBjb21lcwpkb3duIHRvIHBy
-aW5jaXBsZS4gIDMgZGV2aWF0ZXMgZnJvbSB0aGUgY29uZmlndXJhdGlvbiBvbmx5IHdoZXJlIHRo
-ZQppbmRleCBmb3JtYXQgZm9yY2VzIGl0IHRvLiAgMiBpcyBzaW1wbGVyIHRvIGV4cGxhaW4gKCJp
-bmRleC5za2lwSGFzaApoYXMgbm8gZWZmZWN0IHdpdGggYSBzcGxpdCBpbmRleCIpIGFuZCBrZWVw
-cyB0aGUgY2hlY2tzdW0gb2YKLmdpdC9pbmRleCwgYXQgdGhlIGNvc3Qgb2YgaWdub3JpbmcgYSBz
-ZXR0aW5nIGl0IGRvZXMgbm90IHN0cmljdGx5Cm5lZWQgdG8gaWdub3JlLiAgSSBsZWFuIHRvd2Fy
-ZHMgMywgYnV0IHdvdWxkIGJlIGhhcHB5IHRvIHN3aXRjaCB0byAyCmlmIHlvdSBwcmVmZXIgdGhl
-IHNpbXBsZXIgcnVsZTsgdGhlIGRpZmZlcmVuY2UgaXMgYSBzaW5nbGUgY29uZGl0aW9uLgoKT25j
-ZSB3ZSBzZXR0bGUgb24gdGhlIGRpcmVjdGlvbiwgSSB3aWxsIHNlbmQgYSB2MiB3aXRoIHRoZSBs
-b2cKbWVzc2FnZSBhbmQgZG9jdW1lbnRhdGlvbiB1cGRhdGVkIGFjY29yZGluZ2x5LgoKVGhhbmtz
-Lg==
+On Thu, Nov 26, 2026 at 10:33=E2=80=AFPM Okhuomon Ajayi
+<okhuomonajayi54@gmail.com> wrote:
+>
+> In the previous step we added a '.repo' member to struct notes_tree
+> so a notes tree records which repository it belongs to. Notes trees
+> are passed down many call chains, but functions like note_tree_find()
+> still read objects and hash algorithms from the_repository.
+>
+> There is a catch in the notes API's NULL contract. Passing NULL in
+> place of a notes tree is allowed and means "use the default notes
+> tree", so a 't' handed around a call chain may be NULL and 't->repo'
+> cannot be dereferenced blindly.
+
+Looking good so far.
+
+> The high-level entry points cope with
+> this: add_note(), remove_note() and get_note() replace a NULL 't'
+> with the default notes tree via notes_tree_or_default() on entry, so
+> afterwards 't->repo' is safe. The internal format_note() does the
+> same swap and initializes the tree if needed.
+
+As notes_tree_or_default() was introduced earlier, I think it would be
+simpler and a bit better to just say something like the following
+instead:
+
+"A previous commit introduced a notes_tree_or_default() helper to cope
+with this, and ensured all the high-level entry points (except
+copy_note(), see below), as well as the internal format_note(), call
+this helper."
+
+> The leaf helpers
+> note_tree_find(), add_non_note() and load_subtree() do not check for
+> NULL themselves; they rely on being reached only through those entry
+> points (get_note() -> note_tree_find(), and note_tree_search() lazily
+
+Maybe add "for example" before "get_note() -> note_tree_find()" as
+these are just examples.
+
+> unpacking a subtree through load_subtree(), still after the tree has
+> been resolved).
+
+Otherwise the whole v6 series looks good to me now.
+
+Not sure it's worth sending a v7 for the commit message improvements I
+suggested above.
