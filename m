@@ -1,46 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=157.230.60.252
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.176
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795843500;
-	b=f5OyZ+Ag7w7pvFhZtsBVFxusdXQmBbVkPEnCKREB1zVUlMwYhi/mxcLcUY8pZL5tF5YP
-	 eiJ4+RNTvU5r9Q/GnykyfNEwqRTPJN/p6T2LPcqbIFXpJAQ0pPBS4uGBhNqfXJEQbbY1b
-	 uo5jaTtXLrt928pioKbEKPc4YT5gpyjD4oWuJMHej4saWWiq8rfYxt9NrVn9F6cy0cGUl
-	 CZBTega7yl2LDalPBPJv4m6magGmnti6yRc4K35G8IAMXATHVwGoTEB4YxDavtO0vYTZR
-	 i18LNvgU9ww14H6KAPfI/JIDt/O/mQ90anQnfssPFyyO+XUPyOdq3PwAj/o8BKfAz3Q==
+	t=1795845822;
+	b=wMwAEgHfU6KIzXPhdCW4kLlvTm+2IpLapdRqYAwEWuOKUWlZ4pmajhsVuvBgcZvG+mdD
+	 LdrU5xAjNSRUyK2fTuD3NXJ6Tf6PLT+RJrXvlYaPD28JRMMpIW1SRqDzYnAAPII6wR+1r
+	 VJQPbrRCi+UvZDEPvASilel8X7m7/tj7jk2Qd+j35VrBy33111RG/gUp/yIQCBDNjmkEM
+	 O+bndEwsA+LMN84YU4T21VfLrHBh0BklP2r0wRsBtFuWzKoj0wL4HR1QoHSU4qNQhIl6a
+	 rVaNidG3B3hpZgrPQbqzXO7ULMPdu7/ydVblNbCRJQ81dulw77lmnkVHY+JVepMbShQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795843500;
-	h=DMARC-Filter:DKIM-Signature:Received:Mime-Version:
-	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:Subject:Cc:To:
-	 From:X-Mailer:References:In-Reply-To;
-	bh=UhTuH32sMQCiE2Y1Z6OHLI5NDHucmzOtYU+alWW45t8=;
-	b=2xJCubTc0qGjWoA6/u44C/44USCwsHVBlH1weknD9SFiesxF7+v4sevZurGYeXfUHPp4
-	 vKH5mtEowPShcebKga2Ps5HVO4l/mvJN/STtGEyoJkGZqElIB5ewqHYjkhA071a10SOZ/
-	 Qs/Cjkga7t4DEvfdWPWdfceIaYv2aemoOrZ3FK2fZxkSVqEYSP3SQHh3q/N9voDEIvk0w
-	 SsC8BEwa3JWi3AmPWbFVcMfUq5dER7Fi4eokvMm7qgFSCyICjLRaSTElnQgp8ggtmM2dN
-	 V+V6Hit18dABs54ie5LZTKuGre5oNZ9F1YcU6zrQvqPI4O8Gf67y9rhERAhbX0Dj+Sw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795845822;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=AmYl2Byl4c2B41uRU1VM6Vq3m++14BsUbjdgRbX8x10=;
+	b=t8fFx8DC7Rp+QjBRwp9P3w0i7Z97DlRUoJ+ZgVKO8fETy6Wc7vosi0lTIcxY+1SwPjOd
+	 68B6Y0LH3uULEJI5gcaAZMdxoTk9DPbJTXw4yTCocSoIyBsAOdZHSkux3+2ESHDkbyQfQ
+	 iCj6UjHZP2wNJ9Pw7JVKZYzXVYaENhdbjYRxHrdhj8bpkL9JegBiJJklGX9F0UWVLixj2
+	 t/6vNUNzUO+Ekk2GTON5TeF3wHD6HXMttcyoXobwLs1IV6g2p+K8p1+k2kG3HVgENVJc5
+	 fbyZNOyqX/wFPc3twWmJLjc6q0EzYsbm+P2P/z3EHPiSx6S8UejtZCppM8ERYYaaPEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=lfurio.us;
-	spf=pass smtp.mailfrom=lfurio.us;
-	dkim=pass header.d=lfurio.us header.i=@lfurio.us header.a=rsa-sha256 header.s=default header.b="hI/BGbjM";
-	arc=none smtp.remote-ip=157.230.60.252
-Received: from mail.normalmode.org (h01.normalmode.org [157.230.60.252])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pq2NH5Qn;
+	arc=none smtp.remote-ip=74.125.82.176
+Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926E6606A31C
-	for <git@vger.kernel.org>; Sat, 28 Nov 2026 05:24:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 926E6606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lfurio.us
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B8D2606A31C
+	for <git@vger.kernel.org>; Sat, 28 Nov 2026 06:03:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5B8D2606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=lfurio.us header.i=@lfurio.us header.a=rsa-sha256 header.s=default header.b=hI/BGbjM
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lfurio.us; s=default;
-	t=1795843491; bh=5oYCRbFMD7CqQtNhkp8Ld41OqTYJeFmyZNZODXyaHwI=;
-	h=Date:Subject:Cc:To:From:References:In-Reply-To:From;
-	b=hI/BGbjM+nYI7KxI2Qj/b2fjOGMDy8auGLfQOkJxiS7B1Zld2UCKa7B/no3feD8PP
-	 GxOEIxleCH9xXBH4hD3nBHy8NSwFWhlDZWbphv4oqcU/YY/2797zOIfekMo/6LAmDQ
-	 QQmIeC1cXc2KPdHy6hDxcXuyAh+Nd0yCJY86L+dg=
-Received: by mail.normalmode.org (Postfix) with ESMTPSA id A1054600E7;
-	Sat, 28 Nov 2026 05:24:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pq2NH5Qn
+Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-38431138772so11547242eec.1
+        for <git@vger.kernel.org>; Fri, 27 Nov 2026 22:03:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795845821; x=1796450621; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=AmYl2Byl4c2B41uRU1VM6Vq3m++14BsUbjdgRbX8x10=;
+        b=pq2NH5QnEibbxnN1NiMkPU4r68B1gB64dV8hk+poYhvpAM7dLT9I1H6AWTMlYaGH38
+         JdCEXdnnybyyESabJI/SOrDocjrikmrPFyfKGS7kPjrV1ye7ulX5tDy4qco6dkqGZ5R3
+         GiKv/X1NOsYFZVjTbbT7fUOezlGe0gAV0E/zD9GvT2PHfkJXhyVKSHtsZHGlRB/4R5SO
+         6YjEJQQsin44IS/+SGFCRmbk0CQ2Tmp5+QosrKyjKamG0qck2V+0OOGTp2fj+73ZYdy8
+         C7NTl1KIpytr6Rp/VkmZPVIu+EY5XW1VR3pGoKiQc6rQmKyERlphyUGRBVyvMGryS4To
+         FsDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795845821; x=1796450621;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=AmYl2Byl4c2B41uRU1VM6Vq3m++14BsUbjdgRbX8x10=;
+        b=yWjZsUfqAN51sgyYez70quVtto2xejV+xu2Tn4Oait4cEglcq74awJxnLXXtCpPLC0
+         JEYFLlysMRAjfrrGv15zrzvKHDGORgt5ICRF6idX6MhfFIpQmiJ/4bBzc/EXnRNzGIRB
+         gW5tGxStqNOud/FwJh7WeGZ9tCCgLMlxU2DOWOnRWsm7iOdSbj4+kCqEA/9a2uJHsjnO
+         MAfPR/vU20Mmosofmb5vRYR2QdwD7nrI1qabSGWmjsB5kx+3exrid2QgrvscJmrfUru8
+         WJgfhAAMQe7z0XTTkK3jW3FCNbii/WnvjfaEr9X4A9V2LBJ4djkTL6DGDg1QGXCVI9jQ
+         bcgA==
+X-Forwarded-Encrypted: i=1; AL+hErEgVjOsbBjSRum+mN/YS8Ntpm/98YczYlTK3XUXUvHypBbU2cBuOjYt24Xj/lB0qm1w+uA=@vger.kernel.org
+X-Gm-Message-State: APuU4Z9jjikWBT6NtsVEWlsTt+85tiLVQGiMYcyW5hB/Pc4UP+pEObvQ
+	gCP/ANgWVUPrfkV+DfA2wkYIBgk/fiMsc9HGK84pboSIT0S+1WHjjflp
+X-Gm-Gg: AZFdTZdmQb5OuZAThhVAJIFco2my5sYBxTGsIXnLcfdD3LuRK/FGXFoaRVhtKHs6ipG
+	k5PmOpdqG3v4LFezzqqWV2nBGFf7tG1yKvZdCjU5lzKyPF0GmRT0ZVSjxROevDGAVez+gx33yzG
+	uppaZME8vjel3RKMb4nXrIpAYTG9UwCNFQsFnFvWQpQ6IGyMMYa7/HqlYK73AgRcfFX9efPYNmK
+	5rI9oIMAT3Os39LjPG0nvMz3QqnCvi6XLy6vkEdjo+SGuWce7K2xDDRH1HSj6DlztokqYFUc1H9
+	30QpwFRjqOW4TaKI+ipmp/OFzwPxk2HKNQhE7b3NyAJkc4A7JfZ1uH6jGTSrN00jqbST9SbI9gx
+	Ml040hcTMrNNwR03xJzcyjIttxhf4XY/aAO677m/ZkKkTrHUacwmFfzmOD82wQt7JdIR0XbJgWo
+	M9yAKvEP9oEIyGZs9i+evtAGpD6I/H0wAXlTkAJ1qNgfULn4KTqNmU+XAudZOqgd1+ZZezk4q3r
+	Xd818HVwBSVLS1Kr7DSwfdP5T8hl4pROKtCGHov+YYYNn1zmWYd2inYf67JAxfw+II9C8zOba+L
+	m8yStge95O7fb1FbXhH8oRUYgQ/ZQrfA4kzlf6KAsJ2pzfsJY7ILSBwOlH9ydJEG3iesosfP9cM
+	8RBqk4wIn
+X-Received: by 2002:a05:7301:fc18:b0:36f:2e77:93e2 with SMTP id 5a478bee46e88-38570f27031mr25734070eec.28.1795845821386;
+        Fri, 27 Nov 2026 22:03:41 -0800 (PST)
+Received: from ?IPV6:2406:7400:12b:ed80:211c:a254:fe90:c295? ([2406:7400:12b:ed80:211c:a254:fe90:c295])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-38566cd40c5sm95333398eec.10.2026.11.27.22.03.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Nov 2026 22:03:41 -0800 (PST)
+Message-ID: <a079bc60-c064-40f3-a5f3-2723c9b572ef@gmail.com>
+Date: Sat, 28 Nov 2026 11:33:36 +0530
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Post: <mailto:git@vger.kernel.org>
@@ -49,102 +92,49 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sat, 28 Nov 2026 00:24:25 -0500
-Message-Id: <DN6LDMN4UVPP.ZUG3AO2YOIZG@lfurio.us>
-Subject: Re: [PATCH] dir: do not turn blank ignore-file lines into patterns
-Cc: "Junio C Hamano" <gitster@pobox.com>, "Mike Beaton"
- <mjsbeaton@gmail.com>, "Phillip Wood" <phillip.wood123@gmail.com>
-To: "Aniket Gupta" <aniketgupta3001@gmail.com>, <git@vger.kernel.org>
-From: "Matt Hunter" <m@lfurio.us>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <CAHzAAWSi9D1mRL=A5-9GxzqQwo9jJ=45Hmxj3hVAF=8wkNZLmg@mail.gmail.com> <20261106182945.1316297-1-aniketgupta3001@gmail.com>
-In-Reply-To: <20261106182945.1316297-1-aniketgupta3001@gmail.com>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GSoC] Introduction and microproject: fetch --filter error
+ message
+To: Krishna Abhang <krishna.full24@gmail.com>, git@vger.kernel.org
+Cc: christian.couder@gmail.com, karthik nayak <karthik.188@gmail.com>,
+ jltobler@gmail.com
+References: <CAM6E118xUJh77z++XD_z62invya6_rHSmjLKUPydDELRsOffyw@mail.gmail.com>
+Content-Language: en-US
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <CAM6E118xUJh77z++XD_z62invya6_rHSmjLKUPydDELRsOffyw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Aniket, Mike
+Hi Krishna,
 
-I've been looking into this patch as well, but have been slow to
-respond, sorry.  Just a couple of thoughts below.
+On 11/27/26 20:14, Krishna Abhang wrote:
+> Hello everyone,
+> 
+> I'm Krishna, a 3rd year student at VIT Bhopal University, and I'd like to
+> apply to GSoC 2027 with Git. I have checked that I'm eligible.
+> 
 
-On Fri Nov 6, 2026 at 1:29 PM EST, Aniket Gupta wrote:
-> A blank line in an ignore file matches nothing. But
-> add_patterns_from_buffer() only skips a line when it is completely
-> empty. A line that holds just a carriage return i.e a blank line in a
-> file with CRLF line endings or just spaces, is not empty at that
-> point. Once the carriage return and the trailing spaces are removed,
-> what is left is an empty pattern, which matches any path that ends in
-> a slash. "git check-ignore -v foo/" then names the blank line as the
-> pattern that ignores foo/. Skip the line when nothing is left of it
-> after trimming and add a test.
+Good. Thank you for you interest in Git!
 
-Given these two points from gitignore(5):
+> For the GSoC project itself, I'm interested in promisor remote fetch
+> ordering from the 2026 ideas list. Is it likely to be an idea again
+> next year, and is anyone working on it now?
+> 
 
-    - A blank line matches no files, so it can serve as a separator
-      for readability.
-    - Trailing spaces are ignored unless they are quoted with
-      backslash ("`\`").
+That is unsure at the moment. That idea is part of current year's 
+Outreachy proposal. If we pick someone for that project this year, it 
+would not be present for GSoC 2027. Even if we don't pick someone for 
+that idea for this Outreachy, there is no guarantee that the idea would 
+there for GSoC 2027. It depends on the discussion that would happen a 
+couple of months later.
 
-this definitely seems like a bug worth addressing.
+Generally it is better to follow what the "Note about getting involved 
+early" section in the General Application guide[1] and work on other things.
 
-Something that initially confused me while attempting to reproduce the
-problem was that git-status and git-add behave correctly.  Even running
-'git add some-directory/' with the trailing slash present, stages the
-expected files.  I went back to the original bug report and saw that
-these details were commented on.  It would be helpful to mention in the
-commit log message if the problem is specific to check-ignore.
 
->
-> Reported-by: Mike Beaton <mjsbeaton@gmail.com>
-> Signed-off-by: Aniket Gupta <aniketgupta3001@gmail.com>
-> ---
->  dir.c              | 3 ++-
->  t/t0008-ignores.sh | 7 +++++++
->  2 files changed, 9 insertions(+), 1 deletion(-)
->
-> diff --git a/dir.c b/dir.c
-> index d896e7be4b..5a8a28afef 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1249,7 +1249,8 @@ int add_patterns_from_buffer(char *buf, size_t size=
-,
->  			if (entry !=3D buf + i && entry[0] !=3D '#') {
->  				buf[i - (i && buf[i-1] =3D=3D '\r')] =3D 0;
->  				trim_trailing_spaces(entry);
-> -				add_pattern(entry, base, baselen, pl, lineno);
-> +				if (*entry)
-> +					add_pattern(entry, base, baselen, pl, lineno);
+[1]: https://git.github.io/General-Application-Information/
 
-This avoids adding a pattern which becomes empty after stripping a
-carriage return and any spaces.  I wonder if it is also worth fixing up
-the parsing responsible for interpreting such "whitespace only" patterns
-to match ".*/"?  Either way, I think this patch is an improvement as-is.
+-- 
+Sivaraam
 
->  			}
->  			lineno++;
->  			entry =3D buf + i + 1;
-> diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-> index ed95faf327..199abbcdf3 100755
-> --- a/t/t0008-ignores.sh
-> +++ b/t/t0008-ignores.sh
-> @@ -875,6 +875,13 @@ EOF
->  	test_must_be_empty err
->  '
-> =20
-> +test_expect_success 'blank lines are not patterns' '
-
-Should this test description be more about the spelling of the
-(inadvertently) ignored directory?  That might better explain the
-specific check-ignore assertion that is made.
-
-> +	mkdir blank-dir &&
-> +	printf "\r\n   \n   \r\n" >blank-ignore &&
-> +	test_expect_code 1 git -c core.excludesfile=3Dblank-ignore check-ignore=
- blank-dir/ >actual &&
-> +	test_must_be_empty actual
-> +'
-> +
->  test_expect_success !MINGW 'quoting allows trailing whitespace' '
->  	rm -rf whitespace &&
->  	mkdir whitespace &&
