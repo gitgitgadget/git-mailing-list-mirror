@@ -1,121 +1,123 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.152
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795837140;
-	b=IAebykQB9zBMIM1ldjTSixsNWAOvSph1qRv0WY6fjrqOrydwYILGQcxJ1bzsiDWigtL/
-	 6Dwnnd9ZxGXLlumdHWPa90vkWhp0Vj2HruTHF9j6AnWDF6wmWMnkRJFMM6QK/r9CnYF7O
-	 mOp8DsgvBL5d/YjOSqlKX//oHRIOaD+iMZDBP8aoWN8s3nYMHKo9yqUR9zpmRod9Plv0v
-	 /BucETtGM4GVt2TnIhEqwAvpuvuH/Eah7sq7HwA7vyWVfkDY8mbiWZLcoW3c4iJFKjLxN
-	 0bUeWUt01DvShzcxTHWSG1n9kuEvqaJslVF1f6iTmTP8tbSkE3glQKsrDk1LrfXBgUg==
+	t=1795837142;
+	b=wqIa9DFMFOfOIPCMhlKblP8XEKRWCBXznFrjtIBh2bDe6eYVyuomVcok0rQJGbNCNgZn
+	 60mzdUfbYc/xGejx51+ra3VCxDaWlrlW2dYALU1KTGRRYiDKlKggXK69b/OuP8oHnq5Vy
+	 hVnmpIUKSgGeDOFQu6OCEraN6Fs+o9LxzJRkOwePSZl+nHJC+qvrzJcnnoIQZld7AyELo
+	 aFC+nW1i9aKYqt5hBCIGM1su5TX6Fw0dGLDCwfERkL2oaddJvoWXiPiaIt9wK/u9MZFN3
+	 xywrwdZrzgfbioVbxpDDtelqzMB7INdyXfSVRoY7qqmkeR4E0Hbc17mHTcG86ZOq48Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795837140;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795837142;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 User-Agent:MIME-Version:Content-Type;
-	bh=MDb1R2kKhLJFezZ90wEviD8C8sF6xjlFtSY+TkxZe2k=;
-	b=ixwZZwOC9/0szZb+BpS8Vz6XxfmrB6pdba3CgxmQPCKhEfvLx7sd3JOmkxR7zqZYZGwF
-	 f2jmiSUc7TPFYSntr6JO0dyZ+s1CDq/7/iY6BWcxwFWGCvAuMG1j07sCuXFsNLTR6UpeE
-	 PK1hTH5FgmhRM/h+BYd4+HibmgqBfOm1O+MACNiWfTLLZLMwhiGe58AgTVFBW/4zDmfen
-	 gA/8wmClUgvc31rC8tLmEXRaWXm0Abro3gB/DFHPxuWiE4Y/OvWdIh/uvORBc8vhGOTt1
-	 VdaeT5M/sGJDul1jqRmhWiMen19HWunKziN8BGleZ7iqBnGzAhsyUxjlQpVSfjWnLFA==
+	 User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=ZBMmbtYkrk7ne4Bu1VuqnaszOCkri655hTpkbKHALuE=;
+	b=hULcp/WIfHG/AWOIjzkDX2eJIAO6tloUtqryS7z7kAQciZDINfbdBfu1hsaxJG+nkLMV
+	 Yd3h28dPE6KRZuhZjIx9BwQM7A34kS6jvXp0jO5UklEW5I7N3UpL2+tUYlbKmle7iPxIO
+	 a8kKyd2uIkeEUZd5ZBeBJBMMxVOuSRBPMnPY2R3iivp+v1m2qn1BSW0lCtbMXIKztiBJX
+	 eweTy+2kSxhKR4flG7Ae/N5ZkHjxds644bsuIiUdCQimr2LnRPFaa2aSMLPSS+QdjNcg/
+	 cWeNuO3FfY7wxeB4C51wEldeu5g9zeMOXgWi52F3GaCa8LiwLUB64yp1WTXlRI5U/aQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=pobox.com;
 	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=AUKEMvo3;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=B1kfMFSs;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b="O/AuK7Up";
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=lyZq5W3y;
 	arc=none smtp.remote-ip=202.12.124.152
 Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8595606A31E
-	for <git@vger.kernel.org>; Sat, 28 Nov 2026 03:38:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E8595606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66AC6606A31F
+	for <git@vger.kernel.org>; Sat, 28 Nov 2026 03:39:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 66AC6606A31F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=AUKEMvo3;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=B1kfMFSs
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5346F7A039B
-	for <git@vger.kernel.org>; Fri, 27 Nov 2026 22:38:59 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Fri, 27 Nov 2026 22:38:59 -0500
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=O/AuK7Up;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=lyZq5W3y
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C678D7A0496
+	for <git@vger.kernel.org>; Fri, 27 Nov 2026 22:39:01 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Fri, 27 Nov 2026 22:39:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1795837139; x=1795923539; bh=MDb1R2kKhL
-	JFezZ90wEviD8C8sF6xjlFtSY+TkxZe2k=; b=AUKEMvo3yIx9A9aJ3W9BnSk1Ub
-	VHIeC03X3oF91ebkXe3xSeq8gKpjZdpk0Tjn6Ccm/5nBgpLsiM7TmgrO/7Vqx7iq
-	RexQ+7hIDhAJtTChVo0fmMrtkslVW5xT9k9pL26y1Pgs5cJK/AgATeyddwBwZDRW
-	Ef+3zBIzr08I1nbeb4ni4Q7aoJDcLoG99AaX+dAl/TIldc8Fl0iQYd4Ha8Ks0yfY
-	hG1/9cvK4igE3Xumo+2kHaEBzpk58vCIVp+Z4L6QwvZtCGEBLz4gNTEc8c9D8rdc
-	Vs4pzO17jKf9a8+kn3/YoEDSdTsJmdicmvW1ud/MH403Cw2exZqdUoWnU9zA==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1795837141;
+	 x=1795923541; bh=ZBMmbtYkrk7ne4Bu1VuqnaszOCkri655hTpkbKHALuE=; b=
+	O/AuK7UpqFy+b17uD5Y0BeoFAe+YK+7TBr4dcK6f7vc4xf075Z7jW4+6ExCRCzRa
+	Wc6NWafayxMu68E7SjU9n9g3eSlSCdVyf7CvWDD+R7hgtfJNkmtaPxJfxN7a09TH
+	R6Z4BEVN9toJS+LQX2KNJ4w85Dzba9eKhwElOSRWXsEcXRoTjaE3ztfiKLTNQUe1
+	A4NGwoCFX47lKlkRMDh8MWugxjuHkG7tY/evDAl520ZTKVGEKfCMeI2fOpjcpwFV
+	3SLSimeApR/d8LLEbS+tDjCK8GTsx0dw1VcBmaboygax16w5nmGjBJ4a7rPKlSds
+	53gYEas3e4FrSRXj42JqDg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1795837139; x=1795923539; bh=MDb1R2kKhLJFezZ90wEviD8C8sF6xjlFtSY
-	+TkxZe2k=; b=B1kfMFSs3StyX/iq8CHBqx134b4tdRflIUK4YfyVrDlBOEpFIHx
-	zfibzJczr71M0Bhen/o0SKLOOVCFv4jpJvsLRZyhTU+TdkFS3487Jg0mV7Qhz9x5
-	KDNdCHAHhrImCLN0mmIPc2Ede05pQZjVGSf7NuoPYBz4JlZHMjHhu1toijsIqhy8
-	7eZD13MEvNwivRyxzU5BGI9eyZntPs9JkCZohtgQVwHyYoW5tG9cb02pj5drCMHs
-	sldHZ/GFeEMh5rOuaPkMCxgag+zOyBrS01DAVXCn+OfkMitD6hXRiDjuuYhyG3Dn
-	8vvb8BW+1a5Y5ijxl2IiS2bcr6N9QKmMu3g==
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795837141; x=
+	1795923541; bh=ZBMmbtYkrk7ne4Bu1VuqnaszOCkri655hTpkbKHALuE=; b=l
+	yZq5W3yleNp1krQLkNDkAHUYzAdMu+vN2MtL6lJUda0xl3E5lNt9v3QyuLuBrvOD
+	GIo7zc/N+nvpK1WaWiIRmB23XQ9uOTU6qAstvXH8chGM7d3Enmuygl+XO+p/r/7e
+	PFLNn/0FEz79xpOxNx2EsbfoKH8VKmr7H25iRyWdDJNBFr3NVoltfwQpv1BAED3s
+	uR4ZXohw9lDDgkfKRGTz8hGLsjH6uCt2TOGo3qE3YslQTva2puSBGeMLHGfixuhr
+	wKkwNMrLQuofgqhvOaidBSH0mzKHFTpxTwySGr4ZhDTDRgxYFgwFnfbJ4/fbedn6
+	X0ezCWNg2GpwFhILirDWQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795837139; d=pobox.com;
+DKIM2-Signature: i=1; m=1; t=1795837141; d=pobox.com;
 	mf=PGdpdHN0ZXJAcG9ib3guY29tPg==;
 	rt=PGdpdEB2Z2VyLmtlcm5lbC5vcmc+;
-	s=fm2:rsa-sha256:SqjvbAByZx/wYTKxLTfBjhHQhrNRvYmu8bX2nbGJhRxG4EM
-	Ar6nyE4+H1nKDDxnqq9SUQ+uiRp7DlXCuMeOFwVn+qVtibWGOoXHDVRxNrwZmHoF
-	W0nv59U4fX5pI2Q7E6NkxhdEtp/jbnwdNS91GC0qeBni9p6zY4hDQxqGtrx+i9xU
-	RzEUrf5IjgY+GHRNVnE2eiOFCwy2I/ZmRs6wZR0ugS/Sohg7tEValwhAfAD1H1jC
-	Muxo58LFGS91gjRxkE/GdmfEADJSrmLSoMn5SI69jLeb3RcA6tAXLilFrMvqsOZS
-	hLf5IEKHbhSTLyZHFstciSAZb2WS3If8dMJU85w==;
+	s=fm2:rsa-sha256:cc42z0YW8kyNgbbMMZmujpeNpYqmd8lDMTX7B++r6rT7lvC
+	TIa43ww5b+7WaS/Zf02NyDqC4OQ12FXVZNUJW2jyybdsi5nrgvSD7PvaShLy6J5Q
+	5yP0jxAikVmR5cfrJXzz/8egTDW/u0ZxDyojPnFVMSwV0gw3KikL5Z5UKTF1CY15
+	HVx1k/O2WZ30E2hXH016wRnuVpo7sOmnTKbKZlSpCw0kAI54/QzB1aKom7khk+Hm
+	2VJCYxE4K8xJCHv8AlTFPLLxKWGlaazLD9CdruVq8kdFlzoxjvDO8+Siwn3o+fOP
+	Yk2KxoTQuiIXqGU/MGMDpUv6qUzlzSIIhV4Akew==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:exFwPRZSiu+/6kG8ciUy0EyIj22IK3Y9q3P0nHlmqt8=:ChAT0jQfwNCgyOZrWMba7UJcWNhGYrNAB2nzsL8OJ/U=;
-X-ME-Sender: <xms:0kwKa2YcnIl0Cf7SMHjxDvUEepjkO42nbZtIdD-YIm2cVgzaUGy7UA>
-    <xme:0kwKawZ8Mt6U_L6LvaLM21HvbjobVY4QcFkMp9lfy41yD6gGGYACxu7cJ1upF5S5E
-    o2EEAMp3dFYcJBHZlhhamGpa846qKxG-Xl4ADDp_LSNT-o5mKsC9tw>
-X-ME-Received: <xmr:0kwKa19AXu4AUmh9AKoUWC_Pcg7iP1IZUoUAEsB-7vXHuk7UWTDl-kXPJO_8rNJbf6HwKunxxzn9NhjXIp12PXv32nmkjdZVqI5NNp0>
-X-ME-Proxy-Cause: dmFkZTEaNRI0tVG8Q13cs4IeYeLW5M/Jvah6UkyT6AG8JrjfrHWV8qs+pOk1XWONEfYWnZ
-    ZeVm+dBkzTVTRKN6oZLmIsnMfaCwQcZqOoe0lAddf2difjsHN2K2ZOQH2F8dbvHNeuSsTl
-    Ycwsv9BQZoPK2Q8GI9SuwdsLDESlqE82vRKdJMrIeXXdWlXFpieM5vIfYPDjG8X9WOsKNp
-    JUqIfi1BswMpyHIsXU49Jh0glf+pr2AtY5moH+YfSiXT9JfkP8qJfReFCoUI9E4nh7oaoO
-    tVok9Qbzpe8kK+nNqnejHRMKcEW1wPQYVCmSzh/3Wl/rl8MYMTVw2cNNdRyuhYJtpv6GfB
-    lkFKigkzVAsej6HxUt0fYQuc9csJMQsK99Lkt5BAIQTVToh84uQQTNaNjGgvxgjxeuo4Gt
-    hOh2cdWhundEa2U9dnrPfIHSX54Km4ez0rpZjQa4gG9gd9l88VJjE3FBRW7fdti95EASA5
-    TiGbUQRZ4DCw2xcLWxjhNctbgumS5jshe2N38lxrn/mHpoYDVn+3BvE3tQBPA8530av877
-    tQjkxHtOmyrmnUkA+Dt0ShOtVKFon2hn6L5dcBY93Mf8owIDRkmzshUvtPHRQwqVRn0a7W
-    Q+IQ3nclV9iF7uBR5vN4tKTeexUZc2gR4/cRIKknImNHgjgLgxo5AGawNcLw
-X-ME-Proxy: <xmx:0kwKa3jQqr6zyUbGwkgtYfof_fGm-vhPZUL3G_m2r5EKkcX9GmCn4Q>
-    <xmx:0kwKa9fI55F9uK9uISaGF1F1XTP4NVQnYEPHDkHXd81_c3oKIOpWBw>
-    <xmx:0kwKa2r760Q4Rp7I0pwDVzltpf49oPdrmhcvKVagKohCU7wRFtOVxA>
-    <xmx:0kwKa6Bb_pXtlnp8U-67B9HHaJ5mnH6RoWKs-hCBSMzAEUVr-kdf5w>
-    <xmx:00wKa68ZD9LSvVQaSxdIxpZhTFQd9r7lX3E4lnhnkTBx8EbnVFITLcGD>
+	action=mi-m=1; hc=13;
+	hn=cc,content-transfer-encoding,content-type,date,feedback-id,
+	from,in-reply-to,message-id,mime-version,references,subject,to,
+	user-agent;
+Message-Instance: m=1; h=sha256:C9UUD2qQiNKe3Gu2phfdoHr6+7dcw1ibVFw6rbXEBik=:YVYmM9WyQ3/C9ZteawoOBiZgpJpjouqSIYpWfsGwNws=;
+X-ME-Sender: <xms:1UwKa2fK8jZXNS8IV8lp7m3N-E7ne-Qs7Z5oXXxcLWRm8Obz44qlXw>
+    <xme:1UwKa3N4W9MUls8v4q4qI23InkzNISncyQhxFDB6R7Jzm-sL68UUMe8y87V79cVZx
+    c6YmaSGU6Ye-8cgpqPIYZQA7ICit-TNWVWbu5JgwT8_pebZjEyfnw>
+X-ME-Received: <xmr:1UwKa8ioF15jDD3d4yArRzD1oNkWGUdAdlnpQEqQN8KzQxL-Ej-O6n21IMuYNvxsbOMI4_gI5a9WmcLz9z7W3q7G_9sD0i3NmtU7lOU>
+X-ME-Proxy-Cause: dmFkZTEy6cDsg/2tiKdkEqfcfvtu4P9ZNmRKbbesOJBKqTFGPy0IDeKyHM8s7M2e4shxwR
+    TAFDq2R8SyyzXNj/VoQbmsJqG8L2ne5Uepf5wGg3euUBAmAZhc2XZWHJ3B7YS+Xd3NwV2C
+    ztj5GxKMi9MStHaBrbnbuhu5/5gywHoqMqJdQxEX2d9h3nL/+TZS/Z8limX13JFWthocUz
+    RkQ9i4QvUGNhT4CN1WRDtlXgEmgbpIWVe0P86H0F+tlYNg+iHBvX//hUlCcxE4tt/WRryh
+    gCO7rCcW0zSnRlsdSCDS0mecSbHG0FcqZf8lpCMkcHGAjdw1nnmUukKSNlz2rIWYRWhzEJ
+    tmMe54ANwf84KHhjjNAeUrjzHB9jZUabW3s6EtFdgqdaz8q3+dF08/KVbfnj/l8H92px2N
+    iWNZAdAmydPUussBteE04emKA4JqSuDy4d5CdsqiMcUAAWfAt8o2aFEIG7IV6i1swbOYTa
+    viaHP/giB5IZQ4oWgFEiY0RkJJPFjyAoK1+4o4A/JwnTGxU0/Md5gxS+lbSTx5lyjbkTR2
+    iYkjeI8Cdv9H7yCyLBXRA4IB7aqbyAJqJ/jmayTWUiPTrva2E8w7lS1fw/3bnBZCZYCKqu
+    U13kZLUgyBYFgBSi7DDnf5lZXz/8ffErqrb1hgLLO4ksz9/i6ZBgMbetKayQ
+X-ME-Proxy: <xmx:1UwKay2bNjPCkPKoW5PorvrOKJUerwOYhArDU-k2wACD19pTEmuMgQ>
+    <xmx:1UwKa-i1Z579irGd3xnPxWPtnY6t692VMe6jZ1lk00olx7ctsQjXoQ>
+    <xmx:1UwKa6cxDdC5Lj5gWn2AF5XS4O_3XsgIWkq2Dwo6TlujB66_EbSfhA>
+    <xmx:1UwKa5lBGZC2Mngc1KWghYP58snRJeUO785hrk6LG9-TIqF1VeEjpQ>
+    <xmx:1UwKawgf7yFm4TUkwKSK9DoXWvGSiqbxKVo3HnT3WM_jTxgxeSqtKzzm>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Nov 2026 22:38:58 -0500 (EST)
+ 27 Nov 2026 22:39:00 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Alessio Attilio via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Alessio Attilio <attilio.alessio@protonmail.com>
-Subject: Re: [PATCH v3 1/2] submodule: prepare URL helpers for reuse
-In-Reply-To: <fc300295ffaef49b592307a90ac3e58bb803b7ca.1795814853.git.gitgitgadget@gmail.com>
-	(Alessio Attilio via GitGitGadget's message of "Fri, 27 Nov 2026
-	21:27:32 +0000")
-References: <pull.2509.git.git.1795774880142.gitgitgadget@gmail.com>
-	<pull.2509.v3.git.git.1795814853.gitgitgadget@gmail.com>
-	<fc300295ffaef49b592307a90ac3e58bb803b7ca.1795814853.git.gitgitgadget@gmail.com>
-Date: Fri, 27 Nov 2026 19:38:57 -0800
-Message-ID: <xmqq4id1zktq.fsf@gitster.g>
+To: tboegi@web.de
+Cc: git@vger.kernel.org,  curtis.allen.smith@gmail.com
+Subject: Re: [PATCH/RESEND v6 2/2] read-cache: optimize file size change
+ when conversion is active
+In-Reply-To: <20261127194245.10104-1-tboegi@web.de> (tboegi@web.de's message
+	of "Fri, 27 Nov 2026 20:42:45 +0100")
+References: <xmqqwm1no29m.fsf@gitster.g>
+	<20261127194245.10104-1-tboegi@web.de>
+Date: Fri, 27 Nov 2026 19:38:59 -0800
+Message-ID: <xmqqzeuty698.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -126,69 +128,105 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:git+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-"Alessio Attilio via GitGitGadget" <gitgitgadget@gmail.com> writes:
+tboegi@web.de writes:
 
-> From: Alessio Attilio <attilio.alessio@protonmail.com>
+> From: Torsten Bögershausen <tboegi@web.de>
 >
-> Move the relative submodule URL resolver and the helper that computes
-> the path back to the superproject from builtin/submodule--helper.c to
-> submodule.c so they can be shared with git status.
+> Commit
+> "read-cache: do not trust a size change when conversion is active"
+> corrected the case when the file size in the worktree has changed.
+> Input filters may convert worktree files with different sizes into the
+> same blob.
 >
-> Pass the repository explicitly to the resolver instead of relying on
-> the_repository, and update existing callers to use the shared helpers.
+> Optimize the new code:
+> The call to would_convert_to_git() can be skipped since the same check
+> is done in ce_compare_data()  for regular files, which is called from
+> ce_modified_check_fs().
 
-This preparatory extraction may make the next patch easier to read.
+That is a new and unusual way to write a proposed commit log message for
+our project.  Is this an LLM experiment gone wrong, or something?
 
-Removing the get_default_remote() wrapper that has only one caller, and
-calling repo_default_remote(repo) directly is safe too, because
-repo_default_remote() returns a pointer owned by repo->remote_state (or
-a static "origin" string) and repo_config_get_string() does not
-invalidate remote_state before relative_url() runs.
+The claim "the same check is done in ce_compare_data(), hence
+would_compare_to_git() is unnecessary" seems to be mistaken.  Unless you
+meant to name a different function, that is.
 
-> Signed-off-by: Alessio Attilio <attilio.alessio@protonmail.com>
-> ---
->  builtin/submodule--helper.c | 63 ++++++-------------------------------
->  submodule.c                 | 41 ++++++++++++++++++++++++
->  submodule.h                 |  3 ++
->  3 files changed, 54 insertions(+), 53 deletions(-)
+> @@ -456,13 +455,12 @@ int ie_modified(struct index_state *istate,
+>  		return changed;
+>  
+>  	/*
+> -	 * Immediately after read-tree or update-index --cacheinfo,
+> -	 * the length field is zero, as we have never even read the
+> -	 * lstat(2) information once, and we cannot trust DATA_CHANGED
+> -	 * returned by ie_match_stat() which in turn was returned by
+> -	 * ce_match_stat_basic() to signal that the filesize of the
+> -	 * blob changed.  We have to actually go to the filesystem to
+> -	 * see if the contents match, and if so, should answer "unchanged".
+> +	 * When the length field of a regular file is zero or changed,
+> +	 * this does not necessarily mean a changed blob in the index.
+> +	 * All input filters (CRLF line endings, clean filter..)
+> +	 * need to be applied followed by a hash and oideq().
+> +	 * This is done in ce_modified_check_fs() below,
+> +	 * which calls ce_compare_data().
+>  	 *
+>  	 * The logic does not apply to gitlinks, as ce_match_stat_basic()
+>  	 * already has checked the actual HEAD from the filesystem in the
+> @@ -479,10 +477,9 @@ int ie_modified(struct index_state *istate,
+>  	     * So let's just special-case symlinks with a target path length
+>  	     * (i.e. `sd_size`) of 4096 and force them to be re-checked.
+>  	     */
+> -	    (!S_ISLNK(st->st_mode) || ce->ce_stat_data.sd_size != MAX_PATH) &&
+> +	    (ce->ce_stat_data.sd_size != MAX_PATH) &&
+>  #endif
+> -	    (S_ISGITLINK(ce->ce_mode) || ce->ce_stat_data.sd_size != 0) &&
+> -	    !(S_ISREG(st->st_mode) && would_convert_to_git(istate, ce->name)))
+> +	    (S_ISGITLINK(ce->ce_mode)))
+>  		return changed;
 
-While this takes 'repo', the fallback when remote.<remote>.url is unset
-still calls xgetcwd().  For current callers ('submodule--helper' and
-'git status' under RUN_SETUP | NEED_WORK_TREE), the working directory is
-already the superproject worktree root, so behavior is preserved.
+Doesn't this actually have the opposite effect of an optimization?  I
+suspect that it also breaks symlink handling.
 
-Still, if a future caller passes a 'struct repository *' for another
-worktree or subrepository, xgetcwd() will resolve relative URLs against
-the process working directory instead of repo->worktree.
+For a file without conversion active, replacing the check
+(ce->ce_stat_data.sd_size != 0) and the would_convert_to_git() check
+with S_ISGITLINK(ce->ce_mode) disables the size-mismatch fast path
+altogether.
 
-Using
+Imagine a repository with 'core.autocrlf' set to false and no attributes
+set on a regular file that grows or shrinks on disk.  Because
+S_ISGITLINK(ce->ce_mode) is false for regular files, ie_modified() no
+longer returns changed early on DATA_CHANGED.  Instead, it falls through
+to ce_modified_check_fs(), which calls ce_compare_data() and then
+object-file.c:index_fd().
 
-    remoteurl = repo->worktree ? xstrdup(repo->worktree) : xgetcwd();
+While ce_compare_data() opens the file and passes the file descriptor to
+index_fd(), which does call would_convert_to_git(), it does not use that
+result to skip reading from the file descriptor or hashing when no
+conversion applies.  Rather, index_fd() either reads or maps the file in
+index_core() or streams every byte through hash_stream() in order to
+compute the object name.  That is in addition to open the file descriptor
+for the path that we already know has changed, if we paid attention to
+what would_convert_to_git() says.
 
-may make the helper genuinely repository-aware, perhaps?
+Wouldn't it be a serious regression to save a cheap gitattributes lookup
+on converted files at the cost of reading and hashing every
+size-modified non-converted file on disk?
 
-In any case, the "repository-aware" change should be a separate step,
-outside the "move code around" step, right?
+Or am I misreading the code and we actually won't compare the data?
 
-> diff --git a/submodule.h b/submodule.h
-> index 1a465a1208..2028f272c4 100644
-> --- a/submodule.h
-> +++ b/submodule.h
-> @@ -62,6 +62,9 @@ int is_tree_submodule_active(struct repository *repo,
->  			     const struct object_id *treeish_name,
->  			     const char *path);
->  int is_submodule_active(struct repository *repo, const char *path);
-> +char *resolve_submodule_url(struct repository *repo, const char *url,
-> +			    const char *up_path, int quiet);
-> +char *get_submodule_up_path(const char *path);
+Removing !S_ISLNK(st->st_mode) and (ce->ce_stat_data.sd_size !=
+MAX_PATH) makes the conditional false for every symlink on all
+platforms, since S_ISGITLINK(ce->ce_mode) is false for symlinks too.
+Every size-changed symlink now falls through to ce_compare_link(), which
+runs strbuf_readlink() and reads the blob from the object database.
 
-The header names the second parameter 'url', while the definition in
-submodule.c names it 'rel_url'.
+Doesn't it make the GIT_WINDOWS_NATIVE MAX_PATH workaround dead for
+symlinks while applying the '.sd_size != MAX_PATH' check to gitlinks
+instead?
 
-It would help to add comments above the declarations of these two
-functions and to document that callers free the returned string, that
-'up_path' may be NULL, and that get_submodule_up_path() expects a
-non-empty 'path' (because it indexes path[strlen(path) - 1]).  It would
-match the surrounding declarations in this header file.
+I think [1/2] alone was probably OK (I am not as familiar with the
+details on that part of the code as you are, so my review is not worth
+all that much), but I do not know about this step.
+
+Thanks.
